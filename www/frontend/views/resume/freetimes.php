@@ -45,15 +45,9 @@ for($i=0; $i<=6; $i++){
 <?php $this->beginBlock('js') ?>
 <script>
 $(function(){
-    var flag=false;
-    $('.diy-checkbox').bind('touchstart click',
+    $('.diy-checkbox').bind(GB.click_event,
         function(){
-            if (flag) {
-                return false;
-            }
             var _this=$(this);
-            flag = true;
-            setTimeout(function(){ flag = false; }, 100);
             $.ajax({url: '#',
                 'method': 'POST',
                 'data': {'dayofweek': _this.attr('data-dayofweek'),
@@ -68,7 +62,6 @@ $(function(){
                  }
             });
         });
-    setTimeout(function(){ flag = false; }, 100);
 });
 </script>
 <?php $this->endBlock('js') ?>

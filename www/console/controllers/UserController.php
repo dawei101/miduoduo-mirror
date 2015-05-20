@@ -47,5 +47,18 @@ class UserController extends Controller
         $auth->assign($admin, $user->getId());
         echo "$phonenum 权限设置完毕\n";
     }
+
+    public function actionChangePassword($phonenum, $password)
+    {
+        $user = User::findOne(['username'=>$phonenum]);
+        if (!$user){
+            echo "No User found!\n";
+        } else {
+            $user->setPassword($password);
+            $user->save();
+            echo "Change done!\n";
+        }
+
+    }
 }
 

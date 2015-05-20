@@ -78,6 +78,11 @@ AppAsset::register($this);
         </div>
     </footer>
     <?php $this->endBody() ?>
+    <script>
+        GB={};
+        GB.is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+        GB.click_event = GB.is_mobile?'touchstart':'click';
+    </script>
     <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
     <script>
         $(function(){

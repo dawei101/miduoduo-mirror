@@ -17,7 +17,7 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -65,6 +65,11 @@ AppAsset::register($this);
         </div>
     </footer>
     <?php $this->endBody() ?>
+    <script>
+        GB={};
+        GB.is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+        GB.click_event = GB.is_mobile?'touchstart':'click';
+    </script>
     <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
 </body>
 </html>
