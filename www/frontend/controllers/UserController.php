@@ -8,10 +8,10 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 use common\Utils;
-use common\controllers\BaseController;
 use common\models\LoginWithDynamicCodeForm;
 use common\sms\SmsSenderFactory;
 
+use frontend\FBaseController;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -19,7 +19,7 @@ use frontend\models\SignupForm;
 /**
  * Site controller
  */
-class UserController extends BaseController
+class UserController extends FBaseController
 {
     /**
      * @inheritdoc
@@ -99,9 +99,7 @@ class UserController extends BaseController
 
         $model = new LoginWithDynamicCodeForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            $next = Yii::$app->request->get('next');
-            $next = empty($next)?'/':$next;
-            return $this->redirect($next);
+            return $this->goBack();
         } else {
             return $this->render('login', [
                 'model' => $model,

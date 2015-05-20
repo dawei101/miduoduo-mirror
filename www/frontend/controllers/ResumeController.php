@@ -4,13 +4,13 @@ namespace frontend\controllers;
 use Yii;
 use yii\filters\AccessControl;
 
-use common\controllers\BaseController;
 use common\models\Resume;
 use common\models\Freetime;
 
+use frontend\FBaseController;
 use frontend\models\EditResumeForm;
 
-class ResumeController extends BaseController
+class ResumeController extends FBaseController
 {
      /**
      * @inheritdoc
