@@ -53,7 +53,8 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             ['username', 'match', 'pattern'=>'/^1[345789]\d{9}$/',
-                'message'=>'手机号不正确，目前仅支持中国大陆手机号.']
+                'message'=>'手机号不正确，目前仅支持中国大陆手机号.'],
+            ['username', 'unique']
         ];
     }
 
