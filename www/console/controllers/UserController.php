@@ -24,18 +24,28 @@ class UserController extends Controller
     }
 
 
-    public function actionAdd($username, $password){
+    public function actionAdd($phonenum, $password){
         $user = new User();
-        $user->username = $username;
+        $user->username = $phonenum;
         $user->setPassword($password);
         if ($user->validate()) {
             $user->save();
+            echo "$phonenum创建完毕\n";
         }
         else {
             foreach($user->getErrors() as $key=>$errors){
                 echo join('\n', $errors) . "\n";
             }
         }
+    }
+
+    public function actionSetRole($phonenum, $role_name)
+    {
+        $user = User::findOne(['username'=>$phonenum]);
+        $auth = Yii::$app->authManager;
+        $admin = $auth->getRole($role_name);
+        $auth->assign($admin, $user->getId());
+        echo "$phonenum 权限设置完毕\n";
     }
 }
 

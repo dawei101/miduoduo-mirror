@@ -29,10 +29,16 @@ class ResumeController extends BaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['logout', 'index', 'edit', 'add', 'freetimes'],
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['index', 'edit', 'add', 'freetimes'],
+                        'allow' => true,
+                        'roles' => ['admin' , 'hunter'],
+                    ],
+
                 ],
             ],
             'verbs' => [
