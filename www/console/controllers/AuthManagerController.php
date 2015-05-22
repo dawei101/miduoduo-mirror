@@ -28,7 +28,6 @@ class AuthManagerController extends Controller
 
         $hunter = $auth->createRole('hunter');
         $auth->add($hunter);
-        $manager->addChild($worker);
 
         $dispatcher = $auth->createRole('dispatcher');
         $auth->add($dispatcher);
