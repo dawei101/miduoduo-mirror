@@ -1,4 +1,5 @@
 <?php
+$root_path = dirname(dirname(__DIR__));
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
@@ -16,6 +17,9 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
+    ],
+    'aliases' => [
+        'api' => $root_path . '/api'
     ],
     'language'=>'zh-CN',
 ];
