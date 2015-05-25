@@ -2,7 +2,7 @@
 namespace frontend;
 
 use Yii;
-use common\controllers\BaseController;
+use common\BaseController;
 
 class FBaseController extends BaseController
 {

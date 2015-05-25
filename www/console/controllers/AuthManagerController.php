@@ -29,8 +29,8 @@ class AuthManagerController extends Controller
         $hunter = $auth->createRole('hunter');
         $auth->add($hunter);
 
-        $dispatcher = $auth->createRole('dispatcher');
-        $auth->add($dispatcher);
+        $product_manager = $auth->createRole('product_manager');
+        $auth->add($product_manager);
 
         $saleman = $auth->createRole('saleman');
         $auth->add($saleman);
@@ -46,8 +46,9 @@ class AuthManagerController extends Controller
         $auth->add($admin);
         //$auth->addChild($admin, $updatePost);
         $auth->addChild($admin, $hunter);
-        $auth->addChild($admin, $dispatcher);
+        $auth->addChild($admin, $product_manager);
         $auth->addChild($admin, $saleman);
 
+        echo "DONE!";
     }
 }

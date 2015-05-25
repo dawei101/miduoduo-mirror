@@ -1,14 +1,15 @@
 <?php
+
 namespace common\models;
 
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use common\BaseActiveRecord;
 
 /**
- * User model
+ * This is the model class for table "{{%user}}".
  *
  * @property integer $id
  * @property string $username
@@ -17,31 +18,27 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $auth_key
  * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * @property string $created_time
+ * @property string $updated_time
+ * @property string $name
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends BaseActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+
+    public static $STATUSES = [
+        'DELETE' => 0,
+        'ACTIVE' => 10,
+    ];
+    public static $STATUS_LABELS = [0=>'正常',
+        10=>'已删除'];
+
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'jz_users';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
+        return '{{%user}}';
     }
 
     /**
@@ -50,12 +47,58 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['username'], 'required'],
+            [['status'], 'integer'],
+            [['created_time', 'updated_time'], 'safe'],
+            [['username', 'name'], 'string', 'max' => 200],
+            [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 500],
+            [['auth_key'], 'string', 'max' => 1000],
+            [['username'], 'unique'],
+            ['status', 'default', 'value' => static::$STATUSES['ACTIVE']],
+            ['status', 'in', 'range' => array_values(static::$STATUSES)],
             ['username', 'match', 'pattern'=>'/^1[345789]\d{9}$/',
                 'message'=>'手机号不正确，目前仅支持中国大陆手机号.'],
-            ['username', 'unique']
         ];
+    }
+
+
+    public static function createUserWithPhonenum($phonenum){
+        $user = new User;
+        $user->username = $phonenum;
+        $user->setPassword(rand(10000000, 99999999));
+        if ($user->save()){
+            return $user;
+        }
+        return false;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => '手机号',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'email' => '邮箱',
+            'auth_key' => 'Auth Key',
+            'status' => '状态',
+            'created_time' => '创建时间',
+            'updated_time' => '更新时间',
+            'name' => '姓名',
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     * @return UserQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UserQuery(get_called_class());
     }
 
     /**
@@ -63,7 +106,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'status' => static::$STATUSES['ACTIVE']]);
     }
 
     /**
@@ -82,7 +125,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'status' => static::$STATUSES['ACTIVE']]);
     }
 
     /**
@@ -99,7 +142,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
+            'status' => static::$STATUS['ACTIVE'],
         ]);
     }
 

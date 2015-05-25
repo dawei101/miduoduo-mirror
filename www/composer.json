@@ -23,12 +23,14 @@
         "bower-asset/bootstrap": "@stable",
         "bower-asset/jquery-ui": "@stable",
         "bower-asset/jquery.inputmask": "@stable",
-        "bower-asset/punycode": "@stable"
+        "bower-asset/punycode": "@stable",
+        "yiisoft/yii2-jui": "*",
+        "kartik-v/yii2-widget-activeform": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",
-        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-gii": "^2.0",
         "yiisoft/yii2-faker": "*"
     },
     "config": {

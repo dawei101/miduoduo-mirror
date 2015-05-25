@@ -30,7 +30,7 @@ class UserController extends Controller
         $user->setPassword($password);
         if ($user->validate()) {
             $user->save();
-            echo "$phonenum创建完毕\n";
+            echo "$phonenum 创建完毕\n";
         }
         else {
             foreach($user->getErrors() as $key=>$errors){

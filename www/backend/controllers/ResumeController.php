@@ -1,157 +1,121 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\data\Pagination;
-use yii\filters\VerbFilter;
-use yii\web\HttpException;
-
-use common\controllers\BaseController;
-use common\models\LoginForm;
 use common\models\Resume;
-use common\models\Freetime;
-
-use backend\models\EditResumeForm;
+use common\models\ResumeSearch;
+use backend\BBaseController;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
- * Resume controller
+ * ResumeController implements the CRUD actions for Resume model.
  */
-class ResumeController extends BaseController
+class ResumeController extends BBaseController
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['index', 'edit', 'add', 'freetimes'],
-                        'allow' => true,
-                        'roles' => ['admin' , 'hunter'],
-                    ],
-
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'delete' => ['post'],
                 ],
             ],
         ];
     }
 
     /**
-     * @inheritdoc
+     * Lists all Resume models.
+     * @return mixed
      */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
-    }
-
     public function actionIndex()
     {
-        $query = Resume::find()->where(['status' => 0]);
-        $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        $models = $query->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
+        $searchModel = new ResumeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-             'models' => $models,
-             'pages' => $pages,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionEdit()
+    /**
+     * Displays a single Resume model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
     {
-        $user_id = intval(Yii::$app->request->get('user_id'));
-        if ($user_id){
-            $resume = Resume::findOne(['user_id'=>$user_id]);
-            if ($resume){
-                $model = new EditResumeForm($resume);
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect('/resume/freetimes?user_id=' . $user_id);
-                } else {
-                    return $this->render('edit', [
-                        'model' => $model,
-                    ]);
-                }
-            }
-        }
-        throw new HttpException(404, '未知的用户简历');
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 
-    public function actionAdd()
+    /**
+     * Creates a new Resume model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
     {
-        $user_id = intval(Yii::$app->request->get('user_id'));
-        if (!$user_id){
-            throw new HttpException(404, '未知的用户信息');
-        }
-        return $this->render('add');
-    }
+        $model = new Resume();
 
-    public function actionFreetimes()
-    {
-        $user_id = intval(Yii::$app->request->get('user_id'));
-        if (!$user_id){
-            throw new HttpException(404, '未知的用户信息');
-        }
-        if (Yii::$app->request->isPost){
-            $dayofweek = intval(Yii::$app->request->post('dayofweek'));
-            $when = Yii::$app->request->post('when');
-            $is_availiable = filter_var(
-                Yii::$app->request->post('is_availiable'),
-                FILTER_VALIDATE_BOOLEAN);
-            if ($this->setFreetime($user_id, $dayofweek, $when, $is_availiable)){
-                $this->renderJson([
-                    'result'=> true,
-                    'is_availiable'=> $is_availiable
-                ]);
-            } else {
-                $this->renderJson([
-                    'result'=> false,
-                ]);
-            }
-        }
-        $freetimes = Freetime::findAll(['user_id'=>$user_id]);
-        $freetimes_dict = [];
-        foreach($freetimes as $freetime){
-            $freetimes_dict[$freetime->dayofweek] = $freetime;
-        }
-        return $this->render('freetimes', ['freetimes' => $freetimes_dict]);
-    }
-
-    protected function setFreetime($user_id, $dayofweek, $when, $is_availiable)
-    {
-        $freetime = Freetime::findOne(['user_id'=>$user_id, 'dayofweek'=>$dayofweek]);
-        if (!$freetime){
-            $freetime = new Freetime();
-            $freetime->dayofweek = $dayofweek;
-            $freetime->user_id = $user_id;
-            $freetime->$when = $is_availiable;
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $freetime->$when = $is_availiable;
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-        if (!$freetime->hasErrors()){
-            $freetime->save();
-            return true;
-        }
-        return false;
     }
 
+    /**
+     * Updates an existing Resume model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Deletes an existing Resume model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Resume model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Resume the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Resume::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }

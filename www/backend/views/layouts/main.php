@@ -57,10 +57,10 @@ AppAsset::register($this);
                 <div class="col-sm-3 col-md-2 sidebar">
                   <ul class="nav nav-sidebar" id="sidebar">
                     <li><a href="/">Overview <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">账号管理</a></li>
+                    <li><a href="/user">账号管理</a></li>
 
                     <li><a href="/resume">人才库</a></li>
-                    <li><a href="/order">订单</a></li>
+                    <li><a href="/offline-order">线下订单</a></li>
                     <li><a href="#">订单委派</a></li>
                   </ul>
                 </div>

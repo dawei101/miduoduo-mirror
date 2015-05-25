@@ -1,5 +1,5 @@
 <?php
-namespace common\controllers;
+namespace common;
 
 use Yii;
 use yii\web\Controller;

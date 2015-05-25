@@ -2,6 +2,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\ButtonGroup;
 use yii\bootstrap\ActiveForm;
+use yii\jui\DatePicker;
+
+use common\models\Resume;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -11,13 +14,32 @@ $this->title = '编辑简历';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-lg-8">
-        <?php $form = ActiveForm::begin(['id' => 'edit-resume-form']); ?>
-            <?= $form->field($model, 'name') ?>
+    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-5">
+        <?php $form = ActiveForm::begin([
+                'id' => 'edit-resume-form',
+                "options"=>['class'=>'form-horizontal']]); ?>
+            <?= $form->field($model, 'name'       ) ?>
+            <?= $form->field($model, 'phonenum'   ) ?>
             <?= $form->field($model, 'gender')
-                ->dropDownList([0=>'保密', 1=>'男', 2=>'女'])?>
+                ->dropDownList(Resume::$GENDERS)?>
+            <?= $form->field($model, 'is_student' )
+                ->checkBox(['checked' => true]) ?>
             <?= $form->field($model, 'grade')
-                ->dropDownList([1=>'大一', 2=>'大二', 3=>'大三', 4=>'大四', 5=>'大五'])?>
+                ->dropDownList(Resume::$GRADES)?>
+            <?= $form->field($model, 'college'    ) ?>
+            <?= $form->field($model, 'degree'     )
+                ->dropDownList(Resume::$DEGREES)?>
+            <?= $form->field($model, 'birthdate'  )
+                ->widget(DatePicker::className(),
+                        ['dateFormat' => 'yyyy-MM-dd'])->textInput() ?>
+            <?= $form->field($model, 'nation'     ) ?>
+            <?= $form->field($model, 'height'     ) ?>
+            <?= $form->field($model, 'avatar'     ) ?>
+            <?= $form->field($model, 'gov_id'     ) ?>
+            <?= $form->field($model, 'worker_type') ?>
+            <?= $form->field($model, 'status'     )
+                ->dropDownList(Resume::$STATUSES) ?>
+
             <div class="form-group">
                 <?= Html::submitButton('下一步', ['class' => 'btn btn-danger col-xs-12', 'name' => 'login-button']) ?>
             </div>

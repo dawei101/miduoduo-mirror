@@ -1,45 +1,41 @@
 <?php
+
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use yii\widgets\LinkPager;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\Resume */
+/* @var $searchModel common\models\ResumeSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '人力库';
+$this->title = '简历';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>手机号</th>
-      <th>姓名</th>
-      <th>性别</th>
-      <th>年级</th>
-      <th>操作</th>
-    </tr>
-  </thead>
-  <tbody>
-<?php
-foreach ($models as $model) {
-    // display $model here
-?>
-    <tr>
-      <th scope='row'><?= $model->id ?></th>
-      <td><?= $model->phonenum ?></td>
-      <td><?= $model->name ?></td>
-      <td><?= $model->gender ?></td>
-      <td><?= $model->grade ?></td>
-      <td>
-        <a class="btn btn-primary" href="/resume/edit?user_id=<?= $model->user_id ?>">编辑</a>
-        &nbsp; &nbsp;
-        <a class="btn btn-primary" href="/resume/freetimes?user_id=<?= $model->user_id ?>">空闲时间</a>
-      </td>
-    </tr>
-<?php } ?>
-  </tbody>
-</table>
+<div class="resume-index">
 
-<?= LinkPager::widget([ 'pagination' => $pages, ]) ?>
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a('创建简历', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            'name',
+            'phonenum',
+            'gender',
+            'is_student',
+            'college',
+            'gov_id',
+            'status',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+
+</div>
