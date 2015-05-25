@@ -39,7 +39,9 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/user'],
+                    'controller' => ['v1/user', 'v1/address', 'v1/resume',
+                        'v1/offline-order'
+                    ],
                     'pluralize' => '',
                 ]
             ],
