@@ -1,9 +1,9 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use console\BaseMigration;
 
-class m150520_003813_resume extends Migration
+class m150520_003813_resume extends BaseMigration
 {
     public function up()
     {
