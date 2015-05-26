@@ -29,6 +29,11 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'cache' => [
+            'class' => 'yii\caching\DbCache',
+            'db' => 'db',
+            'cacheTable' => 'jz_cache_for_backend',
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'rules' => [

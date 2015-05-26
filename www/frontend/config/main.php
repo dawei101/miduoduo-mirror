@@ -29,7 +29,12 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-    'urlManager' => [
+        'cache' => [
+            'class' => 'yii\caching\DbCache',
+            'db' => 'db',
+            'cacheTable' => 'jz_cache_for_frontend',
+        ],
+        'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
             'enablePrettyUrl' => true,

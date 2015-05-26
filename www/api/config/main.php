@@ -18,7 +18,7 @@ return [
     ],
     'components' => [
         'user' => [
-            'identityClass' => 'api\modules\v1\models\User',
+            'identityClass' => 'common\models\User',
             'enableAutoLogin' => false,
         ],
         'log' => [
@@ -30,7 +30,11 @@ return [
                 ],
             ],
         ],
-
+        'cache' => [
+            'class' => 'yii\caching\DbCache',
+            'db' => 'db',
+            'cacheTable' => 'jz_cache_for_api',
+        ],
         // 这里定义url
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -39,11 +43,21 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/user', 'v1/address', 'v1/resume',
+                    'controller' => ['v1/address', 'v1/resume',
                         'v1/offline-order'
                     ],
                     'pluralize' => '',
-                ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/user'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'POST login'=>'login',
+                        'POST vcode'=>'vcode',
+                        'POST vlogin'=>'vlogin',
+                    ],
+                ],
             ],
         ],
     ],

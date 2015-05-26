@@ -5,24 +5,24 @@ use Yii;
 
 class BaseSmsSender
 {
+
     public static function cacheVerifyCode($phonenum, $code)
     {
-        $vcodes = Yii::$app->session->get('verify_codes');
-        if (empty($vcodes)){
-            $vcodes = [];
-        }
         Yii::trace("verify code for $phonenum is $code");
-        $vcodes[$phonenum] = $code;
-        Yii::$app->session->set('verify_codes', $vcodes);
+        Yii::$app->cache->set(static::getVcodeCachekey($phonenum), $code);
+    }
+
+    public static function getVcodeCachekey($phonenum)
+    {
+        return 'vcode_for_' . $phonenum;
     }
 
     public static function validateVerifyCode($phonenum, $code)
     {
-        $vcodes = Yii::$app->session->get('verify_codes');
-        if (empty($vcodes) || !array_key_exists($phonenum, $vcodes)){
-            return false;
-        }
-        return $vcodes[$phonenum]==$code;
+        $vcode = Yii::$app->cache->get(static::getVcodeCachekey($phonenum));
+        var_dump($vcode);
+        die();
+        return $vcode==$code;
     }
 
     public static function generateVerifyCode()

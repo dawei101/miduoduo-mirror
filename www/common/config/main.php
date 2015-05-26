@@ -11,9 +11,6 @@ return [
             'password' => '123123',
             'charset' => 'utf8',
         ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],

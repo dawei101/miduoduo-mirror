@@ -2,6 +2,8 @@
 namespace api\modules\v1;
 
 use yii\filters\auth\HttpBasicAuth;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\QueryParamAuth;
 use common\models\User;
 
 /**
@@ -24,8 +26,12 @@ class Module extends \yii\base\Module
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => HttpBasicAuth::className(),
-            'auth' => [$this, 'auth']
+            'class' => CompositeAuth::className(),
+             'authMethods' => [
+                // QueryParamAuth 
+                ['class' => QueryParamAuth::className(), 'tokenParam' => 'access_token'],
+                ['class' => HttpBasicAuth::className(), 'auth' => [$this, 'authByPassword']],
+             ],
             ];
         return $behaviors;
     }
@@ -37,7 +43,7 @@ class Module extends \yii\base\Module
      * @param string $password
      * @return static|null
      */
-    public function auth($username, $password) {
+    public function authByPassword($username, $password) {
         if(empty($username) || empty($password))
             return null;
 

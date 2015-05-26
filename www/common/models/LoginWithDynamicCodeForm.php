@@ -29,8 +29,8 @@ class LoginWithDynamicCodeForm extends Model
         return [
             [['phonenum', 'code'], 'required', 'message'=>'不可为空'],
             ['rememberMe', 'boolean'],
-            ['code', 'match', 'pattern'=>'/^\d{6}$/',
-                'message'=>'验证码不正确.'],
+            ['rememberMe', 'default', 'value'=>false],
+            ['code', 'match', 'pattern'=>'/^\d{6}$/', 'message'=>'验证码不正确.'],
             ['code', 'validateCode']
         ];
     }
@@ -43,6 +43,7 @@ class LoginWithDynamicCodeForm extends Model
      */
     public function validateCode($attribute, $params)
     {
+
         if (!$this->hasErrors()) {
             if(!BaseSmsSender::validateVerifyCode($this->phonenum, $this->code)){
                 $this->addError($attribute, '手机号或验证码不正确.');
@@ -51,8 +52,6 @@ class LoginWithDynamicCodeForm extends Model
     }
 
     /**
-     * Logs in a user using the provided username and password.
-     *
      * @return boolean whether the user is logged in successfully
      */
     public function login()
@@ -75,10 +74,7 @@ class LoginWithDynamicCodeForm extends Model
             $this->_user = User::findByUsername($this->phonenum);
         }
         if (!$this->_user){
-            $user = new User();
-            $user->username = $this->phonenum;
-            $user->setPassword(10000000, 99999999);
-            $user->save();
+            $user = User::createUserWithPhonenum($this->phonenum);
             $this->_user = $user;
         }
         return $this->_user;

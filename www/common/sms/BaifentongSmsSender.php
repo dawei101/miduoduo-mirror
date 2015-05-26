@@ -7,7 +7,6 @@ use common\sms\BaseSmsSender;
 
 class BaifentongSmsSender extends BaseSmsSender implements SmsInterface 
 {
-
     public static $account = 'dlcsyj00';
     public static $password = 'gUp48QVj';
 

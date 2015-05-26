@@ -51,7 +51,7 @@ class User extends BaseActiveRecord implements IdentityInterface
             [['status'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
             [['username', 'name'], 'string', 'max' => 200],
-            [['password_hash', 'password_reset_token', 'email'], 'string', 'max' => 500],
+            [['password_hash', 'password_reset_token', 'email', 'access_token'], 'string', 'max' => 500],
             [['auth_key'], 'string', 'max' => 1000],
             [['username'], 'unique'],
             ['status', 'default', 'value' => static::$STATUSES['ACTIVE']],
@@ -85,6 +85,7 @@ class User extends BaseActiveRecord implements IdentityInterface
             'password_reset_token' => 'Password Reset Token',
             'email' => '邮箱',
             'auth_key' => 'Auth Key',
+            'access_token' => 'Access Token',
             'status' => '状态',
             'created_time' => '创建时间',
             'updated_time' => '更新时间',
@@ -114,7 +115,15 @@ class User extends BaseActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        if ($token && strlen($token)>0){
+            return static::findOne(['access_token' => $token]);
+        }
+        return null;
+    }
+
+    public function generateAccessToken()
+    {
+        $this->access_token= Yii::$app->security->generateRandomString() . '_' . time();
     }
 
     /**
