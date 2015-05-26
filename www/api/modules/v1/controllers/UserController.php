@@ -23,7 +23,8 @@ class UserController extends BaseActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['delete'], $actions['create']);
+        unset($actions['delete'], $actions['view'],
+            $actions['create'], $actions['update'], $actions['index']);
         return $actions;
     }
 
@@ -36,11 +37,6 @@ class UserController extends BaseActiveController
                     [
                         'actions' => ['login', 'signup', 'vlogin', 'vcode'],
                         'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => false,
-                        'roles' => ['@'],
                     ],
                 ],
             ],
