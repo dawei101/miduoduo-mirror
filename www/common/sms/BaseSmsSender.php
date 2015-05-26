@@ -20,8 +20,6 @@ class BaseSmsSender
     public static function validateVerifyCode($phonenum, $code)
     {
         $vcode = Yii::$app->cache->get(static::getVcodeCachekey($phonenum));
-        var_dump($vcode);
-        die();
         return $vcode==$code;
     }
 
