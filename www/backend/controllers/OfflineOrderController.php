@@ -14,17 +14,6 @@ use yii\filters\VerbFilter;
  */
 class OfflineOrderController extends BBaseController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Lists all OfflineOrder models.
