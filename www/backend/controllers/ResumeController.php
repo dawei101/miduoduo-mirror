@@ -15,6 +15,17 @@ use yii\filters\VerbFilter;
 class ResumeController extends BBaseController
 {
 
+    public function behaviors()
+    {
+        $bhvs = parent::behaviors();
+        $bhvs['access']['rules'][] = [
+            'actions' => ['freetimes'],
+            'allow' => true,
+            'roles' => ['admin' , 'hunter'],
+        ];
+        return $bhvs;
+    }
+
     /**
      * Lists all Resume models.
      * @return mixed
@@ -107,4 +118,54 @@ class ResumeController extends BBaseController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionFreetimes()
+    {
+        $user_id = intval(Yii::$app->request->get('user_id'));
+        if (!$user_id){
+            throw new HttpException(404, '未知的用户信息');
+        }
+        if (Yii::$app->request->isPost){
+            $dayofweek = intval(Yii::$app->request->post('dayofweek'));
+            $when = Yii::$app->request->post('when');
+            $is_availiable = filter_var(
+                Yii::$app->request->post('is_availiable'),
+                FILTER_VALIDATE_BOOLEAN);
+            if ($this->setFreetime($user_id, $dayofweek, $when, $is_availiable)){
+                $this->renderJson([
+                    'result'=> true,
+                    'is_availiable'=> $is_availiable
+                ]);
+            } else {
+                $this->renderJson([
+                    'result'=> false,
+                ]);
+            }
+        }
+        $freetimes = Freetime::findAll(['user_id'=>$user_id]);
+        $freetimes_dict = [];
+        foreach($freetimes as $freetime){
+            $freetimes_dict[$freetime->dayofweek] = $freetime;
+        }
+        return $this->render('freetimes', ['freetimes' => $freetimes_dict]);
+    }
+
+    protected function setFreetime($user_id, $dayofweek, $when, $is_availiable)
+    {
+        $freetime = Freetime::findOne(['user_id'=>$user_id, 'dayofweek'=>$dayofweek]);
+        if (!$freetime){
+            $freetime = new Freetime();
+            $freetime->dayofweek = $dayofweek;
+            $freetime->user_id = $user_id;
+            $freetime->$when = $is_availiable;
+        } else {
+            $freetime->$when = $is_availiable;
+        }
+        if (!$freetime->hasErrors()){
+            $freetime->save();
+            return true;
+        }
+        return false;
+    }
+
 }
