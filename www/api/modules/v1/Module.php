@@ -7,7 +7,7 @@ use yii\filters\auth\QueryParamAuth;
 use common\models\User;
 
 /**
- * Daai API V1 Module
+ * API V1 Module
  * 
  * @author Dawei
  * @since 1.0

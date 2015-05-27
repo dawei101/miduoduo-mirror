@@ -29,7 +29,7 @@ CREATE TABLE jz_cache_for_m (
     data LONGBLOB
 ); 
             ";
-        $this->execSqls($sqls);
+        return $this->execSqls($sqls);
     }
 
     public function down()

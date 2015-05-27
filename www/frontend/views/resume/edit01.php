@@ -3,6 +3,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ButtonGroup;
 use yii\bootstrap\ActiveForm;
 
+use common\models\Resume;
+
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginWithDynamicCodeForm */
@@ -15,9 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form = ActiveForm::begin(['id' => 'edit-resume-form']); ?>
                 <?= $form->field($model, 'name') ?>
                 <?= $form->field($model, 'gender')
-                    ->dropDownList([0=>'保密', 1=>'男', 2=>'女'])?>
+                    ->dropDownList(Resume::$GENDERS)?>
                 <?= $form->field($model, 'grade')
-                    ->dropDownList([1=>'大一', 2=>'大二', 3=>'大三', 4=>'大四', 5=>'大五'])?>
+                    ->dropDownList(Resume::$GRADES)?>
                 <div class="form-group">
                     <?= Html::submitButton('下一步', ['class' => 'btn btn-danger col-xs-12', 'name' => 'login-button']) ?>
                 </div>
