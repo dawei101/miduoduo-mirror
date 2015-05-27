@@ -12,4 +12,5 @@ use api\modules\BaseActiveController;
 class ResumeController extends BaseActiveController
 {
     public $modelClass = 'common\models\Resume';
+
 }
