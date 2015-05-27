@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ->dropDownList(Resume::$GENDERS)?>
                 <?= $form->field($model, 'grade')
                     ->dropDownList(Resume::$GRADES)?>
+                <?= ($model->isNewRecord)?$form->field($model, 'origin'):'' ?>
                 <div class="form-group">
                     <?= Html::submitButton('下一步', ['class' => 'btn btn-danger col-xs-12', 'name' => 'login-button']) ?>
                 </div>

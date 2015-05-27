@@ -21,6 +21,7 @@ use common\BaseActiveRecord;
  * @property string $created_time
  * @property string $updated_time
  * @property string $name
+ * @property string $is_staff
  */
 class User extends BaseActiveRecord implements IdentityInterface
 {
@@ -58,6 +59,7 @@ class User extends BaseActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => array_values(static::$STATUSES)],
             ['username', 'match', 'pattern'=>'/^1[345789]\d{9}$/',
                 'message'=>'手机号不正确，目前仅支持中国大陆手机号.'],
+            ['is_staff', 'default', 'value'=>false]
         ];
     }
 
