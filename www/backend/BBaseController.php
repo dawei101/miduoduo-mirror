@@ -14,13 +14,13 @@ class BBaseController extends BaseController
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    // allow authenticated users
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin', 'worker', 'hunter', 'saleman', 'supervisor', 'product_manager'],
                     ],
-                    // everything else is denied
+
                 ],
+
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),

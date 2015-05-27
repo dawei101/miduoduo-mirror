@@ -469,7 +469,6 @@ class m130524_201442_init extends Migration
 
         LOCK TABLES `jz_user` WRITE;
         /*!40000 ALTER TABLE `jz_user` DISABLE KEYS */;
-        INSERT INTO `jz_user` VALUES (1,'18661775819','$2y$13$HlOGbubWIp5BjlQewXcKtOWPJ2VvpASfBqkNHl5zG.AHGLEeEI9AW',NULL,'',NULL,10,'2015-05-25 11:02:06','2015-05-25 11:26:42','李大伟'),(2,'18661775818','$2y$13$Fmcqdx7.lg.2e4lFL/x8Nu37tX5x/XTwVz24u/qQuWOZNrMUZudd.',NULL,NULL,NULL,10,'2015-05-25 11:02:47','2015-05-25 11:02:47',NULL),(3,'18661775816','$2y$13$tnHvN2GdxVDRHPuf3DTTIORL0rRjUU7OppOlH8O8jn6S4NW3PgaW2',NULL,NULL,NULL,10,'2015-05-25 16:12:15','2015-05-25 16:12:15',NULL);
         /*!40000 ALTER TABLE `jz_user` ENABLE KEYS */;
         UNLOCK TABLES;
 
@@ -516,5 +515,7 @@ class m130524_201442_init extends Migration
 
     public function down()
     {
+        echo "could not revert , you can drop table directly";
+        return false;
     }
 }

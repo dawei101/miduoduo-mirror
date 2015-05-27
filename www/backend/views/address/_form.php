@@ -36,4 +36,47 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
+    <div class="container col-xs-12">
+        <div id="map" class="row" style="height:400px;">
+        </div>
+        <div class="row">
+            <div class="input-group">
+              <input type="text" class="form-control" id="search-content" placeholder="省市+小区大厦等" />
+              <span class="input-group-addon" id="search">
+                <span class="glyphicon glyphicon-search"></span>
+              </span>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="list-group" id="search-result">
+              <li class="list-group-item">-------</li>
+            </ul>
+        </div>
+    </div>
 </div>
+
+<?php $this->beginBlock('js') ?>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=GB9AZpYwfhnkMysnlzwSdRqq"> </script>
+
+<script type="text/javascript">
+ $(function(){
+    var map = new BMap.Map("map");
+    map.centerAndZoom(new BMap.Point(116.422820,39.996632), 11);
+    var options = {
+     onSearchComplete: function(results){
+       if (local.getStatus() == BMAP_STATUS_SUCCESS){
+         // 判断状态是否正确
+         var s = [];
+         for (var i = 0; i < results.getCurrentNumPois(); i ++){  
+           s.push(results.getPoi(i).title + ", " + results.getPoi(i).address);  
+         }
+         document.getElementById("log").innerHTML = s.join("<br />");
+       }
+     }
+    };
+    var local = new BMap.LocalSearch(map, options);
+    
+    local.search("公园");
+});
+</script>
+<?php $this->endBlock() ?>

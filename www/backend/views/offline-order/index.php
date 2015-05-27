@@ -25,9 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'gid',
-            'date',
-            'worker_quntity',
-            'fee',
+            'plan_quantity',
+            'plan_fee',
             ['attribute' => 'need_train', 'value'=>function ($model){
                     return $model->need_train?'是':'否';
                 },
@@ -38,8 +37,17 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'quality_requirement:ntext',
             // 'status',
             // 'created_by',
-            'pm_id',
-            'saleman_id',
+            ['attribute'=> 'saleman.name',
+             'label'=>'销售人' 
+            ],
+             ['attribute'=> 'suborder',
+             'format'=>'raw',
+             'value'=>function($model){
+                return "<a class='btn btn-success' href='/suborder?order_id=". $model->id ."'>编辑</a>";
+             },
+             'label'=>'子订单'
+            ],
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

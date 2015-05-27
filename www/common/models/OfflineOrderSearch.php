@@ -18,9 +18,12 @@ class OfflineOrderSearch extends OfflineOrder
     public function rules()
     {
         return [
-            [['id', 'worker_quntity', 'need_train', 'status', 'created_by', 'pm_id', 'saleman_id'], 'integer'],
-            [['gid', 'date', 'requirement', 'quality_requirement', 'company', 'person_fee'], 'safe'],
-            [['fee'], 'number'],
+            [['id', 'plan_quantity', 'final_quantity',
+                    'need_train', 'status', 'created_by',
+                    'saleman_id'],
+                'integer'],
+            [['gid', 'from_date', 'to_date', 'requirement', 'quality_requirement', 'company', 'person_fee'], 'safe'],
+            [['plan_fee', 'final_fee'], 'number'],
         ];
     }
 
@@ -58,13 +61,15 @@ class OfflineOrderSearch extends OfflineOrder
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'date' => $this->date,
-            'worker_quntity' => $this->worker_quntity,
-            'fee' => $this->fee,
+            'from_date' => $this->from_date,
+            'to_date' => $this->to_date,
+            'plan_quantity' => $this->plan_quantity,
+            'final_quantity' => $this->final_quantity,
+            'plan_fee' => $this->plan_fee,
+            'final_fee' => $this->final_fee,
             'need_train' => $this->need_train,
             'status' => $this->status,
             'created_by' => $this->created_by,
-            'pm_id' => $this->pm_id,
             'saleman_id' => $this->saleman_id,
         ]);
 
