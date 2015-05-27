@@ -1,6 +1,7 @@
 <?php
 namespace api\modules\v1;
 
+use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\QueryParamAuth;
@@ -19,20 +20,25 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();        
-        \Yii::$app->user->enableSession = false;
     }
+
 
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-             'authMethods' => [
+
+        $controller = Yii::$app->controller->id;
+        if ($controller!='auth'){
+            // 留出auth controller 登陆
+            $behaviors['authenticator'] = [
+                'class' => CompositeAuth::className(),
+                'authMethods' => [
                 // QueryParamAuth 
-                ['class' => QueryParamAuth::className(), 'tokenParam' => 'access_token'],
-                ['class' => HttpBasicAuth::className(), 'auth' => [$this, 'authByPassword']],
-             ],
+                    ['class' => QueryParamAuth::className(), 'tokenParam' => 'access_token'],
+                    ['class' => HttpBasicAuth::className(), 'auth' => [$this, 'authByPassword']],
+                ],
             ];
+        }
         return $behaviors;
     }
 

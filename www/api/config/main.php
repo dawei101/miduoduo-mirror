@@ -19,6 +19,7 @@ return [
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
+            'enableSession' => false,
             'enableAutoLogin' => false,
         ],
         'log' => [
@@ -50,7 +51,7 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/user'],
+                    'controller' => ['v1/auth'],
                     'pluralize' => '',
                     'extraPatterns' => [
                         'POST login'=>'login',
