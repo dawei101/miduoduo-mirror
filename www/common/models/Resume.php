@@ -28,6 +28,7 @@ use common\models\Address;
  * @property integer $user_id
  * @property integer $home
  * @property integer $workplace
+ * @property varchar(200) $origin
  */
 class Resume extends \common\BaseActiveRecord
 {
@@ -64,6 +65,7 @@ class Resume extends \common\BaseActiveRecord
             [['home', 'workplace'], 'default', 'value'=>0],
             ['phonenum', 'checkPhonenum'],
             ['status', 'default', 'value'=>0],
+            ['origin', 'default', 'value'=>'self'],
         ];
     }
 
