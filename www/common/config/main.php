@@ -14,6 +14,13 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
+       'session' => [
+            'class' => 'yii\web\DbSession',
+            'db' => 'db',
+            'sessionTable' => '{{%session}}',
+            'timeout' => 3600 * 24 * 30,
+            'name' => 'sid',
+       ],
     ],
     'aliases' => [
         'api' => $root_path . '/api',

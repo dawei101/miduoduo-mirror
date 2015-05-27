@@ -32,10 +32,6 @@ AppAsset::register($this);
     </div>
 
     <footer class="footer">
-        <div class="container">
-        <p class="pull-left">&copy; 米多多 <?= date('Y') ?></p>
-        <p class="pull-right">Powered by David</p>
-        </div>
     </footer>
     <?php $this->endBody() ?>
     <script>
