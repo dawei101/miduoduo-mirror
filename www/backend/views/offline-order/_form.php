@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\jui\DatePicker;
 
 use common\models\OfflineOrder;
 
@@ -14,7 +15,12 @@ use common\models\OfflineOrder;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'date')->textInput(['type'=>'date']) ?>
+    <?= $form->field($model, 'date')->widget(
+        DatePicker::className(), [
+            'model'=>$model,
+            'attribute' => 'birthdate',
+            'dateFormat' => 'yyyy-MM-dd',
+        ]) ?>
 
     <?= $form->field($model, 'worker_quntity')->textInput(['type'=>'number', 'min'=>1]) ?>
 

@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use common\models\Resume;
+use yii\jui\DatePicker;
+
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Resume */
@@ -24,7 +26,13 @@ use common\models\Resume;
 
     <?= $form->field($model, 'gender')->dropdownList(Resume::$GENDERS) ?>
 
-    <?= $form->field($model, 'birthdate')->textInput(['type'=>'date']) ?>
+    <?= $form->field($model, 'birthdate')->widget(
+        DatePicker::className(), [
+            'model'=>$model,
+            'attribute' => 'birthdate',
+            'dateFormat' => 'yyyy-MM-dd',
+            'language' => 'Zh_cn'
+        ]) ?>
 
     <?= $form->field($model, 'degree')->textInput(['maxlength' => true]) ?>
 

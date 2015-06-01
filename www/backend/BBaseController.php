@@ -3,6 +3,7 @@ namespace backend;
 
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use common\BaseController;
 
 class BBaseController extends BaseController
