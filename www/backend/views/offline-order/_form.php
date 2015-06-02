@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+//use yii\widgets\ActiveForm;
+use kartik\form\ActiveForm;
 use yii\jui\DatePicker;
 
 use common\models\OfflineOrder;
@@ -11,9 +12,9 @@ use common\models\OfflineOrder;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="offline-order-form">
+<div class="offline-order-form col-lg-8 col-xs-12 col-md-8">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['type'=>ActiveForm::TYPE_HORIZONTAL]) ?>
 
     <?= $form->field($model, 'date')->widget(
         DatePicker::className(), [

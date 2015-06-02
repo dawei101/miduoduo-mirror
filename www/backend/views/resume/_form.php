@@ -11,13 +11,14 @@ use yii\jui\DatePicker;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="resume-form">
+<div class="resume-form col-lg-8 col-xs-12 col-md-8">
 
-
+<p>
 <?php
     if (!$model->isNewRecord)
-        echo "<a class='btn btn-primary' href='/freetimes?user_id=" . $model->user_id . "'>编辑空闲时间</a>";
+        echo "<a class='btn btn-success' href='./freetimes?user_id=" . $model->user_id . "'>编辑空闲时间</a>";
 ?>
+</p>
 <?php $form = ActiveForm::begin(['type'=>ActiveForm::TYPE_HORIZONTAL]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -56,9 +57,7 @@ use yii\jui\DatePicker;
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '创建' : '修改', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        &nbsp; &nbsp;
     </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>

@@ -41,7 +41,9 @@ for($i=0; $i<=6; $i++){
       </tbody>
     </table>
 
-<?= Html::a('完成', '/resume', ['class' => 'btn btn-danger col-xs-12']) ?>
+<?= Html::a('完成', '#', ['class' => 'btn btn-danger col-xs-12',
+    'onclick'=>'javascript:window.history.back();'
+]) ?>
 <?php $this->beginBlock('js') ?>
 <script>
 $(function(){

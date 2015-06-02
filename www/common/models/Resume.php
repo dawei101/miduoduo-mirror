@@ -63,7 +63,7 @@ class Resume extends \common\BaseActiveRecord
             [['gov_id'], 'match', 'pattern' => '/^\d{15,18}[Xx]?$/'],
             [['home', 'workplace'], 'default', 'value'=>0],
             ['phonenum', 'checkPhonenum'],
-            ['status', 'default', value=>0],
+            ['status', 'default', 'value'=>0],
         ];
     }
 
