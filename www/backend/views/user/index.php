@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+use common\models\User;
+use yii\helpers\ArrayHelper;
+
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -24,12 +27,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'id',
             'username',
             'email:email',
-            'status',
-            'updated_time',
+            ['attribute' => 'status', 'value'=>function($model){
+                return User::$STATUS_LABELS[$model->status];
+            },
+            'filter'=>User::$STATUS_LABELS
+            ],
             'name',
+            ['attribute' => 'roles', 'value'=>function($model){
+                $roles = '';
+                foreach (\Yii::$app->authManager->getRolesByUser($model->id) as $role){
+                    $roles .= ' ' . $role->name;
+                }
+                return $roles;
+            }, 'label'=> '角色' ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

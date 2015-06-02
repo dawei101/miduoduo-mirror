@@ -24,21 +24,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'gid',
             'date',
             'worker_quntity',
             'fee',
-            'need_train',
+            ['attribute' => 'need_train', 'value'=>function ($model){
+                    return $model->need_train?'是':'否';
+                },
+             'filter'=>[true=> '是', false=>'否']
+            ],
             'company',
-            'person_fee',
             // 'requirement:ntext',
             // 'quality_requirement:ntext',
             // 'status',
             // 'created_by',
-            // 'pm_id',
-            // 'saleman_id',
+            'pm_id',
+            'saleman_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

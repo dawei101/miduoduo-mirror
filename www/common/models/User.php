@@ -26,8 +26,8 @@ class User extends BaseActiveRecord implements IdentityInterface
 {
 
     public static $STATUSES = [
-        'DELETE' => 0,
-        'ACTIVE' => 10,
+        'ACTIVE' => 0,
+        'DELETE' => 10,
     ];
     public static $STATUS_LABELS = [0=>'正常',
         10=>'已删除'];

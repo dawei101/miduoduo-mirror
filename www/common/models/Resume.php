@@ -61,8 +61,9 @@ class Resume extends \common\BaseActiveRecord
                 'message'=>'手机号不正确，目前仅支持中国大陆手机号.'],
             ['gender', 'in', 'range'=>array_keys(static::$GENDERS)],
             [['gov_id'], 'match', 'pattern' => '/^\d{15,18}[Xx]?$/'],
-            ['home', 'default', 'value'=>0],
+            [['home', 'workplace'], 'default', 'value'=>0],
             ['phonenum', 'checkPhonenum'],
+            ['status', 'default', value=>0],
         ];
     }
 

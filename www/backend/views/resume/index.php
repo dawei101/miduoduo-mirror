@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+use common\models\Resume;
+
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ResumeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -24,15 +26,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'name',
             'phonenum',
-            'gender',
-            'is_student',
+            ['attribute' => 'gender', 'value'=>
+                function ($model){
+                    return Resume::$GENDERS[$model->gender];
+                },
+            'filter'=>Resume::$GENDERS
+            ],
+            ['attribute' => 'is_student', 'value'=>function ($model){
+                    return $model->is_student?'是':'否';
+                },
+            'filter'=>[true=> '是', false=>'否']
+            ],
             'college',
             'gov_id',
-            'status',
+            ['attribute' => 'status', 'value'=>
+                function ($model){
+                    return Resume::$STATUS_LABELS[$model->status];
+                },
+            'filter'=>Resume::$STATUS_LABELS
+            ],
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
