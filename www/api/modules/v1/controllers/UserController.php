@@ -34,12 +34,12 @@ class UserController extends BaseActiveController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'signup', 'Vlogin', 'vcode'],
+                        'actions' => ['login', 'signup', 'vlogin', 'vcode'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'allow' => true,
+                        'allow' => false,
                         'roles' => ['@'],
                     ],
                 ],
