@@ -30,7 +30,7 @@ class SiteController extends BBaseController
                     [
                         'actions' => ['logout', 'index'],
                         'allow' => true,
-                        'roles' => ['admin', 'worker', 'hunter', 'saleman', 'supervisor'],
+                        'roles' => ['admin', 'worker', 'hunter', 'saleman', 'supervisor', 'product_manager'],
                     ],
                 ],
             ],

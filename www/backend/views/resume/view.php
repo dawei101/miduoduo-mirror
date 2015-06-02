@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
         <?php
             if (!$model->isNewRecord)
-                echo "<a class='btn btn-primary' href='/freetimes?user_id=" . $model->user_id . "'>编辑空闲时间</a>";
+                echo "<a class='btn btn-primary' href='/resume/freetimes?user_id=" . $model->user_id . "'>编辑空闲时间</a>";
         ?>
     </p>
 

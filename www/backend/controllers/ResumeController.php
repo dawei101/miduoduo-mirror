@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Resume;
+use common\models\Freetime;
 use common\models\ResumeSearch;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;

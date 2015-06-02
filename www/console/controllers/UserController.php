@@ -42,10 +42,14 @@ class UserController extends Controller
     public function actionSetRole($phonenum, $role_name)
     {
         $user = User::findOne(['username'=>$phonenum]);
-        $auth = Yii::$app->authManager;
-        $admin = $auth->getRole($role_name);
-        $auth->assign($admin, $user->getId());
-        echo "$phonenum 权限设置完毕\n";
+        if ($user){
+            $auth = Yii::$app->authManager;
+            $admin = $auth->getRole($role_name);
+            $auth->assign($admin, $user->getId());
+            echo "$phonenum 权限设置完毕\n";
+        } else {
+            echo "$phonenum 用户不存在\n";
+        }
     }
 
     public function actionChangePassword($phonenum, $password)
