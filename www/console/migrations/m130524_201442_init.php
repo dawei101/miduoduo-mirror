@@ -285,7 +285,6 @@ class m130524_201442_init extends Migration
 
         LOCK TABLES `jz_offline_order` WRITE;
         /*!40000 ALTER TABLE `jz_offline_order` DISABLE KEYS */;
-        INSERT INTO `jz_offline_order` VALUES (1,'143257529717834485171','2015-05-13',30,6.10,0,'asd','asd',0,1,0,0,'asd','asd'),(2,'14325769011011','2015-05-31',31,15.00,0,'','',0,1,0,0,'','');
         /*!40000 ALTER TABLE `jz_offline_order` ENABLE KEYS */;
         UNLOCK TABLES;
 
