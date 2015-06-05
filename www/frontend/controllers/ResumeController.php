@@ -46,14 +46,23 @@ class ResumeController extends FBaseController
 
         $model = new EditResumeForm($resume);
 
+        $freetimes = Freetime::findAll(['user_id'=>Yii::$app->user->id]);
+        $freetimes_dict = [];
+        foreach($freetimes as $freetime){
+            $freetimes_dict[$freetime->dayofweek] = $freetime;
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('/resume/freetimes');
+            return $this->render('edit01_done', [
+                'model' => $model,
+            ]);
+
         } else {
             return $this->render('edit01', [
                 'model' => $model,
+                'freetimes' => $freetimes_dict
             ]);
         }
-
     }
 
     public function actionFreetimes()
