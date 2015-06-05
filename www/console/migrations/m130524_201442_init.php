@@ -384,7 +384,6 @@ class m130524_201442_init extends Migration
 
         LOCK TABLES `jz_resume` WRITE;
         /*!40000 ALTER TABLE `jz_resume` DISABLE KEYS */;
-        INSERT INTO `jz_resume` VALUES (1,'wangwang','18661775816',0,NULL,'','',NULL,0,'',NULL,'',0,'2015-05-25 16:12:15','2015-05-25 16:12:15',NULL,3,0,0);
         /*!40000 ALTER TABLE `jz_resume` ENABLE KEYS */;
         UNLOCK TABLES;
 
