@@ -29,6 +29,16 @@ class LoginForm extends Model
             ['rememberMe', 'default', 'value'=>true],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            ['username', 'match', 'pattern'=>'/^1[345789]\d{9}$/',
+                'message'=>'手机号不正确，目前仅支持中国大陆手机号.'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return ['username'=>'手机号',
+            'password'=>'密码',
+            'remeberMe' => '记住我'
         ];
     }
 
@@ -44,7 +54,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, '用户名或密码不正确.');
+                $this->addError($attribute, '手机号或密码不正确.');
             }
         }
     }

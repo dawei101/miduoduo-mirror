@@ -17,43 +17,62 @@ class ResumeController extends MBaseController
      */
     public function behaviors()
     {
-        return [
+        return array_merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['edit', 'edit01', 'freetimes'],
+                        'actions' => ['edit', 'freetimes', 'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
             ],
-        ];
+
+        ]);
     }
 
-
-    public function actionEdit01()
+    public function actionEdit()
     {
         $user = Yii::$app->user;
-        $resume = Resume::findOne(['user_id'=>$user->id]);
-        if (!$resume){
-            $resume = new Resume();
-            $resume->user_id = $user->id; 
-            $resume->is_student = true; 
-            $resume->phonenum = $user->identity->username;
-            $resume->save();
-        }
-
-        $model = new EditResumeForm($resume);
+        $model = Resume::findOne(['user_id'=>$user->id]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('/resume/freetimes');
-        } else {
-            return $this->render('edit01', [
-                'model' => $model,
-            ]);
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        if (!$model){
+            $model = new Resume();
+        }
+        $freetimes = Freetime::findAll(['user_id'=>$user->id]);
+        $freetimes_dict = [];
+        foreach($freetimes as $freetime){
+            $freetimes_dict[$freetime->dayofweek] = $freetime;
         }
 
+        return $this->render('edit', [
+            'model' => $model,
+            'freetimes'=> $freetimes_dict
+        ]);
+    }
+
+    public function actionView()
+    {
+        $user = Yii::$app->user;
+        $model = Resume::findOne(['user_id'=>$user->id]);
+        if (!$model){
+            $this->redirect('/resume/edit');
+        }
+        $freetimes = Freetime::findAll(['user_id'=>$user->id]);
+        $freetimes_dict = [];
+        foreach($freetimes as $freetime){
+            $freetimes_dict[$freetime->dayofweek] = $freetime;
+        }
+
+        return $this->render('view', [
+            'model' => $model,
+            'freetimes'=> $freetimes_dict
+        ]);
+       
     }
 
     public function actionFreetimes()
@@ -75,12 +94,6 @@ class ResumeController extends MBaseController
                 ]);
             }
         }
-        $freetimes = Freetime::findAll(['user_id'=>Yii::$app->user->id]);
-        $freetimes_dict = [];
-        foreach($freetimes as $freetime){
-            $freetimes_dict[$freetime->dayofweek] = $freetime;
-        }
-        return $this->render('freetimes', ['freetimes' => $freetimes_dict]);
     }
 
     protected function setFreetime($user_id, $dayofweek, $when, $is_availiable)
@@ -95,8 +108,7 @@ class ResumeController extends MBaseController
             $freetime->$when = $is_availiable;
         }
         if (!$freetime->hasErrors()){
-            $freetime->save();
-            return true;
+            return $freetime->save();
         }
         return false;
     }

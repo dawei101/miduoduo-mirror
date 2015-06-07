@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\ServiceType */
 
-$this->title = 'Create Service Type';
+$this->title = '新建任务类型';
 $this->params['breadcrumbs'][] = ['label' => 'Service Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

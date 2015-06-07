@@ -27,3 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+
+<?php $this->beginBlock('css') ?>
+<style>
+body {
+    padding-top: 35%;
+}
+
+</style>
+<?php $this->endBlock('css') ?>

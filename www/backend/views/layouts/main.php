@@ -60,6 +60,8 @@ AppAsset::register($this);
                     <li><a href="/user">账号管理</a></li>
 
                     <li><a href="/resume">人才库</a></li>
+                    <li><a href="/task">任务订单</a></li>
+                    <li><a href="/service-type">任务类型</a></li>
                     <li><a href="/offline-order">线下订单</a></li>
                     <li><a href="#">订单委派</a></li>
                   </ul>

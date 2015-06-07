@@ -10,20 +10,22 @@ namespace m\assets;
 use yii\web\AssetBundle;
 
 /**
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * @author dawei
  */
 class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
+
     public $css = [
-        'css/midd.css',
+        'static/css/bootstrap.min.css',
+        'static/css/bootstrap-theme.min.css',
+        'static/css/midd.css',
     ];
     public $js = [
+        'static/js/bootstrap.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
     ];
 }

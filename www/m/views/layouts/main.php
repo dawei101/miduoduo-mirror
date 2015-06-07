@@ -17,29 +17,29 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
 </head>
 <body>
-    <?php $this->beginBody() ?>
-    <div class="wrap">
-        <div class="container">
-        <?= $content ?>
-        </div>
-    </div>
-
-    <footer class="footer">
-    </footer>
-    <?php $this->endBody() ?>
-    <script>
-        GB={};
-        GB.is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
-        GB.click_event = GB.is_mobile?'touchstart':'click';
-    </script>
-    <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
+<?php $this->beginBody() ?>
+<div class="container">
+<?= $content ?>
+</div>
+<?php $this->endBody() ?>
+<script>
+    GB={};
+    GB.is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    GB.click_event = GB.is_mobile?'touchstart':'click';
+</script>
+<?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
 </body>
 </html>
 <?php $this->endPage() ?>

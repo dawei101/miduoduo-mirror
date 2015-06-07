@@ -31,7 +31,8 @@ class Freetime extends \common\BaseActiveRecord
     {
         return [
             [['dayofweek', 'user_id'], 'required'],
-            [['dayofweek', 'morning', 'afternoon', 'evening', 'user_id'], 'integer']
+            [['dayofweek', 'user_id'], 'integer'],
+            [['morning', 'afternoon', 'evening'], 'safe']
         ];
     }
 

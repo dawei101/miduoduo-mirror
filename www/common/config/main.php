@@ -11,8 +11,17 @@ return [
             'password' => '123123',
             'charset' => 'utf8',
         ],
+        'user'=>[
+            'class' => 'yii\web\User',
+            'identityClass' => 'common\models\User',
+            'enableAutoLogin' => true,
+            'loginUrl' => ['user/login'],
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
+        ],
+        'assetManager' => [
+            'appendTimestamp' => true,
         ],
        'session' => [
             'class' => 'yii\web\DbSession',

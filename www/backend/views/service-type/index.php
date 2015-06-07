@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\ServiceTypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Service Types';
+$this->title = '任务类型';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="service-type-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Service Type', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('新建任务类型', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,11 +25,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'name',
             'created_time',
             'updated_time',
             'modified_by',
+            [
+                'attribute' => 'status',
+                'value' => function($model){
+                    return $model::$STATUS_LABELS[$model->status];
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

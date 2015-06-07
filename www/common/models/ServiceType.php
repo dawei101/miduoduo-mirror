@@ -12,6 +12,7 @@ use Yii;
  * @property string $created_time
  * @property string $updated_time
  * @property string $modified_by
+ * @property smallint $status
  */
 class ServiceType extends \common\BaseActiveRecord
 {
@@ -32,7 +33,8 @@ class ServiceType extends \common\BaseActiveRecord
             [['name'], 'required'],
             [['created_time', 'updated_time'], 'safe'],
             [['name'], 'string', 'max' => 200],
-            [['modified_by'], 'string', 'max' => 45]
+            [['modified_by'], 'string', 'max' => 45],
+            ['status', 'default', 'value'=>0]
         ];
     }
 
@@ -43,10 +45,11 @@ class ServiceType extends \common\BaseActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => '服务种类',
-            'created_time' => 'Created Time',
-            'updated_time' => 'Updated Time',
+            'name' => '服务类型',
+            'created_time' => '创建时间',
+            'updated_time' => '修改时间',
             'modified_by' => '修改人',
+            'status' => '状态',
         ];
     }
 
