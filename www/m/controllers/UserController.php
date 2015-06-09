@@ -102,7 +102,7 @@ class UserController extends MBaseController
             if ($signuping){
                 $url = Url::to([
                         '/user/reset-password',
-                        'next' => urlencode('/resume/edit')
+                        'next' => '/resume/edit'
                     ]);
                 return $this->redirect($url);
             } else {
@@ -167,7 +167,7 @@ class UserController extends MBaseController
         $user = Yii::$app->user->identity;
         $model = new ResetPasswordForm($user);
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            $next = urldecode(Yii::$app->request->get('next'));
+            $next = Yii::$app->request->get('next');
             if (!empty($next)){
                 $this->redirect($next);
             }
