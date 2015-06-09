@@ -102,7 +102,7 @@ class TaskController extends \m\MBaseController
         }
         if ($task){
             return $this->render('view', 
-                [ 'task'=>$task, ]
+                ['task'=>$task, ]
             );
         } else {
             $this->render404("未知的信息");

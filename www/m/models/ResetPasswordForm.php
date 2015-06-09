@@ -33,14 +33,12 @@ class ResetPasswordForm extends Model
         return [
             [['password'], 'required'],
             [['password'], 'string', 'min' => 6],
-            ['password2', 'isPasswordSame'],
+            ['password2', function($attr, $params){
+                if ($this->password!=$this->password2){
+                    $this->addError($attr, '两次密码输入不一致');
+                }
+            }],
         ];
-    }
-
-    public function isPasswordSame($attribute, $params){
-        if ($this->password!=$this->password2){
-            $this->addError($attribute, '两次密码输入不一致');
-        }
     }
 
     /**
