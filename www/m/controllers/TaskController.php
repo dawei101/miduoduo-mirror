@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
 use common\models\Task;
+use common\models\Resume;
 use common\models\District;
 use common\models\TaskApplicant;
 
@@ -73,12 +74,16 @@ class TaskController extends \m\MBaseController
         $gid = Yii::$app->request->get('gid');
         $task = null;
         if ($gid){
-            $task = Task::find(['gid'=>$gid])->one();
+            $task = Task::find()->where(['gid'=>$gid])->one();
         }
         if (!$task){
             $this->render404();
         }
-        if ($task && !TaskApplicant::isApplied(Yii::$app->user->id, $task->id)){
+        $user_id = Yii::$app->user->id;
+        if (!Resume::find()->where(['user_id'=>$user_id])->exists()){
+            return $this->redirect('/resume/edit');
+        }
+        if ($task && !TaskApplicant::isApplied($user_id, $task->id)){
             $tc = new TaskApplicant;
             $tc->task_id = $task->id;
             $tc->user_id = Yii::$app->user->id;
@@ -92,13 +97,12 @@ class TaskController extends \m\MBaseController
         $gid = Yii::$app->request->get('gid');
         $task = null;
         if ($gid){
-            $task = Task::find(['gid'=>$gid])->with('address')->with('company')->one();
+            $task = Task::find()->where(['gid'=>$gid])
+                ->with('address')->with('company')->one();
         }
         if ($task){
             return $this->render('view', 
-                [
-                    'task'=>$task,
-                ]
+                [ 'task'=>$task, ]
             );
         } else {
             $this->render404("未知的信息");

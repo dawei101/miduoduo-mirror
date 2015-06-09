@@ -167,7 +167,7 @@ class UserController extends MBaseController
         $user = Yii::$app->user->identity;
         $model = new ResetPasswordForm($user);
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            $next = Yii::$app->request->get('next');
+            $next = urldecode(Yii::$app->request->get('next'));
             if (!empty($next)){
                 $this->redirect($next);
             }

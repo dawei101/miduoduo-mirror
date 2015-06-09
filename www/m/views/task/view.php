@@ -71,7 +71,7 @@ use common\models\TaskApplicant;
 <nav class="navbar navbar-default navbar-fixed-bottom nav-bg" role="navigation">
 <?php
     $applied = !Yii::$app->user->isGuest && TaskApplicant::isApplied(Yii::$app->user->id, $task->id);
-    $ended = $task->to_date < time();
+    $ended = $task->to_date<date('Y-m-d');
 ?>
   <button id="apply" style="width: 100%;" type="button" class="btn btn-primary btn-lg btn-block"><?= $applied?'已报名':($ended?'报名结束':'报名') ?></button>
   <div class="store-sc hidden" id="collect"><span class="glyphicon glyphicon-heart"></span><br>收藏</div>

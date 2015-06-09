@@ -34,6 +34,7 @@ use common\models\Address;
  */
 class Resume extends \common\BaseActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -71,6 +72,7 @@ class Resume extends \common\BaseActiveRecord
             ['origin', 'default', 'value'=>'self'],
             ['job_wishes', 'string', 'max'=>500],
             ['major', 'string', 'max'=>200],
+            ['gender', 'default', 'value'=>0],
         ];
     }
 

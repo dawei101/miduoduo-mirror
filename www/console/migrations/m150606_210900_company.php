@@ -9,7 +9,8 @@ class m150606_210900_company extends BaseMigration
     {
 
         $sqls = "
-CREATE TABLE IF NOT EXISTS `jz_company` (
+DROP table  if exists `jz_company`;
+CREATE TABLE `jz_company` (
   `id` INT NOT NULL,
   `name` VARCHAR(500) NOT NULL COMMENT '企业名',
   `avatar` VARCHAR(1000) NULL COMMENT 'Logo',
@@ -21,9 +22,7 @@ CREATE TABLE IF NOT EXISTS `jz_company` (
   `user_id` INT NOT NULL DEFAULT 0 COMMENT '用户',
   `address_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_p_company_jz_user1_idx` (`user_id` ASC),
-  INDEX `fk_p_company_jz_user2_idx` (`examined_by` ASC),
-  INDEX `fk_jz_company_jz_address1_idx` (`address_id` ASC)
+  INDEX `fk_p_company_jz_user1_idx` (`user_id` ASC)
 )
 ENGINE = InnoDB";
         return $this->execSqls($sqls);

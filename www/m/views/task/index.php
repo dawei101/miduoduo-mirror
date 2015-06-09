@@ -46,7 +46,9 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
   <div style="height:50px;"></div>
 
   <!--===========以上是固定在顶部的==============--> 
-<?php foreach ($tasks as $task){ ?>
+<?php foreach ($tasks as $task){ 
+
+?>
 <div class="panel panel-default zhiwei-list"> 
     <div class="border-bt">
        <a href="/task/view?gid=<?=$task->gid?>" class="list-group-item">

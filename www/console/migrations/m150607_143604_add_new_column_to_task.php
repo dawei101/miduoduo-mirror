@@ -10,6 +10,8 @@ class m150607_143604_add_new_column_to_task extends BaseMigration
         $sqls = "
             Alter table jz_resume add major varchar(500);
             Alter table jz_resume add job_wishes varchar(1000);
+            Alter table jz_task add district_id int;
+            alter table jz_task add company_id int;
             ";
         $this->execSqls($sqls);
 

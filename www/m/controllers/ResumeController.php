@@ -37,11 +37,13 @@ class ResumeController extends MBaseController
         $user = Yii::$app->user;
         $model = Resume::findOne(['user_id'=>$user->id]);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
         if (!$model){
             $model = new Resume();
+            $model->user_id = $user->id;
+            $model->phonenum = $user->identity->username;
+        }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
         $freetimes = Freetime::findAll(['user_id'=>$user->id]);
         $freetimes_dict = [];

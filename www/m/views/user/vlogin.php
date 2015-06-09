@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <input type="text" id="<?= Html::getInputId($model, 'code') ?>"
                   class="form-control" name="<?= Html::getInputName($model, 'code')?>">
             </div>
-            <p class="help-block help-block-error"></p>
+            <p class="help-block help-block-error"><?=$model->getFirstError('code')?></p>
           </div>
 <?php $this->beginBlock('js') ?>
 <script>
