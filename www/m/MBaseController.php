@@ -17,4 +17,12 @@ class MBaseController extends BaseController
         throw new HttpException(404, $msg);
     }
 
+    public function redirectWithSucceedMsg($to, $msg)
+    {
+        $view = Yii::getAlias('@m/views/common/success.php');
+        return $this->renderFile($view,[
+            'message'=>$msg,
+            'next'=>$to,
+        ]);
+    }
 }

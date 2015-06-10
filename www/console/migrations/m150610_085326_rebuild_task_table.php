@@ -10,8 +10,8 @@ class m150610_085326_rebuild_task_table extends BaseMigration
         $sqls = "
             ALTER TABLE `miduoduo`.`jz_task` 
             DROP COLUMN `address_id`,
-            ADD COLUMN `address` VARCHAR(500) NOT NULL AFTER `job_wishes`,
-            ADD COLUMN `company_name` VARCHAR(500) NOT NULL AFTER `address`,
+            ADD COLUMN `address` VARCHAR(500) NOT NULL,
+            ADD COLUMN `company_name` VARCHAR(500) NOT NULL,
             DROP INDEX `fk_jz_order_jz_address1_idx` ;
         ";
 

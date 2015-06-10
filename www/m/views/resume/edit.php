@@ -9,7 +9,7 @@ use yii\jui\DatePicker;
 <div class="form-list">
   <div class="jl-xq">
     <?= $form->field($model, 'name') ?>
-    <?= $form->field($model, 'birthdate')->textInput(['type'=>'date']) ?>
+    <?= ''//$form->field($model, 'birthdate')->textInput(['type'=>'date']) ?>
     <?= $form->field($model, 'college') ?>
     <?= $form->field($model, 'major') ?>
 
@@ -29,6 +29,7 @@ use yii\jui\DatePicker;
         </div>
         <div class="help-block"></div>
     </div>
+    <?= $form->field($model, 'job_wishes') ?>
   </div>
   <div class="jl-xq">
    <div class="jz-time form-group">

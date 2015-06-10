@@ -91,6 +91,7 @@ class Task extends \common\BaseActiveRecord
             [['from_time', 'to_time'], 'date', 'format' => 'H:i'],
             ['got_quantity', 'default', 'value'=>0],
             ['company_id', 'default', 'value'=>0],
+            ['status', 'default', 'value'=>0],
         ];
     }
 

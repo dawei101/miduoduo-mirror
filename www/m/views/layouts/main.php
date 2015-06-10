@@ -38,6 +38,9 @@ AppAsset::register($this);
     GB={};
     GB.is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
     GB.click_event = GB.is_mobile?'touchstart':'click';
+    $(function() {
+        FastClick.attach(document.body);
+    });
 </script>
 <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
 </body>

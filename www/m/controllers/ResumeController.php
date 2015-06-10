@@ -43,7 +43,8 @@ class ResumeController extends MBaseController
             $model->phonenum = $user->identity->username;
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirectWithSucceedMsg('/task',
+                '恭喜您信息提交成功，快去查看兼职职位吧');
         }
         $freetimes = Freetime::findAll(['user_id'=>$user->id]);
         $freetimes_dict = [];

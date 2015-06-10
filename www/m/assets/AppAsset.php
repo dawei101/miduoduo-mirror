@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'static/js/bootstrap.min.js',
+        'static/js/fastclick.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
