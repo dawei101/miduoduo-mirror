@@ -18,8 +18,9 @@ class TaskSearch extends Task
     public function rules()
     {
         return [
-            [['id', 'clearance_period', 'salary_unit', 'need_quantity', 'got_quantity', 'address_id', 'user_id', 'service_type_id', 'gender_requirement', 'degree_requirement', 'age_requirement', 'height_requirement', 'status', 'city_id'], 'integer'],
+            [['id', 'clearance_period', 'salary_unit', 'need_quantity', 'got_quantity', 'user_id', 'service_type_id', 'gender_requirement', 'degree_requirement', 'age_requirement', 'height_requirement', 'status', 'city_id'], 'integer'],
             [['title', 'salary_note', 'from_date', 'to_date', 'from_time', 'to_time', 'created_time', 'updated_time', 'detail', 'requirement'], 'safe'],
+
             [['salary'], 'number'],
         ];
     }
@@ -69,7 +70,7 @@ class TaskSearch extends Task
             'got_quantity' => $this->got_quantity,
             'created_time' => $this->created_time,
             'updated_time' => $this->updated_time,
-            'address_id' => $this->address_id,
+            'address' => $this->address,
             'user_id' => $this->user_id,
             'service_type_id' => $this->service_type_id,
             'gender_requirement' => $this->gender_requirement,

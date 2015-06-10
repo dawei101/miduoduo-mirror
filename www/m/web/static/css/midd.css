@@ -8,7 +8,7 @@ a.list-group-item:focus, a.list-group-item:hover {
 	text-decoration: none;
 	background-color: #fff
 }
-.help-block{margin:0;}
+.help-block{margin:0;padding-right: 15px;; font-size: 0.7em; float: right;}
 
 .alert-success{margin-bottom:0; background:none; border:none; color:#999;   padding: 3px 0 3px 10px;}
 .form-control {box-shadow:none;}

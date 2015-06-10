@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
+            'company_name',
             'clearance_period',
             'salary',
             'salary_unit',
@@ -44,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_time',
             'detail:ntext',
             'requirement:ntext',
-            'address_id',
+            'address',
             'user_id',
             'service_type_id',
             'gender_requirement',

@@ -7,10 +7,11 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginWithDynamicCodeForm */
 
-$this->title = $signuping?'注册':'验证码登陆';
+$this->title = $signuping?'使用手机号注册':'动态手机验证码登录';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
+    <div style='padding: 40px 0 10px 10px;color: #999;' > <?=$this->title?> </div>
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
         <div class="form-list">
           <?= $form->field($model, 'phonenum')->label('手机号')
@@ -24,8 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <p class="help-block help-block-error"><?=$model->getFirstError('code')?></p>
           </div>
-
-          <?= $form->field($model, 'invited_code')->label('邀请码') ?>
+          <?= $signuping?$form->field($model, 'invited_code')->label('邀请码'):'' ?>
 <?php $this->beginBlock('js') ?>
 <script>
     $(function(){
@@ -82,11 +82,4 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php ActiveForm::end(); ?>
 </div>
 
-<?php $this->beginBlock('css') ?>
-<style>
-body {
-    padding-top: 35%;
-}
 
-</style>
-<?php $this->endBlock('css') ?>

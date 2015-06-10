@@ -51,7 +51,7 @@ class TaskController extends \m\MBaseController
             $this->render404('未知的城市');
         }
 
-        $query = Task::find()->with('address');
+        $query = Task::find();
         $query = $query->where(['city_id'=>$city_id]);
         if (!empty($district)){
             $query = $query->where(['district_id'=>$district]);
@@ -98,7 +98,7 @@ class TaskController extends \m\MBaseController
         $task = null;
         if ($gid){
             $task = Task::find()->where(['gid'=>$gid])
-                ->with('address')->with('company')->one();
+                ->with('city')->with('district')->one();
         }
         if ($task){
             return $this->render('view', 

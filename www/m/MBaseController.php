@@ -16,4 +16,9 @@ class MBaseController extends BaseController
     {
         throw new HttpException(404, $msg);
     }
+
+    public function redirectWithSucceedMsg($to, $msg)
+    {
+
+    }
 }

@@ -27,33 +27,25 @@ use common\models\TaskApplicant;
     </div>
   </div>
   <div class="border-bt">
-    <table class="table">
-      <tr>
-        <td class=""><div class="panel-heading">
-            <h3 class="panel-title">工作地点</h3>
-          </div>
-          <div class="panel-body">
-            <p><?=$task->address->address ?></p>
-          </div></td>
-        <td class="map-jl col-lg-1">
-          <div class="ki"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></div>
-          <p style="display:none;">距我5km</p>
-        </td>
-      </tr>
-    </table>
+    <div class="panel-heading">
+      <h3 class="panel-title">工作地点</h3>
+    </div>
+    <div class="panel-body">
+      <p><?=$task->address ?></p>
+      <div class="ki hidden"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></div>
+      <p style="display:none;">距我5km</p>
+    </div>
   </div>
 </div>
 
 <div class="panel panel-default">
-  <div class="table-box">
-    <table class="table">
-      <tr>
-        <td class="col-l"><h3 class="panel-title">公司</h3></td>
-        <td><div class="panel-body">
-            <p><?=$task->company->name?></p>
-          </div></td>
-      </tr>
-    </table>
+  <div class="border-bt">
+    <div class="panel-heading">
+      <h3 class="panel-title">公司名称</h3>
+    </div>
+    <div class="panel-body">
+      <p><?=$task->company_name?></p>
+    </div>
   </div>
 </div>
 

@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
 
 use common\models\ServiceType;
+use common\models\District;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Task */
@@ -20,6 +21,7 @@ use common\models\ServiceType;
     <?= $form->field($model, 'clearance_period')->dropDownList(
         $model::$CLEARANCE_PERIODS
     ) ?>
+    <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'salary')->textInput(['maxlength' => true]) ?>
 
@@ -50,20 +52,35 @@ use common\models\ServiceType;
 
     <?= $form->field($model, 'need_quantity')->textInput() ?>
 
-    <?= $form->field($model, 'got_quantity')->textInput() ?>
-
-    <?= $form->field($model, 'created_time')->textInput() ?>
-
-    <?= $form->field($model, 'updated_time')->textInput() ?>
-
     <?= $form->field($model, 'detail')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'requirement')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'address_id')->textInput() ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?php 
 
+        $city_map = [];
+        foreach(District::getCities() as $city){
+            $city_map[$city->id] = $city->name;
+        }
+        $model->city_id = 3;
+
+        $district_map = [];
+        foreach(District::getDistricts($model->city_id) as $district){
+            $district_map[$district->id] = $district->name;
+        }
+    ?>
+        
+    <?= $form->field($model, 'city_id')->dropDownList(
+        $city_map
+    ) ?>
+
+
+    <?= $form->field($model, 'district_id')->dropDownList(
+        $district_map
+    ) ?>
+
+    <?= $form->field($model, 'address')->textInput() ?>
     <?php
         $service_types = [];
         foreach (ServiceType::find()->all() as $t){
@@ -73,18 +90,6 @@ use common\models\ServiceType;
     <?= $form->field($model, 'service_type_id')->dropDownList(
         $service_types
     ) ?>
-
-    <?= $form->field($model, 'gender_requirement')->textInput() ?>
-
-    <?= $form->field($model, 'degree_requirement')->textInput() ?>
-
-    <?= $form->field($model, 'age_requirement')->textInput() ?>
-
-    <?= $form->field($model, 'height_requirement')->textInput() ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'city_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

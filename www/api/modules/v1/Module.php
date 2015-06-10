@@ -29,7 +29,7 @@ class Module extends \yii\base\Module
 
         $controller = Yii::$app->controller->id;
         if ($controller!='auth'){
-            // 留出auth controller 登陆
+            // 留出auth controller 登录
             $behaviors['authenticator'] = [
                 'class' => CompositeAuth::className(),
                 'authMethods' => [

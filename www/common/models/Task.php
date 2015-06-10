@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use common\models\Address;
 use common\models\Company;
+use common\models\District;
 
 /**
  * This is the model class for table "{{%task}}".
@@ -18,6 +19,7 @@ use common\models\Company;
  * @property string $salary_note
  * @property string $from_date
  * @property int $company_id
+ * @property string $company_name
  * @property string $to_date
  * @property string $from_time
  * @property string $to_time
@@ -27,7 +29,7 @@ use common\models\Company;
  * @property string $updated_time
  * @property string $detail
  * @property string $requirement
- * @property integer $address_id
+ * @property string $address
  * @property integer $user_id
  * @property integer $service_type_id
  * @property integer $gender_requirement
@@ -69,11 +71,11 @@ class Task extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['id', 'salary', 'salary_unit', 'from_date', 'to_date',
-                'need_quantity', 'detail', 'address_id', 'user_id',
-                'service_type_id', 'city_id'], 'required'],
+            [['salary', 'salary_unit', 'from_date', 'to_date',
+                'need_quantity', 'detail', 'address', 'company_name',
+                'service_type_id', 'city_id', 'title'], 'required'],
             [['id', 'clearance_period', 'salary_unit', 'need_quantity',
-                'got_quantity', 'address_id', 'user_id', 'service_type_id',
+                'got_quantity', 'user_id', 'service_type_id',
                 'gender_requirement', 'degree_requirement', 'age_requirement',
                 'height_requirement', 'status', 'city_id', 'district_id',
                 'company_id'], 'integer'],
@@ -82,9 +84,13 @@ class Task extends \common\BaseActiveRecord
             [['from_date', 'to_date', 'from_time', 'to_time',
                 'created_time', 'updated_time'], 'safe'],
             [['gid'], 'string', 'max' => 1000],
-            [['title'], 'string', 'max' => 500],
+            [['title', 'company_name', 'address'], 'string', 'max' => 500],
             ['created_time', 'default', 'value'=>time(), 'on'=>'insert'],
             ['updated_time', 'default', 'value'=>time(), 'on'=>'update'],
+            [['from_date', 'to_date'], 'date', 'format' => 'yyyy-M-d'],
+            [['from_time', 'to_time'], 'date', 'format' => 'H:i'],
+            ['got_quantity', 'default', 'value'=>0],
+            ['company_id', 'default', 'value'=>0],
         ];
     }
 
@@ -111,9 +117,10 @@ class Task extends \common\BaseActiveRecord
             'updated_time' => '修改时间',
             'detail' => '工作内容',
             'requirement' => '其他要求',
-            'address_id' => '地址',
+            'address' => '地址',
             'user_id' => '发布人',
             'company_id' => '公司',
+            'company_name' => '公司名',
             'service_type_id' => '服务类型',
             'gender_requirement' => '性别',
             'degree_requirement' => '学历',
@@ -125,15 +132,23 @@ class Task extends \common\BaseActiveRecord
         ];
     }
 
-   public function beforeSave($insert) 
-   { 
-       if ($this->isNewRecord){ 
-           $user_id = Yii::$app->user->id; 
-           $this->created_by = $user_id; 
-           $this->gid = time() . mt_rand(100, 999) . $user_id; 
-       } 
-       return parent::beforeSave($insert); 
-   }
+    
+    public function beforeValidate()
+    {
+        if ($this->isNewRecord){ 
+
+            $user_id = Yii::$app->user->id; 
+            $this->user_id = $user_id; 
+            $this->gid = time() . mt_rand(100, 999) . $user_id; 
+        }
+
+        return parent::beforeValidate();
+    }
+
+    public function beforeSave($insert) 
+    { 
+        return parent::beforeSave($insert); 
+    }
 
     /**
      * @inheritdoc
@@ -144,13 +159,18 @@ class Task extends \common\BaseActiveRecord
         return new TaskQuery(get_called_class());
     }
 
-    public function getAddress()
-    {
-        return $this->hasOne(Address::className(), ['id' => 'address_id']);
-    }
-
     public function getCompany()
     {
         return $this->hasOne(Company::className(), ['id' => 'company_id']);
+    }
+
+    public function getCity()
+    {
+        return $this->hasOne(District::className(), ['id' => 'city_id']);
+    }
+
+    public function getDistrict()
+    {
+        return $this->hasOne(District::className(), ['id' => 'district_id']);
     }
 }

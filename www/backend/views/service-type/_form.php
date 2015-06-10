@@ -13,9 +13,6 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'modified_by')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'status')->dropdownList(
         $model::$STATUS_LABELS
     ) ?>

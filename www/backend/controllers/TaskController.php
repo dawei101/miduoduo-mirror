@@ -14,17 +14,14 @@ use yii\filters\VerbFilter;
  */
 class TaskController extends BBaseController
 {
+
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
+        $bhvs = parent::behaviors();
+        return $bhvs;
     }
+
+
 
     /**
      * Lists all Task models.

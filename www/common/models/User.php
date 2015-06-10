@@ -68,7 +68,7 @@ class User extends BaseActiveRecord implements IdentityInterface
     public static function createUserWithPhonenum($phonenum, $invited_by=0){
         $user = new User;
         $user->username = $phonenum;
-        if ($invited_byi && static::findIdentity($invited_by)){
+        if ($invited_by && static::findIdentity($invited_by)){
             $user->invited_by = $invited_by;
         }
         $user->setPassword(rand(10000000, 99999999));

@@ -9,6 +9,7 @@ use yii\bootstrap\ActiveForm;
 $this->title = '设置密码';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+    <div style='padding: 40px 0 10px 10px;color: #999;' > <?=$this->title?> </div>
     <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
 <div class="form-list">
     <?= $form->field($model, 'password')->passwordInput() ?>
@@ -19,11 +20,3 @@ $this->params['breadcrumbs'][] = $this->title;
 </p>
 <?php ActiveForm::end(); ?>
 
-<?php $this->beginBlock('css') ?>
-<style>
-body {
-    padding-top: 35%;
-}
-
-</style>
-<?php $this->endBlock('css') ?>

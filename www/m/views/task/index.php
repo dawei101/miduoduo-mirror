@@ -70,7 +70,7 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
         </p>
         <div class="te-x">
           <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-            <?=$task->address->city?>-<?=$task->address->address?>
+            <?=$task->city->name?>-<?=$task->district->name?>-<?=$task->address?>
           </p>
           <span class="label label-default train hidden">距我5km</span></div>
       </div>

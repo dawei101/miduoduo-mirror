@@ -65,4 +65,14 @@ class District extends \yii\db\ActiveRecord
     {
         return new DistrictQuery(get_called_class());
     }
+
+    public static function getCities()
+    {
+        return static::find()->where(['level'=>'city'])->all();
+    }
+    public static function getDistricts($city_id)
+    {
+        return static::find()->where(['parent_id'=>$city_id])->all();
+    }
+
 }
