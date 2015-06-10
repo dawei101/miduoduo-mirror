@@ -3,6 +3,14 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
 
+$this->title = '编辑简历';
+$this->params['breadcrumbs'][] = $this->title;
+
+$this->nav_left_link = 'javascript:window.history.back()';
+$this->nav_right_link = '/';
+$this->nav_right_title = '首页';
+
+
 ?>
 <?php $form = ActiveForm::begin(); ?>
 <div class="alert alert-success" role="alert">填写基本资料，红包马上到碗里！</div>
@@ -30,10 +38,8 @@ use yii\jui\DatePicker;
         <div class="help-block"></div>
     </div>
     <?= $form->field($model, 'job_wishes') ?>
-  </div>
-  <div class="jl-xq">
-   <div class="jz-time form-group">
-    <label class="control-label">可兼职时间</label>
+   <div class="form-group">
+    <label>可兼职时间</label>
       <table class="table table-bordered tab-jz">
          <thead>
             <tr>
