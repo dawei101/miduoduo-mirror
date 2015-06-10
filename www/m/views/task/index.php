@@ -54,7 +54,6 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
   <div class="panel panel-default zhiwei-list"> 
     <div class="border-bt">
         <div class="panel-heading">
-            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
             <h3 class="panel-title"><?=$task->title ?></h3>
         </div>
       <div class="panel-body list-bt">

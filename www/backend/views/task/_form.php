@@ -22,6 +22,9 @@ use common\models\District;
         $model::$CLEARANCE_PERIODS
     ) ?>
     <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'company_introduction')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'contact') ?>
+    <?= $form->field($model, 'contact_phonenum') ?>
 
     <?= $form->field($model, 'salary')->textInput(['maxlength' => true]) ?>
 

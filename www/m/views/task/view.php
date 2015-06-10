@@ -8,9 +8,9 @@ use common\models\TaskApplicant;
     <div class="panel-heading">
     <h2><?= $task->title ?></h2>
     </div>
-    <div class="panel-body">
+    <div class="panel-body list-bt">
         <p>
-            <span class="label label-default">￥<?= $task->salary ?><i>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></i></span>
+            <span class="label label-default">￥<?= $task->salary ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span>
         </p>
     </div>
 </div>
@@ -47,6 +47,24 @@ use common\models\TaskApplicant;
       <p><?=$task->company_name?></p>
     </div>
   </div>
+  <div class="border-bt">
+    <div class="panel-heading">
+      <h3 class="panel-title">联系人</h3>
+    </div>
+    <div class="panel-body">
+      <p><?=$task->contact?></p>
+    </div>
+  </div>
+  <div class="border-bt">
+    <div class="panel-heading">
+      <h3 class="panel-title">联系电话</h3>
+    </div>
+    <div class="panel-body">
+      <p><?=$task->contact_phonenum?></p>
+    </div>
+  </div>
+
+
 </div>
 
 <div class="panel panel-default">

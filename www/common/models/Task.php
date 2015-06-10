@@ -20,6 +20,9 @@ use common\models\District;
  * @property string $from_date
  * @property int $company_id
  * @property string $company_name
+ * @property string $company_introduction;
+ * @property string $contact;
+ * @property string $contact_phonenum;
  * @property string $to_date
  * @property string $from_time
  * @property string $to_time
@@ -92,6 +95,8 @@ class Task extends \common\BaseActiveRecord
             ['got_quantity', 'default', 'value'=>0],
             ['company_id', 'default', 'value'=>0],
             ['status', 'default', 'value'=>0],
+            [['contact', 'contact_phonenum'], 'required'],
+
         ];
     }
 
@@ -130,6 +135,10 @@ class Task extends \common\BaseActiveRecord
             'status' => '状态',
             'city_id' => '城市',
             'district_id' => '区域',
+
+            'company_introduction'=>'公司介绍',
+            'contact'=>'联系人',
+            'contact_phonenum'=>'联系手机',
         ];
     }
 
