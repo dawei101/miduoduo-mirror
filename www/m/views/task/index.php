@@ -1,6 +1,7 @@
 <?php
 use common\models\District;
 use common\models\ServiceType;
+use yii\widgets\LinkPager;
 
 use yii\helpers\Url;
 
@@ -78,6 +79,12 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
   </div>
 </a>
 <?php } ?>
+<div class="text-center" style="width: 100%;" >
+<?=LinkPager::widget(['pagination' => $pages,
+    'maxButtonCount'=>0,
+    'lastPageLabel'=>'末页', 'nextPageLabel'=>'下一页',
+    'prevPageLabel'=>'上一页', 'firstPageLabel'=>'首页'])?>
+</div>
 <?php $this->beginBlock('js') ?>
 <script type="text/javascript">
   $(function(){

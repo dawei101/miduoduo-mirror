@@ -61,7 +61,7 @@ class SiteController extends MBaseController
         $city_id = 3;
         $query = Task::find()->with('city')->with('district');
         $query = $query->where(['city_id'=>$city_id])
-            ->addOrderBy(['to_date'=>SORT_DESC])
+            ->addOrderBy(['id'=>SORT_DESC])
             ->limit(5);
             ;
         $city = District::findOne($city_id);

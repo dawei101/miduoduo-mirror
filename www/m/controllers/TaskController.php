@@ -11,6 +11,7 @@ use common\models\Task;
 use common\models\Resume;
 use common\models\District;
 use common\models\TaskApplicant;
+use yii\data\Pagination;
 
 
 class TaskController extends \m\MBaseController
@@ -59,11 +60,18 @@ class TaskController extends \m\MBaseController
         if (!empty($service_type)){
             $query = $query->where(['service_type_id'=>$service_type]);
         }
-        $query->addOrderBy(['to_date'=>SORT_DESC]);
+        $query->addOrderBy(['id'=>SORT_DESC]);
+        $countQuery = clone $query;
+        $pages =  new Pagination(['pageSize'=>10, 'totalCount' => $countQuery->count()]);
+        $tasks = $query->offset($pages->offset)
+            ->limit($pages->limit)->all();
+
+
         $city = District::findOne($city_id);
         return $this->render('index', 
-            ['tasks'=>$query->all(),
+            ['tasks'=>$tasks,
              'city'=>$city,
+             'pages'=> $pages,
              'current_district' => 
                 empty($district)?$city:District::findOne($district),
             ]);

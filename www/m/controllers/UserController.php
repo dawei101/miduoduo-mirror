@@ -169,7 +169,7 @@ class UserController extends MBaseController
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             $next = Yii::$app->request->get('next');
             if (!empty($next)){
-                $this->redirect($next);
+                return $this->redirect($next);
             }
             return $this->goBack();
         }

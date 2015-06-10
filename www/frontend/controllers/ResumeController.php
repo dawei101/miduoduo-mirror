@@ -22,9 +22,13 @@ class ResumeController extends FBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['edit', 'edit01', 'freetimes'],
+                        'actions' => ['edit', 'freetimes'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['edit01'],
+                        'allow' => true,
                     ],
                 ],
             ],
@@ -34,7 +38,7 @@ class ResumeController extends FBaseController
 
     public function actionEdit01()
     {
-        return $this->redirect(Yii::$app->params['baseurl.m'].'/resume/edit');
+        return $this->redirect(Yii::$app->params['baseurl.m']);
         $user = Yii::$app->user;
         $resume = Resume::findOne(['user_id'=>$user->id]);
         if (!$resume){
