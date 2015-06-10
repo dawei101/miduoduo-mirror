@@ -1,7 +1,10 @@
 <?php
-use Yii;
 /* @var $this yii\web\View */
-$this->title = '米多多首页';
+$this->title = '首页';
+
+$this->params['nav_right'] = null;
+// nav_right nav_left 结构 ['title'=>'首页', 'link'=>'/'];
+$this->params['nav_left'] = null;
 
 ?>
 
@@ -12,7 +15,7 @@ $this->title = '米多多首页';
         不　　仅　　仅　　是　　兼　　职
         </p>
     </div>
-    <?php if (Yii::$app->user->isGuest){ ?>
+    <?php if (\Yii::$app->user->isGuest){ ?>
     <a href="/user/login" class="btn btn-green btn-lg btn-block">登录</a>
     <a href="/user/vsignup" class="btn btn-white btn-lg btn-block">注册</a>
     <?php }?>

@@ -9,6 +9,11 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = '欢迎登录';
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->nav_left_link = 'javascript:window.history.back()';
+$this->nav_right_link = '/user/vsignup';
+$this->nav_right_title = '注册';
+
 ?>
 <div class="">
 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>

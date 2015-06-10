@@ -24,7 +24,7 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => '/user/vsignup'
+            'loginUrl' => '/user/login'
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -47,6 +47,9 @@ return [
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
             'enablePrettyUrl' => true,
+        ],
+        'view' => [
+            'class' => 'm\MView',
         ],
     ],
     'params' => $params,

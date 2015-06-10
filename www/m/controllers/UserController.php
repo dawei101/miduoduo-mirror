@@ -11,6 +11,7 @@ use yii\helpers\Url;
 use common\Utils;
 use common\models\LoginWithDynamicCodeForm;
 use common\models\LoginForm;
+use common\models\User;
 use common\sms\SmsSenderFactory;
 
 use m\MBaseController;
@@ -33,7 +34,7 @@ class UserController extends MBaseController
                 'only' => ['logout', 'signup', 'vcode'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'vcode', 'vsignup', 'vlogin', 'login', 'setPassword'],
+                        'actions' => ['signup', 'vcode', 'vsignup', 'vlogin', 'login', 'setPassword', 'vcodeForSignup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -69,6 +70,19 @@ class UserController extends MBaseController
         ];
     }
 
+    public function actionVcodeForSignup()
+    {
+        $phonenum = Yii::$app->request->get('phonenum');
+        if (Utils::isPhonenum($phonenum) && User::findByUsername($phonenum)){
+            return $this->renderJson([
+                'result'=> false,
+                'msg'=> "该手机号已注册，您可以直接登录."
+            ]);
+        }
+        return $this->actionVcode();
+    }
+
+
     public function actionVcode()
     {
         $phonenum = Yii::$app->request->get('phonenum');
@@ -97,7 +111,9 @@ class UserController extends MBaseController
             return $this->goHome();
         }
 
-        $model = new LoginWithDynamicCodeForm();
+        $model = new LoginWithDynamicCodeForm([
+            'signup_only' => $signuping
+        ]);
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             if ($signuping){
                 $url = Url::to([

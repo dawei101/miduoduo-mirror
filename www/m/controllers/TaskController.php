@@ -10,6 +10,7 @@ use yii\helpers\Url;
 use common\models\Task;
 use common\models\Resume;
 use common\models\District;
+use common\models\ServiceType;
 use common\models\TaskApplicant;
 use yii\data\Pagination;
 
@@ -62,7 +63,7 @@ class TaskController extends \m\MBaseController
         }
         $query->addOrderBy(['id'=>SORT_DESC]);
         $countQuery = clone $query;
-        $pages =  new Pagination(['pageSize'=>10, 'totalCount' => $countQuery->count()]);
+        $pages =  new Pagination(['pageSize'=>3, 'totalCount' => $countQuery->count()]);
         $tasks = $query->offset($pages->offset)
             ->limit($pages->limit)->all();
 
@@ -74,6 +75,7 @@ class TaskController extends \m\MBaseController
              'pages'=> $pages,
              'current_district' => 
                 empty($district)?$city:District::findOne($district),
+             'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
             ]);
     }
 
