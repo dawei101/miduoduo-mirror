@@ -58,7 +58,7 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
         </div>
       <div class="panel-body list-bt">
         <p> <span class="label label-default">
-            ￥<?= $task->salary ?><i>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></i>
+            ￥<?= $task->salary ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?>
            </span> </p>
       </div>
     </div>

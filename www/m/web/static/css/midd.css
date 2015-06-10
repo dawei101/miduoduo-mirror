@@ -68,11 +68,11 @@ a.list-group-item:focus, a.list-group-item:hover {
     border-top:none; padding:0}
 .table{margin:0;}
 .table .col-l{width:80px;}
-.panel{margin-bottom:0.5em; /*padding-bottom: 10px;*/}
+.panel{margin-bottom:0.8em; /*padding-bottom: 10px;*/}
 .panel .table .queren{min-width:100px; background:url(../img/juxin.png) right no-repeat; text-align:center;font-size:1.3em; color:#fff; line-height:105px;}
-.panel h2{font-size:1.7em; font-weight:bold; color:#333;}
+.panel h2{font-size:1.8em; font-weight:bold; color:#444;}
 .pan-left{min-width:100%;}
-.panel-default > .panel-heading {background:#fff;border:none;color: #333; }
+.panel-default > .panel-heading {background:#fff;border:none;padding: 1px 15px;}
 .panel-title{font-size:1.3em; color:#5e7061}
 .panel-body p{font-size:1.2em; color:#999;/*margin-top: 5px;*/}
 .border-bt{border-bottom:1px #f3f3f3 solid; padding: 5px 0 0;}
@@ -182,6 +182,13 @@ a.list-group-item:focus, a.list-group-item:hover {
 .select dd li{width:100%; line-height:50px;border-bottom:1px #eee solid; padding-left:15px;}
 .select dd li a{color:#333; display:block;width:100%; background:#fff; text-decoration:none;}
 .select .inverted-triangle{border-color: #5a4a33 transparent transparent;border-style: solid dashed dashed; border-width: 6px 6px 0;display: inline-block;height: 0;margin-left: 5px;vertical-align: middle;width: 0; float:right; margin-top:20px; margin-right:20px}
+
+.midd-logo-top{width:100%; background:#fed732; padding:60px 0;}
+.midd-logo-top .logo img{display:block; margin:0 auto; width:180px; height:90px;}
+.btn-green{background:#ffa005; color:#fff; width:60%; border-radius:4px; margin:20px auto;}
+.btn-white{background:#fff; color:#5a4a33; width:60%; border-radius:4px; margin:20px auto 0;}
+.list-group-item { padding: 0;  border: 0 solid #ddd;}
+.recommend{padding:2px 15px; font-size:1em;  border-bottom:1px #f3f3f3 solid; color:#999}
 
 
 @media screen and (max-width:479px){
