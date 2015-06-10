@@ -77,7 +77,7 @@ class LoginWithDynamicCodeForm extends Model
         }
         if (!$this->_user){
             $user = User::createUserWithPhonenum($this->phonenum,
-                $invited_by=$this->invited_by);
+                $invited_by=$this->invited_code);
             $this->_user = $user;
         }
         return $this->_user;
