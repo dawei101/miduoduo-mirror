@@ -49,7 +49,7 @@ class User extends BaseActiveRecord implements IdentityInterface
     {
         return [
             [['username'], 'required'],
-            [['status'], 'integer'],
+            [['status', 'invited_by'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
             [['username', 'name'], 'string', 'max' => 200],
             [['password_hash', 'password_reset_token', 'email', 'access_token'], 'string', 'max' => 500],
@@ -59,14 +59,18 @@ class User extends BaseActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => array_values(static::$STATUSES)],
             ['username', 'match', 'pattern'=>'/^1[345789]\d{9}$/',
                 'message'=>'手机号不正确，目前仅支持中国大陆手机号.'],
-            ['is_staff', 'default', 'value'=>false]
+            ['is_staff', 'default', 'value'=>false],
+            ['invited_by', 'default', 'value'=>0],
         ];
     }
 
 
-    public static function createUserWithPhonenum($phonenum){
+    public static function createUserWithPhonenum($phonenum, $invited_by=0){
         $user = new User;
         $user->username = $phonenum;
+        if ($invited_byi && static::findIdentity($invited_by)){
+            $user->invited_by = $invited_by;
+        }
         $user->setPassword(rand(10000000, 99999999));
         if ($user->save()){
             return $user;
@@ -92,6 +96,7 @@ class User extends BaseActiveRecord implements IdentityInterface
             'created_time' => '创建时间',
             'updated_time' => '更新时间',
             'name' => '姓名',
+            'invited_by' => '邀请码',
         ];
     }
 

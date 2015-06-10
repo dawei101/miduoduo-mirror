@@ -49,14 +49,13 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
 <?php foreach ($tasks as $task){ 
 
 ?>
-<div class="panel panel-default zhiwei-list"> 
+<a href="/task/view?gid=<?=$task->gid?>" class="list-group-item">
+  <div class="panel panel-default zhiwei-list"> 
     <div class="border-bt">
-       <a href="/task/view?gid=<?=$task->gid?>" class="list-group-item">
         <div class="panel-heading">
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
             <h3 class="panel-title"><?=$task->title ?></h3>
         </div>
-      </a>
       <div class="panel-body list-bt">
         <p> <span class="label label-default">
             ￥<?= $task->salary ?><i>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></i>
@@ -65,7 +64,10 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
     </div>
     <div class="border-bt">
       <div class="panel-body lnk">
-        <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>5月24日13:00</p>
+        <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+            <?=$task->from_date ?>至<?=$task->to_date?>
+            <?=$task->from_time ?> - <?=$task->to_time ?>
+        </p>
         <div class="te-x">
           <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
             <?=$task->address->city?>-<?=$task->address->address?>
@@ -74,6 +76,7 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
       </div>
     </div>
   </div>
+</a>
 <?php } ?>
 <?php $this->beginBlock('js') ?>
 <script type="text/javascript">

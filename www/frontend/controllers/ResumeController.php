@@ -34,6 +34,7 @@ class ResumeController extends FBaseController
 
     public function actionEdit01()
     {
+        return $this->redirect(Yii::$app->params['baseurl.m'].'/resume/edit');
         $user = Yii::$app->user;
         $resume = Resume::findOne(['user_id'=>$user->id]);
         if (!$resume){

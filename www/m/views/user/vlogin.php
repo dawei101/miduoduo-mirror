@@ -24,6 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <p class="help-block help-block-error"><?=$model->getFirstError('code')?></p>
           </div>
+
+          <?= $form->field($model, 'invited_code')->label('邀请码') ?>
 <?php $this->beginBlock('js') ?>
 <script>
     $(function(){
