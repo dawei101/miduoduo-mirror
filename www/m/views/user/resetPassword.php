@@ -8,6 +8,11 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = '设置密码';
 $this->params['breadcrumbs'][] = $this->title;
+
+
+$this->nav_left_link = 'javascript:window.history.back()';
+$this->nav_right_link = '/';
+$this->nav_right_title = '首页';
 ?>
     <div style='padding: 40px 0 10px 10px;color: #999;' > <?=$this->title?> </div>
     <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>

@@ -9,6 +9,11 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = $signuping?'使用手机号注册':'动态手机验证码登录';
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->nav_left_link = 'javascript:window.history.back()';
+$this->nav_right_link = '/user/login';
+$this->nav_right_title = '登录';
+
 ?>
 <div class="site-login">
     <div style='padding: 40px 0 10px 10px;color: #999;' > <?=$this->title?> </div>
@@ -53,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             }
             flag = true;
             setTimeout(function(){ flag = false; }, 100);
-            $.ajax({url: '/user/vcode',
+            $.ajax({url: "<?=$signuping?'/user/vcode-for-signup':'/user/vcode'?>",
                 'method': 'GET',
                 'data': {'phonenum': pipt.val()}})
             .done(function(text){

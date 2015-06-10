@@ -5,17 +5,23 @@ use yii\widgets\LinkPager;
 
 use yii\helpers\Url;
 
+$this->title = ($current_service_type?$current_service_type->name:'') . '兼职列表';
+
 
 $districts = District::find()->where(['parent_id'=>$city->id])->all();
 $service_types = ServiceType::find()->where(['status'=>0])->all();
+
+
+$this->nav_left_link = 'javascript:window.history.back()';
+$this->nav_right_link = '/';
+$this->nav_right_title = '首页';
 /* @var $this yii\web\View */
 ?>
 
-<div class="container">
-
-  <nav class="navbar-fixed-top top-nav" role="navigation">
+  <nav class="navbar-fixed-top top-nav" style="top: 50px;" role="navigation">
     <dl class="select">
-        <dt style=" white-space: nowrap;"><?=$current_district->name?></dt><span class="inverted-triangle"></span>
+        <dt style=" white-space: nowrap;"><?=$current_district->name?> <span class="caret"></span>
+</dt><span class="inverted-triangle"></span>
         <dd> 
           <ul>
           <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>''])?>">全城</a></li>
@@ -26,9 +32,10 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
         </dd>
      </dl>
     <dl class="select">
-        <dt>类别</dt><span class="inverted-triangle"></span>
+        <dt><?=$current_service_type?$current_service_type->name:'全部'?><span class="caret"></span> </dt>
         <dd> 
           <ul>
+    <li><a href="<?=Url::current(['service_type'=>''])?>">全部</a></li>
 <?php foreach($service_types as $st) { ?>
     <li><a href="<?=Url::current(['service_type'=>$st->id])?>"><?=$st->name?></a></li>
 <?php } ?>
@@ -36,7 +43,7 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
         </dd>
      </dl>
      <dl class="select">
-        <dt>排序</dt><span class="inverted-triangle"></span>
+        <dt>排序 <span class="caret"></span> </dt>
         <dd> 
           <ul>
             <li><a href="#">默认</a></li>
@@ -83,7 +90,6 @@ $service_types = ServiceType::find()->where(['status'=>0])->all();
     'maxButtonCount'=>0,
     'lastPageLabel'=>'末页', 'nextPageLabel'=>'下一页',
     'prevPageLabel'=>'上一页', 'firstPageLabel'=>'首页'])?>
-</div>
 <?php $this->beginBlock('js') ?>
 <script type="text/javascript">
   $(function(){

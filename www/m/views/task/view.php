@@ -3,6 +3,12 @@
 use common\models\TaskApplicant;
 
 
+$this->title = '职位详情';
+
+$this->nav_left_link = 'javascript:window.history.back()';
+$this->nav_right_link = '/';
+$this->nav_right_title = '首页';
+
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">

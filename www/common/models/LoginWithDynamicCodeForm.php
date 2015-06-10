@@ -19,6 +19,8 @@ class LoginWithDynamicCodeForm extends Model
     public $invited_code;
     public $rememberMe = true;
 
+    public $signup_only = false;
+
     private $_user = false;
 
 
@@ -40,6 +42,11 @@ class LoginWithDynamicCodeForm extends Model
                     }
                 }
             }],
+            ['phonenum', function($attr, $params){
+                if ($this->signup_only && $this->getUser()){
+                    $this->addError($attr, '手机号注册过，您可已直接登陆.');
+                }
+            }],
         ];
     }
 
@@ -49,7 +56,7 @@ class LoginWithDynamicCodeForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            return Yii::$app->user->login($this->getUser($auto_create=true), $this->rememberMe ? 3600 * 24 * 30 : 0);
         } else {
             return false;
         }
@@ -60,12 +67,12 @@ class LoginWithDynamicCodeForm extends Model
      *
      * @return User|null
      */
-    public function getUser()
+    public function getUser($atuo_create=false)
     {
         if ($this->_user === false) {
             $this->_user = User::findByUsername($this->phonenum);
         }
-        if (!$this->_user){
+        if (!$this->_user && $auto_create){
             $user = User::createUserWithPhonenum($this->phonenum,
                 $invited_by=$this->invited_code);
             $this->_user = $user;

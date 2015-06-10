@@ -9,7 +9,6 @@ use m\widgets\Alert;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -31,7 +30,27 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 <div class="container">
-<?= $content ?>
+    <nav class="navbar-fixed-top top-nav" role="navigation">
+        <div class="nav-head text-center">
+         <?php if ($this->nav_left_link){ ?>
+             <a style="height: 50px; line-height: 50px; min-width:60px;" class="text-left pull-left" href="<?=$this->nav_left_link?>">
+                <span class="glyphicon glyphicon-chevron-left"> </span>
+                <?=$this->nav_left_title?>
+            </a>
+         <?php } else {?>
+            <a style="height: 50px; line-height: 50px; min-width:60px;" class="text-left pull-left"> </a>
+         <?php }?>
+         <span><?=$this->title?></span>
+         <?php if ($this->nav_right_link){ ?>
+             <a style="height: 50px; line-height: 50px; min-width:60px;" class="text-right pull-right" href="<?=$this->nav_right_link?>">
+                <?=$this->nav_right_title?></a>
+         <?php } else {?>
+            <a style="height: 50px; line-height: 50px; min-width:60px;" class="text-right pull-right">&nbsp;</a>
+         <?php }?>
+    </nav>
+    <nav class="top-nav"></nav>
+
+    <?= $content ?>
 </div>
 <?php $this->endBody() ?>
 <script>
