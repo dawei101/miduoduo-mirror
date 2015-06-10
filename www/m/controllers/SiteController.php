@@ -15,6 +15,10 @@ use m\models\ResetPasswordForm;
 use m\models\SignupForm;
 use m\models\ContactForm;
 
+use common\models\Task;
+use common\models\Resume;
+use common\models\District;
+
 /**
  * Site controller
  */
@@ -53,6 +57,19 @@ class SiteController extends MBaseController
 
     public function actionIndex()
     {
+        //只有北京
+        $city_id = 3;
+        $query = Task::find()->with('address');
+        $query = $query->where(['city_id'=>$city_id])
+            ->addOrderBy(['to_date'=>SORT_DESC])
+            ->limit(5);
+            ;
+        $city = District::findOne($city_id);
+        return $this->render('index', 
+            ['tasks'=>$query->all(),
+             'city'=>$city,
+            ]);
+
         return $this->render('index');
     }
 

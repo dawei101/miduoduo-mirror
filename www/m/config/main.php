@@ -19,7 +19,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'm\controllers',
-    'defaultRoute'=>'task/index',
+    'defaultRoute'=>'site/',
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
