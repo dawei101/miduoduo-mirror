@@ -63,7 +63,7 @@ class TaskController extends \m\MBaseController
         }
         $query->addOrderBy(['id'=>SORT_DESC]);
         $countQuery = clone $query;
-        $pages =  new Pagination(['pageSize'=>3, 'totalCount' => $countQuery->count()]);
+        $pages =  new Pagination(['pageSize'=>Yii::$app->params['pageSize'], 'totalCount' => $countQuery->count()]);
         $tasks = $query->offset($pages->offset)
             ->limit($pages->limit)->all();
 

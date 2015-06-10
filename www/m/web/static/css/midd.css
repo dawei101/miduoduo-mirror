@@ -12,16 +12,16 @@ a.list-group-item:focus, a.list-group-item:hover {
 
 .alert-success{margin-bottom:0; background:none; border:none; color:#999;   padding: 3px 0 3px 10px;}
 .form-control {box-shadow:none;}
-.form-group label {color: #999; font-size: 1.7rem; padding-left: 1rem;}
+.form-group label {color: #999;}
 .form-list .form-group-right{ border-radius: 0;float: right; margin-right: 10px;width: 73%;}
 .form-list .form-group-right input{float:none; width:100%}
 .form-list .form-group-right p{font-size:1em; color:#f00; text-align:right;}
 /*=====数据输入====*/
 .form-list{background: #fff;margin:0 auto 0.5em;border-bottom:#d0d0d0 solid 1px;font-size: 1.3em; }
-.form-list .form-group{border-radius:0;overflow: hidden;padding: 8px 0 8px 10px; border-bottom:1px #f3f3f3 solid; margin-bottom:0;}
+.form-list .form-group{border-radius:0;overflow: hidden;padding: 8px 15px 8px 15px; border-bottom:1px #f3f3f3 solid; margin-bottom:0;}
 .form-list  label {font-weight: normal; margin-top:7px;}
 .form-list .form-control{box-shadow:none;}
-.form-list  input {border:none;width:73%; float:right; margin-right:10px;border-radius:0px;}
+.form-list  input {border:none;width:70%; float:right; margin-right:10px;border-radius:0px;}
 /*=====出生年月日====*/
 .form-list .riqi{background:none; border:1px #fff solid; padding:0 0 3px 10px; color:#999;}
 /*=====单选效果=====*/
