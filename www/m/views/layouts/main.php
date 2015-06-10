@@ -43,6 +43,15 @@ AppAsset::register($this);
     });
 </script>
 <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?71fce0b5ae66cac6b8ba9fc072998791";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>
