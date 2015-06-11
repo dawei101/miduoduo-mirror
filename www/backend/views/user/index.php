@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
                 return $roles;
             }, 'label'=> '角色' ],
+            'invited_by',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
