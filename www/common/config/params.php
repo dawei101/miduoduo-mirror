@@ -1,11 +1,11 @@
 <?php
 return [
-    'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'support@example.com',
+    'adminEmail' => 'admin@chongdd.com',
+    'supportEmail' => 'support@chongdd.com',
     'user.passwordResetTokenExpire' => 3600,
 
-    'baseurl.api' => 'http://api.chongdd.cn',
-    'baseurl.m' => 'http://m.chongdd.cn',
-    'baseurl.backend' => 'http://dashboard.chongdd.cn',
-    'baseurl.frontend' => 'http://www.chongdd.cn',
+    'baseurl.api' => 'http://api.miduoduo.cn',
+    'baseurl.m' => 'http://m.miduoduo.cn',
+    'baseurl.backend' => 'http://dashboard.miduoduo.cn',
+    'baseurl.frontend' => 'http://www.miduoduo.cn',
 ];
