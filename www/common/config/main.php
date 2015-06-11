@@ -11,9 +11,20 @@ return [
             'password' => '123123',
             'charset' => 'utf8',
         ],
+
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
+        'assetManager' => [
+            'appendTimestamp' => true,
+        ],
+       'session' => [
+            'class' => 'yii\web\DbSession',
+            'db' => 'db',
+            'sessionTable' => '{{%session}}',
+            'timeout' => 3600 * 24 * 30,
+            'name' => 'sid',
+       ],
     ],
     'aliases' => [
         'api' => $root_path . '/api',

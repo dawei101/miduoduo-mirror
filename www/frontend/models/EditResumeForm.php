@@ -13,6 +13,7 @@ class EditResumeForm extends Model
     public $name;
     public $gender;
     public $grade;
+    public $origin;
 
     private $_resume;
 
@@ -29,6 +30,11 @@ class EditResumeForm extends Model
         }
     }
 
+    public function getIsNewRecord()
+    {
+        return empty($this->_resume) || $this->_resume->isNewRecord;
+    }
+
     /**
      * @inheritdoc
      */
@@ -38,8 +44,8 @@ class EditResumeForm extends Model
             ['name', 'filter', 'filter' => 'trim'],
             ['name', 'required', 'message'=>'有名有姓，顶天立地!'],
             ['name', 'string', 'min' => 2, 'max' => 255, 'message'=>'姓名需要大于2位数, 小于...255位就好!'],
-            ['gender', 'in', 'range'=>[0, 1, 2]],
-            ['grade', 'in', 'range' => [1, 2, 3, 4, 5]],
+            ['gender', 'default', 'value'=>0],
+            ['grade', 'default', 'value'=>0],
         ];
     }
 
@@ -49,6 +55,7 @@ class EditResumeForm extends Model
             'name' => '姓名',
             'gender' => '性别',
             'grade' => '年级',
+            'origin' => '推荐码',
         ];
     }
 
@@ -58,6 +65,9 @@ class EditResumeForm extends Model
         $this->_resume->name = $this->name;
         $this->_resume->grade = $this->grade;
         $this->_resume->gender = $this->gender;
+        if (!empty($this->origin)){
+            $this->_resume->origin = $this->origin;
+        }
         return $this->_resume->save();
     }
 }

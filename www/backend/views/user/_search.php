@@ -25,6 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email') ?>
 
+
     <?php // echo $form->field($model, 'auth_key') ?>
 
     <?php // echo $form->field($model, 'status') ?>

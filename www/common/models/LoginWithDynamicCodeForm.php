@@ -16,6 +16,7 @@ class LoginWithDynamicCodeForm extends Model
 {
     public $phonenum;
     public $code;
+    public $invited_code;
     public $rememberMe = true;
 
     private $_user = false;
@@ -31,24 +32,15 @@ class LoginWithDynamicCodeForm extends Model
             ['rememberMe', 'boolean'],
             ['rememberMe', 'default', 'value'=>false],
             ['code', 'match', 'pattern'=>'/^\d{6}$/', 'message'=>'验证码不正确.'],
-            ['code', 'validateCode']
+            ['invited_code', 'integer'],
+            ['code', function ($attribute, $params) {
+                if (!$this->hasErrors()) {
+                    if(!BaseSmsSender::validateVerifyCode($this->phonenum, $this->code)){
+                        $this->addError($attribute, '手机号或验证码不正确.');
+                    }
+                }
+            }],
         ];
-    }
-
-    /**
-     * Validates the verify code.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
-    public function validateCode($attribute, $params)
-    {
-
-        if (!$this->hasErrors()) {
-            if(!BaseSmsSender::validateVerifyCode($this->phonenum, $this->code)){
-                $this->addError($attribute, '手机号或验证码不正确.');
-            }
-        }
     }
 
     /**
@@ -74,7 +66,8 @@ class LoginWithDynamicCodeForm extends Model
             $this->_user = User::findByUsername($this->phonenum);
         }
         if (!$this->_user){
-            $user = User::createUserWithPhonenum($this->phonenum);
+            $user = User::createUserWithPhonenum($this->phonenum,
+                $invited_by=$this->invited_code);
             $this->_user = $user;
         }
         return $this->_user;

@@ -10,6 +10,11 @@ use yii\db\Query;
 class BaseActiveController extends ActiveController
 {
 
+    public$serializer=[
+        'class'=>'yii\rest\Serializer',
+        'collectionEnvelope'=>'items',
+    ];
+
     static $QUERY_OPERATIONS = [
         "=",
         "!=",

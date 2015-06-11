@@ -12,31 +12,18 @@ use Yii;
 class ResetPasswordForm extends Model
 {
     public $password;
+    public $password2;
 
     /**
      * @var \common\models\User
      */
     private $_user;
 
-
-    /**
-     * Creates a form model given a token.
-     *
-     * @param  string                          $token
-     * @param  array                           $config name-value pairs that will be used to initialize the object properties
-     * @throws \yii\base\InvalidParamException if token is empty or not valid
-     */
-    public function __construct($token, $config = [])
-    {
-        if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException('Password reset token cannot be blank.');
-        }
-        $this->_user = User::findByPasswordResetToken($token);
-        if (!$this->_user) {
-            throw new InvalidParamException('Wrong password reset token.');
-        }
+    public function __construct($user, $config=[]){
         parent::__construct($config);
+        $this->_user = $user;
     }
+
 
     /**
      * @inheritdoc
@@ -44,8 +31,13 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            [['password'], 'required'],
+            [['password'], 'string', 'min' => 6],
+            ['password2', function($attr, $params){
+                if ($this->password!=$this->password2){
+                    $this->addError($attr, '两次密码输入不一致');
+                }
+            }],
         ];
     }
 
@@ -58,8 +50,15 @@ class ResetPasswordForm extends Model
     {
         $user = $this->_user;
         $user->setPassword($this->password);
-        $user->removePasswordResetToken();
 
         return $user->save(false);
+    }
+
+
+    public function attributeLabels()
+    {
+        return ['password'=>'密码',
+            'password2'=>'重新输入'
+        ];
     }
 }

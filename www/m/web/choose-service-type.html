@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+<meta http-equiv="pragma" content="no-cache">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="pragma" content="no-cache">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<title>米多多-基本信息填写</title>
+<link href="/static/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="/static/css/midd.css" type="text/css" rel="stylesheet" />
+<script src="/static/js/jquery.min.js" type="text/jscript" ></script>
+<script src="/static/js/bootstrap.min.js"></script>
+</head>
+<style></style>
+<body>
+<div class="alert alert-success" role="alert">请选择您擅长的兼职类型（可多选）！</div>
+<div class="container">
+<style>
+.checkbox {
+    cursor: pointer;
+    position: relative;
+    width: 1.8em;
+    height: 1.8em;
+    margin: 0px;
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+    font-size: 12pt;
+    color: #FFF;
+    -webkit-font-smoothing: antialiased;
+    border: 1px #d0d0d0 solid; 
+}
+
+.selected .checkbox {
+    border-color: green;
+}
+.selected .checkbox:after {
+    content: '✓';
+    color: green;
+    font-size: 1.3em;
+    margin-left: -0.6em;
+}
+.btn-warning {
+    background-color: #fc3!important;
+}
+.fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+</style>
+<ul class="job-list">
+    <li data-id="8" class="check-service-type selected">
+      <span class="pull-left">App推广 </span>
+      <div class="checkbox pull-right">
+          <i>✓</i>
+      </div>
+    </li>
+    <li class="check-service-type selected">
+      <span class="pull-left">App推广 </span>
+      <div class="checkbox pull-right">
+          <i>✓</i>
+      </div>
+    </li>
+
+    <li class="check-service-type selected">
+      <span class="pull-left">App推广 </span>
+      <div class="checkbox pull-right">
+          <i>✓</i>
+      </div>
+    </li>
+
+</ul>
+
+<button type="button" class="btn btn-warning fixed-bottom btn-lg">返回</button>
+
+<script>
+    $(function(){
+        $(".check-service-type").bind('click', function(){
+                $(this).toggleClass('selected');
+            })
+    });
+</script>
+</div>
+</body>
+</html>
+

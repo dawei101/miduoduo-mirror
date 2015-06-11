@@ -6,13 +6,14 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 
 use common\Utils;
 use common\models\LoginWithDynamicCodeForm;
+use common\models\LoginForm;
 use common\sms\SmsSenderFactory;
 
 use m\MBaseController;
-use m\models\PasswordResetRequestForm;
 use m\models\ResetPasswordForm;
 use m\models\SignupForm;
 
@@ -32,7 +33,7 @@ class UserController extends MBaseController
                 'only' => ['logout', 'signup', 'vcode'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'vcode'],
+                        'actions' => ['signup', 'vcode', 'vsignup', 'vlogin', 'login', 'setPassword'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -46,7 +47,7 @@ class UserController extends MBaseController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post', 'get'],
                 ],
             ],
         ];
@@ -88,7 +89,36 @@ class UserController extends MBaseController
                 'result'=> false,
                 'msg'=> "验证码发送失败, 请稍后重试。"
         ]);
+    }
 
+    public function actionVlogin($signuping=false)
+    {
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginWithDynamicCodeForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            if ($signuping){
+                $url = Url::to([
+                        '/user/reset-password',
+                        'next' => '/resume/edit'
+                    ]);
+                return $this->redirect($url);
+            } else {
+                return $this->redirect('/user/reset-password');
+            }
+        } else {
+            return $this->render('vlogin', [
+                'model' => $model,
+                'signuping' => $signuping,
+            ]);
+        }
+    }
+
+    public function actionVsignup()
+    {
+        return $this->actionVlogin($signuping=true);
     }
 
     public function actionLogin()
@@ -97,7 +127,7 @@ class UserController extends MBaseController
             return $this->goHome();
         }
 
-        $model = new LoginWithDynamicCodeForm();
+        $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
@@ -105,6 +135,8 @@ class UserController extends MBaseController
                 'model' => $model,
             ]);
         }
+
+
     }
 
     public function actionLogout()
@@ -130,38 +162,17 @@ class UserController extends MBaseController
         ]);
     }
 
-    public function actionRequestPasswordReset()
+    public function actionResetPassword()
     {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->getSession()->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
-            } else {
-                Yii::$app->getSession()->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
-            }
-        }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionResetPassword($token)
-    {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
+        $user = Yii::$app->user->identity;
+        $model = new ResetPasswordForm($user);
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->getSession()->setFlash('success', 'New password was saved.');
-
-            return $this->goHome();
+            $next = Yii::$app->request->get('next');
+            if (!empty($next)){
+                return $this->redirect($next);
+            }
+            return $this->goBack();
         }
-
         return $this->render('resetPassword', [
             'model' => $model,
         ]);

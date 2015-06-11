@@ -51,10 +51,6 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'grade')->dropDownList(Resume::$GRADES) ?>
 
-    <?= $form->field($model, 'home')->textInput() ?>
-
-    <?= $form->field($model, 'workplace')->textInput() ?>
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '创建' : '修改', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

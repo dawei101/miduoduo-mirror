@@ -14,6 +14,4 @@ class BaseActiveRecord extends ActiveRecord
     ];
     public static $STATUS_LABELS = [0=>'正常',
         10=>'已删除'];
-
-
 }

@@ -37,7 +37,7 @@ AppAsset::register($this);
                 ['label' => '首页', 'url' => ['/site/index']],
             ];
             if (Yii::$app->user->isGuest) {
-                $menuItems[] = ['label' => '登陆', 'url' => ['/site/login']];
+                $menuItems[] = ['label' => '登录', 'url' => ['/site/login']];
             } else {
                 $menuItems[] = [
                     'label' => '退出(' . Yii::$app->user->identity->username . ')',
@@ -58,10 +58,9 @@ AppAsset::register($this);
                   <ul class="nav nav-sidebar" id="sidebar">
                     <li><a href="/">Overview <span class="sr-only">(current)</span></a></li>
                     <li><a href="/user">账号管理</a></li>
-
                     <li><a href="/resume">人才库</a></li>
-                    <li><a href="/offline-order">线下订单</a></li>
-                    <li><a href="#">订单委派</a></li>
+                    <li><a href="/task">任务订单</a></li>
+                    <li><a href="/service-type">任务类型</a></li>
                   </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

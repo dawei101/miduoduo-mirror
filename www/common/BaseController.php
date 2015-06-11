@@ -33,4 +33,5 @@ class BaseController extends Controller
         ";
         Yii::$app->end();
     }
+
 }

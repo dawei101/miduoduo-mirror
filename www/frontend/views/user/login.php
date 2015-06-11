@@ -7,7 +7,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginWithDynamicCodeForm */
 
-$this->title = '验证码登陆';
+$this->title = '验证码登录';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">

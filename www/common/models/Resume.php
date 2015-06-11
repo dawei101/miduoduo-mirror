@@ -28,9 +28,13 @@ use common\models\Address;
  * @property integer $user_id
  * @property integer $home
  * @property integer $workplace
+ * @property varchar(200) $origin
+ * @property varchar(200) $major
+ * @property varchar(1000) job_willes
  */
 class Resume extends \common\BaseActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -52,6 +56,7 @@ class Resume extends \common\BaseActiveRecord
             [['name', 'phonenum'], 'required'],
             [['gender', 'height', 'is_student', 'grade', 'status', 'user_id', 'home', 'workplace'], 'integer'],
             [['birthdate', 'created_time', 'updated_time'], 'safe'],
+            [['birthdate'], 'date', 'format' => 'yyyy-M-d'],
             [['name', 'degree', 'college'], 'string', 'max' => 500],
             [['nation'], 'string', 'max' => 255],
             [['avatar'], 'string', 'max' => 2048],
@@ -64,6 +69,10 @@ class Resume extends \common\BaseActiveRecord
             [['home', 'workplace'], 'default', 'value'=>0],
             ['phonenum', 'checkPhonenum'],
             ['status', 'default', 'value'=>0],
+            ['origin', 'default', 'value'=>'self'],
+            ['job_wishes', 'string', 'max'=>500],
+            ['major', 'string', 'max'=>200],
+            ['gender', 'default', 'value'=>0],
         ];
     }
 
@@ -90,6 +99,7 @@ class Resume extends \common\BaseActiveRecord
             'height' => '身高(cm)',
             'is_student' => '是学生',
             'college' => '学校',
+            'major' => '专业',
             'avatar' => '头像',
             'gov_id' => '身份证号',
             'grade' => '年级',
@@ -99,6 +109,7 @@ class Resume extends \common\BaseActiveRecord
             'user_id' => '用户',
             'home' => '住址',
             'workplace' => '工作地址',
+            'job_wishes' => '工作意愿',
         ];
     }
 

@@ -56,7 +56,7 @@ class AuthController extends BaseActiveController
                     $user->save();
                     return $this->renderJson([
                         'success'=> true,
-                        'message'=> '登陆成功',
+                        'message'=> '登录成功',
                         'result'=> [
                             'username'=> $username,
                             'password'=> $password,
@@ -106,7 +106,7 @@ class AuthController extends BaseActiveController
             $user->save();
             return $this->renderJson([
                 'success'=> true,
-                'message'=> '登陆成功',
+                'message'=> '登录成功',
                 'result'=> [
                     'username'=> $phonenum,
                     'password'=> '',
