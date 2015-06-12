@@ -26,8 +26,8 @@
 filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
 filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);
 	background-repeat: repeat-x;
-	border-color: #dbdbdb;
-	border-color: #ccc
+	border-color: #00b564;
+	border-color: #00b564
 }
 .btn-default:focus, .btn-default:hover {
 	background-color: #e0e0e0;
@@ -35,7 +35,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
 .btn-default.active, .btn-default:active {
 	background-color: #e0e0e0;
-	border-color: #dbdbdb
+	border-color: #00b564
 }
 .btn-default.disabled, .btn-default:disabled, .btn-default[disabled] {
 	background-color: #e0e0e0;
