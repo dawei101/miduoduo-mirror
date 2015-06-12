@@ -53,7 +53,8 @@ class SiteController extends FBaseController
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $this->redirect(\Yii::$app->params['baseurl.m']);
+        //return $this->render('index');
     }
 
     public function actionContact()
