@@ -7,11 +7,14 @@ use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
+use yii\data\Pagination;
 
 use common\Utils;
 use common\models\LoginWithDynamicCodeForm;
 use common\models\LoginForm;
 use common\models\User;
+use common\models\TaskApplicant;
+use common\models\Resume;
 use common\sms\SmsSenderFactory;
 
 use m\MBaseController;
@@ -31,7 +34,6 @@ class UserController extends MBaseController
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'vcode'],
                 'rules' => [
                     [
                         'actions' => ['signup', 'vcode', 'vsignup', 'vlogin', 'login', 'setPassword', 'vcodeForSignup'],
@@ -39,7 +41,7 @@ class UserController extends MBaseController
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'index', 'tasks'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -68,6 +70,40 @@ class UserController extends MBaseController
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+
+    public function actionIndex()
+    {
+        return $this->render('index', [
+            'resume' => Resume::find()->where(['user_id'=>Yii::$app->user->id])->one(),
+        ]);
+    }
+
+    public function actionTasks()
+    {
+        $query = TaskApplicant::find()
+            ->with('task')
+            ->where(['user_id'=>Yii::$app->user->id]);
+
+        $query->addOrderBy(['id'=>SORT_DESC]);
+        $countQuery = clone $query;
+        $pages =  new Pagination(['pageSize'=>10, 'totalCount' => $countQuery->count()]);
+
+        $task_applicants = $query->offset($pages->offset)
+            ->limit($pages->limit)->all();
+
+        $tasks = [];
+
+        foreach($task_applicants as $task_applicant){
+            $tasks[] = $task_applicant->task;
+        }
+
+        return $this->render('tasks', [
+            'tasks' => $tasks,
+            'pages' => $pages
+        ]);
+
     }
 
     public function actionVcodeForSignup()

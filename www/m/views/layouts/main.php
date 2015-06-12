@@ -49,7 +49,6 @@ AppAsset::register($this);
          <?php }?>
     </nav>
     <nav class="top-nav"></nav>
-
     <?= $content ?>
 </div>
 <?php $this->endBody() ?>
