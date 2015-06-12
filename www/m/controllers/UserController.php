@@ -36,7 +36,7 @@ class UserController extends MBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['signup', 'vcode', 'vsignup', 'vlogin', 'login', 'setPassword', 'vcodeForSignup'],
+                        'actions' => ['signup', 'vcode', 'vsignup', 'vlogin', 'login', 'set-password', 'vcode-for-signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -108,7 +108,7 @@ class UserController extends MBaseController
 
     public function actionVcodeForSignup()
     {
-        $phonenum = Yii::$app->request->get('phonenum');
+        $phonenum = Yii::$app->request->post('phonenum');
         if (Utils::isPhonenum($phonenum) && User::findByUsername($phonenum)){
             return $this->renderJson([
                 'result'=> false,
@@ -121,7 +121,7 @@ class UserController extends MBaseController
 
     public function actionVcode()
     {
-        $phonenum = Yii::$app->request->get('phonenum');
+        $phonenum = Yii::$app->request->post('phonenum');
         if (!Utils::isPhonenum($phonenum)){
             return $this->renderJson([
                 'result'=> false,
