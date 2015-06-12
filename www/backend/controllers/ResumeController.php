@@ -47,11 +47,19 @@ class ResumeController extends BBaseController
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id=null, $user_id=null)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if ($id) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+
+        if ($user_id) {
+            return $this->render('view', [
+                'model' => Resume::find()->where(['user_id'=>$user_id])->one(),
+            ]);
+        }
     }
 
     /**
