@@ -15,10 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Task Applicant', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -26,11 +22,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+             ['attribute'=> 'task_id',
+                 'format'=>'raw',
+                 'value'=>function($model){
+                    return $model->task->title . "<a target='_blank' class='pull-right' href='/task/view?id=". $model->task_id ."'>查看任务</a>";
+                },
+                'label'=>'任务'
+             ],
+             ['attribute'=> 'user_id',
+                 'format'=>'raw',
+                 'value'=>function($model){
+                    return $model->user->username . "<a target='_blank' class='pull-right' href='/resume?user_id=". $model->user_id ."'>查看简历</a>";
+                 },
+                 'label'=>'用户'
+            ],
             'created_time',
-            'user_id',
-            'task_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
+
         ],
     ]); ?>
 
