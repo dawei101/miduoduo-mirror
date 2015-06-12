@@ -19,8 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
              ['attribute'=> 'task_id',
                  'format'=>'raw',
@@ -32,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
              ['attribute'=> 'user_id',
                  'format'=>'raw',
                  'value'=>function($model){
-                    return $model->user->username . "<a target='_blank' class='pull-right' href='/resume?user_id=". $model->user_id ."'>查看简历</a>";
+                    return $model->user->username . "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>查看简历</a>";
                  },
                  'label'=>'用户'
             ],
