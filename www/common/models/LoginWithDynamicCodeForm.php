@@ -67,7 +67,7 @@ class LoginWithDynamicCodeForm extends Model
      *
      * @return User|null
      */
-    public function getUser($atuo_create=false)
+    public function getUser($auto_create=false)
     {
         if ($this->_user === false) {
             $this->_user = User::findByUsername($this->phonenum);
