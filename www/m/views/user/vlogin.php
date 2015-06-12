@@ -59,8 +59,8 @@ $this->nav_right_title = '登录';
             flag = true;
             setTimeout(function(){ flag = false; }, 100);
             $.ajax({url: "<?=$signuping?'/user/vcode-for-signup':'/user/vcode'?>",
-                'method': 'GET',
-                'data': {'phonenum': pipt.val()}})
+                'method': 'POST',
+                'data': {'phonenum': pipt.val(), 't': $.now()}})
             .done(function(text){
                 data =$.parseJSON(text);
                 if (data['result']){

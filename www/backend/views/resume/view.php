@@ -33,24 +33,44 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            [
+                'attribute'=> 'user',
+                'label'=> '账号',
+                'format'=>'raw',
+                'value'=>"<a target='_blank' href='/user/view?id=".$model->user_id."'>点击查看</a>"
+            ],
             'name',
             'phonenum',
             'gender',
+            [
+                'attribute'=> 'gender',
+                'label'=> '性别',
+                'value'=>$model::$GENDERS[$model->gender]
+            ],
+            [   'attribute' => 'is_student',
+                'value'=>$model->is_student?'是':'否',
+            ],
+            [   'attribute' => 'grade',
+                'value'=>$model::$GRADES[$model->grade]
+            ],
+            'birthdate',
+ 
+ 
             'birthdate',
             'degree',
             'nation',
             'height',
-            'is_student',
             'college',
             'avatar',
             'gov_id',
-            'grade',
             'created_time',
             'updated_time',
-            'status',
-            'user_id',
+            'birthdate',
             'home',
             'workplace',
+            [   'attribute' => 'status',
+                'value'=>$model::$STATUS_LABELS[$model->status]
+            ],
         ],
     ]) ?>
 
