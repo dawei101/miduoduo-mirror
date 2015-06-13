@@ -19,6 +19,7 @@ $this->params['nav_left'] = null;
     <a href="/user/login" class="btn btn-green btn-lg btn-block">登录</a>
     <a href="/user/vsignup" class="btn btn-white btn-lg btn-block">注册</a>
     <?php }?>
+    <p class="text-center"> <a style="background:#f23f28;color: #fff;" href="/hongbao.html" class="btn btn-white btn-lg btn-block">抢红包</a> </p>
 </div>
 <div id="content"> 
   <div class="recommend"><caption>热门推荐</caption></div>

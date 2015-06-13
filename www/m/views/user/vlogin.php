@@ -31,6 +31,17 @@ $this->nav_right_title = '登录';
             <p class="help-block help-block-error"><?=$model->getFirstError('code')?></p>
           </div>
           <?= $signuping?$form->field($model, 'invited_code')->label('邀请码'):'' ?>
+
+                </div>
+        </div>
+        <p class="block-btn">
+            <?= Html::submitButton('下一步', ['class' => 'btn btn-primary btn-lg btn-block', 'name' => 'login-button']) ?>
+        </p>
+
+            <?php ActiveForm::end(); ?>
+</div>
+
+
 <?php $this->beginBlock('js') ?>
 <script>
     $(function(){
@@ -78,13 +89,3 @@ $this->nav_right_title = '登录';
     });
 </script>
 <?php $this->endBlock('js') ?>
-                </div>
-        </div>
-
-        <p class="block-btn">
-            <?= Html::submitButton('下一步', ['class' => 'btn btn-primary btn-lg btn-block', 'name' => 'login-button']) ?>
-        </p>
-            <?php ActiveForm::end(); ?>
-</div>
-
-

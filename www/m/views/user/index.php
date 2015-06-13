@@ -12,7 +12,7 @@ $this->nav_right_title = '首页';
    </div>
   <div class="list-lis">
         <a href="/resume/edit" class="list-group-item"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>我的简历</a>
-        <a href="/user/tasks" class="list-group-item"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>我的兼职</a>
+        <a href="/user/tasks" class="list-group-item"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>已报名兼职</a>
   </div>
   <div class="list-lis">
         <a href="mailto:<?=\Yii::$app->params['supportEmail']?>" class="list-group-item">联系我们： <?= \Yii::$app->params['supportEmail']?> </a>
