@@ -1,10 +1,17 @@
 <?php
-$params = array_merge(
-    require(__DIR__ . '/../../common/config/params.php'),
-    require(__DIR__ . '/../../common/config/params-local.php'),
-    require(__DIR__ . '/params.php'),
-    require(__DIR__ . '/params-local.php')
-);
+$param_files = 
+    [__DIR__ . '/../../common/config/params.php',
+     __DIR__ . '/../../common/config/params-local.php',
+     __DIR__ . '/params.php',
+     __DIR__ . '/params-local.php'];
+
+$params = [];
+
+foreach ($param_files as $f){
+    if (file_exists($f)){
+        $params = array_merge($params, require($f));
+    }
+}
 
 return [
     'id' => 'app-console',
