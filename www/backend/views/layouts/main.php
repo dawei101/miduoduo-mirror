@@ -55,7 +55,7 @@ AppAsset::register($this);
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
-                  <ul class="nav nav-sidebar" id="sidebar">
+                  <ul class="nav nav-sidebar">
                     <li><a href="/">Overview <span class="sr-only">(current)</span></a></li>
                     <li><a href="/user">账号管理</a></li>
                     <li><a href="/resume">人才库</a></li>
@@ -63,6 +63,12 @@ AppAsset::register($this);
                     <li><a href="/task">任务</a></li>
                     <li><a href="/task-applicant">任务报名单</a></li>
                   </ul>
+                  <ul class="nav nav-sidebar">
+                    <li><a href="/support/report-bug">提交bug
+                        <span class="glyphicon glyphicon-flag pull-right" style="color:red;"></span>
+                        </a></li>
+                  </ul>
+
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <?= $content ?>

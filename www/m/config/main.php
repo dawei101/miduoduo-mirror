@@ -1,5 +1,4 @@
 <?php
-
 $param_files = 
     [__DIR__ . '/../../common/config/params.php',
      __DIR__ . '/../../common/config/params-local.php',
@@ -10,7 +9,7 @@ $params = [];
 
 foreach ($param_files as $f){
     if (file_exists($f)){
-        $params = array_merge(require($f));
+        $params = array_merge($params, require($f));
     }
 }
 

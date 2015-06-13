@@ -11,7 +11,18 @@ return [
             'password' => '123123',
             'charset' => 'utf8',
         ],
-
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@common/mail',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.exmail.qq.com',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+                'username' => 'support@chongdd.com',
+                'password' => 'chongdd123',
+                'port' => '465', // Port 25 is a very common port too
+                'encryption' => 'ssl', // It is often used, check your provider or mail server specs
+            ],
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
