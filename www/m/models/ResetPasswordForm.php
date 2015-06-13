@@ -31,7 +31,7 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
-            [['password'], 'required'],
+            [['password', 'password2'], 'required'],
             [['password'], 'string', 'min' => 6],
             ['password2', function($attr, $params){
                 if ($this->password!=$this->password2){

@@ -36,12 +36,11 @@ class UserController extends MBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['signup', 'vcode', 'vsignup', 'vlogin', 'login', 'set-password', 'vcode-for-signup'],
+                        'actions' => ['signup', 'vcode', 'vsignup', 'vlogin', 'login', 'vcode-for-signup'],
                         'allow' => true,
-                        'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index', 'tasks'],
+                        'actions' => ['logout', 'index', 'tasks', 'set-password', 'reset-password', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -228,5 +227,14 @@ class UserController extends MBaseController
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    
+    public function actionDelete()
+    {
+        $user_id = Yii::$app->user->id;
+        TaskApplicant::deleteAll(['user_id'=>$user_id]);
+        User::deleteAll(['id'=>$user_id]);
+        return $this->redirect('/');
     }
 }
