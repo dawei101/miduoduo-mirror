@@ -14,7 +14,7 @@ class BaseController extends Controller
         Yii::$app->end();
     }
 
-    public function redirectHtml($to)
+    public function redirectHtml($to, $msg='')
     {
         echo "
         <!DOCTYPE HTML>
@@ -27,9 +27,12 @@ class BaseController extends Controller
                 <title>跳转</title>
             </head>
             <body>
+                <p >
                 如果没有跳转，请<a href='$to'>点击这里</a>
+                </p>
+                <p>". $msg ."</p>
             </body>
-        </html>  
+        </html>
         ";
         Yii::$app->end();
     }
