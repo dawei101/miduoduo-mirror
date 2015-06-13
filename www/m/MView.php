@@ -12,5 +12,4 @@ class MView extends \yii\web\View
     public $nav_right_link = null;
     public $nav_right_title = '';
 
-
 }
