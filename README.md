@@ -3,16 +3,15 @@
 
 用到的工具与开发环境
 -------------------------------
+##[Ubuntu14.04](http://www.ubuntu.com/server)
 
-#Ubuntu14.04(http://www.ubuntu.com/server)
+##[php5.5.9](http://php.net/)
 
-#php5.5.9(http://php.net/)
+##[Mysql5.6.19](https://www.mysql.com/)
 
-#Mysql5.6.19(https://www.mysql.com/)
+##[composer](https://getcomposer.org/)
 
-#composer(https://getcomposer.org/)
-
-#Yii2(http://www.yiiframework.com/doc-2.0/)
+##[Yii2](http://www.yiiframework.com/doc-2.0/)
 
 ##(Yii2 经典模板)https://github.com/yiisoft/yii2-app-advanced
 
@@ -20,15 +19,15 @@
 [![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-advanced/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
 [![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
 
-#bootstrap(http://getbootstrap.com/css/)
+##[bootstrap](http://getbootstrap.com/css/)
 项目中bootstrap在pc端，和手机m端最初版本用了很多。
 
-#jQuery(https://jquery.com/)
+##[jQuery](https://jquery.com/)
 
 
 Git
 -------------------------------
-#git 版本控制器与Github(https://github.com/)
+##[git 版本控制器与Github](https://github.com/)
 
 
 代码结构
