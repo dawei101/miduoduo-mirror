@@ -31,5 +31,5 @@ return [
         'm' => $root_path . '/m'
     ],
     'language'=>'zh-CN',
-    'timeZone' => 'Asia/Shanghai.',
+    'timeZone' => 'Asia/Shanghai',
 ];
