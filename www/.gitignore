@@ -1,3 +1,5 @@
+*-local.php
+
 composer.lock
 
 # yii console command
