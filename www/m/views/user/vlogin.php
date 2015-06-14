@@ -39,6 +39,12 @@ $this->nav_right_title = '登录';
         </p>
 
             <?php ActiveForm::end(); ?>
+
+        <p class="text-right" style="padding-right: 15px; ">
+            <a href="/user/vlogin">找回密码</a>
+            &nbsp; &nbsp; &nbsp; &nbsp;
+            <a href="/user/vlogin">手机验证码登录</a>
+        </p>
 </div>
 
 

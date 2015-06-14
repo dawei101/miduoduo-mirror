@@ -146,16 +146,17 @@ class Task extends \common\BaseActiveRecord
     
     public function beforeValidate()
     {
-        if ($this->isNewRecord && __NAMESPACE__.'\Task' == __CLASS__){ 
-            $user_id = Yii::$app->user->id; 
-            $this->user_id = $user_id; 
-            $this->gid = time() . mt_rand(100, 999) . $user_id; 
-        }
         return parent::beforeValidate();
     }
 
     public function beforeSave($insert) 
-    { 
+    {
+        if ($this->isNewRecord){ 
+            $user_id = Yii::$app->user->id; 
+            $this->user_id = $user_id; 
+            $this->gid = time() . mt_rand(100, 999) . $user_id; 
+        }
+
         return parent::beforeSave($insert); 
     }
 
