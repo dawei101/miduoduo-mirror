@@ -95,8 +95,9 @@ class AuthController extends BaseActiveController
 
     public function actionVlogin()
     {
-        $phonenum = Yii::$app->request->post('username');
+        $phonenum = Yii::$app->request->post('phonenum');
         $code = Yii::$app->request->post('code');
+
         if(BaseSmsSender::validateVerifyCode($phonenum, $code)){
             $user = User::findByUsername($phonenum);
             if (!$user){

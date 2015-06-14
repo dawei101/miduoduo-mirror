@@ -247,4 +247,14 @@ class User extends BaseActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function fields()
+    {
+        return [
+
+            'id', 'username',
+            'email' , 'status' , 'created_time' , 'updated_time',
+            'name' , 'is_staff'
+        ];
+    }
 }

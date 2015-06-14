@@ -52,7 +52,7 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/address', 'v1/resume',
-                        'v1/offline-order'
+                        'v1/offline-order', 'v1/task'
                     ],
                     'pluralize' => '',
                 ],

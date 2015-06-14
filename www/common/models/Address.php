@@ -4,6 +4,8 @@ namespace common\models;
 
 use Yii;
 
+use common\models\User;
+
 /**
  * This is the model class for table "{{%address}}".
  *
@@ -66,5 +68,10 @@ class Address extends \common\BaseActiveRecord
     public static function find()
     {
         return new AddressQuery(get_called_class());
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }
