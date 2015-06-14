@@ -6,6 +6,7 @@ use Yii;
 use common\models\Address;
 use common\models\Company;
 use common\models\District;
+use common\models\ServiceType;
 
 /**
  * This is the model class for table "{{%task}}".
@@ -177,8 +178,40 @@ class Task extends \common\BaseActiveRecord
         return $this->hasOne(District::className(), ['id' => 'city_id']);
     }
 
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
     public function getDistrict()
     {
         return $this->hasOne(District::className(), ['id' => 'district_id']);
+    }
+
+    public function getService_type()
+    {
+        return $this->hasOne(ServiceType::className(), ['id' => 'service_type_id']);
+    }
+
+    public function extraFields()
+    {
+        return ['city', 'district', 'user', 'service_type', 'company'];
+    }
+
+    public function fields()
+    {
+        return [
+            'gid', 'title', 'clearance_period', 'salary', 'salary_unit',
+            'salary_note', 'from_date', 'company_name',
+            'company_introduction', 'contact', 'contact_phonenum',
+            'to_date', 'from_time', 'to_time', 'need_quantity',
+            'got_quantity', 'created_time', 'updated_time', 'detail',
+            'requirement', 'address',
+            'age_requirement', 'height_requirement', 'status',
+            'user_id', 'service_type_id',
+            'city_id', 'district_id', 'company_id',
+            'gender_requirement', 'degree_requirement',
+            ];
+
     }
 }

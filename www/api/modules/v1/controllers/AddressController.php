@@ -12,4 +12,13 @@ use api\modules\BaseActiveController;
 class AddressController extends BaseActiveController
 {
     public $modelClass = 'common\models\Address';
+
+    public function buildBaseQuery()
+    {
+        $query = parent::buildBaseQuery();
+        return $query->with('user');
+    }
+
+
+
 }
