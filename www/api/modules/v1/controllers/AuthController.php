@@ -22,20 +22,25 @@ class AuthController extends BaseActiveController
 
     public function actions()
     {
-        $actions = parent::actions();
-        return ['login', 'signup', 'vlogin', 'vcode'];
+        return ['login', 'signup', 'vlogin',
+            'vcode', 'vcode-for-signup', 'set-password'];
     }
 
     public function behaviors()
     {
-        return parent::behaviors();
         return [
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'signup', 'vlogin', 'vcode'],
+                        'actions' => ['login', 'signup', 'vlogin',
+                            'vcode', 'vcode-for-signup', 'set-password'],
                         'allow' => true,
+                    ],
+                    [
+                        'actions' => ['set-password', ],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -44,7 +49,7 @@ class AuthController extends BaseActiveController
 
     public function actionLogin()
     {
-        $username = Yii::$app->request->post('username');
+        $username = Yii::$app->request->post('phonenum');
         $password = Yii::$app->request->post('password');
         if(!(empty($username) || empty($password))){
             $user = User::findOne([
@@ -67,7 +72,8 @@ class AuthController extends BaseActiveController
             }
         }
 
-        return ['success'=> false, 'message'=> '用户名密码不正确'];
+        return $this->renderJson(['success'=> false,
+            'message'=> '用户名密码不正确']);
     }
 
     public function actionVcode()
@@ -90,8 +96,22 @@ class AuthController extends BaseActiveController
                 'result'=> false,
                 'message'=> "验证码发送失败, 请稍后重试。"
         ]);
-
     }
+
+    public function actionVcodeForSignup()
+    {
+        $phonenum = Yii::$app->request->post('phonenum');
+
+        $user = User::findByUsername($phonenum);
+        if ($user){
+            return $this->renderJson([
+                'result'=> false,
+                'message'=> "手机号码已被注册，请直接登陆"
+            ]);
+        }
+        return $this->actionVcode();
+    }
+
 
     public function actionVlogin()
     {
@@ -114,7 +134,6 @@ class AuthController extends BaseActiveController
                     'access_token'=> $user->access_token,
                 ]
             ]);
-
         }
         return $this->renderJson([
             'success'=> false,
@@ -124,6 +143,31 @@ class AuthController extends BaseActiveController
 
     public function actionSignup()
     {
+        $phonenum = Yii::$app->request->post('phonenum');
+        $user = User::findByUsername($phonenum);
+        if ($user){
+            return $this->renderJson([
+                'result'=> false,
+                'message'=> "手机号码已被注册，请直接登陆"
+            ]);
+        }
+        return $this->actionVlogin();
+    }
 
+    public function actionSetPassword()
+    {
+        $password = Yii::$app->request->post('password');
+        if (empty($password) || strlen($password)<6)
+        {
+            return $this->renderJson([
+                'result'=> false,
+                'message'=> "请保证密码不小于6位数",
+            ]);
+        }
+        //TODO 
+        return $this->renderJson([
+            'result'=> false,
+            'message'=> "api未完成",
+        ]);
     }
 }
