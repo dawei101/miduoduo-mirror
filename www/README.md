@@ -1,30 +1,69 @@
-网站的设置
+服务器端
 ===============================
 
 
 用到的工具与开发环境
 -------------------------------
-##[Ubuntu14.04](http://www.ubuntu.com/server)
+* [Ubuntu14.04 64位](http://www.ubuntu.com/server)
+    * 你懂
+* Apache2
+    * 不用解释
+* [php5.5.9](http://php.net/)
+    * 有namespace 新特性的php
+* [Mysql5.6.19](https://www.mysql.com/)
+    * 我们mysql用到了5.6的新特性，所以不要试图用5.6以下版本
+* [composer](https://getcomposer.org/)
+    * 第三方管理工具
+* [Yii2](http://www.yiiframework.com/doc-2.0/) [![yii2 经典模板](https://poser.pugx.org/yiisoft/yii2-app-advanced/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
+    * 我们主要用到的框架
+* [bootstrap](http://getbootstrap.com/css/)
+    * 项目中bootstrap在pc端，和手机m端最初版本用了很多。
+* [jQuery](https://jquery.com/)
+    * 著名javascript 框架,我们尽量只用于pc端和后台管理
+* [git 版本控制器与Github](https://github.com/)
 
-##[php5.5.9](http://php.net/)
+部署指引
+------------------------------
+###安装环境
+```
+sudo su
+apt-get install -y php5=5.5\*
+apt-get install -y apache2=2.4\*
+apt-get install -y php5-mysql
+apt-get install -y mysql-server-5.6
+apt-get install -y php5-gd
+a2enmod rewrite
+```
 
-##[Mysql5.6.19](https://www.mysql.com/)
+###安装php第三方库
+```
+cd www/
+php ../bin/composer.phar global require "fxp/composer-asset-plugin:~1.0.0"
+php ../bin/composer.phar install
+cd ..
+```
 
-##[composer](https://getcomposer.org/)
+###初始化项目
+```
+cd www/
+./init
+cd ..
+```
+这里需要你自己设置相关 **-local.php的文件，比如数据库连接等等
 
-##[Yii2](http://www.yiiframework.com/doc-2.0/)
-
-[![yii2 经典模板](https://poser.pugx.org/yiisoft/yii2-app-advanced/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-
-##[bootstrap](http://getbootstrap.com/css/)
-项目中bootstrap在pc端，和手机m端最初版本用了很多。
-
-##[jQuery](https://jquery.com/)
-
-
-Git
--------------------------------
-##[git 版本控制器与Github](https://github.com/)
+###运行起测试环境
+```
+cd www/
+./test_web
+```
+恭喜！你看到这里就可以在浏览器输入对应的网址来运行项目了
+对应网址的映射如下：
+```
+http://ip:9999  >  m/web/ 
+http://ip:9998  >  frontend/web/ 
+http://ip:9997  >  backend/web/ 
+http://ip:9996  >  api/web/ 
+```
 
 
 代码结构
