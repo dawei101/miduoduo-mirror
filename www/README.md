@@ -62,6 +62,18 @@ cd ..
 ```
 这里需要你自己设置相关 **-local.php的文件，比如数据库连接等等
 
+
+###导入mysql数据
+```
+cd www
+./yii migrate --migrationPath=@yii/rbac/migrations
+#这里初始化角色
+./yii auth-manager/init
+
+./yii migrate
+
+```
+
 ###运行起测试环境
 ```
 cd www/
