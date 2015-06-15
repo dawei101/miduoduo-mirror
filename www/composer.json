@@ -18,6 +18,8 @@
         "yiisoft/yii2": ">=2.0.4",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
+        "yiisoft/yii2-jui": "*",
+        "kartik-v/yii2-widget-activeform": "*",
         "yiisoft/yii2-twig": "^2.0",
         "bower-asset/jquery": "@stable",
         "bower-asset/bootstrap": "@stable",

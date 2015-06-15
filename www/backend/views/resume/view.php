@@ -53,9 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [   'attribute' => 'grade',
                 'value'=>$model::$GRADES[$model->grade]
             ],
-            'birthdate',
- 
- 
+            'job_wishes',
             'birthdate',
             'degree',
             'nation',
