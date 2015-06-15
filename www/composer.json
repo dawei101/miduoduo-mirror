@@ -21,11 +21,15 @@
         "yiisoft/yii2-jui": "*",
         "kartik-v/yii2-widget-activeform": "*",
         "yiisoft/yii2-twig": "^2.0",
-	    "bower-asset/jquery": "@stable",
+        "bower-asset/jquery": "@stable",
         "bower-asset/bootstrap": "@stable",
         "bower-asset/jquery-ui": "@stable",
         "bower-asset/jquery.inputmask": "@stable",
-        "bower-asset/punycode": "@stable"
+        "bower-asset/punycode": "@stable",
+        "yiisoft/yii2-jui": "*",
+        "kartik-v/yii2-widget-activeform": "*"
+        "nategood/httpful": "*",
+        "jpush/jpush": "v3.2.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
