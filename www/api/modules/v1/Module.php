@@ -28,7 +28,7 @@ class Module extends \yii\base\Module
         $behaviors = parent::behaviors();
 
         $controller = Yii::$app->controller->id;
-        if ($controller!='auth'){
+        if ($controller!='entry'){
             // 留出auth controller 登录
             $behaviors['authenticator'] = [
                 'class' => CompositeAuth::className(),
@@ -66,4 +66,5 @@ class Module extends \yii\base\Module
 
         return $user;
     }
+
 }

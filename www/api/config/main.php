@@ -69,6 +69,22 @@ return [
                         'POST set-password' => 'set-password',
                     ],
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/entry'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'POST login'=>'login',
+                        'POST vcode'=>'vcode',
+                        'POST vlogin'=>'vlogin',
+                        'POST vcode-for-signup'=>'vcode-for-signup',
+                        'POST vsignup'=>'vsignup',
+                        'GET,POST report-device' => 'report-device',
+                        'POST report-push-id' => 'report-push-id',
+                        'GET,POST check-update' => 'check-update',
+                    ],
+                ],
+
             ],
         ],
     ],

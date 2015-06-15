@@ -36,6 +36,15 @@ return [
             'timeout' => 3600 * 24 * 30,
             'name' => 'sid',
        ],
+       'pusher' => [
+            'class' => 'common\pusher\JPush',
+            'app_key' => '25382afaf629369a15179e9f',
+            'master_secret' => '877bd8b996d72601ba7e318b',
+       ],
+       'message' => [
+            'class' => 'common\message\Message',
+       ],
+
     ],
     'aliases' => [
         'api' => $root_path . '/api',
