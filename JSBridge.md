@@ -3,55 +3,120 @@
 我们Js Bridge的实现是基于开源[JsBridge](https://github.com/lzyzsd/JsBridge)
 原理为,在webview中，js通过添加iframe 节点，在ios/android可以捕获对应的事件，然后进行处理。
 
-##action: 
-
-* 导航栏配置
-* 隐藏导航栏
 * 提示框
-* 确认提示
-* push 新的页面
-* pop 
-* 返回按钮
-* 地图位置获取
-* 城市切换
+```
+function alertView() {
+    var action = '3';
+    var data = { 'type':3,'title': '升级提示', 'message': '米多多兼职 。。。。', 'delay':2, 'cancel':' － 取消 －','ok':' － 确定 －'}
+    
+    var json = {'action':action, 'data' : data }
+    WebViewJavascriptBridge.send(json, function (result) {
+        alert('action: ' + result.action + ' -- result: ' + result.result)
+    });
+}
+```
 
+* ??
+```
+function hud() {
+    var action = '3';
+    var data = { 'type':5,'message': '恭喜你！ 登录 成功！', 'delay':3}
+    
+    var json = {'action':action, 'data' : data }
+    WebViewJavascriptBridge.send(json, function (result) {
+        alert('action: ' + result.action + ' -- result: ' + result.result)
+    });
+}
+```
 
+* 获取地址
+```
+function getAddress() {
+    var action = 8;
+    var data = {'title': '附近地点', 'city': '北京','latitude':39.927321,'longitude':116.434821}
+    var json = {'action':action,'data' : data}
+    WebViewJavascriptBridge.send(json, function (result) {
+        alert('name: ' + result.name + 
+            '\n address: ' + result.address  + 
+            '\n city: ' + result.city + 
+            '\n location: {' + result.latitude + ',' + result.longitude + '}')
+    });
+}
+```
 
-data：
-1、nvshow：0:隐藏、1:显示；left：返回／其他text；title：text；right：text  （如果要配置图片，要添加 png 后缀名）
-2、
-3、type：1、刷新界面；2、加载中；3、文字提示；4、点击view 以外区域消失；title：txt；message：txt；delay：秒；button［显示文字：回传文字；如：ok：1；cancel：2］
-4、
-5、url：txt；params：json
-6、nvshow：0:隐藏、1:显示；
-7、
+* push页面
+```
+function pushView() {
+    var action = 5;
+    var data = {'nvshow':1, 'title': 'push 新页面', 'url':'http://192.168.1.217/NewPage.html'}
+    var json = {'action':action,'data' : data}
+    WebViewJavascriptBridge.send(json, function (result) {
+        alert(' 返回 。。。。。');
+    });
+}
 
+function pushViewNo() {
+    var action = 5;
+    var data = {'nvshow':0, 'url':'http://192.168.1.217/NewPage.html'}
+    var json = {'action':action,'data' : data}
+    WebViewJavascriptBridge.send(json, function (result) {
+        alert(' 返回 。。。。。');
+    });
+}
 
-返回格式：
-action：txt
-result：txt
+```
 
+* 刷新
+```
+function refreshView() {
+    var action = '3';
+    var data = { 'type':2,'message': '刷新中 .....！'}
+    
+    var json = {'action':action, 'data' : data }
+    WebViewJavascriptBridge.send(json, function (result) {
+    });
+    window.setTimeout(hiddenView,10000);
+}
+```
 
-8／9
-name：txt
-address：txt
-city：txt
-location：｛39.927321,116.434821｝
+* ??
+```
+function hiddenView() {
+    var action = '3';
+    var data = { 'type':1}
+    
+    var json = {'action':action, 'data' : data }
+    WebViewJavascriptBridge.send(json, function (result) {
+    });
+}
+```
 
+* 按钮事件
+```
+function onBkJsBridgeReady() {
+    
+    WebViewJavascriptBridge.defaultHandler(
+        function(data,responseCallback) {
+            if (data.action == 7) {
+                var r=confirm("native 按下了返回键");
+                if (r==true) {
+                    responseCallback({'result': 1});
+                } else {
+                    responseCallback({'result': 0});
+                }
+            };
+        });
+};
+```
 
-checkupdate
-in:
+* 连接JSBridge
+```
+if (window.WebViewJavascriptBridge) {
+    onBkJsBridgeReady()
+} else {
+    document.addEventListener('WebViewJavascriptBridgeReady', function() {
+        onBkJsBridgeReady()
+    }, false)
 
-out:
-title:txt
-msg:txt:
-version:txt
-url:txt
-
-checkversion
-in:
-
-out:
-version:txt
-
+```
 
