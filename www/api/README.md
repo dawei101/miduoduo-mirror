@@ -5,7 +5,7 @@ BASE_URL = 'http://api.miduoduo.cn'
 ##Login 
 ###通过验证码与手机登陆步骤
 -1
-    POST /v1/auth/vcode
+    POST /v1/entry/vcode
         参数:    phonenum=手机号
     RETURN:
         { "result": true,
@@ -15,7 +15,7 @@ BASE_URL = 'http://api.miduoduo.cn'
           "message": 错误提示 }
 
 -2
-    POST /v1/auth/vlogin
+    POST /v1/entry/vlogin
 
         参数:   phonenum=手机号
                 code=验证码
@@ -33,7 +33,7 @@ BASE_URL = 'http://api.miduoduo.cn'
                 }
         }
 ###通过手机号密码登陆
-    POST /v1/auth/login
+    POST /v1/entry/login
 
         参数:   phonenum=手机号
                 password=密码
@@ -53,7 +53,7 @@ BASE_URL = 'http://api.miduoduo.cn'
 
 ###注册
 -1
-    POST /v1/auth/vcode-for-signup
+    POST /v1/entry/vcode-for-signup
         参数:    phonenum=手机号
     RETURN:
         { "result": true,
@@ -63,7 +63,7 @@ BASE_URL = 'http://api.miduoduo.cn'
           "message": 错误提示 }
 
 -2
-    POST /v1/auth/signup
+    POST /v1/entry/signup
 
         参数:   phonenum=手机号
                 code=验证码
@@ -82,7 +82,7 @@ BASE_URL = 'http://api.miduoduo.cn'
         }
 
 ###修改密码
-    POST /v1/auth/set-password
+    POST /v1/user/set-password
     auth required
         参数:   password=修改的密码
                 password2=重复确认密码
@@ -99,11 +99,6 @@ BASE_URL = 'http://api.miduoduo.cn'
                 }
         }
     备注：* 重新设置密码后，之前的access_token将失效
-
-
-
-
-
 
 
 ##request请求 标识认证信息

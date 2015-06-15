@@ -45,11 +45,16 @@ class UserController extends BaseActiveController
         }
         $user = Yii::$app->user->identity;
         $user->setPassword($password);
+        $user->generateAccessToken();
         $user->save();
         return $this->renderJson([
             'result'=> true,
             'message'=> "修改成功",
+            'result' => [
+                "username"=> $user->username,
+                "password"=>$password,
+                "access_token"=> $user->access_token,
+            ],
         ]);
     }
-
 }
