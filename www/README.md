@@ -35,11 +35,13 @@ apt-get install -y apache2=2.4\*
 apt-get install -y php5-mysql
 apt-get install -y mysql-server-5.6
 apt-get install -y php5-gd
+apt-get install -y php5-curl
 apt-get install -y git
 a2enmod rewrite
 ```
 
 ###拉取git代码
+在clone代码前，请确保在github已经添加了sshkey ，如果没有添加，请[点击这里](https://github.com/settings/ssh)添加
 ```
 cd the_path_that_you_want_save
 git clone git@github.com:chongdd/miduoduo.git

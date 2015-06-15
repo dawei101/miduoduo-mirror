@@ -23,7 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
              ['attribute'=> 'task_id',
                  'format'=>'raw',
                  'value'=>function($model){
-                    return $model->task->title . "<a target='_blank' class='pull-right' href='/task/view?id=". $model->task_id ."'>查看任务</a>";
+                    if ($model->task){
+                        return $model->task->title . "<a target='_blank' class='pull-right' href='/task/view?id=". $model->task_id ."'>查看任务</a>";
+                    }
+                    return '<span class="pull-right">已删除</span>';
                 },
                 'label'=>'任务'
              ],

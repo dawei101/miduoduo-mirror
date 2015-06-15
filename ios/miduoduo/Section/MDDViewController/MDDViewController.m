@@ -38,7 +38,8 @@
 
     
     if (![self hiddenBackBar]) {
-        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStyleDone target:self action:@selector(backBarClick)];
+        UIImage *backImage = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:backImage style:UIBarButtonItemStyleDone target:self action:@selector(backBarClick)];
         
         self.navigationItem.leftBarButtonItem = leftItem;
         

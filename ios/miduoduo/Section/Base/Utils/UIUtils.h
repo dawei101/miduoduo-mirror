@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "MBProgressHUD.h"
 typedef void (^ResultBlock)(NSString *text);
 
 @interface UIUtils : NSObject
+
++ (UIWindow *)mainWindow;
+
++ (UIViewController *)activityViewController;
 
 + (UIView *)createBackItemView;
 
@@ -18,8 +22,11 @@ typedef void (^ResultBlock)(NSString *text);
 
 + (UIViewController *)activityViewController;
 
++ (void)showAlertView:(UIView *)view text:(NSString *)text delay:(NSInteger)delay;
 + (void)showAlertView:(UIView *)view withText:(NSString *)text;
-
++ (MBProgressHUD *)showAlertView:(UIView *)view text:(NSString *)text;
++ (void)showRefreshView:(UIView *)view text:(NSString *)text;
++ (void)hiddenAlertView:(UIView *)view;
 
 + (UIButton *)createNextButton;
 

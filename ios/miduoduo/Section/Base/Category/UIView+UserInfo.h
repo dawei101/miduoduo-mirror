@@ -10,9 +10,7 @@
 
 @interface UIView (UserInfo)
 
-#define AS_DYNAMIC_PROPERTY(_getter_, _setter_, _type_) \
-- (void)_setter_:(_type_)v;  \
-- (_type_)_getter_;
+
 
 AS_DYNAMIC_PROPERTY(userInfo, setUserInfo, id)
 

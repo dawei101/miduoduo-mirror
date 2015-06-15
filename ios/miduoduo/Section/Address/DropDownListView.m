@@ -99,7 +99,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
 
-        cell = [[NSClassFromString(self.cellName) alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[NSClassFromString(self.cellName) alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     
     if ([self.dataSource respondsToSelector:@selector(dropDownListView:cell:IndexPath:)]) {

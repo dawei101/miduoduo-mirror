@@ -58,14 +58,9 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/auth'],
+                    'controller' => ['v1/user'],
                     'pluralize' => '',
-                    'extraPatterns' => [
-                        'POST login'=>'login',
-                        'POST vcode'=>'vcode',
-                        'POST vlogin'=>'vlogin',
-                        'POST vcode-for-signup'=>'vcode-for-signup',
-                        'POST vsignup'=>'vsignup',
+                    'patterns' => [
                         'POST set-password' => 'set-password',
                     ],
                 ],
@@ -84,7 +79,6 @@ return [
                         'GET,POST check-update' => 'check-update',
                     ],
                 ],
-
             ],
         ],
     ],

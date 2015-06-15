@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "RegisterBaseView.h"
 
-typedef void (^ReadProtocolAction)(void);
+typedef void (^SendVerifyCodeAction)(void);
 
 @interface VerifyCodeView : RegisterBaseView
 
 @property (nonatomic, strong) NSString  *hintSting;
+
+@property (nonatomic, retain) NSString *phoneNumber  ;
 
 - (void)show;
 

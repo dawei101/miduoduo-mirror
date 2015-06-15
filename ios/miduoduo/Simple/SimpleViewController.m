@@ -71,27 +71,27 @@
     
     NSString *url = @"http://api.chongdd.cn/v1/auth/vcode";
   
-//    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-//    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-////    [requestSerializer setValue:@"phonenum" forHTTPHeaderField:@"15101681550"];
-////    [requestSerializer setAuthorizationHeaderFieldWithUsername:@"18661775819" password:@"61860533"];
+    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
+    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [requestSerializer setValue:@"phonenum" forHTTPHeaderField:@"15101681550"];
+//    [requestSerializer setAuthorizationHeaderFieldWithUsername:@"18661775819" password:@"61860533"];
 //
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    manager.requestSerializer = requestSerializer;
-//    
-//    NSString *num = @"phonenum";
-//    NSString *phonenum = @"15101681550";
-//    [manager POST:url parameters:@{num:phonenum} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-////        [formData appendPartWithFormData:[phonenum dataUsingEncoding:NSUTF8StringEncoding] name:num];
-//        
-//    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        NSLog(@"JSON: %@", responseObject);
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"Error: %@,statusCode: %i", error,operation.response.statusCode);
-//    }];
-//    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = requestSerializer;
+    
+    NSString *num = @"phonenum";
+    NSString *phonenum = @"15101681550";
+    [manager POST:url parameters:@{num:phonenum} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+//        [formData appendPartWithFormData:[phonenum dataUsingEncoding:NSUTF8StringEncoding] name:num];
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@,statusCode: %i", error,operation.response.statusCode);
+    }];
+    
 
 
 }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="format-detection" content="email=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+        
+        <script>
+            
+        
+        function alertView() {
+            var action = '3';
+            var data = { 'type':3,'title': '升级提示', 'message': '米多多兼职 。。。。', 'delay':2, 'cancel':' － 取消 －','ok':' － 确定 －'}
+            
+            var json = {'action':action, 'data' : data }
+            WebViewJavascriptBridge.send(json, function (result) {
+                alert('action: ' + result.action + ' -- result: ' + result.result)
+            });
+        }
+
+        function hud() {
+            var action = '3';
+            var data = { 'type':5,'message': '恭喜你！ 登录 成功！', 'delay':3}
+            
+            var json = {'action':action, 'data' : data }
+            WebViewJavascriptBridge.send(json, function (result) {
+                alert('action: ' + result.action + ' -- result: ' + result.result)
+            });
+        }
+
+        function address() {
+            var action = 8;
+            var data = {'title': '附近地点', 'city': '北京','latitude':39.927321,'longitude':116.434821}
+            var json = {'action':action,'data' : data}
+            WebViewJavascriptBridge.send(json, function (result) {
+                alert('name: ' + result.name + 
+                    '\n address: ' + result.address  + 
+                    '\n city: ' + result.city + 
+                    '\n location: {' + result.latitude + ',' + result.longitude + '}')
+            });
+        }
+
+        function pushView() {
+            var action = 5;
+            var data = {'title': 'push 新页面', 'url':'http://www.baidu.com'}
+            var json = {'action':action,'data' : data}
+            WebViewJavascriptBridge.send(json, function (result) {
+                alert('name: ' + result.name + 
+                    '\n address: ' + result.address  + 
+                    '\n city: ' + result.city + 
+                    '\n location: {' + result.latitude + ',' + result.longitude + '}')
+            });
+        }
+
+
+
+        //按钮事件
+        function onBkJsBridgeReady() {
+            
+            WebViewJavascriptBridge.defaultHandler(
+                function(data,responseCallback) {
+                    if (data.action == 7) {
+                        var r=confirm("native 按下了返回键");
+                        if (r==true) {
+                            responseCallback({'result': 1});
+                        } else {
+                            responseCallback({'result': 0});
+                        }
+                    };
+                });
+        };
+    	
+        //连接JSBridge
+        if (window.WebViewJavascriptBridge) {
+            onBkJsBridgeReady()
+        } else {
+            document.addEventListener('WebViewJavascriptBridgeReady', function() {
+                onBkJsBridgeReady()
+            }, false)
+        }                            	
+        </script>
+    </head>
+    <body>
+        <div style="width:80%;margin:50px auto;">
+            <button id="alertView" style="width:100%;" onclick="alertView()">－－ 提示框 －－</button> </p>
+            <button id="hud" style="width:100%;" onclick="hud()">－－ 提醒内容 －－</button> </p>
+            <button id="address" style="width:100%;" onclick="address()">－－ 附近地点 －－</button> </p>
+            <button id="pushView" style="width:100%;" onclick="pushView()">－－ push 一个新页面 －－</button> </p>
+            <button id="popView" style="width:100%;" onclick="popView()">－－ pop 当前页面 －－</button> </p>
+            <button id="pushViewNo" style="width:100%;" onclick="pushViewNo()">－－ push 一个新页面，没有导航栏 －－</button> </p>
+            <button id="popViewNV" style="width:100%;" onclick="popViewNV()">－－ pop 显示导航栏 －－</button> </p>
+        </div>
+        
+    </body>
+</html>
