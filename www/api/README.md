@@ -177,9 +177,9 @@ BASE_URL = 'http://api.miduoduo.cn'
 ### rest api 举例
 以任务列表(职位列表)为例，任务的model名为task
 * 获取task
-    * GET http://api.test.chongdd.cn/task
+    * GET http://api.test.chongdd.cn/v1/task
 * 获取某服务类别的task
-    GET http://api.test.chongdd.cn/task?filters=[["=", "service_type_id", 10]]
+    GET (http://api.test.chongdd.cn/v1/task?filters=[["=", "service_type_id", 10]])
 
 具体api
 =============================
@@ -349,3 +349,13 @@ BASE_URL = 'http://api.miduoduo.cn'
     * params: user_id, task_id
 * 取消收藏某任务
     * DELETE /version/task-collection/user_id,task_id
+
+
+### 关于跨域
+[Http access control - CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
+原理：
+* 浏览器发送http request 带着 origin
+* 服务器http response 带着 Access-Control-Allow-Origin
+    * 例 Access-Control-Allow-Origin: http://m.miduoduo.cn
+欲知详情请深挖[Wiki](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
+
