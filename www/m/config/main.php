@@ -34,6 +34,12 @@ return [
                 ],
             ],
         ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'php:m-d',
+            'datetimeFormat' => 'php:m-d H:i',
+            'timeFormat' => 'php:H:i',
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

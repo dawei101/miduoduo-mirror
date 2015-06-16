@@ -78,6 +78,7 @@ class Task extends \common\BaseActiveRecord
             [['salary', 'salary_unit', 'from_date', 'to_date',
                 'need_quantity', 'detail', 'address', 'company_name',
                 'service_type_id', 'city_id', 'title'], 'required'],
+
             [['id', 'clearance_period', 'salary_unit', 'need_quantity',
                 'got_quantity', 'user_id', 'service_type_id',
                 'gender_requirement', 'degree_requirement', 'age_requirement',

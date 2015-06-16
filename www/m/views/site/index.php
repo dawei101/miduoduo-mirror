@@ -48,7 +48,7 @@ $this->params['nav_left'] = null;
     <div class="border-bt">
       <div class="panel-body lnk">
         <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-            <?=substr($task->from_date, 5) ?>至<?=substr($task->to_date, 5)?>
+            <?=\Yii::$app->formatter->asDate($task->from_date) ?>至<?= \Yii::$app->formatter->asDate($task->to_date) ?>
         </p>
         <div class="te-x">
           <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
