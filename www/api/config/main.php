@@ -1,4 +1,5 @@
 <?php
+
 $param_files = 
     [__DIR__ . '/../../common/config/params.php',
      __DIR__ . '/../../common/config/params-local.php',
@@ -74,6 +75,40 @@ return [
                         'POST vlogin'=>'vlogin',
                         'POST vcode-for-signup'=>'vcode-for-signup',
                         'POST signup'=>'signup',
+                        'GET,POST report-device' => 'report-device',
+                        'POST report-push-id' => 'report-push-id',
+                        'GET,POST check-update' => 'check-update',
+                    ],
+                ],
+                // 以下的url只是为了后边多出反斜杠的可能
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/address', 'v1/resume',
+                        'v1/offline-order', 'v1/task'
+                    ],
+                    'pluralize' => '',
+                    'suffix' => '/',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/user'],
+                    'pluralize' => '',
+                    'suffix' => '/',
+                    'patterns' => [
+                        'POST set-password' => 'set-password',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/entry'],
+                    'pluralize' => '',
+                    'suffix' => '/',
+                    'extraPatterns' => [
+                        'POST login'=>'login',
+                        'POST vcode'=>'vcode',
+                        'POST vlogin'=>'vlogin',
+                        'POST vcode-for-signup'=>'vcode-for-signup',
+                        'POST vsignup'=>'vsignup',
                         'GET,POST report-device' => 'report-device',
                         'POST report-push-id' => 'report-push-id',
                         'GET,POST check-update' => 'check-update',
