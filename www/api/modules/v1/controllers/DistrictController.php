@@ -23,16 +23,6 @@ class DistrictController extends BaseActiveController
 
     public $id_column = 'id';
 
-    public function prepareDataProvider()
-    {
-        return new ActiveDataProvider([
-            'query' => $this->buildQuery(),
-            'pagination' => [
-                'pageSize' => 10000
-            ],
-        ]);
-    }
-
-
+    public $page_size = 10000;
 
 }

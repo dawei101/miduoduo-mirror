@@ -63,6 +63,7 @@ return [
                         'v1/district',
                         'v1/sys-message',
                         'v1/message',
+                        'v1/user-service-type',
                     ],
                     'pluralize' => '',
                 ],

@@ -136,6 +136,17 @@ class Resume extends \common\BaseActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
+    public function getService_types()
+    {
+        return $this->hasMany(ServiceType::className(), ['id' => 'service_type_id'])
+            ->viaTable(UserHasServiceType::tableName(), ['user_id' => 'user_id']);
+    }
+
+    public function getFreetimes()
+    {
+        return $this->hasMany(Freetime::className(), ['user_id' => 'user_id']);
+    }
+
     public function getHome_address()
     {
         return $this->hasOne(Address::className(), ['id' => 'home']);
@@ -148,7 +159,7 @@ class Resume extends \common\BaseActiveRecord
 
     public function extraFields()
     {
-        return ['user', 'home_address', 'workplace_address'];
+        return ['user', 'home_address', 'workplace_address', 'service_types', 'freetimes'];
     }
 
 }

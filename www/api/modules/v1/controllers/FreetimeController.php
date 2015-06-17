@@ -16,4 +16,6 @@ class FreetimeController extends BaseActiveController
     public $id_column = 'day_of_week';
     public $auto_filter_user = true;
     public $user_identifier_column = 'user_id';
+
+    public $page_size = 10000;
 }

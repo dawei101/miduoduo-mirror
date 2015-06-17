@@ -22,6 +22,8 @@ class BaseActiveController extends ActiveController
     //标识用户的字段, 用此字段对应user_id
     public $user_identifier_column = null;
 
+    // null = 使用默认
+    public $page_size = null;
 
     public function beforeAction($action)
     {
@@ -125,9 +127,16 @@ class BaseActiveController extends ActiveController
 
     public function prepareDataProvider()
     {
+        if ($this->page_size){
+            return new ActiveDataProvider([
+                'query' => $this->buildFilterQuery(),
+                'pagination' => ['pageSize' => $this->page_size ],
+            ]);
+        }
         return new ActiveDataProvider([
             'query' => $this->buildFilterQuery()
         ]);
+
     }
 
     public function buildFilterQuery(){

@@ -232,15 +232,15 @@ BASE_URL = 'http://api.miduoduo.cn'
 ###简历 Resume
 
 * 获取自己简历(使用须取列表中第一个)
-    * GET /version/resume
+    * GET /version/resume?expand=service_types,free_times,home_address,workplace_address
 * 获取自己的简历
-    * GET /version/resume/user_id
+    * GET /version/resume/user_id?expand=service_types,free_times,home_address,workplace_address
 * 更新自己简历
     * PUT /version/resume/user_id
 * 创建自己简历
-    * POST /vesion/resume/user_id
+    * POST /vesion/resume
 
-###时间表 Freetime
+###时间表 Freetime(获取简历时可直接获取)
 
 * 获取自己一周的时间表
     * GET /version/freetime
@@ -251,6 +251,17 @@ BASE_URL = 'http://api.miduoduo.cn'
     * PUT /version/freetime/day_of_week
 * 创建某天时间表
     * POST /version/freetime
+
+###设置我可做的服务
+
+* 获取可做的服务列表(获取简历时直接获取)
+    * GET /version/user-service-type
+* 添加可做服务
+    * POST /version/user-service-type
+        * params: {service_type_id: 10}
+* 删除可做服务
+    * DELETE /version/user-service-type/service_type_id
+
 
 ###Address 地址
 * 获取自己的地址列表
