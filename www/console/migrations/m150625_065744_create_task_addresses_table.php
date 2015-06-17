@@ -1,9 +1,9 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use console\BaseMigration;
 
-class m150625_065744_create_task_addresses_table extends Migration
+class m150625_065744_create_task_addresses_table extends BaseMigration
 {
     public function up()
     {
@@ -25,12 +25,15 @@ CREATE TABLE IF NOT EXISTS `jz_task_address` (
   INDEX `fk_jz_task_address_jz_user1_idx` (`user_id` ASC)
 )
 ENGINE = InnoDB";
+
+        $this->execSqls($sqls);
     }
 
     public function down()
     {
-        echo "m150625_065744_create_task_addresses_table cannot be reverted.\n";
-        return false;
+        $sqls = "drop table if exists jz_task_address ";
+        $this->execSqls($sqls);
+        return true;
     }
     
     /*
