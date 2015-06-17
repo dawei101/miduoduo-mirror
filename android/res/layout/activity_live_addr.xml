@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:navigation="http://schemas.android.com/apk/res/com.miduoduo.person"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
+
+    <com.miduoduo.person.view.UINavigationView
+        android:id="@+id/navigation"
+        android:layout_width="fill_parent"
+        android:layout_height="44dip"
+        navigation:tv_title="@string/live_address" />
+
+    <LinearLayout
+        android:id="@+id/llt_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/navigation"
+        android:orientation="horizontal" >
+
+        <AutoCompleteTextView
+            android:id="@+id/atv_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="搜索地点" />
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:text="搜索" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/flt_map_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/llt_bar" >
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/iv_bmap_mark"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_gcoding" />
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/lv_near_addr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/tv_text" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/flt_map_view"
+        android:layout_marginLeft="15dp"
+        android:text="附近地点"
+        android:textColor="#848484" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_text"
+        android:background="#D8D8D8" />
+
+</RelativeLayout>
