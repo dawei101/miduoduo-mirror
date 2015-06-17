@@ -52,9 +52,9 @@ class BaseActiveController extends ActiveController
     }
 
     public function buildQuery(){
-        $model = $this->modelClass;
-        $query = $model::find();
+        $query = $this->buildBaseQuery();
         $p_str = Yii::$app->request->getHeaders()->get('query');
+
         if (!$p_str || strlen($p_str)==0){
             return $query;
         }
@@ -77,6 +77,13 @@ class BaseActiveController extends ActiveController
             $p_dict[$filter[1]] = $filter[2];
         }
         $query->where($where, $p_dict);
+        return $query;
+    }
+
+    public function buildBaseQuery()
+    {
+        $model = $this->modelClass;
+        $query = $model::find();
         return $query;
     }
 
