@@ -39,7 +39,7 @@ class Device extends \common\BaseActiveRecord
             [['updated_time'], 'safe'],
             [['device_id', 'push_id', 'access_token'], 'string', 'max' => 500],
             [['created_time', 'app_version'], 'string', 'max' => 45],
-            [['device_info'], 'string', 'max' => 200]
+            [['device_info'], 'string', 'max' => 200],
         ];
     }
 

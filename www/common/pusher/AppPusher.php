@@ -13,10 +13,10 @@ use JPush\Exception\APIRequestException;
 
 use common\constants;
 
-use common\models\Authentification;
+use common\models\Device;
 
 
-class JPush
+class AppPusher
 {
 
     private $_client;
@@ -36,26 +36,25 @@ class JPush
         return $this->_client;
     }
 
-    public function pushNotification($user_id, $message, $devices=null)
+    public function notification($user_id, $message)
     {
-        $auths = Authentification::find()->where(['user_id'=>$user_id])->all();
+        $devices = Device::find()->where(['user_id'=>$user_id, 'is_active'=>true])->all();
         $reg_ids = [];
-        foreach ($auths as $auth){
-            if ($auth->access_token && 0<strlen($auth->access_token)){
-                $reg_ids[] = $auth->reg_id;
-            }
+        foreach ($devices as $device){
+            $reg_ids[] = $device ->push_id;
         }
         if (empty($reg_ids)){
             Yii::error("Push failed, No signed in device for this user ");
             return false;
         }
+
         $audiences = JModel\audience(JModel\registration_id($reg_ids));
         try {
             $result = $this->getClient()
                 ->push()
                 ->setPlatform(JModel\all)
                 ->setAudience($audiences)
-                ->setNotification(JModel\notification($message))
+                ->setNotification(JModel\notification($message,  JModel\ios($message, $badge="+1")))
                 ->send();
             Yii::trace('Push message succeed with sendno:'. $result->sendno
                 . ', message id:' . $result->msg_id
@@ -66,11 +65,15 @@ class JPush
         } catch (APIConnectionException $e) {
             Yii::error('Push failed with connection error:' . $e->getMessage());
             return false;
+        } catch (Exception $e) {
+            Yii::error('Push failed with exception:' . $e->getMessage());
+            return false;
         }
         return true;
     }
 
-    public function pushMessage($user_id, $message, $devices=null){
+    public function message($user_id, $message, $devices=null)
+    {
 
     }
 }

@@ -122,9 +122,11 @@ class EntryController extends BaseActiveController
     {
         $device_type = Utils::getDeviceType(Yii::$app->request->get('User-Agent'));
         if ($device_type){
+            Device::updateAll(['is_active'=> false], 'user_id=' . $user->id);
             $device = $this->distillDeviceFromRequest(Yii::$app->request);
             $device->user_id = $user->id;
             $device->access_token = $user->access_token;
+            $device->is_active = true;
             $device->save();
         }
     }
