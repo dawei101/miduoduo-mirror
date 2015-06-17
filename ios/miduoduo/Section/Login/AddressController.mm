@@ -7,7 +7,7 @@
 //
 
 #import "AddressController.h"
-#import <BaiduMapAPI/BMapKit.h>
+
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreLocation/CoreLocation.h>
 #import "DropDownListView.h"
@@ -32,6 +32,8 @@
 @property (weak, nonatomic) IBOutlet BMKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet DropDownListView *dropView;
+
+
 
 @end
 
@@ -238,7 +240,13 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    BMKPoiInfo *info = dataSource[indexPath.row];
+    
+    if (self.back) {
+        self.back(info);
+    } else {
+        // todo 
+    }
 }
 
 

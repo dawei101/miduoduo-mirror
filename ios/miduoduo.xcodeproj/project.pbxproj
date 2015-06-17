@@ -67,6 +67,8 @@
 		FAA69DC91B29B796005BEE58 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAA69DC81B29B796005BEE58 /* InformationViewController.m */; };
 		FAA69DCC1B29CF38005BEE58 /* NSString+Simple.m in Sources */ = {isa = PBXBuildFile; fileRef = FAA69DCB1B29CF38005BEE58 /* NSString+Simple.m */; };
 		FAB9004B1B311C1500E6138C /* CheckUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB9004A1B311C1500E6138C /* CheckUpdate.m */; };
+		FAB900541B319F9900E6138C /* MDDWebViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB900531B319F9900E6138C /* MDDWebViewModel.m */; };
+		FAB900591B31A63800E6138C /* UIApplication+ControllerFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = FAB900581B31A63800E6138C /* UIApplication+ControllerFinder.m */; };
 		FAC2794A1B26891B00E79799 /* UIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC279491B26891B00E79799 /* UIUtils.m */; };
 		FAC279541B26EDDC00E79799 /* MDDModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC279531B26EDDC00E79799 /* MDDModel.m */; };
 		FAC279571B26F36100E79799 /* MyTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC279561B26F36100E79799 /* MyTestModel.m */; };
@@ -273,6 +275,10 @@
 		FAA69DCB1B29CF38005BEE58 /* NSString+Simple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Simple.m"; sourceTree = "<group>"; };
 		FAB900491B311C1500E6138C /* CheckUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckUpdate.h; sourceTree = "<group>"; };
 		FAB9004A1B311C1500E6138C /* CheckUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckUpdate.m; sourceTree = "<group>"; };
+		FAB900521B319F9900E6138C /* MDDWebViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDDWebViewModel.h; sourceTree = "<group>"; };
+		FAB900531B319F9900E6138C /* MDDWebViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDDWebViewModel.m; sourceTree = "<group>"; };
+		FAB900571B31A63800E6138C /* UIApplication+ControllerFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+ControllerFinder.h"; sourceTree = "<group>"; };
+		FAB900581B31A63800E6138C /* UIApplication+ControllerFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+ControllerFinder.m"; sourceTree = "<group>"; };
 		FAC279481B26891B00E79799 /* UIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIUtils.h; sourceTree = "<group>"; };
 		FAC279491B26891B00E79799 /* UIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIUtils.m; sourceTree = "<group>"; };
 		FAC279521B26EDDC00E79799 /* MDDModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDDModel.h; sourceTree = "<group>"; };
@@ -630,6 +636,8 @@
 				FA2C38C81B2D213000A21BDE /* MDDWebView.m */,
 				FAC3E1781B2EB75D00E6C60D /* MDDWebViewResponder.h */,
 				FAC3E1791B2EB75D00E6C60D /* MDDWebViewResponder.m */,
+				FAB900521B319F9900E6138C /* MDDWebViewModel.h */,
+				FAB900531B319F9900E6138C /* MDDWebViewModel.m */,
 			);
 			path = MDDWebView;
 			sourceTree = "<group>";
@@ -705,6 +713,8 @@
 				FAD450391B2ADE1800D8B312 /* UIView+UserInfo.m */,
 				FAC3E1991B304FA700E6C60D /* NSUserDefaults+Convenient.h */,
 				FAC3E19A1B304FA700E6C60D /* NSUserDefaults+Convenient.m */,
+				FAB900571B31A63800E6138C /* UIApplication+ControllerFinder.h */,
+				FAB900581B31A63800E6138C /* UIApplication+ControllerFinder.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1239,6 +1249,7 @@
 				FA6E580D1B297580001C1857 /* RegisterBaseView.m in Sources */,
 				FA1182E41B28203200B7C086 /* RecordViewController.m in Sources */,
 				FA1EEBF01B18613B00562FDD /* AppDelegate.mm in Sources */,
+				FAB900591B31A63800E6138C /* UIApplication+ControllerFinder.m in Sources */,
 				FAC2794A1B26891B00E79799 /* UIUtils.m in Sources */,
 				FA6E57EF1B293036001C1857 /* UIColor+HexColor.m in Sources */,
 				FA1182E71B28204E00B7C086 /* MiViewController.m in Sources */,
@@ -1248,6 +1259,7 @@
 				FA6E58071B297368001C1857 /* SetPasswordView.m in Sources */,
 				FA6E58011B295F06001C1857 /* InputPhoneNumberView.m in Sources */,
 				FA3A45AF1B25CB63004F24FC /* MDDViewController.m in Sources */,
+				FAB900541B319F9900E6138C /* MDDWebViewModel.m in Sources */,
 				FA6E58041B29734A001C1857 /* VerifyCodeView.m in Sources */,
 				FAD450361B2ABC7900D8B312 /* InformationInputCell.m in Sources */,
 				FA6E57FE1B295D21001C1857 /* RegisterViewController.m in Sources */,

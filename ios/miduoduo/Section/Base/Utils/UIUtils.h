@@ -12,6 +12,10 @@ typedef void (^ResultBlock)(NSString *text);
 
 @interface UIUtils : NSObject
 
++ (UIWindow *)mainWindow;
+
++ (UIViewController *)activityViewController;
+
 + (UIView *)createBackItemView;
 
 + (UIViewController *)viewController:(NSString *)viewController;

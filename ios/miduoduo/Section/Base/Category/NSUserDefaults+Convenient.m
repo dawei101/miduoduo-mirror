@@ -25,7 +25,13 @@
 
 + (NSString *)version
 {
-    return [[NSUserDefaults standardUserDefaults] stringForKey:@"user_key_version"];
+    NSString *text = [[NSUserDefaults standardUserDefaults] stringForKey:@"user_key_version"];
+    if (text == nil) {
+        [self version:@"v1"];
+        return @"v1";
+    }
+    
+    return text;
 }
 
 + (BOOL)version:(NSString *)version

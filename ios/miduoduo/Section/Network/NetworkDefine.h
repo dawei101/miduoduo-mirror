@@ -15,7 +15,7 @@
 static const NSString *CACHE_FILTER_BASE_PATH = @"http://m.miduoduo.cn/";
 
 //基础网址
-static const NSString *BASE_URL = @"http://api.test.chongdd.cn/";
+static const NSString *BASE_URL = @"http://api.test.chongdd.cn";
 
 //版本号
 static const NSString *VERSION  = @"v1";

@@ -79,7 +79,7 @@
         [GuideView show];
     }
     
-    [self checkUpdate];
+//    [self checkUpdate];
 
     return YES;
 }

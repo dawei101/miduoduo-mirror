@@ -30,14 +30,14 @@
     
     NSString* htmlPath = [[NSBundle mainBundle] pathForResource:@"ExampleApp" ofType:@"html"];
     NSString* appHtml = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
-//    [webView loadHTMLString:appHtml baseURL:nil];
+    [webView loadHTMLString:appHtml baseURL:nil];
     
     NSURL *url = [NSURL URLWithString:@"http://www.csdn.net/"];
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
-    [webView loadRequest:request];
+//    [webView loadRequest:request];
     
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(20, 100, 280, 40)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(20, 0, 280, 25)];
     button.backgroundColor = [UIColor lightGrayColor];
     [button setTitle:@"向 html 发送消息" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -68,21 +68,33 @@
     NSLog(@"main -- webViewDidFinishLoad");
 }
 
+- (void)backBarClick
+{
+    [webView send:@{@"action": @(7)} withResponse:^(id data) {
+        BOOL result = [[data valueForKey:@"result"] boolValue];
+        if (result) {
+            [UIUtils showAlertView:self.view withText:@"html 允许返回"];
+        } else {
+            [UIUtils showAlertView:self.view withText:@"html 不允许返回"];
+        }
+    }];
+}
+
 - (void)buttonClick:(id)sender
 {
     
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     id data = @{ @"data": @"Hi there, JS!" };
     
-    [webView send:data withHandler:@"titleClick" withResponse:^(id data) {
-        NSLog(@"titleClick handler: %@",data);
-    }];
+//    [webView send:data withHandler:@"titleClick" withResponse:^(id data) {
+//        NSLog(@"titleClick handler: %@",data);
+//    }];
     
     data = @"dddddddddddddddd";
     
-//    [webView send:data withResponse:^(id data) {
-//        NSLog(@" ----- %@",data);
-//    }];
+    [webView send:data withResponse:^(id data) {
+        NSLog(@" ----- %@",data);
+    }];
 }
 
 

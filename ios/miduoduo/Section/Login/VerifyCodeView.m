@@ -173,6 +173,8 @@
 
 - (void)sendVerifyCode
 {
+    
+    
     [[Api instance] requestWithApi:API_VCONDE parameters:@{@"phonenum":self.phoneNumber} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -51,7 +51,12 @@ DEF_SINGLETON(instance)
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer = requestSerializer;
-    [manager POST:url parameters:parameters success:success failure:failure];
+//    [manager POST:url parameters:parameters success:success failure:failure];
+    
+    [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+//        NSString *phonenum = @"15101681550";
+//        [formData appendPartWithFormData:[phonenum dataUsingEncoding:NSUTF8StringEncoding] name:@"phonenum"];
+    } success:success failure:failure];
     
 }
 

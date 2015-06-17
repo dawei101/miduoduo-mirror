@@ -65,18 +65,7 @@
 }
 
 
-+ (UIWindow *)mainWindow
-{
-    UIApplication *app = [UIApplication sharedApplication];
-    if ([app.delegate respondsToSelector:@selector(window)])
-    {
-        return [app.delegate window];
-    }
-    else
-    {
-        return [app keyWindow];
-    }
-}
+
 
 + (void)showGuide
 {
@@ -86,7 +75,7 @@
     frame.origin.y -= frame.size.height;
     guide.frame = frame;
     
-    [[self mainWindow] addSubview:guide];
+    [[UIUtils mainWindow] addSubview:guide];
     [UIView animateWithDuration:1 animations:^{
         guide.frame = [UIScreen mainScreen].bounds;
     }];

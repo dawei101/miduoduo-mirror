@@ -12,38 +12,54 @@
         
         <script>
             
-            // js 调用原生 oc方法
-            function callNativeConfirm() {
-                
-                var data = { 'title': '亲', 'message': '确定要这么干吧', 'okButton': '确定', 'cancelButton': '算了'}
-                WebViewJavascriptBridge.callHandler('confirm', data, function (result) {
-                    alert(result)
-                });
+        
+        function alertView() {
+            var action = '3';
+            var data = { 'type':3,'title': '升级提示', 'message': '米多多兼职 。。。。', 'delay':2, 'cancel':' － 取消 －','ok':' － 确定 －'}
+            
+            var json = {'action':action, 'data' : data }
+            WebViewJavascriptBridge.send(json, function (result) {
+                alert('action: ' + result.action + ' -- result: ' + result.result)
+            });
+        }
 
-<!--                WebViewJavascriptBridge.send(data, function (result) {-->
-<!--                                             alert(result.result+' -- ' + result.msg)-->
-<!--                                             });-->
-            }
+        function hud() {
+            var action = '3';
+            var data = { 'type':5,'message': '恭喜你！ 登录 成功！', 'delay':3}
+            
+            var json = {'action':action, 'data' : data }
+            WebViewJavascriptBridge.send(json, function (result) {
+                alert('action: ' + result.action + ' -- result: ' + result.result)
+            });
+        }
+
+        function address() {
+            var action = 8;
+            var data = {'title': '附近地点', 'city': '北京','latitude':39.927321,'longitude':116.434821}
+            var json = {'action':action,'data' : data}
+            WebViewJavascriptBridge.send(json, function (result) {
+                alert('name: ' + result.name + 
+                    '\n address: ' + result.address  + 
+                    '\n city: ' + result.city + 
+                    '\n location: {' + result.latitude + ',' + result.longitude + '}')
+            });
+        }
+
 
             //按钮事件
             function onBkJsBridgeReady() {
-                //注册事件
-                WebViewJavascriptBridge.registerHandler('titleClick', function(data, responseCallback){
-                                alert(data.data + ": 222")
-                                var responseData = { 'Javascript Says':'Right back atcha!' }
-                                responseCallback(responseData)
-                            });
-                            
-                            
-            	
-                document.getElementById('myBtn').onclick = callNativeConfirm;
                 
-                WebViewJavascriptBridge.defaultHandler(function(data,responseCallback) {
-                                                       alert('default - ' + data)
-                                                       
-                                                       var data = 'hello default from .......'
-                                                       responseCallback(data)
-                                                       });
+                WebViewJavascriptBridge.defaultHandler(
+                    function(data,responseCallback) {
+                        if (data.action == 7) {
+                            var r=confirm("native 按下了返回键");
+                            if (r==true) {
+                                responseCallback({'result': 1});
+                            } else {
+                                responseCallback({'result': 0});
+                            }
+                        };
+                    });
             };
     	
             //连接JSBridge
@@ -58,7 +74,9 @@
     </head>
     <body>
         <div style="width:80%;margin:50px auto;">
-            <button id="myBtn" style="width:100%;">Confirm</button>
+            <button id="alertView" style="width:100%;" onclick="alertView()">－－ 提示框 －－</button> </p>
+            <button id="hud" style="width:100%;" onclick="hud()">－－ 提醒内容 －－</button> </p>
+            <button id="address" style="width:100%;" onclick="address()">－－ 附近地点 －－</button> </p>
         </div>
         
     </body>

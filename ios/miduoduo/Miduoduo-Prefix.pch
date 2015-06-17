@@ -25,6 +25,7 @@
 #import "UIColor+HexColor.h"
 #import "NSString+Simple.h"
 #import "UIView+UserInfo.h"
+#import "UIApplication+ControllerFinder.h"
 
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>

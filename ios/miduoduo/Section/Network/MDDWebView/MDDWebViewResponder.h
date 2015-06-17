@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WebViewJavascriptBridge.h"
 
 @interface MDDWebViewResponder : NSObject
 
 AS_SINGLETON(instance)
 
-
+- (void)invoked:(NSDictionary *)json callback:(BridgeResponseCallback) callback;
 
 @end

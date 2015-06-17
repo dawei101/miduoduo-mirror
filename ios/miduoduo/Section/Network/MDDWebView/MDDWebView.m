@@ -59,7 +59,10 @@
     if (!jsBridge) {
        jsBridge = [[WebViewJavascriptBridge alloc] initBridgeForWebView:self defaultHandler:^(id data, BridgeResponseCallback responseCallback) {
            NSLog(@"%@",data);
-           responseCallback(@{@"result":@"app",@"msg":@"hello wrold"});
+//           responseCallback(@{@"result":@"app",@"msg":@"hello wrold"});
+           
+           [[MDDWebViewResponder instance] invoked:data callback:responseCallback];
+           
        }];
     }
     
