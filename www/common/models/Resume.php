@@ -136,30 +136,19 @@ class Resume extends \common\BaseActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public function getHome()
+    public function getHome_address()
     {
         return $this->hasOne(Address::className(), ['id' => 'home']);
     }
 
-    public function getWorkplace()
+    public function getWorkplace_address()
     {
         return $this->hasOne(Address::className(), ['id' => 'workplace']);
     }
 
     public function extraFields()
     {
-        return ['user', 'home', 'workplace'];
-    }
-
-    public function fields()
-    {
-
-        ['id', 'name', 'phonenum', 'gender', 'birthdate',
-            'degree', 'nation', 'height', 'is_student',
-            'college', 'avatar', 'gov_id', 'grade',
-            'created_time', 'updated_time', 'status',
-            'user_id', 'home', 'workplace', 'origin',
-            'major', 'job_willes'];
+        return ['user', 'home_address', 'workplace_address'];
     }
 
 }
