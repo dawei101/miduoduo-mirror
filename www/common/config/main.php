@@ -23,6 +23,15 @@ return [
                 'encryption' => 'ssl', // It is often used, check your provider or mail server specs
             ],
         ],
+        'app_pusher' => [
+            'class' => 'common\pusher\AppPusher',
+            'app_key' => '2ca0b9dfc8faa0381d1deb06',
+            'master_secret' => '387ed21511f595ee278d29d1',
+        ],
+        'wechat_pusher' => [
+            'class' => 'common\pusher\WechatPusher',
+        ],
+
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
@@ -35,11 +44,6 @@ return [
             'sessionTable' => '{{%session}}',
             'timeout' => 3600 * 24 * 30,
             'name' => 'sid',
-       ],
-       'pusher' => [
-            'class' => 'common\pusher\JPush',
-            'app_key' => '25382afaf629369a15179e9f',
-            'master_secret' => '877bd8b996d72601ba7e318b',
        ],
        'message' => [
             'class' => 'common\message\Message',
