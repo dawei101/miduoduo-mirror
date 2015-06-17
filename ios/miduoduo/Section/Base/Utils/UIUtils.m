@@ -67,14 +67,30 @@
 }
 
 
-+ (void)showAlertView:(UIView *)view withText:(NSString *)text
++ (void)showAlertView:(UIView *)view text:(NSString *)text delay:(NSInteger)delay
 {
     MBProgressHUD *hud = [[MBProgressHUD alloc]initWithView:view];
     [view addSubview:hud];
     hud.mode = MBProgressHUDModeText;
     hud.labelText =  text;
     [hud show:YES];
-    [hud hide:YES afterDelay:3];
+    [hud hide:YES afterDelay:delay];
+}
+
++ (void)showAlertView:(UIView *)view withText:(NSString *)text
+{
+    [self showAlertView:view text:text delay:2];
+}
+
++ (MBProgressHUD *)showAlertView:(UIView *)view text:(NSString *)text
+{
+    MBProgressHUD *hud = [[MBProgressHUD alloc]initWithView:view];
+    [view addSubview:hud];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText =  text;
+    [hud show:YES];
+    
+    return hud;
 }
 
 + (UIButton *)createNextButton

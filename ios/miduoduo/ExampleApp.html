@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="format-detection" content="email=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+        
+        <script>
+            
+            // js 调用原生 oc方法
+            function callNativeConfirm() {
+                
+                var data = { 'title': '亲', 'message': '确定要这么干吧', 'okButton': '确定', 'cancelButton': '算了'}
+                WebViewJavascriptBridge.callHandler('confirm', data, function (result) {
+                    alert(result)
+                });
+
+<!--                WebViewJavascriptBridge.send(data, function (result) {-->
+<!--                                             alert(result.result+' -- ' + result.msg)-->
+<!--                                             });-->
+            }
+
+            //按钮事件
+            function onBkJsBridgeReady() {
+                //注册事件
+                WebViewJavascriptBridge.registerHandler('titleClick', function(data, responseCallback){
+                                alert(data.data + ": 222")
+                                var responseData = { 'Javascript Says':'Right back atcha!' }
+                                responseCallback(responseData)
+                            });
+                            
+                            
+            	
+                document.getElementById('myBtn').onclick = callNativeConfirm;
+                
+                WebViewJavascriptBridge.defaultHandler(function(data,responseCallback) {
+                                                       alert('default - ' + data)
+                                                       
+                                                       var data = 'hello default from .......'
+                                                       responseCallback(data)
+                                                       });
+            };
+    	
+            //连接JSBridge
+            if (window.WebViewJavascriptBridge) {
+                onBkJsBridgeReady()
+            } else {
+                document.addEventListener('WebViewJavascriptBridgeReady', function() {
+                    onBkJsBridgeReady()
+                }, false)
+            }                            	
+        </script>
+    </head>
+    <body>
+        <div style="width:80%;margin:50px auto;">
+            <button id="myBtn" style="width:100%;">Confirm</button>
+        </div>
+        
+    </body>
+</html>

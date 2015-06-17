@@ -7,7 +7,8 @@
 //
 
 #import "GuideView.h"
-#import "NormalUtils.h"
+#import "NSUserDefaults+Convenient.h"
+
 
 @implementation GuideView
 
@@ -59,7 +60,7 @@
         self.frame = frame;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
-        [NormalUtils setFirstRun:NO];
+        [NSUserDefaults isFirstRun:NO];
     }];
 }
 

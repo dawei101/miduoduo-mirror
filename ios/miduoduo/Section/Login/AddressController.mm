@@ -45,7 +45,7 @@
     
     
     // 设置地图级别
-    [_mapView setZoomLevel:13];
+    [_mapView setZoomLevel:18];
     _mapView.isSelectedAnnotationViewFront = NO;
     [_mapView setCenterCoordinate:self.location];
     _geocodesearch = [[BMKGeoCodeSearch alloc]init];
@@ -208,6 +208,8 @@
     } else {
         // 各种情况的判断。。。
     }
+    
+    
 }
 
 
@@ -226,6 +228,7 @@
     
     BMKPoiInfo *item = dataSource[indexPath.row];
     cell.textLabel.text = item.name;
+    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     cell.detailTextLabel.text = item.address;
     
     return cell;
@@ -249,6 +252,8 @@
     BMKPoiInfo *poiInfo = dropDataSource[indexPath.row];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@",poiInfo.name];
+    cell.detailTextLabel.text = poiInfo.address;
+    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
 }
 
 #pragma mark -- DropDownListViewDelegate
@@ -260,7 +265,9 @@
     BMKPoiInfo *poiInfo = dropDataSource[indexPath.row];
     NSString *searchStr = poiInfo.name;
     isThinkPoi = NO;
-    [self poiSearchWithKeyword:searchStr];
+//    [self poiSearchWithKeyword:searchStr];
+    _searchBar.text = poiInfo.name;
+    self.mapView.centerCoordinate = poiInfo.pt;
     [self endEditing:YES];
 }
 
@@ -281,8 +288,8 @@
 
 - (BOOL)endEditing:(BOOL)force
 {
-    _searchBar.text = @"";
     [dropDataSource removeAllObjects];
+    [_dropView reloadDropDownListView];
     [_searchBar resignFirstResponder];
     return YES;
 //    return [self.view endEditing:YES];

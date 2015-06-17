@@ -17,6 +17,9 @@
 #import "Masonry.h"
 #import "MBProgressHUD.h"
 
+#import "AFHTTPRequestOperationManager.h"
+#import "AFHTTPRequestOperation.h"
+
 #import "Common.h"
 #import "UIView+Frame.h"
 #import "UIColor+HexColor.h"

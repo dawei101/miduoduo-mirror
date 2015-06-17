@@ -8,29 +8,56 @@
 
 #import "AppDelegate.h"
 #import "NormalUtils.h"
+#import "CustomURLCache.h"
 #import "GuideView.h"
 #import "LoginViewController.h"
 #import "AddressController.h"
+#import "MainViewController.h"
+#import "NSUserDefaults+Convenient.h"
+#import "CheckUpdate.h"
 
-//BMKMapManager* _mapManager;
+#import <ShareSDK/ShareSDK.h>
+#import <UIKit/UIKit.h>
 
-@interface AppDelegate ()
+//第三方平台的SDK头文件，根据需要的平台导入。
+
+#import <TencentOpenAPI/QQApi.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+#import <TencentOpenAPI/TencentOAuth.h>
+
+@interface AppDelegate () <UIAlertViewDelegate>
 
 @end
 
 @implementation AppDelegate
 
-
-
+- (void)initializePlat
+{
+    [ShareSDK connectSMS];
+    [ShareSDK connectQZoneWithAppKey:@"1104646657"
+                           appSecret:@"EJm3UOlZqzSX8Frc"
+                   qqApiInterfaceCls:[QQApiInterface class]
+                     tencentOAuthCls:[TencentOAuth class]];
+    
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+
+    // 设置 缓存区域
+    CustomURLCache *urlCache = [[CustomURLCache alloc]initWithMemoryCapacity:200 * 1024 * 1024
+                                                                diskCapacity:2000 * 1024 * 1024
+                                                                    diskPath:nil
+                                                                   cacheTime:0];
+    [CustomURLCache setSharedURLCache:urlCache];
+    
+    //1.初始化ShareSDK应用,Appkey
+    [ShareSDK registerApp:@"833fa5e712ad"];
+    [self initializePlat];
     
     // 要使用百度地图，请先启动BaiduMapManager
     BMKMapManager *_mapManager = [[BMKMapManager alloc]init];
-    BOOL ret = [_mapManager start:@"l8u4uHf2tdwvzoArf6OdDYWH" generalDelegate:self];
-    
-    if (!ret) {
+    if (![_mapManager start:@"l8u4uHf2tdwvzoArf6OdDYWH" generalDelegate:self]) {
         NSLog(@"manager start failed!");
     }
 
@@ -39,18 +66,21 @@
     
     LC.navigationController.navigationBarHidden = YES;
     self.window.rootViewController = NC;
-
-//    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[AddressController alloc]init]];
+    
+    
+//    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[NSClassFromString(@"AddressController") alloc]init]];
     
     // 设置全局的导航栏和状态栏颜色
     [[UINavigationBar appearance] setBarTintColor:COLOR_THEME];
     [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
     
    [self.window makeKeyAndVisible];
-    if ([NormalUtils isFirstRun]) {
+    if ([NSUserDefaults isFirstRun]) {
         [GuideView show];
     }
     
+    [self checkUpdate];
+
     return YES;
 }
 
@@ -76,6 +106,20 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{// 内存告警，清除缓存
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [ShareSDK handleOpenURL:url wxDelegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [ShareSDK handleOpenURL:url sourceApplication:sourceApplication annotation:annotation wxDelegate:self];
+}
 
 - (void)onGetNetworkState:(int)iError
 {
@@ -95,6 +139,26 @@
     }
     else {
         NSLog(@"onGetPermissionState %d",iError);
+    }
+}
+
+
+- (void)checkUpdate
+{
+    [[CheckUpdate instance] checkUpdate:^(CheckUpdateInfo *info) {
+        [[[UIAlertView alloc]initWithTitle:info.title message:info.msg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"升级", nil] show];
+    } error:^(NSError *error, id data) {
+        [self performSelector:@selector(checkUpdate) withObject:nil afterDelay:3];
+    }];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [alertView removeFromSuperview];
+    } else {
+        NSURL *phoneURL = [NSURL URLWithString:[CheckUpdate instance].info.url];
+        [[UIApplication sharedApplication] openURL:phoneURL];
     }
 }
 @end
