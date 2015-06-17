@@ -3,17 +3,17 @@
 namespace common\models;
 
 use Yii;
+use common\models\UserReadedSysMessage;
 
 /**
  * This is the model class for table "{{%sys_message}}".
  *
  * @property integer $id
- * @property integer $user_id
- * @property integer $read_flag
- * @property string $message
  * @property string $title
+ * @property string $content
  * @property string $created_time
- * @property integer $has_sent
+ * @property integer $type
+ * @property integer $created_by
  */
 class SysMessage extends \common\BaseActiveRecord
 {
@@ -31,11 +31,11 @@ class SysMessage extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'message', 'title'], 'required'],
-            [['user_id', 'read_flag', 'has_sent'], 'integer'],
-            [['message'], 'string'],
+            [['content'], 'string'],
             [['created_time'], 'safe'],
-            [['title'], 'string', 'max' => 100]
+            [['type', 'created_by'], 'integer'],
+            [['created_by'], 'required'],
+            [['title'], 'string', 'max' => 200]
         ];
     }
 
@@ -46,12 +46,11 @@ class SysMessage extends \common\BaseActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'read_flag' => 'Read Flag',
-            'message' => 'Message',
-            'title' => 'Title',
+            'title' => '标题',
+            'content' => '内容',
             'created_time' => '创建时间',
-            'has_sent' => '已发送',
+            'type' => '类型',
+            'created_by' => 'Created By',
         ];
     }
 
@@ -63,4 +62,21 @@ class SysMessage extends \common\BaseActiveRecord
     {
         return new SysMessageQuery(get_called_class());
     }
+
+    public function getRead_flag()
+    {
+        $user_id = \Yii::$app->user->id;
+        if ($user_id){
+            return $this->hasOne(UserReadedSysMessage::className(),
+                ['sys_message_id' => 'id'])->andWhere(['user_id' => $user_id])->exists();
+        }
+        return false;
+    }
+
+    public function extraFields()
+    {
+        return ['read_flag'];
+    }
+
+
 }

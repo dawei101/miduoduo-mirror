@@ -33,8 +33,10 @@ class TaskCollection extends \common\BaseActiveRecord
         return [
             [['created_time'], 'safe'],
             [['user_id', 'task_id'], 'required'],
-            [['user_id', 'task_id'], 'integer']
-            ['task_id', 'unique', 'targetAttribute' => ['task_id', 'user_id'], 'message'=>'已收藏过'],
+            [['user_id', 'task_id'], 'integer'],
+            ['task_id', 'unique',
+                'targetAttribute' => ['task_id', 'user_id'],
+                'message' => '已收藏过'],
         ];
     }
 

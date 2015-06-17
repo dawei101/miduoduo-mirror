@@ -3,19 +3,19 @@
 namespace api\modules\v1\controllers;
  
 use api\modules\BaseActiveController;
+
+use common\models\UserReadedSysMessage;
  
 /**
  * Sys Message Controller API
  *
  * @author dawei
  */
-class MessageController extends BaseActiveController
+class SysMessageController extends BaseActiveController
 {
-    public $modelClass = 'common\models\Message';
+    public $modelClass = 'common\models\SysMessage';
 
     public $id_column = 'id';
-    public $auto_filter_user = true;
-    public $user_identifier_column = 'user_id';
 
     public function actions()
     {
@@ -23,14 +23,22 @@ class MessageController extends BaseActiveController
         return ['index'=> $actions['index'], 'view'=> $actions['view']];
     }
 
+    public function buildBaseQuery()
+    {
+        $query = parent::buildBaseQuery();
+        $query->andWhere(['>=', 'created_time', \Yii::$app->user->identity->created_time]);
+        return $query;
+    }
+
     public function actionUpdate($id)
     {
-        $m = $this->buildBaseQuery()->andWhere(['id'=>id]);
-        if (!$m){
-            throw new HttpException(404, 'Record not found');
+        $flag = UserReadedSysMessage();
+        $flag->sys_message_id = $id;
+        $flag = \Yii::$app->user->id;
+        if ($model->save() === false && !$model->hasErrors())
+        {
+            throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
         }
-        $m->read_flag = true;
-        $m->save();
-        return $m;
+        return model;
     }
 }

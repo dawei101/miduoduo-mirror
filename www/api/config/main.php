@@ -62,6 +62,7 @@ return [
                         'v1/task-collection',
                         'v1/district',
                         'v1/sys-message',
+                        'v1/message',
                     ],
                     'pluralize' => '',
                 ],

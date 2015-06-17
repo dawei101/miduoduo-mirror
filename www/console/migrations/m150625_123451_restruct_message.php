@@ -1,9 +1,9 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use console\BaseMigration;
 
-class m150625_123451_restruct_message extends Migration
+class m150625_123451_restruct_message extends BaseMigration
 {
     public function up()
     {
@@ -37,7 +37,7 @@ CREATE TABLE `jz_sys_message` (
 )
 ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `miduoduo`.`jz_user_readed_sys_message` (
+CREATE TABLE IF NOT EXISTS `jz_user_readed_sys_message` (
   `sys_message_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`sys_message_id`, `user_id`),
@@ -45,13 +45,15 @@ CREATE TABLE IF NOT EXISTS `miduoduo`.`jz_user_readed_sys_message` (
 )
 ENGINE = InnoDB
            ";
+        $this->execSqls($sqls);
     }
 
     public function down()
     {
-        echo "m150625_123451_restruct_message cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('jz_sys_message');
+        $this->dropTable('jz_user_readed_sys_message');
+        $this->dropTable('jz_message');
+        return true;
     }
     
     /*
