@@ -6,6 +6,7 @@ $this->title = '米多多兼职平台';
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
 <link     rel="shortcut icon"  href="img/miduoduo.ico" />
 <title>米多多/兼职平台</title>
 <link href="css/miduoduo.css" type="text/css" rel="stylesheet" >
