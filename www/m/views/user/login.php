@@ -30,6 +30,11 @@ $this->nav_right_title = '注册';
     <p class="block-btn">
         <?= Html::submitButton('登录', ['class' => 'btn btn-primary btn-lg btn-block']) ?>
     </p>
+    <p class="text-right" style="padding-right: 15px; ">
+        <a href="/user/vlogin">找回密码</a>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <a href="/user/vlogin">手机验证码登录</a>
+    </p>
 <?php ActiveForm::end(); ?>
 </div>
 

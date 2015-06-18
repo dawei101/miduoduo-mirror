@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use backend\assets\AppAsset;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -8,13 +9,28 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = '登录';
 $this->params['breadcrumbs'][] = $this->title;
+AppAsset::register($this);
+
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= Html::csrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+    <?php $this->head() ?>
+    <link href="/css/dashboard.css" rel="stylesheet">
+    <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
+</head>
+<body>
+<?php $this->beginBody() ?>
+<div class="wrap">
+<div class="container">
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-4 col-lg-offset-4">
+            <h1><?= Html::encode($this->title) ?></h1>
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
                 <?= $form->field($model, 'username')->label("手机号") ?>
                 <?= $form->field($model, 'password')->passwordInput()->label("密码") ?>
@@ -26,3 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+</div>
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>

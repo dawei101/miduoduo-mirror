@@ -121,20 +121,36 @@ $this->title = '米多多兼职平台';
 
 <script src="js/jquery.min.js"></script> 
 <script>
+    $(function(){
         $(function(){
-            $(function(){
-            $('#suc1 li').hover(function(){
-                $('.text',this).stop().animate({
-                    height:'0'
-                });
-            },function(){
-                $('.text',this).stop().animate({
-                    height:'330px'
-                });
+        $('#suc1 li').hover(function(){
+            $('.text',this).stop().animate({
+                height:'0'
+            });
+        },function(){
+            $('.text',this).stop().animate({
+                height:'330px'
             });
         });
-        })
-    </script>
-
+    });
+    })
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-64201170-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?71fce0b5ae66cac6b8ba9fc072998791";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 </body>
 </html>

@@ -90,10 +90,6 @@ $this->nav_right_title = '首页';
     $ended = $task->to_date<date('Y-m-d');
 ?>
   <button id="apply" style="width: 100%;" type="button" class="btn btn-primary btn-lg btn-block"><?= $applied?'已报名':($ended?'报名结束':'报名') ?></button>
-  <div class="store-sc hidden" id="collect"><span class="glyphicon glyphicon-heart"></span><br>收藏</div>
-  <a href="/task/report?gid=<?=$task->gid?>" class="report-jb hidden" id="report">
-     <span class="glyphicon glyphicon-eye-open"></span><br>举报
-  </a >
 </nav>
 
 <?php $this->beginBlock('js') ?>
