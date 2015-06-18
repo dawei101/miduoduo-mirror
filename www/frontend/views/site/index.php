@@ -101,7 +101,7 @@ $this->title = '米多多兼职平台';
      <ul>
         <li class="contact-us1">
             <h2>联系我们</h2>
-            <p>邮箱：coutact@miduoduo.cn</p>
+            <p>邮箱：contact@miduoduo.cn</p>
             <p>电话：010-84991662</p>
         </li>
         <li class="about-us">
