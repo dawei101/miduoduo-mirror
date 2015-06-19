@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="AllowBackup" severity="ignore" />
+    <issue id="ContentDescription" severity="ignore" />
+    <issue id="InflateParams" severity="ignore">
+        <ignore path="src/com/miduoduo/person/activity/LoginActivity.java" />
+        <ignore path="src/com/miduoduo/person/login/LoginActivity.java" />
+        <ignore path="src/com/miduoduo/person/register/RegisterActivity.java" />
+    </issue>
+    <issue id="OldTargetApi" severity="ignore" />
+    <issue id="TextFields" severity="ignore" />
+</lint>
