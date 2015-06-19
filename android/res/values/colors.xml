@@ -8,4 +8,7 @@
     <color name="transparent">#0000</color>
     <color name="gray">#CCCCCC</color>
     <color name="devide_line">#CBCED2</color>
+    <color name="layout_bg">#EEEEEE</color>
+    <!--dialog中按钮字体颜色 -->
+    <color name="btntextcolor">#ff1E90FF</color>
 </resources>

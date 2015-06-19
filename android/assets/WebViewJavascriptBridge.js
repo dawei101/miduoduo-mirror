@@ -10,6 +10,7 @@ var messagingIframe;
 var sendMessageQueue = [];
 var receiveMessageQueue = [];
 var messageHandlers = {};
+ var defaultHandler;
 
 var CUSTOM_PROTOCOL_SCHEME = 'miduoduo';
 var QUEUE_HAS_MESSAGE = '__QUEUE_MESSAGE__/';
@@ -63,6 +64,10 @@ function send(data, responseCallback) {
     }, responseCallback);
 }
 
+ function defaultHandler(handler) {
+    defaultHandler = handler;
+ }
+ 
 function registerHandler(handlerName, handler) {
     messageHandlers[handlerName] = handler;
 }
@@ -112,8 +117,8 @@ function _dispatchMessageFromNative(messageJSON) {
             responseCallback(message.responseData);
             delete responseCallbacks[message.responseId];
         } else {
-        //直接发送
-            if (message.callbackId) {
+            //由 native 向 html 发送消息
+            if (message.callbackId) { // 创建由 html 向 native 发送消息的回调函数
                 var callbackResponseId = message.callbackId;
                 responseCallback = function(responseData) {
                 _doSend({ responseId: callbackResponseId,responseData: responseData });
@@ -121,9 +126,11 @@ function _dispatchMessageFromNative(messageJSON) {
             }
 
             var handler = WebViewJavascriptBridge._messageHandler;
-            if (message.handlerName) {
+            if (message.handlerName) {// 找到 html 注册的handler
                 handler = messageHandlers[message.handlerName];
-            }
+               } else {// 发送默认 handler
+               handler = defaultHandler;
+               }
             //查找指定handler
             try {
                 handler(message.data, responseCallback);
@@ -148,6 +155,7 @@ function _handleMessageFromNative(messageJSON) {
 var WebViewJavascriptBridge = window.WebViewJavascriptBridge = {
     init: init,
     send: send,
+    defaultHandler:defaultHandler,
     registerHandler: registerHandler,
     callHandler: callHandler,
     _fetchQueue: _fetchQueue,

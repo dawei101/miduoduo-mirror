@@ -1,6 +1,7 @@
 package com.miduoduo.person.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +18,10 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.miduoduo.person.Constants;
 import com.miduoduo.person.R;
 import com.miduoduo.person.network.MiHttpClient;
+import com.miduoduo.person.util.DialogUtils;
 import com.miduoduo.person.util.LogUtils;
 import com.miduoduo.person.util.SharedPreferencesUtils;
+import com.miduoduo.person.util.Utils;
 
 /**
  * <ul>
@@ -37,6 +40,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private Button btnForget;
 	private Button btnLogin;
 	private Button btnRegister;
+	private ProgressDialog loadingDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
+		loadingDialog = DialogUtils.getLoadingDialog(mContext);
 		btnJump.setOnClickListener(this);
 		btnForget.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
@@ -80,13 +85,17 @@ public class LoginActivity extends Activity implements OnClickListener {
 			if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
 				Toast.makeText(mContext, "账号或密码不能为空", Toast.LENGTH_SHORT)
 						.show();
+			} else if (!Utils.isPhone(userName)) {
+				Toast.makeText(this, "手机号码格式不正确", Toast.LENGTH_SHORT).show();
 			} else {
-				httpClient.userLogin("18600098028", userName,
+				loadingDialog.show();
+				httpClient.userLogin(userName, password,
 						new RequestCallBack<String>() {
 
 							@Override
 							public void onSuccess(
 									ResponseInfo<String> responseInfo) {
+								loadingDialog.dismiss();
 								LogUtils.e("login: " + responseInfo.result);
 								Toast.makeText(mContext, "登录成功",
 										Toast.LENGTH_SHORT).show();
@@ -99,7 +108,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 							@Override
 							public void onFailure(HttpException error,
 									String msg) {
-								LogUtils.e(msg);
+								LogUtils.e("登录失败信息：" + msg);
+								loadingDialog.dismiss();
 								Toast.makeText(mContext, "登录失败",
 										Toast.LENGTH_SHORT).show();
 							}
@@ -115,9 +125,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	private void goInputPhoneNum(boolean b) {
+	private void goInputPhoneNum(boolean value) {
 		Intent intent = new Intent(this, InputPhoneNumActivity.class);
-		intent.putExtra("isRegister", b);
+		intent.putExtra("isRegister", value);
 		startActivity(intent);
 	}
 

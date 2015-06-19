@@ -12,12 +12,10 @@ public class UpdateUtils {
 	/**
 	 * 安装
 	 */
-	public static void installApp(Activity activity, String url) {
+	public static void installApp(Activity activity, String filePath) {
 
 		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setDataAndType(
-				Uri.fromFile(new File(getDownloadDirectory().getAbsolutePath()
-						+ getDownloadFileName(url))),
+		intent.setDataAndType(Uri.fromFile(new File(filePath)),
 				"application/vnd.android.package-archive");
 		activity.startActivity(intent);
 	}

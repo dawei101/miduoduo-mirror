@@ -19,6 +19,7 @@ public class MainActivity extends Activity {
 
 	private ImageButton mBar1, mBar2, mBar3;
 	private View currentButton;
+	public static boolean isForeground = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		initButtomBar();
+		
 	}
 	
 	private void initButtomBar() {
@@ -41,6 +43,12 @@ public class MainActivity extends Activity {
 		mBar1.performClick();
 	}
 
+	@Override
+	protected void onResume() {
+		isForeground = true;
+		super.onResume();
+	}
+	
 	/** 底部功能栏的监听器 */
 	private OnClickListener onClickListener = new OnClickListener() {
 		@Override
@@ -80,5 +88,11 @@ public class MainActivity extends Activity {
 			currentButton = view;
 		}
 	};
+	
+	@Override
+	protected void onPause() {
+		isForeground = false;
+		super.onPause();
+	}
 
 }

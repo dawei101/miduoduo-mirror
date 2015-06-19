@@ -2,6 +2,9 @@ package com.miduoduo.person.util;
 
 import java.io.File;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
@@ -77,19 +80,18 @@ public class WebViewUtils {
 		try {
 			context.deleteDatabase("webview.db");
 			context.deleteDatabase("webviewCache.db");
+			File webviewCacheDir = new File(context.getCacheDir()
+					.getAbsolutePath() + "/webviewCache");
+			// 删除webview 缓存目录
+			if (webviewCacheDir.exists()) {
+				deleteFile(webviewCacheDir);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		// WebView 缓存文件
 		File appCacheDir = new File(getWebViewFilesDir(context));
-		// File webviewCacheDir = new
-		// File(context.getCacheDir().getAbsolutePath()
-		// + "/webviewCache");
-		// // 删除webview 缓存目录
-		// if (webviewCacheDir.exists()) {
-		// deleteFile(webviewCacheDir);
-		// }
 		// 删除webview 缓存 缓存目录
 		if (appCacheDir.exists()) {
 			deleteFile(appCacheDir);
@@ -119,4 +121,46 @@ public class WebViewUtils {
 			Log.e("TAG", "delete file no exists " + file.getAbsolutePath());
 		}
 	}
+
+	public static String getRequestAction(String json) {
+		try {
+			JSONObject object = new JSONObject(json);
+			return object.getString("action");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+//	if ("1".equals(action)) {
+//
+//	} else if ("2".equals(action)) {//隐藏导航栏
+//
+//	} else if ("3".equals(action)) {//提示框
+//
+//	} else if ("4".equals(action)) {//确认提示
+//
+//	} else if ("5".equals(action)) {//push 新的页面
+//
+//	} else if ("6".equals(action)) {//pop
+//
+//	} else if ("7".equals(action)) {//返回按钮
+//
+//	} else if ("8".equals(action)) {//地图位置获取
+//
+//	} else if ("9".equals(action)) {//城市切换
+//
+//	}
+	
+	/** action=1:导航栏配置 */
+	public static void setNavigation(String json) {
+		try {
+			JSONObject object = new JSONObject(json);
+			JSONObject dataObject = object.getJSONObject("data");
+			String nvshow = dataObject.getString("nvshow");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

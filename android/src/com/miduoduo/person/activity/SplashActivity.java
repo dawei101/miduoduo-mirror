@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+
+import cn.jpush.android.api.JPushInterface;
 
 import com.miduoduo.person.Constants;
 import com.miduoduo.person.R;
@@ -19,7 +22,7 @@ import com.miduoduo.person.util.SharedPreferencesUtils;
  * </ul>
  */
 public class SplashActivity extends Activity {
-	
+
 	boolean isFirstIn = false;
 	private static final int GO_HOME = 1000;
 	private static final int GO_GUIDE = 1001;
@@ -53,7 +56,9 @@ public class SplashActivity extends Activity {
 	}
 
 	private void init() {
-
+		String registrationID = JPushInterface
+				.getRegistrationID(getApplicationContext());
+		Log.i("TAG", "registrationID=" + registrationID);
 		isFirstIn = SharedPreferencesUtils.getBoolean(getApplicationContext(),
 				Constants.Config.ISFIRSTRUN, true);
 
@@ -65,6 +70,18 @@ public class SplashActivity extends Activity {
 			mHandler.sendEmptyMessageDelayed(GO_GUIDE, 3000);
 		}
 
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		JPushInterface.onResume(getApplicationContext());
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		JPushInterface.onPause(getApplicationContext());
 	}
 
 	private void goHome() {

@@ -33,13 +33,14 @@ public class Utils {
 	 * 验证是否为手机号
 	 */
 	public static boolean isPhone(CharSequence phoneNum) {
-		return isEmpty(phoneNum) && phoneNumPattern.matcher(phoneNum).matches();
+		return !isEmpty(phoneNum)
+				&& phoneNumPattern.matcher(phoneNum).matches();
 	}
 
 	/**
 	 * 验证是否为Email地址
 	 */
 	public static boolean isEmail(CharSequence email) {
-		return isEmpty(email) && emailPattern.matcher(email).matches();
+		return !isEmpty(email) && emailPattern.matcher(email).matches();
 	}
 }

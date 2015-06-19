@@ -2,10 +2,11 @@ package com.miduoduo.person.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 /**
  * <ul>
- * <li>类描述：加载动画的工具类
+ * <li>类描述：对话框工具类
  * <li>创建人：liyunlong
  * <li>创建时间：2015-3-19 下午12:57:09
  * </ul>
@@ -25,30 +26,47 @@ public class DialogUtils {
 	// dialog.setCanceledOnTouchOutside(false);
 	// return dialog;
 	// }
-	
+
 	/**
 	 * 加载对话框
 	 */
-	public static ProgressDialog getLoadingDialog(Context context){
+	public static ProgressDialog getLoadingDialog(Context context) {
 		ProgressDialog dialog = new ProgressDialog(context);
-		
+
 		// setIcon(R.drawable.dialogicon);
 		// setTitle("温馨提示");
 		dialog.setMessage("正在加载");
 		dialog.setCanceledOnTouchOutside(false);
 		return dialog;
 	}
-	
+
 	/**
 	 * 加载对话框
 	 */
-	public static ProgressDialog getDialog(Context context){
+	public static ProgressDialog getDialog(Context context) {
 		ProgressDialog dialog = new ProgressDialog(context);
 		dialog.setTitle("下载");
 		dialog.setMessage("正在下载，请稍后...");
 		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.setCancelable(true);// 设置点击进度条外部，不响应
+		return dialog;
+	}
+
+	/**
+	 * 自定义对话框
+	 */
+	public static CustomDialog getCustomDialog(Context context, String title,
+			String message, String confirmText,
+			DialogInterface.OnClickListener confirmListener, String cancelText,
+			DialogInterface.OnClickListener cancelListener) {
+		CustomDialog dialog = new CustomDialog.Builder(context).setTitle(title)
+				.setMessage(message)
+				.setPositiveButton(confirmText, confirmListener)
+				.setPositiveButton(cancelText, cancelListener).create();
+
+		dialog.setCanceledOnTouchOutside(false);
+
 		return dialog;
 	}
 }

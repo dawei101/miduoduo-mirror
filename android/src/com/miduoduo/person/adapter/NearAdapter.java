@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.miduoduo.person.R;
+import com.miduoduo.person.bean.Near;
+
 /**
  * <ul>
  * <li>类描述：
@@ -18,37 +21,16 @@ import android.widget.TextView;
  */
 public class NearAdapter extends BaseAdapter {
 
-	private ArrayList<String> mList = null;
+	private ArrayList<Near> mList = null;
 
-	private int mResourceId = 0;
-	private int mTextViewResourceId = 0;
-
-	private Context mContext = null;
-
-	public NearAdapter(Context context, ArrayList<String> list, int resourceId,
-			int textViewSourceId) {
-		super();
-		mContext = context;
-		mList = list;
-		mResourceId = resourceId;
-		mTextViewResourceId = textViewSourceId;
-		notifyDataSetChanged();
-	}
-
-	public ArrayList<String> getList() {
-		return mList;
-	}
-
-	public void setList(ArrayList<String> list) {
+	public void setDatas(ArrayList<Near> list) {
 		this.mList = list;
+		notifyDataSetChanged();
 	}
 
 	@Override
 	public int getCount() {
-		if (mList == null) {
-			return 0;
-		}
-		return mList.size();
+		return mList != null ? mList.size() : 0;
 	}
 
 	@Override
@@ -58,31 +40,37 @@ public class NearAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		return 0;
+		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
-
+		Context mContext = parent.getContext();
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = LayoutInflater.from(mContext).inflate(mResourceId,
-					null);
-			holder.info = (TextView) convertView
-					.findViewById(mTextViewResourceId);
+			convertView = LayoutInflater.from(mContext).inflate(
+					R.layout.near_address, null);
+			// 查找控件
+			holder.tvKey = (TextView) convertView
+					.findViewById(R.id.tv_near_key);
+			holder.tvDistrict = (TextView) convertView
+					.findViewById(R.id.tv_near_district);
 			convertView.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			// 复用ListView滚出屏幕的itemView
+			holder = (ViewHolder) convertView.getTag(); // 获取到可复用的item中的所有控件对象
 		}
 
-		String text = mList.get(position);
-		holder.info.setText(text);
+		Near near = mList.get(position);
+		holder.tvKey.setText(near.getKey());
+		holder.tvDistrict.setText(near.getDistrict());
 		return convertView;
 
 	}
 
-	public final class ViewHolder {
-		public TextView info;
+	static final class ViewHolder {
+		TextView tvKey;
+		TextView tvDistrict;
 	}
 }

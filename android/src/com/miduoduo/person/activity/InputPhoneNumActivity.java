@@ -87,16 +87,15 @@ public class InputPhoneNumActivity extends BaseActivity implements
 		LogUtils.i("phoneNumber=" + phoneNumber);
 		if (TextUtils.isEmpty(phoneNumber)) {
 			Toast.makeText(this, "手机号码不能为空", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		if (!Utils.isPhone(phoneNumber)) {
+		} else if (!Utils.isPhone(phoneNumber)) {
 			Toast.makeText(this, "手机号码格式不正确", Toast.LENGTH_SHORT).show();
-			return;
+		} else {
+			Intent intent = new Intent(this,
+					InputVerificationCodeActivity.class);
+			intent.putExtra("isRegister", isRegister);
+			intent.putExtra("phoneNumber", phoneNumber);
+			startActivity(intent);
 		}
-		Intent intent = new Intent(this, InputVerificationCodeActivity.class);
-		intent.putExtra("isRegister", isRegister);
-		intent.putExtra("phoneNumber", phoneNumber);
-		startActivity(intent);
 	}
 
 }
