@@ -35,6 +35,7 @@ apt-get install -y apache2=2.4\*
 apt-get install -y php5-mysql
 apt-get install -y mysql-server-5.6
 apt-get install -y php5-gd
+apt-get install -y php5-curl
 apt-get install -y git
 a2enmod rewrite
 ```
