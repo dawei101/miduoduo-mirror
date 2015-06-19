@@ -6,6 +6,7 @@ import com.miduoduo.person.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -14,10 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * 自定义对话框
- * 
- * @author：liyunlong
- * @since：2015-5-11 下午4:40:40
+ * <ul>
+ * <li>类描述：自定义对话框
+ * <li>创建时间： 2015-6-19 下午11:57:41
+ * <li>创建人：liyunlong
+ * </ul>
  */
 public class CustomDialog extends Dialog {
 
@@ -144,8 +146,12 @@ public class CustomDialog extends Dialog {
 
 		/** 设置对话框【标题】 */
 		private void setTitle(View layout) {
-			((TextView) layout.findViewById(R.id.customdialog_title))
-					.setText(title);
+			TextView tvTitle = ((TextView) layout.findViewById(R.id.customdialog_title));
+			if (!TextUtils.isEmpty(title)) {
+				tvTitle.setText(title);
+			}else {
+				tvTitle.setVisibility(View.GONE);
+			}
 			// 设置对话框【标题】加粗
 			// ((TextView) layout.findViewById(R.id.customdialog_title))
 			// .getPaint().setFakeBoldText(true);
