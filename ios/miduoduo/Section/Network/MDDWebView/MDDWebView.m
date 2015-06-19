@@ -58,10 +58,7 @@
 {
     if (!jsBridge) {
        jsBridge = [[WebViewJavascriptBridge alloc] initBridgeForWebView:self defaultHandler:^(id data, BridgeResponseCallback responseCallback) {
-           NSLog(@"%@",data);
-//           responseCallback(@{@"result":@"app",@"msg":@"hello wrold"});
-           
-           [[MDDWebViewResponder instance] invoked:data callback:responseCallback];
+          [[MDDWebViewResponder instance] invoked:data callback:responseCallback];
            
        }];
     }
@@ -73,13 +70,30 @@
         super.delegate = (id)interceptor;
     }
     
+    if (!self.urlRequest) {
+        self.urlRequest = [[NSMutableURLRequest alloc]init];
+    }
+    
     responder = [MDDWebViewResponder instance];
 }
 
 - (void)setDelegate:(id<UIWebViewDelegate>)delegate
 {
+    super.delegate = nil;
     interceptor.receiver = delegate;
     super.delegate = (id)interceptor;
+}
+
+- (void)setUrl:(NSString *)url
+{
+    _url = url;
+    self.urlRequest.URL = [NSURL URLWithString:url];
+    [self loadRequest:self.urlRequest];
+}
+
+- (void)willMoveToWindow:(UIWindow *)newWindow
+{
+    
 }
 
 - (void)registerHandler:(NSString*)name handler:(void (^)(id data,MDDCallback cb))handler
@@ -108,7 +122,6 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSLog(@"request: %@",request.URL);
     [jsBridge parseWithRequest:request];
     if ([interceptor.receiver respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
         [interceptor.receiver webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
@@ -126,8 +139,6 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"webViewDidFinishLoad");
-    
     [jsBridge loadJS];
 
     if ([interceptor.receiver respondsToSelector:@selector(webViewDidFinishLoad:)]) {

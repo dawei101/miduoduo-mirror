@@ -15,6 +15,7 @@
 #import "MainViewController.h"
 #import "NSUserDefaults+Convenient.h"
 #import "CheckUpdate.h"
+#import "APService.h"
 
 #import <ShareSDK/ShareSDK.h>
 #import <UIKit/UIKit.h>
@@ -41,6 +42,15 @@
     
 }
 
+- (void)initJPush:(NSDictionary *)launchOptions
+{
+    [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                   UIRemoteNotificationTypeSound |
+                                                   UIRemoteNotificationTypeAlert)
+                                       categories:nil];
+    [APService setupWithOption:launchOptions];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 
@@ -60,6 +70,11 @@
     if (![_mapManager start:@"l8u4uHf2tdwvzoArf6OdDYWH" generalDelegate:self]) {
         NSLog(@"manager start failed!");
     }
+    
+    [self initJPush:launchOptions];
+    
+    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+    [application registerForRemoteNotifications];
 
     LoginViewController *LC = [[LoginViewController alloc]init];
     UINavigationController *NC = [[UINavigationController alloc]initWithRootViewController:LC];
@@ -67,6 +82,8 @@
     LC.navigationController.navigationBarHidden = YES;
     self.window.rootViewController = NC;
     
+    NSString *jpushid = [APService registrationID];
+    NSLog(@"%@",jpushid);
     
 //    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[[NSClassFromString(@"AddressController") alloc]init]];
     
@@ -92,6 +109,8 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:10];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -111,6 +130,26 @@
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    
+    // Required
+    [APService registerDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    // Required
+    [APService handleRemoteNotification:userInfo];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    
+    // IOS 7 Support Required
+    [APService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     return [ShareSDK handleOpenURL:url wxDelegate:self];
@@ -119,6 +158,10 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     return [ShareSDK handleOpenURL:url sourceApplication:sourceApplication annotation:annotation wxDelegate:self];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    [APService showLocalNotificationAtFront:notification identifierKey:nil];
 }
 
 - (void)onGetNetworkState:(int)iError

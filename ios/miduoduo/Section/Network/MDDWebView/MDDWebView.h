@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "WebViewJavascriptBridge.h"
 
+typedef void (^MDDCallback)(id data);
+
 @interface MDDWebView : UIWebView
 
-typedef void (^MDDCallback)(id data);
+@property (nonatomic, strong)   NSString *url;
+
+@property (nonatomic, strong)   NSMutableURLRequest *urlRequest;
 
 - (void)registerHandler:(NSString*)name handler:(void (^)(id data,MDDCallback cb))handler;
 

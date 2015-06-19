@@ -32,22 +32,22 @@
     NSString* appHtml = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
     [webView loadHTMLString:appHtml baseURL:nil];
     
-    NSURL *url = [NSURL URLWithString:@"http://www.csdn.net/"];
-    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
-//    [webView loadRequest:request];
+//    NSURL *url = [NSURL URLWithString:@"http://www.csdn.net/"];
+//    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
+////    [webView loadRequest:request];
     
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(20, 0, 280, 25)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(20, 10, 280, 25)];
     button.backgroundColor = [UIColor lightGrayColor];
     [button setTitle:@"向 html 发送消息" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:button];
 
-    [webView registerHandler:@"confirm" handler:^(id data, void (^callback)(id data)) {
-        NSLog(@"%@",data);
-        callback(@"kkkkkkkkkkkkk");
-    }];
+//    [webView registerHandler:@"confirm" handler:^(id data, void (^callback)(id data)) {
+//        NSLog(@"%@",data);
+//        callback(@"kkkkkkkkkkkkk");
+//    }];
     
 }
 
@@ -82,33 +82,19 @@
 
 - (void)buttonClick:(id)sender
 {
+
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
-    id data = @{ @"data": @"Hi there, JS!" };
+//    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:20];
+//    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    localNotification.alertBody = @"addddddd";
+    localNotification.alertAction = @"查看";
     
-//    [webView send:data withHandler:@"titleClick" withResponse:^(id data) {
-//        NSLog(@"titleClick handler: %@",data);
-//    }];
-    
-    data = @"dddddddddddddddd";
-    
-    [webView send:data withResponse:^(id data) {
-        NSLog(@" ----- %@",data);
-    }];
+//    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 }
 
 
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-//    if (buttonIndex == 0)
-//    {
-//        _callback(@{@"result": @YES,@"msg":@"hello yes"});
-//    }
-//    else
-//    {
-//        _callback(@{@"result": @NO,@"msg":@"hello no"});
-//    }
-}
+
 
 @end

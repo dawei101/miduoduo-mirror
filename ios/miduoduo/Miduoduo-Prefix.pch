@@ -26,6 +26,9 @@
 #import "NSString+Simple.h"
 #import "UIView+UserInfo.h"
 #import "UIApplication+ControllerFinder.h"
+#import "UIViewController+UserInfo.h"
+#import "UIImage+Scale.h"
+
 
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>

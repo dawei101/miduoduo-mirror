@@ -145,6 +145,21 @@
     return hud;
 }
 
++ (void)showRefreshView:(UIView *)view text:(NSString *)text
+{
+    MBProgressHUD * HUD = [[MBProgressHUD alloc] initWithView:view];
+    [view addSubview:HUD];
+    HUD.dimBackground = YES;
+    HUD.labelText = text;
+    
+    [HUD show:YES];
+}
+
++ (void)hiddenAlertView:(UIView *)view
+{
+    [MBProgressHUD hideAllHUDsForView:view animated:NO];
+}
+
 + (UIButton *)createNextButton
 {
     UIButton *nextBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, SCREEN_WIDTH - 20, 40)];

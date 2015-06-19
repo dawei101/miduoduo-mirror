@@ -25,7 +25,8 @@ typedef void (^ResultBlock)(NSString *text);
 + (void)showAlertView:(UIView *)view text:(NSString *)text delay:(NSInteger)delay;
 + (void)showAlertView:(UIView *)view withText:(NSString *)text;
 + (MBProgressHUD *)showAlertView:(UIView *)view text:(NSString *)text;
-
++ (void)showRefreshView:(UIView *)view text:(NSString *)text;
++ (void)hiddenAlertView:(UIView *)view;
 
 + (UIButton *)createNextButton;
 

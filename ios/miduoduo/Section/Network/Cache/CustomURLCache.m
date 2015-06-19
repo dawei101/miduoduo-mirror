@@ -180,10 +180,10 @@
     }
     
     NSScanner *scanner = [[NSScanner alloc]initWithString:url];
-//    if (![scanner scanString:CACHE_FILTER_BASE_PATH intoString:nil]) {
-//        // 过滤非需要混存路径，不要缓存
-//        return nil;
-//    }
+    if (![scanner scanString:CACHE_FILTER_BASE_PATH intoString:nil]) {
+        // 过滤非需要混存路径，不要缓存
+        return nil;
+    }
     
     __block NSCachedURLResponse *cachedResponse = nil;
     //sendSynchronousRequest请求也要经过NSURLCache

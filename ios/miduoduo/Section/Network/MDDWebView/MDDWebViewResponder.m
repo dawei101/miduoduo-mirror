@@ -10,8 +10,7 @@
 #import "MDDWebViewModel.h"
 #import "UIUtils.h"
 #import "AddressController.h"
-#import <BaiduMapAPI/BMapKit.h>
-#import <CoreLocation/CLLocation.h>
+#import "PushController.h"
 
 @interface MDDWebViewResponder () <UIAlertViewDelegate>
 
@@ -29,13 +28,19 @@ DEF_SINGLETON(instance)
     webModel.action = [[json valueForKey:@"action"] integerValue];
     webModel.callback = callback;
     id data = [json valueForKey:@"data"];
+    
+    UIViewController *activityController = [[UIApplication sharedApplication]activeViewController];
     if (webModel.action == 3) {
         MDDAlertModel *model = [[MDDAlertModel alloc]initWithDictionary:data];
         if (!model) {
             return;
         }
-        if (model.type == 5) {
-            
+        
+        if (model.type == 1) {
+            [UIUtils hiddenAlertView:activityController.view];
+        } else if (model.type == 2) {
+            [UIUtils showRefreshView:activityController.view text:[data valueForKey:@"message"]];
+        } else if (model.type == 5) {
             UIViewController *activity = [UIUtils activityViewController];
             [UIUtils showAlertView:activity.view text:model.message delay:model.delay];
         } else {
@@ -45,14 +50,25 @@ DEF_SINGLETON(instance)
             [alertView show];
         }
 
-    } else if (webModel.action == 8) {
+    } else if (webModel.action == 5) {
+        PushController *pushController = [[PushController alloc]init];
+        pushController.title = [data valueForKey:@"title"];
+        pushController.url = [data valueForKey:@"url"];
+        pushController.params = [data valueForKey:@"params"];
+        pushController.userInfo = webModel;
+        activityController.navigationController.navigationBarHidden = ![[data valueForKey:@"nvshow"] boolValue];
+        [activityController.navigationController pushViewController:pushController animated:YES];
+    } else if (webModel.action == 6) {
+        BOOL nvshow = [[data valueForKey:@"nvshow"] boolValue];
+        activityController.navigationController.navigationBarHidden = !nvshow;
+        [activityController.navigationController popViewControllerAnimated:YES];
+    }  else if (webModel.action == 8) {
         
         MDDAddressModel *model = [[MDDAddressModel alloc]initWithDictionary:data];
-        
-        UIViewController *activityController = [[UIApplication sharedApplication]activeViewController];
         AddressController *addressController = [[AddressController alloc]init];
         addressController.location = (CLLocationCoordinate2D){model.latitude,model.longitude};
         addressController.locationCity = model.city;
+        addressController.title = model.title;
         addressController.back = ^(BMKPoiInfo *info) {
             NSDictionary *addr = @{@"name":info.name,
                                    @"address":info.address,
@@ -63,14 +79,10 @@ DEF_SINGLETON(instance)
             
             [activityController.navigationController popViewControllerAnimated:YES];
         };
-    
-        if ([activityController isKindOfClass:[UINavigationController class]]) {
-            UINavigationController *navigationController = (id)activityController;
-            [navigationController pushViewController:addressController animated:YES];
-        } else {
-            [activityController.navigationController pushViewController:addressController animated:YES];
-        }
         
+        
+
+        [activityController.navigationController pushViewController:addressController animated:YES];
     }
 }
 

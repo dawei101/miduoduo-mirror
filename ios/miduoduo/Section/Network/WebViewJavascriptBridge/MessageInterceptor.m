@@ -33,14 +33,30 @@
 @synthesize middleMan;
 
 - (id)forwardingTargetForSelector:(SEL)aSelector {
-    if ([middleMan respondsToSelector:aSelector]) { return middleMan; }
-    if ([receiver respondsToSelector:aSelector]) { return receiver; }
+    if ([middleMan respondsToSelector:aSelector]) {
+//        NSLog(@"forwardingTargetForSelector - middleMan: %@",NSStringFromClass([middleMan class]));
+        return middleMan;
+    }
+    
+    if ([receiver respondsToSelector:aSelector]) {
+//        NSLog(@"forwardingTargetForSelector - receiver: %@",NSStringFromClass([receiver class]));
+        return receiver;
+    }
+    
     return [super forwardingTargetForSelector:aSelector];
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector {
-    if ([middleMan respondsToSelector:aSelector]) { return YES; }
-    if ([receiver respondsToSelector:aSelector]) { return YES; }
+    if ([middleMan respondsToSelector:aSelector]) {
+//        NSLog(@"respondsToSelector - middleMan: %@",NSStringFromClass([middleMan class]));
+        return YES;
+    }
+    
+    if ([receiver respondsToSelector:aSelector]) {
+//        NSLog(@"respondsToSelector - receiver: %@",NSStringFromClass([receiver class]));
+        return YES;
+    }
+    
     return [super respondsToSelector:aSelector];
 }
 

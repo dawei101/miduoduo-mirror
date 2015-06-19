@@ -45,31 +45,70 @@
             });
         }
 
+        function pushView() {
+            var action = 5;
+            var data = {'nvshow':1, 'title': 'push 新页面', 'url':'http://192.168.1.217/NewPage.html'}
+            var json = {'action':action,'data' : data}
+            WebViewJavascriptBridge.send(json, function (result) {
+                alert(' 返回 。。。。。');
+            });
+        }
 
-            //按钮事件
-            function onBkJsBridgeReady() {
-                
-                WebViewJavascriptBridge.defaultHandler(
-                    function(data,responseCallback) {
-                        if (data.action == 7) {
-                            var r=confirm("native 按下了返回键");
-                            if (r==true) {
-                                responseCallback({'result': 1});
-                            } else {
-                                responseCallback({'result': 0});
-                            }
-                        };
-                    });
-            };
+        function pushViewNo() {
+            var action = 5;
+            var data = {'nvshow':0, 'url':'http://192.168.1.217/NewPage.html'}
+            var json = {'action':action,'data' : data}
+            WebViewJavascriptBridge.send(json, function (result) {
+                alert(' 返回 。。。。。');
+            });
+        }
+
+        
+        function refreshView() {
+            var action = '3';
+            var data = { 'type':2,'message': '刷新中 .....！'}
+            
+            var json = {'action':action, 'data' : data }
+            WebViewJavascriptBridge.send(json, function (result) {
+            });
+
+            window.setTimeout(hiddenView,10000);
+        }
+
+        function hiddenView() {
+            var action = '3';
+            var data = { 'type':1}
+            
+            var json = {'action':action, 'data' : data }
+            WebViewJavascriptBridge.send(json, function (result) {
+            });
+        }
+
+
+        //按钮事件
+        function onBkJsBridgeReady() {
+            
+            WebViewJavascriptBridge.defaultHandler(
+                function(data,responseCallback) {
+                    if (data.action == 7) {
+                        var r=confirm("native 按下了返回键");
+                        if (r==true) {
+                            responseCallback({'result': 1});
+                        } else {
+                            responseCallback({'result': 0});
+                        }
+                    };
+                });
+        };
     	
-            //连接JSBridge
-            if (window.WebViewJavascriptBridge) {
+        //连接JSBridge
+        if (window.WebViewJavascriptBridge) {
+            onBkJsBridgeReady()
+        } else {
+            document.addEventListener('WebViewJavascriptBridgeReady', function() {
                 onBkJsBridgeReady()
-            } else {
-                document.addEventListener('WebViewJavascriptBridgeReady', function() {
-                    onBkJsBridgeReady()
-                }, false)
-            }                            	
+            }, false)
+        }                            	
         </script>
     </head>
     <body>
@@ -77,6 +116,14 @@
             <button id="alertView" style="width:100%;" onclick="alertView()">－－ 提示框 －－</button> </p>
             <button id="hud" style="width:100%;" onclick="hud()">－－ 提醒内容 －－</button> </p>
             <button id="address" style="width:100%;" onclick="address()">－－ 附近地点 －－</button> </p>
+
+            <button id="pushView" style="width:100%;" onclick="pushView()">－－ push 一个新页面,显示导航栏 －－</button> </p>
+            <button id="pushViewNo" style="width:100%;" onclick="pushViewNo()">－－ push 一个新页面，没有导航栏 －－</button> </p>
+
+
+            <button id="popView" style="width:100%;" onclick="refreshView()">－－ 刷新界面,10秒后退出 －－</button> </p>
+            <button id="popViewNo" style="width:100%;" onclick="hiddenView()">－－ 隐藏刷新界面－－</button> </p>
+            
         </div>
         
     </body>
