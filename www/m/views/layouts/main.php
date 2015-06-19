@@ -25,6 +25,7 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <!-- <?php // echo $this ->blocks['js'];?> -->
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
 </head>
 <body>
@@ -52,6 +53,9 @@ AppAsset::register($this);
     <?= $content ?>
 </div>
 <?php $this->endBody() ?>
+
+
+
 <script>
     GB={};
     GB.is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
