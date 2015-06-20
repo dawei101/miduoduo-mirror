@@ -8,7 +8,7 @@ class m150610_061558_add_invited_by_to_user extends BaseMigration
     public function up()
     {
         $sqls = "
-           ALTER TABLE `miduoduo`.`jz_user` 
+           ALTER TABLE `jz_user` 
             ADD COLUMN `invited_by` INT NOT NULL DEFAULT 0 AFTER `is_staff`,
             ADD INDEX `invited_user_id` (`invited_by` ASC);
             update jz_district set name =  REPLACE(name, '市辖区', '') where 1=1;

@@ -10,7 +10,6 @@ class m130524_201442_init extends Migration
         $sqls = 
         "-- MySQL dump 10.13  Distrib 5.6.19, for debian-linux-gnu (x86_64)
         --
-        -- Host: localhost    Database: miduoduo
         -- ------------------------------------------------------
         -- Server version	5.6.19-0ubuntu0.14.04.1
 

@@ -8,7 +8,7 @@ class m150610_085326_rebuild_task_table extends BaseMigration
     public function up()
     {
         $sqls = "
-            ALTER TABLE `miduoduo`.`jz_task` 
+            ALTER TABLE `jz_task` 
             DROP COLUMN `address_id`,
             ADD COLUMN `address` VARCHAR(500) NOT NULL,
             ADD COLUMN `company_name` VARCHAR(500) NOT NULL,
