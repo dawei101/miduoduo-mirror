@@ -22,7 +22,7 @@ $this->title = '米多多兼职平台';
     <div class="banner"><img src="img/banner.png" width="751" height="407">
       <h1>米多多 | 大学生兼职平台</h1>
       <div class="erweima"><img src="img/erweima.png" width="140" height="140">
-        <p>扫码进入m站</p>
+        <p>扫码进入c站</p>
       </div>
     </div>
   </div>
@@ -119,7 +119,7 @@ $this->title = '米多多兼职平台';
      </ul>
 </footer>
 
-<script src="js/jquery.min.js"></script> 
+<script src="js/jquery.min.js"></script>
 <script>
     $(function(){
         $(function(){
@@ -148,7 +148,7 @@ var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?71fce0b5ae66cac6b8ba9fc072998791";
-  var s = document.getElementsByTagName("script")[0]; 
+  var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
