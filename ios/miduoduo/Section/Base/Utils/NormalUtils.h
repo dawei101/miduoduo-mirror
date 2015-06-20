@@ -10,8 +10,9 @@
 
 @interface NormalUtils : NSObject
 
-+ (BOOL)isFirstRun;
-+ (void)setFirstRun:(BOOL)isFirst;
+
++ (BOOL)networkAvailable;
+
 
 
 @end

@@ -156,7 +156,6 @@ class Task extends \common\BaseActiveRecord
             $this->user_id = $user_id; 
             $this->gid = time() . mt_rand(100, 999) . $user_id; 
         }
-
         return parent::beforeSave($insert); 
     }
 

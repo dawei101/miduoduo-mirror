@@ -56,7 +56,6 @@ class SiteController extends FBaseController
         // echo 'ok';die();//可以到这里
         // $this->redirect(\Yii::$app->params['baseurl.m']);
         // $this->layout= false;
-     
         return $this -> renderPartial('index');
         //return $this->render('index');
     }

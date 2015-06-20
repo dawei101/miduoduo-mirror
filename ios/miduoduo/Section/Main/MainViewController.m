@@ -7,8 +7,13 @@
 //
 
 #import "MainViewController.h"
+#import "MDDWebView.h"
+#import "UIWebView+AFNetworking.h"
 
-@interface MainViewController ()
+@interface MainViewController () <UIWebViewDelegate>
+{
+    MDDWebView      *webView;
+}
 
 @end
 
@@ -18,14 +23,31 @@
 {
     [super viewDidAppear:animated];
     
+    webView = [[MDDWebView alloc]initWithFrame:self.view.bounds];
+    [self.view addSubview:webView];
+    
+    webView.delegate = self;
+    
+    NSString* htmlPath = [[NSBundle mainBundle] pathForResource:@"ExampleApp" ofType:@"html"];
+    NSString* appHtml = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
+    [webView loadHTMLString:appHtml baseURL:nil];
+    
+//    NSURL *url = [NSURL URLWithString:@"http://www.csdn.net/"];
+//    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
+////    [webView loadRequest:request];
     
     
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(30, 70, 60, 40)];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(20, 10, 280, 25)];
     button.backgroundColor = [UIColor lightGrayColor];
+    [button setTitle:@"向 html 发送消息" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:button];
-    
+
+//    [webView registerHandler:@"confirm" handler:^(id data, void (^callback)(id data)) {
+//        NSLog(@"%@",data);
+//        callback(@"kkkkkkkkkkkkk");
+//    }];
     
 }
 
@@ -41,19 +63,38 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSLog(@"main -- webViewDidFinishLoad");
+}
 
+- (void)backBarClick
+{
+    [webView send:@{@"action": @(7)} withResponse:^(id data) {
+        BOOL result = [[data valueForKey:@"result"] boolValue];
+        if (result) {
+            [UIUtils showAlertView:self.view withText:@"html 允许返回"];
+        } else {
+            [UIUtils showAlertView:self.view withText:@"html 不允许返回"];
+        }
+    }];
+}
 
 - (void)buttonClick:(id)sender
 {
-//    [GuideView show];
 
-//    [[UIApplication sharedApplication].keyWindow addSubview:controller.view];
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     
-//    GuideViewController *controller = [[GuideViewController alloc]init];
-//    [self.navigationController pushViewController:controller animated:YES];
+//    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:20];
+//    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    localNotification.alertBody = @"addddddd";
+    localNotification.alertAction = @"查看";
     
-    [self.navigationController pushViewController:[[NSClassFromString(@"RecordViewController") alloc]init] animated:YES];
+//    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 }
+
+
 
 
 @end

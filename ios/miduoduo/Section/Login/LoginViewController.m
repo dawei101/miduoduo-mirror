@@ -145,9 +145,14 @@
     UIViewController *controller = [[NSClassFromString(viewController) alloc]init];
     
     UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:controller];
+
     
-    UIImage *image = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIImage *selectedImage = [[UIImage imageNamed:selectedImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *image = [UIImage imageWithCGImage:[[UIImage imageNamed:imageName] CGImage] scale:1.5 orientation:UIImageOrientationUp];
+    UIImage *selectedImage = [[UIImage imageWithCGImage:[[UIImage imageNamed:selectedImageName] CGImage] scale:1.2 orientation:UIImageOrientationUp] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//      CGSize size = CGSizeMake(30,30);  
+//    UIImage *image = [[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] scaleToSize:size];
+//    UIImage *selectedImage = [[[UIImage imageNamed:selectedImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]scaleToSize:size];
+    
     UITabBarItem *tabBarItem = [[UITabBarItem alloc]initWithTitle:title image:image selectedImage:selectedImage];
     navigationController.tabBarItem = tabBarItem;
     
@@ -169,6 +174,8 @@
     
 //    [self presentModalViewController:tabBarController animated:YES];
     [self.navigationController pushViewController:tabBarController animated:YES];
+    
+    [[UITabBarItem appearance] setTitleTextAttributes:@{UITextAttributeTextColor:[UIColor lightGrayColor]} forState:UIControlStateSelected];
 }
 
 

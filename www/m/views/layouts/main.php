@@ -52,6 +52,9 @@ AppAsset::register($this);
     <?= $content ?>
 </div>
 <?php $this->endBody() ?>
+
+
+
 <script>
     GB={};
     GB.is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));

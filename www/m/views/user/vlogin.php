@@ -37,9 +37,7 @@ $this->nav_right_title = '登录';
         <p class="block-btn">
             <?= Html::submitButton('下一步', ['class' => 'btn btn-primary btn-lg btn-block', 'name' => 'login-button']) ?>
         </p>
-
             <?php ActiveForm::end(); ?>
-
         <p class="text-right" style="padding-right: 15px; ">
             <a href="/user/vlogin">找回密码</a>
             &nbsp; &nbsp; &nbsp; &nbsp;

@@ -18,15 +18,18 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eS6-ij-5NY">
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="eS6-ij-5NY">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xQX-hp-bVH" customClass="BMKMapView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xQX-hp-bVH" customClass="BMKMapView">
                     <rect key="frame" x="0.0" y="44" width="320" height="200"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="Kvf-g3-Nt2"/>
+                    </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="LNW-p4-hKV">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="LNW-p4-hKV">
                     <rect key="frame" x="0.0" y="267" width="320" height="302"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -34,25 +37,55 @@
                         <outlet property="delegate" destination="-1" id="8yH-wm-5QY"/>
                     </connections>
                 </tableView>
-                <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q1f-jp-8Ol" customClass="DropDownListView">
-                    <rect key="frame" x="0.0" y="44" width="320" height="200"/>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q1f-jp-8Ol" customClass="DropDownListView">
+                    <rect key="frame" x="0.0" y="44" width="320" height="221"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="searchBar" destination="eS6-ij-5NY" id="j1Z-sf-DMl"/>
                     </connections>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="附近地点" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnS-DT-Eka">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="附近地点" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnS-DT-Eka">
                     <rect key="frame" x="8" y="245" width="304" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="hcs-os-304"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SBe-mr-w6G">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SBe-mr-w6G">
                     <rect key="frame" x="0.0" y="266" width="320" height="1"/>
                     <color key="backgroundColor" red="0.81974037247474751" green="0.81974037247474751" blue="0.81974037247474751" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="YRp-mp-WMs"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="cnS-DT-Eka" firstAttribute="top" secondItem="xQX-hp-bVH" secondAttribute="bottom" constant="1" id="1ba-4b-sZY"/>
+                <constraint firstItem="eS6-ij-5NY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6Sf-gK-MkU"/>
+                <constraint firstAttribute="bottom" secondItem="LNW-p4-hKV" secondAttribute="bottom" constant="-1" id="6bW-5E-Lsy"/>
+                <constraint firstItem="SBe-mr-w6G" firstAttribute="top" secondItem="cnS-DT-Eka" secondAttribute="bottom" id="883-fD-U9e"/>
+                <constraint firstAttribute="trailing" secondItem="cnS-DT-Eka" secondAttribute="trailing" constant="8" id="AuK-tg-DPf"/>
+                <constraint firstItem="cnS-DT-Eka" firstAttribute="top" secondItem="xQX-hp-bVH" secondAttribute="bottom" constant="1" id="IFF-kx-8fG"/>
+                <constraint firstItem="q1f-jp-8Ol" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="J62-nC-89B"/>
+                <constraint firstItem="cnS-DT-Eka" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="OfZ-2Y-Smu"/>
+                <constraint firstAttribute="trailing" secondItem="eS6-ij-5NY" secondAttribute="trailing" id="Qkh-qn-Swu"/>
+                <constraint firstItem="SBe-mr-w6G" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="TOK-8l-Cjp"/>
+                <constraint firstItem="LNW-p4-hKV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Tqd-uQ-QEC"/>
+                <constraint firstItem="xQX-hp-bVH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="U4N-Df-A9u"/>
+                <constraint firstItem="q1f-jp-8Ol" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Va5-AE-mcL"/>
+                <constraint firstAttribute="trailing" secondItem="q1f-jp-8Ol" secondAttribute="trailing" id="dLd-Mx-11g"/>
+                <constraint firstItem="SBe-mr-w6G" firstAttribute="top" secondItem="q1f-jp-8Ol" secondAttribute="bottom" constant="1" id="eZ3-Ye-Ry4"/>
+                <constraint firstItem="eS6-ij-5NY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="l7Q-WF-pW6"/>
+                <constraint firstItem="xQX-hp-bVH" firstAttribute="top" secondItem="eS6-ij-5NY" secondAttribute="bottom" id="mo1-Hq-iQk"/>
+                <constraint firstItem="q1f-jp-8Ol" firstAttribute="top" secondItem="eS6-ij-5NY" secondAttribute="bottom" id="pMP-po-lL5"/>
+                <constraint firstAttribute="trailing" secondItem="LNW-p4-hKV" secondAttribute="trailing" id="sV6-pT-TVt"/>
+                <constraint firstAttribute="trailing" secondItem="SBe-mr-w6G" secondAttribute="trailing" id="xBK-f7-Nau"/>
+                <constraint firstAttribute="trailing" secondItem="xQX-hp-bVH" secondAttribute="trailing" id="xXN-Nr-86I"/>
+                <constraint firstItem="LNW-p4-hKV" firstAttribute="top" secondItem="SBe-mr-w6G" secondAttribute="bottom" id="xqh-O7-ZI9"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="432" y="272"/>
         </view>

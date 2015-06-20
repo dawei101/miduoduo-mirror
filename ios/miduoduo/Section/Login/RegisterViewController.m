@@ -13,6 +13,7 @@
 #import "SetPasswordView.h"
 #import <objc/NSObject.h>
 #import "InformationViewController.h"
+#import "Api.h"
 
 @interface RegisterViewController () <RegisterBaseViewDelegate>
 {
@@ -24,7 +25,8 @@
     NSArray     *titleList;
     
     NSString    *phoneNumber;
-    NSString    *verifyCode;
+    
+    MBProgressHUD   *hud;
 }
 
 @end
@@ -62,6 +64,8 @@
         phoneView.hintSting = @"请填写你的注册手机号码";
         self.title = titleList[0] ;
     }
+    
+ 
 }
 
 - (void)pushView:(UIView *)view
@@ -104,13 +108,15 @@
 {
     if (view == phoneView) {
         phoneNumber = params;
+        verifyCodeView.phoneNumber = phoneNumber;
+        
         [self pushView:verifyCodeView];
     } else if (view == verifyCodeView) {
         if (params == nil) { //  阅读用户协议
             [self pushView:protocolView];
         } else { // 下一步
-            verifyCode = params;
-            [self pushView:setPwdView];
+            [self verifyCode:params];
+            
         }
         
     } else if (view == setPwdView) {
@@ -143,8 +149,20 @@
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
-    
-    
 }
+
+
+#pragma mark - network
+- (void)verifyCode:(NSString *)code
+{
+    [UIUtils showAlertView:self.view text:@"验证中 ..."];
+    [[Api instance] requestWithApi:API_VLOGIN parameters:@{@"phonenum":phoneNumber,@"code":code} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [hud hide:YES];
+        [self pushView:setPwdView];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+    }];
+}
+
 
 @end
