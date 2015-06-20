@@ -3,120 +3,181 @@
 我们Js Bridge的实现是基于开源[JsBridge](https://github.com/lzyzsd/JsBridge)
 原理为,在webview中，js通过添加iframe 节点，在ios/android可以捕获对应的事件，然后进行处理。
 
+
+* 请求认证
+```
+    {
+        action: 'b_require_auth',
+        data: {
+            'message': '请先登陆'
+            }
+    }
+
+    Return :
+    {
+        action: 'b_require_auth',
+        result: {
+            phone_num: '',
+            access_token: '',
+            }
+        }
+
+    附：
+        如果未登陆，不返回任何东西，或返回access_token为null
+```
+
+
 * 提示框
 ```
-function alertView() {
-    var action = '3';
-    var data = { 'type':3,'title': '升级提示', 'message': '米多多兼职 。。。。', 'delay':2, 'cancel':' － 取消 －','ok':' － 确定 －'}
-    
-    var json = {'action':action, 'data' : data }
+    {
+        action: 'b_alert',
+        data = {
+            'disappear_delay': -1, //整数，显示n毫秒后消失
+            'title': '升级提示',
+            'message': '米多多兼职',
+            'operation' => [
+                'cancel'=>'取消',
+                'ok'=>'确定'
+             ]
+        }
+    }
+    Return:
+    {
+        action: 'b_alert',
+        result: {
+            value: 0 // operation的index
+            },
+        }
     WebViewJavascriptBridge.send(json, function (result) {
         alert('action: ' + result.action + ' -- result: ' + result.result)
     });
 }
 ```
 
-* ??
+* Toast alert
 ```
-function hud() {
-    var action = '3';
-    var data = { 'type':5,'message': '恭喜你！ 登录 成功！', 'delay':3}
-    
-    var json = {'action':action, 'data' : data }
+    {
+        action: 'b_toast_alert',
+        data: {
+            'message': '恭喜你登陆成功',
+            'disappear_delay': n, //显示n毫秒后消失
+            }
+        }
+    Return:
+        No return data
+
     WebViewJavascriptBridge.send(json, function (result) {
         alert('action: ' + result.action + ' -- result: ' + result.result)
+    });
+```
+
+* push页面
+```
+    {
+        action: 'b_push',
+        data = {
+            'has_nav': true,
+            'has_tab': false,
+            'title': 'push 新页面',
+            'left_action': null, // null可以取消任何显示
+            'right_action': {title: '消息' ,action: {'action':action,'data' : data}],
+            'url':'http://192.168.1.217/NewPage.html'
+        }
+    }
+    Return:
+        No return;
+    var json = {'action':action,'data' : data}
+    WebViewJavascriptBridge.send(json, function (result) {
+        alert(' 返回 。。。。。');
+    });
+}
+```
+
+* pop页面
+```
+    {
+        action: 'b_pop',
+        data: {},
+    }
+    Return:
+        No return;
+    var json = {'action':action,'data' : data}
+    WebViewJavascriptBridge.send(json, function (result) {
+        alert(' 返回 。。。。。');
     });
 }
 ```
 
 * 获取地址
 ```
-function getAddress() {
-    var action = 8;
-    var data = {'title': '附近地点', 'city': '北京','latitude':39.927321,'longitude':116.434821}
-    var json = {'action':action,'data' : data}
-    WebViewJavascriptBridge.send(json, function (result) {
-        alert('name: ' + result.name + 
-            '\n address: ' + result.address  + 
-            '\n city: ' + result.city + 
-            '\n location: {' + result.latitude + ',' + result.longitude + '}')
-    });
-}
+    {
+        action: 'b_get_address',
+        data: {
+            'title': '附近地点',
+        }
+    }
+    Return:
+    {
+        action: 'b_get_address',
+        result: {
+            name: 地址名称,
+            address: 具体地址,
+            city: 城市,
+            latitude: ,
+            longitude: ,
+            }
+        }
 ```
 
-* push页面
+* 获取Location
 ```
-function pushView() {
-    var action = 5;
-    var data = {'nvshow':1, 'title': 'push 新页面', 'url':'http://192.168.1.217/NewPage.html'}
-    var json = {'action':action,'data' : data}
-    WebViewJavascriptBridge.send(json, function (result) {
-        alert(' 返回 。。。。。');
-    });
-}
-
-function pushViewNo() {
-    var action = 5;
-    var data = {'nvshow':0, 'url':'http://192.168.1.217/NewPage.html'}
-    var json = {'action':action,'data' : data}
-    WebViewJavascriptBridge.send(json, function (result) {
-        alert(' 返回 。。。。。');
-    });
-}
-
+    {
+        action: 'b_get_current_location',
+        data: {},
+    }
+    Return:
+    {
+        action: 'b_get_current_location',
+        result = {
+            latitude: ,
+            longitude: ,
+            },
+    }
 ```
 
-* 刷新
+
+* 加载中/加载完毕
 ```
-function refreshView() {
-    var action = '3';
-    var data = { 'type':2,'message': '刷新中 .....！'}
-    
-    var json = {'action':action, 'data' : data }
-    WebViewJavascriptBridge.send(json, function (result) {
-    });
-    window.setTimeout(hiddenView,10000);
-}
+    {
+        action: 'b_start_processing/b_stop_processing',
+        data: {
+            message: '加载中',
+            }
+        }
+    Return:
+        No return;
 ```
 
-* ??
+* 连接JSBridge 与处理 app 主动事件消息
 ```
-function hiddenView() {
-    var action = '3';
-    var data = { 'type':1}
-    
-    var json = {'action':action, 'data' : data }
-    WebViewJavascriptBridge.send(json, function (result) {
-    });
-}
-```
+document.addEventListener('WebViewJavascriptBridgeReady', function() {
+     WebViewJavascriptBridge.defaultHandler(handle_action)
+    }, false);
 
-* 按钮事件
-```
-function onBkJsBridgeReady() {
-    
-    WebViewJavascriptBridge.defaultHandler(
-        function(data,responseCallback) {
-            if (data.action == 7) {
-                var r=confirm("native 按下了返回键");
-                if (r==true) {
-                    responseCallback({'result': 1});
-                } else {
-                    responseCallback({'result': 0});
-                }
-            };
-        });
-};
-```
 
-* 连接JSBridge
-```
-if (window.WebViewJavascriptBridge) {
-    onBkJsBridgeReady()
-} else {
-    document.addEventListener('WebViewJavascriptBridgeReady', function() {
-        onBkJsBridgeReady()
-    }, false)
-
+function handle_action(data, responseCallback) {
+    data = {
+            action: 'q_before_quit',
+            data: {}
+            }
+    return = {
+        action: 'q_before_quit',
+        result: {
+            value: true,
+            message: '一般只用于不能退出提示',
+            }
+        }
+    responseCallback(return);
+});
 ```
 
