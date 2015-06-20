@@ -104,9 +104,9 @@ BASE_URL = 'http://api.miduoduo.cn'
 ##request请求 标识认证信息
 
 我们有两种方式标识出登录后的认证信息
--[Http Basic](https://zh.wikipedia.org/zh-sg/HTTP%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%81)
--access_token
-    在所有url后 + ?access_token=登陆成功返回的access_token
+- [Http Basic](https://zh.wikipedia.org/zh-sg/HTTP%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%81)
+- access_token
+    * 在所有url后 + ?access_token=登陆成功返回的access_token
 
 ##使用api
 api完全使用rest方式完成
