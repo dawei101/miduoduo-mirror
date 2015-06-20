@@ -40,4 +40,4 @@ app开发协议
     * TODO
 
 
-* app 与Html5 互通协议 [参见文档](./html4app.MD)
+* [app 与Html5 互通协议 参见文档](./html4app.md)

@@ -110,20 +110,23 @@ class EntryController extends BaseActiveController
         }
         $version = AppReleaseVersion::find()->where(['device_type'=>$device_type])
             ->orderBy(['id'=>SORT_DESC])->one();
-        
+
         return $this->renderJson([
             'success'=> true,
             'message'=> '获取成功',
-            'result'=>$device_type->asArray()
+            'result'=>$version->asArray()
             ]);
     }
 
     public function activeDevice($user)
     {
-        $device = $this->distillDeviceFromRequest(Yii::$app->request);
-        $device->user_id = $user->id;
-        $device->access_token = $user->access_token;
-        $device->save();
+        $device_type = Utils::getDeviceType(Yii::$app->request->get('User-Agent'));
+        if ($device_type){
+            $device = $this->distillDeviceFromRequest(Yii::$app->request);
+            $device->user_id = $user->id;
+            $device->access_token = $user->access_token;
+            $device->save();
+        }
     }
 
 
@@ -139,7 +142,7 @@ class EntryController extends BaseActiveController
                 if($user->validatePassword($password)){
                     $user->generateAccessToken();
                     $user->save();
-                    $this->activeDevice();
+                    $this->activeDevice($user);
                     return $this->renderJson([
                         'success'=> true,
                         'message'=> '登录成功',
@@ -162,19 +165,19 @@ class EntryController extends BaseActiveController
         $phonenum = Yii::$app->request->post('phonenum');
         if (!Utils::isPhonenum($phonenum)){
             return $this->renderJson([
-                'result'=> false,
+                'success'=> false,
                 'message'=> "手机号码不正确"
             ]);
         }
         $sender = SmsSenderFactory::getSender();
         if ($sender->sendVerifyCode($phonenum)){
             return $this->renderJson([
-                    'result'=> true,
+                    'success'=> true,
                     'message'=> "验证码已发送"
             ]);
         }
         return $this->renderJson([
-                'result'=> false,
+                'success'=> false,
                 'message'=> "验证码发送失败, 请稍后重试。"
         ]);
     }
@@ -186,7 +189,7 @@ class EntryController extends BaseActiveController
         $user = User::findByUsername($phonenum);
         if ($user){
             return $this->renderJson([
-                'result'=> false,
+                'success'=> false,
                 'message'=> "手机号码已被注册，请直接登陆"
             ]);
         }
@@ -205,7 +208,7 @@ class EntryController extends BaseActiveController
                 $user = User::createUserWithPhonenum($phonenum);
             }
             $user->generateAccessToken();
-            $this->activeDevice();
+            $this->activeDevice($user);
             $user->save();
             return $this->renderJson([
                 'success'=> true,
@@ -229,7 +232,7 @@ class EntryController extends BaseActiveController
         $user = User::findByUsername($phonenum);
         if ($user){
             return $this->renderJson([
-                'result'=> false,
+                'success'=> false,
                 'message'=> "手机号码已被注册，请直接登陆"
             ]);
         }
