@@ -1,4 +1,4 @@
-服务器端
+服务器端 Bootstrap
 ===============================
 * [Dashboard 后台(backend/)](./backend)
 * [手机端/app (m/)](./m)
@@ -65,7 +65,16 @@ cd ..
 这里需要你自己设置相关 **-local.php的文件，比如数据库连接等等
 
 
-###导入mysql数据
+
+###创建数据库并导入mysql数据
+* 创建数据库
+```
+mysql -u your-mysql-username -p
+$mysql> create database the-database-name-you-want default character set utf8 default collate utf8_general_ci;
+$mysql> exit;
+```
+
+* 导入数据
 ```
 cd www
 ./yii migrate --migrationPath=@yii/rbac/migrations
