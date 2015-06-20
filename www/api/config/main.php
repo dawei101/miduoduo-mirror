@@ -73,7 +73,7 @@ return [
                         'POST vcode'=>'vcode',
                         'POST vlogin'=>'vlogin',
                         'POST vcode-for-signup'=>'vcode-for-signup',
-                        'POST vsignup'=>'vsignup',
+                        'POST signup'=>'signup',
                         'GET,POST report-device' => 'report-device',
                         'POST report-push-id' => 'report-push-id',
                         'GET,POST check-update' => 'check-update',
