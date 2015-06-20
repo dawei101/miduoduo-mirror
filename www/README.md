@@ -41,6 +41,7 @@ a2enmod rewrite
 ```
 
 ###拉取git代码
+在clone代码前，请确保在github已经添加了sshkey ，如果没有添加，请[点击这里](https://github.com/settings/ssh)添加
 ```
 cd the_path_that_you_want_save
 git clone git@github.com:chongdd/miduoduo.git
