@@ -8,9 +8,13 @@
 
 #import "MDDViewController.h"
 #import <CoreLocation/CLLocation.h>
+#import <BaiduMapAPI/BMapKit.h>
 
 @interface AddressController : MDDViewController
 
 @property (nonatomic, assign)   CLLocationCoordinate2D location;
 @property (nonatomic, retain)   NSString    *locationCity;
+
+@property (strong, nonatomic)   void (^back)(BMKPoiInfo *info);
+
 @end

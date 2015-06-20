@@ -8,6 +8,7 @@
 
 #import "VerifyCodeView.h"
 #import "NormalUtils.h"
+#import "Api.h"
 
 @interface VerifyCodeView ()
 {
@@ -112,6 +113,8 @@
     fetchCodeBtn.enabled = NO;
     fetchCodeBtn.backgroundColor = [UIColor lightGrayColor];
     fetchCodeBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
+    [self sendVerifyCode];
 }
 
 - (void)nextBtnClick:(id)sender
@@ -165,6 +168,18 @@
 - (void)hidden
 {
     
+}
+
+
+- (void)sendVerifyCode
+{
+    
+    
+    [[Api instance] requestWithApi:API_VCONDE parameters:@{@"phonenum":self.phoneNumber} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@",responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
 }
 
 @end
