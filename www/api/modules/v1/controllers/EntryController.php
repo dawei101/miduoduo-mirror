@@ -31,7 +31,7 @@ class EntryController extends BaseActiveController
                     [
                         'actions' => ['login', 'signup', 'vlogin',
                         'vcode', 'vcode-for-signup', 'report-device',
-                        'report-push-id', 'check-update',
+                        'report-push-id', 'check-update', 
                     ],
                         'allow' => true,
                     ],
@@ -234,22 +234,5 @@ class EntryController extends BaseActiveController
             ]);
         }
         return $this->actionVlogin();
-    }
-
-    public function actionSetPassword()
-    {
-        $password = Yii::$app->request->post('password');
-        if (empty($password) || strlen($password)<6)
-        {
-            return $this->renderJson([
-                'result'=> false,
-                'message'=> "请保证密码不小于6位数",
-            ]);
-        }
-        //TODO 
-        return $this->renderJson([
-            'result'=> false,
-            'message'=> "api未完成",
-        ]);
     }
 }
