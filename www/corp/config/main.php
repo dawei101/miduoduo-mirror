@@ -13,18 +13,23 @@ foreach ($param_files as $f){
     }
 }
 
+
+
+
 return [
-    'id' => 'app-corp',
+    'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
+    'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'controllerNamespace' => 'corp\controllers',
+    'modules' => [],
     'components' => [
-        'user' => [
+        'user'=>[
+            'class' => 'yii\web\User',
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => ['user/login']
+            'loginUrl' => 'site/login',
         ],
-        'log' => [
+       'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
@@ -39,12 +44,20 @@ return [
         'cache' => [
             'class' => 'yii\caching\DbCache',
             'db' => 'db',
-            'cacheTable' => 'jz_cache_for_frontend',
+            'cacheTable' => 'jz_cache_for_backend',
         ],
         'urlManager' => [
-            'class' => 'yii\web\UrlManager',
-            'showScriptName' => false,
             'enablePrettyUrl' => true,
+            'rules' => [
+                // your rules go here
+            ],
+        ],
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=miduoduo',
+            'username' => 'root',
+            'password' => '123123',
+            'charset' => 'utf8',
         ],
     ],
     'params' => $params,

@@ -1,169 +1,110 @@
 <?php
-namespace frontend\controllers;
+
+namespace backend\controllers;
 
 use Yii;
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
+use common\models\User;
+use common\models\UserSearch;
+use backend\BBaseController;
+use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-
-use common\Utils;
-use common\models\LoginWithDynamicCodeForm;
-use common\sms\SmsSenderFactory;
-
-use frontend\FBaseController;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
 
 /**
- * Site controller
+ * UserController implements the CRUD actions for User model.
  */
-class UserController extends FBaseController
+class UserController extends BBaseController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'vcode'],
-                'rules' => [
-                    [
-                        'actions' => ['signup', 'vcode'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
 
     /**
-     * @inheritdoc
+     * Lists all User models.
+     * @return mixed
      */
-    public function actions()
+    public function actionIndex()
     {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
-    }
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-    public function actionVcode()
-    {
-        $phonenum = Yii::$app->request->get('phonenum');
-        if (!Utils::isPhonenum($phonenum)){
-            return $this->renderJson([
-                'result'=> false,
-                'msg'=> "手机号码不正确"
-            ]);
-        }
-        $sender = SmsSenderFactory::getSender();
-        if ($sender->sendVerifyCode($phonenum)){
-            return $this->renderJson([
-                    'result'=> true,
-                    'msg'=> "验证码已发送"
-            ]);
-        }
-        return $this->renderJson([
-                'result'=> false,
-                'msg'=> "验证码发送失败, 请稍后重试。"
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
-
     }
 
-    public function actionLogin()
+    /**
+     * Displays a single User model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
     {
-        if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
-        $model = new LoginWithDynamicCodeForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+    /**
+     * Creates a new User model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new User();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('login', [
+            return $this->render('create', [
                 'model' => $model,
             ]);
         }
     }
 
-    public function actionLogout()
+    /**
+     * Updates an existing User model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
     {
-        Yii::$app->user->logout();
+        $model = $this->findModel($id);
 
-        return $this->goHome();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
-    public function actionSignup()
+    /**
+     * Deletes an existing User model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
     {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
+        $this->findModel($id)->delete();
 
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
+        return $this->redirect(['index']);
     }
 
-    public function actionRequestPasswordReset()
+    /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return User the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
     {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->getSession()->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
-            } else {
-                Yii::$app->getSession()->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
-            }
+        if (($model = User::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionResetPassword($token)
-    {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->getSession()->setFlash('success', 'New password was saved.');
-
-            return $this->goHome();
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
     }
 }

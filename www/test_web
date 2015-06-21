@@ -4,3 +4,5 @@ php -S 0.0.0.0:9999 -t ./m/web/ &
 php -S 0.0.0.0:9998 -t ./frontend/web/ &
 php -S 0.0.0.0:9997 -t ./backend/web/ &
 php -S 0.0.0.0:9996 -t ./api/web/ &
+php -S 0.0.0.0:9995 -t ./corp/web/ &
+

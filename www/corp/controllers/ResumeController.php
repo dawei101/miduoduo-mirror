@@ -1,84 +1,146 @@
 <?php
-namespace frontend\controllers;
+
+namespace backend\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-
 use common\models\Resume;
 use common\models\Freetime;
+use common\models\ResumeSearch;
+use backend\BBaseController;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
-use frontend\FBaseController;
-use frontend\models\EditResumeForm;
-
-class ResumeController extends FBaseController
+/**
+ * ResumeController implements the CRUD actions for Resume model.
+ */
+class ResumeController extends BBaseController
 {
-     /**
-     * @inheritdoc
-     */
+
     public function behaviors()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['edit', 'freetimes'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['edit01'],
-                        'allow' => true,
-                    ],
-                ],
-            ],
+        $bhvs = parent::behaviors();
+        $bhvs['access']['rules'][] = [
+            'actions' => ['freetimes'],
+            'allow' => true,
+            'roles' => ['admin' , 'hunter'],
         ];
+        return $bhvs;
     }
 
-
-    public function actionEdit01()
+    /**
+     * Lists all Resume models.
+     * @return mixed
+     */
+    public function actionIndex()
     {
-        return $this->redirect(Yii::$app->params['baseurl.m']);
-        $user = Yii::$app->user;
-        $resume = Resume::findOne(['user_id'=>$user->id]);
-        if (!$resume){
-            $resume = new Resume();
-            $resume->user_id = $user->id; 
-            $resume->is_student = true; 
-            $resume->phonenum = $user->identity->username;
-            $resume->save();
+        $searchModel = new ResumeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Displays a single Resume model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id=null, $user_id=null)
+    {
+        if ($id) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
         }
 
-        $model = new EditResumeForm($resume);
-
-        $freetimes = Freetime::findAll(['user_id'=>Yii::$app->user->id]);
-        $freetimes_dict = [];
-        foreach($freetimes as $freetime){
-            $freetimes_dict[$freetime->dayofweek] = $freetime;
+        if ($user_id) {
+            return $this->render('view', [
+                'model' => Resume::find()->where(['user_id'=>$user_id])->one(),
+            ]);
         }
+    }
+
+    /**
+     * Creates a new Resume model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Resume();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->render('edit01_done', [
-                'model' => $model,
-            ]);
-
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('edit01', [
+            return $this->render('create', [
                 'model' => $model,
-                'freetimes' => $freetimes_dict
             ]);
+        }
+    }
+
+    /**
+     * Updates an existing Resume model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Deletes an existing Resume model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Resume model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Resume the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Resume::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 
     public function actionFreetimes()
     {
+        $user_id = intval(Yii::$app->request->get('user_id'));
+        if (!$user_id){
+            throw new HttpException(404, '未知的用户信息');
+        }
         if (Yii::$app->request->isPost){
             $dayofweek = intval(Yii::$app->request->post('dayofweek'));
             $when = Yii::$app->request->post('when');
             $is_availiable = filter_var(
                 Yii::$app->request->post('is_availiable'),
                 FILTER_VALIDATE_BOOLEAN);
-            if ($this->setFreetime(Yii::$app->user->id, $dayofweek, $when, $is_availiable)){
+            if ($this->setFreetime($user_id, $dayofweek, $when, $is_availiable)){
                 $this->renderJson([
                     'result'=> true,
                     'is_availiable'=> $is_availiable
@@ -89,7 +151,7 @@ class ResumeController extends FBaseController
                 ]);
             }
         }
-        $freetimes = Freetime::findAll(['user_id'=>Yii::$app->user->id]);
+        $freetimes = Freetime::findAll(['user_id'=>$user_id]);
         $freetimes_dict = [];
         foreach($freetimes as $freetime){
             $freetimes_dict[$freetime->dayofweek] = $freetime;
@@ -114,4 +176,5 @@ class ResumeController extends FBaseController
         }
         return false;
     }
+
 }
