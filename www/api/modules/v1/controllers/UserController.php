@@ -32,14 +32,14 @@ class UserController extends BaseActiveController
         if (empty($password) || strlen($password)<6)
         {
             return $this->renderJson([
-                'result'=> false,
+                'success'=> false,
                 'message'=> "请保证密码不小于6位数",
             ]);
         }
         if ($password!=$password2)
         {
             return $this->renderJson([
-                'result'=> false,
+                'success'=> false,
                 'message'=> "两次密码输入不一致",
             ]);
         }
@@ -48,7 +48,7 @@ class UserController extends BaseActiveController
         $user->generateAccessToken();
         $user->save();
         return $this->renderJson([
-            'result'=> true,
+            'success'=> true,
             'message'=> "修改成功",
             'result' => [
                 "username"=> $user->username,
