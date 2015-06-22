@@ -24,11 +24,11 @@ class SiteController extends BBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'register', 'index', 'error'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['admin', 'worker', 'hunter', 'saleman', 'supervisor', 'product_manager'],
                     ],
@@ -62,9 +62,9 @@ class SiteController extends BBaseController
 
     public function actionLogin()
     {
-        //if (!\Yii::$app->user->isGuest) {
-        //    return $this->goHome();
-        //}
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -81,5 +81,9 @@ class SiteController extends BBaseController
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionRegister() {
+        
     }
 }
