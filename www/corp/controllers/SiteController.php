@@ -13,6 +13,7 @@ use common\models\LoginWithDynamicCodeForm;
 use corp\models\PasswordResetRequestForm;
 use corp\models\ResetPasswordForm;
 use corp\models\SignupForm;
+use corp\models\LoginForm;
 use corp\models\ContactForm;
 
 /**
@@ -53,15 +54,25 @@ class SiteController extends FBaseController
 
     public function actionIndex()
     {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
+        $regModel = new SignupForm();
+        if ($regModel->load(Yii::$app->request->post())) {
+            if ($user = $regModel->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
             }
         }
-        return $this -> render('index', ['model' => $model]);
+
+        $loginModel = new LoginForm();
+        if ($loginModel->load(Yii::$app->request->post()) && $loginModel->login()) {
+            return $this->goBack();
+        }else{
+            return $this->goHome();
+        }
+
+
+        return $this -> render('index',
+        ['regmodel' => $regModel, 'loginmodel' => $loginmodel]);
     }
 
     public function actionAbout()

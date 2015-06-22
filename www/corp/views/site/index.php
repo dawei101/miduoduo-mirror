@@ -31,17 +31,39 @@ $this->title = '米多多兼职平台';
     </div>
   </div>
 </div>
-<div class="row">
-    <div class="col-lg-5">
-           <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-               <?= $form->field($model, 'username') ?>
-               <?= $form->field($model, 'email') ?>
-               <?= $form->field($model, 'password')->passwordInput() ?>
+<div>
+    <div>
+           <?php $form0 = ActiveForm::begin(['id' => 'form-signup', 'action'=>'/user/signup']); ?>
+               <?= $form0->field($regModel, 'username') ?>
+               <?= $form0->field($regModel, 'email') ?>
+               <?= $form0->field($regModel, 'password')->passwordInput() ?>
                <div class="form-group">
                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                </div>
            <?php ActiveForm::end(); ?>
     </div>
+</div>
+<div>
+<?php $form1 = ActiveForm::begin(['id' => 'login-form', 'action' => '/user/login']); ?>
+    <div style='padding: 40px 0 10px 10px;color: #999;' > <?=$this->title?> </div>
+    <div class="form-list">
+      <?= $form1->field($loginModel, 'username')
+          ->input('tel', $options = ['data-id'=>'phonenum'] ) ?>
+
+      <?= $form1->field($loginModel, 'password')
+          ->passwordInput() ?>
+            </div>
+    </div>
+
+    <p class="block-btn">
+        <?= Html::submitButton('登录', ['class' => 'btn btn-primary btn-lg btn-block']) ?>
+    </p>
+    <p class="text-right" style="padding-right: 15px; ">
+        <a href="/user/vlogin">找回密码</a>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <a href="/user/vlogin">手机验证码登录</a>
+    </p>
+<?php ActiveForm::end(); ?>
 </div>
 <div class="miduoduo-one">
   <div class="miduoduo-ms">
