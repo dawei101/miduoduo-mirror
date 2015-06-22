@@ -27,6 +27,18 @@ $this->title = '米多多兼职平台';
     </div>
   </div>
 </div>
+<div class="row">
+    <div class="col-lg-5">
+           <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+               <?= $form->field($model, 'username') ?>
+               <?= $form->field($model, 'email') ?>
+               <?= $form->field($model, 'password')->passwordInput() ?>
+               <div class="form-group">
+                   <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+               </div>
+           <?php ActiveForm::end(); ?>
+    </div>
+</div>
 <div class="miduoduo-one">
   <div class="miduoduo-ms">
     <div class="y-ability"><img src="img/ablility-icon.png" width="75" height="80"><span>我的能力</span></div>
@@ -119,7 +131,7 @@ $this->title = '米多多兼职平台';
      </ul>
 </footer>
 
-<script src="js/jquery.min.js"></script> 
+<script src="js/jquery.min.js"></script>
 <script>
     $(function(){
         $(function(){
@@ -148,7 +160,7 @@ var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?71fce0b5ae66cac6b8ba9fc072998791";
-  var s = document.getElementsByTagName("script")[0]; 
+  var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
