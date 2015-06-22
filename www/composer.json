@@ -27,7 +27,8 @@
         "bower-asset/punycode": "@stable",
         "kartik-v/yii2-widget-activeform": "*",
         "nategood/httpful": "*",
-        "jpush/jpush": "v3.2.0"
+        "jpush/jpush": "v3.2.0",
+        "2amigos/yii2-tinymce-widget" : "~1.1"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
