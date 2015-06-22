@@ -53,7 +53,15 @@ class SiteController extends FBaseController
 
     public function actionIndex()
     {
-        return $this -> renderPartial('index');
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+        return $this -> render('index', ['model' => $model]);
     }
 
     public function actionAbout()
