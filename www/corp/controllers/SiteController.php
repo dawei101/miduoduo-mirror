@@ -1,18 +1,24 @@
 <?php
-namespace backend\controllers;
+namespace corp\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
+use yii\base\InvalidParamException;
+use yii\web\BadRequestHttpException;
+use corp\FBaseController;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
-use common\models\LoginForm;
+use common\models\LoginWithDynamicCodeForm;
 
-use backend\BBaseController;
+use corp\models\PasswordResetRequestForm;
+use corp\models\ResetPasswordForm;
+use corp\models\SignupForm;
+use corp\models\ContactForm;
 
 /**
  * Site controller
  */
-class SiteController extends BBaseController
+class SiteController extends FBaseController
 {
     /**
      * @inheritdoc
@@ -20,20 +26,6 @@ class SiteController extends BBaseController
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'register', 'index', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['admin', 'worker', 'hunter', 'saleman', 'supervisor', 'product_manager'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -52,38 +44,42 @@ class SiteController extends BBaseController
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
         ];
     }
 
     public function actionIndex()
     {
-        return $this->render('index');
+        // echo 'ok';die();//可以到这里
+        // $this->redirect(\Yii::$app->params['baseurl.m']);
+        // $this->layout= false;
+        return $this -> renderPartial('index');
+        //return $this->render('index');
     }
 
-    public function actionLogin()
+    public function actionContact()
     {
-        if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+            } else {
+                Yii::$app->session->setFlash('error', 'There was an error sending email.');
+            }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->refresh();
         } else {
-            return $this->renderPartial('login', [
+            return $this->render('contact', [
                 'model' => $model,
             ]);
         }
     }
 
-    public function actionLogout()
+    public function actionAbout()
     {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    public function actionRegister() {
-        
+        return $this->render('about');
     }
 }

@@ -1,12 +1,14 @@
 <?php
-use backend\assets\AppAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use corp\assets\AppAsset;
+use corp\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+
 
 AppAsset::register($this);
 ?>
@@ -15,11 +17,10 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <link href="/css/dashboard.css" rel="stylesheet">
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
 </head>
 <body>
@@ -27,7 +28,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => '宠爱有家',
+                'brandLabel' => '米多多',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -35,13 +36,12 @@ AppAsset::register($this);
             ]);
             $menuItems = [
                 ['label' => '首页', 'url' => ['/site/index']],
+                ['label' => '关于', 'url' => ['/site/about']],
+                ['label' => '联系我们', 'url' => ['/site/contact']],
             ];
-            if (Yii::$app->user->isGuest) {
-                $menuItems[] = ['label' => '登录', 'url' => ['/site/login']];
-            } else {
+            if (!Yii::$app->user->isGuest){
                 $menuItems[] = [
-                    'label' => '退出(' . Yii::$app->user->identity->username . ')',
-                    'url' => ['/site/logout'],
+                    'label' => '退出', 'url' => ['/user/logout'],
                     'linkOptions' => ['data-method' => 'post']
                 ];
             }
@@ -52,34 +52,15 @@ AppAsset::register($this);
             NavBar::end();
         ?>
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 col-md-2 sidebar">
-                  <ul class="nav nav-sidebar">
-                    <li><a href="/">Overview <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/user">账号管理</a></li>
-                    <li><a href="/resume">人才库</a></li>
-                    <li><a href="/service-type">任务类型</a></li>
-                    <li><a href="/task">任务</a></li>
-                    <li><a href="/task-applicant">任务报名单</a></li>
-                  </ul>
-                  <ul class="nav nav-sidebar">
-                    <li><a href="/support/report-bug">提交bug
-                        <span class="glyphicon glyphicon-flag pull-right" style="color:red;"></span>
-                        </a></li>
-                  </ul>
-
-                </div>
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <?= $content ?>
-                </div>
-            </div>
+        <div class="container">
+        <?= Alert::widget() ?>
+        <?= $content ?>
         </div>
     </div>
 
     <footer class="footer">
-        <div class="container-fluid">
-        <p class="pull-left">&copy; 宠爱有家<?= date('Y') ?></p>
+        <div class="container">
+        <p class="pull-left">&copy; 米多多 <?= date('Y') ?></p>
         <p class="pull-right">Powered by David</p>
         </div>
     </footer>
@@ -90,20 +71,24 @@ AppAsset::register($this);
         GB.click_event = GB.is_mobile?'touchstart':'click';
     </script>
     <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
-    <script>
-        $(function(){
-            var uri=location.pathname;
-            console.info(uri);
-            $.each($('#sidebar a'), function(i, v){
-                var a =$(v);
-                var muri = a.attr('href');
-                if (uri==muri){
-                    a.closest('li').addClass('active');
-                }
-            });
-        });
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-64201170-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?71fce0b5ae66cac6b8ba9fc072998791";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
-    </script>
 </body>
 </html>
 <?php $this->endPage() ?>
