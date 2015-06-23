@@ -74,4 +74,6 @@ class Address extends \common\BaseActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+
 }

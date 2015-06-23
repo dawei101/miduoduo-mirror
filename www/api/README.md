@@ -181,4 +181,121 @@ BASE_URL = 'http://api.miduoduo.cn'
 * 获取某服务类别的task
     GET http://api.test.chongdd.cn/task?filters=[["=", "service_type_id", 10]]
 
+具体api
+=============================
 
+### 区域
+
+* 获取城市列表
+    * GET /version/district?filters=[["=", "level", "city"]]
+
+* 获取城市的区域
+    * GET /version/district?filters=[["=", "parent_id", city_id]]
+
+* 区域
+```
+    {
+      "id": 4,
+      "parent_id": 3,
+      "name": "东城区",
+      "level": "district",
+      "citycode": "010",
+      "postcode": "110101",
+      "center": "116.418757,39.917544",
+      "full_name": "北京市-北京市市辖区-东城区",
+      "disabled": 0
+    },
+```
+
+### 职位
+* 职位列表
+    * GET /version/task?expand=company,service_type,city,district,user
+
+* 职位详情
+    * GET /version/task/gid
+
+* 职位
+```
+    {
+      "gid": "14339329187365",
+      "title": "传单发兼职",
+      "clearance_period": 0,
+      "salary": "120.00",
+      "salary_unit": 0,
+      "salary_note": "",
+      "from_date": "2015-06-03",
+      "company_name": "北京宠爱有家信息技术有限公司",
+      "company_introduction": null,
+      "contact": null,
+      "contact_phonenum": null,
+      "to_date": "2015-06-20",
+      "from_time": "10:00:00",
+      "to_time": "20:00:00",
+      "need_quantity": 100,
+      "got_quantity": 0,
+      "created_time": "2015-06-10 18:41:58",
+      "updated_time": null,
+      "detail": "Alter table jz_resume add job_wishes varchar(1000);Alter table jz_resume add job_wishes varchar(1000);Alter table jz_resume add job_wishes varchar(1000);",
+      "requirement": "",
+      "address": "京市北京朝阳冠军城",
+      "age_requirement": null,
+      "height_requirement": null,
+      "status": 0,
+      "user_id": 5,
+      "service_type_id": 1,
+      "city_id": 3,
+      "district_id": 4,
+      "company_id": 0,
+      "gender_requirement": null,
+      "degree_requirement": null,
+      "city": {
+        "id": 3,
+        "parent_id": 2,
+        "name": "北京市",
+        "level": "city",
+        "citycode": "010",
+        "postcode": "110100",
+        "center": "116.405285,39.904989",
+        "full_name": "北京市-北京市市辖区",
+        "disabled": 0
+      },
+      "district": {
+        "id": 4,
+        "parent_id": 3,
+        "name": "东城区",
+        "level": "district",
+        "citycode": "010",
+        "postcode": "110101",
+        "center": "116.418757,39.917544",
+        "full_name": "北京市-北京市市辖区-东城区",
+        "disabled": 0
+      },
+      "user": {
+        "id": 5,
+        "username": "18661775819",
+        "email": null,
+        "status": 0,
+        "created_time": "2015-06-09 20:29:55",
+        "updated_time": "2015-06-23 15:21:43",
+        "name": null,
+        "is_staff": 0
+      },
+      "service_type": {
+        "id": 1,
+        "name": "传单",
+        "created_time": null,
+        "updated_time": null,
+        "modified_by": "",
+        "status": 0
+      },
+      "company": null
+    },
+```
+
+###简历 Resume
+
+* 获取自己简历
+    * GET /version/resume/user_id
+
+* 更新自己简历
+    * POST /version/resume/user_id

@@ -211,7 +211,7 @@ class Task extends \common\BaseActiveRecord
             'user_id', 'service_type_id',
             'city_id', 'district_id', 'company_id',
             'gender_requirement', 'degree_requirement',
-            ];
+        ];
 
     }
 }
