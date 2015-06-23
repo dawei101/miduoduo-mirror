@@ -67,12 +67,12 @@ class SiteController extends FBaseController
         if ($loginModel->load(Yii::$app->request->post()) && $loginModel->login()) {
             return $this->goBack();
         }else{
-            return $this->goHome();
+//            return $this->goHome();
         }
 
 
         return $this -> render('index',
-        ['regmodel' => $regModel, 'loginmodel' => $loginmodel]);
+        ['regModel' => $regModel, 'loginModel' => $loginModel]);
     }
 
     public function actionAbout()
