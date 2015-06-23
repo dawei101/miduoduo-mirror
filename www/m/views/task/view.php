@@ -16,7 +16,7 @@ $this->nav_right_title = '首页';
     </div>
     <div class="panel-body list-bt">
         <p>
-            <span class="label label-default">￥<?= $task->salary ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span>
+            <span class="label label-default">￥<?= floor($task->salary); ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span>
         </p>
     </div>
 </div>
@@ -27,8 +27,7 @@ $this->nav_right_title = '首页';
       <h3 class="panel-title">工作时间</h3>
     </div>
     <div class="panel-body">
-      <p><?=$task->from_date ?>至<?=$task->to_date?>
-        <?=$task->from_time ?> - <?=$task->to_time ?>
+      <p><?=substr($task->from_date, 5);?>至<?=substr($task->to_date, 5)?>
       </p>
     </div>
   </div>

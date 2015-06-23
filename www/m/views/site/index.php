@@ -1,11 +1,9 @@
 <?php
 /* @var $this yii\web\View */
 $this->title = '首页';
-
-$this->params['nav_right'] = null;
-// nav_right nav_left 结构 ['title'=>'首页', 'link'=>'/'];
-$this->params['nav_left'] = null;
-
+$this->nav_left_link = 'javascript:window.history.back()';
+$this->nav_right_link = '/user';
+$this->nav_right_title = '个人中心';
 ?>
 
 

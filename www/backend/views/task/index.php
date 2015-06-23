@@ -1,5 +1,5 @@
 <?php
-
+header('content-type:text/html;charset=utf-8');
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '标题',
                 'format' => 'raw',
                 'value' => function($model){
+                    //var_dump($model);die();
                     return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->gid ."'>" . $model->title . "</a>";
                 }
             ]

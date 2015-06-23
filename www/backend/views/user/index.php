@@ -26,7 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
+            'id',
             'username',
             'email:email',
             ['attribute' => 'status', 'value'=>function($model){
@@ -43,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $roles;
             }, 'label'=> '角色' ],
             'invited_by',
+            'created_time',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
