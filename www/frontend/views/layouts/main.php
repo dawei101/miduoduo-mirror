@@ -24,7 +24,6 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
-    <?php echo $this->blocks['css'];die();?>
 </head>
 <body>
     <?php $this->beginBody() ?>
