@@ -85,4 +85,33 @@ class SiteController extends FBaseController
 
         return $this->renderJson(['result' => false]);
     }
+
+    public function actionVcode()
+    {
+        $phonenum = Yii::$app->request->post('phonenum');
+        if (!Utils::isPhonenum($phonenum)){
+            return $this->renderJson([
+                'result'=> false,
+                'msg'=> "手机号码不正确"
+            ]);
+        }
+
+        if (User::findByUsername($phonenum)){
+            return $this->renderJson([
+                'result'=> false,
+                'msg'=> "该手机号已注册，您可以直接登录."
+            ]);
+        }
+        $sender = SmsSenderFactory::getSender();
+        if ($sender->sendVerifyCode($phonenum)){
+            return $this->renderJson([
+                    'result'=> true,
+                    'msg'=> "验证码已发送"
+            ]);
+        }
+        return $this->renderJson([
+                'result'=> false,
+                'msg'=> "验证码发送失败, 请稍后重试。"
+        ]);
+    }
 }

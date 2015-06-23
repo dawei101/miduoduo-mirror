@@ -35,10 +35,15 @@ $this->title = '米多多兼职平台';
     <div>
            <?php $form0 = ActiveForm::begin(['id' => 'form-signup', 'action'=>'/site/register']); ?>
                <?= $form0->field($regModel, 'username') ?>
-               <?= $form0->field($regModel, 'email') ?>
+               <?= $form0->field($regModel, 'vcode') ?>
                <?= $form0->field($regModel, 'password')->passwordInput() ?>
                <div class="form-group">
+                   <p class="block-btn">
                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                   </p>
+                   <p class="text-right" style="padding-right: 15px; ">
+                       <a href="/site/vcode">获取手机验证码</a>
+                   </p>
                </div>
            <?php ActiveForm::end(); ?>
     </div>

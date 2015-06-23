@@ -4,6 +4,7 @@ namespace corp\models;
 use common\models\User;
 use yii\base\Model;
 use Yii;
+use common\sms\BaseSmsSender;
 
 /**
  * Signup form
@@ -11,7 +12,7 @@ use Yii;
 class SignupForm extends Model
 {
     public $username;
-    public $email;
+    public $vcode;
     public $password;
 
     /**
@@ -25,10 +26,16 @@ class SignupForm extends Model
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
-            ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['vcode', 'filter', 'filter' => 'trim'],
+            ['vcode', 'required'],
+            ['vcode', 'match', 'pattern'=>'/^\d{6}$/', 'message'=>'验证码不正确.'],
+            ['vcode', function ($attribute, $params) {
+                if (!$this->hasErrors()) {
+                    if(!BaseSmsSender::validateVerifyCode($this->phonenum, $this->vcode)){
+                        $this->addError($attribute, '手机号或验证码不正确.');
+                    }
+                }
+            }],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
@@ -45,7 +52,6 @@ class SignupForm extends Model
         if ($this->validate()) {
             $user = new User();
             $user->username = $this->username;
-            $user->email = $this->email;
             $user->setPassword($this->password);
             $user->generateAuthKey();
             if ($user->save()) {
