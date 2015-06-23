@@ -31,6 +31,8 @@ class SiteController extends FBaseController
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'login' => ['post'],
+                    'register' => ['post'],
                 ],
             ],
         ];
@@ -55,28 +57,32 @@ class SiteController extends FBaseController
     public function actionIndex()
     {
         $regModel = new SignupForm();
-        if ($regModel->load(Yii::$app->request->post())) {
-            if ($user = $regModel->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
         $loginModel = new LoginForm();
-        if ($loginModel->load(Yii::$app->request->post()) && $loginModel->login()) {
-            return $this->goBack();
-        }else{
-//            return $this->goHome();
-        }
-
-
         return $this -> render('index',
         ['regModel' => $regModel, 'loginModel' => $loginModel]);
     }
 
-    public function actionAbout()
+    public function actionLogin()
     {
-        return $this->render('about');
+        $loginModel = new LoginForm();
+        if ($loginModel->load(Yii::$app->request->post()) && $loginModel->login()) {
+            return $this->renderJson(['result' => true ]);
+        }
+
+        return $this->renderJson(['result' => false]);
+    }
+
+    public function actionRegister()
+    {
+        $regModel = new SignupForm();
+        if ($regModel->load(Yii::$app->request->post())) {
+            if ($user = $regModel->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->renderJson(['result' => true]);
+                }
+            }
+        }
+
+        return $this->renderJson(['result' => false]);
     }
 }
