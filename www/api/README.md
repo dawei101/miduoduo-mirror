@@ -210,7 +210,6 @@ BASE_URL = 'http://api.miduoduo.cn'
 ### 职位
 * 职位列表
     * GET /version/task?expand=company,service_type,city,district,user
-
 * 职位详情
     * GET /version/task/gid
 
@@ -296,6 +295,57 @@ BASE_URL = 'http://api.miduoduo.cn'
 
 * 获取自己简历
     * GET /version/resume/user_id
-
 * 更新自己简历
-    * POST /version/resume/user_id
+    * PUT /version/resume/user_id
+
+###时间表 Freetime
+
+* 获取自己的时间表
+    * GET /version/freetime
+* 获取某天的时间表
+    * GET /version/freetime/user_id,day_of_week
+    * day_of_week ＝ range(1-7)
+* 更新某天的时间表
+    * PUT /version/freetime/user_id,day_of_week
+    * post params = {"morning": 1, "afternoon": 0}  | "evening"
+    * 参数可以提交多个
+
+###Address 地址
+* 获取地址列表
+    * GET /version/address
+* 添加新地址
+    * POST /version/address
+    * params: province,city,district,address,lat,lng,user_id
+* 修改已有地址
+    * PUT /version/address/id
+    * params: province,city,district,address,lat,lng,user_id
+
+###任务报名
+
+* 获取已报名的任务列表 
+    * GET /version/task-applicant?expand=task
+* 报名某任务
+    * PUT /version/task-applicant
+    * params: user_id, task_id
+* 取消报名某任务
+    * DELETE /version/task-applicant/user_id,task_id
+
+###Message 消息
+* 获取消息列表
+    * GET /version/sys-message
+* 获取消息详情(用不到)
+    * GET /version/sys-message/id
+
+###User 资料
+* 获取当前用户资料
+    * GET /version/user/user_id
+
+###收藏
+
+* 获取收藏的任务列表 
+    * GET /version/task-collection?expand=task
+* 收藏某任务
+    * PUT /version/task-collection
+    * params: user_id, task_id
+* 取消收藏某任务
+    * DELETE /version/task-collection/user_id,task_id
