@@ -63,16 +63,13 @@ class BaseActiveController extends ActiveController
     public function prepareDataProvider()
     {
         return new ActiveDataProvider([
-            'pagination' => [
-                'pageSize' => 100,
-            ],
             'query' => $this->buildQuery()
         ]);
     }
 
     public function buildQuery(){
         $query = $this->buildBaseQuery();
-        $p_str = Yii::$app->request->getHeaders()->get('query');
+        $p_str = Yii::$app->request->get('filters');
 
         if (!$p_str || strlen($p_str)==0){
             return $query;
@@ -90,12 +87,13 @@ class BaseActiveController extends ActiveController
             }
             if (strpos($operate, 'IN')!==false){
                 // where(['in/not in', field, array])
-                $query->where($filter);
+                $query->andWhere($filter);
+                continue;
             }
             $where .= ' AND ' . $filter[1] . ' ' . $filter[0] . ' :' . $filter[1] ;
             $p_dict[$filter[1]] = $filter[2];
         }
-        $query->where($where, $p_dict);
+        $query->andWhere($where, $p_dict);
         return $query;
     }
 

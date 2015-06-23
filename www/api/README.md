@@ -109,18 +109,76 @@ BASE_URL = 'http://api.miduoduo.cn'
     * 在所有url后 + ?access_token=登陆成功返回的access_token
 
 ##使用api
-api完全使用rest方式完成
-###path规则
-    基础的path
-    /api_version/model_name(*注，不用复数格式)
-    列表:
-        GET /api_version/model_name
+###api遵循rest api协议
 
-    详情
-        GET /api_version/model_name/id
+* Path构成
+    * /version/model(/:id)
+* 请求
+    * 列表 
+        * GET /version/model?page=1&per-page=2&expand=company,service_type (*注，不用复数格式)
+            * expand 为连表查询的关系字段
+            * page 为要获取的页, default=1
+            * per-page 为每页数据条数, default=20
+            * filters 为筛选条件, 语法如下
+                * filters 为数组
+                * filters 格式 [[operation, field_name, value], ...]
+                * filters 中允许的 operation如下
+                    * "=",
+                    * "!=",
+                    * "<>",
+                    * ">=",
+                    * "<=",
+                    * "LIKE",
+                    * "ILIKE",
+                    * "IN",
+                    * "NOT IN",
+            * orders 为排序条件, 语法如下:
+                * 待编写
+            * http://api.test.chongdd.cn/v1/task?expand=service_type&filters=['service_type_id', '=', '10']
+        * 返回格式:
+        ```
+    {
+        "items": [
+                {}, {}, {}, {}, {}
+        ],
+        "_links": {
+            "self": {
+              "href": "baseurl/v1/task?page=1&per-page=100"
+            },
+            "next": {
+              "href": "baseurl/v1/task?page=2&per-page=100"
+            },
+            "last": {
+              "href": "baseurl/v1/task?page=2&per-page=100"
+            }
+        },
+        "_meta": {
+            "totalCount": 104,
+            "pageCount": 2,
+            "currentPage": 1,
+            "perPage": 100
+        }
+    }
+        ```
+    * 详情
+        * GET /version/model/id
+    * 创建
+        * POST /version/model
+        * post params = {}
+        * 返回值
+        ```
+        ```
+    * 删除
+        * DELETE /version/model/id
 
-    创建
-        POST /api_version/model_name
-            post params = {}
+### 执行失败全局返回说明
+* 参见http协议
+
+### rest api 举例
+以任务列表(职位列表)为例，任务的model名为task
+* 获取task
+    * GET http://api.test.chongdd.cn/task
+* 获取某服务类别的task
+    GET http://api.test.chongdd.cn/task?filters=[["=", "service_type_id", 10]]
 
 

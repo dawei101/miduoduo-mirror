@@ -11,5 +11,5 @@ use api\modules\BaseActiveController;
  */
 class TaskController extends BaseActiveController
 {
-    public $modelClass = 'common\models\Task';
+    public $modelClass = 'api\common\models\Task';
 }
