@@ -15,7 +15,7 @@ class TaskController extends BaseActiveController
 
     public function actions()
     {
-        $actions = parent::$actions;
-        return ['index'=> $actions['index'], 'view'=> $action['view']];
+        $actions = parent::actions();
+        return ['index'=> $actions['index'], 'view'=> $actions['view']];
     }
 }
