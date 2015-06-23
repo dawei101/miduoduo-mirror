@@ -1,4 +1,5 @@
 <?php
+
 $param_files = 
     [__DIR__ . '/../../common/config/params.php',
      __DIR__ . '/../../common/config/params-local.php',

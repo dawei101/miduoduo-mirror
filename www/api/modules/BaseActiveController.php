@@ -2,15 +2,34 @@
 namespace api\modules;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\db\Query;
+use yii\web\Response;
 
 
 class BaseActiveController extends ActiveController
 {
 
-    public$serializer=[
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'corsFilter' => [
+                'class' => \yii\filters\Cors::className(),
+                'cors' => [
+                    'Origin' => Yii::$app->params['api_allowed_origins'], 
+                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                    'Access-Control-Request-Headers' => ['*'],
+                    'Access-Control-Allow-Credentials' => null,
+                    'Access-Control-Max-Age' => 86400,
+                    'Access-Control-Expose-Headers' => [],
+                ],
+            ],
+        ]); 
+    }
+
+    public $serializer=[
         'class'=>'yii\rest\Serializer',
         'collectionEnvelope'=>'items',
     ];

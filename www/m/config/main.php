@@ -46,6 +46,10 @@ return [
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
             'enablePrettyUrl' => true,
+            'rules' => [
+                'origin/v<version:[\d]+>/?' => 'origin/handle',
+                'origin/v<version:[\d]+>/<action:[\w\d]+>' => 'origin/handle',
+            ],
         ],
         'view' => [
             'class' => 'm\MView',
