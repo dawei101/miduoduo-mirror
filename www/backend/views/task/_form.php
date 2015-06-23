@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
-
+use dosamigos\tinymce\TinyMce;
 use common\models\ServiceType;
 use common\models\District;
 
@@ -55,7 +55,21 @@ use common\models\District;
 
     <?= $form->field($model, 'need_quantity')->textInput() ?>
 
-    <?= $form->field($model, 'detail')->textarea(['rows' => 6]) ?>
+    
+
+    <?= $form->field($model, 'detail')->widget(
+        TinyMce::className(), [
+            'options' => ['rows' => 6],
+            'language' => 'es',
+            'clientOptions' => [
+                'plugins' => [
+                    "advlist autolink lists link charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | image |"
+            ]
+        ]) ?>
 
     <?= $form->field($model, 'requirement')->textarea(['rows' => 6]) ?>
 
