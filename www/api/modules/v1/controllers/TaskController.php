@@ -12,4 +12,10 @@ use api\modules\BaseActiveController;
 class TaskController extends BaseActiveController
 {
     public $modelClass = 'api\common\models\Task';
+
+    public function actions()
+    {
+        $actions = parent::$actions;
+        return ['index'=> $actions['index'], 'view'=> $action['view']];
+    }
 }
