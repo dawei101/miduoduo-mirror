@@ -67,6 +67,11 @@ class TaskApplicant extends \common\BaseActiveRecord
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 
+    public function getResume(){
+        
+        return $this->hasOne(Resume::className(), ['user_id' => 'user_id']);
+    }
+
     /**
      * @inheritdoc
      * @return TaskApplicantQuery the active query used by this AR class.

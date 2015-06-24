@@ -24,7 +24,7 @@ $this->nav_right_title = '个人中心';
 
 <ul class="bxslider">
       <li><a href="/hongbao.html"><img src="/static/img/hongbao.png" ></a></li>
-      <li><a href="/user/vsignup"><img src="/static/img/zhuce.png" ></a></li>
+      <li><a href="/user/vlogin"><img src="/static/img/zhuce.png" ></a></li>
 </ul>
 
 <div id="content"> 

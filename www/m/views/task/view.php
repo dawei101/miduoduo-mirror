@@ -78,7 +78,7 @@ $this->nav_right_title = '首页';
       <h3 class="panel-title">工作内容</h3>
     </div>
     <div class="panel-body pan-bot">
-      <p> <?=htmlentities($task->detail) ?></p>
+      <p> <?=$task->detail ?></p>
     </div>
   </div>
 </div>
