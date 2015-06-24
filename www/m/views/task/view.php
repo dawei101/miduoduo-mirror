@@ -27,7 +27,7 @@ $this->nav_right_title = '首页';
       <h3 class="panel-title">工作时间</h3>
     </div>
     <div class="panel-body">
-      <p><?=substr($task->from_date, 5);?>至<?=substr($task->to_date, 5)?>
+      <p><?=\Yii::$app->formatter->asDate($task->from_date);?>至<?=\Yii::$app->formatter->asDate($task->to_date)?>
       </p>
     </div>
   </div>
@@ -78,7 +78,7 @@ $this->nav_right_title = '首页';
       <h3 class="panel-title">工作内容</h3>
     </div>
     <div class="panel-body pan-bot">
-      <p> <?=$task->detail ?></p>
+      <p> <?=$task->detail?></p>
     </div>
   </div>
 </div>

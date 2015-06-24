@@ -5,19 +5,13 @@ namespace api\modules\v1\controllers;
 use api\modules\BaseActiveController;
  
 /**
- * Resume Controller API
+ *  Controller API
  *
  * @author dawei
  */
-class ResumeController extends BaseActiveController
+class TaskApplicantController extends BaseActiveController
 {
-    public $modelClass = 'api\common\models\Resume';
-
-    public function actions()
-    {
-        $actions = parent::actions();
-        unset($actions['delete'], $actions['create']);
-    }
+    public $modelClass = 'api\common\models\TaskApplicant';
 
     public function buildBaseQuery()
     {
@@ -33,5 +27,4 @@ class ResumeController extends BaseActiveController
         }
         parent::checkAccess($action, $model, $params);
     }
-
 }

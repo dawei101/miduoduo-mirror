@@ -29,12 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
             //['class' => 'yii\grid\SerialColumn'],
             'id',
             'username',
-            'email:email',
-            ['attribute' => 'status', 'value'=>function($model){
-                return User::$STATUS_LABELS[$model->status];
-            },
-            'filter'=>User::$STATUS_LABELS
-            ],
             'name',
             ['attribute' => 'roles', 'value'=>function($model){
                 $roles = '';
@@ -44,7 +38,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $roles;
             }, 'label'=> '角色' ],
             'invited_by',
-            'created_time',
+            'created_time:date',
+            ['attribute' => 'status', 'value'=>function($model){
+                return User::$STATUS_LABELS[$model->status];
+                },
+                'filter'=>User::$STATUS_LABELS
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

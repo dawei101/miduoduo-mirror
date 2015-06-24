@@ -9,15 +9,9 @@ use api\modules\BaseActiveController;
  *
  * @author dawei
  */
-class ResumeController extends BaseActiveController
+class FreetimeController extends BaseActiveController
 {
-    public $modelClass = 'api\common\models\Resume';
-
-    public function actions()
-    {
-        $actions = parent::actions();
-        unset($actions['delete'], $actions['create']);
-    }
+    public $modelClass = 'api\common\models\Freetime';
 
     public function buildBaseQuery()
     {

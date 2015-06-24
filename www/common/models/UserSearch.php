@@ -18,8 +18,8 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id', 'status','invited_by'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email', 'auth_key', 'created_time', 'updated_time', 'name'], 'safe'],
+            [['id', 'status', 'invited_by'], 'integer'],
+            [['username', 'email', 'created_time', 'updated_time', 'name'], 'safe'],
         ];
     }
 
@@ -58,16 +58,14 @@ class UserSearch extends User
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
+            'invited_by' => $this->invited_by,
             'created_time' => $this->created_time,
             'updated_time' => $this->updated_time,
             'invited_by' => $this->invited_by,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
             ->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;

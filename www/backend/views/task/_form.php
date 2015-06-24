@@ -60,7 +60,9 @@ use common\models\District;
     <?= $form->field($model, 'detail')->widget(
         TinyMce::className(), [
             'options' => ['rows' => 6],
-            'language' => 'es',
+            // http://www.tinymce.com/wiki.php/Configuration:language 
+            // vendor/2amigos/yii2-tinymce-widget/src/assets/langs
+            'language' => 'zh_CN',
             'clientOptions' => [
                 'plugins' => [
                     "advlist autolink lists link charmap print preview anchor",
