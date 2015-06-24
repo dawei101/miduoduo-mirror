@@ -1,4 +1,5 @@
 <?php
+
 $param_files = 
     [__DIR__ . '/../../common/config/params.php',
      __DIR__ . '/../../common/config/params-local.php',
@@ -52,7 +53,11 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/address', 'v1/resume',
-                        'v1/offline-order', 'v1/task'
+                        'v1/offline-order', 'v1/task', 'v1/freetime',
+                        'v1/task-applicant',
+                        'v1/task-collection',
+                        'v1/district',
+                        'v1/sys-message',
                     ],
                     'pluralize' => '',
                 ],

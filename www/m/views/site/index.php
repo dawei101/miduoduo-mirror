@@ -41,15 +41,14 @@ $this->params['nav_left'] = null;
         </div>
       <div class="panel-body list-bt">
         <p> <span class="label label-default">
-            ￥<?= $task->salary ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?>
+            ￥<?= floor($task->salary) ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?>
            </span> </p>
       </div>
     </div>
     <div class="border-bt">
       <div class="panel-body lnk">
         <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-            <?=$task->from_date ?>至<?=$task->to_date?>
-            <?=$task->from_time ?> - <?=$task->to_time ?>
+            <?=\Yii::$app->formatter->asDate($task->from_date) ?>至<?= \Yii::$app->formatter->asDate($task->to_date) ?>
         </p>
         <div class="te-x">
           <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>

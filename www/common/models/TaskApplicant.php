@@ -83,4 +83,10 @@ class TaskApplicant extends \common\BaseActiveRecord
             'task_id' => $task_id
         ])->exists();
     }
+
+
+    public function extraFields()
+    {
+        return ['task', 'user'];
+    }
 }

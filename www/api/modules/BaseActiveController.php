@@ -2,15 +2,34 @@
 namespace api\modules;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\db\Query;
+use yii\web\Response;
 
 
 class BaseActiveController extends ActiveController
 {
 
-    public$serializer=[
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'corsFilter' => [
+                'class' => \yii\filters\Cors::className(),
+                'cors' => [
+                    'Origin' => Yii::$app->params['api_allowed_origins'], 
+                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                    'Access-Control-Request-Headers' => ['*'],
+                    'Access-Control-Allow-Credentials' => null,
+                    'Access-Control-Max-Age' => 86400,
+                    'Access-Control-Expose-Headers' => [],
+                ],
+            ],
+        ]); 
+    }
+
+    public $serializer=[
         'class'=>'yii\rest\Serializer',
         'collectionEnvelope'=>'items',
     ];
@@ -44,16 +63,13 @@ class BaseActiveController extends ActiveController
     public function prepareDataProvider()
     {
         return new ActiveDataProvider([
-            'pagination' => [
-                'pageSize' => 100,
-            ],
             'query' => $this->buildQuery()
         ]);
     }
 
     public function buildQuery(){
         $query = $this->buildBaseQuery();
-        $p_str = Yii::$app->request->getHeaders()->get('query');
+        $p_str = Yii::$app->request->get('filters');
 
         if (!$p_str || strlen($p_str)==0){
             return $query;
@@ -71,12 +87,13 @@ class BaseActiveController extends ActiveController
             }
             if (strpos($operate, 'IN')!==false){
                 // where(['in/not in', field, array])
-                $query->where($filter);
+                $query->andWhere($filter);
+                continue;
             }
             $where .= ' AND ' . $filter[1] . ' ' . $filter[0] . ' :' . $filter[1] ;
             $p_dict[$filter[1]] = $filter[2];
         }
-        $query->where($where, $p_dict);
+        $query->andWhere($where, $p_dict);
         return $query;
     }
 

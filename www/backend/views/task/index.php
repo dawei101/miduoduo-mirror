@@ -24,10 +24,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'id',
-            'title',
-            'clearance_period',
+            [
+                'label' => '标题',
+                'format' => 'raw',
+                'value' => function($model){
+                    return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->gid ."'>" . $model->title . "</a>";
+                }
+            ]
+            ,
+             [
+                //'attribute' => 'state',
+                'label'=>'结算方式',
+                'value'=>
+                function($model){
+                    return $model::$CLEARANCE_PERIODS[$model->clearance_period];
+                },
+            ],
             'salary',
             'salary_unit',
+           
             // 'salary_note:ntext',
             // 'from_date',
             // 'to_date',

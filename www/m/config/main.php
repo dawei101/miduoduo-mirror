@@ -34,6 +34,12 @@ return [
                 ],
             ],
         ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'php:m-d',
+            'datetimeFormat' => 'php:m-d H:i',
+            'timeFormat' => 'php:H:i',
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -46,6 +52,10 @@ return [
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
             'enablePrettyUrl' => true,
+            'rules' => [
+                'origin/v<version:[\d]+>/?' => 'origin/handle',
+                'origin/v<version:[\d]+>/<action:[\w\d]+>' => 'origin/handle',
+            ],
         ],
         'view' => [
             'class' => 'm\MView',

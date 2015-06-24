@@ -7,21 +7,23 @@ $this->title = '米多多兼职平台';
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
-<link     rel="shortcut icon"  href="img/miduoduo.ico" />
-<title>米多多/兼职平台</title>
-<link href="css/miduoduo.css" type="text/css" rel="stylesheet" >
+<meta name="description" content="米多多兼职网，是中国最大的正规网上兼职平台。所有兼职招聘信息全部经过人工审核，不收任何押金和费用，安全有保障。免费找兼职，就上米多多兼职网。 miduoduo.cn" />
+<meta name="keywords" content="兼职网,大学生兼职网,正规网上兼职平台" />
+<link rel="shortcut icon"  href="/static/img/miduoduo.ico" />
+<title>【米多多兼职】最靠谱有保障的兼职平台</title>
+<link href="/static/css/miduoduo.css" type="text/css" rel="stylesheet" >
 </head>
 <body>
 <div class="top">
   <div class="toumin-box"></div>
   <div class="top-center">
     <nav>
-      <div class="logo"><img src="img/logo.png" width="200" height="110"></div>
+      <div class="logo"><img src="/static/img/logo.png" width="200" height="110"></div>
       <!-- <div class="nav"><a href="/site/Contact/"  class="contact-us">联系我们</a><a href="#">企业合作</a></div> -->
     </nav>
-    <div class="banner"><img src="img/banner.png" width="751" height="407">
+    <div class="banner"><img src="/static/img/banner.png" width="751" height="407">
       <h1>米多多 | 大学生兼职平台</h1>
-      <div class="erweima"><img src="img/erweima.png" width="140" height="140">
+      <div class="erweima"><img src="/static/img/erweima.png" width="140" height="140">
         <p>扫码进入m站</p>
       </div>
     </div>
@@ -29,13 +31,13 @@ $this->title = '米多多兼职平台';
 </div>
 <div class="miduoduo-one">
   <div class="miduoduo-ms">
-    <div class="y-ability"><img src="img/ablility-icon.png" width="75" height="80"><span>我的能力</span></div>
+    <div class="y-ability"><img src="/static/img/ablility-icon.png" width="75" height="80"><span>我的能力</span></div>
     <div class="jia1">+</div>
-    <div class="y-Interest"><img src="img/Interest-icon.png" width="75" height="80"><span>我的兴趣</span></div>
+    <div class="y-Interest"><img src="/static/img/Interest-icon.png" width="75" height="80"><span>我的兴趣</span></div>
     <div class="jia2">+</div>
-    <div class="y-time"><img src="img/time-icon.png" width="75" height="80"><span>我的时间</span></div>
+    <div class="y-time"><img src="/static/img/time-icon.png" width="75" height="80"><span>我的时间</span></div>
     <div class="deng">=</div>
-    <div class="y-miduoduo"><img src="img/logo1.png" width="150" height="60"><span>我的兼职工作</span></div>
+    <div class="y-miduoduo"><img src="/static/img/logo1.png" width="150" height="60"><span>我的兼职工作</span></div>
   </div>
 </div>
 <div class="position-type-box">
@@ -66,28 +68,28 @@ $this->title = '米多多兼职平台';
 <div class="function-display" >
   <ul id="suc1">
     <li>
-      <img src="img/function-pic.jpg" width="330" height="330">
-      <div class="text"><img src="img/free-icon.png" width="71" height="32"><p>完全免费</p></div>
+      <img src="/static/img/function-pic.jpg" width="330" height="330">
+      <div class="text"><img src="/static/img/free-icon.png" width="71" height="32"><p>完全免费</p></div>
     </li>
      <li>
-     <img src="img/function-pic1.jpg" width="330" height="330">
-<div class="text"><img src="img/xing.png" width="96" height="29"><p>一流合作企业</p></div>
+     <img src="/static/img/function-pic1.jpg" width="330" height="330">
+<div class="text"><img src="/static/img/xing.png" width="96" height="29"><p>一流合作企业</p></div>
     </li>
      <li>
-     <img src="img/function-pic2.jpg" width="330" height="330">
-<div class="text"><img src="img/gaoxin.png" width="39" height="42"><p>众多高薪职位</p></div>
+     <img src="/static/img/function-pic2.jpg" width="330" height="330">
+<div class="text"><img src="/static/img/gaoxin.png" width="39" height="42"><p>众多高薪职位</p></div>
     </li>
      <li>
-      <img src="img/function-pic3.jpg" width="330" height="330">
-<div class="text"><img src="img/anquan.png" width="41" height="46"><p>安全担保</p></div>
+      <img src="/static/img/function-pic3.jpg" width="330" height="330">
+<div class="text"><img src="/static/img/anquan.png" width="41" height="46"><p>安全担保</p></div>
     </li>
      <li>
-     <img src="img/function-pic4.jpg" width="330" height="330">
-<div class="text"><img src="img/lignhuo.png" width="38" height="38"><p>时间灵活</p></div>
+     <img src="/static/img/function-pic4.jpg" width="330" height="330">
+<div class="text"><img src="/static/img/lignhuo.png" width="38" height="38"><p>时间灵活</p></div>
     </li>
      <li>
-     <img src="img/function-pic5.jpg" width="330" height="330">
-<div class="text"><img src="img/jiujin.png" width="43" height="41"><p>就近择业</p></div>
+     <img src="/static/img/function-pic5.jpg" width="330" height="330">
+<div class="text"><img src="/static/img/jiujin.png" width="43" height="41"><p>就近择业</p></div>
     </li>
   </ul>
 </div>
@@ -113,13 +115,13 @@ $this->title = '米多多兼职平台';
         <li class="xian"></li>
         <li class="attention-us">
             <h2>关注我们</h2>
-            <div class="erwei"><img src="img/fooerwei.jpg" width="70" height="70"><div class="er-text">扫码进入m站</div></div>
-            <!-- <div class="erwei"><img src="img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>-->
+            <div class="erwei"><img src="/static/img/fooerwei.jpg" width="70" height="70"><div class="er-text">扫码进入m站</div></div>
+            <!-- <div class="erwei"><img src="/static/img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>-->
        </li>
      </ul>
 </footer>
 
-<script src="js/jquery.min.js"></script> 
+<script src="/static/js/jquery.min.js"></script> 
 <script>
     $(function(){
         $(function(){
