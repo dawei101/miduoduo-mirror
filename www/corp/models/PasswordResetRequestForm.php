@@ -3,13 +3,15 @@ namespace corp\models;
 
 use common\models\User;
 use yii\base\Model;
+use common\sms\BaseSmsSender;
 
 /**
  * Password reset request form
  */
 class PasswordResetRequestForm extends Model
 {
-    public $email;
+    public $phone;
+    public $vcode;
 
     /**
      * @inheritdoc
@@ -17,14 +19,25 @@ class PasswordResetRequestForm extends Model
     public function rules()
     {
         return [
-            ['email', 'filter', 'filter' => 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'exist',
+            ['phone', 'filter', 'filter' => 'trim'],
+            ['phone', 'required'],
+            ['phone', 'email'],
+            ['phone', 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => 0],//User::STATUS_ACTIVE],
-                'message' => 'There is no user with such email.'
+                'message' => 'There is no user with such phone.'
             ],
+
+            ['vcode', 'filter', 'filter' => 'trim'],
+            ['vcode', 'required'],
+            ['vcode', 'match', 'pattern'=>'/^\d{6}$/', 'message'=>'验证码不正确.'],
+            ['vcode', function ($attribute, $params) {
+                if (!$this->hasErrors()) {
+                    if(!BaseSmsSender::validateVerifyCode($this->phone, $this->vcode)){
+                        $this->addError($attribute, '手机号或验证码不正确.');
+                    }
+                }
+            }],
         ];
     }
 
@@ -33,12 +46,12 @@ class PasswordResetRequestForm extends Model
      *
      * @return boolean whether the email was send
      */
-    public function sendEmail()
+    public function verifyPhone()
     {
         /* @var $user User */
         $user = User::findOne([
-            'status' => User::STATUS_ACTIVE,
-            'email' => $this->email,
+            'status' => 0,//User::STATUS_ACTIVE,
+            'username' => $this->phone,
         ]);
 
         if ($user) {
@@ -47,11 +60,7 @@ class PasswordResetRequestForm extends Model
             }
 
             if ($user->save()) {
-                return \Yii::$app->mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
-                    ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name . ' robot'])
-                    ->setTo($this->email)
-                    ->setSubject('Password reset for ' . \Yii::$app->name)
-                    ->send();
+                return $user;
             }
         }
 
