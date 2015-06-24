@@ -29,7 +29,17 @@ class UserController extends FBaseController
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'rules' => [],
+                'rules' => [
+                    [
+                        'actions' => ['request-password-reset', 'reset-password'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
