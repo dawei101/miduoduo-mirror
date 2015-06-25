@@ -10,6 +10,7 @@ use common\Utils;
 use common\sms\SmsSenderFactory;
 use common\sms\BaseSmsSender;
 use common\models\User;
+use common\models\Resume;
 
 /**
  * User Controller API
@@ -57,4 +58,5 @@ class UserController extends BaseActiveController
             ],
         ]);
     }
+
 }

@@ -13,12 +13,6 @@ class ResumeController extends BaseActiveController
 {
     public $modelClass = 'api\common\models\Resume';
 
-    public function actions()
-    {
-        $actions = parent::actions();
-        unset($actions['delete'], $actions['create']);
-    }
-
     public function buildBaseQuery()
     {
         $model = $this->modelClass;

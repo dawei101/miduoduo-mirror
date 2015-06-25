@@ -147,6 +147,7 @@ class EntryController extends BaseActiveController
                         'success'=> true,
                         'message'=> '登录成功',
                         'result'=> [
+                            'id'=> $user->id,
                             'username'=> $username,
                             'password'=> $password,
                             'access_token'=> $user->access_token,
@@ -214,6 +215,7 @@ class EntryController extends BaseActiveController
                 'success'=> true,
                 'message'=> '登录成功',
                 'result'=> [
+                    'id'=> $user->id,
                     'username'=> $phonenum,
                     'password'=> '',
                     'access_token'=> $user->access_token,
