@@ -11,7 +11,7 @@ use api\modules\BaseActiveController;
  */
 class ResumeController extends BaseActiveController
 {
-    public $modelClass = 'api\common\models\Resume';
+    public $modelClass = 'common\models\Resume';
 
     public function actions()
     {
@@ -20,10 +20,8 @@ class ResumeController extends BaseActiveController
         return $as;
     }
 
-    public function buildBaseQuery()
-    {
-        $model = $this->modelClass;
-        $query = $model::find()->where(['user_id'=>\Yii::$app->user->id]);
-        return $query;
-    }
+    public $id_column = 'user_id';
+    public $auto_filter_user = true;
+    public $user_identifier_column = 'user_id';
+
 }

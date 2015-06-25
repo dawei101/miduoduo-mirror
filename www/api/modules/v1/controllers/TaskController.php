@@ -13,6 +13,8 @@ class TaskController extends BaseActiveController
 {
     public $modelClass = 'api\common\models\Task';
 
+    public $id_column = 'gid';
+
     public function actions()
     {
         $actions = parent::actions();

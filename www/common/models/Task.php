@@ -208,7 +208,7 @@ class Task extends \common\BaseActiveRecord
     public function fields()
     {
         return [
-            'gid', 'title', 'clearance_period', 'salary', 'salary_unit',
+            'id', 'gid', 'title', 'clearance_period', 'salary', 'salary_unit',
             'salary_note', 'from_date', 'company_name',
             'company_introduction', 'contact', 'contact_phonenum',
             'to_date', 'from_time', 'to_time', 'need_quantity',

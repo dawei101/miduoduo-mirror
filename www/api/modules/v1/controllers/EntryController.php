@@ -21,7 +21,6 @@ class EntryController extends BaseActiveController
 {
     public $modelClass = 'common\models\User';
 
-
     public function behaviors()
     {
         return [

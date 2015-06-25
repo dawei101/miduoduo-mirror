@@ -21,12 +21,7 @@ class DistrictController extends BaseActiveController
         return ['index' => $actions['index']];
     }
 
-    public function buildBaseQuery()
-    {
-        $model = $this->modelClass;
-        $query = $model::find()->orderBy('id asc');
-        return $query;
-    }
+    public $id_column = 'id';
 
     public function prepareDataProvider()
     {
@@ -37,6 +32,7 @@ class DistrictController extends BaseActiveController
             ],
         ]);
     }
+
 
 
 }
