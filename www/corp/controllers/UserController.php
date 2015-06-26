@@ -111,4 +111,19 @@ class UserController extends FBaseController
             'model' => $model,
         ]);
     }
+
+    public function actionRegisterSuccess()
+    {
+        $this->render('registerSuccess');
+    }
+
+    public function actionAddContactInfo()
+    {
+        $this->render('addContactInfo');
+    }
+
+    public function actionAddCompanyInfo()
+    {
+        $this->render('addCompanyInfo');
+    }
 }
