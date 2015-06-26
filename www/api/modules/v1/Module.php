@@ -20,7 +20,6 @@ class Module extends \yii\base\Module
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-
         $controller = Yii::$app->controller->id;
         
         if ($controller!='entry'){
