@@ -130,13 +130,8 @@ class UserController extends FBaseController
     {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->getSession()->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
-            } else {
-                Yii::$app->getSession()->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
-            }
+            $token = User::generatePasswordResetToken();
+            return $this->redirect(array('/user/resetPassword', 'token' => $token));
         }
 
         return $this->render('requestPasswordResetToken', [
