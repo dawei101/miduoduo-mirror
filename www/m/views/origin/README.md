@@ -33,11 +33,11 @@ http://h5v1.origin.miduoduo.cn/task/view
         root@mose:/service/miduoduo/www/m/views/origin# ls task/view/
         1.php   5.php    10.php
         ```
-        * task/view + version 10
+        * task/view + [version 10] = 10.php
         ```
-            http://h5v10.origin.miduoduo.cn/task/view -> ORIGIN_ROOT/task/view/1.php
+            http://h5v10.origin.miduoduo.cn/task/view -> ORIGIN_ROOT/task/view/10.php
         ```
-        * task/view + version 9
+        * task/view + [version 9] = 5.php
         ```
             http://h5v9.origin.miduoduo.cn/task/view -> ORIGIN_ROOT/task/view/5.php
         ```
