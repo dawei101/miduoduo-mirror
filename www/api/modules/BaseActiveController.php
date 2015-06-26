@@ -13,6 +13,11 @@ use yii\web\HttpException;
 class BaseActiveController extends ActiveController
 {
 
+    public $serializer = [
+        'class'=>'yii\rest\Serializer',
+        'collectionEnvelope'=>'items',
+    ];
+
     // 设置url中id所对应的字段
     public $id_column = 'id';
 
@@ -90,7 +95,7 @@ class BaseActiveController extends ActiveController
             'corsFilter' => [
                 'class' => \yii\filters\Cors::className(),
                 'cors' => [
-                    'Origin' => Yii::$app->params['api_allowed_origins'], 
+                    'Origin' => ['*'], 
                     'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
                     'Access-Control-Request-Headers' => ['*'],
                     'Access-Control-Allow-Credentials' => null,
@@ -100,11 +105,6 @@ class BaseActiveController extends ActiveController
             ],
         ]); 
     }
-
-    public $serializer=[
-        'class'=>'yii\rest\Serializer',
-        'collectionEnvelope'=>'items',
-    ];
 
     static $QUERY_OPERATIONS = [
         "=",

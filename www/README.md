@@ -116,7 +116,7 @@ vi /etc/apache2/sites-available/000-default.conf
      RewriteEngine On
 
      RewriteCond %{HTTP_HOST} ^(.*)\.origin\.test\.chongdd\.cn$
-     RewriteRule ^(.*)$ http://127.0.0.1:9999/origin/%1/ [L,P]
+     RewriteRule ^(.*)$ http://127.0.0.1:9999/origin/%1$1 [L,P]
      ProxyPassReverse  / http://127.0.0.1:9999/origin/%1/
 </VirtualHost>
 
