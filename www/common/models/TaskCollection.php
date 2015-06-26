@@ -77,4 +77,9 @@ class TaskCollection extends \common\BaseActiveRecord
     {
         return new TaskCollectionQuery(get_called_class());
     }
+
+    public function extraFields()
+    {
+        return ['task'];
+    }
 }
