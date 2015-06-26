@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 
 use common\Utils;
 use common\models\LoginWithDynamicCodeForm;
+use common\models\User;
 use common\sms\SmsSenderFactory;
 
 use corp\FBaseController;
@@ -31,7 +32,7 @@ class UserController extends FBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['request-password-reset', 'reset-password'],
+                        'actions' => ['login', 'register', 'vcode','request-password-reset', 'reset-password'],
                         'allow' => true,
                     ],
                     [
@@ -66,7 +67,57 @@ class UserController extends FBaseController
         ];
     }
 
+    public function actionLogin()
+    {
+        $loginModel = new LoginForm();
+        if ($loginModel->load(Yii::$app->request->post()) && $loginModel->login()) {
+            return $this->renderJson(['result' => true ]);
+        }
 
+        return $this->renderJson(['result' => false]);
+    }
+
+    public function actionRegister()
+    {
+        $regModel = new SignupForm();
+        if ($regModel->load(Yii::$app->request->post())) {
+            if ($user = $regModel->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->renderJson(['result' => true]);
+                }
+            }
+        }
+
+        return $this->renderJson(['result' => false]);
+    }
+
+    public function actionVcode($phonenum)
+    {
+        if (!Utils::isPhonenum($phonenum)){
+            return $this->renderJson([
+                'result'=> false,
+                'msg'=> "手机号码不正确"
+            ]);
+        }
+
+        // if (User::findByUsername($phonenum)){
+        //     return $this->renderJson([
+        //         'result'=> false,
+        //         'msg'=> "该手机号已注册，您可以直接登录."
+        //     ]);
+        // }
+        $sender = SmsSenderFactory::getSender();
+        if ($sender->sendVerifyCode($phonenum)){
+            return $this->renderJson([
+                    'result'=> true,
+                    'msg'=> "验证码已发送"
+            ]);
+        }
+        return $this->renderJson([
+                'result'=> false,
+                'msg'=> "验证码发送失败, 请稍后重试。"
+        ]);
+    }
 
     public function actionLogout()
     {
