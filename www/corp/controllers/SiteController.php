@@ -86,9 +86,9 @@ class SiteController extends FBaseController
         return $this->renderJson(['result' => false]);
     }
 
-    public function actionVcode()
+    public function actionVcode($phonenum)
     {
-        $phonenum = Yii::$app->request->post('phonenum');
+        // $phonenum = Yii::$app->request->post('phonenum');
         if (!Utils::isPhonenum($phonenum)){
             return $this->renderJson([
                 'result'=> false,
