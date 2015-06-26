@@ -54,7 +54,7 @@ return [
             'enablePrettyUrl' => true,
             'rules' => [
                 'origin/h5v<version:[\d]+>/?' => 'origin/handle',
-                'origin/h5v<version:[\d]+>/<action:[\w\d]+>' => 'origin/handle',
+                'origin/h5v<version:[\d]+>/<file:[\w\d\/]+>' => 'origin/handle',
             ],
         ],
         'view' => [

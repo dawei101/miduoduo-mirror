@@ -2,15 +2,16 @@
 namespace m\controllers;
 
 use Yii;
+use yii\web\HttpException;
 use m\MBaseController;
 
 
 class OriginController extends MBaseController
 {
 
-    public function getViewFile($action, $version)
+    public function getViewFile($path, $version)
     {
-        $path = Yii::getAlias('@m/views/origin/' . $action);
+        $path = Yii::getAlias('@m/views/origin/' . $path);
         if (!file_exists($path)){
             return null;
         }
@@ -22,15 +23,18 @@ class OriginController extends MBaseController
             }
         }
         if ($v>0){
-            return $action . '/' . $v . '.php';
+            return $path . '/' . $v . '.php';
         }
         return null;
     }
 
-    public function actionHandle($version, $action='index')
+    public function actionHandle($version, $file='index')
     {
         $version = intval($version);
-        $view = $this->getViewFile($action, $version);
+        $view = $this->getViewFile($path, $version);
+        if (!$view){
+            throw new HttpException(404, 'File not found');
+        }
         return $this->renderPartial($view);
     }
 }
