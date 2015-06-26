@@ -24,11 +24,15 @@ http://h5v1.origin.miduoduo.cn/task/view
         `-- task
             `-- view
                     |-- 10.php
-                            |-- 1.php
-                                    `-- 5.php
+                    |-- 1.php
+                    `-- 5.php
         ```
 
     * 新版本只添加对应版本需要修改的文件,高版本文件找不到自动找最近的最高版本文件
+        ```bash
+        root@mose:/service/miduoduo/www/m/views/origin# ls task/view/
+        1.php   5.php    10.php
+        ```
         * task/view + version 10
         ```
             http://h5v10.origin.miduoduo.cn/task/view -> ORIGIN_ROOT/task/view/1.php
