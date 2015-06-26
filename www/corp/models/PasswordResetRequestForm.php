@@ -10,7 +10,7 @@ use common\sms\BaseSmsSender;
  */
 class PasswordResetRequestForm extends Model
 {
-    public $phone;
+    public $username;
     public $vcode;
 
     /**
@@ -19,10 +19,9 @@ class PasswordResetRequestForm extends Model
     public function rules()
     {
         return [
-            ['phone', 'filter', 'filter' => 'trim'],
-            ['phone', 'required'],
-            ['phone', 'email'],
-            ['phone', 'exist',
+            ['username', 'filter', 'filter' => 'trim'],
+            ['username', 'required'],
+            ['username', 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::$STATUSES['ACTIVE']],
                 'message' => 'There is no user with such phone.'
@@ -51,7 +50,7 @@ class PasswordResetRequestForm extends Model
         /* @var $user User */
         $user = User::findOne([
             'status' => User::$STATUSES['ACTIVE'],
-            'username' => $this->phone,
+            'username' => $this->username,
         ]);
 
         if ($user) {
