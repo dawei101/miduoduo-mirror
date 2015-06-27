@@ -126,7 +126,7 @@ class UserController extends FBaseController
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $token = $model->verifyPhone();
             if ($token !== false) {
-                return $this->redirect(array('/user/resetPassword', 'token' => $token));
+                return $this->redirect(array('/user/reset-password', 'token' => $token));
             }
         }
 
