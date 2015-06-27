@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-use common\models\Address;
+use common\models\TaskAddress;
 use common\models\Company;
 use common\models\District;
 use common\models\ServiceType;
@@ -184,6 +184,12 @@ class Task extends \common\BaseActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
+    public function getAddresses()
+    {
+        return $this->hasMany(TaskAddress::className(), ['task_id' => 'id']);
+    }
+
+
     public function getDistrict()
     {
         return $this->hasOne(District::className(), ['id' => 'district_id']);
@@ -196,13 +202,13 @@ class Task extends \common\BaseActiveRecord
 
     public function extraFields()
     {
-        return ['city', 'district', 'user', 'service_type', 'company'];
+        return ['city', 'district', 'user', 'service_type', 'company', 'addresses'];
     }
 
     public function fields()
     {
         return [
-            'gid', 'title', 'clearance_period', 'salary', 'salary_unit',
+            'id', 'gid', 'title', 'clearance_period', 'salary', 'salary_unit',
             'salary_note', 'from_date', 'company_name',
             'company_introduction', 'contact', 'contact_phonenum',
             'to_date', 'from_time', 'to_time', 'need_quantity',
