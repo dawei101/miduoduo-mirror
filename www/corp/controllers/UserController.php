@@ -33,11 +33,11 @@ class UserController extends FBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'register', 'vcode','request-password-reset', 'reset-password'],
+                        'actions' => ['register-success', 'login', 'register', 'vcode','request-password-reset', 'reset-password'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['register-success', 'add-company-info', 'add-contact-info','logout'],
+                        'actions' => ['add-company-info', 'add-contact-info','logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
