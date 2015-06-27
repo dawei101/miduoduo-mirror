@@ -81,14 +81,14 @@
 <div style="height:50px;"></div>
 
 <!--======列表======--> 
-<a class="list" ng-click="openDetail(task)" ng-repeat="task in tasks">
+<a class="list" ng-click="detail(task)" ng-repeat="task in data.items">
 <div class="list-title">
   <h2>{{task.title}}</h2><span>06-16</span>
 </div>
 <div class="list-tag"><span class="tag-im">120元/天</span><span>日结</span><span>朝阳</span></div>
 </a>
 <div class="page">
-   <a ng-click="prevPage()"><span class="arrow-left"></span>上一页</a>
+   <a ng-click="lastPage()"><span class="arrow-left"></span>上一页</a>
    <a ng-click="nextPage()">下一页<span class="arrow-right"></span></a>
 </div>
 </div>
