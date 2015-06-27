@@ -5,6 +5,8 @@ namespace corp\models;
 use Yii;
 use yii\base\Model;
 
+use common\models\User;
+
 /**
  * ContactForm is the model behind the contact form.
  */
@@ -12,8 +14,6 @@ class ContactForm extends Model
 {
     public $phone;
     public $email;
-    public $subject;
-    public $body;
 
     /**
      * @inheritdoc
@@ -21,8 +21,7 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-            // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
+            [['phone', 'email'], 'required'],
             // email has to be a valid email address
             ['email', 'email'],
         ];
@@ -34,7 +33,8 @@ class ContactForm extends Model
     public function attributeLabels()
     {
         return [
-            'verifyCode' => 'Verification Code',
+            'phone' => '联系电话',
+            'email' => '接收简历邮箱',
         ];
     }
 
@@ -52,5 +52,10 @@ class ContactForm extends Model
             ->setSubject($this->subject)
             ->setTextBody($this->body)
             ->send();
+    }
+
+    public function saveContactInfo()
+    {
+        
     }
 }
