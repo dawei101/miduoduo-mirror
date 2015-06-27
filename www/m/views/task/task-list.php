@@ -12,14 +12,14 @@ use yii\widgets\LinkPager;
         </div>
       <div class="panel-body list-bt">
         <p> <span class="label label-default">
-            ￥<?= intval($task->salary) ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?>
+            ￥<?=floor($task->salary) ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?>
            </span> </p>
       </div>
     </div>
     <div class="border-bt">
       <div class="panel-body lnk">
         <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-            <?=\Yii::$app->formatter->asDate($task->from_date) ?>至<?= \Yii::$app->formatter->asDate($task->to_date) ?>
+            <?=\Yii::$app->formatter->asDate($task->from_date);?>至<?=\Yii::$app->formatter->asDate($task->to_date)?>
         </p>
         <div class="te-x">
           <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
