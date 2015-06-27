@@ -148,7 +148,7 @@ class UserController extends MBaseController
 
         $model = new LoginWithDynamicCodeForm([
             'signup_only' => $signuping
-        ]);
+        ]);//this model is ready for insert into db 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             if ($signuping){
                 $url = Url::to([

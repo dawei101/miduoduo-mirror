@@ -3,7 +3,8 @@
 use common\models\TaskApplicant;
 
 
-$this->title = '职位详情';
+$this->title = '兼职详情';
+$this->page_title = $task->title . '-';
 
 $this->nav_left_link = 'javascript:window.history.back()';
 $this->nav_right_link = '/';
