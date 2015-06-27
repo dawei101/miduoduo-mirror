@@ -37,7 +37,7 @@ class UserController extends FBaseController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['register-success', 'add-company-info', 'add-contact-info','logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
