@@ -100,12 +100,6 @@ class UserController extends FBaseController
             ]);
         }
 
-        // if (User::findByUsername($phonenum)){
-        //     return $this->renderJson([
-        //         'result'=> false,
-        //         'msg'=> "该手机号已注册，您可以直接登录."
-        //     ]);
-        // }
         $sender = SmsSenderFactory::getSender();
         if ($sender->sendVerifyCode($phonenum)){
             return $this->renderJson([
@@ -130,8 +124,10 @@ class UserController extends FBaseController
     {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $token = User::generatePasswordResetToken();
-            return $this->redirect(array('/user/resetPassword', 'token' => $token));
+            $token = $model->verifyPhone();
+            if ($token !== false) {
+                return $this->redirect(array('/user/resetPassword', 'token' => $token));
+            }
         }
 
         return $this->render('requestPasswordResetToken', [
