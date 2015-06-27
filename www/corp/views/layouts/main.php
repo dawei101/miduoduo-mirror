@@ -35,9 +35,11 @@ AppAsset::register($this);
                 ],
             ]);
             $menuItems = [
-                ['label' => '首页', 'url' => ['/site/index']],
-                ['label' => '关于', 'url' => ['/site/about']],
-                ['label' => '联系我们', 'url' => ['/site/contact']],
+                ['label' => '我的职位', 'url' => ['/task/index']],
+                ['label' => '我要发布', 'url' => ['/task/open']],
+                ['label' => '简历管理', 'url' => ['/resume/index']],
+                ['label' => '消息', 'url' => ['/message/index']],
+                ['label' => '用户中心', 'url' => ['/user/index']],
             ];
             if (!Yii::$app->user->isGuest){
                 $menuItems[] = [
@@ -84,7 +86,7 @@ var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "//hm.baidu.com/hm.js?71fce0b5ae66cac6b8ba9fc072998791";
-  var s = document.getElementsByTagName("script")[0]; 
+  var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
