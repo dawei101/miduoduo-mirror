@@ -16,6 +16,7 @@ use corp\FBaseController;
 use corp\models\PasswordResetRequestForm;
 use corp\models\ResetPasswordForm;
 use corp\models\SignupForm;
+use corp\models\LoginForm;
 
 /**
  * Site controller
