@@ -17,6 +17,7 @@ use corp\models\PasswordResetRequestForm;
 use corp\models\ResetPasswordForm;
 use corp\models\SignupForm;
 use corp\models\LoginForm;
+use corp\models\ContactForm;
 
 /**
  * Site controller
@@ -162,11 +163,15 @@ class UserController extends FBaseController
 
     public function actionAddContactInfo()
     {
-        return $this->render('addContactInfo');
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->actionAddCompanyInfo()) {
+            return $this->redirect('/user/add-company-info');
+        }
+        return $this->render('addContactInfo', ['model' => $model]);
     }
 
     public function actionAddCompanyInfo()
     {
-         return $this->render('addCompanyInfo');
+        return $this->render('addCompanyInfo');
     }
 }

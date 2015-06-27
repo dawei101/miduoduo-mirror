@@ -36,7 +36,7 @@ class Company extends \common\BaseActiveRecord
             [['id', 'name', 'license_id', 'license_img', 'user_id'], 'required'],
             [['id', 'status', 'address_id', 'examined_by', 'user_id'], 'integer'],
             [['examined_time'], 'safe'],
-            [['name', 'license_id', 'license_img'], 'string', 'max' => 500]
+            [['name', 'license_id', 'license_img', 'contact_phone', 'contact_email'], 'string', 'max' => 500],
         ];
     }
 
@@ -55,6 +55,8 @@ class Company extends \common\BaseActiveRecord
             'address_id' => '地址',
             'examined_by' => '审核人',
             'user_id' => '用户',
+            'contact_phone' => '联系电话',
+            'contact_email' => '招聘邮箱'
         ];
     }
 
@@ -65,5 +67,37 @@ class Company extends \common\BaseActiveRecord
     public static function find()
     {
         return new CompanyQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findByCurrentUser()
+    {
+        return static::findOne(['user_id' => Yii::$app->user->id]);
+    }
+
+    public static function createCompanyWithCurrentUser(){
+        $company = new Company;
+        $company->user_id = Yii::$app->user->id;
+        if ($company->save()){
+            return $company;
+        }
+        return false;
+    }
+
+    public static function updateContactInfo($phone, $email)
+    {
+        $company = static::findByCurrentUser();
+        if ($company === false) {
+            //we build a company for first visit
+            $company = static::createCompanyWithCurrentUser();
+        }
+        if ($company === false) {
+            return false;
+        }
+        $company->contact_phone = $phone;
+        $company->contact_email = $email;
+        return $company->save();
     }
 }

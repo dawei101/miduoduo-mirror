@@ -5,7 +5,7 @@ namespace corp\models;
 use Yii;
 use yii\base\Model;
 
-use common\models\User;
+use common\models\Company;
 
 /**
  * ContactForm is the model behind the contact form.
@@ -56,6 +56,6 @@ class ContactForm extends Model
 
     public function saveContactInfo()
     {
-        
+        return Company::updateContactInfo($this->phone, $this->email);
     }
 }
