@@ -3,7 +3,7 @@
 
 import scrapy
 
-class WubaSpider(scrapy.Spider):
+class XlbSpider(scrapy.Spider):
 
     name = "wuba"
     allowed_domains = ["dmoz.org"]
