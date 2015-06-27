@@ -63,4 +63,10 @@ class H5Utils
         return H5Utils::getViewFile(Constants::H5_VERSION_MARKER, $version);
     }
 
+    public function generateUrl($version)
+    {
+        return Yii::$app->params['baseurl.h5_origin'] . '/' . 
+            Constants::H5_VERSION_MARKER . '/' . $version .
+                Constants::H5_VERSION_MARKER;
+    }
 }

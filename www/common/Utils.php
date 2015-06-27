@@ -16,10 +16,10 @@ class Utils
         $os = current($matches);
         switch ($os){
             case 'android': 
-                return Constants\DEVICE_ANDROID;
+                return Constants::DEVICE_ANDROID;
                 break;
             case 'ipod' || 'iphone' || 'ipad' || 'ipod' || 'ios':
-                return Constants\DEVICE_IOS;
+                return Constants::DEVICE_IOS;
                 break;
         }
         return null;

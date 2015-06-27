@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\H5Utils;
 
 /**
  * This is the model class for table "{{%app_release_version}}".
@@ -35,7 +36,7 @@ class AppReleaseVersion extends \common\BaseActiveRecord
             [['device_type'], 'integer'],
             [['release_time'], 'safe'],
             [['app_version', 'html_version'], 'string', 'max' => 45],
-            [['update_url'], 'string', 'max' => 1000]
+            [['update_url', 'h5_map_file'], 'string', 'max' => 1000]
         ];
     }
 
@@ -51,6 +52,7 @@ class AppReleaseVersion extends \common\BaseActiveRecord
             'html_version' => 'html版本',
             'update_url' => '升级链接',
             'release_time' => '发布时间',
+            'h5_map_file' => 'H5 地图文件',
         ];
     }
 
@@ -61,5 +63,16 @@ class AppReleaseVersion extends \common\BaseActiveRecord
     public static function find()
     {
         return new AppReleaseVersionQuery(get_called_class());
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->h5_map_file = H5Utils::generateUrl($this->html_version);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
