@@ -33,7 +33,7 @@ $this->title = '米多多兼职平台';
 </div>
 <div>
     <div>
-           <?php $form0 = ActiveForm::begin(['id' => 'form-signup', 'action'=>'/site/register']); ?>
+           <?php $form0 = ActiveForm::begin(['id' => 'form-signup', 'action'=>'/user/register']); ?>
                <?= $form0->field($regModel, 'username') ?>
                <?= $form0->field($regModel, 'vcode') ?>
                <?= $form0->field($regModel, 'password')->passwordInput() ?>
@@ -49,7 +49,7 @@ $this->title = '米多多兼职平台';
     </div>
 </div>
 <div>
-<?php $form1 = ActiveForm::begin(['id' => 'login-form', 'action' => '/site/login']); ?>
+<?php $form1 = ActiveForm::begin(['id' => 'login-form', 'action' => '/user/login']); ?>
     <div style='padding: 40px 0 10px 10px;color: #999;' > <?=$this->title?> </div>
     <div class="form-list">
       <?= $form1->field($loginModel, 'username')
