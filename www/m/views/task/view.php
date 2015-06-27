@@ -3,7 +3,8 @@
 use common\models\TaskApplicant;
 
 
-$this->title = '职位详情';
+$this->title = '兼职详情';
+$this->page_title = $task->title . '-';
 
 $this->nav_left_link = 'javascript:window.history.back()';
 $this->nav_right_link = '/';
@@ -16,7 +17,7 @@ $this->nav_right_title = '首页';
     </div>
     <div class="panel-body list-bt">
         <p>
-            <span class="label label-default">￥<?= $task->salary ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span>
+            <span class="label label-default">￥<?= floor($task->salary); ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span>
         </p>
     </div>
 </div>
@@ -27,8 +28,7 @@ $this->nav_right_title = '首页';
       <h3 class="panel-title">工作时间</h3>
     </div>
     <div class="panel-body">
-      <p><?=$task->from_date ?>至<?=$task->to_date?>
-        <?=$task->from_time ?> - <?=$task->to_time ?>
+      <p><?=\Yii::$app->formatter->asDate($task->from_date);?>至<?=\Yii::$app->formatter->asDate($task->to_date)?>
       </p>
     </div>
   </div>

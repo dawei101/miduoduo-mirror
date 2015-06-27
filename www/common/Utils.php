@@ -12,19 +12,18 @@ class Utils
     {
         $user_agent = strtolower($user_agent);
         $matches = [];
-        preg_match("/iphone|android|ipad|ipod/", $user_agent, $matches);
+        preg_match("/iphone|android|ipad|ipod/i", $user_agent, $matches);
         $os = current($matches);
         switch ($os){
             case 'android': 
-                return Constants\DEVICE_ANDROID;
+                return Constants::DEVICE_ANDROID;
                 break;
             case 'ipod' || 'iphone' || 'ipad' || 'ipod' || 'ios':
-                return Constants\DEVICE_IOS;
+                return Constants::DEVICE_IOS;
                 break;
         }
         return null;
     }
-
 
     public static function getAppVersion($request)
     {
@@ -35,4 +34,5 @@ class Utils
     {
         return $request->headers->get('Device-Id');
     }
+
 }

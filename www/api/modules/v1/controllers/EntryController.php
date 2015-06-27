@@ -10,6 +10,7 @@ use common\Utils;
 use common\sms\SmsSenderFactory;
 use common\sms\BaseSmsSender;
 use common\models\User;
+use common\models\AppReleaseVersion;
 use common\models\Device;
 
 /**
@@ -20,7 +21,6 @@ use common\models\Device;
 class EntryController extends BaseActiveController
 {
     public $modelClass = 'common\models\User';
-
 
     public function behaviors()
     {
@@ -102,19 +102,27 @@ class EntryController extends BaseActiveController
     {
         $user_agent = Yii::$app->request->headers->get('User-Agent');
         $device_type = Utils::getDeviceType($user_agent);
-        if (!$device_type){
+        $app_version = Yii::$app->request->headers->get('App-Version');
+        if (!$device_type || !$app_version){
             return $this->renderJson([
                 'success'=> false,
                 'message'=> '未知的设备信息',
                 ]);
         }
-        $version = AppReleaseVersion::find()->where(['device_type'=>$device_type])
+        $h5v = AppReleaseVersion::find()->where(
+            ['app_version'=>$app_version, 'device_type'=>$device_type])
+            ->orderBy(['id'=>SORT_DESC])->one();
+
+        $appv = AppReleaseVersion::find()->where(['device_type'=>$device_type])
             ->orderBy(['id'=>SORT_DESC])->one();
 
         return $this->renderJson([
             'success'=> true,
             'message'=> '获取成功',
-            'result'=>$version->asArray()
+            'result'=> [
+                'current'=>$h5v?$h5v->toArray():null,
+                'new'=>$appv?$appv->toArray():null,
+                ]
             ]);
     }
 
@@ -149,6 +157,7 @@ class EntryController extends BaseActiveController
                         'success'=> true,
                         'message'=> '登录成功',
                         'result'=> [
+                            'id'=> $user->id,
                             'username'=> $username,
                             'password'=> $password,
                             'access_token'=> $user->access_token,
@@ -216,6 +225,7 @@ class EntryController extends BaseActiveController
                 'success'=> true,
                 'message'=> '登录成功',
                 'result'=> [
+                    'id'=> $user->id,
                     'username'=> $phonenum,
                     'password'=> '',
                     'access_token'=> $user->access_token,

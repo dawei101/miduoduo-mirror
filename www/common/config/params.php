@@ -11,4 +11,5 @@ return [
     'baseurl.backend' => 'http://dashboard.miduoduo.cn',
     'baseurl.frontend' => 'http://www.miduoduo.cn',
 
+    'baseurl.h5_origin' => 'http://origin.miduoduo.cn',
 ];

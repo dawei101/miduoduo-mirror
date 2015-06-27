@@ -1,7 +1,17 @@
+miduoduo 协议
+=====================
+
+##js bridge的url
+```
+miduoduo://jsbridge.action?query=
+```
+
 #Js Bridge
 
 我们Js Bridge的实现是基于开源[JsBridge](https://github.com/lzyzsd/JsBridge)
-原理为,在webview中，js通过添加iframe 节点，在ios/android可以捕获对应的事件，然后进行处理。
+
+js调用native 方法原理
+    * 在webview中，js通过添加iframe 节点，在ios/android可以捕获对应的事件，然后进行处理。
 
 
 * 请求认证

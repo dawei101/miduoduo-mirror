@@ -61,6 +61,7 @@ class UserSearch extends User
             'invited_by' => $this->invited_by,
             'created_time' => $this->created_time,
             'updated_time' => $this->updated_time,
+            'invited_by' => $this->invited_by,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\TaskApplicantSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Task Applicants';
+$this->title = '投递管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-applicant-index">
@@ -18,28 +18,42 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'columns' => [
-            'id',
-             ['attribute'=> 'task_id',
+        'columns' => [      
+            ['attribute'=> 'id',
+                 'label'=>'投递流水ID'
+            ],
+            ['attribute'=> 'resume',
+                 'format'=>'raw',
+                 'value'=>function($model){
+ //var_dump($model->resume->name);die();
+                    // return $model->user->username . "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>查看简历</a>";
+                     return "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>".$model->resume->name."</a>";
+
+                 },
+                 'label'=>'简历',
+            ],
+            ['attribute'=> 'task',
                  'format'=>'raw',
                  'value'=>function($model){
                     if ($model->task){
-                        return $model->task->title . "<a target='_blank' class='pull-right' href='/task/view?id=". $model->task_id ."'>查看任务</a>";
+                        return "<a target='_blank' class='pull-right' href='/task/view?id=". $model->task_id ."'>".$model->task->title ."</a>";
                     }
                     return '<span class="pull-right">已删除</span>';
                 },
-                'label'=>'任务'
-             ],
-             ['attribute'=> 'user_id',
-                 'format'=>'raw',
-                 'value'=>function($model){
-                    return $model->user->username . "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>查看简历</a>";
-                 },
-                 'label'=>'用户'
+                'label'=>'应聘岗位'
             ],
-            'created_time',
+            [
+             'attribute' => 'contact',
+             'label' => '联系方式',
+             'value' => function($model){
+                return $model->user->username;
+             },
 
-
+            ],
+            [
+                'attribute' => 'created_time',
+                'format' => ['date', 'php:y-m-d H:m'],
+            ],
         ],
     ]); ?>
 

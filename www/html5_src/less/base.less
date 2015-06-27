@@ -1,0 +1,19 @@
+@import "atom";
+@import "css-reset.less";
+/*
+该文件用来设置整站基调样式
+*/
+body{.bgc(#fff); .fc(#666); }
+html, body, div, p, span, a, img, ul, li, header, section, footer, nav, canvas, figure, figcaption{-webkit-user-select:none;}
+html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {-webkit-text-size-adjust:none;}
+
+a{color: #666; .tnone; }
+
+input{
+  &[type="password"], &[type="text"], &[type="submit"]{
+    .appearance-n;
+  }
+}
+textarea{
+  .appearance-n;
+}

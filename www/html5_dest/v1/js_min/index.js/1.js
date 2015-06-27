@@ -1,0 +1,1 @@
+define(function(require,exports,module){return require("zepto"),require("widget/touchSlide"),void $("#bannerSlider").touchSlide({})});

@@ -67,6 +67,7 @@ AppAsset::register($this);
                     <li><a href="/support/report-bug">提交bug
                         <span class="glyphicon glyphicon-flag pull-right" style="color:red;"></span>
                         </a></li>
+                    <li><a href="/app-release-version">应用发布管理</a></li>
                   </ul>
 
                 </div>
