@@ -157,16 +157,16 @@ class UserController extends FBaseController
 
     public function actionRegisterSuccess()
     {
-        $this->render('registerSuccess');
+        return $this->render('registerSuccess');
     }
 
     public function actionAddContactInfo()
     {
-        $this->render('addContactInfo');
+        return $this->render('addContactInfo');
     }
 
     public function actionAddCompanyInfo()
     {
-        $this->render('addCompanyInfo');
+         return $this->render('addCompanyInfo');
     }
 }
