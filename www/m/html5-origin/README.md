@@ -9,14 +9,14 @@ http://h5v1.origin.miduoduo.cn/task/view
 ```
 
 * 目录结构与文件创建约定
-    * 计： ORIGIN_ROOT = project_root/www/m/views/origin
+    * 计： ORIGIN_ROOT = project_root/www/m/html5-origin
 
     * 所有目录都不可在ORIGIN_ROOT 之外
 
     * 以访问的文件创建目录, 以[版本号+.php]为文件名称
         * http://h5v1.origin.miduoduo.cn/task/view -> ORIGIN_ROOT/task/view/1.php
         ```bash
-        root@mose:/service/miduoduo/www/m/views/origin# tree
+        root@mose:/service/miduoduo/www/m/html5-origin# tree
         .
         |-- index
         |   |-- 1.php
@@ -30,7 +30,7 @@ http://h5v1.origin.miduoduo.cn/task/view
 
     * 新版本只添加对应版本需要修改的文件,高版本文件找不到自动找最近的最高版本文件
         ```bash
-        root@mose:/service/miduoduo/www/m/views/origin# ls task/view/
+        root@mose:/service/miduoduo/www/m/html5-origin# ls task/view/
         1.php   5.php    10.php
         ```
         * task/view + [version 10] = 10.php
