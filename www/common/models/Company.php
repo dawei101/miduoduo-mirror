@@ -13,7 +13,6 @@ use Yii;
  * @property string $license_img
  * @property string $examined_time
  * @property integer $status
- * @property integer $address_id
  * @property integer $examined_by
  * @property integer $user_id
  */
@@ -33,8 +32,8 @@ class Company extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name', 'license_id', 'license_img', 'user_id'], 'required'],
-            [['id', 'status', 'address_id', 'examined_by', 'user_id'], 'integer'],
+ //           [['id', 'name', 'license_id', 'license_img', 'user_id'], 'required'],
+            [['id', 'status', 'examined_by', 'user_id'], 'integer'],
             [['examined_time'], 'safe'],
             [['name', 'license_id', 'license_img', 'contact_phone', 'contact_email'], 'string', 'max' => 500],
         ];
@@ -52,7 +51,6 @@ class Company extends \common\BaseActiveRecord
             'license_img' => '营业执照',
             'examined_time' => '审核日期',
             'status' => '状态',
-            'address_id' => '地址',
             'examined_by' => '审核人',
             'user_id' => '用户',
             'contact_phone' => '联系电话',
@@ -89,11 +87,11 @@ class Company extends \common\BaseActiveRecord
     public static function updateContactInfo($phone, $email)
     {
         $company = static::findByCurrentUser();
-        if ($company === false) {
+        if (!$company) {
             //we build a company for first visit
             $company = static::createCompanyWithCurrentUser();
         }
-        if ($company === false) {
+        if (!$company) {
             return false;
         }
         $company->contact_phone = $phone;
