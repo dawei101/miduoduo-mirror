@@ -3,6 +3,8 @@
 namespace common\pusher;
 
 use Yii;
+use yii\base\Component;
+use yii\base\ViewContextInterface;
 
 require_once(Yii::getAlias('@vendor/autoload.php'));
 
@@ -12,11 +14,10 @@ use JPush\Exception\APIConnectionException;
 use JPush\Exception\APIRequestException;
 
 use common\constants;
-
 use common\models\Device;
 
 
-class AppPusher
+class AppPusher extends Component implements ViewContextInterface 
 {
 
     private $_client;
