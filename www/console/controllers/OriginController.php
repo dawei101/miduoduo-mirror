@@ -8,33 +8,37 @@ use Yii;
 use yii\console\Controller;
 use yii\console\Exception;
 use \common\models\User;
+use m\controllers\OriginController as mOriginC;
+use yii\base\ErrorException;
+
 
 class OriginController extends Controller
 {
 
     public $defaultAction = 'current-version';
 
-    public function getMarkFile()
+    private $_copied_files = [];
+
+    public function getLastestVersion($file)
     {
-        return \m\controllers\OriginController::getViewPath() . '/.version';
+        return mOriginC::getClosestVersion($file, 9999999999);
+    }
+
+    public function getLastestViewFile($file)
+    {
+        return mOriginC::getViewPath() . '/'
+            . mOriginC::getViewFile($file, $this->getLastestVersion($file));
+    }
+
+    public function buildFilePath($file, $version)
+    {
+        return mOriginC::getViewPath() . '/' .
+            mOriginC::getViewFile($file, $version);
     }
 
     public function getCurrentVersion()
     {
-        $content = file_get_contents($this->getMarkFile());
-        return intval(end(explode("\n", $content)));
-    }
-
-    public function markVersion($version)
-    {
-        $version = intval($version);
-        $cr = $this->getCurrentVersion();
-        if ($version<$cr) {
-            die('version could not low than ' .$cr);
-        }
-        $f = fopen($this->getMarkFile(), "a");
-        fwrite($f, "\n" . $version);
-        fclose($f);
+        return $this->getLastestVersion(mOriginC::VERSION_MARKER);
     }
 
     public function actionCurrentVersion()
@@ -43,19 +47,115 @@ class OriginController extends Controller
         echo "\n";
     }
 
-    public function actionUpVersion()
-    {
-        $this->markVersion($this->getCurrentVersion()+1);
-        $this->actionCurrentVersion();
+    function listFiles($basedir, $rdir=''){
+        $current_dir = rtrim($basedir, '/') . '/' . $rdir;
+        $ffs = scandir($current_dir);
+        $arr = [];
+        foreach($ffs as $ff) {
+            if($ff != '.' && $ff != '..') {
+                if(is_dir($current_dir . '/' . $ff)) {
+                    $arr = array_merge($arr, $this->listFiles($basedir, $rdir . '/' .$ff));
+                } else {
+                    $arr[] = $rdir. '/' . $ff;
+                }
+            }
+        }
+        return $arr;
     }
 
-    public function actionImportSource($path)
+    public function rollback()
     {
-        
+        echo "Rolling back...\n";
+        foreach ($this->_copied_files as $f){
+            echo "Delete file: " . $f . "\n";
+            unlink($f);
+            echo "->Done!\n";
+        }
+        echo "Rollback is done!!\\nn";
     }
 
-    public function actionExportSource($path, $version=null)
+    public function actionImportSource()
     {
+        $path = Yii::getAlias('@html5_src/dest');
+        if (!is_dir($path)) {
+            echo "Source need to be a path \n";
+            exit(1);
+        }
+        $new_version = $this->getCurrentVersion() + 1;
 
+        try {
+            $file_count = 0;
+            $all_files = $this->listFiles($path);
+            foreach ($all_files as $file){
+                $old_f = $this->getLastestViewFile($file);
+                $new_f = rtrim($path, '/') . $file;
+                $to_f = $this->buildFilePath($file, $new_version);
+                $file_count += 1;
+                if ($this->isFileChanged($old_f, $new_f)) {
+                    $this->copyFile($new_f, $to_f);
+                } else {
+                    echo "$file is not changed, no need to copy!\n";
+                }
+            }
+            $c = count($this->_copied_files);
+            echo $c . " files cloned \n";
+
+            if ($c==0){
+                echo "No file changed, No need to add new version! \n";
+                exit(1);
+            }
+            echo "**************************************************\n";
+            echo "Generate file maps...\n";
+            $map = [];
+            foreach($all_files as $file) {
+                $map[$file] = mOriginC::getViewFile($file, $this->getLastestVersion($file));
+            }
+            $vfile= $this->buildFilePath(mOriginC::VERSION_MARKER, $new_version);
+            if (!file_exists(dirname($vfile))){
+                mkdir(dirname($vfile), 0755, true);
+            }
+            $fp = fopen($vfile, 'w');
+            fwrite($fp, json_encode($map));
+            fclose($fp);
+            echo "Generation is done!\n\n";
+            echo "**************************************************\n";
+            echo "Current version is: " . $new_version . "\n";
+        } catch (ErrorException $e){
+            $this->rollback();
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            exit(1);
+        }
+    }
+
+    public function copyFile($f, $to_file)
+    {
+        echo "File: " . $f . " is copying...\n";
+        echo "\tCopy To: " . $to_file . "\n";
+        $path = dirname($to_file);
+        if (!file_exists($path)){
+            if (!mkdir($path, 0755, true)){
+                echo "Path: $path create failed!";
+                exit(1);
+            }
+        }
+        if (copy($f, $to_file)) {
+            $this->_copied_files[] = $to_file;
+            echo "->Done!\n";
+        } else {
+            throw new ErrorException('Failed to copy file from: '. $f . ' to file: ' . $to_file . "\n" . 'Please check permission!!!!!!!!!'."\n");
+        }
+    }
+
+    public function isFileChanged($file1, $file2)
+    {
+        if (!file_exists($file1) || !file_exists($file2)){
+            return true;
+        }
+        return sha1_file($file1)!=sha1_file($file2);
+    }
+
+    public function genereateMap($version, $files)
+    {
+        $file = $this->buildFilePath();
     }
 }

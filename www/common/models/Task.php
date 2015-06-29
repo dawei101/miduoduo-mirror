@@ -61,6 +61,16 @@ class Task extends \common\BaseActiveRecord
     ];
 
 
+    public function getClearance_period_label()
+    {
+        return static::$CLEARANCE_PERIODS[$this->clearance_period];
+    }
+
+    public function getSalary_unit_label()
+    {
+        return static::$SALARY_UNITS[$this->salary_unit];
+    }
+
     /**
      * @inheritdoc
      */
@@ -218,6 +228,7 @@ class Task extends \common\BaseActiveRecord
             'user_id', 'service_type_id',
             'city_id', 'district_id', 'company_id',
             'gender_requirement', 'degree_requirement',
+            'clearance_period_label', 'salary_unit_label',
         ];
 
     }
