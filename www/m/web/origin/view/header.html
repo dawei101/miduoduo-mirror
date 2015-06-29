@@ -10,7 +10,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
 
-    <script type="text/javascript" src="<%=baseJsUrl%>/third-party/sea.js" ></script>
+    <link rel="stylesheet" href="<%=baseCssUrl%>base<%=styleFileExt%>"/>
+    <script type="text/javascript" src="<%=baseJsUrl%>/third_party/sea.js" ></script>
     <script>
         window.miduoduo = {};
         miduoduo.config = {
@@ -19,8 +20,9 @@
         seajs.config({
             base: "<%=baseJsUrl%>",
             alias: {
-                "angular": "third-party/angular.min.js",
-                "ngResource" : "third-party/angular-resource.min.js"
+                "zepto" : "third_party/zepto.js",
+                "angular": "third_party/angular.min.js",
+                "ngResource" : "third_party/angular-resource.min.js"
             }
         })
     </script>
