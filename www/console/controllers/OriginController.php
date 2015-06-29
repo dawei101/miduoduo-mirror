@@ -74,8 +74,9 @@ class OriginController extends Controller
         echo "Rollback is done!!\\nn";
     }
 
-    public function actionImportSource($path)
+    public function actionImportSource()
     {
+        $path = Yii::getAlias('@html5_src/dest');
         if (!is_dir($path)) {
             echo "Source need to be a path \n";
             exit(1);

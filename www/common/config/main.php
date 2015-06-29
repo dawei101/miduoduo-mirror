@@ -48,7 +48,8 @@ return [
     ],
     'aliases' => [
         'api' => $root_path . '/api',
-        'm' => $root_path . '/m'
+        'm' => $root_path . '/m',
+        'html5_src' => $root_path . '/html5_src',
     ],
     'language'=>'zh-CN',
     'timeZone' => 'Asia/Shanghai',

@@ -13,13 +13,13 @@ class OriginController extends MBaseController
 
     public function getViewPath()
     {
-        return Yii::getAlias('@m/web/html5-origin');
+        return Yii::getAlias('@m/web/origin');
     }
 
     public function getClosestVersion($file, $version)
     {
         // do not use getViewPath to get view path, there is a bug!!!!!!!!!
-        $path = Yii::getAlias('@m/web/html5-origin') . '/' . $file;
+        $path = Yii::getAlias('@m/web/origin') . '/' . $file;
         if (!file_exists($path)){
             return null;
         }
