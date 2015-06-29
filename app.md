@@ -37,7 +37,17 @@ app开发协议
 
 
 * app Native调用api
-    * TODO
+    * 参见 [API文档](./www/api/README.md)
+
+* [app 与Html5 互通协议 参见文档](./www/api/JSBridge.md)
+    * miduoduo://jsbridge/
+
+### 视图的控制
+    * miduoduo://view/path?params
 
 
-* [app 与Html5 互通协议 参见文档](./html4app.md)
+
+![alt tag](http://7xjyyt.com1.z0.glb.clouddn.com/米多多顶 app view Flowchart - New Page.png)
+
+
+

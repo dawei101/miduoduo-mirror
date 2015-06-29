@@ -53,8 +53,8 @@ return [
             'showScriptName' => false,
             'enablePrettyUrl' => true,
             'rules' => [
-                'origin/v<version:[\d]+>/?' => 'origin/handle',
-                'origin/v<version:[\d]+>/<action:[\w\d]+>' => 'origin/handle',
+                'origin/h5v<version:[\d]+>/?' => 'origin/handle',
+                'origin/h5v<version:[\d]+>/<file:[\-\.\_\w\d\/]+>' => 'origin/handle',
             ],
         ],
         'view' => [

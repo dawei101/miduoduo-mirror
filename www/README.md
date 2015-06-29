@@ -37,7 +37,11 @@ apt-get install -y mysql-server-5.6
 apt-get install -y php5-gd
 apt-get install -y php5-curl
 apt-get install -y git
+
 a2enmod rewrite
+a2enmod rewrite
+a2enmod proxy
+a2enmod proxy_http
 ```
 
 ###拉取git代码
@@ -97,6 +101,29 @@ http://ip:9999  >  m/web/
 http://ip:9998  >  frontend/web/ 
 http://ip:9997  >  backend/web/ 
 http://ip:9996  >  api/web/ 
+```
+
+
+### 设置apache(手机端app的html5f反向代理)
+```
+vi /etc/apache2/sites-available/000-default.conf
+
+#添加如下类似设置(自己hosts里随便填些测试域名)
+<VirtualHost *:80>
+     ServerName chongdd.cn
+     ServerAdmin admin@chongdd.com
+     ServerAlias *.origin.test.chongdd.cn
+     RewriteEngine On
+
+     RewriteCond %{HTTP_HOST} ^(.*)\.origin\.test\.chongdd\.cn$
+     RewriteRule ^(.*)$ http://127.0.0.1:9999/origin/%1$1 [L,P]
+     ProxyPassReverse  / http://127.0.0.1:9999/origin/%1/
+</VirtualHost>
+
+#重load apache
+sduo service apache2 reload
+
+# 访问一下http://h5v1.origin.test.chongdd.cn看是否能打开
 ```
 
 
