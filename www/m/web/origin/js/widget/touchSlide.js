@@ -35,6 +35,8 @@ define(function(require, exports, module) {
             self.ul = self.wrap.find(opts.ul);
             self.li = self.ul.find(opts.li);
             self.len = self.li.length;
+            self.ul.css("width", (self.len + (opts.isLoop ? 2 : 0))*100 + "%");
+            self.li.css("width", (100/(self.len + (opts.isLoop ? 2 : 0))) + "%" );
             self.liWidth = self.li.width();
             self.numBox = self.wrap.find(opts.numBox);
             self.isLoop = opts.isLoop;

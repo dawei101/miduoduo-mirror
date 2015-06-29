@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
-    var destRootPath = "/miduoduo/www/m/web/origin/dest/v1/";
+    var destRootPath = "/mdd/www/m/web/origin/dest/v1/";
     var destCssRootPath = destRootPath + "css/";
-    var destJsRootPath = destRootPath + "js-min/";
+    var destJsRootPath = "/mdd/www/m/web/origin/js/";//destRootPath + "js_min/";
     grunt.initConfig({
         ejs: {
             all: {
@@ -9,7 +9,9 @@ module.exports = function(grunt) {
                     title : "",
                     setTitle : function(param) { this.title = param},
                     baseUrl : destRootPath,
+                    baseCssUrl : destCssRootPath,
                     baseJsUrl : destJsRootPath,
+                    styleFileExt : ".css",
                     mainJs : function(param) {
                         return "<script>seajs.use('" + param + "')</script>";
                     },
@@ -34,14 +36,13 @@ module.exports = function(grunt) {
         },
         less: {
             options: {
-                paths: ['less'],
                 compress: true,
                 yuicompress: true,
                 optimization: 2
             },
             compile: {
                 expand: true,
-                cwd: 'less',
+                cwd : "less",
                 src: ['**/*.less'],
                 dest: 'dest/v1/css/',
                 ext: '.css'
@@ -52,13 +53,10 @@ module.exports = function(grunt) {
                 options : {
                     mangle: false
                 },
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'js',
-                        src: ['**/*.js'],
-                        dest: 'dest/v1/js-min/'
-                    }]
+                expand: true,
+                cwd: 'js',
+                src: ['**/*.js'],
+                dest: 'dest/v1/js_min/'
             }
         },
         watch: {
@@ -66,21 +64,21 @@ module.exports = function(grunt) {
                 files: ['less/**/*.less'],
                 tasks: ['less'],
                 options: {
-                    nospawn: true
+                    spawn: false
                 }
             },
             ejs : {
                 files : ['view/**/*.html'],
                 tasks : ['ejs'],
                 options: {
-                    nospawn: true
+                    spawn: false
                 }
             },
             uglify : {
                 files : ['js/**/*.js'],
                 tasks : ['uglify'],
                 options: {
-                    nospawn: true
+                    spawn: false
                 }
             }
         }
@@ -93,4 +91,21 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('default', ['watch']);
+    grunt.registerTask('uglify', ['uglify']);
+
+    grunt.event.on('watch', function(action, filepath,target) {
+        console.log("目标", target, filepath);
+       switch (target) {
+           case "ejs" :
+               grunt.config('ejs.all.src', filepath);
+               break;
+           case "less" :
+              grunt.config('less.compile.src', filepath.substr(5));
+               break;
+           case "uglify" :
+               grunt.config('uglify.build.src', filepath.substr(3));
+               break;
+       }
+
+    });
 }

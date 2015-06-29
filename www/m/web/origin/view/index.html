@@ -1,15 +1,25 @@
-<%include  header.html%>
+<%include header.html%>
 <%-css("index")%>
 <%-mainJs("index")%>
 </head>
-<body ng-app="indexApp">
-<div id="bannerSlide" ng-controller="indexCtrl">
+<body >
+<div id="bannerSlider" class='imageSlide'>
     <ul>
         <li>
             <a href=""><img src="<%=baseUrl%>img/index/banner1.jpg"/></a>
         </li>
+        <li>
+            <a href=""><img src="<%=baseUrl%>img/index/banner2.jpg"/></a>
+        </li>
+        <li>
+            <a href=""><img src="<%=baseUrl%>img/index/banner1.jpg"/></a>
+        </li>
+        <li>
+            <a href=""><img src="<%=baseUrl%>img/index/banner2.jpg"/></a>
+        </li>
     </ul>
-    <div class="num">123312</div>
+    <div class="num">22</div>
 </div>
+
 </body>
 </html>

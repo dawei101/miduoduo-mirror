@@ -10,17 +10,19 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
 
-    <script type="text/javascript" src="/miduoduo/www/m/web/origin/dest/v1/js-min//third-party/sea.js" ></script>
+    <link rel="stylesheet" href="/mdd/www/m/web/origin/dest/v1/css/base.css"/>
+    <script type="text/javascript" src="/mdd/www/m/web/origin/js//third_party/sea.js" ></script>
     <script>
         window.miduoduo = {};
         miduoduo.config = {
-            picUrl : "/miduoduo/www/m/web/origin/dest/v1/" + "img"
+            picUrl : "/mdd/www/m/web/origin/dest/v1/" + "img"
         }
         seajs.config({
-            base: "/miduoduo/www/m/web/origin/dest/v1/js-min/",
+            base: "/mdd/www/m/web/origin/js/",
             alias: {
-                "angular": "third-party/angular.min.js",
-                "ngResource" : "third-party/angular-resource.min.js"
+                "zepto" : "third_party/zepto.js",
+                "angular": "third_party/angular.min.js",
+                "ngResource" : "third_party/angular-resource.min.js"
             }
         })
     </script>
