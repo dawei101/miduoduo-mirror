@@ -1,4 +1,4 @@
-var destRootPath = "/m/web/origin/";
+var destRootPath = "../";
 var destCssRootPath = destRootPath + "less/";
 var destJsRootPath = destRootPath + "js/";
 options = {

@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
-    var destRootPath = "/mdd/www/m/web/origin/dest/v1/";
+    var destRootPath = "../";
     var destCssRootPath = destRootPath + "css/";
-    var destJsRootPath = "/mdd/www/m/web/origin/js/";//destRootPath + "js_min/";
+    var destJsRootPath = destRootPath + "js_min/";
     grunt.initConfig({
         ejs: {
             all: {
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
                 },
                 src: ['view/**/*.html'],
-                dest: 'dest/v1/',
+                dest: 'dest/',
                 expand: true,
                 ext: '.html'
             }
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd : "less",
                 src: ['**/*.less'],
-                dest: 'dest/v1/css/',
+                dest: 'dest/css/',
                 ext: '.css'
             }
         },
@@ -56,7 +56,15 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'js',
                 src: ['**/*.js'],
-                dest: 'dest/v1/js_min/'
+                dest: 'dest/js_min/'
+            }
+        },
+        copy : {
+            main : {
+                expand: true,
+                cwd: 'img',
+                src: ['**/*.*'],
+                dest: 'dest/img/'
             }
         },
         watch: {
@@ -88,10 +96,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ejs');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+
 
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('uglify', ['uglify']);
+    grunt.registerTask('all', ['ejs','less','uglify', 'copy']);
 
     grunt.event.on('watch', function(action, filepath,target) {
         console.log("目标", target, filepath);

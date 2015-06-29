@@ -46,7 +46,7 @@ function loadFile(fileType, filePath, res) {
                     onErr(filePath, res);
                     return;
                 }
-                fileStr = ejs.render(file, ejsDefaultOpts.options, {filename : "../m/web/origin/view/header.html"})
+                fileStr = ejs.render(file, ejsDefaultOpts.options, {filename : "../view/header.html"})
                 responseReq(fileStr, fileType, res)
             })
 
@@ -67,7 +67,7 @@ function loadFile(fileType, filePath, res) {
                     return;
                 }
                 var parser = new(less.Parser)({
-                    paths: ["../m/web/origin/less"]
+                    paths: ["../less"]
                 })
                 parser.parse(file , function(err ,tree){
                     file = tree.toCSS({ compress: true })

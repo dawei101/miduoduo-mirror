@@ -21,5 +21,16 @@
     <div class="num">22</div>
 </div>
 
+<script type="text/html" id="banner-slide-tpl">
+    <ul>
+        <? this.banners.forEach(function(e) {?>
+        <li>
+            <a href="">
+                <img src="<?=e.imgSrc?>" alt=""/>
+            </a>
+        </li>
+        <?});?>
+    </ul>
+</script>
 </body>
 </html>
