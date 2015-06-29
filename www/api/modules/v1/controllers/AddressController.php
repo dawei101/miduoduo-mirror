@@ -14,18 +14,8 @@ class AddressController extends BaseActiveController
 {
     public $modelClass = 'common\models\Address';
 
-    public function buildBaseQuery()
-    {
-        $model = $this->modelClass;
-        $query = $model::find()->where(['user_id'=>\Yii::$app->user->id]);
-        return $query;
-    }
+    public $id_column = 'id';
+    public $auto_filter_user = true;
+    public $user_identifier_column = 'user_id';
 
-    public function checkAccess($action, $model = null, $params = [])
-    {
-        if ($action=='view' && $model->user_id!=\Yii::$app->user->id){
-            throw new ForbiddenHttpException('No access to view this address');
-        }
-        parent::checkAccess($action, $model, $params);
-    }
 }

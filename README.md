@@ -19,9 +19,10 @@ www                          服务端代码
     * [Android Wiki](/android/)
 
 * 协议wiki
-    * [app使用api协议](./app.md)
     * [api 使用文档](./www/api/)
+    * [app 开发协议](./app.md)
     * [app与Html5通讯协议(jsbridge)](./JSBridge.md)
+    * [关于html5 for app?](./www/m/views/origin/README.md)
 
 
 数据结构图

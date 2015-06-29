@@ -1,0 +1,31 @@
+<%include header.html%>
+<%-css("index")%>
+<%-mainJs("index")%>
+</head>
+<body >
+<!--轮播-->
+<div id="bannerSlider" class='imageSlide'>
+</div>
+<!--顶部导航-->
+<div class="top-nav">
+    <div class="item1"></div>
+    <div class="item2"></div>
+    <div class="item3"></div>
+    <div class="item4"></div>
+</div>
+
+<!--banner 轮播模板-->
+<script type="text/html" id="banner-slide-tpl">
+    <ul>
+        <? this.banners.forEach(function(e) {?>
+        <li>
+            <a href="">
+                <img src="<?=e.imgSrc?>" alt=""/>
+            </a>
+        </li>
+        <?});?>
+    </ul>
+    <div class="num"></div>
+</script>
+</body>
+</html>
