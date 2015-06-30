@@ -97,7 +97,7 @@ class OriginController extends Controller
                 mkdir(dirname($vfile), 0755, true);
             }
             $fp = fopen($vfile, 'w');
-            fwrite($fp, json_encode($vinfo));
+            fwrite($fp, json_encode($vinfo, JSON_UNESCAPED_SLASHES));
             fclose($fp);
             echo "Generation is done!\n\n";
             echo "**************************************************\n";
