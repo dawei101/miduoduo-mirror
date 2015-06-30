@@ -12,7 +12,7 @@ class Utils
     {
         $user_agent = strtolower($user_agent);
         $matches = [];
-        preg_match("/iphone|android|ipad|ipod/", $user_agent, $matches);
+        preg_match("/iphone|android|ipad|ipod/i", $user_agent, $matches);
         $os = current($matches);
         switch ($os){
             case 'android': 
