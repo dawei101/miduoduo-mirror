@@ -60,7 +60,7 @@ class H5Utils
 
     public function getVersionFile($version)
     {
-        return H5Utils::getViewFile(Constants::H5_VERSION_MARKER, $version);
+        return H5Utils::getViewFileWithAbsolutePath(Constants::H5_VERSION_MARKER, $version);
     }
 
     public function generateUrl($version)

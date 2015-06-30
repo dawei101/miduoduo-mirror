@@ -20,12 +20,6 @@ class OriginController extends Controller
 
     private $_copied_files = [];
 
-    public function buildFilePath($file, $version)
-    {
-        return H5Utils::getViewPath() . '/' .
-            H5Utils::getViewFile($file, $version);
-    }
-
     public function actionCurrentVersion()
     {
         echo "Current html5 origin version is:  " . H5Utils::getLastestVersion();
@@ -56,7 +50,7 @@ class OriginController extends Controller
             unlink($f);
             echo "->Done!\n";
         }
-        echo "Rollback is done!!\\nn";
+        echo "Rollback is done!!\n";
     }
 
     public function actionImportSource()
@@ -74,7 +68,7 @@ class OriginController extends Controller
             foreach ($all_files as $file){
                 $old_f = H5Utils::getLastestViewFileWithAbsolutePath($file);
                 $new_f = rtrim($path, '/') . $file;
-                $to_f = $this->buildFilePath($file, $new_version);
+                $to_f = H5Utils::getViewFileWithAbsolutePath($file, $new_version);
                 $file_count += 1;
                 if ($this->isFileChanged($old_f, $new_f)) {
                     $this->copyFile($new_f, $to_f);
@@ -93,12 +87,12 @@ class OriginController extends Controller
             echo "Generate file maps...\n";
             $map = [];
             foreach($all_files as $file) {
-                $map[$file] = mOriginC::getViewFile($file, H5Utils::getLastestVersion($file));
+                $map[$file] = H5Utils::getViewFile($file, H5Utils::getLastestVersion($file));
             }
             $vinfo = [];
             $vinfo['baseUrl'] = Yii::$app->params['baseurl.h5_origin'];
             $vinfo['fileMaps'] = $map;
-            $vfile= $this->buildFilePath(mOriginC::VERSION_MARKER, $new_version);
+            $vfile= H5Utils::getVersionFile($new_version);
             if (!file_exists(dirname($vfile))){
                 mkdir(dirname($vfile), 0755, true);
             }
