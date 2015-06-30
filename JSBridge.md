@@ -6,17 +6,6 @@ miduoduo 协议
 miduoduo://jsbridge.action?query=
 ```
 
-## web view 的url 与 url map [假设html5 version=9999999]
-```
-miduoduo://view.action/task                            -> http://h5v9999999.miduoduo.cn/task
-miduoduo://view.action/task/view?params         -> http://h5v9999999.miduoduo.cn/task/view?params
-```
-
-## 获取access token的url
-```
-miduoduo://view.action/access_token/
-```
-
 #Js Bridge
 
 我们Js Bridge的实现是基于开源[JsBridge](https://github.com/lzyzsd/JsBridge)
