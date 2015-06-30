@@ -19,16 +19,30 @@ function route(req, res) {
         res.end();
         return;
     }
-    var pathName = reqUrl.pathname;
-    var fileType = getFileype(pathName);
-    if (fileType == "ico") {
-
+    //处理urlParam
+    req.__get = {};
+    reqUrl.query = querystring.parse(reqUrl.query);
+    for (var k in reqUrl.query){
+        req.__get[k.replace(/[<>%\'\"]/g,'')] = reqUrl.query[k]; //防止xss攻击
+    }
+    req.__post = {};
+    if (req.method == "post") {
+        var data = '';
+        req.addListener('data' , function(chunk){
+            data += chunk;
+        }).addListener('end' ,function(){
+                data = querystring.parse(data);
+                req.__post = data;
+        });
     }
 
+    var pathName = reqUrl.pathname;
+    var fileType = getFileype(pathName);
+    if (fileType == 'html') {
+        console.log(reqUrl);
+    }
     var filePath = getFilePath(fileType, pathName);
     loadFile(fileType, filePath, res);
-
-
 }
 
 /**
