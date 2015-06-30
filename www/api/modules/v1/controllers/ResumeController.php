@@ -11,27 +11,17 @@ use api\modules\BaseActiveController;
  */
 class ResumeController extends BaseActiveController
 {
-    public $modelClass = 'api\common\models\Resume';
+    public $modelClass = 'common\models\Resume';
 
     public function actions()
     {
-        $actions = parent::actions();
-        unset($actions['delete'], $actions['create']);
+        $as = parent::actions();
+        unset($as['delete']);
+        return $as;
     }
 
-    public function buildBaseQuery()
-    {
-        $model = $this->modelClass;
-        $query = $model::find()->where(['user_id'=>\Yii::$app->user->id]);
-        return $query;
-    }
-
-    public function checkAccess($action, $model = null, $params = [])
-    {
-        if ($action=='view' && $model->user_id!=\Yii::$app->user->id){
-            throw new ForbiddenHttpException('No access to view this address');
-        }
-        parent::checkAccess($action, $model, $params);
-    }
+    public $id_column = 'user_id';
+    public $auto_filter_user = true;
+    public $user_identifier_column = 'user_id';
 
 }

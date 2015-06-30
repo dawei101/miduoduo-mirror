@@ -17,17 +17,11 @@ class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'api\modules\v1\controllers';
 
-    public function init()
-    {
-        parent::init();        
-    }
-
-
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-
         $controller = Yii::$app->controller->id;
+        
         if ($controller!='entry'){
             // 留出auth controller 登录
             $behaviors['authenticator'] = [
