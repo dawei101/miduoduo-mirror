@@ -1,0 +1,39 @@
+@import "/atom.less";
+@import "/widget/job-list.less";
+
+.job-filter {
+  .pf;
+  top: 0;
+  .w(100%);
+  .clearfix;
+  .h(44px);
+  .l(44px);
+  border-bottom: 1px solid #d0d0d0;
+  .bgc(#fff);
+  a {
+    .block;
+    .w(100/3%);
+    .left;
+    box-sizing: border-box;
+    border-right: 1px solid #eee ;
+    .c;
+    .grey;
+    .f(15*@f);
+    &:after {
+      .pl(10%);
+      .if-arrow-down;
+      font-family:"iconfont" !important;
+      .f(16*@f);
+      font-style:normal;
+    }
+  }
+  .act {
+    border-bottom:  2px solid #fed732;
+  }
+}
+
+.content {
+  .w(100%);
+}
+
+.jobList;

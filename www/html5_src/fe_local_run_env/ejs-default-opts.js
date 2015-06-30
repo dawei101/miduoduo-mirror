@@ -1,12 +1,14 @@
-var destRootPath = "../";
+var destRootPath = "/";
 var destCssRootPath = destRootPath + "less/";
 var destJsRootPath = destRootPath + "js/";
+var destImgRootPath = destRootPath + "img/";
 options = {
     title : "",
     setTitle : function(param) { this.title = param},
     baseUrl : destRootPath,
     baseCssUrl : destCssRootPath,
     baseJsUrl : destJsRootPath,
+    baseImgUrl : destImgRootPath,
     styleFileExt : ".less",
     mainJs : function(param) {
         return "<script>seajs.use('" + param + "')</script>";

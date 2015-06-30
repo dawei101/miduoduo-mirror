@@ -1,7 +1,11 @@
 module.exports = function(grunt) {
+    //生成文件的目标根路径
+    var targetRootPath = "dest/v1/";
+    //ejs常量
     var destRootPath = "../";
     var destCssRootPath = destRootPath + "css/";
     var destJsRootPath = destRootPath + "js_min/";
+    var destImgRootPath = destRootPath + "img/";
     grunt.initConfig({
         ejs: {
             all: {
@@ -11,6 +15,7 @@ module.exports = function(grunt) {
                     baseUrl : destRootPath,
                     baseCssUrl : destCssRootPath,
                     baseJsUrl : destJsRootPath,
+                    baseImgUrl : destImgRootPath,
                     styleFileExt : ".css",
                     mainJs : function(param) {
                         return "<script>seajs.use('" + param + "')</script>";
@@ -29,7 +34,7 @@ module.exports = function(grunt) {
 
                 },
                 src: ['view/**/*.html'],
-                dest: 'dest/',
+                dest: targetRootPath,
                 expand: true,
                 ext: '.html'
             }
@@ -44,7 +49,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd : "less",
                 src: ['**/*.less'],
-                dest: 'dest/css/',
+                dest: targetRootPath + 'css/',
                 ext: '.css'
             }
         },
@@ -56,7 +61,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'js',
                 src: ['**/*.js'],
-                dest: 'dest/js_min/'
+                dest: targetRootPath + 'js_min/'
             }
         },
         copy : {
@@ -64,7 +69,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'img',
                 src: ['**/*.*'],
-                dest: 'dest/img/'
+                dest: targetRootPath + 'img/'
             }
         },
         watch: {

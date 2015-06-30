@@ -8,10 +8,29 @@
 </div>
 <!--顶部导航-->
 <div class="top-nav">
-    <div class="item1"></div>
-    <div class="item2"></div>
-    <div class="item3"></div>
-    <div class="item4"></div>
+    <div class="item1">
+        <img src="<%=baseImgUrl%>index/item1.png" alt=""/>
+        <span>最新职位</span>
+    </div>
+    <div class="item2">
+        <img src="<%=baseImgUrl%>index/item2.png" alt=""/>
+        <span>暑期工</span>
+    </div>
+    <div class="item3">
+        <img src="<%=baseImgUrl%>index/item3.png" alt=""/>
+        <span>日结</span>
+    </div>
+    <div class="item4">
+        <img src="<%=baseImgUrl%>index/item3.png" alt=""/>
+        <span>实习</span>
+    </div>
+</div>
+
+<div class="content">
+    <div class="content-bar">
+
+    </div>
+    <!--此处插入职位列表模板-->
 </div>
 
 <!--banner 轮播模板-->
@@ -19,7 +38,7 @@
     <ul>
         <? this.banners.forEach(function(e) {?>
         <li>
-            <a href="">
+            <a href="http://www.baidu.com">
                 <img src="<?=e.imgSrc?>" alt=""/>
             </a>
         </li>
@@ -27,5 +46,7 @@
     </ul>
     <div class="num"></div>
 </script>
+<!--职位列表模板-->
+<%include widget/job-list-tpl.html%>
 </body>
 </html>
