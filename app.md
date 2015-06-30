@@ -56,6 +56,18 @@ app开发协议
               }
           }
             ```
+    * GET h5_map_file
+    ```
+    {
+        baseUrl: 'http://origin.miduoduo.cn',
+        maps: {
+            file : linked_file,
+            file : linked_file,
+            file : linked_file,
+            file : linked_file,
+            },
+        }
+    ```
 
 * app 认证流程
     * 参见 [API文档](./www/api/README.md)
