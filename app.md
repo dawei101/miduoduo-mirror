@@ -12,8 +12,32 @@ app开发协议
 * app装机后
     * 获取或生成Device-Id
     * POST/GET /entry/report-device 请求后，服务器会记录该设备相关信息
+        * RETURN 
+        ```
+        {
+            'success'=> true,
+            'message'=> '记录成功'
+            }
+        OR
+        {
+            'success'=> false,
+            'message'=> '错误信息'
+            }
+        ```
     * POST /entry/report-push-id 获取极光推送的reg_id后，告知服务器推送信息
         * params: push_id=极光推送reg_id
+        * RETURN 
+        ```
+        {
+            'success'=> true,
+            'message'=> '记录成功'
+            }
+        OR
+        {
+            'success'=> false,
+            'message'=> '错误信息'
+            }
+        ```
 
 * app更新过程
     * GET,POST /entry/check-update
@@ -28,6 +52,7 @@ app开发协议
               html_version: app_version下，最新html版本,
               update_url: 更新的链接( android 会是APK的链接，ios会是itunes链接),
               release_time: 发布时间,
+              'h5_map_file': 文件map的url
               }
           }
             ```

@@ -95,12 +95,15 @@ class OriginController extends Controller
             foreach($all_files as $file) {
                 $map[$file] = mOriginC::getViewFile($file, H5Utils::getLastestVersion($file));
             }
+            $vinfo = [];
+            $vinfo['baseUrl'] = Yii::$app->params['baseurl.h5_origin'];
+            $vinfo['fileMaps'] = $map;
             $vfile= $this->buildFilePath(mOriginC::VERSION_MARKER, $new_version);
             if (!file_exists(dirname($vfile))){
                 mkdir(dirname($vfile), 0755, true);
             }
             $fp = fopen($vfile, 'w');
-            fwrite($fp, json_encode($map));
+            fwrite($fp, json_encode($vinfo));
             fclose($fp);
             echo "Generation is done!\n\n";
             echo "**************************************************\n";
