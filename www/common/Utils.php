@@ -25,7 +25,6 @@ class Utils
         return null;
     }
 
-
     public static function getAppVersion($request)
     {
         return $request->headers->get('App-Version');
@@ -35,4 +34,5 @@ class Utils
     {
         return $request->headers->get('Device-Id');
     }
+
 }

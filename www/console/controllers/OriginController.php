@@ -7,9 +7,10 @@ namespace console\controllers;
 use Yii;
 use yii\console\Controller;
 use yii\console\Exception;
-use \common\models\User;
-use m\controllers\OriginController as mOriginC;
 use yii\base\ErrorException;
+use common\H5Utils;
+use common\models\User;
+use m\controllers\OriginController as mOriginC;
 
 
 class OriginController extends Controller
@@ -19,31 +20,15 @@ class OriginController extends Controller
 
     private $_copied_files = [];
 
-    public function getLastestVersion($file)
-    {
-        return mOriginC::getClosestVersion($file, 9999999999);
-    }
-
-    public function getLastestViewFile($file)
-    {
-        return mOriginC::getViewPath() . '/'
-            . mOriginC::getViewFile($file, $this->getLastestVersion($file));
-    }
-
     public function buildFilePath($file, $version)
     {
-        return mOriginC::getViewPath() . '/' .
-            mOriginC::getViewFile($file, $version);
-    }
-
-    public function getCurrentVersion()
-    {
-        return $this->getLastestVersion(mOriginC::VERSION_MARKER);
+        return H5Utils::getViewPath() . '/' .
+            H5Utils::getViewFile($file, $version);
     }
 
     public function actionCurrentVersion()
     {
-        echo "Current html5 origin version is:  " . $this->getCurrentVersion();
+        echo "Current html5 origin version is:  " . H5Utils::getLastestVersion();
         echo "\n";
     }
 
@@ -81,13 +66,13 @@ class OriginController extends Controller
             echo "Source need to be a path \n";
             exit(1);
         }
-        $new_version = $this->getCurrentVersion() + 1;
+        $new_version = H5Utils::getLastestVersion() + 1;
 
         try {
             $file_count = 0;
             $all_files = $this->listFiles($path);
             foreach ($all_files as $file){
-                $old_f = $this->getLastestViewFile($file);
+                $old_f = H5Utils::getLastestViewFileWithAbsolutePath($file);
                 $new_f = rtrim($path, '/') . $file;
                 $to_f = $this->buildFilePath($file, $new_version);
                 $file_count += 1;
@@ -108,7 +93,7 @@ class OriginController extends Controller
             echo "Generate file maps...\n";
             $map = [];
             foreach($all_files as $file) {
-                $map[$file] = mOriginC::getViewFile($file, $this->getLastestVersion($file));
+                $map[$file] = mOriginC::getViewFile($file, H5Utils::getLastestVersion($file));
             }
             $vfile= $this->buildFilePath(mOriginC::VERSION_MARKER, $new_version);
             if (!file_exists(dirname($vfile))){

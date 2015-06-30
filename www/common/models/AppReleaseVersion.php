@@ -13,6 +13,7 @@ use Yii;
  * @property string $html_version
  * @property string $update_url
  * @property string $release_time
+ * @property string $h5_map_file
  */
 class AppReleaseVersion extends \common\BaseActiveRecord
 {
@@ -60,5 +61,10 @@ class AppReleaseVersion extends \common\BaseActiveRecord
     public static function find()
     {
         return new AppReleaseVersionQuery(get_called_class());
+    }
+
+    public function getFileMaps()
+    {
+        Utils::getH5VersionFile($this->html_version);
     }
 }

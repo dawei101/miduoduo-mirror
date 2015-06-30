@@ -50,6 +50,7 @@ return [
         'api' => $root_path . '/api',
         'm' => $root_path . '/m',
         'html5_src' => $root_path . '/html5_src',
+        'html5_dest' => $root_path . '/html5_dest',
     ],
     'language'=>'zh-CN',
     'timeZone' => 'Asia/Shanghai',
