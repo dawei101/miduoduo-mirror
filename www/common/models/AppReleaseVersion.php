@@ -62,9 +62,4 @@ class AppReleaseVersion extends \common\BaseActiveRecord
     {
         return new AppReleaseVersionQuery(get_called_class());
     }
-
-    public function getFileMaps()
-    {
-        Utils::getH5VersionFile($this->html_version);
-    }
 }
