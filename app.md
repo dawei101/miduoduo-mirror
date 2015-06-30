@@ -80,9 +80,6 @@ app开发协议
     * miduoduo://jsbridge/
 
 ### 视图的控制
-    * miduoduo://view/path?params
-
-
 
 ![alt tag](http://7xjyyt.com1.z0.glb.clouddn.com/米多多顶 app view Flowchart - New Page.png)
 
