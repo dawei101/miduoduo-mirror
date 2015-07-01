@@ -30,7 +30,7 @@ AppAsset::register($this);
 <body>
 <!-- 添加隐藏的logo图片 300*300 用于微信分享图标 - start -->
 <div style="display:none;">
-    <img src="/static/img/logo.jpg" /> 
+    <img src="/static/img/weichat_icon.jpg" /> 
 </div>
 <!-- 添加隐藏的logo图片 300*300 用于微信分享图标 - end -->
 <?php $this->beginBody() ?>
