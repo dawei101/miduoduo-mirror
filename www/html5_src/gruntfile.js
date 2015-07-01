@@ -1,8 +1,8 @@
 module.exports = function(grunt) {
     //生成文件的目标根路径
-    var targetRootPath = "dest/v1/";
+    var targetRootPath = "./dest/v1/";
     //ejs常量
-    var destRootPath = "../";
+    var destRootPath = "/v1/";
     var destCssRootPath = destRootPath + "css/";
     var destJsRootPath = destRootPath + "js_min/";
     var destImgRootPath = destRootPath + "img/";
