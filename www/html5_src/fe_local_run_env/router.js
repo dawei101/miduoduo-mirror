@@ -11,10 +11,11 @@ var mime = require("./mime");
 var ejs = require("./node_modules/ejs");
 var ejsDefaultOpts = require("./ejs-default-opts");
 var less = require("./node_modules/less");
+var httpClient = require("./http-client");
+
 
 function route(req, res) {
     var reqUrl = url.parse(req.url);
-    console.log(reqUrl.pathname);
     if (reqUrl.pathname == "/favicon.ico") {
         res.end();
         return;
@@ -38,10 +39,14 @@ function route(req, res) {
 
     var pathName = reqUrl.pathname;
     var fileType = getFileype(pathName);
-    if (fileType == 'html') {
-        console.log(reqUrl);
+    if (!fileType) {
+        console.log(req.method);
+        httpClient.__create(req, res)(pathName, req.method , {phonenum : "15110083715"});
+        return;
     }
+
     var filePath = getFilePath(fileType, pathName);
+    console.log(filePath);
     loadFile(fileType, filePath, res);
 }
 
@@ -60,7 +65,7 @@ function loadFile(fileType, filePath, res) {
                     onErr(filePath, res);
                     return;
                 }
-                fileStr = ejs.render(file, ejsDefaultOpts.options, {filename : "../view/header.html"})
+                fileStr = ejs.render(file, ejsDefaultOpts.options, {filename : filePath})
                 responseReq(fileStr, fileType, res)
             })
 
@@ -81,7 +86,7 @@ function loadFile(fileType, filePath, res) {
                     return;
                 }
                 var parser = new(less.Parser)({
-                    paths: ["../less"]
+                    paths: [filePath.substr(0, filePath.lastIndexOf("/"))]
                 })
                 parser.parse(file , function(err ,tree){
                     file = tree.toCSS({ compress: true })
@@ -123,7 +128,7 @@ function responseReq(fileStr, fileType, res, encoding) {
  */
 function getFileype(url){
     var pos = url.lastIndexOf('.');
-    if (!pos ) return;
+    if (pos < 0) return null;
     return url.substr(pos +1);
 
 }

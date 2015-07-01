@@ -1,18 +1,16 @@
 var http = require('http');
 var querystring = require('querystring'),
-    keepAliveAgent = require(config.path.lib + 'agent.js'),
-    cookie = require(config.path.base + 'cookie.js')
+    cookie = require("./cookie");
 
-var hosts = {"web" :  "http://api.test.chongdd.cn"},
+var hosts = {"web" :  "www.tuicool.com"},
     port = 80,
-    debug = config.api.debug;
+    debug = null;
 
-var agent = config.etc.maxSockets ? new keepAliveAgent({ maxSockets: config.etc.maxSockets }) : false
 
 function create(req ,res , notify) {
 
-    return function(remoteUri , method, reqAct , data){
-        var reqHeaders = reqAct ? {'request' : reqAct} : {};
+    return function(remoteUri , method, data){
+        var reqHeaders = {};
         if (!method ) { method = 'GET';}
         var hostSource = 'web'
         var host = hosts[hostSource]
@@ -30,7 +28,6 @@ function create(req ,res , notify) {
                 proxyHeaders[proxyDomain[i]] = req.headers[proxyDomain[i]]
             }
         }
-
         if ('GET' == method){
             if (data) {
                 remoteUri = remoteUri.trim()
@@ -41,20 +38,15 @@ function create(req ,res , notify) {
             proxyHeaders['Content-Type'] =  'application/x-www-form-urlencoded'
         }
         proxyHeaders['Content-Length'] =  Buffer.byteLength(data,'utf8') //data.length
-
         var options = {
             host : host,
             port : port ,
             headers: proxyHeaders,
             path : remoteUri,
-            agent : agent,
             method : method
         };
-        var request_timer;
-        var st1 = new Date;
         var request = http.request(options , function(response) {
-            request_timer && clearTimeout(request_timer);
-            request_timer = null
+            console.log(response);
             //console.log('STATUS: ' + response.statusCode);
             //response.setEncoding('utf8');
 
@@ -89,43 +81,15 @@ function create(req ,res , notify) {
 
                     }
                 }
-                return evt ? evt(result , res_state) : result;
+                res.write(result);
+                res.end();
             });
         });
-
-        return function(evt , data ) {
-            if (!host)   return evt ? evt(false) : {};
-
-            if ('undefined' == typeof data && 'function' != typeof evt){
-                data = evt;
-                evt = null;
-            }
-
-
-            request.on('error' , function(e){
-                base.errorLog('error' , 'api' ,remoteUri , e.message )
-                evt && evt(false);
-
-            });
-            request_timer = setTimeout(function() {
-                request_timer = null
-                request.abort();
-                base.errorLog('error' , 'api' ,remoteUri , 'Request Timeout' )
-                return evt ? evt(false) : {};
-            }, config.api.timeout);
-            notify && notify.on('abort' , function(){
-                if (!request_timer) return
-                clearTimeout(request_timer)
-                request.abort()
-                base.errorLog('error' , 'api' ,remoteUri , 'User Abort' )
-            })
-
-
-            request.write(data);
-            request.end();
-
-        }
-
+        request.on('error' , function(e){
+           console.log('api请求出错', e);
+        });
+        request.write(data);
+        request.end();
     }
 }
 
