@@ -157,6 +157,21 @@ class Resume extends \common\BaseActiveRecord
         return $this->hasOne(Address::className(), ['id' => 'workplace']);
     }
 
+    public function getGender_label()
+    {
+        return static::$GENDERS[$this->gender];
+    }
+
+    public function getGrade_label()
+    {
+        return static::$GRADES[$this->grade];
+    }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['grade_label', 'gender_label']);
+    }
+
     public function extraFields()
     {
         return ['user', 'home_address', 'workplace_address', 'service_types', 'freetimes'];

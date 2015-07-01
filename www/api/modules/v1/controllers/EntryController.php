@@ -7,8 +7,6 @@ use yii\filters\AccessControl;
 use api\modules\BaseActiveController;
  
 use common\Utils;
-use common\sms\SmsSenderFactory;
-use common\sms\BaseSmsSender;
 use common\models\User;
 use common\models\AppReleaseVersion;
 use common\models\Device;
@@ -180,8 +178,7 @@ class EntryController extends BaseActiveController
                 'message'=> "手机号码不正确"
             ]);
         }
-        $sender = SmsSenderFactory::getSender();
-        if ($sender->sendVerifyCode($phonenum)){
+        if (Utils::sendVerifyCode($phonenum)){
             return $this->renderJson([
                     'success'=> true,
                     'message'=> "验证码已发送"
@@ -213,7 +210,7 @@ class EntryController extends BaseActiveController
         $phonenum = Yii::$app->request->post('phonenum');
         $code = Yii::$app->request->post('code');
 
-        if(BaseSmsSender::validateVerifyCode($phonenum, $code)){
+        if(Utils::validateVerifyCode($phonenum, $code)){
             $user = User::findByUsername($phonenum);
             if (!$user){
                 $user = User::createUserWithPhonenum($phonenum);

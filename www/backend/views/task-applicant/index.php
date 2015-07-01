@@ -48,12 +48,14 @@ $this->params['breadcrumbs'][] = $this->title;
              'value' => function($model){
                 return $model->user->username;
              },
-
             ],
             [
                 'attribute' => 'created_time',
                 'format' => ['date', 'php:y-m-d H:m'],
             ],
+            'company_alerted:boolean',
+            'applicant_alerted:boolean',
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{update}'],
         ],
     ]); ?>
 

@@ -6,9 +6,6 @@ use Yii;
 use yii\base\Model;
 use common\models\User;
 
-use common\sms\BaseSmsSender;
-
-
 /**
  * Login form
  */
@@ -37,7 +34,7 @@ class LoginWithDynamicCodeForm extends Model
             ['invited_code', 'integer'],
             ['code', function ($attribute, $params) {
                 if (!$this->hasErrors()) {
-                    if(!BaseSmsSender::validateVerifyCode($this->phonenum, $this->code)){
+                    if(!Utils::validateVerifyCode($this->phonenum, $this->code)){
                         $this->addError($attribute, '手机号或验证码不正确.');
                     }
                 }
