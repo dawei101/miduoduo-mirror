@@ -28,6 +28,11 @@ AppAsset::register($this);
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
 </head>
 <body>
+<!-- 添加隐藏的logo图片 300*300 用于微信分享图标 - start -->
+<div style="display:none;">
+    <img src="/static/img/logo.jpg" /> 
+</div>
+<!-- 添加隐藏的logo图片 300*300 用于微信分享图标 - end -->
 <?php $this->beginBody() ?>
 <div class="container">
     <nav class="navbar-fixed-top top-nav" role="navigation">
