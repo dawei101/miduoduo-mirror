@@ -9,3 +9,4 @@ function start(route, port) {
 }
 
 start(router.route, 8800);
+console.log("服务启动，端口号", 8800);
