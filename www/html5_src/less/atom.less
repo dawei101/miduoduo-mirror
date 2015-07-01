@@ -2,8 +2,20 @@
 * 定义路径
 **/
 @pic_ver : `"?"+(new Date()).getTime()`;
-@pic_url: "../img";
+@pic_url: "/img/";
 @var: 20px;
+@f:1/16rem;
+/**
+* 站内
+**/
+@black : #2a3141; //工作标题、tab标题等
+.black() {color:@black}
+@grey : #a5abb2; //灰色字体
+.grey() {color: @grey;}
+.f1 {font-size: 12*@f}
+.f2 {font-size: 14*@f}
+.f3 {font-size: 16*@f}
+.if-arrow-down() { content: '\e6c4'};
 /**
 * 定义atom原子化样式
 * */

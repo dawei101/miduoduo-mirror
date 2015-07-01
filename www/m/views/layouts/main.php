@@ -23,7 +23,7 @@ AppAsset::register($this);
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
 
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?=$this->page_title?>米多多兼职</title>
     <?php $this->head() ?>
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
 </head>
