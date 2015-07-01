@@ -206,6 +206,12 @@ BASE_URL = 'http://api.miduoduo.cn'
     },
 ```
 
+### 任务类型
+* 任务类型列表
+    * GET /version/service-type
+* 类型详情(几乎无用)
+    * GET /version/task/id
+
 ### 任务（职位）
 考虑某任务可设置多个地址，addresses为预留
 * 任务列表
