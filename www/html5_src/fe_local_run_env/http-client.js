@@ -2,7 +2,7 @@ var http = require('http');
 var querystring = require('querystring'),
     cookie = require("./cookie");
 
-var hosts = {"web" :  "www.tuicool.com"},
+var hosts = {"web" :  "api.test.chongdd.cn"},
     port = 80,
     debug = null;
 
@@ -17,7 +17,8 @@ function create(req ,res , notify) {
         if (!host){
             console.log("没指定远程主机");
         }
-        var data = querystring.stringify(data);
+        console.log(data);
+
         var proxyHeaders = reqHeaders;
         var proxyDomain = ['XREF', 'seashell' , 'clientIp' , 'referer' , 'cookie' , 'user-agent' ];
         proxyHeaders.reqHost = req.headers.host

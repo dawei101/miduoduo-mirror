@@ -4,16 +4,41 @@
 </head>
 <body>
 <div class="job-filter">
-    <a class="item1">区域</a>
-    <a class="item2">兼职类型</a>
-    <a class="item3">排序</a>
+    <a class="item1 js-district-btn">区域</a>
+    <a class="item2 js-job-type-btn">兼职类型</a>
+    <a class="item3 js-sort-btn">排序</a>
 </div>
 <div class="job-filter" style="position: static">
 
 </div>
 <div class="content">
-
+<div class="pullUp">
+    加载中...
 </div>
+</div>
+<!--区域列表-->
+<script type="text/html" id="district-list-tpl">
+    <ul class="district-list js-top-filter-btn">
+        <? this.list.forEach(function(item){ ?>
+       <li><?=item.name?></li>
+        <? }); ?>
+    </ul>
+</script>
+<!--兼职类型列表-->
+<script type="text/html" id="job-type-list-tpl">
+    <ul class="job-type-list js-top-filter-btn">
+        <? this.list.forEach(function(item){ ?>
+        <li><?=item.name?></li>
+        <? }); ?>
+    </ul>
+</script>
+<!--排序列表-->
+<script type="text/html" id="sort-list-tpl">
+    <ul class="sort-list js-top-filter-btn">
+        <li>默认</li>
+    </ul>
+</script>
+<!--职位列表-->
 <%include ../widget/job-list-tpl.html%>
 </body>
 </html>

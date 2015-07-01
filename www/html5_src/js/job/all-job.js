@@ -1,40 +1,70 @@
 define(function(require, exports, module) {
     require("zepto");
+    var sLoad = require("../widget/scroll-load");
+    var api = require("../widget/api");
     var tpl = require("../widget/tpl-engine");
-    //职位列表
-    var jobs = [
-        {
-            title : "APP下载推广线下征集",
-            salaryInfo : "120/天",
-            paymentType : "日结",
-            workTime : "仅周末",
-            district : "朝阳区",
-            pubTime : "06/11"
-        },
-        {
-            title : "APP下载推广线下征集",
-            salaryInfo : "底薪120元，提成每单8元",
-            paymentType : "完工结算",
-            workTime : "长期招聘",
-            district : "海淀区",
-            pubTime : "06/11"
-        },
-        {
-            title : "APP下载推广线下征集",
-            salaryInfo : "底薪120元，提成每单8元",
-            paymentType : "完工结算",
-            workTime : "长期招聘",
-            district : "海淀区",
-            pubTime : "06/11"
-        },
-        {
-            title : "APP下载推广线下征集",
-            salaryInfo : "底薪120元，提成每单8元",
-            paymentType : "完工结算",
-            workTime : "长期招聘",
-            district : "海淀区",
-            pubTime : "06/11"
+    var url = "task";
+    //职位列表，滚动加载
+    sLoad.startWatch(api.gen(url), {"page" : 1, "per-page" : 30}, function(data) {
+        $(".content").find(".pullUp").before(tpl.parse("job-list-tpl", {"jobs" : data.items}));
+    });
+
+
+    $(".js-district-btn").on("tap", function() {
+        var _this = $(this)[0];
+        if (!_this.isLoad && !_this.notLoadOver) {
+            _this.notLoadOver = true;
+            //加载区域列表
+            $.get(api.gen('district?filters=[["=",%20"parent_id",3]]'), function(data) {
+                if (data && data.items.length > 0) {
+                    $(".js-top-filter-btn").hide();
+                    $("body").append(tpl.parse("district-list-tpl", {list : data.items}));
+                    _this.isLoad = true;
+                } else {
+                    console.error("加载区域列表出错", data);
+                }
+                _this.notLoadOver = false;
+            }, "json")
+        } else {
+            var $obj = $(".district-list");
+            $obj.siblings(".js-top-filter-btn").hide();
+            $obj.toggle();
         }
-    ];
-    $(".content").append(tpl.parse("job-list-tpl", {"jobs" : jobs}));
+
+    });
+
+    $(".js-job-type-btn").on("tap", function() {
+        var _this = $(this)[0];
+        if (!_this.isLoad && !_this.notLoadOver) {
+            _this.notLoadOver = true;
+            $.getJSON(api.gen("service-type"), function(data) {
+                if (data && data.items.length > 0) {
+                    $(".js-top-filter-btn").hide();
+                    $("body").append(tpl.parse("job-type-list-tpl", {list : data.items}));
+                    _this.isLoad = true;
+                } else {
+                    console.error("加载区域列表出错", data);
+                }
+                _this.notLoadOver = false;
+            })
+        } else {
+            var $obj = $(".job-type-list");
+            $obj.siblings(".js-top-filter-btn").hide();
+            $obj.toggle();
+
+        }
+    })
+
+    $(".js-sort-btn").on("tap", function() {
+        var _this = $(this)[0];
+        if (!_this.isLoad) {
+            _this.isLoad = true;
+            $("body").append(tpl.parse("sort-list-tpl",null));
+        } else {
+           var $obj = $(".sort-list");
+            $obj.siblings(".js-top-filter-btn").hide();
+            $obj.toggle();
+        }
+    });
+
 });

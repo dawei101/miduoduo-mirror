@@ -47,13 +47,17 @@
         <a href="">
             <div class="part1">
                 <div class="title"><?=e.title?></div>
-                <div class="pub-time"><?=e.pubTime?></div>
+                <?
+                    var ct = new Date(e.created_time);
+                    var pubDate = ct.getMonth()+1 + "-" + ct.getDate();
+                ?>
+                <div class="pub-time"><?=pubDate?></div>
             </div>
             <div class="part2">
-                <div class="salary-info firstDiv"><?=e.salaryInfo?></div>
-                <div class="payment-type"><?=e.paymentType?></div>
-                <div calss="work-time"><?=e.workTime?></div>
-                <div class="district"><?=e.district?></div>
+                <div class="firstDiv"><?=+e.salary + "/" + (e.salary_unit_label || "?")?></div>
+                <? e.labels.forEach(function(label, i){?>
+                <div ><?=label?></div>
+                <? }); ?>
             </div>
         </a>
         <? }); ?>
