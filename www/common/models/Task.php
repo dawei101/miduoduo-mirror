@@ -173,6 +173,11 @@ class Task extends \common\BaseActiveRecord
         return parent::beforeSave($insert); 
     }
 
+    public function tidyTitle()
+    {
+        return preg_replace('/【.*?】/', '', $this->title);
+    }
+
     /**
      * @inheritdoc
      * @return TaskQuery the active query used by this AR class.
