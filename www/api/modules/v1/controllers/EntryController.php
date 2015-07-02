@@ -118,8 +118,8 @@ class EntryController extends BaseActiveController
             'success'=> true,
             'message'=> '获取成功',
             'result'=> [
-                'current'=>$h5v?$h5v->toArray():null,
-                'new'=>$appv?$appv->toArray():null,
+                'current_app'=>$h5v?$h5v->toArray():[],
+                'newest_app'=>$appv?$appv->toArray():[],
                 ]
             ]);
     }

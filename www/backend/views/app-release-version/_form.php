@@ -21,6 +21,8 @@ use common\Constants;
 
     <?= $form->field($model, 'app_version')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'api_version')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'html_version')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'update_url')->textInput(['maxlength' => true]) ?>
