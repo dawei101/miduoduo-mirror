@@ -4,13 +4,8 @@ define(function(require, exports, module) {
     var api = require("../widget/api");
     var tpl = require("../widget/tpl-engine");
     var url = "task";
-    //职位列表，滚动加载
-    sLoad.startWatch(api.gen(url), {"page" : 1, "per-page" : 30}, function(data) {
-        $(".content").find(".pullUp").before(tpl.parse("job-list-tpl", {"jobs" : data.items}));
-    });
 
-
-    $(".js-district-btn").on("tap", function() {
+    $(".js-district-btn").on("click", function() {
         var _this = $(this)[0];
         if (!_this.isLoad && !_this.notLoadOver) {
             _this.notLoadOver = true;
@@ -33,7 +28,7 @@ define(function(require, exports, module) {
 
     });
 
-    $(".js-job-type-btn").on("tap", function() {
+    $(".js-job-type-btn").on("click", function() {
         var _this = $(this)[0];
         if (!_this.isLoad && !_this.notLoadOver) {
             _this.notLoadOver = true;
@@ -55,7 +50,7 @@ define(function(require, exports, module) {
         }
     })
 
-    $(".js-sort-btn").on("tap", function() {
+    $(".js-sort-btn").on("click", function() {
         var _this = $(this)[0];
         if (!_this.isLoad) {
             _this.isLoad = true;
@@ -66,5 +61,54 @@ define(function(require, exports, module) {
             $obj.toggle();
         }
     });
+
+    var expandStr = "";
+    var filtersObj = {};
+    $("body").on("click", ".district-list li", function() {
+
+        buildFilterParam($(this));
+    }).on("click", ".job-type-list li", function() {
+        buildFilterParam($(this));
+    }).on("click", ".sort-list li", function() {
+        $(this).parent().hide();
+    })
+
+    function buildFilterParam($this) {
+        $this.parent().hide();
+        var allTag = $this.data("all");
+        if(allTag) {
+            expandStr = expandStr.replace(allTag+",", "");
+            delete  filtersObj[allTag];
+        } else {
+            var paramArr = $this.data("uid").split(":");
+            var p0 = paramArr[0];
+            var p1 = paramArr[1];
+            var p2 = paramArr[2];
+            expandStr = expandStr.replace(p0+",", "").concat(p0+",");
+            filtersObj[p0] = ["=", p1, p2];
+        }
+        var btnClass = $this.parent().data("btn");
+        $("." + btnClass).text($this.text());
+
+        buildJobList();
+    }
+
+    buildJobList();
+    function buildJobList() {
+        $(".jobList").remove();
+        var urlParam = {"page" : 1, "per-page" : 30, "expand" : expandStr, "filters" : handleFiltersObj(filtersObj)}
+        //职位列表，滚动加载
+        sLoad.startWatch(api.gen(url), urlParam, function(data) {
+            $(".content").find(".pullUp").before(tpl.parse("job-list-tpl", {"jobs" : data.items}));
+        });
+
+        function handleFiltersObj(obj) {
+            var tempArr = [];
+            for (var i in obj) {
+                tempArr.push(obj[i]);
+            }
+            return JSON.stringify(tempArr);
+        }
+    }
 
 });
