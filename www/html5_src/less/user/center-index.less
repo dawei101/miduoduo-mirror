@@ -1,0 +1,69 @@
+@import "../atom.less";
+body {
+  .bgc(#eee);
+}
+
+.state {
+  .clearfix;
+  .w(93%);
+  padding: 7%;
+  .pr(0);
+  .bgc(#fff);
+  border-bottom: 1px solid #d0d0d0;
+  div {
+    .left
+  }
+  .avatar {
+    .w(20%);
+    img {
+      .w(100%);
+    }
+  }
+  .info {
+    .bgc(#fff);
+    .w(70%);
+    .mt(4%);
+    .ml(10%);
+    div {
+      padding: 6% 12%;
+      .mr(4%);
+      border: 1px solid #00b966;
+      .border-r;
+      .fc(#00b966);
+      .f3;
+    }
+    .login {
+      .mr(0);
+    }
+  }
+}
+
+.nav {
+  .mt(4%);
+  .bgc(#fff);
+  border-bottom: 1px solid #d0d0d0;
+  .item {
+    border-bottom: 1px solid #f2f2f2;
+  }
+}
+
+.contact-us {
+  .mt(4%);
+  .bgc(#fff);
+  border-bottom: 1px solid #d0d0d0;
+}
+
+.item {
+  .f3;
+  .black;
+  padding: 6%;
+  &:after {
+    .pa;
+    right: 4%;
+    .if-arrow-right;
+    .pl(10%);
+    .f(16*@f);
+    .fc(#a5abb2);
+    font-style:normal;
+  }
+}

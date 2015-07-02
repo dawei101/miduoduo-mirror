@@ -1463,6 +1463,18 @@ window.$ === undefined && (window.$ = Zepto)
         return $.ajax(options)
     }
 
+    $.put = function(/* url, data, success, dataType */){
+        var options = parseArguments.apply(null, arguments);
+        options.type = 'PUT';
+        return $.ajax(options);
+    }
+
+    $.delete = function(/* url, data, success, dataType */){
+        var options = parseArguments.apply(null, arguments);
+        options.type = 'DELETE';
+        return $.ajax(options);
+    }
+
     $.getJSON = function(/* url, data, success */){
         var options = parseArguments.apply(null, arguments)
         options.dataType = 'json'

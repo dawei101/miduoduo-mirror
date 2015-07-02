@@ -15,7 +15,8 @@
     <script>
         window.miduoduo = {};
         miduoduo.config = {
-            picUrl : "/v1/" + "img"
+            picUrl : "/v1/" + "img",
+            access_token : null
         }
         seajs.config({
             base: "/v1/js_min/",
@@ -57,6 +58,7 @@
 
     </div>
     <!--此处插入职位列表模板-->
+    <div class="pullUp">加载中...</div>
 </div>
 
 <!--banner 轮播模板-->
@@ -89,7 +91,9 @@
             <div class="part2">
                 <div class="firstDiv"><?=+e.salary + "/" + (e.salary_unit_label || "?")?></div>
                 <? e.labels.forEach(function(label, i){?>
+                <?if (label) {?>
                 <div ><?=label?></div>
+                <? } ?>
                 <? }); ?>
             </div>
         </a>

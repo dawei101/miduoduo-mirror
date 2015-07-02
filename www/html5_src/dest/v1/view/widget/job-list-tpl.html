@@ -14,7 +14,9 @@
             <div class="part2">
                 <div class="firstDiv"><?=+e.salary + "/" + (e.salary_unit_label || "?")?></div>
                 <? e.labels.forEach(function(label, i){?>
+                <?if (label) {?>
                 <div ><?=label?></div>
+                <? } ?>
                 <? }); ?>
             </div>
         </a>
