@@ -116,7 +116,7 @@ $this->title = '米多多兼职平台';
         <li class="xian"></li>
         <li class="attention-us">
             <h2>关注我们</h2>
-            <div class="erwei"><img src="/static/img/fooerwei.jpg" width="70" height="70"><div class="er-text">扫码进入m站</div></div>
+            <div class="erwei"><img src="/static/img/fooerwei.jpg" width="70" height="70"><div class="er-text"><a style="text-decoration:none; color:#fff" href="<?=Yii::$app->params['baseurl.m']?>">扫码进入m站</a></div></div>
             <!-- <div class="erwei"><img src="/static/img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>-->
        </li>
      </ul>
