@@ -58,8 +58,6 @@ use common\models\District;
 
     <?= $form->field($model, 'need_quantity')->textInput() ?>
 
-    
-
     <?= $form->field($model, 'detail')->widget(
         TinyMce::className(), [
             'options' => ['rows' => 6],
