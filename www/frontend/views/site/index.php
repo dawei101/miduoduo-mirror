@@ -1,4 +1,5 @@
 <?php
+use Yii;
 /* @var $this yii\web\View */
 $this->title = '米多多兼职平台';
 ?>
@@ -19,7 +20,7 @@ $this->title = '米多多兼职平台';
   <div class="top-center">
     <nav>
       <div class="logo"><img src="/static/img/logo.png" width="200" height="110"></div>
-      <!-- <div class="nav"><a href="/site/Contact/"  class="contact-us">联系我们</a><a href="#">企业合作</a></div> -->
+      <div class="nav"><a href="<?=Yii::$app->params['baseurl.m'] . '/task'?>"  class="contact-us">职位列表</a><a href="/corp">企业合作</a></div>
     </nav>
     <div class="banner"><img src="/static/img/banner.png" width="751" height="407">
       <h1>米多多 | 大学生兼职平台</h1>
