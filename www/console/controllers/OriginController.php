@@ -87,7 +87,10 @@ class OriginController extends Controller
             echo "Generate file maps...\n";
             $map = [];
             foreach($all_files as $file) {
-                $map[$file] = H5Utils::getViewFile($file, H5Utils::getLastestVersion($file));
+                $tmpf = H5Utils::getViewFile($file, H5Utils::getLastestVersion($file));
+                if ($tmpf){
+                    $map[$file] = $tmpf;
+                }
             }
             $vinfo = [];
             $vinfo['baseUrl'] = Yii::$app->params['baseurl.h5_origin'];
