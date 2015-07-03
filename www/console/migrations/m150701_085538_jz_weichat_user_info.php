@@ -3,7 +3,7 @@
 use yii\db\Schema;
 use console\BaseMigration;
 
-class m150703_085538_jz_weichat_user_info extends BaseMigration
+class m150701_085538_jz_weichat_user_info extends BaseMigration
 {
     public function up()
     {

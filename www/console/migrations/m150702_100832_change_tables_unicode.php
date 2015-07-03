@@ -16,7 +16,6 @@ class m150702_100832_change_tables_unicode extends BaseMigration
        alter table jz_auth_rule                 convert to character set utf8 collate utf8_unicode_ci;
        alter table jz_cache_for_api             convert to character set utf8 collate utf8_unicode_ci;
        alter table jz_cache_for_backend         convert to character set utf8 collate utf8_unicode_ci;
-       alter table jz_cache_for_corp            convert to character set utf8 collate utf8_unicode_ci;
        alter table jz_cache_for_frontend        convert to character set utf8 collate utf8_unicode_ci;
        alter table jz_cache_for_m               convert to character set utf8 collate utf8_unicode_ci;
        alter table jz_company                   convert to character set utf8 collate utf8_unicode_ci;

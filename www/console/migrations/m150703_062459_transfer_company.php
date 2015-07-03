@@ -10,7 +10,7 @@ class m150703_062459_transfer_company extends BaseMigration
         $sqls = "
             insert into jz_company (name, introduction) 
                 select DISTINCT (company_name) company_name, company_introduction from jz_task;
-                update jz_task set company_id = (select id from jz_company where jz_company.name=jz_task.company_name) where 1=1;
+                update jz_task set company_id = (select id from jz_company where jz_company.name=jz_task.company_name limit 1) where 1=1;
                 
             ";
         $this->execSqls($sqls);
