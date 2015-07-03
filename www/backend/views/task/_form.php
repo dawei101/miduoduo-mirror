@@ -16,6 +16,7 @@ use common\models\District;
 
     <?php $form = ActiveForm::begin(); ?>
 
+
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'labels_str')->label("标签(以英文','分隔)") ?>
@@ -23,11 +24,6 @@ use common\models\District;
     <?= $form->field($model, 'clearance_period')->dropDownList(
         $model::$CLEARANCE_PERIODS
     ) ?>
-
-    <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'company_introduction')->textarea(['rows' => 6]) ?>
-    <?= $form->field($model, 'contact') ?>
-    <?= $form->field($model, 'contact_phonenum') ?>
 
     <?= $form->field($model, 'salary')->textInput(['maxlength' => true]) ?>
 
@@ -40,7 +36,7 @@ use common\models\District;
     <?= $form->field($model, 'from_date')->widget(
         DatePicker::className(), [
             'model'=>$model,
-            'attribute' => 'birthdate',
+            'attribute' => 'from_date',
             'dateFormat' => 'yyyy-MM-dd',
         ]) ?>
 
@@ -58,7 +54,6 @@ use common\models\District;
 
     <?= $form->field($model, 'need_quantity')->textInput() ?>
 
-    
 
     <?= $form->field($model, 'detail')->widget(
         TinyMce::className(), [
@@ -79,14 +74,6 @@ use common\models\District;
     <?= $form->field($model, 'requirement')->textarea(['rows' => 6]) ?>
 
 
-    <div class="row addresses">
-        <ul class="list-group">
-    <?php foreach ($model->addresses as $address){ ?>
-        <li class="list-group-item"><?=$address->city?>, <?=$address->district?>, <?=$address->address?></li>
-    <?php }?>
-        </ul>
-    </div>
-
     <?php 
 
         $city_map = [];
@@ -100,17 +87,6 @@ use common\models\District;
             $district_map[$district->id] = $district->name;
         }
     ?>
-        
-    <?= $form->field($model, 'city_id')->dropDownList(
-        $city_map
-    ) ?>
-
-
-    <?= $form->field($model, 'district_id')->dropDownList(
-        $district_map
-    ) ?>
-
-    <?= $form->field($model, 'address')->textInput() ?>
     <?php
         $service_types = [];
         foreach (ServiceType::find()->all() as $t){
@@ -121,10 +97,67 @@ use common\models\District;
         $service_types
     ) ?>
 
+    <?= $form->field($model, 'contact') ?>
+    <?= $form->field($model, 'contact_phonenum') ?>
+    <?= $form->field($model, 'company_id')->hiddenInput($options=['id'=>'company-id']) ?>
+    <div class="input-group">
+          <input id="keyword" autocomplete="off" type="text" class="form-control" placeholder="输入公司名"
+            value="<?=$model->company?$model->company->name:''?>"
+            >
+          <span class="input-group-btn">
+            <button id="search" class="btn btn-default" type="button">搜索</button>
+          </span>
+    </div>
+    <ul class="list-group" id="search-result">
+    </ul>
+    <p class="text-right"> OR
+        <a href="/company/create" target="_blank" class="btn btn-danger">添加新公司</a>
+    </p>
+    <br />
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton('下一步', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php $this->beginBlock('js') ?>
+<script>
+$(function(){
+    var cipt = $("#company-id");
+    var sr = $("#search-result");
+    var kwipt = $("#keyword");
+    var companies = [];
+
+    function set_company(i){
+        var c = companies[i];
+        cipt.val(c.id);
+        kwipt.val(c.name);
+        sr.html('');
+    }
+    window.set_company = set_company;
+
+    function search(){
+        var kw = kwipt.val();
+        if (kw){
+            $.ajax({url: '/company/search?keyword=' + kw, 
+            }).done(function(data_s){
+                var data = $.parseJSON(data_s);
+                companies = data;
+                var lis = '';
+                for (var i in data){
+                    var s = '<li onclick="set_company('+i+')" class="list-group-item">' + data[i].name + '</li>';
+                    lis += s;
+                }
+                sr.html(lis);
+            });
+        }
+    }
+
+    $("#search").bind(GB.click_event, function(){
+        search();
+    });
+});
+</script>
+<?php $this->endBlock() ?>

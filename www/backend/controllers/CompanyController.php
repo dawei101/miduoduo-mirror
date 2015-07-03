@@ -5,14 +5,14 @@ namespace backend\controllers;
 use Yii;
 use common\models\Company;
 use common\models\CompanySearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\BBaseController;
 
 /**
  * CompanyController implements the CRUD actions for Company model.
  */
-class CompanyController extends Controller
+class CompanyController extends BBaseController
 {
     public function behaviors()
     {
@@ -51,6 +51,18 @@ class CompanyController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+
+    public function actionSearch($keyword)
+    {
+        $query = Company::find()->where(['like', 'name', $keyword]);
+        $cs = $query->all();
+        $cs_arr = [];
+        foreach($cs as $c){
+            $cs_arr[] = $c->toArray();
+        }
+        return $this->renderJson($cs_arr);
     }
 
     /**

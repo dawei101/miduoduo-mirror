@@ -33,10 +33,12 @@ class Company extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name', 'license_id', 'license_img', 'user_id'], 'required'],
+            [['name'], 'required'],
             [['id', 'status', 'address_id', 'examined_by', 'user_id'], 'integer'],
             [['examined_time'], 'safe'],
-            [['name', 'license_id', 'license_img'], 'string', 'max' => 500]
+            [['name', 'license_id', 'license_img'], 'string', 'max' => 500],
+            [['introduction'], 'string'],
+            ['status', 'default', 'value'=>0],
         ];
     }
 
@@ -48,13 +50,14 @@ class Company extends \common\BaseActiveRecord
         return [
             'id' => 'ID',
             'name' => '企业名',
+            'introduction'=>'公司介绍',
             'license_id' => '营业执照号',
-            'license_img' => '营业执照',
+            'license_img' => '营业执照照片',
             'examined_time' => '审核日期',
-            'status' => '状态',
             'address_id' => '地址',
             'examined_by' => '审核人',
             'user_id' => '用户',
+            'status' => '状态',
         ];
     }
 
