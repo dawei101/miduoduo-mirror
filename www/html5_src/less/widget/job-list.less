@@ -4,7 +4,7 @@
 */
 .jobList() {
   .jobList {
-    a {
+    & > a {
       .block;
       .w(94%);
       border-bottom: 1px solid #eee;
@@ -12,6 +12,7 @@
       .clearfix;
     }
     .part1 {
+      .clearfix;
       div {
         .mb(6px);
       }
@@ -28,6 +29,7 @@
     }
     .part2 {
       clear: both;
+      .clearfix;
       div {
         .left;
         .mr(1%);
@@ -42,6 +44,44 @@
         border: 2px solid #ff7b5d;
         color: #ff7b5d;
       }
+    }
+  }
+
+  .others {
+    .w(97%);
+    .pl(3%);
+    .clearfix;
+    border-bottom: 10px solid #eee;
+    div,a {
+      display: inline-block;
+      .pt(2%);
+      .pb(2%);
+      vertical-align: middle;
+      .c;
+      .f1;
+      span {
+        display: inline-block;
+        padding: 5% 0;
+      }
+    }
+    .status {
+      .w(50%);
+      text-align: left;
+      .f2;
+      .fc(#ff7b5d);
+    }
+    .report {
+      .w(20%);
+      box-sizing: border-box;
+      border-left: 1px solid #eee;
+      border-right: 1px solid #eee;
+      .f1;
+      .fc(#606c77);
+    }
+    .tel {
+      .w(27%);
+      .f1;
+      .fc(#00b966);
     }
   }
 }
