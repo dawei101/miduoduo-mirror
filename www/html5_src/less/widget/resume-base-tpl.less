@@ -116,10 +116,20 @@
           .ml(8%);
           .w(72%);
         }
+        .control {
+          &:after {
+            .pa;
+            right: 4%;
+            .if-arrow-right;
+            .pl(10%);
+            .f(16*@f);
+            font-style:normal;
+          }
+        }
       }
       .sub2 {
         .con {
-          div {
+          .sub2-con-val {
             float: left;
             .w(44%);
             .mr(3%);
@@ -129,6 +139,18 @@
             border: 1px solid #ccc;
             .f1;
             .c;
+          }
+          .sub2-con-val-act {
+            .pr;
+            border: 1px solid #00b966;
+            .fc(#00b966);
+            &:after {
+              .if-correct;
+              .pa;
+              bottom: 0;
+              right: 1%;
+              .f(1rem);
+            }
           }
         }
       }
@@ -177,6 +199,10 @@
             }
             .dateTitle {
               .bgc(#606c77);
+              .fc(#fff);
+            }
+            .time-act {
+              .bgc(#00b966);
               .fc(#fff);
             }
           }
