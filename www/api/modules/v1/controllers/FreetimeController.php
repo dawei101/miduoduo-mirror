@@ -39,7 +39,9 @@ class FreetimeController extends BaseActiveController
     public function actionFreeAll(){
         $m = $this->modelClass;
         $m::updateAll(['morning'=>1, 'afternoon'=>1, 'evening'=>1], 'user_id='.Yii::$app->user->id);
-        $index = '/' . $this->module->id . '/' . 'freetime';
-        return $this->redirect($index);
+        return $this->renderJson([
+            "success" => true,
+            "message" => '设置成功',
+        ]);
     }
 }
