@@ -19,7 +19,6 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <link href="/css/dashboard.css" rel="stylesheet">
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
 </head>
 <body>
@@ -52,8 +51,8 @@ AppAsset::register($this);
 
         </div>
         <div id="page-content-wrapper">
-            <div id="sidebar-toggle" class="text-center">
-                菜单
+            <div id="sidebar-toggle" class="text-right">
+                <span class="glyphicon glyphicon-list"></span>
             </div>
             <div class="container-fluid">
 <?= $content ?>

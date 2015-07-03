@@ -35,12 +35,14 @@
 
 #wrapper.toggled #sidebar-wrapper {
     width: 250px;
+    z-index: 1;
 }
 
 #page-content-wrapper {
     width: 100%;
     position: absolute;
     padding: 15px;
+    z-index: 2000;
 }
 
 #wrapper.toggled #page-content-wrapper {
@@ -52,12 +54,12 @@
 
 #sidebar-toggle {
     display: block;
+    padding-right: 20px;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     background: rgba(120, 120, 120, 0.1);
-    color: rgba(180, 180, 180, 0.2);
     height:51px;
     line-height: 50px;
     font-size: 30px;
