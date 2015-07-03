@@ -43,6 +43,7 @@ use common\models\ServiceType;
  * @property integer $status
  * @property integer $city_id
  * @property integer $district_id
+ * @property string $labels_str
  */
 class Task extends \common\BaseActiveRecord
 {
@@ -152,6 +153,7 @@ class Task extends \common\BaseActiveRecord
             'company_introduction'=>'公司介绍',
             'contact'=>'联系人',
             'contact_phonenum'=>'联系手机',
+            'labels_str'=>'标签',
         ];
     }
 
@@ -169,6 +171,11 @@ class Task extends \common\BaseActiveRecord
             $this->gid = time() . mt_rand(100, 999) . $user_id; 
         }
         return parent::beforeSave($insert); 
+    }
+
+    public function tidyTitle()
+    {
+        return preg_replace('/【.*?】/', '', $this->title);
     }
 
     /**
@@ -211,6 +218,16 @@ class Task extends \common\BaseActiveRecord
         return $this->hasOne(ServiceType::className(), ['id' => 'service_type_id']);
     }
 
+    public function getLabels()
+    {
+        return explode(',', $this->labels_str);
+    }
+
+    public function setLabels($labels)
+    {
+        $this->labels_str = implode(',', $labels);
+    }
+
     public function extraFields()
     {
         return ['city', 'district', 'user', 'service_type', 'company', 'addresses'];
@@ -230,6 +247,7 @@ class Task extends \common\BaseActiveRecord
             'city_id', 'district_id', 'company_id',
             'gender_requirement', 'degree_requirement',
             'clearance_period_label', 'salary_unit_label',
+            'labels',
         ];
 
     }

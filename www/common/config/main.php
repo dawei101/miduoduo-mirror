@@ -23,6 +23,11 @@ return [
                 'encryption' => 'ssl', // It is often used, check your provider or mail server specs
             ],
         ],
+        'sms_sender' => [
+            'class' => 'common\sms_sender\GuoduSender',
+            'account' => 'bjcayj',
+            'password' => 'cayj001',
+        ],
         'app_pusher' => [
             'class' => 'common\pusher\AppPusher',
             'app_key' => '2ca0b9dfc8faa0381d1deb06',
@@ -31,7 +36,9 @@ return [
         'wechat_pusher' => [
             'class' => 'common\pusher\WechatPusher',
         ],
-
+        'sms_pusher' => [
+            'class' => 'common\pusher\SmsPusher',
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],

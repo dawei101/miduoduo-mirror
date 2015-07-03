@@ -15,7 +15,6 @@ use common\models\LoginForm;
 use common\models\User;
 use common\models\TaskApplicant;
 use common\models\Resume;
-use common\sms\SmsSenderFactory;
 
 use m\MBaseController;
 use m\models\ResetPasswordForm;
@@ -127,8 +126,7 @@ class UserController extends MBaseController
                 'msg'=> "手机号码不正确"
             ]);
         }
-        $sender = SmsSenderFactory::getSender();
-        if ($sender->sendVerifyCode($phonenum)){
+        if (Utils::sendVerifyCode($phonenum)){
             return $this->renderJson([
                     'result'=> true,
                     'msg'=> "验证码已发送"

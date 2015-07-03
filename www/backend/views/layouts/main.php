@@ -19,71 +19,46 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <link href="/css/dashboard.css" rel="stylesheet">
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
 </head>
 <body>
     <?php $this->beginBody() ?>
-    <div class="wrap">
-        <?php
-            NavBar::begin([
-                'brandLabel' => '宠爱有家',
-                'brandUrl' => Yii::$app->homeUrl,
-                'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
-                ],
-            ]);
-            $menuItems = [
-                ['label' => '首页', 'url' => ['/site/index']],
-            ];
-            if (Yii::$app->user->isGuest) {
-                $menuItems[] = ['label' => '登录', 'url' => ['/site/login']];
-            } else {
-                $menuItems[] = [
-                    'label' => '退出(' . Yii::$app->user->identity->username . ')',
-                    'url' => ['/site/logout'],
-                    'linkOptions' => ['data-method' => 'post']
-                ];
-            }
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => $menuItems,
-            ]);
-            NavBar::end();
-        ?>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+              <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/"> 米多多 </a>
+                </li>
+                <li><a href="/user">账号管理</a></li>
+                <li><a href="/resume">人才库</a></li>
+                <li><a href="/service-type">任务类型</a></li>
+                <li><a href="/task">任务</a></li>
+                <li><a href="/task-applicant">任务报名单</a></li>
+                <li>&nbsp;</li>
+                <li><a href="/support/report-bug">
+                    <span class="glyphicon glyphicon-flag" style="color:red;"></span> 提交bug
+                    </a></li>
+                <li><a href="/app-release-version">应用发布管理</a></li>
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 col-md-2 sidebar">
-                  <ul class="nav nav-sidebar">
-                    <li><a href="/">Overview <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/user">账号管理</a></li>
-                    <li><a href="/resume">人才库</a></li>
-                    <li><a href="/service-type">任务类型</a></li>
-                    <li><a href="/task">任务</a></li>
-                    <li><a href="/task-applicant">任务报名单</a></li>
-                  </ul>
-                  <ul class="nav nav-sidebar">
-                    <li><a href="/support/report-bug">提交bug
-                        <span class="glyphicon glyphicon-flag pull-right" style="color:red;"></span>
-                        </a></li>
-                    <li><a href="/app-release-version">应用发布管理</a></li>
-                  </ul>
+                <li>&nbsp;</li>
+<?php if (Yii::$app->user->isGuest) { ?>
+                <li><a href="/site/login">登陆</a></li>
+<?php } else { ?>
+                <li><a href="/site/logout" data-method="post">退出</a></li>
+<?php } ?>
 
-                </div>
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <?= $content ?>
-                </div>
+
+        </div>
+        <div id="page-content-wrapper">
+            <div id="sidebar-toggle" class="text-right">
+                <span class="glyphicon glyphicon-list"></span>
+            </div>
+            <div class="container-fluid">
+<?= $content ?>
             </div>
         </div>
     </div>
-
-    <footer class="footer">
-        <div class="container-fluid">
-        <p class="pull-left">&copy; 宠爱有家<?= date('Y') ?></p>
-        <p class="pull-right">Powered by David</p>
-        </div>
-    </footer>
     <?php $this->endBody() ?>
     <script>
         GB={};
@@ -104,6 +79,12 @@ AppAsset::register($this);
             });
         });
 
+    </script>
+        <script>
+    $("#sidebar-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
     </script>
 </body>
 </html>

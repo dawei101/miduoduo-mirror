@@ -52,7 +52,6 @@ class ServiceType extends \common\BaseActiveRecord
             'status' => '状态',
         ];
     }
-
     /**
      * @inheritdoc
      * @return ServiceTypeQuery the active query used by this AR class.
@@ -61,4 +60,15 @@ class ServiceType extends \common\BaseActiveRecord
     {
         return new ServiceTypeQuery(get_called_class());
     }
+
+    public function getStatus_label()
+    {
+        return static::$STATUS_LABELS[$this->status];
+    }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['status_label']);
+    }
+
 }

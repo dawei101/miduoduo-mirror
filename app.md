@@ -48,11 +48,22 @@ app开发协议
          { "result": true,
           "message": 成功信息,
           result: {
-              app_version: 最新app版本,
-              html_version: app_version下，最新html版本,
-              update_url: 更新的链接( android 会是APK的链接，ios会是itunes链接),
-              release_time: 发布时间,
-              'h5_map_file': 文件map的url
+              current_app : {
+                  app_version: 当前手机的app版本,
+                  api_version: api版本
+                  html_version: 当前手机可使用的最新html版本,
+                  update_url: 更新的链接( android 会是APK的链接，ios会是itunes链接),
+                  release_time: 发布时间,
+                  h5_map_file: 文件map的url,
+                },
+              newest_app : {
+                  app_version: 最新app版本,
+                  api_version: api版本
+                  html_version: 最新app版本须使用的最新html版本,
+                  update_url: 更新的链接( android 会是APK的链接，ios会是itunes链接),
+                  release_time: 发布时间,
+                  h5_map_file: 文件map的url,
+                  }
               }
           }
             ```
