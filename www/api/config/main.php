@@ -70,6 +70,15 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/freetime'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'POST free-all' => 'free-all',
+                    ],
+                ],
+
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/user'],
                     'pluralize' => '',
                     'patterns' => [
