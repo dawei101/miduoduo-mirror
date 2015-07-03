@@ -12,17 +12,21 @@ use yii\web\AssetBundle;
 /**
  * @author dawei
  */
-class AppAsset extends AssetBundle
+class BootstrapAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
 
     public $css = [
-        'static/css/m-midd.css',
-        'static/fonts/iconfont.css',
+        'static/css/bootstrap.min.css',
+        'static/css/bootstrap-theme.min.css',
+        'static/css/midd.css',
     ];
     public $js = [
+        'static/js/bootstrap.min.js',
         'static/js/fastclick.js',
-        'static/js/jquery.min.js',
+    ];
+    public $depends = [
+        'yii\web\YiiAsset',
     ];
 }
