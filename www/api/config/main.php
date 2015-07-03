@@ -64,6 +64,7 @@ return [
                         'v1/sys-message',
                         'v1/message',
                         'v1/user-service-type',
+                        'v1/service-type',
                     ],
                     'pluralize' => '',
                 ],

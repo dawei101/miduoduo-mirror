@@ -18,9 +18,12 @@ use common\models\District;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'labels_str')->label("标签(以英文','分隔)") ?>
+
     <?= $form->field($model, 'clearance_period')->dropDownList(
         $model::$CLEARANCE_PERIODS
     ) ?>
+
     <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'company_introduction')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'contact') ?>
@@ -54,8 +57,6 @@ use common\models\District;
     <?= $form->field($model, 'to_time')->textInput() ?>
 
     <?= $form->field($model, 'need_quantity')->textInput() ?>
-
-    
 
     <?= $form->field($model, 'detail')->widget(
         TinyMce::className(), [

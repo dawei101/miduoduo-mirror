@@ -1,16 +1,15 @@
 <?php
-namespace common\sms;
+namespace common\sms_sender;
 
 use Yii;
-use common\sms\SmsInterface;
-use common\sms\BaseSmsSender;
+use yii\base\Component;
 
-class BaifentongSmsSender extends BaseSmsSender implements SmsInterface 
+class BaifentongSender extends 
 {
-    public static $account = 'dlcsyj00';
-    public static $password = 'gUp48QVj';
+    public $account = 'dlcsyj00';
+    public $password = 'gUp48QVj';
 
-    public static function post($data, $url) {
+    public function post($data, $url) {
         $url_info = parse_url($url);
         $httpheader = "POST " . $url_info['path'] . " HTTP/1.0\r\n";
         $httpheader .= "Host:" . $url_info['host'] . "\r\n";
@@ -36,27 +35,22 @@ class BaifentongSmsSender extends BaseSmsSender implements SmsInterface
         return $gets;
     }
 
-    public function sendSms($phonenum, $content){
-        Yii::trace("Sending to $phonenum with content: $content");
+    public function send($phonenum, $content){
         $url = "http://cf.lmobile.cn/submitdata/Service.asmx/g_Submit";
         $posts = [
-            'sname' => static::$account,
-            'spwd'=> static::$password,
+            'sname' => $this->account,
+            'spwd'=> $this->password,
             'scorpid'=>'',
             'sprdid'=>'1012818',
             'sdst'=>$phonenum,
             'smsg'=>$content
         ];
         $post_data = http_build_query($posts);
-        $content = static::post($post_data, $url);
-        return strpos($content, '<State>0</State>')!==false;
-    }
-
-    public function sendVerifyCode($phonenum)
-    {
-        $code = static::generateVerifyCode();
-        static::cacheVerifyCode($phonenum, $code);
-        $msg = "您的验证码为" . $code . ", 请不要告诉其他人【米多多】";
-        return $this->sendSms($phonenum, $msg);
+        $content = $this->post($post_data, $url);
+        $r = strpos($content, '<State>0</State>')!==false;
+        if (!$r){
+            Yii::error("Error::failed sending $phonenum with content: $content");
+        }
+        return $r;
     }
 }

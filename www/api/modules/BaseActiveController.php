@@ -130,11 +130,13 @@ class BaseActiveController extends ActiveController
         if ($this->page_size){
             return new ActiveDataProvider([
                 'query' => $this->buildFilterQuery(),
+                'sort' => ['defaultOrder'=>['id'=>SORT_DESC]],
                 'pagination' => ['pageSize' => $this->page_size ],
             ]);
         }
         return new ActiveDataProvider([
-            'query' => $this->buildFilterQuery()
+            'query' => $this->buildFilterQuery(),
+             'sort' => ['defaultOrder'=>['id'=>SORT_DESC]],
         ]);
 
     }

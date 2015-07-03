@@ -12,11 +12,16 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'created_time')->textInput() ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <p>申请时间: <?= $model->created_time ?></p>
 
-    <?= $form->field($model, 'task_id')->textInput() ?>
+    <p>申请人: <?= $model->resume->name ?></p>
+
+    <p>任务名: <?= $model->task->title ?></p>
+
+    <?= $form->field($model, 'company_alerted')->checkbox() ?>
+
+    <?= $form->field($model, 'applicant_alerted')->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
