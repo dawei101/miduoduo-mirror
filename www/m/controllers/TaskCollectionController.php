@@ -18,7 +18,7 @@ class TaskCollectionController extends \m\MBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['collect'],
+                        'actions' => ['create', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -27,7 +27,8 @@ class TaskCollectionController extends \m\MBaseController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'collect' => ['post'],
+                    'create' => ['post'],
+                    'delete' => ['post'],
                 ],
             ],
 
@@ -36,8 +37,11 @@ class TaskCollectionController extends \m\MBaseController
 
     public function actionCreate()
     {
-        $task_id = Yii::$app->request->post('task');
+        $task_id = Yii::$app->request->post('task_id');
         $user_id = Yii::$app->user->id;
+        if (!$task_id){
+            $this->render404();
+        }
 
         $tc = TaskCollection::find(['task_id'=>$task_id,
             'user_id'=>$user_id

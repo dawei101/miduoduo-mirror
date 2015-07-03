@@ -8,6 +8,8 @@ use yii\web\HttpException;
 class MBaseController extends BaseController
 {
 
+    public $layout = 'bootstrap';
+
     public function beforeAction($action)
     {
         // 微信相关处理
@@ -33,10 +35,10 @@ class MBaseController extends BaseController
 
     public function goBack($defaultUrl = null)
     {
-        $cnext = Yii:$app->request->getCookies()->getValue('next');
-        if ($cnext){
-            Yii::$app->response->setCookies()->setValue('next', '');
-            return Yii::$app->getResponse()->redirect($cnext));
+        if (isset($_COOKIE['next'])){
+            $next = $_COOKIE['next'];
+            setcookie('next', '', time() - 60*60*24, '/');
+            return Yii::$app->getResponse()->redirect($next);
         }
         parent::goBack($defaultUrl);
     }
