@@ -15,12 +15,18 @@
     <script>
         window.miduoduo = {};
         miduoduo.config = {
-            picUrl : "/v1/" + "img"
+            picUrl : "/v1/" + "img",
+            access_token : null,
+            userID : null,
+            phone : 15110083777
+
         }
+        miduoduo.os  = {};
+        miduoduo.os.mddApp = window.WebViewJavascriptBridge || false;
         seajs.config({
             base: "/v1/js_min/",
             alias: {
-                "zepto" : "third_party/zepto.js"
+                "zepto" : "third_party/zepto.js",
             }
         })
     </script>
@@ -30,16 +36,43 @@
 </head>
 <body>
 <div class="job-filter">
-    <a class="item1">区域</a>
-    <a class="item2">兼职类型</a>
-    <a class="item3">排序</a>
+    <a class="item1 js-district-btn">区域</a>
+    <a class="item2 js-job-type-btn">兼职类型</a>
+    <a class="item3 js-sort-btn">排序</a>
 </div>
 <div class="job-filter" style="position: static">
 
 </div>
 <div class="content">
-
+<div class="pullUp">
+    加载中...
 </div>
+</div>
+<!--区域列表-->
+<script type="text/html" id="district-list-tpl">
+    <ul class="district-list js-top-filter-btn" data-btn="js-district-btn">
+        <li data-all="district">全部区域</li>
+        <? this.list.forEach(function(item){ ?>
+       <li data-uid="district:district_id:<?=item.id?>"><?=item.name?></li>
+        <? }); ?>
+    </ul>
+</script>
+<!--兼职类型列表-->
+<script type="text/html" id="job-type-list-tpl" >
+    <ul class="job-type-list js-top-filter-btn" data-btn="js-job-type-btn">
+        <li data-all="service-type">全部</li>
+        <? this.list.forEach(function(item){ ?>
+        <li data-uid="service-type:service_type_id:<?=item.id?>"><?=item.name?></li>
+        <? }); ?>
+    </ul>
+</script>
+<!--排序列表-->
+<script type="text/html" id="sort-list-tpl" >
+    <ul class="sort-list js-top-filter-btn">
+        <li>默认</li>
+    </ul>
+</script>
+<!--职位列表-->
 <!--职位列表模板-->
 <script type="text/html" id="job-list-tpl">
     <div class="jobList">
@@ -47,15 +80,26 @@
         <a href="">
             <div class="part1">
                 <div class="title"><?=e.title?></div>
-                <div class="pub-time"><?=e.pubTime?></div>
+                <?
+                    var ct = new Date(e.created_time);
+                    var pubDate = ct.getMonth()+1 + "-" + ct.getDate();
+                ?>
+                <div class="pub-time"><?=pubDate?></div>
             </div>
             <div class="part2">
-                <div class="salary-info firstDiv"><?=e.salaryInfo?></div>
-                <div class="payment-type"><?=e.paymentType?></div>
-                <div calss="work-time"><?=e.workTime?></div>
-                <div class="district"><?=e.district?></div>
+                <div class="firstDiv"><?=+e.salary + "/" + (e.salary_unit_label || "?")?></div>
+                <? e.labels.forEach(function(label, i){?>
+                <?if (label) {?>
+                <div ><?=label?></div>
+                <? } ?>
+                <? }); ?>
             </div>
         </a>
+        <div class="others">
+            <div class="status">报名成功</div>
+            <div class="report"> <span>x</span><br/>举报</div>
+            <a class="tel" href="tel:18310835520"><span>x</span><br/>联系企业</a>
+        </div>
         <? }); ?>
     </div>
 </script>

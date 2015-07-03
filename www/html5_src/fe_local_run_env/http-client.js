@@ -2,7 +2,7 @@ var http = require('http');
 var querystring = require('querystring'),
     cookie = require("./cookie");
 
-var hosts = {"web" :  "www.tuicool.com"},
+var hosts = {"web" :  "api.test.chongdd.cn"},
     port = 80,
     debug = null;
 
@@ -17,12 +17,11 @@ function create(req ,res , notify) {
         if (!host){
             console.log("没指定远程主机");
         }
-        var data = querystring.stringify(data);
+        console.log(data);
+
         var proxyHeaders = reqHeaders;
         var proxyDomain = ['XREF', 'seashell' , 'clientIp' , 'referer' , 'cookie' , 'user-agent' ];
-        proxyHeaders.reqHost = req.headers.host
-        proxyHeaders.requrl = req.url
-        proxyHeaders.targetEnd = hostSource
+        proxyHeaders.host = host;
         for(var i=0,j = proxyDomain.length ; i < j ;i++ ){
             if (req.headers.hasOwnProperty(proxyDomain[i]) ) {
                 proxyHeaders[proxyDomain[i]] = req.headers[proxyDomain[i]]
@@ -38,6 +37,7 @@ function create(req ,res , notify) {
             proxyHeaders['Content-Type'] =  'application/x-www-form-urlencoded'
         }
         proxyHeaders['Content-Length'] =  Buffer.byteLength(data,'utf8') //data.length
+        console.log("是真的吗",method);
         var options = {
             host : host,
             port : port ,
@@ -88,7 +88,8 @@ function create(req ,res , notify) {
         request.on('error' , function(e){
            console.log('api请求出错', e);
         });
-        request.write(data);
+        console.log(12121,typeof data);
+        request.write(typeof data == 'object' ? JSON.stringify(data) : data);
         request.end();
     }
 }

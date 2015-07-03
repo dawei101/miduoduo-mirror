@@ -22,6 +22,7 @@ function route(req, res) {
     }
     //处理urlParam
     req.__get = {};
+    console.log(reqUrl);
     reqUrl.query = querystring.parse(reqUrl.query);
     for (var k in reqUrl.query){
         req.__get[k.replace(/[<>%\'\"]/g,'')] = reqUrl.query[k]; //防止xss攻击
@@ -40,8 +41,9 @@ function route(req, res) {
     var pathName = reqUrl.pathname;
     var fileType = getFileype(pathName);
     if (!fileType) {
-        console.log(req.method);
-        httpClient.__create(req, res)(pathName, req.method , {phonenum : "15110083715"});
+        console.log(111,req.__get);
+
+        httpClient.__create(req, res)(pathName, req.method , req.__get);
         return;
     }
 

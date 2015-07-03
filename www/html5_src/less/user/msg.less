@@ -1,0 +1,73 @@
+@import "../atom.less";
+
+.item1, .item2 {
+  padding: 3%;
+  border-bottom: 1px solid #eee;
+  .pr;
+  & > div {
+    display: inline-block;
+  }
+  .icon {
+    .w(18%);
+    .pt(18%);
+    vertical-align: middle;
+  }
+  .intro {
+    vertical-align: top;
+    .w(60%);
+    .sub-intro {
+      .block;
+      .pa;
+      bottom: 0%;
+      .pb(3%);
+      .f2;
+      .grey;
+    }
+    .sub-main {
+      .f3;
+      .black;
+    }
+  }
+  .tips {
+    .w(10%);
+    padding: 1%;
+    .bgc(#ef1d1d);
+    .border-r(10px);
+    .c;
+    .fc(#fff);
+  }
+}
+.item1 {
+  .icon {
+    .pr;
+    .bgc(#00b564);
+    &:after {
+      .pa;
+      .w(100%);
+      .c;
+      top: 30%;
+      .f(1.7rem);
+      .if-msg-page-icon1;
+      .fc(#fff);
+      font-family:"iconfont" !important;
+      font-style:normal;
+    }
+  }
+}
+.item2 {
+  .icon {
+    .pr;
+    .bgc(#3498db);
+    &:after {
+      .pa;
+      .w(100%);
+      .c;
+      top: 30%;
+      .f(1.7rem);
+      .if-msg-page-icon2;
+      .fc(#fff);
+      font-family:"iconfont" !important;
+      font-style:normal;
+    }
+  }
+}

@@ -1,0 +1,1 @@
+define(function(require,exports){require("zepto");var tpl=(require("../widget/scroll-load"),require("../widget/api"),require("../widget/tpl-engine"));$("body").append(tpl.parse("msg-list-tpl",{}))});

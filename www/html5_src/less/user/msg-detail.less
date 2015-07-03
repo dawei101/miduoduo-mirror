@@ -1,0 +1,29 @@
+@import "../atom.less";
+
+.msg-list {
+  .w(100%);
+  li {
+    padding: 3%;
+    border-bottom: 1px solid #eee;
+    &:after {
+      .pa;
+      right: 4%;
+      top: 4%;
+      .if-arrow-right;
+      .f(16*@f);
+      .fc(#a5abb2);
+      font-style:normal;
+
+    }
+    div {
+      .black;
+    }
+    .time {
+      .pb(3%);
+      .f2;
+    }
+    .content {
+      .f3;
+    }
+  }
+}
