@@ -10,6 +10,9 @@ class MBaseController extends BaseController
 
     public function beforeAction($action)
     {
+        // 微信相关处理
+        $weichat = new WeiChatController();
+
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
