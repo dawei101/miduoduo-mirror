@@ -7,8 +7,8 @@ $param_files =
 
 $params = [
     'weichat'=>[
-        'appid'     => 'wxcec51a2dfc04a39c',                // 微信公众号ID
-        'secret'    => '10f206447ee1218398e2dab5c99feb41',  // 微信secret
+        'appid'     => 'wxc940e677d43db45d',                // 微信公众号ID
+        'secret'    => '284769fa88c6ba0496cc2aa06ef1d7c4',  // 微信secret
         'scope1'    => 'snsapi_base',                       // 获取基本信息
         'scope2'    => 'snsapi_userinfo',                   // 获取详细信息
         ]
