@@ -79,6 +79,14 @@ use common\models\District;
     <?= $form->field($model, 'requirement')->textarea(['rows' => 6]) ?>
 
 
+    <div class="row addresses">
+        <ul class="list-group">
+    <?php foreach ($model->addresses as $address){ ?>
+        <li class="list-group-item"><?=$address->city?>, <?=$address->district?>, <?=$address->address?></li>
+    <?php }?>
+        </ul>
+    </div>
+
     <?php 
 
         $city_map = [];
