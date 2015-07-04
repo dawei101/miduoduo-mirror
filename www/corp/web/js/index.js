@@ -11,7 +11,11 @@ $('#login .zc-btn').click(function(e){
 $('#hr .zc-btn').click(function(e){
     $.post('/user/register', $(this).closest('form').serialize())
     .done(function(data){
-        console.log(data);
+        var result = data['result'];
+        if (result === false) {
+            window.location = '/user/add-contact-info';
+            return;
+        }
     });
     return false;
 });

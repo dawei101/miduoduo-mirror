@@ -38,7 +38,7 @@ class UserController extends FBaseController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['add-company-info', 'add-contact-info','logout'],
+                        'actions' => ['add-contact-info','logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -76,7 +76,7 @@ class UserController extends FBaseController
             return $this->renderJson(['result' => true ]);
         }
 
-        return $this->renderJson(['result' => false, 'error' => $loginModel->getFirstError()]);
+        return $this->renderJson(['result' => false, 'error' => $loginModel->errors]);
     }
 
     public function actionRegister()
@@ -90,7 +90,7 @@ class UserController extends FBaseController
             }
         }
 
-        return $this->renderJson(['result' => false, 'error' => $regModel->getFirstError()]);
+        return $this->renderJson(['result' => false, 'error' => $regModel->errors]);
     }
 
     public function actionVcode($username)
