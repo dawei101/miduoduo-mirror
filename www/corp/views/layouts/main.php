@@ -36,7 +36,7 @@ AppAsset::register($this);
         <div class="midd-nav-head navbar-left">
           <button type="button" class="navbar-toggle" data-toggle="collapse"
              data-target="#example-navbar-collapse"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-          <a class="navbar-brand" href="#"><img src="img/qiye-logo.png"></a> </div>
+          <a class="navbar-brand" href="#"><img src="/img/qiye-logo.png"></a> </div>
         <div class="collapse navbar-collapse" id="example-navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="#">我的职位</a></li>
@@ -72,8 +72,8 @@ AppAsset::register($this);
           </div>
           <div class="col-sm-12 col-md-4 col-lg-4">
                <h2>关注我们</h2>
-               <div class="erwei"><img src="img/mzhan.png" width="70" height="70"><div class="er-text">扫码进入m站</div></div>
-               <div class="erwei"><img src="img/weixin.png" width="70" height="70"><div class="er-text">关注微信公众号</div></div>
+               <div class="erwei"><img src="/img/mzhan.png" width="70" height="70"><div class="er-text">扫码进入m站</div></div>
+               <div class="erwei"><img src="/img/weixin.png" width="70" height="70"><div class="er-text">关注微信公众号</div></div>
           </div>
         </div>
       </div>
