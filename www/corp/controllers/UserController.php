@@ -169,9 +169,4 @@ class UserController extends FBaseController
         }
         return $this->render('addContactInfo', ['model' => $model]);
     }
-
-    public function actionAddCompanyInfo()
-    {
-        return $this->render('addCompanyInfo');
-    }
 }
