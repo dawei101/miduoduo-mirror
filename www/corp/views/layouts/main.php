@@ -17,80 +17,62 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="pragma" content="no-cache">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <link href="font/iconfont.css" type="text/css" rel="stylesheet">
     <?php $this->head() ?>
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
 </head>
 <body>
     <?php $this->beginBody() ?>
-    <div class="wrap">
-        <?php
-            NavBar::begin([
-                'brandLabel' => '米多多',
-                'brandUrl' => Yii::$app->homeUrl,
-                'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
-                ],
-            ]);
-            $menuItems = [
-                ['label' => '我的职位', 'url' => ['/task/index']],
-                ['label' => '我要发布', 'url' => ['/task/open']],
-                ['label' => '简历管理', 'url' => ['/resume/index']],
-                ['label' => '消息', 'url' => ['/message/index']],
-                ['label' => '用户中心', 'url' => ['/user/index']],
-            ];
-            if (!Yii::$app->user->isGuest){
-                $menuItems[] = [
-                    'label' => '退出', 'url' => ['/user/logout'],
-                    'linkOptions' => ['data-method' => 'post']
-                ];
-            }
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => $menuItems,
-            ]);
-            NavBar::end();
-        ?>
-
-        <div class="container">
-        <?= Alert::widget() ?>
-        <?= $content ?>
+    <!--======导航======-->
+    <div class="navbar midd-nav midd-2a3141 navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="midd-nav-head navbar-left">
+          <button type="button" class="navbar-toggle" data-toggle="collapse"
+             data-target="#example-navbar-collapse"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <a class="navbar-brand" href="#"><img src="img/qiye-logo.png"></a> </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">我的职位</a></li>
+            <li><a href="#">我要发布</a></li>
+            <li><a href="#">简历管理</a></li>
+            <li><a href="#">消息<em style="background:#fed732  ; border-radius:20px; padding:0 10px;  color:#fff; z-index:40">1</em></a></li>
+            <li><a href="#">用户中心</a></li>
+          </ul>
         </div>
+      </div>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-        <p class="pull-left">&copy; 米多多 <?= date('Y') ?></p>
-        <p class="pull-right">Powered by David</p>
-        </div>
-    </footer>
-    <?php $this->endBody() ?>
-    <script>
-        GB={};
-        GB.is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
-        GB.click_event = GB.is_mobile?'touchstart':'click';
-    </script>
-    <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-64201170-1', 'auto');
-  ga('send', 'pageview');
-</script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?71fce0b5ae66cac6b8ba9fc072998791";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+    <!--main content start-->
+    <?= $content ?>
+    <!--main content end-->
 
+    <div class="foots">
+      <div class="container foot">
+        <div class="row">
+          <div class="col-sm-12 col-md-4 col-lg-4">
+               <h2>联系我们</h2>
+               <p>邮箱：pangleimewe@126.com</p>
+               <p>电话：400-7890886</p>
+          </div>
+          <div class="col-sm-12 col-md-4 col-lg-4">
+               <h2>关于我们</h2>
+               <p><a href="#">公司介绍</a></p>
+               <p><a href="#">团队介绍</a></p>
+          </div>
+          <div class="col-sm-12 col-md-4 col-lg-4">
+               <h2>关注我们</h2>
+               <div class="erwei"><img src="img/mzhan.png" width="70" height="70"><div class="er-text">扫码进入m站</div></div>
+               <div class="erwei"><img src="img/weixin.png" width="70" height="70"><div class="er-text">关注微信公众号</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

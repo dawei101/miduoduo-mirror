@@ -6,33 +6,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $this yii\web\View */
 $this->title = '米多多兼职平台';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
-<link     rel="shortcut icon"  href="img/miduoduo.ico" />
-<title>米多多/兼职平台</title>
-<link href="css/miduoduo.css" type="text/css" rel="stylesheet" >
-</head>
-<body>
-<div class="top">
-  <div class="toumin-box"></div>
-  <div class="top-center">
-    <nav>
-      <div class="logo"><img src="img/logo.png" width="200" height="110"></div>
-      <!-- <div class="nav"><a href="/site/Contact/"  class="contact-us">联系我们</a><a href="#">企业合作</a></div> -->
-    </nav>
-    <div class="banner"><img src="img/banner.png" width="751" height="407">
-      <h1>米多多 | 大学生兼职平台</h1>
-      <div class="erweima"><img src="img/erweima.png" width="140" height="140">
-        <p>扫码进入m站</p>
-      </div>
-    </div>
-  </div>
-</div>
-<div>
-    <div>
+
            <?php $form0 = ActiveForm::begin(['id' => 'form-signup', 'action'=>'/user/register']); ?>
                <?= $form0->field($regModel, 'username') ?>
                <?= $form0->field($regModel, 'vcode') ?>
@@ -70,130 +44,105 @@ $this->title = '米多多兼职平台';
     </p>
 <?php ActiveForm::end(); ?>
 </div>
-<div class="miduoduo-one">
-  <div class="miduoduo-ms">
-    <div class="y-ability"><img src="img/ablility-icon.png" width="75" height="80"><span>我的能力</span></div>
-    <div class="jia1">+</div>
-    <div class="y-Interest"><img src="img/Interest-icon.png" width="75" height="80"><span>我的兴趣</span></div>
-    <div class="jia2">+</div>
-    <div class="y-time"><img src="img/time-icon.png" width="75" height="80"><span>我的时间</span></div>
-    <div class="deng">=</div>
-    <div class="y-miduoduo"><img src="img/logo1.png" width="150" height="60"><span>我的兼职工作</span></div>
+
+
+
+
+<!-- InstanceBeginEditable name="EditRegion3" -->
+
+<!--======banner======-->
+<div class="midd-kong"></div>
+<div class="banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-7 banner-left">
+        <h2>通过米多多发布兼职／实习招聘</h2>
+        <h1>招人更快 更优秀</h1>
+        <div class="h4"> <span class="h4-l pull-left"></span>
+          <h4>让兼职不仅仅是兼职</h4>
+          <span class="h4-r pull-left"></span> </div>
+        <h3 class="fixde">让4000 万在校大学生助力您的发展</h3>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-5">
+        <div class="tab">
+          <ul id="myTab">
+            <!-- class="nav nav-tabs"-->
+            <li class="active"><a href="/demo/bootstrap-tab-plugin1.htm#hr" data-toggle="tab">企业HR注册</a> </li>
+            <li><a href="/demo/bootstrap-tab-plugin1.htm#login" data-toggle="tab">登录</a></li>
+            </li>
+          </ul>
+          <div id="myTabContent" class="tab-content fixde">
+            <div class="tab-pane fade in active" id="hr">
+              <form class="" role="form" action="/user/register">
+                <div class="error-message">验证码错误</div>
+                <!--错误提示-->
+                <div class="midd-input-group">
+                  <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">
+                  <span class="yz-btn pull-left text-center">发送验证码</span> </div>
+                <div class="midd-input-group">
+                  <input name="vcode" type="text" class="input-q"  placeholder="请输入短信验证码">
+                </div>
+                <div class="midd-input-group">
+                  <input name="password" type="text" class="input-q"  placeholder="请设置登录密码">
+                </div>
+                <div class="midd-xieyi">
+                  <input name="" class="pull-left" type="checkbox" value="">
+                  <a href="">同意米多多兼职企业用户协议</a></div>
+                <a href="#" class="zc-btn">注册</a>
+              </form>
+            </div>
+            <div class="tab-pane fade" id="login">
+              <form class="" role="form" action="/user/login">
+                <div class="error-message">验证码错误</div>
+                <div class="midd-input-group">
+                  <input type="text" class="pull-left"  placeholder="请输入手机号">
+                  <span class="yz-btn-jx pull-left text-center">验证码已60s</span> </div>
+                <div class="midd-input-group">
+                  <input type="text" class="input-q"  placeholder="请输入短信验证码">
+                </div>
+                <div class="midd-xieyi">
+                  <label>
+                    <input name="" class="pull-left" type="checkbox" value="">
+                    <span>两周内自动登录</span></label>
+                </div>
+                <a href="#" class="zc-btn">注册</a>
+              </form>
+              <div class="or">
+                <div class="or-l"></div>
+                <div class="or-c">or</div>
+                <div class="or-l"></div>
+                <a href="#">使用普通登录方式&gt;&gt;</a> </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<div class="position-type-box">
-  <ul>
-    <li class="orange">派单员</li>
-    <li class="blue">会展</li>
-    <li class="light-green">模特</li>
-    <li class="dark-red">舞蹈教练</li>
-    <li class="orange">翻译</li>
-    <li class="blue">视频</li>
-    <li class="light-green">产品</li>
-    <li class="dark-red">运营</li>
-    <li class="orange">SEO</li>
-    <li class="blue">家教</li>
-    <li class="light-green">CAD</li>
-    <li class="light-blue">平面</li>
-    <li class="blue">程序</li>
-    <li class="light-blue">运维</li>
-    <li class="blue">促销</li>
-    <li class="light-green">美工</li>
-    <li class="dark-red">法律</li>
-    <li class="blue">高薪服务员</li>
-  </ul>
+<!--======主体部分======-->
+<div class="container cent">
+  <div class="row">
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <div class="zt-box">
+        <div class="img"><img src="img/youhua.png" class="img-responsive" alt="优化成本"> </div>
+        <h2 class="yh-title">优化成本</h2>
+        <div class="yh-tag"> <span><em>■</em>弹性工作</span><span><em>■</em>共享人力</span><span><em>■</em>组合工时</span><span><em>■</em>节约人工</span> </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <div class="zt-box">
+        <div class="img"><img src="img/zhineng.png" class="img-responsive" alt="优化成本"> </div>
+        <h2 class="yh-title">智能匹配</h2>
+        <div class="yh-tag"> <span><em>■</em>经验标签</span><span><em>■</em>工作记录</span><span><em>■</em>雇主评价</span><span><em>■</em>算法推理</span> </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-4 col-lg-4">
+      <div class="zt-box">
+        <div class="img"><img src="img/guanli.png" class="img-responsive" alt="优化成本"> </div>
+        <h2 class="yh-title">优化成本</h2>
+        <div class="yh-tag"> <span><em>■</em>灵活排班</span><span><em>■</em>智能签到</span><span><em>■</em>工时优化</span><span><em>■</em>节约人工</span> </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="service"> <span>米多多</span>
-  <p>我们能为您做到那些？</p>
-</div>
-<div class="function-display" >
-  <ul id="suc1">
-    <li>
-      <img src="img/function-pic.jpg" width="330" height="330">
-      <div class="text"><img src="img/free-icon.png" width="71" height="32"><p>完全免费</p></div>
-    </li>
-     <li>
-     <img src="img/function-pic1.jpg" width="330" height="330">
-<div class="text"><img src="img/xing.png" width="96" height="29"><p>一流合作企业</p></div>
-    </li>
-     <li>
-     <img src="img/function-pic2.jpg" width="330" height="330">
-<div class="text"><img src="img/gaoxin.png" width="39" height="42"><p>众多高薪职位</p></div>
-    </li>
-     <li>
-      <img src="img/function-pic3.jpg" width="330" height="330">
-<div class="text"><img src="img/anquan.png" width="41" height="46"><p>安全担保</p></div>
-    </li>
-     <li>
-     <img src="img/function-pic4.jpg" width="330" height="330">
-<div class="text"><img src="img/lignhuo.png" width="38" height="38"><p>时间灵活</p></div>
-    </li>
-     <li>
-     <img src="img/function-pic5.jpg" width="330" height="330">
-<div class="text"><img src="img/jiujin.png" width="43" height="41"><p>就近择业</p></div>
-    </li>
-  </ul>
-</div>
-
-<div class="bottom-bsnner">
-    <div class="toumin-box"></div>
-    <div class="text-mi">米多多，不仅仅是兼职！</div>
-</div>
-
-
-<footer>
-     <ul>
-        <li class="contact-us1">
-            <h2>联系我们</h2>
-            <p>邮箱：contact@miduoduo.cn</p>
-            <p>电话：010-84991662</p>
-        </li>
-        <li class="about-us">
-            <h2>关于我们</h2>
-            <p><a href="#">公司介绍</a></p>
-            <p><a href="#">团队介绍</a></p>
-        </li>
-        <li class="xian"></li>
-        <li class="attention-us">
-            <h2>关注我们</h2>
-            <div class="erwei"><img src="img/fooerwei.jpg" width="70" height="70"><div class="er-text">扫码进入m站</div></div>
-            <!-- <div class="erwei"><img src="img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>-->
-       </li>
-     </ul>
-</footer>
-
-<script src="js/jquery.min.js"></script>
-<script>
-    $(function(){
-        $(function(){
-        $('#suc1 li').hover(function(){
-            $('.text',this).stop().animate({
-                height:'0'
-            });
-        },function(){
-            $('.text',this).stop().animate({
-                height:'330px'
-            });
-        });
-    });
-    })
-</script>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-64201170-1', 'auto');
-  ga('send', 'pageview');
-</script>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?71fce0b5ae66cac6b8ba9fc072998791";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-</body>
-</html>
+<!-- InstanceEndEditable -->
