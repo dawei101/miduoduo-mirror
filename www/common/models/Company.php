@@ -35,7 +35,7 @@ class Company extends \common\BaseActiveRecord
  //           [['id', 'name', 'license_id', 'license_img', 'user_id'], 'required'],
             [['id', 'status', 'examined_by', 'user_id'], 'integer'],
             [['examined_time'], 'safe'],
-            [['name', 'license_id', 'license_img', 'contact_phone', 'contact_email'], 'string', 'max' => 500],
+            [['name', 'license_id', 'license_img', 'contact_phone', 'contact_email', 'contact_name'], 'string', 'max' => 500],
         ];
     }
 
