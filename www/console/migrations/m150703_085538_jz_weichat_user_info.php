@@ -1,9 +1,9 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use console\BaseMigration;
 
-class m150703_085538_jz_weichat_user_info extends Migration
+class m150703_085538_jz_weichat_user_info extends BaseMigration
 {
     public function up()
     {

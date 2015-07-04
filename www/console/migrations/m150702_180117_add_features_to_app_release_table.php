@@ -1,7 +1,6 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
 use console\BaseMigration;
 
 class m150702_180117_add_features_to_app_release_table extends BaseMigration
