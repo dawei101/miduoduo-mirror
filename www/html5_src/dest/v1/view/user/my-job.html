@@ -31,56 +31,24 @@
         })
     </script>
 
-<link rel='stylesheet' type='text/css' href='/v1/css/index.css'/>
-<script>seajs.use('index')</script>
+<link rel='stylesheet' type='text/css' href='/v1/css/user/my-job.css'/>
+<script>seajs.use('user/my-job')</script>
 </head>
-<body >
-<!--轮播-->
-<div id="bannerSlider" class='imageSlide'>
-</div>
-<!--顶部导航-->
-<div class="top-nav">
-    <div class="item1">
-        <img src="/v1/img/index/item1.png" alt=""/>
-        <span>最新职位</span>
+<body>
+    <div class="top">
+        <div class="tab">
+            <div class="tab1 act">待确认</div>
+            <div class="tab2">报名成功</div>
+            <div class="tab3">全部</div>
+        </div>
     </div>
-    <div class="item2">
-        <img src="/v1/img/index/item2.png" alt=""/>
-        <span>暑期工</span>
-    </div>
-    <div class="item3">
-        <img src="/v1/img/index/item3.png" alt=""/>
-        <span>日结</span>
-    </div>
-    <div class="item4">
-        <img src="/v1/img/index/item3.png" alt=""/>
-        <span>实习</span>
-    </div>
-</div>
 
-<div class="content">
-    <div class="content-bar">
-
+    <div class="content">
+        <div class="pullUp">加载中...</div>
     </div>
-    <!--此处插入职位列表模板-->
-    <div class="pullUp">加载中...</div>
-</div>
 
-<!--banner 轮播模板-->
-<script type="text/html" id="banner-slide-tpl">
-    <ul>
-        <? this.banners.forEach(function(e) {?>
-        <li>
-            <a href="http://www.baidu.com">
-                <img src="<?=e.imgSrc?>" alt=""/>
-            </a>
-        </li>
-        <?});?>
-    </ul>
-    <div class="num"></div>
-</script>
-<!--职位列表模板-->
-<!--职位列表模板-->
+    <!--职位列表-->
+    <!--职位列表模板-->
 <script type="text/html" id="job-list-tpl">
     <div class="jobList">
         <? this.jobs.forEach(function(e) { ?>

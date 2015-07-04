@@ -16,12 +16,17 @@
         window.miduoduo = {};
         miduoduo.config = {
             picUrl : "/v1/" + "img",
-            access_token : null
+            access_token : null,
+            userID : null,
+            phone : 15110083777
+
         }
+        miduoduo.os  = {};
+        miduoduo.os.mddApp = window.WebViewJavascriptBridge || false;
         seajs.config({
             base: "/v1/js_min/",
             alias: {
-                "zepto" : "third_party/zepto.js"
+                "zepto" : "third_party/zepto.js",
             }
         })
     </script>
