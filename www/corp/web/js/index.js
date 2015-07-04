@@ -10,9 +10,9 @@ $('#login .zc-btn').click(function(e){
 //首页注册
 $('#hr .zc-btn').click(function(e){
     $.post('/user/register', $(this).closest('form').serialize())
-    .done(function(data){
-        var result = data['result'];
-        if (result === false) {
+    .done(function(str){
+        var data = JSON.parse(str);
+        if (data.result === false) {
             window.location = '/user/add-contact-info';
             return;
         }
