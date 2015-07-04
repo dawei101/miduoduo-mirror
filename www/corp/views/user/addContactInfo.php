@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'add-contact-info-form']); ?>
+                <?= $form->field($model, 'name')?>
                 <?= $form->field($model, 'phone') ?>
                 <?= $form->field($model, 'email') ?>
                 <div class="form-group">

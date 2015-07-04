@@ -14,6 +14,7 @@ class ContactForm extends Model
 {
     public $phone;
     public $email;
+    public $name;
 
     /**
      * @inheritdoc
@@ -21,7 +22,7 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-            [['phone', 'email'], 'required'],
+            [['name','phone', 'email'], 'required'],
             // email has to be a valid email address
             ['email', 'email'],
         ];
@@ -33,6 +34,7 @@ class ContactForm extends Model
     public function attributeLabels()
     {
         return [
+            'name' => '公司名称',
             'phone' => '联系电话',
             'email' => '接收简历邮箱',
         ];
@@ -56,6 +58,6 @@ class ContactForm extends Model
 
     public function saveContactInfo()
     {
-        return Company::updateContactInfo($this->phone, $this->email);
+        return Company::updateContactInfo($this->name, $this->phone, $this->email);
     }
 }
