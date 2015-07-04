@@ -8,7 +8,15 @@
 import scrapy
 
 
-class Record(scrapy.Item):
+class Company(scrapy.Item):
+    name = scrapy.Field()
+
+
+class TaskAddress(scrapy.Item):
+    pass
+
+
+class Task(scrapy.Item):
 
     title = scrapy.Field()
     category_name = scrapy.Field()
@@ -28,3 +36,6 @@ class Record(scrapy.Item):
     phonenum = scrapy.Field()
     email = scrapy.Field()
     release_time = scrapy.Field()
+
+    gender = scrapy.Field()
+
