@@ -7,10 +7,10 @@ define(function(require, exports, module) {
 
     //轮播
     var banners = [
-        {url: "", imgSrc : miduoduo.config.picUrl + "/index/banner1.jpg"},
-        {url: "", imgSrc : miduoduo.config.picUrl + "/index/banner2.jpg"},
-        {url: "", imgSrc : miduoduo.config.picUrl + "/index/banner1.jpg"},
-        {url: "", imgSrc : miduoduo.config.picUrl + "/index/banner2.jpg"}
+        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner1.jpg"},
+        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner2.jpg"},
+        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner1.jpg"},
+        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner2.jpg"}
 
     ]
     $(".imageSlide").html(tpl.parse("banner-slide-tpl", {"banners" : banners}));

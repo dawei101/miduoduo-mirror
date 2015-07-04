@@ -1,6 +1,9 @@
 @import "../atom.less";
 
-.tips {
+.sel-job-type {
+  display: none;
+}
+.type-tips {
   .w(100%);
   padding: 2%;
   .f1;
@@ -8,12 +11,13 @@
   .grey;
 }
 
-.content {
-  .item {
+.type-content {
+  .type-item {
     padding: 4%;
     border-bottom: 1px solid #f3f3f3;
     .black;
     .f3;
+    .bgc(#fff);
     &:after {
       .pa;
       right: 3%;
@@ -21,7 +25,7 @@
       font-style:normal;
     }
   }
-  .act {
+  .type-act {
     .fc(#00b966);
     &:after {
       .if-checkbox-select;
@@ -29,7 +33,7 @@
   }
 }
 
-.submit, .submit-placeholder {
+.type-submit, .type-submit-placeholder {
   .pf;
   bottom: 0;
   .auto;
@@ -47,7 +51,7 @@
     .border-r;
   }
 }
-.submit-placeholder {
+.type-submit-placeholder {
   position: static;
   visibility: hidden;
 }

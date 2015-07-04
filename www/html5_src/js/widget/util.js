@@ -3,6 +3,7 @@ define(function(require, exports) {
         WebViewJavascriptBridge.send(json, callback);
     }
     function href(_url) {
+        //_url += '/v1/'   //编译的时候加上这句话
         if (!miduoduo.os.mddApp) {
             location.href = _url;
         } else {

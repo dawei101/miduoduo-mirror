@@ -3,28 +3,44 @@ define(function(require, exports) {
     var urlHandle = require("../widget/url-handle")
     var api = require("../widget/api");
     var tpl = require("../widget/tpl-engine");
-    //已经选过的项
-    var alreadySelected = urlHandle.getParams(window.location.search).service_type;
     $.get(api.gen("service-type"), function(data) {
-        console.log(data);
-        $(".content").append(tpl.parse("job-type-list-tpl", { list : data.items, as : alreadySelected}));
+        $("body").append(tpl.parse("job-type-list-tpl", { list : data.items, as : ""}));
     }, "json")
     //选择类型
-    $("body").on("click", ".item" ,function() {
+    $("body").on("click", ".type-content .type-item" ,function() {
         var $this = $(this);
         var typeCode =  $this.data("code");
-        if ($this.hasClass("act")) {
-            $this.removeClass("act");
+        if ($this.hasClass("type-act")) {
+            $this.removeClass("type-act");
             $.delete(api.gen("user-service-type/" + typeCode), function(data) {
                 console.log(data);
             });
 
         } else {
-            $this.addClass("act");
+            $this.addClass("type-act");
             $.post(api.gen("user-service-type"), {"service_type_id" : typeCode}, function(data) {
                 console.log(data);
             });
         }
     })
 
+    //点击返回时，与父页面有偶合的
+    $("body").on("click", ".type-submit", function() {
+        var typesStr = "";
+        var $selType = $(".type-act");
+        $selType.each(function() {
+            typesStr += " " + $(this).text();
+        });
+        //简历表单--可兼类别对象
+        var $st = $(".js-sel-service-type");
+        if ($selType.length > 0) {
+            $st.find("input").hide();
+        } else {
+            $st.find("input").show();
+        }
+        $st.find("span").text(typesStr);
+        $(".sel-job-type").hide();
+        $(".main2").show();
+
+    })
 });

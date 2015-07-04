@@ -31,14 +31,18 @@
             </section>
         </div>
         <div class="part3">
-            <div class="sub-title">公司信息</div>
-            <p class="info">
-                <?=data.company_name?> <br/>
-                联系人：<?=data.contact?> <br/>
-                联系方式：<?=data.contact_phonenum?> <br/>
-            </p>
-            <p class="tel">
+            <div class="sub-part">
+                <div class="sub-title">公司信息</div>
+                <p class="info">
+                    <?=data.company_name || '没有记录公司名称'?> <br/>
+                    联系人：<?=data.contact?> <br/>
+                    联系方式：<?=data.contact_phonenum?> <br/>
+                </p>
 
+            </div>
+            <p class="tel">
+                <span style="visibility: hidden;font-size: 28px">电话</span> <br/>
+                电话咨询
             </p>
         </div>
         <div class="part4">
@@ -48,7 +52,17 @@
             </p>
         </div>
         <div class="part5">
-
+            <div class="store">
+                <div style="visibility: hidden;padding-bottom: 36%">藏</div><br/>
+                收藏
+            </div>
+            <div class="report">
+                <div style="visibility: hidden;padding-bottom: 36%">报</div> <br/>
+                举报
+            </div>
+            <div class="control-btn">
+                我要报名
+            </div>
         </div>
     </div>
 </script>

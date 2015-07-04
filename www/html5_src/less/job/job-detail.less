@@ -17,6 +17,7 @@ body {
     border-bottom: 1px solid #eee;
     padding: 2% 0;
     .sub-title {
+      .w(100%);
       .grey;
       .f2;
       .pb(2%);
@@ -51,7 +52,16 @@ body {
 
   .part3, .part4 {
     padding: 2%;
+    .sub-part {
+      .w(70%);
+      .clearfix;
+      display: inline-block;
+      box-sizing: border-box;
+      vertical-align: middle;
+      border-right: 1px solid #f2f2f2;
+    }
     .sub-title {
+      .w(100%);
       .grey;
       .f2;
       .pb(2%);
@@ -61,5 +71,72 @@ body {
       .black;
       line-height: 25px;
     }
-  } 
+    .tel {
+      .pr;
+      .w(28%);
+      .c;
+      display: inline-block;
+      vertical-align: middle;
+      &:after {
+        .if-tel;
+        position: absolute;
+        top: -14%;
+        font-size: 1.5rem;
+        left: 0;
+        right: 0;
+        .fc(#0cbc6d);
+      }
+    }
+  }
+
+  .part5 {
+    padding: 2%;
+    div {
+      .ml(4%);
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .store, .report {
+      .pr;
+      .f1;
+      .grey;
+      &:after {
+        .if-store;
+        .pa;
+        top: -9%;
+        left: 0;
+        right: 0;
+        .c;
+        .f(1.2rem);
+        .fc(#606c77);
+      }
+    }
+    .store-act {
+      &:after{
+        .fc(#00b966);
+      }
+    }
+    .report {
+      &:after {
+        .if-report;
+        font-weight: bold;
+      }
+    }
+    .control-btn {
+      .w(60%);
+      .ml(5%);
+      .pt(4%);
+      .pb(4%);
+      .border-r;
+      .c;
+      .bgc(#00b966);
+      .fc(#fff);
+    }
+    .btn-wait-confirm {
+      .bgc(#a5abb2);
+    }
+    .btn-apply-success {
+      .bgc(#ff7b5d);
+    }
+  }
 }

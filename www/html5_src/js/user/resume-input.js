@@ -54,7 +54,16 @@ define(function(require, exports) {
         })
     })
     $(".js-sel-service-type").on("click", function() {
-        util.href("/view/user/resume-job-type.html?service_type=");
+        $(".main2").hide();
+        $(".sel-job-type").show();
+        /*var typeCodeStr = $(this).find("input").val();
+        if (typeCodeStr) {
+            var typeCode = typeCodeStr.split(",");
+            typeCode.forEach(function(e) {
+                $(".type-item[data-code='" + e + "']").addClass("type-act");
+            });
+        }*/
+
     })
     //提交
     $(".submit-btn").on("click", function() {
@@ -71,4 +80,6 @@ define(function(require, exports) {
             console.log(data);
         })
     })
+
+    require("./resume-job-type");
 });
