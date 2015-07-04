@@ -22,11 +22,11 @@ AppAsset::register($this);
     <meta http-equiv="pragma" content="no-cache">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link href="font/iconfont.css" type="text/css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <link href="css/miduoduo-qy.css" type="text/css" rel="stylesheet" />
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link href="/font/iconfont.css" type="text/css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="/css/miduoduo-qy.css" type="text/css" rel="stylesheet" />
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
     <?php $this->beginBody() ?>
