@@ -14,7 +14,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropdownList([
+        0 => '正常',
+        1 => '删除',
+    ]) ?>
 
     <?= $form->field($model, 'introduction')->textArea() ?>
 
