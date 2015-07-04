@@ -42,7 +42,11 @@ AppAsset::register($this);
             <li class="active"><a href="#">我的职位</a></li>
             <li><a href="#">我要发布</a></li>
             <li><a href="#">简历管理</a></li>
-            <li><a href="#">消息<em style="background:#fed732  ; border-radius:20px; padding:0 10px;  color:#fff; z-index:40">1</em></a></li>
+            <li><a href="#">消息
+                <!--
+                <em style="background:#fed732  ; border-radius:20px; padding:0 10px;  color:#fff; z-index:40">1</em>
+            -->
+                </a></li>
             <li><a href="#">用户中心</a></li>
           </ul>
         </div>

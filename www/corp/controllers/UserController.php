@@ -93,9 +93,9 @@ class UserController extends FBaseController
         return $this->renderJson(['result' => false]);
     }
 
-    public function actionVcode($phonenum)
+    public function actionVcode($username)
     {
-        if (!Utils::isPhonenum($phonenum)){
+        if (!Utils::isPhonenum($username)){
             return $this->renderJson([
                 'result'=> false,
                 'msg'=> "手机号码不正确"
@@ -103,7 +103,7 @@ class UserController extends FBaseController
         }
 
         $sender = SmsSenderFactory::getSender();
-        if ($sender->sendVerifyCode($phonenum)){
+        if ($sender->sendVerifyCode($username)){
             return $this->renderJson([
                     'result'=> true,
                     'msg'=> "验证码已发送"
