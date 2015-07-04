@@ -1459,7 +1459,7 @@ window.$ === undefined && (window.$ = Zepto)
 
     $.post = function(/* url, data, success, dataType */){
         var options = parseArguments.apply(null, arguments)
-        options.type = 'POST'
+        options.type = 'POST';
         return $.ajax(options)
     }
 

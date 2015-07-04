@@ -1,7 +1,8 @@
 <?php
  
 namespace api\modules\v1\controllers;
- 
+
+use yii\web\HttpException;
 use api\modules\BaseActiveController;
  
 /**

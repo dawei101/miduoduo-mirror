@@ -1,0 +1,52 @@
+<!doctype html>
+<html >
+<head>
+    <meta charset="utf-8">
+    <title>米多多兼职 </title>
+    <meta name="keywords" content="米多多、快速兼职" />
+    <meta name="description" content="米多多兼职" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+
+    <link rel="stylesheet" href="/css/base.css"/>
+    <script type="text/javascript" src="/js_min//third_party/sea.js" ></script>
+    <script>
+        window.miduoduo || (window.miduoduo = {});
+        miduoduo.basePath = {
+            picUrl : "/" + "img"
+        };
+        miduoduo.user || (miduoduo.user = {}); //id username access_token
+        miduoduo.user.username = "123123";
+        miduoduo.user.phone = miduoduo.user.username;
+        miduoduo.user.id = 4;
+        miduoduo.os  = {};
+        miduoduo.os.mddApp = window.WebViewJavascriptBridge || false;
+        seajs.config({
+            base: "/js_min/",
+            alias: {
+                "zepto" : "third_party/zepto.js",
+                "zepto-ext" : "widget/zepto-ext.js"
+            }
+        })
+    </script>
+
+<link rel='stylesheet' type='text/css' href='/css/user/msg-detail.css'/>
+<script>seajs.use('user/msg-detail')</script>
+</head>
+<body>
+<script type="text/html" id="msg-list-tpl">
+    <ul class="msg-list">
+        <? this.msgs.forEach(function(e) { ?>
+        <li>
+            <div class="time"><?=e.created_time?></div>
+            <div class="content">
+                <?=e.message?>
+            </div>
+        </li>
+        <? }); ?>
+    </ul>
+</script>
+</body>
+</html>

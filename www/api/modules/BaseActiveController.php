@@ -58,7 +58,7 @@ class BaseActiveController extends ActiveController
         $model = $this->modelClass;
         $tc = $this->buildBaseQuery()->andWhere([$this->id_column=>$id])->one();
         if (!$tc){
-            throw new HttpException(404, 'Record not found');
+            return new $model;
         }
         return $tc;
     }
@@ -69,7 +69,7 @@ class BaseActiveController extends ActiveController
         $query = $model::find();
         if ($this->auto_filter_user && $this->user_identifier_column){
             if (\Yii::$app->user->isGuest){
-                throw new ForbiddenHttpException("Unknown user");
+                throw new HttpException(403, "Unknown user");
             }
             $query->where([$this->getTableName() . '.' . $this->user_identifier_column=>\Yii::$app->user->id]);
         }
@@ -78,15 +78,17 @@ class BaseActiveController extends ActiveController
 
     public function checkAccess($action, $model = null, $params = [])
     {
-        if ($this->auto_filter_user && $this->user_identifier_column){
-            if (\Yii::$app->user->isGuest){
-                throw new ForbiddenHttpException("Unknown user");
-            }
-            if ($action=='view' && $model->user_id!=\Yii::$app->user->id){
-                throw new ForbiddenHttpException("No access");
+        if ($model && !$model->isNewRecord){
+            if ($this->auto_filter_user && $this->user_identifier_column){
+                if (\Yii::$app->user->isGuest){
+                    throw new HttpException(403, "Unknown user");
+                }
+                if ($action=='view' && $model->user_id!=\Yii::$app->user->id){
+                    throw new HttpException(403, "No access");
+                }
             }
         }
-        parent::checkAccess($action, $model, $params);
+        return parent::checkAccess($action, $model, $params);
     }
 
     public function behaviors()

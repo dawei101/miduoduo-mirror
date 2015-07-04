@@ -84,4 +84,27 @@ class TaskAddress extends \common\BaseActiveRecord
         return ['task', 'user'];
     }
 
+    public static function buildNearbyQuery($query, $lat, $lng, $distance)
+    {
+        $max_d = Yii::$app->params['nearby_search.max_distance'];
+        $distance = min([$max_d, $distance]);
+        $lat_col = static::tableName() . '.lat';
+        $lng_col = static::tableName() . '.lng';
+        $mpi = pi();
+        $lat_range = 180.0/$mpi*($distance/1000.0)/6372.797;
+        $lng_range = $lat_range/cos($lat*$mpi/180.0);
+        $max_lat = $lat + $lat_range;
+        $min_lat = $lat - $lat_range;
+        $max_lng = $lng + $lng_range;
+        $min_lng = $lng - $lng_range;
+        $query
+            ->andWhere(['>', $lat_col, $min_lat])
+            ->andWhere(['<', $lat_col, $max_lat])
+            ->andWhere(['>', $lng_col, $min_lng])
+            ->andWhere(['<', $lng_col, $max_lng]);
+        return $query;
+    }
+
+
+
 }

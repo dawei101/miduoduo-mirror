@@ -4,16 +4,16 @@
 </head>
 <body>
 <script type="text/html" id="main-tpl">
-    <? var user = {name : 11, gender_label : "男"};?>
+    <? var user = this.user;?>
     <div class="main1">
 
         <ul class="resume-part1">
-            <li >
+            <!--<li >
                 <div class="title">照片</div>
                 <div class="con ">
                     <img src="<?=user.avatar?>" alt=""/>
                 </div>
-            </li>
+            </li>-->
             <li>
                 <div class="title">姓名</div>
                 <div class="con">
@@ -61,7 +61,9 @@
             <li class="sub1">
                 <div class="title">可兼类别</div>
                 <div class="con">
-                    <?=user.service_types?>
+                    <? user.service_types && user.service_types.forEach(function(type) {?>
+                    <?=type.name?>
+                    <? });?>
                 </div>
             </li>
             <li class="sub2">

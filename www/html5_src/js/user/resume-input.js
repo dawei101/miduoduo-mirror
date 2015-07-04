@@ -1,5 +1,5 @@
 define(function(require, exports) {
-    require("zepto");
+    require("zepto-ext");
     var api = require("../widget/api");
     var util = require("../widget/util");
     location.hash = '';
@@ -57,7 +57,6 @@ define(function(require, exports) {
     })
     //可兼类型
     $(".js-sel-service-type").on("click", function() {
-        $(".main2").hide();
         $(".sel-job-type").show();
         /*var typeCodeStr = $(this).find("input").val();
         if (typeCodeStr) {
@@ -68,6 +67,16 @@ define(function(require, exports) {
         }*/
 
     })
+    //居住地点
+    $(".js-set-address").on("click", function() {
+        var $this = $(this);
+        util.setAddress(function(data) {
+            alert("app返回的地址信息：" + JSON.stringify(data));
+            $.post(api.gen("address"), data, function(d) {
+                console.log(d);
+            });
+        });
+    })
     //提交
     $(".submit-btn").on("click", function() {
         var data = {};
@@ -77,7 +86,7 @@ define(function(require, exports) {
 
         var $sc = $(".js-special-col");
         data[$sc.attr("name")] = $sc.find(".sex-act").data("val");
-        data["phonenum"] = miduoduo.config.phone;
+        data["phonenum"] = miduoduo.user.phone;
         console.log("简历",data);
         $.post(api.gen("resume"), data, function(data) {
             console.log(data);
