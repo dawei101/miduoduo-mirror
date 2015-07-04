@@ -18,10 +18,12 @@
             picUrl : "<%=baseUrl%>" + "img",
             access_token : null
         }
+        miduoduo.os  = {};
+        miduoduo.os.mddApp = window.WebViewJavascriptBridge || false;
         seajs.config({
             base: "<%=baseJsUrl%>",
             alias: {
-                "zepto" : "third_party/zepto.js"
+                "zepto" : "third_party/zepto.js",
             }
         })
     </script>
