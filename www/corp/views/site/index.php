@@ -53,10 +53,10 @@ $this->title = '米多多兼职平台';
               <form class="" role="form" action="/user/login">
                 <div class="error-message">验证码错误</div>
                 <div class="midd-input-group">
-                  <input type="text" class="pull-left"  placeholder="请输入手机号">
+                  <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">
                   <span class="yz-btn-jx pull-left text-center">验证码已60s</span> </div>
                 <div class="midd-input-group">
-                  <input type="text" class="input-q"  placeholder="请输入短信验证码">
+                  <input name="password" type="text" class="input-q"  placeholder="请输入短信验证码">
                 </div>
                 <div class="midd-xieyi">
                   <label>
