@@ -17,15 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-12 col-md-12 col-lg-12 ">
             <div class="miam-coter">
                 <h2>开通招聘服务</h2>
-                <div class="box-jindu">
-                    <div class="one1"></div>
-                    <div class="one-n">1</div>
-                    <div class="two-n1">2</div>
-                    <div class="three-n1">3</div>
-                    <div class="one-text">填写联系方式</div>
-                    <div class="two-text1">提交公司信息</div>
-                    <div class="three-text1">发布职位</div>
-                </div>
                 <form action="/user/add-contact-info" method="post">
                     <div class="tx-box">
                         <span class="pull-left text-right">企业名称 </span>
