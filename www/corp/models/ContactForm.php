@@ -14,7 +14,8 @@ class ContactForm extends Model
 {
     public $phone;
     public $email;
-    public $name;
+    public $name; //公司名
+    public $contact; //联系人
 
     /**
      * @inheritdoc
@@ -22,42 +23,14 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-            [['name','phone', 'email'], 'required'],
+            [['name','phone', 'email', 'contact'], 'required'],
             // email has to be a valid email address
             ['email', 'email'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'name' => '公司名称',
-            'phone' => '联系电话',
-            'email' => '接收简历邮箱',
-        ];
-    }
-
-    /**
-     * Sends an email to the specified email address using the information collected by this model.
-     *
-     * @param  string  $email the target email address
-     * @return boolean whether the email was sent
-     */
-    public function sendEmail($email)
-    {
-        return Yii::$app->mailer->compose()
-            ->setTo($email)
-            ->setFrom([$this->email => $this->name])
-            ->setSubject($this->subject)
-            ->setTextBody($this->body)
-            ->send();
-    }
-
     public function saveContactInfo()
     {
-        return Company::updateContactInfo($this->name, $this->phone, $this->email);
+        return Company::updateContactInfo($this->name, $this->phone, $this->email, $this->contact);
     }
 }

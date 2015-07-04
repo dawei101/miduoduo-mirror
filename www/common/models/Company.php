@@ -84,7 +84,7 @@ class Company extends \common\BaseActiveRecord
         return false;
     }
 
-    public static function updateContactInfo($name, $phone, $email)
+    public static function updateContactInfo($name, $phone, $email, $contact)
     {
         $company = static::findByCurrentUser();
         if (!$company) {
@@ -97,6 +97,7 @@ class Company extends \common\BaseActiveRecord
         $company->name = $name;
         $company->contact_phone = $phone;
         $company->contact_email = $email;
+        $company->contact_name = $contact;
         return $company->save();
     }
 }
