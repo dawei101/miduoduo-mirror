@@ -1,6 +1,7 @@
 define(function(require, exports) {
     require("zepto");
     var api = require("../widget/api");
+    var util = require("../widget/util");
     location.hash = '';
     var tpl = require("../widget/tpl-engine");
     $("body").append(tpl.parse("main1-tpl", {}));
@@ -49,6 +50,24 @@ define(function(require, exports) {
     $(".freetime-all").on("click", function() {
         $(".dateCol > .time").addClass("time-act");
         $.post(api.gen("freetime/free-all"), {}, function(data) {
+            console.log(data);
+        })
+    })
+    $(".js-sel-service-type").on("click", function() {
+        util.href("/view/user/resume-job-type.html?service_type=");
+    })
+    //提交
+    $(".submit-btn").on("click", function() {
+        var data = {};
+        $(".js-col").each(function() {
+            data[$(this).attr("name")] = $(this).val();
+        });
+
+        var $sc = $(".js-special-col");
+        data[$sc.attr("name")] = $sc.find(".sex-act").data("val");
+        data["phonenum"] = miduoduo.config.phone;
+        console.log("简历",data);
+        $.post(api.gen("resume"), data, function(data) {
             console.log(data);
         })
     })

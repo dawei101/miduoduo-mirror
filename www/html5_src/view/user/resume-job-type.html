@@ -22,12 +22,12 @@
 
 
 <script type="text/html" id="job-type-list-tpl">
-    <div class="item act">
-        客服
+    <? var as = this.as;?>
+    <? this.list.forEach(function(e) {?>
+    <div class="item <?=(as.indexOf(e.name) > -1 ? 'act' : '')?>" data-code="<?=e.id?>">
+        <?=e.name?>
     </div>
-    <div class="item">
-        客服
-    </div>
+    <? }); ?>
 </script>
 </body>
 </html>
