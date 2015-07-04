@@ -87,6 +87,8 @@ class UserController extends FBaseController
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->renderJson(['result' => true]);
                 }
+            }else if ($regModel->hasErrors()) {
+                return $this->renderJson(['result' => false, 'error' => $regModel->getFirstError()]);
             }
         }
 
