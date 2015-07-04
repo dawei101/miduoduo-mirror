@@ -72,27 +72,25 @@ class UserController extends FBaseController
     public function actionLogin()
     {
         $loginModel = new LoginForm();
-        if ($loginModel->load(Yii::$app->request->post()) && $loginModel->login()) {
+        if ($loginModel->load(Yii::$app->request->post(), '') && $loginModel->login()) {
             return $this->renderJson(['result' => true ]);
         }
 
-        return $this->renderJson(['result' => false]);
+        return $this->renderJson(['result' => false, 'error' => $loginModel->getFirstError()]);
     }
 
     public function actionRegister()
     {
         $regModel = new SignupForm();
-        if ($regModel->load(Yii::$app->request->post())) {
+        if ($regModel->load(Yii::$app->request->post(), '')) {
             if ($user = $regModel->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->renderJson(['result' => true]);
                 }
-            }else if ($regModel->hasErrors()) {
-                return $this->renderJson(['result' => false, 'error' => $regModel->getFirstError()]);
             }
         }
 
-        return $this->renderJson(['result' => false]);
+        return $this->renderJson(['result' => false, 'error' => $regModel->getFirstError()]);
     }
 
     public function actionVcode($username)
