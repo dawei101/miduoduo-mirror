@@ -86,6 +86,13 @@ use common\models\District;
             $district_map[$district->id] = $district->name;
         }
     ?>
+    <?= $form->field($model, 'city_id')->dropDownList(
+        $city_map
+    ) ?>
+    <?= $form->field($model, 'district_id')->dropDownList(
+        $district_map
+    ) ?>
+    <?= $form->field($model, 'address')->textInput() ?>
     <?php
         $service_types = [];
         foreach (ServiceType::find()->all() as $t){
