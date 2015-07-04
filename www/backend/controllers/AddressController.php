@@ -15,76 +15,27 @@ use yii\filters\VerbFilter;
 class AddressController extends BBaseController
 {
 
-    /**
-     * Lists all Address models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new AddressSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Address model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Address model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
         $model = new Address();
 
+        $model->user_id = Yii::$app->user->id;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->renderJson([
+                'success'=> true,
+                'msg'=> '创建成功',
+                'result'=> $model->toArray()
+            ]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
+            return $this->renderJson([
+                'success'=> false,
+                'msg'=> '创建失败',
+                'errors'=> $model->getErrors(),
             ]);
         }
     }
 
-    /**
-     * Updates an existing Address model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing Address model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -92,13 +43,6 @@ class AddressController extends BBaseController
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Address model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Address the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Address::findOne($id)) !== null) {

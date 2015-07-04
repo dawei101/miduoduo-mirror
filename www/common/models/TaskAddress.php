@@ -38,7 +38,8 @@ class TaskAddress extends \common\BaseActiveRecord
             [['lat', 'lng', 'task_id', 'user_id'], 'required'],
             [['lat', 'lng'], 'number'],
             [['task_id', 'user_id'], 'integer'],
-            [['province', 'city', 'district'], 'string', 'max' => 45]
+            [['province', 'city', 'district'], 'string', 'max' => 45],
+            [['address', 'title'], 'string', 'max' => 200],
         ];
     }
 

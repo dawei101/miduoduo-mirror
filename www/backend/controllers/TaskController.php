@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Task;
+use common\models\Company;
 use common\models\TaskSearch;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;
@@ -20,7 +21,6 @@ class TaskController extends BBaseController
         $bhvs = parent::behaviors();
         return $bhvs;
     }
-
 
 
     /**
@@ -59,7 +59,7 @@ class TaskController extends BBaseController
         $model = new Task();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['edit-address', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -78,12 +78,21 @@ class TaskController extends BBaseController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['edit-address', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionEditAddress($id)
+    {
+        $task = $this->findModel($id);
+
+        return $this->render('edit-address',
+            ['task'=>$task]
+        );
     }
 
     /**
