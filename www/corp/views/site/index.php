@@ -50,10 +50,13 @@ $this->title = '米多多兼职平台';
               </form>
             </div>
             <div class="tab-pane fade" id="login">
-              <form class="" role="form" action="/user/login">
+              <?php $form = ActiveForm::begin(['role' => 'form']); ?>
                 <div class="error-message">验证码错误</div>
                 <div class="midd-input-group">
+                    <!--
                   <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">
+              -->
+                  <?= $form->field($model, 'username')->textInput(array('placeholder' => '请输入手机号', 'class' => 'pull-left'));?>
                   <span class="yz-btn-jx pull-left text-center">验证码已60s</span> </div>
                 <div class="midd-input-group">
                   <input name="password" type="text" class="input-q"  placeholder="请输入短信验证码">
@@ -64,7 +67,7 @@ $this->title = '米多多兼职平台';
                     <span>两周内自动登录</span></label>
                 </div>
                 <a href="#" class="zc-btn">注册</a>
-              </form>
+              <?php ActiveForm::end(); ?>x`
               <div class="or">
                 <div class="or-l"></div>
                 <div class="or-c">or</div>
@@ -105,5 +108,5 @@ $this->title = '米多多兼职平台';
 </div>
 <!-- InstanceEndEditable -->
 <?php
-$this->registerJsFile('http://example.com/js/main.js');
+$this->registerJsFile('/js/index.js');
 ?>
