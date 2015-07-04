@@ -1,9 +1,9 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use console\BaseMigration;
 
-class m150703_062459_transfer_company extends Migration
+class m150703_062459_transfer_company extends BaseMigration
 {
     public function up()
     {
@@ -13,14 +13,15 @@ class m150703_062459_transfer_company extends Migration
                 update jz_task set company_id = (select id from jz_company where jz_company.name=jz_task.company_name) where 1=1;
                 
             ";
+        $this->execSqls($sqls);
 
     }
 
     public function down()
     {
-        echo "m150703_062459_transfer_company cannot be reverted.\n";
-
-        return false;
+        $sqls = "delete from jz_company;";
+        $this->execSqls($sqls);
+        return true;
     }
     
     /*

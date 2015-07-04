@@ -34,7 +34,7 @@ class Company extends \common\BaseActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['id', 'status', 'address_id', 'examined_by', 'user_id'], 'integer'],
+            [['id', 'status', 'examined_by', 'user_id'], 'integer'],
             [['examined_time'], 'safe'],
             [['name', 'license_id', 'license_img'], 'string', 'max' => 500],
             [['introduction'], 'string'],
@@ -54,7 +54,6 @@ class Company extends \common\BaseActiveRecord
             'license_id' => '营业执照号',
             'license_img' => '营业执照照片',
             'examined_time' => '审核日期',
-            'address_id' => '地址',
             'examined_by' => '审核人',
             'user_id' => '用户',
             'status' => '状态',
