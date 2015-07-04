@@ -17,7 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-12 col-md-12 col-lg-12 ">
             <div class="miam-coter">
                 <h2>开通招聘服务</h2>
-                <form action="/user/add-contact-info" method="post">
+                <!--
+                <form action="/user/add-contact-info" method="post" id="form">
+                -->
+                <?php $form = ActiveForm::begin(['action'=>'/user/add-contact-info']);?>
                     <div class="tx-box">
                         <span class="pull-left text-right">企业名称 </span>
                         <div class="midd-input-group pull-left">
@@ -48,10 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="tx-box">
                         <span class="pull-left text-right"></span>
-                        <a href="#" class="zc-btn pull-right">确定</a>
+                        <a href="#" onclick="$('#form').submit();return false;" class="zc-btn pull-right">确定</a>
                     </div>
-
+<!--
                 </form>
+            -->
+            <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>

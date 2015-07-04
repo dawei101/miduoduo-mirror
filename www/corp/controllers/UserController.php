@@ -165,7 +165,7 @@ class UserController extends FBaseController
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->saveContactInfo()) {
-            return $this->redirect('/user/add-company-info');
+            return $this->goHome();
         }
         return $this->render('addContactInfo', ['model' => $model]);
     }
