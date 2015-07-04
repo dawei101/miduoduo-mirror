@@ -5,9 +5,7 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use common\models\User;
-
-use common\sms\BaseSmsSender;
-
+use common\Utils;
 
 /**
  * Login form
@@ -33,11 +31,11 @@ class LoginWithDynamicCodeForm extends Model
             [['phonenum', 'code'], 'required', 'message'=>'不可为空'],
             ['rememberMe', 'boolean'],
             ['rememberMe', 'default', 'value'=>false],
-            ['code', 'match', 'pattern'=>'/^\d{6}$/', 'message'=>'验证码不正确.'],
+            ['code', 'match', 'pattern'=>'/^\d{4,}$/', 'message'=>'验证码不正确.'],
             ['invited_code', 'integer'],
             ['code', function ($attribute, $params) {
                 if (!$this->hasErrors()) {
-                    if(!BaseSmsSender::validateVerifyCode($this->phonenum, $this->code)){
+                    if(!Utils::validateVerifyCode($this->phonenum, $this->code)){
                         $this->addError($attribute, '手机号或验证码不正确.');
                     }
                 }

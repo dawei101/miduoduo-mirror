@@ -20,8 +20,6 @@ use common\models\ServiceType;
  * @property string $salary_note
  * @property string $from_date
  * @property int $company_id
- * @property string $company_name
- * @property string $company_introduction;
  * @property string $contact;
  * @property string $contact_phonenum;
  * @property string $to_date
@@ -43,6 +41,7 @@ use common\models\ServiceType;
  * @property integer $status
  * @property integer $city_id
  * @property integer $district_id
+ * @property string $labels_str
  */
 class Task extends \common\BaseActiveRecord
 {
@@ -86,9 +85,9 @@ class Task extends \common\BaseActiveRecord
     {
         return [
             [['salary', 'salary_unit', 'from_date', 'to_date',
-                'need_quantity', 'detail', 'address', 'company_name',
-                'service_type_id', 'city_id', 'title'], 'required'],
-
+                'need_quantity', 'detail',
+                'service_type_id', 'title'], 'required'],
+            ['company_id', 'required', 'message'=>'请选择一个已存在的公司'],
             [['id', 'clearance_period', 'salary_unit', 'need_quantity',
                 'got_quantity', 'user_id', 'service_type_id',
                 'gender_requirement', 'degree_requirement', 'age_requirement',
@@ -99,7 +98,7 @@ class Task extends \common\BaseActiveRecord
             [['from_date', 'to_date', 'from_time', 'to_time',
                 'created_time', 'updated_time'], 'safe'],
             [['gid'], 'string', 'max' => 1000],
-            [['title', 'company_name', 'address'], 'string', 'max' => 500],
+            [['title', 'address'], 'string', 'max' => 500],
             ['created_time', 'default', 'value'=>time(), 'on'=>'insert'],
             ['updated_time', 'default', 'value'=>time(), 'on'=>'update'],
             [['from_date', 'to_date'], 'date', 'format' => 'yyyy-M-d'],
@@ -108,7 +107,8 @@ class Task extends \common\BaseActiveRecord
             ['company_id', 'default', 'value'=>0],
             ['status', 'default', 'value'=>0],
             [['contact', 'contact_phonenum'], 'required'],
-
+            ['contact_phonenum', 'match', 'pattern'=>'/^(1[345789]\d{9})|(\d{3,4}\-?\d{7,8})$/',
+                'message'=>'请输入正确的电话'],
         ];
     }
 
@@ -122,8 +122,12 @@ class Task extends \common\BaseActiveRecord
             'gid' => '订单号',
             'title' => '标题',
             'clearance_period' => '结算方式',
+            'clearance_period_label' => '结算方式',
+
             'salary' => '薪资',
             'salary_unit' => '薪资单位',
+            'salary_unit_label' => '薪资单位',
+
             'salary_note' => '薪资说明',
             'from_date' => '开始日期',
             'to_date' => '结束日期',
@@ -138,7 +142,6 @@ class Task extends \common\BaseActiveRecord
             'address' => '地址',
             'user_id' => '发布人',
             'company_id' => '公司',
-            'company_name' => '公司名',
             'service_type_id' => '服务类型',
             'gender_requirement' => '性别',
             'degree_requirement' => '学历',
@@ -148,13 +151,13 @@ class Task extends \common\BaseActiveRecord
             'city_id' => '城市',
             'district_id' => '区域',
 
-            'company_introduction'=>'公司介绍',
             'contact'=>'联系人',
             'contact_phonenum'=>'联系手机',
+            'labels_str'=>'标签',
+
         ];
     }
 
-    
     public function beforeValidate()
     {
         return parent::beforeValidate();
@@ -168,6 +171,11 @@ class Task extends \common\BaseActiveRecord
             $this->gid = time() . mt_rand(100, 999) . $user_id; 
         }
         return parent::beforeSave($insert); 
+    }
+
+    public function tidyTitle()
+    {
+        return preg_replace('/【.*?】/', '', $this->title);
     }
 
     /**
@@ -210,17 +218,49 @@ class Task extends \common\BaseActiveRecord
         return $this->hasOne(ServiceType::className(), ['id' => 'service_type_id']);
     }
 
+    public function getLabels()
+    {
+        return explode(',', $this->labels_str);
+    }
+
+    public function setLabels($labels)
+    {
+        $this->labels_str = implode(',', $labels);
+    }
+
     public function extraFields()
     {
         return ['city', 'district', 'user', 'service_type', 'company', 'addresses'];
+    }
+
+    public function getLabel_options()
+    {
+        return [];
+    }
+
+    /*
+     *  TODO 临时方法，为了迁移company数据到独立表
+     */
+    public function getCompany_name()
+    {
+        if ($this->company_id){
+            return $this->company->name;
+        }
+    }
+
+    public function getCompany_introduction()
+    {
+        if ($this->company_id){
+            return $this->company->introduction;
+        }
     }
 
     public function fields()
     {
         return [
             'id', 'gid', 'title', 'clearance_period', 'salary', 'salary_unit',
-            'salary_note', 'from_date', 'company_name',
-            'company_introduction', 'contact', 'contact_phonenum',
+            'salary_note', 'from_date', 
+            'contact', 'contact_phonenum',
             'to_date', 'from_time', 'to_time', 'need_quantity',
             'got_quantity', 'created_time', 'updated_time', 'detail',
             'requirement', 'address',
@@ -229,7 +269,7 @@ class Task extends \common\BaseActiveRecord
             'city_id', 'district_id', 'company_id',
             'gender_requirement', 'degree_requirement',
             'clearance_period_label', 'salary_unit_label',
+            'labels', 'label_options',
         ];
-
     }
 }

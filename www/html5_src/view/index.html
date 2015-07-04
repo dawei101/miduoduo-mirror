@@ -3,23 +3,51 @@
 <%-mainJs("index")%>
 </head>
 <body >
+<!--轮播-->
 <div id="bannerSlider" class='imageSlide'>
-    <ul>
-        <li>
-            <a href=""><img src="<%=baseUrl%>img/index/banner1.jpg"/></a>
-        </li>
-        <li>
-            <a href=""><img src="<%=baseUrl%>img/index/banner2.jpg"/></a>
-        </li>
-        <li>
-            <a href=""><img src="<%=baseUrl%>img/index/banner1.jpg"/></a>
-        </li>
-        <li>
-            <a href=""><img src="<%=baseUrl%>img/index/banner2.jpg"/></a>
-        </li>
-    </ul>
-    <div class="num">22</div>
+</div>
+<!--顶部导航-->
+<div class="top-nav">
+    <div class="item1">
+        <img src="<%=baseImgUrl%>index/item1.png" alt=""/>
+        <span>最新职位</span>
+    </div>
+    <div class="item2">
+        <img src="<%=baseImgUrl%>index/item2.png" alt=""/>
+        <span>暑期工</span>
+    </div>
+    <div class="item3">
+        <img src="<%=baseImgUrl%>index/item3.png" alt=""/>
+        <span>日结</span>
+    </div>
+    <div class="item4">
+        <img src="<%=baseImgUrl%>index/item3.png" alt=""/>
+        <span>实习</span>
+    </div>
 </div>
 
+<div class="content">
+    <div class="content-bar">
+
+    </div>
+    <!--此处插入职位列表模板-->
+    <div class="pullUp">加载中...</div>
+</div>
+
+<!--banner 轮播模板-->
+<script type="text/html" id="banner-slide-tpl">
+    <ul>
+        <? this.banners.forEach(function(e) {?>
+        <li>
+            <a href="http://www.baidu.com">
+                <img src="<?=e.imgSrc?>" alt=""/>
+            </a>
+        </li>
+        <?});?>
+    </ul>
+    <div class="num"></div>
+</script>
+<!--职位列表模板-->
+<%include widget/job-list-tpl.html%>
 </body>
 </html>

@@ -33,7 +33,7 @@ define(function(require , exports){
                 }
             }
         }else
-            return fn
+            return fn();
     };
     exports.parse = parse;
 })

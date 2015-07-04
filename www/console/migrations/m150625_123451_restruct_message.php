@@ -25,6 +25,7 @@ CREATE TABLE `jz_message` (
 )
 ENGINE = InnoDB;
 
+drop table if exists `jz_sys_message`;
 CREATE TABLE `jz_sys_message` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(200) NULL COMMENT '标题',

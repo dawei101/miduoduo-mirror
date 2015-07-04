@@ -1,4 +1,5 @@
 <?php
+use Yii;
 /* @var $this yii\web\View */
 $this->title = '米多多兼职平台';
 ?>
@@ -19,7 +20,7 @@ $this->title = '米多多兼职平台';
   <div class="top-center">
     <nav>
       <div class="logo"><img src="/static/img/logo.png" width="200" height="110"></div>
-      <!-- <div class="nav"><a href="/site/Contact/"  class="contact-us">联系我们</a><a href="#">企业合作</a></div> -->
+      <div class="nav"><a href="<?=Yii::$app->params['baseurl.m'] . '/task'?>"  class="contact-us">职位列表</a><a href="/corp">企业合作</a></div>
     </nav>
     <div class="banner"><img src="/static/img/banner.png" width="751" height="407">
       <h1>米多多 | 大学生兼职平台</h1>
@@ -115,7 +116,7 @@ $this->title = '米多多兼职平台';
         <li class="xian"></li>
         <li class="attention-us">
             <h2>关注我们</h2>
-            <div class="erwei"><img src="/static/img/fooerwei.jpg" width="70" height="70"><div class="er-text">扫码进入m站</div></div>
+            <div class="erwei"><img src="/static/img/fooerwei.jpg" width="70" height="70"><div class="er-text"><a style="text-decoration:none; color:#fff" href="<?=Yii::$app->params['baseurl.m']?>">扫码进入m站</a></div></div>
             <!-- <div class="erwei"><img src="/static/img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>-->
        </li>
      </ul>

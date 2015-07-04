@@ -27,43 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '标题',
                 'format' => 'raw',
                 'value' => function($model){
-                    //var_dump($model);die();
                     return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->gid ."'>" . $model->title . "</a>";
                 }
-            ]
-            ,
-             [
-                //'attribute' => 'state',
-                'label'=>'结算方式',
-                'value'=>
-                function($model){
-                    return $model::$CLEARANCE_PERIODS[$model->clearance_period];
-                },
-            ],
+            ] ,
+            'clearance_period_label',
             'salary',
-            'salary_unit',
-           
-            // 'salary_note:ntext',
-            // 'from_date',
-            // 'to_date',
-            // 'from_time',
-            // 'to_time',
-            // 'need_quantity',
-            // 'got_quantity',
-            // 'created_time',
-            // 'updated_time',
-            // 'detail:ntext',
-            // 'requirement:ntext',
-            // 'address_id',
-            // 'user_id',
-            // 'service_type_id',
-            // 'gender_requirement',
-            // 'degree_requirement',
-            // 'age_requirement',
-            // 'height_requirement',
-            // 'status',
-            // 'city_id',
-
+            'salary_unit_label',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

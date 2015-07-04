@@ -206,6 +206,12 @@ BASE_URL = 'http://api.miduoduo.cn'
     },
 ```
 
+### 任务类型
+* 任务类型列表
+    * GET /version/service-type
+* 类型详情(几乎无用)
+    * GET /version/task/id
+
 ### 任务（职位）
 考虑某任务可设置多个地址，addresses为预留
 * 任务列表
@@ -249,8 +255,8 @@ BASE_URL = 'http://api.miduoduo.cn'
     * day_of_week ＝ range(1-7)
 * 更新某天的时间表
     * PUT /version/freetime/day_of_week
-* 创建某天时间表
-    * POST /version/freetime
+* 更改所有时间为free
+    * POST /version/freetime/free-all
 
 ###设置我可做的服务
 

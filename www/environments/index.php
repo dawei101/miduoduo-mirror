@@ -34,6 +34,8 @@ return [
         'setWritable' => [
             'backend/runtime',
             'backend/web/assets',
+            'corp/runtime',
+            'corp/web/assets',
             'frontend/runtime',
             'frontend/web/assets',
             'm/runtime',
@@ -47,6 +49,7 @@ return [
         ],
         'setCookieValidationKey' => [
             'backend/config/main-local.php',
+            'corp/config/main-local.php',
             'm/config/main-local.php',
             'frontend/config/main-local.php',
         ],
@@ -56,6 +59,8 @@ return [
         'setWritable' => [
             'backend/runtime',
             'backend/web/assets',
+            'corp/runtime',
+            'corp/web/assets',
             'frontend/runtime',
             'frontend/web/assets',
             'm/runtime',
@@ -68,6 +73,7 @@ return [
         ],
         'setCookieValidationKey' => [
             'backend/config/main-local.php',
+            'corp/config/main-local.php',
             'frontend/config/main-local.php',
             'm/config/main-local.php',
         ],

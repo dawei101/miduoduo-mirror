@@ -23,6 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+
+        <?= Html::a('编辑地址', ['edit-address', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -30,13 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
-            'company_name',
-            'company_introduction:ntext',
+            'user_id',
             'contact',
             'contact_phonenum',
-            'clearance_period',
+            'clearance_period_label',
             'salary',
-            'salary_unit',
+            'salary_unit_label',
             'salary_note:ntext',
             'from_date',
             'to_date',
@@ -46,16 +47,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'got_quantity',
             'created_time',
             'updated_time',
-            'detail:ntext',
+            'detail:html',
             'requirement:ntext',
-            'address',
-            'user_id',
-            'service_type_id',
+            'service_type.name',
+/**
             'gender_requirement',
             'degree_requirement',
             'age_requirement',
             'height_requirement',
+**/
             'status',
+
+            'company_name',
+            'company_introduction:ntext',
+
+            'address',
             'city_id',
         ],
     ]) ?>

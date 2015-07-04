@@ -9,6 +9,7 @@ class m150625_065744_create_task_addresses_table extends BaseMigration
     {
 
         $sqls = "
+drop table if exists jz_task_address ;
 CREATE TABLE IF NOT EXISTS `jz_task_address` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `province` VARCHAR(45) NULL,

@@ -1,0 +1,82 @@
+<!doctype html>
+<html >
+<head>
+    <meta charset="utf-8">
+    <title>米多多兼职 </title>
+    <meta name="keywords" content="米多多、快速兼职" />
+    <meta name="description" content="米多多兼职" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+
+    <link rel="stylesheet" href="/v1/css/base.css"/>
+    <script type="text/javascript" src="/v1/js_min//third_party/sea.js" ></script>
+    <script>
+        window.miduoduo = {};
+        miduoduo.config = {
+            picUrl : "/v1/" + "img",
+            access_token : null,
+            userID : null,
+            phone : 15110083777
+
+        }
+        miduoduo.os  = {};
+        miduoduo.os.mddApp = window.WebViewJavascriptBridge || false;
+        seajs.config({
+            base: "/v1/js_min/",
+            alias: {
+                "zepto" : "third_party/zepto.js",
+            }
+        })
+    </script>
+
+<link rel='stylesheet' type='text/css' href='/v1/css/user/my-job.css'/>
+<script>seajs.use('user/my-job')</script>
+</head>
+<body>
+    <div class="top">
+        <div class="tab">
+            <div class="tab1 act">待确认</div>
+            <div class="tab2">报名成功</div>
+            <div class="tab3">全部</div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="pullUp">加载中...</div>
+    </div>
+
+    <!--职位列表-->
+    <!--职位列表模板-->
+<script type="text/html" id="job-list-tpl">
+    <div class="jobList">
+        <? this.jobs.forEach(function(e) { ?>
+        <a href="">
+            <div class="part1">
+                <div class="title"><?=e.title?></div>
+                <?
+                    var ct = new Date(e.created_time);
+                    var pubDate = ct.getMonth()+1 + "-" + ct.getDate();
+                ?>
+                <div class="pub-time"><?=pubDate?></div>
+            </div>
+            <div class="part2">
+                <div class="firstDiv"><?=+e.salary + "/" + (e.salary_unit_label || "?")?></div>
+                <? e.labels.forEach(function(label, i){?>
+                <?if (label) {?>
+                <div ><?=label?></div>
+                <? } ?>
+                <? }); ?>
+            </div>
+        </a>
+        <div class="others">
+            <div class="status">报名成功</div>
+            <div class="report"> <span>x</span><br/>举报</div>
+            <a class="tel" href="tel:18310835520"><span>x</span><br/>联系企业</a>
+        </div>
+        <? }); ?>
+    </div>
+</script>
+</body>
+</html>

@@ -64,9 +64,19 @@ return [
                         'v1/sys-message',
                         'v1/message',
                         'v1/user-service-type',
+                        'v1/service-type',
                     ],
                     'pluralize' => '',
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/freetime'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'POST free-all' => 'free-all',
+                    ],
+                ],
+
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/user'],

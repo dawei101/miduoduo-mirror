@@ -1,0 +1,50 @@
+<!doctype html>
+<html >
+<head>
+    <meta charset="utf-8">
+    <title>米多多兼职 </title>
+    <meta name="keywords" content="米多多、快速兼职" />
+    <meta name="description" content="米多多兼职" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+
+    <link rel="stylesheet" href="/v1/css/base.css"/>
+    <script type="text/javascript" src="/v1/js_min//third_party/sea.js" ></script>
+    <script>
+        window.miduoduo = {};
+        miduoduo.config = {
+            picUrl : "/v1/" + "img",
+            access_token : null,
+            userID : null,
+            phone : 15110083777
+
+        }
+        miduoduo.os  = {};
+        miduoduo.os.mddApp = window.WebViewJavascriptBridge || false;
+        seajs.config({
+            base: "/v1/js_min/",
+            alias: {
+                "zepto" : "third_party/zepto.js",
+            }
+        })
+    </script>
+
+<link rel='stylesheet' type='text/css' href='/v1/css/user/center-index.css'/>
+<script>seajs.use('user/center-index')</script>
+</head>
+<body>
+    <div class="state">
+            <img src="/v1/img/user/default-avatar.jpg" alt=""/>
+            <span   class="register">注册</span>
+            <span class="login">登陆</span>
+    </div>
+    <div class="nav">
+        <div class="item">我的兼职</div>
+        <div class="item">我的收藏</div>
+        <div class="item">我的简历</div>
+    </div>
+    <div class="contact-us item">联系我们</div>
+</body>
+</html>

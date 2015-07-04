@@ -2,8 +2,44 @@
 * 定义路径
 **/
 @pic_ver : `"?"+(new Date()).getTime()`;
-@pic_url: "../img";
+@pic_url: "/img/";
 @var: 20px;
+@f:1/16rem;
+/**
+* 站内
+**/
+@black : #2a3141; //工作标题、tab标题等
+.black() {color:@black}
+@grey : #a5abb2; //灰色字体
+.grey() {color: @grey;}
+.f1 {font-size: 12*@f}
+.f2 {font-size: 14*@f}
+.f3 {font-size: 16*@f}
+.if-font-family {font-family:"iconfont" !important;}
+//实心三角向下
+.if-triangle-down() { content: '\e6c4'; .if-font-family};
+//箭头向右 >
+.if-arrow-right() {content : '\e612';.if-font-family};
+//复选：未选中
+.if-checkbox-unselect() {content: '\e62f'; .if-font-family}
+//复选：选中
+.if-checkbox-select() {content : '\e630'; .if-font-family}
+//对勾
+.if-correct() {content: '\e648'; .if-font-family}
+//个人中心-->消息列表页 报名消息图标
+.if-msg-page-icon1() {
+  content : '\e61a'; .if-font-family;
+}
+//个人中心-->消息列表页面 系统消息图标
+.if-msg-page-icon2() {
+  content : '\e619'; .if-font-family;
+}
+//联系图标
+.if-tel() {content:'\e617'; .if-font-family}
+//收藏图标
+.if-store() {content:'\e613'; .if-font-family}
+//举报图标
+.if-report() {content:'\e615'; .if-font-family}
 /**
 * 定义atom原子化样式
 * */
