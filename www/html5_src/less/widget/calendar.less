@@ -1,7 +1,8 @@
 @import "../atom";
 @grass : #00b966;
 .calendar {
-  .pr;
+  .pf;
+  bottom: 0;
   .part1 {
     .clearfix;
     .w(100%);
@@ -33,6 +34,7 @@
     }
   }
   .part2 {
+    .pr;
     .w(100%);
     .dayName {
       padding: 2%;
@@ -51,7 +53,7 @@
         .clearfix;
         div {
           .w(100/7%);
-          padding: 3% 0;
+          padding: 6% 0;
           .left;
           .c;
         }
@@ -61,16 +63,20 @@
   }
 
   .part3 {
-    .pr;
-    .pt(30%);
+    .pa;
+    .pt(105%);
+    bottom: 0;
     .w(100%);
     overflow: hidden;
+    -webkit-transform: translate3d(0,100%,0);
+    opacity: 1 !important;
     .year-panel-container {
       .pa;
       top: 0;
       .w(900%); //9个年面板
       .clearfix;
-      transform: translate(-89%,0);
+      -webkit-transform: translate3d(-88.8%,0,0);
+      opacity: 0;
       .bgc(#fff);
       .year-panel {
         .left;
@@ -78,10 +84,58 @@
         .w(100/9%);
         div {
           .w(100/3%);
+          padding: 11% 0;
           .left;
           .c;
         }
       }
     }
+  }
+
+  .year-panel-container {
+    .pa;
+    top: 0;
+    bottom: 0;
+    .w(900%); //9个年面板
+    .clearfix;
+    -webkit-transform: translate3d(-88.8%,100%,0);
+    opacity: 0;
+    .bgc(#fff);
+    .year-panel {
+      .left;
+      .clearfix;
+      .w(100/9%);
+      div {
+        .w(100/3%);
+        padding: 11% 0;
+        .left;
+        .c;
+      }
+    }
+  }
+
+  .month-panel-container {
+    .pa;
+    top: 0;
+    bottom: 0;
+    .w(100%);
+    -webkit-transform: translate3d(0,100%,0);
+    opacity: 0;
+    .bgc(#fff);
+    li {
+      .w(100/3%);
+      padding: 11% 0;
+      .left;
+      .c;
+    }
+  }
+
+  .m-act {
+    .bgc(#00b966);
+    .fc(#fff);
+  }
+  .y-act {
+    .bgc(#00b966);
+    .fc(#fff);
   }
 }

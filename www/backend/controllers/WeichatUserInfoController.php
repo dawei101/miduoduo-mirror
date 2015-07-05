@@ -16,14 +16,8 @@ class WeichatUserInfoController extends BBaseController
 {
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
+        $bhvs = parent::behaviors();
+        return $bhvs;
     }
 
     /**

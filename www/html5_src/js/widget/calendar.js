@@ -11,7 +11,7 @@ define(function(require, exports) {
         datePanel(date);
         $(".curr-y").text(year);
         $(".curr-m").text(month);
-        $(".part3").touchSlide({isLoop : false, isAuto : false});
+        $(".part2").touchSlide({ul : ".year-panel-container", isLoop : false, isAuto : false, pos : -0.89 * ($(".year-panel-container").width()), index : 8});
     }
 
     function buildYearPanel(year) {
@@ -48,6 +48,44 @@ define(function(require, exports) {
             d.setDate(1 + d.getDate());
         }
         $div.append(frag);
-        $(".dayNum").append($div);
+        $(".dayNum").html($div);
     }
+
+    //事件区
+    var currSelObj = {y : null, m : null, d : null};
+    var $yearPanel = $(".year-panel-container");
+    $(".curr-y").on("click", function() {
+        $(".dayNum,.dayName").css("opacity", "0");
+        $(".month-panel-container").css({"opacity" : "0", "-webkit-transform" :  "translate3d(0, 100%, 0)"});
+
+        var transVal = $yearPanel.css("-webkit-transform");
+        var h = transVal.substring(transVal.indexOf("(") + 1, transVal.indexOf(","));
+        $yearPanel.css("-webkit-transform", "translate3d(" + h + ", 0, 0)").animate({opacity : 1}, 300);
+    });
+    $(".curr-m").on("click", function() {
+        $(".dayNum,.dayName").css("opacity", "0");
+        $(".year-panel-container").css({"opacity" : "0"});
+        $(".month-panel-container").css("-webkit-transform", "translate3d(0, 0, 0)").animate({opacity : 1}, 300);
+    });
+    $(".month-panel-container>li").on("click", function() {
+        $(this).addClass("m-act")
+        if (currSelObj.m) {
+            currSelObj.m.removeClass("m-act");
+        }
+        currSelObj.m = $(this);
+
+        var m = $(this).text();
+        $(".curr-m").text(m);
+        var y = $(".curr-y").text();
+        datePanel(new Date(y+"/"+m));
+        $(".dayNum,.dayName").css("opacity", "1");
+
+        $(this).parent().animate({opacity : 0}, 300, function() {
+            this.css("-webkit-transform", "translate3d(0, 100%, 0)")
+        })
+    })
+
+    $(".year-panel-container div").on("click", function() {
+        $(this).addClass("y-act")
+    })
 });

@@ -43,6 +43,7 @@ AppAsset::register($this);
                 <li><a href="/weichat-push-set-template-push-list">微信推送-附近-模板</a></li>
                 <li><a href="/weichat-push-quality-task">微信推送-优单</a></li>
                 <li><a href="/weichat-user-info">微信推送-绑定用户</a></li>
+                <li><a href="/weichat-erweima">微信二维码</a></li>
                 <li>&nbsp;</li>
                 <li><a href="/app-release-version">应用发布管理</a></li>
                 <li>
