@@ -24,7 +24,28 @@ class SpiderPipeline(object):
         self.db.autocommit(False)
 
     def open_spider(self, spider):
-        pass
+        if (spider.name == 'xiaolianbang'):
+            cursor = self.db.cursor()
+            cid = 0
+            while 1:
+                cursor.execute(
+                        'select id, origin_id from jz_task_pool where origin=%s and id>%s order by id asc limit 1000',
+                        (spider.origin, cid))
+                rows = cursor.fetchall()
+                for _id, origin_id in rows:
+                    spider.exists_ids.add(int(origin_id))
+                if rows:
+                    cid = _id
+                    logger.log(logging.DEBUG, "got %s exists tasks", len(rows))
+                if len(rows)<1000:
+                    break;
+            logger.log(
+                    logging.DEBUG,
+                    "got exists tasks total count is : %s", len(spider.exists_ids))
+        if (spider.name == 'mark_poi'):
+            spider.item_addresses
+            pass
+
 
     def close_spider(self, spider):
         pass
@@ -33,16 +54,22 @@ class SpiderPipeline(object):
 
         if isinstance(item, Task):
             cursor = self.db.cursor()
+            logger.log(logging.DEBUG, "get task %s",
+                dict(item))
             try:
                 cursor.execute("""insert into jz_task_pool 
-                (company_name, city, origin_id, origin, details)
-                    values (%(company_name)s, %(city)s, %(origin_id)s, %(origin)s, %(details)s)
+                (company_name, city, origin_id, origin, details, lat, lng)
+                    values (%(company_name)s, %(city)s,
+                        %(origin_id)s, %(origin)s, %(details)s,
+                        %(lat)s, %(lng)s)
                     """, {
                         'company_name': item['company_name'],
                         'origin_id': item['id'],
                         'city': item['city'],
-                        'origin': spider.name,
+                        'origin': item['origin'],
                         'details': simplejson.dumps(dict(item)),
+                        'lat': item['lat'],
+                        'lng': item['lng'],
                         })
                 self.db.commit()
             except MySQLdb.IntegrityError, e:
@@ -51,17 +78,21 @@ class SpiderPipeline(object):
                     item['id'], spider.name, item['title'], item['city'].decode('utf-8')))
             except Exception, e:
                 self.db.rollback()
-                logger.log(logging.WARNING, "insert task failed with error: %s " % e)
+                logger.log(logging.ERROR, "insert task failed with error: %s " % e)
             finally:
                 cursor.close()
 
         if isinstance(item, NearbyTaskList):
-            cursor = db.cursor()
+            cursor = self.db.cursor()
             try:
                 format_strings = ','.join(['%s'] * len(item['ids']))
                 cursor.execute("""
-                    update jz_task_pool set has_poi = true where id in (%s) and origin=%s where has_poi = false
-                """ % format_strings, tuple(items['ids']))
-            except:
-                pass
-
+                    update jz_task_pool set has_poi = true where id in (%s) and origin='%s' and has_poi = false
+                """ % (format_strings, item['origin']), tuple(item['ids']))
+                self.db.commit()
+            except Exception, e:
+                self.db.rollback()
+                logger.log(logging.ERROR,
+                        "update has_poi flag faided with exception: %s " % e)
+            finally:
+                cursor.close()

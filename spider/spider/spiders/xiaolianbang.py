@@ -3,11 +3,16 @@ import scrapy
 import re
 
 from spider.items import Task
+from spider import utils
 
 class XlbSpider(scrapy.Spider):
 
     name = "xiaolianbang"
     allowed_domains = ["m.xiaolianbang.com"]
+
+    origin = 'xiaolianbang'
+
+    exists_ids = set()
 
     def start_requests(self):
         return [scrapy.http.Request("http://m.xiaolianbang.com/cities",
@@ -43,12 +48,14 @@ class XlbSpider(scrapy.Spider):
             meta = response.meta
             yield self.build_list_request(meta['city'], meta['page']+1)
         for _id in _ids:
-            yield self.build_detail_request(_id, meta['city'])
+            if (int(_id) not in self.exists_ids):
+                yield self.build_detail_request(_id, meta['city'])
 
     def build_detail_request(self, _id, city):
         return scrapy.http.Request(
                     "http://m.xiaolianbang.com/pt/%s/detail" % _id,
-                    meta = {'city': city,
+                    meta = {
+                        'city': city,
                         'id': _id,
                         },
                     callback=self.parse_detail)
@@ -58,6 +65,7 @@ class XlbSpider(scrapy.Spider):
             task = Task()
             task['id'] = response.meta['id']
             task['city'] = response.meta['city']
+            task['origin'] = self.origin
             task['title'] = response.xpath(
                     '//*[@id="info"]/div[contains(@class, "title_box")]/p/text()').extract()[0]
 
@@ -69,9 +77,10 @@ class XlbSpider(scrapy.Spider):
 
             for tr in trs:
                 label = tr.xpath(
-                        '//td[contains(@class,"list_item")]/text()').extract_first()
+                        'td[contains(@class,"list_item")]/text()').extract_first()
                 info = tr.xpath(
-                        '//td[contains(@class,"list_con")]/text()').extract_first()
+                        'td[contains(@class,"list_con")]/text()').extract_first()
+                self.logger.debug("parse field: %s value: %s", label, info)
                 if u'发布机构' in label:
                     task['company_name'] = info
                 elif u'薪资待遇' in label:
@@ -97,11 +106,14 @@ class XlbSpider(scrapy.Spider):
             cnodes = response.xpath(
                     '//*[@id="info"]/ul[contains(@class,"job_info")]/li[contains(@class,"info_con")]/node()').extract()
             task['content'] = "\n".join(cnodes)
+            task['lat'] = None
+            task['lng'] = None
+            if task['address']:
+                location = utils.get_location(task['address'], task['city'])
+                if (location):
+                    task['lat'] = location['lat']
+                    task['lng'] = location['lng']
             yield task
         except Exception, e:
             self.logger.error("parse detail failed with error: %s" % e)
-
-    def parse_nearby_list(self, response):
-        _ids = list(response.selector.xpath(
-                '//*[@id="content"]/li/@data-id').extract())
 

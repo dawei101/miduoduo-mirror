@@ -5,6 +5,11 @@ import urllib2
 from scrapy.utils.project import get_project_settings
 
 from spider.items import Task
+import simplejson
+import math
+
+from spider.items import NearbyTaskList
+from spider import utils
 
 class XlbNearbySpider(scrapy.Spider):
 
@@ -12,20 +17,7 @@ class XlbNearbySpider(scrapy.Spider):
     allowed_domains = ["m.xiaolianbang.com"]
 
     city_locations = {}
-
-
-    def get_city_location(city):
-        baseurl = "http://api.map.baidu.com/geocoder?address=%s&output=json&key=%s"
-        url = baseurl % (city, self.settings.get('BAIDU_MAP_KEY'))
-        try:
-            fp = urllib2.urlopen(url)
-            c = fp.read()
-            r = simplejson.loads(c)
-            return r['status']=='OK' and r['result'] and r['result']['location']
-        except Exception, e:
-            self.logger.info(
-                    "Failed to get city: %s's location from baidu map",
-                    city)
+    origin = 'xiaolianbang'
 
     def start_requests(self):
         return [scrapy.http.Request("http://m.xiaolianbang.com/cities",
@@ -33,32 +25,32 @@ class XlbNearbySpider(scrapy.Spider):
                 )]
 
     def parse_cities(self, response):
-
         content = response.body
         res = re.findall('data-city="([^"]+)"', content)
         for city in res:
-            location  = self.get_city_location(city)
+            location  = utils.get_location(city)
             if location:
                 self.city_locations[city] = location
             else:
                 self.logger.error(
                         "No location for :%s , we cloud not get nearby list of this city",
                         city)
-        for city in self.city_locations.keys():
-            yield self.build_list_request(city, 1)
+        for city, location in self.city_locations.items():
+            yield self.build_list_request(city, location, extend="left_top")
+            yield self.build_list_request(city, location, extend="right_top")
+            yield self.build_list_request(city, location, extend="right_bottom")
+            yield self.build_list_request(city, location, extend="left_bottom")
 
-    def build_list_request(self, city, page=1, location=None):
-        if not location:
-            location = self.city_locations[city]
-
+    def build_list_request(self, city, location, extend, page=1):
         return scrapy.http.Request(
                 "http://m.xiaolianbang.com/pt/nearby?page=%s&lng=%s&lat=%s" % (
-                    page, location['lng'], location['lat'])
+                    page, location['lng'], location['lat']),
                 cookies = location,
                 meta={
                     'city': city,
                     'page': page,
                     'location': location,
+                    'extend': extend,
                     },
                 callback=self.parse_list)
 
@@ -68,10 +60,41 @@ class XlbNearbySpider(scrapy.Spider):
         _ids = list(response.selector.xpath(
                 '//*[@id="content"]/li/@data-id').extract())
 
+        extend = response.meta['extend']
+        page = response.meta['page']
+        location = response.meta['location']
+        city = response.meta['city']
         if len(_ids)>0:
             task_list =  NearbyTaskList()
+            task_list['origin'] = self.origin
             task_list['ids'] = _ids
+            task_list['city'] = city
             yield task_list
-            location = response.meta['location']
-            yield self.build_detail_request(_id, meta['city'])
+            for loc in self.expandLocaton(location, extend):
+                yield self.build_list_request(
+                        city, loc, extend=extend, page=page+1)
+        else:
+            if page>1:
+                for loc in self.expandLocaton(location, extend):
+                    yield self.build_list_request(
+                            response.meta['city'], loc, extend=extend)
 
+    def expandLocaton(self, location, extend):
+        lat = location['lat']
+        lng = location['lng']
+        # 20 KM
+        distance = 50.0
+
+        lat_range = 180.0/math.pi*distance/6372.797
+        lng_range = lat_range/math.cos(lat*math.pi/180.0)
+        if 'left' in extend:
+            yield {'lat': lat - lat_range, 'lng': lng}
+
+        if 'top' in extend:
+            yield {'lat': lat, 'lng': lng + lng_range}
+
+        if 'right' in extend:
+            yield {'lat': lat + lat_range, 'lng': lng}
+
+        if 'bottom' in extend:
+            yield {'lat': lat, 'lng': lng - lng_range}
