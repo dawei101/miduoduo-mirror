@@ -9,20 +9,25 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Request password reset';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-request-password-reset">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out your email. A link to reset password will be sent there.</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
-                <?= $form->field($model, 'username') ?>
-                <?= $form->field($model, 'vcode') ?>
-                <div class="form-group">
-                    <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
-                </div>
-            <?php ActiveForm::end(); ?>
+<!-- InstanceBeginEditable name="EditRegion3" -->
+<div class="midd-kong"></div>
+<div class="container mima">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 ">
+      <div class="miam-coter">
+      <h2>找回密码</h2>
+      <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
+        <div class="midd-input-group">
+          <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">
+          <span class="yz-btn pull-left text-center">获取验证码</span> </div>
+        <div class="midd-input-group">
+          <input name="password" type="text" class="input-q"  placeholder="请输入短信验证码">
         </div>
+        <a href="#" class="zc-btn">下一步</a>
+        </div>
+      <?php ActiveForm::end(); ?>
     </div>
+  </div>
 </div>
+<!-- InstanceEndEditable -->
