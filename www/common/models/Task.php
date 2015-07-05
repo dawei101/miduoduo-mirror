@@ -50,6 +50,7 @@ class Task extends \common\BaseActiveRecord
         0=>'月结',
         1=>'周结',
         2=>'日结',
+        3=>'完工结',
     ];
 
     public static $SALARY_UNITS = [
@@ -114,7 +115,6 @@ class Task extends \common\BaseActiveRecord
             [['from_date', 'to_date'], 'date', 'format' => 'yyyy-M-d'],
             [['from_time', 'to_time'], 'date', 'format' => 'H:i'],
             ['got_quantity', 'default', 'value'=>0],
-            ['company_id', 'default', 'value'=>0],
             ['status', 'default', 'value'=>0],
             [['contact', 'contact_phonenum'], 'required'],
             ['contact_phonenum', 'match', 'pattern'=>'/^(1[345789]\d{9})|(\d{3,4}\-?\d{7,8})$/',

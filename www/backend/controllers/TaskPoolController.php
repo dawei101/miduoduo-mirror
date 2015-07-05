@@ -61,16 +61,33 @@ class TaskPoolController extends BBaseController
         ]);
     }
 
-    public function actionTransfer($id=null, $company_name=null)
+    public function actionTransfer($id=null, $company_name=null, $origin=null)
     {
-        if ($company_name){
+        if ($company_name && $origin){
             if (Yii::$app->request->isPost){
-                new TaskPoolWhiteList;
+                $w = TaskPoolWhiteList::find()->where(
+                    ['attr'=> 'company_name', 'value'=>$company_name, 'origin'=> $origin]
+                )->one();
+                if (!$w){
+                    $w = new TaskPoolWhiteList;
+                }
+                $w->origin = $origin;
+                $w->attr = 'company_name';
+                $w->value = $company_name;
+                $w->is_white = true;
+                $w->save();
             }
-            return $this->render('transfer-company');
+            return $this->render('transfer-company', [
+                'tasks'=> $w->examineTaskPool()
+            ]);
         }
         elseif ($id){
-            $this->render('transfer-record');
+            $t = TaskPool::findOne($id);
+            if ($t->status!=0){
+                $this->redirectHtml('/task-pool', '该任务已经处理过，无法继续处理!');
+            }
+            $task = $t->exportTask();
+            return $this->redirect('/task/update?id='.$task->id);
         }
     }
 
@@ -121,7 +138,13 @@ class TaskPoolController extends BBaseController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if ($model && $model->status==0){
+            $model->status = 11;
+            $model->save();
+        } else {
+            $this->redirectHtml('/task-pool', '该任务不存在或已经处理过!');
+        }
 
         return $this->redirect(['index']);
     }

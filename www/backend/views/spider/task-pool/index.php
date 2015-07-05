@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw',
                 'value'=> function($model){
                     return '
-                        <a href="/index.php/task-pool/transfer?id='.$model->id.'" title="添加到米多多" data-method="post">
+                        <a target="_blank" href="/index.php/task-pool/transfer?id='.$model->id.'" title="添加到米多多" data-method="post">
                              <span class="glyphicon glyphicon-export"></span>
                         </a>
                         <a target="_blank" style="color: red;" href="/index.php/task-pool/transfer?company_name='. $model->company_name .'" title="将公司加入白名单" >

@@ -147,8 +147,8 @@ class XlbSpider(scrapy.Spider):
                 elif '工作日期' in label:
                     r = re.search(ur'(\d+\.\d+)~(\d+\.\d+)', info)
                     if r:
-                        task['from_date'] = r.group(1)
-                        task['to_date'] = r.group(2)
+                        task['from_date'] = '2015-' + '-'.join(r.group(1).split('.'))
+                        task['to_date'] = '2015-' + '-'.join(r.group(2).split('.'))
             cnodes = response.xpath(
                     '//*[@id="info"]/ul[contains(@class,"job_info")]/li[contains(@class,"info_con")]/node()').extract()
             task['content'] = "\n".join(cnodes)
