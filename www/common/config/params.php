@@ -4,6 +4,9 @@ return [
     'supportEmail' => 'contact@miduoduo.cn',
     'bugEmail' => '1bbd853df30a46a695cd7d350bee6caa+lukps3jjzxxxx3gr1rzd@boards.trello.com',
 
+    'baidu.map.server_key' => 'oUVOlwx2f8Ok7iGt30CcB2aQ',
+    'baidu.map.web_key' => 'GB9AZpYwfhnkMysnlzwSdRqq',
+
     'user.passwordResetTokenExpire' => 3600,
 
     'baseurl.api' => 'http://api.miduoduo.cn',

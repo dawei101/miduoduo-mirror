@@ -13,6 +13,17 @@ BOT_NAME = 'spider'
 
 SPIDER_MODULES = ['spider.spiders']
 NEWSPIDER_MODULE = 'spider.spiders'
+COOKIES_DEBUG = True
+
+MYSQL_CONFIG = {
+        "host":"localhost", 
+        "user":"root",
+        "passwd":"123123",
+        "db":"miduoduo",
+        "use_unicode": True,
+        "charset": "utf8",
+        }
+BAIDU_MAP_KEY = 'oUVOlwx2f8Ok7iGt30CcB2aQ'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -60,11 +71,9 @@ DEFAULT_REQUEST_HEADERS = {
 #    'scrapy.telnet.TelnetConsole': None,
 #}
 
-# Configure item pipelines
-# See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'mspider.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'spider.pipelines.SpiderPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -84,3 +93,6 @@ DEFAULT_REQUEST_HEADERS = {
 #HTTPCACHE_DIR='httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES=[]
 #HTTPCACHE_STORAGE='scrapy.extensions.httpcache.FilesystemCacheStorage'
+import os
+ROOT = os.path.dirname(os.path.realpath(__file__))
+execfile(os.path.join(ROOT, "settings_local.py"))

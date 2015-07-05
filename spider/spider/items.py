@@ -18,6 +18,10 @@ class TaskAddress(scrapy.Item):
 
 class Task(scrapy.Item):
 
+    id = scrapy.Field()
+
+    city = scrapy.Field()
+
     title = scrapy.Field()
     category_name = scrapy.Field()
     is_long_term = scrapy.Field()
@@ -39,3 +43,7 @@ class Task(scrapy.Item):
 
     gender = scrapy.Field()
 
+
+class NearbyTaskList(scrapy.Item):
+
+    ids = scrapy.Field()
