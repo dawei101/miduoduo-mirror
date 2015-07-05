@@ -54,8 +54,6 @@ class SpiderPipeline(object):
 
         if isinstance(item, Task):
             cursor = self.db.cursor()
-            logger.log(logging.DEBUG, "get task %s",
-                dict(item))
             try:
                 cursor.execute("""insert into jz_task_pool 
                 (company_name, city, origin_id, origin, details, lat, lng)
@@ -75,7 +73,7 @@ class SpiderPipeline(object):
             except MySQLdb.IntegrityError, e:
                 self.db.rollback()
                 logger.log(logging.DEBUG, "task exists: %s, %s , %s , %s" % (
-                    item['id'], spider.name, item['title'], item['city'].decode('utf-8')))
+                    item['id'], spider.name, item['title'], item['city']))
             except Exception, e:
                 self.db.rollback()
                 logger.log(logging.ERROR, "insert task failed with error: %s " % e)

@@ -3,46 +3,53 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\WeichatUserInfo;
-use yii\data\ActiveDataProvider;
+use backend\models\TaskPool;
+use backend\models\TaskPoolSearch;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * WeichatUserInfoController implements the CRUD actions for WeichatUserInfo model.
+ * TaskPoolController implements the CRUD actions for TaskPool model.
  */
-class WeichatUserInfoController extends BBaseController
+class TaskPoolController extends BBaseController
 {
+
 
     public function getViewPath()
     {
-        return Yii::getAlias('@backend/views/wechat/weichat-user-info');
+        return Yii::getAlias('@backend/views/spider/task-pool');
     }
 
     public function behaviors()
     {
-        $bhvs = parent::behaviors();
-        return $bhvs;
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
     }
 
     /**
-     * Lists all WeichatUserInfo models.
+     * Lists all TaskPool models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => WeichatUserInfo::find(),
-        ]);
+        $searchModel = new TaskPoolSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single WeichatUserInfo model.
+     * Displays a single TaskPool model.
      * @param integer $id
      * @return mixed
      */
@@ -54,13 +61,13 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Creates a new WeichatUserInfo model.
+     * Creates a new TaskPool model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new WeichatUserInfo();
+        $model = new TaskPool();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,7 +79,7 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Updates an existing WeichatUserInfo model.
+     * Updates an existing TaskPool model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,7 +98,7 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Deletes an existing WeichatUserInfo model.
+     * Deletes an existing TaskPool model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,15 +111,15 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Finds the WeichatUserInfo model based on its primary key value.
+     * Finds the TaskPool model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return WeichatUserInfo the loaded model
+     * @return TaskPool the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = WeichatUserInfo::findOne($id)) !== null) {
+        if (($model = TaskPool::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

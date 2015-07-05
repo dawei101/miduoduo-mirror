@@ -24,7 +24,7 @@ class XlbSpider(scrapy.Spider):
         content = response.body
         res = re.findall('data-city="([^"]+)"', content)
         for city in res:
-            yield self.build_list_request(city, 1)
+            yield self.build_list_request(city.decode('utf-8'), 1)
 
     def build_list_request(self, city, page=1):
             return scrapy.http.Request(
@@ -67,19 +67,23 @@ class XlbSpider(scrapy.Spider):
             task['city'] = response.meta['city']
             task['origin'] = self.origin
             task['title'] = response.xpath(
-                    '//*[@id="info"]/div[contains(@class, "title_box")]/p/text()').extract()[0]
+                    '//*[@id="info"]/div[contains(@class, "title_box")]/p/text()')\
+                            .extract_first()
 
             task['category_name'] = response.xpath(
-                    '//*[@id="info"]/div[contains(@class, "title_box")]/div/text()').extract()[0]
+                    '//*[@id="info"]/div[contains(@class, "title_box")]/div/text()')\
+                            .extract_first()
 
             trs = response.xpath(
                     '//*[@id="info"]//div[contains(@class, "info_list")]//tr')
 
             for tr in trs:
                 label = tr.xpath(
-                        'td[contains(@class,"list_item")]/text()').extract_first()
+                        'td[contains(@class,"list_item")]/text()')\
+                                .extract_first()
                 info = tr.xpath(
-                        'td[contains(@class,"list_con")]/text()').extract_first()
+                        'td[contains(@class,"list_con")]/text()')\
+                                .extract_first().encode('utf-8').decode('utf-8')
                 self.logger.debug("parse field: %s value: %s", label, info)
                 if u'发布机构' in label:
                     task['company_name'] = info
@@ -88,18 +92,20 @@ class XlbSpider(scrapy.Spider):
                         task['salary'], task['salary_unit'] = 0, None
                     else:
                         task['salary'], task['salary_unit'] = re.search(
-                                r'(\d+).*?/([^\<]?)', info).group(1, 2)
+                                ur'(\d+).*?/([^\<]?)', info).group(1, 2)
                 elif u'结算方式' in label:
                     task['clearance_period'] = info
                 elif u'招聘人数' in label:
-                    r = re.search('(\d+)', info)
+                    r = re.search(ur'(\d+)', info)
                     task['need_quantity'] = r and int(r.group(1)) or 0
                 elif u'性别要求' in label:
                     task['gender'] = info
                 elif u'工作地点' in label:
                     task['address'] = info
+                    if u"不限" in info:
+                        task['address'] = None
                 elif u'工作日期' in label:
-                    r = re.search(r'(\d+\.\d+)~(\d+\.\d+)', info)
+                    r = re.search(ur'(\d+\.\d+)~(\d+\.\d+)', info)
                     if r:
                         task['from_date'] = r.group(1)
                         task['to_date'] = r.group(2)

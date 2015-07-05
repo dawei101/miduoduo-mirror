@@ -45,6 +45,10 @@ AppAsset::register($this);
                 <li><a href="/weichat-user-info">微信推送-绑定用户</a></li>
                 <li><a href="/weichat-erweima">微信二维码</a></li>
                 <li>&nbsp;</li>
+
+                <li><a href="/task-pool">爬虫-任务列表</a></li>
+                <li><a href="/task-pool-white-list">爬虫-白名单(黑名单)</a></li>
+                <li>&nbsp;</li>
                 <li><a href="/app-release-version">应用发布管理</a></li>
                 <li>
                     <a href="/support/report-bug">
