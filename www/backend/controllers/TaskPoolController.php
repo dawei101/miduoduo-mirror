@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\TaskPool;
+use backend\models\TaskPoolWhiteList;
 use backend\models\TaskPoolSearch;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;
@@ -59,6 +60,21 @@ class TaskPoolController extends BBaseController
             'model' => $this->findModel($id),
         ]);
     }
+
+    public function actionTransfer($id=null, $company_name=null)
+    {
+        if ($company_name){
+            if (Yii::$app->request->isPost){
+                new TaskPoolWhiteList;
+            }
+            return $this->render('transfer-company');
+        }
+        elseif ($id){
+            $this->render('transfer-record');
+        }
+    }
+
+
 
     /**
      * Creates a new TaskPool model.

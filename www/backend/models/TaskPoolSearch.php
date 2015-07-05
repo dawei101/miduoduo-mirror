@@ -18,7 +18,7 @@ class TaskPoolSearch extends TaskPool
     public function rules()
     {
         return [
-            [['id', 'has_poi', 'has_imported'], 'integer'],
+            [['has_poi', 'status'], 'integer'],
             [['company_name', 'city', 'origin_id', 'origin', 'details', 'created_time'], 'safe'],
             [['lng', 'lat'], 'number'],
         ];
@@ -61,7 +61,7 @@ class TaskPoolSearch extends TaskPool
             'lng' => $this->lng,
             'lat' => $this->lat,
             'has_poi' => $this->has_poi,
-            'has_imported' => $this->has_imported,
+            'status' => $this->status,
             'created_time' => $this->created_time,
         ]);
 

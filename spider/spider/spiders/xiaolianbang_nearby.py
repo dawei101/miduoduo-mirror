@@ -28,7 +28,7 @@ class XlbNearbySpider(scrapy.Spider):
         content = response.body
         res = re.findall('data-city="([^"]+)"', content)
         for city in res:
-            location  = utils.get_location(city)
+            location  = utils.get_location(city.decode('utf-8'))
             if location:
                 self.city_locations[city] = location
             else:
@@ -70,9 +70,8 @@ class XlbNearbySpider(scrapy.Spider):
             task_list['ids'] = _ids
             task_list['city'] = city
             yield task_list
-            for loc in self.expandLocaton(location, extend):
-                yield self.build_list_request(
-                        city, loc, extend=extend, page=page+1)
+            yield self.build_list_request(
+                    city, location, extend=extend, page=page+1)
         else:
             if page>1:
                 for loc in self.expandLocaton(location, extend):

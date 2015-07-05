@@ -35,11 +35,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'origin',
             'lng',
             'lat',
-            'details:ntext',
-            'has_poi',
-            'has_imported',
+            'has_poi:boolean',
             'created_time',
         ],
     ]) ?>
+    <h2>详情<a class="pull-right" target="_blank" href="<?=$model->origin_url?>">来源页</a></h2>
+<table class="table table-striped table-bordered detail-view">
+    <tbody>
+      <?php foreach($model->list_detail() as $attr=>$value) { ?>
+      <tr><th><?=$attr?></th><td><?=$value?></td></tr>
+      <?php } ?>
+    </tbody>
+</table> 
+
+
 
 </div>

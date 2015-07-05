@@ -13,7 +13,9 @@ BOT_NAME = 'spider'
 
 SPIDER_MODULES = ['spider.spiders']
 NEWSPIDER_MODULE = 'spider.spiders'
-COOKIES_DEBUG = False
+
+COOKIES_ENABLED=True
+COOKIES_DEBUG = True
 
 MYSQL_CONFIG = {
         "host":"localhost", 

@@ -50,10 +50,11 @@ class SpiderPipeline(object):
     def close_spider(self, spider):
         pass
 
-    def process_item(self, item, spider):
 
+    def process_item(self, item, spider):
         if isinstance(item, Task):
             cursor = self.db.cursor()
+            details = simplejson.dumps(dict(item))
             try:
                 cursor.execute("""insert into jz_task_pool 
                 (company_name, city, origin_id, origin, details, lat, lng)
@@ -65,13 +66,24 @@ class SpiderPipeline(object):
                         'origin_id': item['id'],
                         'city': item['city'],
                         'origin': item['origin'],
-                        'details': simplejson.dumps(dict(item)),
+                        'details': details,
                         'lat': item['lat'],
                         'lng': item['lng'],
                         })
                 self.db.commit()
             except MySQLdb.IntegrityError, e:
                 self.db.rollback()
+                if item['lat'] or item['phonenum']:
+                    try:
+                        cursor.execute("""
+                                update jz_task_pool set lat=%s, lng=%s, details=%s
+                                 where origin_id = %s and origin=%s
+                                """, (item['lat'], item['lng'], details,
+                                    item['id'], item['origin']))
+                        self.db.commit()
+                    except Exception, e:
+                        self.db.rollback()
+                        logger.log(logging.ERROR, "task updated failed with error:%s", e)
                 logger.log(logging.DEBUG, "task exists: %s, %s , %s , %s" % (
                     item['id'], spider.name, item['title'], item['city']))
             except Exception, e:
@@ -85,7 +97,7 @@ class SpiderPipeline(object):
             try:
                 format_strings = ','.join(['%s'] * len(item['ids']))
                 cursor.execute("""
-                    update jz_task_pool set has_poi = true where id in (%s) and origin='%s' and has_poi = false
+                    update jz_task_pool set has_poi = true where origin_id in (%s) and origin='%s' and has_poi = false
                 """ % (format_strings, item['origin']), tuple(item['ids']))
                 self.db.commit()
             except Exception, e:

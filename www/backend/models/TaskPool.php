@@ -21,6 +21,7 @@ use Yii;
  */
 class TaskPool extends \common\BaseActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -38,11 +39,12 @@ class TaskPool extends \common\BaseActiveRecord
             [['company_name', 'origin_id', 'origin', 'details'], 'required'],
             [['lng', 'lat'], 'number'],
             [['details'], 'string'],
-            [['has_poi', 'has_imported'], 'integer'],
+            [['has_poi', 'status'], 'integer'],
             [['created_time'], 'safe'],
             [['company_name', 'city'], 'string', 'max' => 200],
             [['origin_id', 'origin'], 'string', 'max' => 45],
-            [['origin_id', 'origin'], 'unique', 'targetAttribute' => ['origin_id', 'origin'], 'message' => 'The combination of 来源id and 来源 has already been taken.']
+            [['origin_id', 'origin'], 'unique', 'targetAttribute' => ['origin_id', 'origin'], 'message' => '已抓取过'],
+            ['status', 'default', 'value'=>0],
         ];
     }
 
@@ -61,8 +63,9 @@ class TaskPool extends \common\BaseActiveRecord
             'lat' => 'Lat',
             'details' => '细节',
             'has_poi' => '位置精准？',
-            'has_imported' => 'Has Imported',
-            'created_time' => 'Created Time',
+            'status' => '状态',
+            'status_label' => '状态',
+            'created_time' => '创建时间',
         ];
     }
 
@@ -73,5 +76,35 @@ class TaskPool extends \common\BaseActiveRecord
     public static function find()
     {
         return new TaskPoolQuery(get_called_class());
+    }
+
+    public function getStatus_options()
+    {
+        return [
+            0=> '未处理',
+            10=> '已导入',
+            11=>'已放弃',
+        ];
+    }
+
+    public function getStatus_label()
+    {
+        return $this->status_options[$this->status];
+    }
+
+    public function getOrigin_url()
+    {
+        if ($this->origin=='xiaolianbang'){
+            return 'http://m.xiaolianbang.com/pt/' . $this->origin_id . '/detail';
+        }
+    }
+
+    public function list_detail()
+    {
+        $s = [];
+        foreach(json_decode($this->details) as $attr=>$value){
+            $s[$attr] = $value ;
+        }
+        return $s;
     }
 }
