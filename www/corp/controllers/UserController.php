@@ -125,7 +125,7 @@ class UserController extends FBaseController
     public function actionRequestPasswordReset()
     {
         $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post(), '') && $model->validate()) {
             $token = $model->verifyPhone();
             if ($token !== false) {
                 return $this->redirect(array('/user/reset-password', 'token' => $token));
@@ -145,7 +145,7 @@ class UserController extends FBaseController
             throw new BadRequestHttpException($e->getMessage());
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+        if ($model->load(Yii::$app->request->post(), '') && $model->validate() && $model->resetPassword()) {
             Yii::$app->getSession()->setFlash('success', 'New password was saved.');
 
             return $this->goHome();
@@ -164,7 +164,7 @@ class UserController extends FBaseController
     public function actionAddContactInfo()
     {
         $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->saveContactInfo()) {
+        if ($model->load(Yii::$app->request->post(), '') && $model->validate() && $model->saveContactInfo()) {
             return $this->goHome();
         }
         return $this->render('addContactInfo', ['model' => $model]);
