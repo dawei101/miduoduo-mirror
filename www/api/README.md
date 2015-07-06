@@ -314,6 +314,14 @@ BASE_URL = 'http://api.miduoduo.cn'
     * PUT /version/sys-message/id
       params = 随便
 
+### 投诉举报
+* 获取我举报过的任务列表
+    * GET /version/complain
+* 获取消息详情(用不到)
+    * GET /version/complain/task_id
+* 举报
+    * POST /version/complain
+      params = {title: ,content:, task_id:, phonenum:, }
 
 ## 关于跨域
 [Http access control - CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
