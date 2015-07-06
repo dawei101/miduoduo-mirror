@@ -37,8 +37,8 @@ AppAsset::register($this);
                 <li><a href="/task">任务</a></li>
                 <li><a href="/task-applicant">任务报名单</a></li>
                 <li><a href="/complaint">投诉列表</a></li>
+                <li><a href="/contact-us">联系我们的客户</a></li>
                 <li><a href="/config-recommend">后台配置-推荐兼职</a></li>
-                
                 <li>&nbsp;</li>
                 <li><a href="/weichat-push-set-pushset">微信推送-附近</a></li>
                 <li><a href="/weichat-push-set-template-push-list">微信推送-附近-模板</a></li>
