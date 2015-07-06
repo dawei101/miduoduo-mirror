@@ -143,6 +143,7 @@ class UserController extends FBaseController
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
             // throw new BadRequestHttpException($e->getMessage());
+            //just for test
             return $this->render('resetPassword');
         }
 
@@ -153,11 +154,6 @@ class UserController extends FBaseController
         }
 
         return $this->render('resetPassword');
-    }
-
-    public function actionRegisterSuccess()
-    {
-        return $this->render('registerSuccess');
     }
 
     public function actionAddContactInfo()
