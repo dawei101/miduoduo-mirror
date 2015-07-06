@@ -60,12 +60,14 @@ class SpiderPipeline(object):
                 insert into jz_task_pool (
                     company_name, city, origin_id,
                     origin, details, lat, lng,
-                    title, contact, phonenum
+                    title, contact, phonenum,
+                    release_date, to_date
                 ) values (
                     %(company_name)s, %(city)s,
                     %(origin_id)s, %(origin)s, %(details)s,
                     %(lat)s, %(lng)s,
-                    %(title)s, %(contact)s, %(phonenum)s
+                    %(title)s, %(contact)s, %(phonenum)s,
+                    %(release_date)s, %(to_date)s
                 );
                     """, {
                         'company_name': item['company_name'],
@@ -77,7 +79,9 @@ class SpiderPipeline(object):
                         'lng': item['lng'],
                         'title': item['title'],
                         'contact': item['contact'],
-                        'phonenum': item['phonenum']
+                        'phonenum': item['phonenum'],
+                        'to_date': item['to_date'],
+                        'release_date': item['release_date'],
                         })
                 self.db.commit()
             except MySQLdb.IntegrityError, e:

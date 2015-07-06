@@ -65,6 +65,8 @@ class TaskPool extends \common\BaseActiveRecord
             [['origin_id', 'origin'], 'string', 'max' => 45],
             [['origin_id', 'origin'], 'unique', 'targetAttribute' => ['origin_id', 'origin'], 'message' => '已抓取过'],
             ['status', 'default', 'value'=>0],
+            ['release_date', 'safe'],
+            ['to_date', 'safe'],
         ];
     }
 
@@ -89,6 +91,8 @@ class TaskPool extends \common\BaseActiveRecord
             'status' => '状态',
             'status_label' => '状态',
             'created_time' => '创建时间',
+            'release_date' => '发布日期',
+            'to_date' => '任务截止日期',
         ];
     }
 

@@ -24,12 +24,34 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+<?php 
+$details = $model->list_detail(); 
+?>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
+            [
+                'label'=> '来源',
+                'format'=>'raw',
+                'value' => '<a target="_blank" href="' . $model->origin_url . '">来源页</a></h2>',
+            ],
+            [
+                'label'=> '联系人',
+                'value' => $details['contact'],
+            ],
+            [
+                'label'=> '联系电话',
+                'value' => $details['phonenum'],
+            ],
             'company_name',
+            'release_date',
+            [
+                'label'=> '任务开始日期',
+                'value' => $details['need_quantity'],
+            ],
+            'to_date',
             'city',
             'origin_id',
             'origin',
@@ -37,16 +59,29 @@ $this->params['breadcrumbs'][] = $this->title;
             'lat',
             'has_poi:boolean',
             'created_time',
+            [
+                'label'=> '需要人数',
+                'value' => $details['need_quantity'],
+            ],
+            [
+                'label'=> '结算方式',
+                'value' => $details['clearance_period'],
+            ],
+            [
+                'label'=> '地址',
+                'value' => $details['address'],
+            ],
+            [
+                'label'=> '薪酬',
+                'value' => $details['salary']. ' / ' .$details['salary_unit'],
+            ],
+            [
+                'label'=> '详情',
+                'format' => 'raw',
+                'value' => $details['content'],
+            ],
         ],
     ]) ?>
-    <h2>详情<a class="pull-right" target="_blank" href="<?=$model->origin_url?>">来源页</a></h2>
-<table class="table table-striped table-bordered detail-view">
-    <tbody>
-      <?php foreach($model->list_detail() as $attr=>$value) { ?>
-      <tr><th><?=$attr?></th><td><?=$value?></td></tr>
-      <?php } ?>
-    </tbody>
-</table> 
 
 
 
