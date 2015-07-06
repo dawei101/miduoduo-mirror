@@ -50,7 +50,7 @@ class Utils
     public static function cacheVerifyCode($phonenum, $code)
     {
         Yii::trace("verify code for $phonenum is $code");
-        Yii::$app->cache->set(static::getVcodeCachekey($phonenum), $code, 10*60);
+        Yii::$app->cache->set(static::getVcodeCachekey($phonenum), $code, 30*60);
     }
 
     public static function sendVerifyCode($phonenum)

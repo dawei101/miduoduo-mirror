@@ -35,7 +35,7 @@ class Address extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['id', 'lat', 'lng', 'user_id'], 'required'],
+            [['lat', 'lng'], 'required'],
             [['id', 'user_id', 'belong_to'], 'integer'],
             [['lat', 'lng'], 'number'],
             [['province', 'city', 'district', 'address'], 'string', 'max' => 45],

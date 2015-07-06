@@ -12,23 +12,14 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id')->textInput() ?>
-
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'license_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'status')->dropdownList([
+        0 => '正常',
+        1 => '删除',
+    ]) ?>
 
-    <?= $form->field($model, 'license_img')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'examined_time')->textInput() ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'address_id')->textInput() ?>
-
-    <?= $form->field($model, 'examined_by')->textInput() ?>
-
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model, 'introduction')->textArea() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

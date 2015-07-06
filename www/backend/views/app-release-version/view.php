@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'update_url:url',
             'release_time',
             'h5_map_file',
+            'features:html',
         ],
     ]) ?>
 

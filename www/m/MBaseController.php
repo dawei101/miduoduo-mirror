@@ -10,6 +10,9 @@ class MBaseController extends BaseController
 
     public function beforeAction($action)
     {
+        // 微信相关处理
+        $weichat = new WeiChatController();
+
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
@@ -26,5 +29,15 @@ class MBaseController extends BaseController
             'message'=>$msg,
             'next'=>$to,
         ]);
+    }
+
+    public function goBack($defaultUrl = null)
+    {
+        $cnext = Yii:$app->request->getCookies()->getValue('next');
+        if ($cnext){
+            Yii::$app->response->setCookies()->setValue('next', '');
+            return Yii::$app->getResponse()->redirect($cnext));
+        }
+        parent::goBack($defaultUrl);
     }
 }

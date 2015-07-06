@@ -15,6 +15,7 @@ use common\H5Utils;
  * @property string $update_url
  * @property string $release_time
  * @property string $h5_map_file
+ * @property string $features
  */
 class AppReleaseVersion extends \common\BaseActiveRecord
 {
@@ -36,7 +37,8 @@ class AppReleaseVersion extends \common\BaseActiveRecord
             [['device_type'], 'integer'],
             [['release_time'], 'safe'],
             [['app_version', 'html_version', 'api_version'], 'string', 'max' => 45],
-            [['update_url', 'h5_map_file'], 'string', 'max' => 1000]
+            [['update_url', 'h5_map_file'], 'string', 'max' => 1000],
+            ['features', 'default', 'value'=>''],
         ];
     }
 
@@ -54,6 +56,7 @@ class AppReleaseVersion extends \common\BaseActiveRecord
             'update_url' => '升级链接',
             'release_time' => '发布时间',
             'h5_map_file' => 'H5 地图文件',
+            'features' => '更新详情',
         ];
     }
 

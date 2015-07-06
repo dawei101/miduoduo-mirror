@@ -255,8 +255,8 @@ BASE_URL = 'http://api.miduoduo.cn'
     * day_of_week ＝ range(1-7)
 * 更新某天的时间表
     * PUT /version/freetime/day_of_week
-* 创建某天时间表
-    * POST /version/freetime
+* 更改所有时间为free
+    * POST /version/freetime/free-all
 
 ###设置我可做的服务
 
