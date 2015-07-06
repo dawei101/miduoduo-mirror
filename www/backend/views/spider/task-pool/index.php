@@ -34,6 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'company_name',
             'title',
             'contact',
+            'release_date',
+            'to_date',
             'phonenum',
             [
                 'attribute' => 'city',

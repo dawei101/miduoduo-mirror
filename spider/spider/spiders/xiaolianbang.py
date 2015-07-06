@@ -107,6 +107,7 @@ class XlbSpider(scrapy.Spider):
             task['email'] = None
             task['phonenum'] = None
             task['address'] = None
+            task['company_name'] = None
             task['contact'] = None
             task['need_quantity'] = 0
             task['from_date'] = '1999-09-09'
