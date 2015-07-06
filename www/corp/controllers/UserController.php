@@ -142,7 +142,8 @@ class UserController extends FBaseController
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
+            // throw new BadRequestHttpException($e->getMessage());
+            return $this->render('resetPassword');
         }
 
         if ($model->load(Yii::$app->request->post(), '') && $model->validate() && $model->resetPassword()) {
@@ -151,9 +152,7 @@ class UserController extends FBaseController
             return $this->goHome();
         }
 
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
+        return $this->render('resetPassword');
     }
 
     public function actionRegisterSuccess()
