@@ -147,7 +147,7 @@ class TaskPool extends \common\BaseActiveRecord
         $task->to_date = isset($ds['to_date'])?$ds['to_date']:'1999-09-09';
         $task->need_quantity = intval($ds['need_quantity']);
         $task->detail = $ds['content'];
-        $task->address = $ds['address'] or '不限';
+        $task->address = isset($ds['address'])?$ds['address']:'--';
         $task->user_id = 0;
 
         $task->status = $task::STATUS_UNCONFIRMED_FROM_SPIDER;
@@ -176,13 +176,13 @@ class TaskPool extends \common\BaseActiveRecord
         $task->city_id = $this->getCityId($this->city);
         $task->save();
 
-        if ($this->has_poi&&$this->lat){
+        if ($this->has_poi&&$this->lat && isset($ds['address'])){
 
             $ta = new TaskAddress;
             $ta->lat = $this->lat;
             $ta->lng = $this->lng;
 
-            $ta->address = $ds['address'];
+            $ta->address = isset($ds['address'])?$ds['address']:'--';
             $ta->city = $this->city;
             $ta->task_id = $task->id;
             $ta->save();
