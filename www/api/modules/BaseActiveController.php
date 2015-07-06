@@ -71,7 +71,7 @@ class BaseActiveController extends ActiveController
             if (\Yii::$app->user->isGuest){
                 throw new ForbiddenHttpException("Unknown user");
             }
-            $query->where([$this->user_identifier_column=>\Yii::$app->user->id]);
+            $query->where([$this->getTableName() . '.' . $this->user_identifier_column=>\Yii::$app->user->id]);
         }
         return $query;
     }
@@ -111,6 +111,8 @@ class BaseActiveController extends ActiveController
         "!=",
         "<>",
         ">=",
+        ">",
+        "<",
         "<=",
         "LIKE",
         "ILIKE",
@@ -157,19 +159,31 @@ class BaseActiveController extends ActiveController
             if (!in_array($operate, static::$QUERY_OPERATIONS)){
                 continue;
             }
-            if(preg_match('/^[\w\d\_]+$/i', $filter[1])===0){
+            if(preg_match('/^[\w\d\_\.]+$/i', $filter[1])===0){
                 continue;
             }
-            if (strpos($operate, 'IN')!==false){
-                // where(['in/not in', field, array])
-                $query->andWhere($filter);
-                continue;
+            $fs = explode('.', $filter[1]);
+            if (2==count($fs)){
+                $query->joinWith($fs[0]);
+                $filter[1] = $this->getColumn($fs[1], $fs[0]);
+            } else {
+                $filter[1] = $this->getColumn($filter[1]);
             }
-            $where .= ' AND ' . $filter[1] . ' ' . $filter[0] . ' :' . $filter[1] ;
-            $p_dict[$filter[1]] = $filter[2];
+            $query->andWhere($filter);
+            continue;
         }
-        $query->andWhere($where, $p_dict);
         return $query;
+    }
+
+    public function getColumn($column, $slug=null)
+    {
+        return $this->getTableName($slug).'.'.$column;
+    }
+
+    public function getTableName($slug=null)
+    {
+        $model = $this->modelClass;
+        return $slug?('jz_'.$slug):$model::tableName();
     }
 
     public function renderJson($data)
