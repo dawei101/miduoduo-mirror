@@ -29,10 +29,10 @@ js调用native 方法原理
     {
         action: 'b_require_auth',
         result: {
-            phone_num: '',
-            access_token: '',
-            }
-        }
+        "id": 4,
+        "username": "18661775819",
+        "access_token": "I-rakchs-AQnW9YiwAl7uwsLUsIrxT7p_1435949771"
+      }
 
     附：
         如果未登陆，不返回任何东西，或返回access_token为null
