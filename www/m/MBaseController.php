@@ -30,14 +30,4 @@ class MBaseController extends BaseController
             'next'=>$to,
         ]);
     }
-
-    public function goBack($defaultUrl = null)
-    {
-        $cnext = Yii:$app->request->getCookies()->getValue('next');
-        if ($cnext){
-            Yii::$app->response->setCookies()->setValue('next', '');
-            return Yii::$app->getResponse()->redirect($cnext));
-        }
-        parent::goBack($defaultUrl);
-    }
 }

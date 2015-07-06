@@ -11,7 +11,7 @@ class m150606_210900_company extends BaseMigration
         $sqls = "
 DROP table  if exists `jz_company`;
 CREATE TABLE `jz_company` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(500) NOT NULL COMMENT '企业名',
   `avatar` VARCHAR(1000) NULL COMMENT 'Logo',
   `license_id` VARCHAR(500) NULL COMMENT '营业执照号',
