@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\OfflineOrder */
+/* @var $model backend\models\TaskPool */
 
-$this->title = '修改线下订单: ' . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Offline Orders', 'url' => ['index']];
+$this->title = 'Update Task Pool: ' . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Task Pools', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="offline-order-update">
+<div class="task-pool-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

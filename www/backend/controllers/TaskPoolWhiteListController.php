@@ -3,46 +3,52 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\WeichatUserInfo;
-use yii\data\ActiveDataProvider;
+use backend\models\TaskPoolWhiteList;
+use backend\models\TaskPoolWhiteListSearch;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * WeichatUserInfoController implements the CRUD actions for WeichatUserInfo model.
+ * TaskPoolWhiteListController implements the CRUD actions for TaskPoolWhiteList model.
  */
-class WeichatUserInfoController extends BBaseController
+class TaskPoolWhiteListController extends BBaseController
 {
-
     public function getViewPath()
     {
-        return Yii::getAlias('@backend/views/wechat/weichat-user-info');
+        return Yii::getAlias('@backend/views/spider/task-pool-white-list');
     }
+
 
     public function behaviors()
     {
-        $bhvs = parent::behaviors();
-        return $bhvs;
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
     }
 
     /**
-     * Lists all WeichatUserInfo models.
+     * Lists all TaskPoolWhiteList models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => WeichatUserInfo::find(),
-        ]);
+        $searchModel = new TaskPoolWhiteListSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single WeichatUserInfo model.
+     * Displays a single TaskPoolWhiteList model.
      * @param integer $id
      * @return mixed
      */
@@ -54,13 +60,13 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Creates a new WeichatUserInfo model.
+     * Creates a new TaskPoolWhiteList model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new WeichatUserInfo();
+        $model = new TaskPoolWhiteList();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,7 +78,7 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Updates an existing WeichatUserInfo model.
+     * Updates an existing TaskPoolWhiteList model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,7 +97,7 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Deletes an existing WeichatUserInfo model.
+     * Deletes an existing TaskPoolWhiteList model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,15 +110,15 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Finds the WeichatUserInfo model based on its primary key value.
+     * Finds the TaskPoolWhiteList model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return WeichatUserInfo the loaded model
+     * @return TaskPoolWhiteList the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = WeichatUserInfo::findOne($id)) !== null) {
+        if (($model = TaskPoolWhiteList::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

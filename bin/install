@@ -9,9 +9,19 @@ apt-get install -y php5-mysql
 apt-get install -y mysql-server-5.6
 apt-get install -y php5-gd
 apt-get install -y php5-curl
+apt-get install -y python2.7-dev
+apt-get install -y python-pip
+apt-get install -y libmysqlclient-dev
 
 a2enmod rewrite
 a2enmod proxy
 a2enmod proxy_http
 
+pip install virtualenv
 
+mkdir spider/.env
+virtualenv spider/.env
+source spider/.env/bin/activate
+pip install scrapy
+pip install mysql-python==1.2.5
+pip install simplejson==3.7.3

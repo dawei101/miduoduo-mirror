@@ -14,6 +14,12 @@ use yii\filters\VerbFilter;
  */
 class WeichatPushSetTemplatePushItemController extends BBaseController
 {
+
+    public function getViewPath()
+    {
+        return Yii::getAlias('@backend/views/wechat/weichat-push-set-template-push-item');
+    }
+
     public function behaviors()
     {
         $bhvs = parent::behaviors();

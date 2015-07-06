@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Suborder */
+/* @var $model backend\models\TaskPoolWhiteList */
 
-$this->title = '添加子订单for:' . $order->gid;
-$this->params['breadcrumbs'][] = ['label' => 'Suborders', 'url' => ['index']];
+$this->title = 'Create Task Pool White List';
+$this->params['breadcrumbs'][] = ['label' => 'Task Pool White Lists', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="suborder-create">
+<div class="task-pool-white-list-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

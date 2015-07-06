@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Tinyorder */
+/* @var $model backend\models\TaskPoolWhiteList */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Tinyorders', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Task Pool White Lists', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tinyorder-view">
+<div class="task-pool-white-list-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,11 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'order_id',
-            'address_id',
-            'user_id',
-            'added_by',
-            'status',
+            'origin',
+            'attr',
+            'value',
+            'examined_time',
+            'slug',
+            'examined_by',
+            'is_white',
         ],
     ]) ?>
 

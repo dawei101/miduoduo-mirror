@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Tinyorder */
+/* @var $model backend\models\TaskPool */
 
-$this->title = 'Create Tinyorder';
-$this->params['breadcrumbs'][] = ['label' => 'Tinyorders', 'url' => ['index']];
+$this->title = 'Create Task Pool';
+$this->params['breadcrumbs'][] = ['label' => 'Task Pools', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tinyorder-create">
+<div class="task-pool-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

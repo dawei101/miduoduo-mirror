@@ -1,18 +1,16 @@
 <?php
 
-namespace common\models;
-use \DateTime;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\TaskApplicant;
-
+use backend\models\TaskPoolWhiteList;
 
 /**
- * TaskApplicantSearch represents the model behind the search form about `common\models\TaskApplicant`.
+ * TaskPoolWhiteListSearch represents the model behind the search form about `backend\models\TaskPoolWhiteList`.
  */
-class TaskApplicantSearch extends TaskApplicant
+class TaskPoolWhiteListSearch extends TaskPoolWhiteList
 {
     /**
      * @inheritdoc
@@ -20,9 +18,8 @@ class TaskApplicantSearch extends TaskApplicant
     public function rules()
     {
         return [
-            [['id', 'user_id', 'task_id'], 'integer'],
-            [['created_time'], 'date'],
-            [['created_time'], 'safe'],
+            [['id', 'examined_by', 'is_white'], 'integer'],
+            [['origin', 'attr', 'value', 'examined_time', 'slug'], 'safe'],
         ];
     }
 
@@ -44,7 +41,7 @@ class TaskApplicantSearch extends TaskApplicant
      */
     public function search($params)
     {
-        $query = TaskApplicant::find();
+        $query = TaskPoolWhiteList::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,19 +55,17 @@ class TaskApplicantSearch extends TaskApplicant
             return $dataProvider;
         }
 
-        if ($this->created_time){
-            $from_date = $this->created_time;
-            $date = DateTime::createFromFormat('Y-m-d', $this->created_time);
-            $to_date = $date->modify('+1 day')->format('Y-m-d');
-            $query->andWhere(['>=', 'created_time', $from_date]);
-            $query->andWhere(['<', 'created_time', $to_date]);
-        }
-
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'task_id' => $this->task_id,
+            'examined_time' => $this->examined_time,
+            'examined_by' => $this->examined_by,
+            'is_white' => $this->is_white,
         ]);
+
+        $query->andFilterWhere(['like', 'origin', $this->origin])
+            ->andFilterWhere(['like', 'attr', $this->attr])
+            ->andFilterWhere(['like', 'value', $this->value])
+            ->andFilterWhere(['like', 'slug', $this->slug]);
 
         return $dataProvider;
     }
