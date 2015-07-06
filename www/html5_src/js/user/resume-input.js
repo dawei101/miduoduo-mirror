@@ -22,6 +22,7 @@ define(function(require, exports) {
         }
     })
 
+    //性别
     $(".sex").find("div").on("click", function() {
         $(this).addClass("sex-act").siblings().removeClass("sex-act");
     })
@@ -29,6 +30,7 @@ define(function(require, exports) {
     $(".sub2-con-val").on("click", function() {
         $(this).toggleClass("sub2-con-val-act");
     });
+    //时间表事件
     var timeName = ["morning", "afternoon", "evening"];
     $(".dateCol > .time").on("click", function() {
         var $this = $(this);
@@ -53,6 +55,7 @@ define(function(require, exports) {
             console.log(data);
         })
     })
+    //可兼类型
     $(".js-sel-service-type").on("click", function() {
         $(".main2").hide();
         $(".sel-job-type").show();

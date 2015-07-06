@@ -14,13 +14,13 @@
     <script type="text/javascript" src="<%=baseJsUrl%>/third_party/sea.js" ></script>
     <script>
         window.miduoduo = {};
-        miduoduo.config = {
-            picUrl : "<%=baseUrl%>" + "img",
-            access_token : null,
-            userID : null,
-            phone : 15110083777
-
-        }
+        miduoduo.accessToken = null,
+                miduoduo.basePath = {
+                    picUrl : "<%=baseUrl%>" + "img"
+                }
+        miduoduo.user = {};
+        miduoduo.user.id = "15110083777";
+        miduoduo.user.phone = "15110083777";
         miduoduo.os  = {};
         miduoduo.os.mddApp = window.WebViewJavascriptBridge || false;
         seajs.config({

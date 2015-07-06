@@ -18,19 +18,18 @@
       .bgc(#fff);
       li {
         .pr;
-        padding: 5%;
+        padding: 3%;
         .clearfix;
         border-bottom: 1px solid #eee;
         div {
-          .left;
+          display: inline-block;
+          vertical-align: middle;
         }
         .title {
+          .w(25%);
           .f3;
-          line-height: 20.5px;
         }
         .con {
-          .w(70%);
-          .ml(10%);
           .f3;
           div {
             .left;
@@ -51,16 +50,17 @@
         .control {
           &:after {
             .pa;
+            top: 0;
             right: 4%;
+            .pt(4.5%);
             .if-arrow-right;
-            .pl(10%);
-            .f(16*@f);
-            font-style:normal;
           }
         }
         .tag {
           &:after {
             .pa;
+            top: 0;
+            .pt(4.5%);
             right: 4%;
             content: 'cm';
             .pl(10%);
@@ -69,7 +69,7 @@
           }
         }
         .sex {
-          .w(80%);
+          .w(50%);
           .border-r(5px);
           box-sizing: border-box;
           border: 1px solid #eee;
@@ -102,24 +102,26 @@
       .mb(2%);
       .bgc(#fff);
       li {
+        .pr;
         padding: 3%;
         box-sizing: border-box;
-        border-bottom: 1px solid #d0d0d0;
+        border-bottom: 1px solid #eee;
         .clearfix;
         div {
-          .left;
+          display: inline-block;
+          vertical-align: middle;
         }
         .title {
-          .w(20%);
+          .w(25%);
         }
         .con {
-          .ml(8%);
-          .w(72%);
         }
         .control {
           &:after {
             .pa;
+            top: 0;
             right: 4%;
+            .pt(4.5%);
             .if-arrow-right;
             .pl(10%);
             .f(16*@f);

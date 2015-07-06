@@ -1,0 +1,23 @@
+<%include header.html%>
+<%-css("guide")%>
+<%-mainJs("guide")%>
+</head>
+<body >
+<!--轮播-->
+<div id="bannerSlider" class='imageSlide'>
+</div>
+<!--banner 轮播模板-->
+<script type="text/html" id="banner-slide-tpl">
+    <ul>
+        <? this.banners.forEach(function(e) {?>
+        <li>
+            <a href="javascript:void(0);">
+                <img src="<?=e.imgSrc?>" alt=""/>
+            </a>
+        </li>
+        <?});?>
+    </ul>
+    <div class="num"></div>
+</script>
+</body>
+</html>

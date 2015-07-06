@@ -4,6 +4,7 @@
 </head>
 <body>
 <script type="text/html" id="main-tpl">
+    <? var user = {name : 11, gender_label : "男"};?>
     <div class="main1">
 
         <ul class="resume-part1">
@@ -16,13 +17,13 @@
             <li>
                 <div class="title">姓名</div>
                 <div class="con">
-                    <input type="text" placeholder="请输入真实姓名"/>
+                    <input type="text" placeholder="请输入真实姓名" value="<?=user.name?>"/>
                 </div>
             </li>
             <li>
                 <div class="title ">出生年月</div>
                 <div class="con control">
-                    <input type="text" placeholder="请选择真实日期"/>
+                    <input type="text" placeholder="请选择真实日期" value="<?=user.birthdate ?>"/>
                 </div>
             </li>
             <li>
@@ -35,7 +36,7 @@
             <li>
                 <div class="title">身高</div>
                 <div class="con tag">
-                    <input type="text" placeholder="请输入身高"/>
+                    <input type="text" placeholder="请输入身高" value="<?=user.height ?>"/>
                 </div>
             </li>
         </ul>
@@ -44,13 +45,13 @@
             <li>
                 <div class="title">学校</div>
                 <div class="con control">
-                    <input type="text"  placeholder="请输入学校"/>
+                    <input type="text"  placeholder="请输入学校" value="<?=user.height ?>"/>
                 </div>
             </li>
             <li>
                 <div class="title">居住地点</div>
                 <div class="con control">
-                    <input type="text" placeholder="请选择居住地点"/>
+                    <input type="text" placeholder="请选择居住地点" value="<?=user.home_address?>"/>
                 </div>
             </li>
         </ul>
@@ -60,7 +61,8 @@
         <ul class="resume-part3">
             <li class="sub1">
                 <div class="title">可兼类别</div>
-                <div class="con">
+                <div class="con control js-sel-service-type">
+                    <span><?=user.service_types?></span>
                     <input type="text" placeholder="请选择您擅长的兼职类别"/>
                 </div>
             </li>
@@ -84,7 +86,7 @@
             <li>
                 <div class="title">
                     <div class="t1">可兼职时间</div>
-                    <div class="t2">全选</div>
+                    <div class="t2 freetime-all">全选</div>
                 </div>
                 <div class="con">
                     <?
@@ -105,5 +107,6 @@
         <div class="submit-btn">修改简历</div>
     </div>
 </script>
+<%include ./resume-job-type.html%>
 </body>
 </html>
