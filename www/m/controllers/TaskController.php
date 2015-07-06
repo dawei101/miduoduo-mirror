@@ -58,7 +58,7 @@ class TaskController extends \m\MBaseController
             $this->render404('未知的城市');
         }
 
-        $query = Task::find();
+        $query = Task::find()->where(['status'=>Task::STATUS_OK]);
         $query = $query->where(['city_id'=>$city_id]);
         if (!empty($district)){
             $query = $query->where(['district_id'=>$district]);

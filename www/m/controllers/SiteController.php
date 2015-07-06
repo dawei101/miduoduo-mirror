@@ -76,7 +76,7 @@ class SiteController extends MBaseController
         if($gids){
 
             // 查询数据显示
-            $tasks      = Task::find()
+            $tasks      = Task::find()->where(['status'=>Task::STATUS_OK])
             ->where('`gid` in('.$gids.')')
             ->addOrderBy(['display_order'=>SORT_DESC])
             ->joinWith('recommend')->all();
@@ -92,7 +92,8 @@ class SiteController extends MBaseController
         }else{
             //只有北京
             $city_id = 3;
-            $query = Task::find()->with('city')->with('district');
+            $query = Task::find()->where(['status'=>Task::STATUS_OK])
+                ->with('city')->with('district');
             $query = $query->where(['city_id'=>$city_id])
                 ->addOrderBy(['id'=>SORT_DESC])
                 ->limit(5);

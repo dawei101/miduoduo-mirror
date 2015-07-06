@@ -176,7 +176,7 @@ class TaskPool extends \common\BaseActiveRecord
         $task->city_id = $this->getCityId($this->city);
         $task->save();
 
-        if ($this->lat){
+        if ($this->has_poi&&$this->lat){
 
             $ta = new TaskAddress;
             $ta->lat = $this->lat;
