@@ -11,6 +11,8 @@ use common\models\District;
 
 $this->title = '数据';
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <div class="data-daily-index">
 
