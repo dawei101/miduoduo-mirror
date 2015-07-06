@@ -152,6 +152,9 @@ class BaseActiveController extends ActiveController
             return $query;
         }
         $conditions = json_decode($p_str);
+        if (!$conditions){
+            return $query;
+        }
         $p_dict = [];
         $where = '1 ';
         foreach ($conditions as $filter){

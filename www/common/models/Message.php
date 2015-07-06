@@ -15,6 +15,7 @@ use Yii;
  * @property string $created_time
  * @property integer $has_sent
  * @property integer $type
+ * @property integer $link
  */
 class Message extends \common\BaseActiveRecord
 {
@@ -34,7 +35,7 @@ class Message extends \common\BaseActiveRecord
         return [
             [['user_id', 'message', 'title'], 'required'],
             [['user_id', 'read_flag', 'has_sent', 'type'], 'integer'],
-            [['message'], 'string'],
+            [['message', 'link'], 'string'],
             [['created_time'], 'safe'],
             [['title'], 'string', 'max' => 100]
         ];
