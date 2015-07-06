@@ -31,3 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
   </div>
 </div>
 <!-- InstanceEndEditable -->
+<?php
+$this->registerJsFile('/js/index.js');
+?>

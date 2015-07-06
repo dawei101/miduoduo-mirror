@@ -137,7 +137,7 @@ class UserController extends FBaseController
         ]);
     }
 
-    public function actionResetPassword($token)
+    public function actionResetPassword($token='')
     {
         try {
             $model = new ResetPasswordForm($token);

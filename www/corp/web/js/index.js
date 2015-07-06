@@ -21,7 +21,7 @@ $('#hr .zc-btn').click(function(e){
 });
 
 //注册发送验证码
-$('#hr .yz-btn').on('click', function(){
+$('.yz-btn').on('click', function(){
     $.get('/user/vcode', $(this).closest('form').serialize())
     .done(function(data){
         console.log(data);
