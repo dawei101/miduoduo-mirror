@@ -72,6 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw',
                 'value'=> function($model){
                     return '
+                      <div style="width: 100px;">
                         <a href="/task-pool/view?id=' . $model->id . '" title="查看" target="_blank">
                              <span class="glyphicon glyphicon-eye-open"></span> 
                         </a>
@@ -87,6 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <a style="color: red;"  href="/index.php/task-pool/delete?company_name='. $model->company_name .'&origin='.$model->origin.'" aria-label="删除" data-confirm="您确定要把此公司加入<黑名单>吗？" data-method="post" title="删除公司并列入<黑名单>">
                             <span class="glyphicon glyphicon-lock"></span>
                         </a>
+                      <div>
                         ';
                 }
             ],

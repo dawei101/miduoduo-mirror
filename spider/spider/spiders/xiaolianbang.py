@@ -2,6 +2,7 @@
 import scrapy
 import re
 import simplejson
+import datetime
 
 from spider.items import Task
 from spider import utils
@@ -15,6 +16,8 @@ class XlbSpider(scrapy.Spider):
     origin = 'xiaolianbang'
 
     exists_ids = set()
+
+    this_year = '%s' % datetime.date.today().year
 
     def start_requests(self):
         yield scrapy.http.Request("http://m.xiaolianbang.com/",
@@ -67,19 +70,31 @@ class XlbSpider(scrapy.Spider):
                 response.request.cookies)
         _ids = list(response.selector.xpath(
                 '//*[@id="content"]/li/@data-id').extract())
-        if len(_ids)>0:
+
+        lis = response.selector.xpath(
+                '//*[@id="content"]/li')
+        if len(lis)>0:
             meta = response.meta
             yield self.build_list_request(meta['city'], meta['page']+1)
-        for _id in _ids:
-            if (int(_id) not in self.exists_ids):
-                yield self.build_detail_request(_id, meta['city'])
+        for li in lis:
+            _id = li.xpath('@data-id').extract_first();
+            release_date = li.xpath(
+                    '//div[contains(@class, "time")]/text()').extract_first()
+            if _id and re.match(r'\d{2}-\d{2}', release_date):
+                release_date = self.this_year + '-' + str(release_date)
 
-    def build_detail_request(self, _id, city):
+                if (int(_id) not in self.exists_ids):
+                    yield self.build_detail_request(_id, meta['city'], release_date)
+
+    def build_detail_request(self, _id, city, release_date=None):
+        if not release_date:
+            release_date = str(datetime.date.today())
         return scrapy.http.Request(
                     "http://m.xiaolianbang.com/pt/%s/detail" % _id,
                     meta = {
                         'city': city,
                         'id': _id,
+                        'release_date': release_date,
                         },
                     callback=self.parse_detail)
 
@@ -94,7 +109,13 @@ class XlbSpider(scrapy.Spider):
             task['address'] = None
             task['contact'] = None
             task['need_quantity'] = 0
+            task['from_date'] = '1999-09-09'
+            task['to_date'] = '1999-09-09'
+            
+            task['release_date'] = response.meta['release_date']
 
+            self.logger.debug(
+                    "The release date is : %s", task['release_date'])
             task['id'] = response.meta['id']
             task['city'] = response.meta['city']
             task['origin'] = self.origin
@@ -148,8 +169,8 @@ class XlbSpider(scrapy.Spider):
                     r = re.search(ur'(\d+\.\d+)~(\d+\.\d+)', info)
                     if r:
                         task['is_long_term'] = False;
-                        task['from_date'] = '2015-' + '-'.join(r.group(1).split('.'))
-                        task['to_date'] = '2015-' + '-'.join(r.group(2).split('.'))
+                        task['from_date'] = self.this_year + '-' + '-'.join(r.group(1).split('.'))
+                        task['to_date'] = self.this_year + '-' + '-'.join(r.group(2).split('.'))
             cnodes = response.xpath(
                     '//*[@id="info"]/ul[contains(@class,"job_info")]/li[contains(@class,"info_con")]/node()').extract()
             task['content'] = "\n".join(cnodes)
