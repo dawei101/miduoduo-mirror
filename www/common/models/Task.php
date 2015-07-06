@@ -60,7 +60,7 @@ class Task extends \common\BaseActiveRecord
         1=>'天',
         2=>'周',
         3=>'月',
-        3=>'次',
+        4=>'次',
     ];
 
     public static $STATUSES = [
