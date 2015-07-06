@@ -28,6 +28,20 @@ use common\models\District;
 class TaskPool extends \common\BaseActiveRecord
 {
 
+    const STATUS_UNSETTLED=0;
+    const STATUS_EXPORTED=10;
+    const STATUS_DROPPED=11;
+
+    public function getStatus_options()
+    {
+        return [
+            0=> '未处理',
+            10=> '已导出',
+            11=>'已放弃',
+        ];
+    }
+
+
     /**
      * @inheritdoc
      */
@@ -44,7 +58,7 @@ class TaskPool extends \common\BaseActiveRecord
         return [
             [['company_name', 'origin_id', 'origin', 'details'], 'required'],
             [['lng', 'lat'], 'number'],
-            [['details'], 'string'],
+            [['details', 'title', 'phonenum', 'contact'], 'string'],
             [['has_poi', 'status'], 'integer'],
             [['created_time'], 'safe'],
             [['company_name', 'city'], 'string', 'max' => 200],
@@ -63,6 +77,9 @@ class TaskPool extends \common\BaseActiveRecord
             'id' => 'ID',
             'company_name' => '公司名',
             'city' => '城市',
+            'contact' => '联系人',
+            'title' => '标题',
+            'phonenum' => '电话',
             'origin_id' => '来源id',
             'origin' => '来源',
             'lng' => 'Lng',
@@ -82,15 +99,6 @@ class TaskPool extends \common\BaseActiveRecord
     public static function find()
     {
         return new TaskPoolQuery(get_called_class());
-    }
-
-    public function getStatus_options()
-    {
-        return [
-            0=> '未处理',
-            10=> '已导入',
-            11=>'已放弃',
-        ];
     }
 
     public function getStatus_label()
@@ -131,25 +139,19 @@ class TaskPool extends \common\BaseActiveRecord
         $task->clearance_period = $cp;
 
         $task->salary = intval($ds['salary']);
+        $task->salary_unit = 0;
         if ($task->salary!=0){
-            $su = null;
-            foreach(Task::$SALARY_UNITS as $k=>$v){
-                if ($v==$ds['salary_unit']){
-                    $su = $k;
-                }
-            }
-            $task->salary_unit = $su;
-        } else {
-            $task->salary_unit = 0;
+            $task->salary_unit = $this->getSalaryUnit($ds['salary_unit']);
         }
-
-        $task->from_date = $ds['from_date'];
-        $task->to_date = $ds['to_date'];
+        $task->from_date = isset($ds['from_date'])?$ds['from_date']:'1999-09-09';
+        $task->to_date = isset($ds['to_date'])?$ds['to_date']:'1999-09-09';
         $task->need_quantity = intval($ds['need_quantity']);
         $task->detail = $ds['content'];
         $task->address = $ds['address'] or '不限';
         $task->user_id = 0;
 
+        $task->status = $task::STATUS_UNCONFIRMED_FROM_SPIDER;
+        $task->origin = $ds['origin'];
         $task->company_id = 0;
 
         if ($this->company_name){
@@ -172,21 +174,42 @@ class TaskPool extends \common\BaseActiveRecord
 
         $task->service_type_id = $this->getServiceTypeId($ds['origin'], $ds['category_name']);
         $task->city_id = $this->getCityId($this->city);
-
         $task->save();
 
         if ($this->lat){
+
             $ta = new TaskAddress;
             $ta->lat = $this->lat;
             $ta->lng = $this->lng;
+
             $ta->address = $ds['address'];
             $ta->city = $this->city;
             $ta->task_id = $task->id;
             $ta->save();
         }
-        $this->status = 10;
-        $this->save();
         return $task;
+    }
+
+    public function getSalaryUnit($name)
+    {
+        $n = null;
+        if (strpos($name, '时') !== false) {
+            $n = '小时';
+        } elseif (strpos($name, '周') !== false){
+            $n = '周';
+        } elseif (strpos($name, '月') !== false){
+            $n = '月';
+        } elseif (strpos($name, '天') !== false){
+            $n = '天';
+        } elseif (strpos($name, '次') !== false){
+            $n = '次';
+        }
+        foreach(Task::$SALARY_UNITS as $k=>$v){
+            if ($v==$n){
+                return $k;
+            }
+        }
+        return 0;
     }
 
     private $_stype_dict = [];

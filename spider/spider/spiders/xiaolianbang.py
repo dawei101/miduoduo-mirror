@@ -147,12 +147,12 @@ class XlbSpider(scrapy.Spider):
                 elif '工作日期' in label:
                     r = re.search(ur'(\d+\.\d+)~(\d+\.\d+)', info)
                     if r:
+                        task['is_long_term'] = False;
                         task['from_date'] = '2015-' + '-'.join(r.group(1).split('.'))
                         task['to_date'] = '2015-' + '-'.join(r.group(2).split('.'))
             cnodes = response.xpath(
                     '//*[@id="info"]/ul[contains(@class,"job_info")]/li[contains(@class,"info_con")]/node()').extract()
             task['content'] = "\n".join(cnodes)
-            yield task
             yield self.build_contact_request(task)
 
         except Exception, e:
@@ -167,8 +167,6 @@ class XlbSpider(scrapy.Spider):
                      'task': task,
                      },
                 callback=self.parse_contact)
-
-
 
     def parse_contact(self, response):
         task = response.meta['task']
@@ -189,6 +187,7 @@ class XlbSpider(scrapy.Spider):
                 r = re.search(ur'[\d\w\_\-\.]+\@([\w\_\-\_]+\.)+([\w]+)', cons[i])
                 if r:
                     task['email'] = r.group(0)
+        yield task
 
         if task['address']:
             self.logger.debug("start scrape location for address: %s", task['address'])
@@ -198,8 +197,6 @@ class XlbSpider(scrapy.Spider):
                          'task': task,
                          },
                     callback=self.parse_poi)
-        else:
-            yield task
 
 
 

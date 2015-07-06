@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\TaskApplicantSearch */
@@ -49,7 +50,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $model->user->username;
              },
             ],
-            'created_time',
+            [
+                'label' => '申请日期',
+                'attribute' => 'created_time',
+                'format' => 'date',
+                'value' => function($model){
+                    return $model->created_time;
+                },
+                'filter' => DatePicker::widget([
+                    'name' => 'TaskApplicantSearch[created_time]',
+                    'dateFormat' => 'yyyy-MM-dd',
+                ]),
+            ],
             'company_alerted:boolean',
             'applicant_alerted:boolean',
             'status_label',

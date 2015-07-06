@@ -120,6 +120,8 @@ use common\models\District;
         <a href="/company/create" target="_blank" class="btn btn-danger">添加新公司</a>
     </p>
     <br />
+
+    <?= $form->field($model, 'status')->dropdownList($model::$STATUSES) ?>
     <div class="form-group">
         <?= Html::submitButton('下一步', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

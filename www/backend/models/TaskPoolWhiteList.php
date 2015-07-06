@@ -2,8 +2,6 @@
 
 namespace backend\models;
 
-use backend\models\TaskPoolWhiteList;
-
 use Yii;
 
 /**
@@ -52,13 +50,17 @@ class TaskPoolWhiteList extends \common\BaseActiveRecord
             'id' => 'ID',
             'origin' => '来源',
             'attr' => '属性',
-            'value' => 'Value',
-            'examined_time' => '审核日期',
-            'slug' => '大鼻涕',
+            'value' => '值',
+            'examined_time' => '添加规则时间',
+            'slug' => 'Slug',
             'examined_by' => '审核人',
-            'is_white' => '白名单?',
-            'type' => '类型',
+            'is_white' => '是白名单(否黑)',
         ];
+    }
+
+    public function getType_label()
+    {
+        return $this->is_white?'白名单':'黑名单';
     }
 
     /**
@@ -70,17 +72,12 @@ class TaskPoolWhiteList extends \common\BaseActiveRecord
         return new TaskPoolWhiteListQuery(get_called_class());
     }
 
-    public function getType()
-    {
-        return $this->is_white?'白名单':'黑名单';
-    }
-
     public function examineTaskPool()
     {
         $conditions = [
                 $this->attr=>$this->value,
                 'origin'=>$this->origin,
-                'status'=>0
+                'status'=>TaskPool::STATUS_UNSETTLED
             ];
         if ($this->is_white){
             $ws = TaskPool::findAll($conditions);
@@ -89,11 +86,10 @@ class TaskPoolWhiteList extends \common\BaseActiveRecord
                 $task = $w->exportTask();
                 $tasks[] = $task;
             }
-            TaskPool::updateAll(['status'=>10], $conditions);
+            TaskPool::updateAll(['status'=>TaskPool::STATUS_EXPORTED], $conditions);
             return $tasks;
         } else {
-            TaskPool::updateAll(['status'=>11], $conditions);
+            TaskPool::updateAll(['status'=>TaskPool::STATUS_DROPPED], $conditions);
         }
     }
-
 }

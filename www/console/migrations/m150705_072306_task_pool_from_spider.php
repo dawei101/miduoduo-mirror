@@ -9,6 +9,10 @@ class m150705_072306_task_pool_from_spider extends BaseMigration
     {
         $sqls = "
     alter table jz_task_pool add status smallint not null default 0;
+    alter table jz_task_pool add title varchar(200) not null ;
+    alter table jz_task_pool add phonenum varchar(200);
+    alter table jz_task_pool add contact varchar(200);
+    alter table jz_task add origin varchar(200) default 'internal';
             ";
         $this->execSqls($sqls);
 

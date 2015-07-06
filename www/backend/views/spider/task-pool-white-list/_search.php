@@ -17,13 +17,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'company_name') ?>
+    <?= $form->field($model, 'origin') ?>
+
+    <?= $form->field($model, 'attr') ?>
+
+    <?= $form->field($model, 'value') ?>
 
     <?= $form->field($model, 'examined_time') ?>
 
-    <?= $form->field($model, 'slug') ?>
+    <?php // echo $form->field($model, 'slug') ?>
 
-    <?= $form->field($model, 'examined_by') ?>
+    <?php // echo $form->field($model, 'examined_by') ?>
+
+    <?php // echo $form->field($model, 'is_white') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

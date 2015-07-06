@@ -19,7 +19,8 @@ class TaskPoolSearch extends TaskPool
     {
         return [
             [['has_poi', 'status'], 'integer'],
-            [['company_name', 'city', 'origin_id', 'origin', 'details', 'created_time'], 'safe'],
+            [['title', 'phonenum', 'contact'], 'safe'],
+            [['company_name', 'city', 'origin_id', 'origin', 'created_time'], 'safe'],
             [['lng', 'lat'], 'number'],
         ];
     }
@@ -61,6 +62,8 @@ class TaskPoolSearch extends TaskPool
             'lng' => $this->lng,
             'lat' => $this->lat,
             'has_poi' => $this->has_poi,
+            'contact' => $this->contact,
+            'phonenum' => $this->phonenum,
             'status' => $this->status,
             'created_time' => $this->created_time,
         ]);
@@ -69,6 +72,7 @@ class TaskPoolSearch extends TaskPool
             ->andFilterWhere(['like', 'city', $this->city])
             ->andFilterWhere(['like', 'origin_id', $this->origin_id])
             ->andFilterWhere(['like', 'origin', $this->origin])
+            ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'details', $this->details]);
 
         return $dataProvider;

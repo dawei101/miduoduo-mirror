@@ -18,8 +18,8 @@ class TaskPoolWhiteListSearch extends TaskPoolWhiteList
     public function rules()
     {
         return [
-            [['id', 'examined_by'], 'integer'],
-            [['company_name', 'examined_time', 'slug'], 'safe'],
+            [['id', 'examined_by', 'is_white'], 'integer'],
+            [['origin', 'attr', 'value', 'examined_time', 'slug'], 'safe'],
         ];
     }
 
@@ -59,9 +59,12 @@ class TaskPoolWhiteListSearch extends TaskPoolWhiteList
             'id' => $this->id,
             'examined_time' => $this->examined_time,
             'examined_by' => $this->examined_by,
+            'is_white' => $this->is_white,
         ]);
 
-        $query->andFilterWhere(['like', 'company_name', $this->company_name])
+        $query->andFilterWhere(['like', 'origin', $this->origin])
+            ->andFilterWhere(['like', 'attr', $this->attr])
+            ->andFilterWhere(['like', 'value', $this->value])
             ->andFilterWhere(['like', 'slug', $this->slug]);
 
         return $dataProvider;

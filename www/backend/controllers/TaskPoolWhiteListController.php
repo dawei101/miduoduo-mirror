@@ -14,6 +14,12 @@ use yii\filters\VerbFilter;
  */
 class TaskPoolWhiteListController extends BBaseController
 {
+    public function getViewPath()
+    {
+        return Yii::getAlias('@backend/views/spider/task-pool-white-list');
+    }
+
+
     public function behaviors()
     {
         return [

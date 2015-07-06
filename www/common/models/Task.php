@@ -41,6 +41,7 @@ use common\models\ServiceType;
  * @property integer $status
  * @property integer $city_id
  * @property integer $district_id
+ * @property string $origin
  * @property string $labels_str
  */
 class Task extends \common\BaseActiveRecord
@@ -58,12 +59,21 @@ class Task extends \common\BaseActiveRecord
         1=>'天',
         2=>'周',
         3=>'月',
+        3=>'次',
     ];
 
     public static $STATUSES = [
         0=>'正常',
-        10=>'下线',
+        10=>'已下线',
+        20=>'已删除',
+        100=>'爬取需编辑',
     ];
+
+    const STATUS_OK = 0;
+    const STATUS_OFFLINE = 10;
+    const STATUS_DELETED = 20;
+    const STATUS_UNCONFIRMED_FROM_SPIDER = 100;
+
 
     public function getStatus_label()
     {
@@ -105,7 +115,7 @@ class Task extends \common\BaseActiveRecord
                 'height_requirement', 'status', 'city_id', 'district_id',
                 'company_id'], 'integer'],
             [['salary'], 'number'],
-            [['salary_note', 'detail', 'requirement'], 'string'],
+            [['salary_note', 'detail', 'requirement', 'origin'], 'string'],
             [['from_date', 'to_date', 'from_time', 'to_time',
                 'created_time', 'updated_time'], 'safe'],
             [['gid'], 'string', 'max' => 1000],
@@ -120,6 +130,7 @@ class Task extends \common\BaseActiveRecord
             ['contact_phonenum', 'match', 'pattern'=>'/^(1[345789]\d{9})|(\d{3,4}\-?\d{7,8})$/',
                 'message'=>'请输入正确的电话'],
             ['clearance_period', 'default', 'value'=>0],
+            ['origin', 'default', 'value'=>'internal'],
         ];
     }
 
@@ -167,6 +178,7 @@ class Task extends \common\BaseActiveRecord
             'contact_phonenum'=>'联系手机',
             'labels_str'=>'标签',
 
+            'origin'=>'来源',
         ];
     }
 

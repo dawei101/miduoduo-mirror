@@ -56,11 +56,17 @@ class SpiderPipeline(object):
             cursor = self.db.cursor()
             details = simplejson.dumps(dict(item))
             try:
-                cursor.execute("""insert into jz_task_pool 
-                (company_name, city, origin_id, origin, details, lat, lng)
-                    values (%(company_name)s, %(city)s,
-                        %(origin_id)s, %(origin)s, %(details)s,
-                        %(lat)s, %(lng)s)
+                cursor.execute("""
+                insert into jz_task_pool (
+                    company_name, city, origin_id,
+                    origin, details, lat, lng,
+                    title, contact, phonenum
+                ) values (
+                    %(company_name)s, %(city)s,
+                    %(origin_id)s, %(origin)s, %(details)s,
+                    %(lat)s, %(lng)s,
+                    %(title)s, %(contact)s, %(phonenum)s
+                );
                     """, {
                         'company_name': item['company_name'],
                         'origin_id': item['id'],
@@ -69,6 +75,9 @@ class SpiderPipeline(object):
                         'details': details,
                         'lat': item['lat'],
                         'lng': item['lng'],
+                        'title': item['title'],
+                        'contact': item['contact'],
+                        'phonenum': item['phonenum']
                         })
                 self.db.commit()
             except MySQLdb.IntegrityError, e:
