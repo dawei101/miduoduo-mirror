@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `jz_complaint` (
   `task_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   `created_time` TIMESTAMP NULL DEFAULT current_timestamp,
-  `phonenum` varchar(100) NULL DEFAULT ,
+  `phonenum` varchar(100) not NULL ,
   `status` SMALLINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `fk_jz_complaint_jz_task1_idx` (`task_id` ASC),
