@@ -6,6 +6,8 @@ miduoduo 协议
 miduoduo://jsbridge.action?query=
 ```
 
+
+
 #Js Bridge
 
 我们Js Bridge的实现是基于开源[JsBridge](https://github.com/lzyzsd/JsBridge)
@@ -191,3 +193,29 @@ function handle_action(data, responseCallback) {
 });
 ```
 
+
+###access_token 与 user 信息传递
+* 在app打开webview，并载入url时会在url后靠 GET 传参的方式传递 access_token/user_id/username(phonenum) 
+```
+/v1/view/index.html?access_token=*the_access_token*&user_id=user_id&username=18661775819
+```
+* webview加载后，认证成功jsBridge回调
+```
+function handle_action(data, responseCallback) {
+    data = {
+            action: 'q_authed',
+            data: {
+                access_token: access_token,
+                user_id: user_id, 
+                username: username,
+                }
+            }
+    return = {
+        action: 'q_authed',
+        result: {
+            value: true,
+            }
+        }
+    responseCallback(return);
+});
+```

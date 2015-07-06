@@ -20,7 +20,7 @@ class TaskApplicant extends \common\BaseActiveRecord
 
     public static $STATUSES = [
         0 => '等待企业确认',
-        1 => '报名成功',
+        10 => '报名成功',
     ];
 
     
@@ -105,9 +105,14 @@ class TaskApplicant extends \common\BaseActiveRecord
         return $this::$STATUSES[$this->status];
     }
 
+    public function getStatus_options()
+    {
+        return $this::$STATUSES;
+    }
+
     public function fields()
     {
-        return array_merge(parent::fields(), ['status_label']);
+        return array_merge(parent::fields(), ['status_label', 'status_options']);
     }
 
     public function extraFields()
