@@ -12,11 +12,13 @@ define(function(require, exports) {
     });
 
     $(".control-btn").on("click", function() {
-
+        console.log();
     })
 
     $("body").on("click", ".report", function() { //举报
-        util.href("/view/job/report.html?job_id=" + taskID)
+        if (!$(this).hasClass("report-act")) {
+            util.href("/view/job/report.html?job_gid=" + taskID)
+        }
     }).on("click", ".store", function() {
         var $this = $(this);
         if ($this.hasClass("store-act")) {
