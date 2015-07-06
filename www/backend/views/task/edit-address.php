@@ -29,7 +29,6 @@ $this->title = '设置地址';
         <?php }?>
     </ul>
     <hr />
-
         <div id="map" class="row hidden" style="height:0px;">
         </div>
         <div class="row">
