@@ -31,8 +31,6 @@ class WeichatBase{
             $access_token = $arr->access_token;
             Yii::$app->cache->set(
                 $this->_access_token_key, $access_token, 1.8 * 60 * 60);
-            $access_token       = $token_arr->access_token;
-            return $access_token;
         }
         return $access_token;
     }
