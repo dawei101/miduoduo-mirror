@@ -5,7 +5,6 @@
 if (window.WebViewJavascriptBridge) {
     return;
 }
-
 var messagingIframe;
 var sendMessageQueue = [];
 var receiveMessageQueue = [];

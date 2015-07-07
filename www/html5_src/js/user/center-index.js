@@ -13,7 +13,6 @@ define(function(require, exports) {
 
     //我的简历跳转逻辑
     if (miduoduo.user.id) {
-
         $.pageInitGet(api.gen("resume?expand=service_types,freetimes,home_address,workplace_address"), function(data) {
             console.log(data);
             if (data.items && data.items.length > 0) {
@@ -25,9 +24,12 @@ define(function(require, exports) {
     }
 
     //注册、登陆
-    $(".state").find("span").on("click", function() {
+    $(".login").on("click", function() {
         util.auth();
     });
+    $(".register").on("click", function() {
+        util.reg();
+    })
     $(".item").on("click", function(e) {
         e.preventDefault();
         if (miduoduo.user.id) {

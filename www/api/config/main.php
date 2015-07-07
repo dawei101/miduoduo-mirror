@@ -65,6 +65,7 @@ return [
                         'v1/complaint',
                         'v1/user-service-type',
                         'v1/service-type',
+                        'v1/contact-us',
                     ],
                     'pluralize' => '',
                 ],

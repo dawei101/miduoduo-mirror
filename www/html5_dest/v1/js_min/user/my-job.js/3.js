@@ -1,1 +1,0 @@
-define(function(require,exports,module){require("zepto");var tpl=require("../widget/tpl-engine"),sLoad=require("../widget/scroll-load"),api=require("../widget/api");sLoad.startWatch(api.gen("task"),{page:1,"per-page":30},function(data){$(".content").find(".pullUp").before(tpl.parse("job-list-tpl",{jobs:data.items}))})});

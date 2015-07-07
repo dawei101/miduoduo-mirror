@@ -126,6 +126,13 @@ js调用native 方法原理
         action: 'b_get_address',
         data: {
             'title': '附近地点',
+            address: {
+               name: 地址名称,
+               address: 具体地址,
+               city: 城市,
+               latitude: ,
+               longitude: ,
+            }
         }
     }
     Return:
@@ -145,12 +152,19 @@ js调用native 方法原理
 ```
     {
         action: 'b_get_current_location',
-        data: {},
+        data: { // data可以为空，
+            'title': ,
+            'address': ,
+            latitude: ,
+            longitude: ,
+        },
     }
     Return:
     {
         action: 'b_get_current_location',
         result = {
+            'title': ,
+            'address': ,
             latitude: ,
             longitude: ,
             },

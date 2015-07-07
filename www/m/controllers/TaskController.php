@@ -88,7 +88,8 @@ class TaskController extends \m\MBaseController
     public function actionView()
     {
         $this->layout = 'main';
-
+        $user_id = Yii::$app->user->id;
+        $resume =(bool) Resume::find()->where(['user_id'=>$user_id])->one();
         $gid = Yii::$app->request->get('gid');
         $task = null;
         if ($gid){
@@ -113,6 +114,7 @@ class TaskController extends \m\MBaseController
                     'collected'=>$collected,
                     'complainted'=>$complainted,
                     'app'=> $app,
+                    'resume'=> $resume,
                 ]
             );
         } else {

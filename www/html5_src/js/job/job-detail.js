@@ -62,7 +62,12 @@ define(function(require, exports) {
     }
 
     $("body").on("click", ".report", function() { //举报
-        util.href("view/job/report.html?job_gid=" + taskID)
+        if (miduoduo.user.id) {
+            util.href("view/job/report.html?job_gid=" + taskID)
+        } else {
+            showLoginDialog(true);
+        }
+
     }).on("click", ".store", function() {
         if (miduoduo.user.id) {
             var $this = $(this);
@@ -90,8 +95,11 @@ define(function(require, exports) {
         action ? $obj.show() : $obj.hide();
 
     }
-    $(".login-btn").on("click", function() {
+    $(".go-login").on("click", function() {
         util.auth();
+    });
+    $(".go-reg").on("click", function() {
+        util.reg();
     });
     $(".close-login-dialog").on("click", function() {
         $(this).parents(".login-dialog").hide();

@@ -101,6 +101,7 @@ $this->nav_right_title = '首页';
 
 <!--=======以藏的弹出层======-->
 <div class="cd-popup" role="alert">
+<input type="hidden" value="<?= $resume ?>" id="getResume">
   <div class="cd-popup-container">
     <p><?= (Yii::$app->user->isGuest) ? '你好，报名兼职职位需要登录米多多！':'你好，报名兼职职位需要填写简历！' ?></p>
     <ul class="cd-buttons">

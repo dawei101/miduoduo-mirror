@@ -18,7 +18,7 @@
     <ul class="district-list js-top-filter-btn" data-btn="js-district-btn">
         <li data-all="district">全部区域</li>
         <? this.list.forEach(function(item){ ?>
-       <li data-uid="district:district_id:<?=item.id?>"><?=item.name?></li>
+       <li id="district-<?=item.id?>" data-uid="district:district_id:<?=item.id?>"><?=item.name?></li>
         <? }); ?>
     </ul>
 </script>
@@ -27,7 +27,7 @@
     <ul class="job-type-list js-top-filter-btn" data-btn="js-job-type-btn">
         <li data-all="service-type">全部</li>
         <? this.list.forEach(function(item){ ?>
-        <li data-uid="service-type:service_type_id:<?=item.id?>"><?=item.name?></li>
+        <li id="type-<?=item.id?>" data-uid="service-type:service_type_id:<?=item.id?>"><?=item.name?></li>
         <? }); ?>
     </ul>
 </script>
@@ -37,5 +37,4 @@
         <li>默认</li>
     </ul>
 </script>
-</body>
-</html>
+<%include ../footer.html%>

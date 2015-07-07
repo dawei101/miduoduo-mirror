@@ -2,6 +2,7 @@
 
 namespace api\common\models;
 
+use Yii;
 use common\Utils;
 
 class Resume extends \common\models\Resume
