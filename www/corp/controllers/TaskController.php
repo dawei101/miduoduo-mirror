@@ -17,19 +17,27 @@ class TaskController extends FBaseController
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                    'login' => ['post'],
-                    'register' => ['post'],
-                ],
-            ],
-        ];
-    }
+     public function behaviors()
+     {
+         return [
+             'access' => [
+                 'class' => AccessControl::className(),
+                 'rules' => [
+                     [
+                         'actions' => ['index','publish'],
+                         'allow' => true,
+                         'roles' => ['@'],
+                     ],
+                 ],
+             ],
+             'verbs' => [
+                 'class' => VerbFilter::className(),
+                 'actions' => [
+                     'logout' => ['post'],
+                 ],
+             ],
+         ];
+     }
 
     /**
      * @inheritdoc
