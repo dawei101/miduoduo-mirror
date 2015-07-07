@@ -12,7 +12,7 @@ use yii\filters\AccessControl;
 /**
  * Site controller
  */
-class SiteController extends FBaseController
+class TaskController extends FBaseController
 {
     /**
      * @inheritdoc
@@ -52,5 +52,9 @@ class SiteController extends FBaseController
         return $this -> render('index');
     }
 
+    public function actionPublish()
+    {
+        return $this -> render('publish');
+    }
 
 }
