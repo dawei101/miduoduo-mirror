@@ -6,7 +6,6 @@ body {
   .w(100%);
   .clearfix;
   & > div {
-    .w(100%);
     padding: 0 2%;
     .mb(10px);
     .clearfix;
@@ -90,6 +89,7 @@ body {
   }
 
   .part5 {
+    display: none;
     padding: 2%;
     div {
       .ml(4%);
@@ -137,6 +137,50 @@ body {
     }
     .btn-apply-success {
       .bgc(#ff7b5d);
+    }
+  }
+}
+
+.login-dialog {
+  .none;
+  .pf;
+  .w(100%);
+  .h(100%);
+  background: rgba(85,90,103,0.3);
+  z-index: 10000;
+  .main-panel {
+    .pa;
+    top: 20%;
+    left: 30%;
+    right: 30%;
+    bottom: 45%;
+    .bgc(#fff);
+    .border-r(5px);
+    .login-tips {
+      padding: 20% 5%;
+      border-bottom: 1px solid #a5abb2;
+    }
+    .login-btn {
+      div {
+        .w(49%);
+        padding: 10% 0;
+        display: inline-block;
+        vertical-align: middle;
+        box-sizing: border-box;
+        border-right: 1px solid #a5abb2;
+        .c;
+        .f3;
+        .fc(#00b966);
+      }
+      .go-login {
+        border-right: 0px;
+      }
+    }
+    .close-login-dialog {
+      .pa;
+      top: 1%;
+      right: 1%;
+      padding: 4%;
     }
   }
 }

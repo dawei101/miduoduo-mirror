@@ -3,6 +3,18 @@
 <%-mainJs("job/job-detail")%>
 </head>
 <body>
+<div class="login-dialog">
+    <div class="main-panel">
+        <div class="login-tips">
+            您好，报名兼职职位需要登陆米多多！
+        </div>
+        <div class="login-btn">
+            <div>立即注册</div>
+            <div class="go-login">现在登陆</div>
+        </div>
+        <div class="close-login-dialog">x</div>
+    </div>
+</div>
 <script type="text/html" id="main-tpl">
     <? var data = this.data;?>
     <div class="main">
@@ -40,10 +52,10 @@
                 </p>
 
             </div>
-            <p class="tel">
+            <a class="tel" href="tel:<?=data.contact_phonenum?>">
                 <span style="visibility: hidden;font-size: 28px">电话</span> <br/>
                 电话咨询
-            </p>
+            </a>
         </div>
         <div class="part4">
             <div class="sub-title">公司信息</div>
@@ -60,7 +72,7 @@
                 <div style="visibility: hidden;padding-bottom: 36%">报</div> <br/>
                 举报
             </div>
-            <div class="control-btn">
+            <div class="control-btn js-unapply">
                 我要报名
             </div>
         </div>

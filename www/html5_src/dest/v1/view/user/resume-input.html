@@ -13,20 +13,21 @@
     <link rel="stylesheet" href="/v1/css/base.css"/>
     <script type="text/javascript" src="/v1/js_min//third_party/sea.js" ></script>
     <script>
-        window.miduoduo = {};
-        miduoduo.config = {
-            picUrl : "/v1/" + "img",
-            access_token : null,
-            userID : null,
-            phone : 15110083777
-
-        }
+        window.miduoduo || (window.miduoduo = {});
+        miduoduo.basePath = {
+            picUrl : "/v1/" + "img"
+        };
+        miduoduo.user || (miduoduo.user = {}); //id username access_token
+        miduoduo.user.username = "123123";
+        miduoduo.user.phone = miduoduo.user.username;
+        miduoduo.user.id = 4;
         miduoduo.os  = {};
         miduoduo.os.mddApp = window.WebViewJavascriptBridge || false;
         seajs.config({
             base: "/v1/js_min/",
             alias: {
                 "zepto" : "third_party/zepto.js",
+                "zepto-ext" : "widget/zepto-ext.js"
             }
         })
     </script>
@@ -42,12 +43,12 @@
         </div>
 
         <ul class="resume-part1">
-            <li >
+            <!--<li >
                 <div class="title">照片</div>
                 <div class="con control">
                     <input name="avatar" class="js-col" type="text"  placeholder="请上传个人照片"/>
                 </div>
-            </li>
+            </li>-->
             <li>
                 <div class="title">姓名</div>
                 <div class="con">
@@ -84,7 +85,7 @@
             </li>
             <li>
                 <div class="title">居住地点</div>
-                <div class="con control">
+                <div class="con control js-set-address">
                     <input  type="text" placeholder="请选择居住地点"/>
                 </div>
             </li>
@@ -102,6 +103,7 @@
             <li class="sub1">
                 <div class="title">可兼类别</div>
                 <div class="con control js-sel-service-type">
+                    <span></span>
                     <input type="text" placeholder="请选择您擅长的兼职类别"/>
                 </div>
             </li>
@@ -154,7 +156,7 @@
     <div class="type-content">
         <? var as = this.as;?>
         <? this.list.forEach(function(e) {?>
-        <div class="item <?=(as.indexOf(e.name) > -1 ? 'act' : '')?>" data-code="<?=e.id?>">
+        <div class="type-item <?=(as.indexOf(e.name) > -1 ? 'act' : '')?>" data-code="<?=e.id?>">
             <?=e.name?>
         </div>
         <? }); ?>

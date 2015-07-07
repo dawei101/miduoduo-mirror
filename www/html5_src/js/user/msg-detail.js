@@ -7,7 +7,7 @@ define(function(require, exports) {
     var msgType = urlHandle.getParams(window.location.search)["msg-type"];
     $.get(api.gen(msgType), function(data) {
         console.log(data);
-        $("body").append(tpl.parse("msg-list-tpl", {}));
+        $("body").append(tpl.parse("msg-list-tpl", {msgs : data.items}));
     })
 
 
