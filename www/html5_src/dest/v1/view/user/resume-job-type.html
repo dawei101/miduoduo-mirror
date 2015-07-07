@@ -6,7 +6,7 @@
     <div class="type-content">
         <? var as = this.as;?>
         <? this.list.forEach(function(e) {?>
-        <div class="item <?=(as.indexOf(e.name) > -1 ? 'act' : '')?>" data-code="<?=e.id?>">
+        <div class="type-item <?=(as.indexOf(e.name) > -1 ? 'act' : '')?>" data-code="<?=e.id?>">
             <?=e.name?>
         </div>
         <? }); ?>

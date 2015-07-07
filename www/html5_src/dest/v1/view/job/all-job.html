@@ -13,20 +13,21 @@
     <link rel="stylesheet" href="/v1/css/base.css"/>
     <script type="text/javascript" src="/v1/js_min//third_party/sea.js" ></script>
     <script>
-        window.miduoduo = {};
-        miduoduo.config = {
-            picUrl : "/v1/" + "img",
-            access_token : null,
-            userID : null,
-            phone : 15110083777
-
-        }
+        window.miduoduo || (window.miduoduo = {});
+        miduoduo.basePath = {
+            picUrl : "/v1/" + "img"
+        };
+        miduoduo.user || (miduoduo.user = {}); //id username access_token
+        miduoduo.user.username = "123123";
+        miduoduo.user.phone = miduoduo.user.username;
+        miduoduo.user.id = 4;
         miduoduo.os  = {};
         miduoduo.os.mddApp = window.WebViewJavascriptBridge || false;
         seajs.config({
             base: "/v1/js_min/",
             alias: {
                 "zepto" : "third_party/zepto.js",
+                "zepto-ext" : "widget/zepto-ext.js"
             }
         })
     </script>
@@ -76,30 +77,34 @@
 <!--职位列表模板-->
 <script type="text/html" id="job-list-tpl">
     <div class="jobList">
+        <? var showOthers = this.showOthers;?>
         <? this.jobs.forEach(function(e) { ?>
-        <a href="">
+        <? var task = e.task ? e.task : e;?>
+        <a href="/view/job/job-detail.html?task=<?=task.id?>">
             <div class="part1">
-                <div class="title"><?=e.title?></div>
+                <div class="title"><?=task.title?></div>
                 <?
-                    var ct = new Date(e.created_time);
+                    var ct = new Date(task.created_time);
                     var pubDate = ct.getMonth()+1 + "-" + ct.getDate();
                 ?>
                 <div class="pub-time"><?=pubDate?></div>
             </div>
             <div class="part2">
-                <div class="firstDiv"><?=+e.salary + "/" + (e.salary_unit_label || "?")?></div>
-                <? e.labels.forEach(function(label, i){?>
+                <div class="firstDiv"><?=+task.salary + "/" + (task.salary_unit_label || "?")?></div>
+                <? task.labels && task.labels.forEach(function(label, i){?>
                 <?if (label) {?>
                 <div ><?=label?></div>
                 <? } ?>
                 <? }); ?>
             </div>
         </a>
-        <div class="others">
-            <div class="status">报名成功</div>
-            <div class="report"> <span>x</span><br/>举报</div>
-            <a class="tel" href="tel:18310835520"><span>x</span><br/>联系企业</a>
+        <? if (showOthers) {?>
+        <div class="others" data-gid="<?=task.id?>">
+            <div class="status"><?=e.status_label?></div>
+            <div class="report"> <span style="visibility: hidden">x</span><br/>举报</div>
+            <a class="tel" href="tel:<?=task.contact_phonenum?>"><span style="visibility: hidden">x</span><br/>联系企业</a>
         </div>
+        <? } ?>
         <? }); ?>
     </div>
 </script>
