@@ -71,7 +71,10 @@ define(function(require, exports) {
     $(".js-set-address").on("click", function() {
         var $this = $(this);
         util.setAddress(function(data) {
-            alert(data);
+            alert("app返回的地址信息：" + JSON.stringify(data));
+            $.post(api.gen("address"), data, function(d) {
+                console.log(d);
+            });
         });
     })
     //提交

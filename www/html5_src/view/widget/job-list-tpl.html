@@ -4,7 +4,7 @@
         <? var showOthers = this.showOthers;?>
         <? this.jobs.forEach(function(e) { ?>
         <? var task = e.task ? e.task : e;?>
-        <a href="/view/job/job-detail.html?task=<?=task.gid?>">
+        <a href="/view/job/job-detail.html?task=<?=task.id?>">
             <div class="part1">
                 <div class="title"><?=task.title?></div>
                 <?
@@ -23,7 +23,7 @@
             </div>
         </a>
         <? if (showOthers) {?>
-        <div class="others" data-gid="<?=task.gid?>">
+        <div class="others" data-gid="<?=task.id?>">
             <div class="status"><?=e.status_label?></div>
             <div class="report"> <span style="visibility: hidden">x</span><br/>举报</div>
             <a class="tel" href="tel:<?=task.contact_phonenum?>"><span style="visibility: hidden">x</span><br/>联系企业</a>

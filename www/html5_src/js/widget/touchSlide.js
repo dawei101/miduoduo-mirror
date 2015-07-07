@@ -30,6 +30,8 @@ define(function(require, exports, module) {
         /*属性写在构造函数中*/
         function TouchSlide(el, opts) {
             var self = this;
+            self.pos = 0;
+            self.preIndex = 0;
             self.wrap = el;
             self.index = 0;
             self.ul = self.wrap.find(opts.ul);
@@ -108,6 +110,7 @@ define(function(require, exports, module) {
             /*移动*/
             move: function() {
                 var self = this;
+                self.preIndex = self.index;
                 if (arguments[0] == 0) {
                     //不循环的时候
                     if (!self.isLoop) {
@@ -128,8 +131,12 @@ define(function(require, exports, module) {
                         self.index--;
                     }
                 }
+                var pp = self.liWidth*(Math.abs(self.preIndex-self.index));
+                if(arguments[0] == 0) { pp = pp*-1}
+                self.pos = self.pos + pp;
                 self.ul.animate({
-                        "left": -self.liWidth * self.index + "px"
+                        "-webkit-transform" : "translate(" + self.pos + "px,0)"
+                     //   "left": -self.liWidth * self.index + "px"
                     },
                     self.speed,
                     function() {
@@ -199,16 +206,21 @@ define(function(require, exports, module) {
                     //阻止网页默认动作（即网页滑动）
                     event.preventDefault();
                     //这里是为了手指一定是横向滑动的,原理是计算X位置的偏移要比Y的偏移大
+
                     if (Math.abs(x) > Math.abs(y)) {
+
                         //向左滑动
                         if (x < 0) {
+                            console.log(self.pos);
+                            x += self.pos;
                             spirit = 0;
-                            self.ul.css("left", ulOffset - Math.abs(x) + "px");
+                            self.ul.css("-webkit-transform", "translate(" + x + "px"+ ",0)");
                         }
                         //向右滑动
                         else {
+                            x += self.pos;
                             spirit = 1;
-                            self.ul.css("left", ulOffset + Math.abs(x) + "px");
+                            self.ul.css("-webkit-transform", "translate(" + x + "px"+ ",0)");
                         }
                     }
                 }

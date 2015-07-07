@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    require("zepto");
+    require("zepto-ext");
     require("widget/touchSlide");
     var tpl = require("widget/tpl-engine");
     var sLoad = require("widget/scroll-load");
