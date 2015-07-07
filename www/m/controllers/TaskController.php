@@ -9,16 +9,18 @@ use yii\filters\AccessControl;
 use yii\helpers\Url;
 use common\Utils;
 use common\models\Task;
+use common\models\TaskCollection;
+use common\models\TaskApplicant;
 use common\models\Resume;
 use common\models\District;
 use common\models\ServiceType;
-use common\models\TaskApplicant;
 use yii\data\Pagination;
 use common\models\WeichatPushSetTemplatePushItem;
 
 
 class TaskController extends \m\MBaseController
 {
+
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -131,6 +133,8 @@ class TaskController extends \m\MBaseController
 
     public function actionView()
     {
+        $this->layout = 'main';
+
         $gid = Yii::$app->request->get('gid');
         $task = null;
         if ($gid){
@@ -138,8 +142,20 @@ class TaskController extends \m\MBaseController
                 ->with('city')->with('district')->one();
         }
         if ($task){
+            $collected = false;
+            $app = null;
+            if (!Yii::$app->user->isGuest){
+                $collected = TaskCollection::find()->where(
+                    ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->exists();
+                $app = TaskApplicant::find()->where(
+                    ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->one();
+            }
             return $this->render('view', 
-                ['task'=>$task, ]
+                [
+                    'task'=>$task,
+                    'collected'=>$collected,
+                    'app'=> $app,
+                ]
             );
         } else {
             $this->render404("未知的信息");
