@@ -56,10 +56,9 @@ return [
                         'v1/address',
                         'v1/offline-order',
                         'v1/resume',
-                        'v1/task',
                         'v1/freetime',
+                        'v1/task',
                         'v1/task-applicant',
-                        'v1/task-collection',
                         'v1/district',
                         'v1/sys-message',
                         'v1/message',
@@ -71,13 +70,28 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/task-collection'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'GET exists/<id:\d+>' => 'exists',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/freetime'],
                     'pluralize' => '',
                     'extraPatterns' => [
                         'POST free-all' => 'free-all',
                     ],
                 ],
-
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/task-address'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'GET nearby' => 'nearby',
+                    ],
+                ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/user'],

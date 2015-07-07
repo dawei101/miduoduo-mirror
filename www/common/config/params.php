@@ -12,4 +12,6 @@ return [
     'baseurl.frontend' => 'http://www.miduoduo.cn',
 
     'baseurl.h5_origin' => 'http://origin.miduoduo.cn',
+
+    'nearby_search.max_distance' => 5000, // 单位米
 ];
