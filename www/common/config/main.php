@@ -1,5 +1,21 @@
 <?php
 $root_path = dirname(dirname(__DIR__));
+
+$params = [
+        'weichat'=>[
+            'appid'     => 'wxc940e677d43db45d',                // 微信公众号ID
+            'secret'    => '284769fa88c6ba0496cc2aa06ef1d7c4',  // 微信secret
+            'scope1'    => 'snsapi_base',                       // 获取基本信息
+            'scope2'    => 'snsapi_userinfo',                   // 获取详细信息
+            'pushset'   => [
+                'pushtime'      => [1=>'上午9点',2=>'下午3点'],     // 推送时间
+                'pushtype'      => [1=>'固定内容',2=>'用户偏好'],   // 推送类型
+                'status'        => [1=>'启用',2=>'停用'],           // 状态
+                'tmp_weichat'   => [1=>'兼职',2=>'通知'],           // 微信模板
+            ],
+        ],
+    ];
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
@@ -62,8 +78,8 @@ return [
         'm' => $root_path . '/m',
         'html5_src' => $root_path . '/html5_src',
         'html5_dest' => $root_path . '/html5_dest',
-        'corp' => $root_path . '/corp'
     ],
     'language'=>'zh-CN',
     'timeZone' => 'Asia/Shanghai',
+    'params' => $params,
 ];
