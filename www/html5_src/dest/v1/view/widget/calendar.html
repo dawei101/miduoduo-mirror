@@ -14,7 +14,9 @@
     <script type="text/javascript" src="/v1/js_min//third_party/sea.js" ></script>
     <script>
         window.miduoduo || (window.miduoduo = {});
+        miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
         miduoduo.basePath = {
+            base : "/v1/",
             picUrl : "/v1/" + "img"
         };
         miduoduo.user || (miduoduo.user = {}); //id username access_token
@@ -67,7 +69,7 @@
         </div>
     </div>
     <div class="part3">
-        <div class="year-panel-container"></div>
+        <ul class="year-panel-container"></ul>
     </div>
     <div class="part4"></div>
 </div>
