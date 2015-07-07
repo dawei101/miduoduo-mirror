@@ -3,6 +3,7 @@ define(function(require, exports, module) {
     var sLoad = require("../widget/scroll-load");
     var api = require("../widget/api");
     var tpl = require("../widget/tpl-engine");
+    var util = require("../widget/util")
     var url = "task";
 
     $(".js-district-btn").on("click", function() {
@@ -110,5 +111,10 @@ define(function(require, exports, module) {
             return JSON.stringify(tempArr);
         }
     }
+
+    $(".content").on("click", "a", function(e) {
+        e.preventDefault();
+        util.href($(this).attr("href"));
+    })
 
 });

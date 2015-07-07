@@ -22,4 +22,9 @@ define(function(require, exports, module) {
             util.href("/view/job/report.html?job-gid=" + $(this).parent().data("gid"));
         }
     })
+
+    $(".content").on("click", "a", function(e) {
+        e.preventDefault();
+        util.href($(this).attr("href"));
+    })
 });

@@ -20,4 +20,9 @@ define(function(require, exports, module) {
         }
     })
     $(".tab1").click();
+
+    $(".content").on("click", "a", function(e) {
+        e.preventDefault();
+        util.href($(this).attr("href"));
+    })
 });

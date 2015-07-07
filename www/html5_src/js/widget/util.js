@@ -28,7 +28,7 @@ define(function(require, exports) {
         app(opts, callback);
     }
 
-    function location(callback) {
+    function appLocation(callback) {
         var opts = {
             action : "b_get_address",
             data : {
@@ -65,7 +65,8 @@ define(function(require, exports) {
     function href(_url) {
         //_url += '/v1/'   //编译的时候加上这句话
         if (!miduoduo.os.mddApp) {
-            location.href = _url;
+            window.location.href = "http://www.baidu.com"
+            window.location.href = _url;
         } else {
             push(_url);
         }
@@ -83,13 +84,13 @@ define(function(require, exports) {
     //注册、登陆
     function auth() {
         appAuth(function(data) {
-            location.reload(); //登陆成功直接重新加载页面
+            window.location.reload(); //登陆成功直接重新加载页面
         });
     }
 
     //设置地址
     function setAddress(callback) {
-        location(callback);
+        appLocation(callback);
     }
 
     //日期格式化输出

@@ -55,6 +55,7 @@ define(function(require, exports) {
             }
         }
         console.log(arguments);
+        alert(res.status + " " + res.statusText);
     }
 
     function parseArguments(url, data, success, dataType) {
