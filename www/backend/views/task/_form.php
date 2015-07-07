@@ -48,9 +48,9 @@ use common\models\District;
         ]) ?>
 
 
-    <?= $form->field($model, 'from_time')->textInput() ?>
+    <?= $form->field($model, 'from_time')->textInput(['class'=>'timepicker']) ?>
 
-    <?= $form->field($model, 'to_time')->textInput() ?>
+    <?= $form->field($model, 'to_time')->textInput(['class'=>'timepicker']) ?>
 
     <?= $form->field($model, 'need_quantity')->textInput() ?>
 
@@ -128,9 +128,18 @@ use common\models\District;
 
 </div>
 
+<?php $this->beginBlock('css') ?>
+ <link href="/css/jquery.timepicker.css" media="all" rel="stylesheet" />
+<?php $this->endBlock('css') ?>
 <?php $this->beginBlock('js') ?>
+<script src="/js/jquery.timepicker.min.js" ></script>
 <script>
 $(function(){
+    $(".timepicker").timepicker({
+        lang: { am: '上午', pm: '下午', AM: '上午', PM: '下午', decimal: '.', mins: '分钟', hr: '小时', hrs: '小时' },
+        timeFormat: 'H:i'
+    });
+
     var cipt = $("#company-id");
     var sr = $("#search-result");
     var kwipt = $("#keyword");
