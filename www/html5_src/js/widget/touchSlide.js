@@ -86,6 +86,7 @@ define(function(require, exports, module) {
                                 self.loadImg(self.len - 1,
                                     function() {
                                         self.li.eq(self.len - 1).clone().appendTo(self.ul);
+                                        //self.ul.css("-webkit-transform", "translate(" + x + "px"+ ",0)");
                                         self.ul.children().eq(self.len + 1).css({
                                             "position": "relative",
                                             "left": -self.liWidth * (self.len + 2)
@@ -142,10 +143,12 @@ define(function(require, exports, module) {
                     function() {
                         self.lazyLoad && self.loadImg(self.index);
                         if (self.index > self.len - 1) {
-                            self.ul.css("left", 0);
+                            self.pos = 0;
+                            self.ul.css("-webkit-transform", "translate(0,0)");
                             self.index = 0;
                         } else if (self.index < 0) {
-                            self.ul.css("left", -self.liWidth * (self.len - 1));
+                            self.pos = (-self.liWidth * (self.len - 1));
+                            self.ul.css("-webkit-transform", "translate(" +(-self.liWidth * (self.len - 1)) + ",0)");
                             self.index = self.len - 1;
                         }
                     });
