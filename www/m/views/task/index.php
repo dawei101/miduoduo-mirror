@@ -63,7 +63,50 @@ $this->nav_right_title = '首页';
   <!--===========以上是固定在顶部的==============--> 
 <?php $this->beginBlock('js') ?>
 <script type="text/javascript">
+
+    
+
   $(function(){
+    function getH5Location(callback) {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position){
+            var c= position.coords;
+            callback({lat: c.latitude, lng: c.longitude});
+          });
+      } else {
+          callback();
+      }
+    }
+    function getWxLocation(callback){
+
+    }
+    getH5Location(function(location){
+      if (location){
+          var url = 'http://api.map.baidu.com/geoconv/v1/?coords='
+              + location.lng + ',' + location.lat + '&from=1&to=5&ak='
+              + "<?=Yii::$app->params['baidu.map.web_key']?>";
+          $.ajax({
+            'dataType': 'jsonp',
+            'url': url,
+            success: function(json){
+                console.log(json);
+                if(json['status']==0){
+                    setLocation({lng: json.result[0].x, lat: json.result[0].y})
+                }
+            },
+            error: function(e){
+                console.log(e);
+            }
+          });
+      }
+    });
+
+    function setLocation(location){
+        
+    }
+  });
+  $(function(){
+
     $(".select").each(function(){
       var s=$(this);
       var z=parseInt(s.css("z-index"));

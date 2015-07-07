@@ -7,6 +7,9 @@ use common\models\WeichatUserLog;
 
 class WeichatBase{
 
+
+    private $_access_token_key = 'wechat_access_token';
+
     /**
      *
      * getWeichatAccessToken 获取当前有效的微信access-token
@@ -18,35 +21,20 @@ class WeichatBase{
      *
      */
     public function getWeichatAccessToken(){
-        $access_token_arr   = WeichatAccesstoken::find()->asArray()->orderBy('id DESC')->one();
-        // 判断是否已经过期了
-        $created_time       = $access_token_arr['created_time'];
-        $expires_in         = $access_token_arr['expires_in'] - 3600; // 获取每日限制100次，有效期2小时，这里如果 超过1小时，重新获取
-        $time_now           = time();
-        $time_diff          = $time_now - strtotime($created_time);
-        // 如果过期，重新获取
-        if( $time_diff > $expires_in ){
-            $appid          = Yii::$app->params['weichat']['appid'];
-            $secret         = Yii::$app->params['weichat']['secret'];
-            $getTokenUrl    = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$secret;
-            $token_json     = $this->getWeichatAPIdata($getTokenUrl);
-            $token_arr      = json_decode($token_json); 
-
-            // 将新的 access_token 保存起来
-            $datetime       = date("Y-m-d H:i:s",time());
-            $tokenobj       = new WeichatAccesstoken();
-            $tokenobj->access_token = $token_arr->access_token;
-            $tokenobj->expires_in   = $token_arr->expires_in;
-            $tokenobj->created_time = $datetime;
-            $tokenobj->update_time  = $datetime;
-            $tokenobj->save();
-
+        $access_token = Yii::$app->cache->get($this->_access_token_key);
+        if($access_token){
+            $appid = Yii::$app->params['weichat']['appid'];
+            $secret = Yii::$app->params['weichat']['secret'];
+            $getTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$secret;
+            $json = $this->getWeichatAPIdata($getTokenUrl);
+            $arr = json_decode($json); 
+            $access_token = $arr->access_token;
+            Yii::$app->cache->set(
+                $this->_access_token_key, $access_token, 1.8 * 60 * 60);
             $access_token       = $token_arr->access_token;
             return $access_token;
-        }else{
-            $access_token       = $access_token_arr['access_token'];
-            return $access_token;
         }
+        return $access_token;
     }
 
     /**

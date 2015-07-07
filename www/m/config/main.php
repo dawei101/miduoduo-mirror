@@ -23,6 +23,9 @@ return [
             'enableAutoLogin' => true,
             'loginUrl' => '/user/login'
         ],
+        'request' => [
+            'class' => 'm\MRequest',
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
