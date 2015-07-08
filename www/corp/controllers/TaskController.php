@@ -10,6 +10,7 @@ use yii\filters\AccessControl;
 use common\models\Task;
 use common\models\TaskAddress;
 
+use corp\models\TaskPublishModel;
 
 /**
  * Site controller
@@ -64,15 +65,13 @@ class TaskController extends FBaseController
 
     public function actionPublish()
     {
-        $model = new Task();
+        $model = new TaskPublishModel();
         $company_id = Yii::$app->getSession()->setFlash('success', 'New password was saved.');
         $data = Yii::$app->request->post();
         $data['company_id'] = $company_id;
 
         if ($model->load($data, '')) {
-            if ($user = $model->save()) {
-                return $this->goHome();
-            }
+            print_r($model);
         }
         return $this -> render('publish');
     }

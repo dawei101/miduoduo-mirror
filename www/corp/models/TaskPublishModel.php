@@ -8,7 +8,7 @@ use yii\base\Model;
 /**
  * Login form
  */
-class TaskPublish extends Model
+class TaskPublishModel extends Model
 {
     public $title;
     public $clearance_period;
