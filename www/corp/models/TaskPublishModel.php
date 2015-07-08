@@ -37,7 +37,7 @@ class TaskPublishModel extends Model
     public function rules()
     {
         return [
-             [['title', '$salary'], 'required'],
+             [['title', 'salary'], 'required'],
         ];
     }
 
