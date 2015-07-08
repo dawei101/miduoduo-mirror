@@ -44,6 +44,7 @@ class TaskApplicant extends \common\BaseActiveRecord
             ['created_time', 'default', 'value'=>time(), 'on'=>'insert'],
             ['task_id', 'unique', 'targetAttribute' => ['task_id', 'user_id'], 'message'=>'已报名过'],
             [['company_alerted', 'applicant_alerted'], 'default', 'value'=>'false'],
+            ['status', 'default', 'value'=>0],
         ];
     }
 

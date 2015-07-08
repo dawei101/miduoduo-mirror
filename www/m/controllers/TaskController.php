@@ -100,6 +100,7 @@ class TaskController extends \m\MBaseController
             return $this->redirect('/resume/edit');
         }
         if ($task && !TaskApplicant::isApplied($user_id, $task->id)){
+
             $tc = new TaskApplicant;
             $tc->task_id = $task->id;
             $tc->user_id = Yii::$app->user->id;

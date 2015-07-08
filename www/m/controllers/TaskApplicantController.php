@@ -6,7 +6,11 @@ use Yii;
 
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+
+use common\Utils;
 use common\models\TaskApplicant;
+use common\models\Task;
+use common\models\Resume;
 
 
 class TaskApplicantController extends \m\MBaseController
@@ -42,16 +46,46 @@ class TaskApplicantController extends \m\MBaseController
         if (!$task_id){
             $this->render404();
         }
+        $task = Task::findOne($task_id);
+        if (!$task){
+            $this->render404();
+        }
 
         $tc = TaskApplicant::find(['task_id'=>$task_id,
             'user_id'=>$user_id
         ])->one();
 
+        $resume = Resume::find()->where(['user_id'=>$user_id])->one();
+
         if (!$tc){
             $tc = new TaskApplicant;
+            $tc->task_id = $task_id;
+            $tc->user_id = $user_id;
+
+            if (Utils::isPhonenum($task->contact_phonenum)){
+                Yii::$app->sms_pusher->push(
+                    $resume->phonenum,
+                    ['task'=>$task, 'resume'=>$resume],
+                    'to-applicant-task-applied-done'
+                );
+                Yii::$app->sms_pusher->push(
+                    $task->contact_phonenum,
+                    ['task'=>$task, 'resume'=>$resume],
+                    'to-company-get-new-application'
+                );
+                $tc->applicant_alerted = true;
+                $tc->company_alerted = true;
+            } else {
+               Yii::$app->sms_pusher->push(
+                    $resume->phonenum,
+                    ['task'=>$task, 'resume'=>$resume],
+                    'to-applicant-task-need-touch-actively'
+                );
+                $tc->company_alerted = false;
+                $tc->applicant_alerted = true;
+            }
         }
-        $tc->task_id = $task_id;
-        $tc->user_id = $user_id;
+
         $tc->save();
         return $this->renderJson([
             'success'=> true,
