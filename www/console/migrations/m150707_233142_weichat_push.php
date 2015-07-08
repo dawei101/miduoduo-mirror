@@ -1,10 +1,9 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\BaseMigration;
+use console\BaseMigration;
 
 class m150707_233142_weichat_push extends BaseMigration
-{
 {
     public function up()
     {
