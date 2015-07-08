@@ -14,19 +14,40 @@
     <script type="text/javascript" src="<%=baseJsUrl%>/third_party/sea.js" ></script>
     <script>
        // alert(window.WebViewJavascriptBridge);
-        //alert(JSON.stringify(window.miduoduo));
-        window.miduoduo || (window.miduoduo = {});
+        if (!window.miduoduo) { //如果app没有注入该变量，则认为不在app里
+            window.miduoduo = {};
+            miduoduo.os  = {};
+            miduoduo.os.mddApp = false;
+        } else {
+            miduoduo.user = JSON.parse(miduoduo.user);
+            miduoduo.os  = {};
+            miduoduo.os.mddApp = true;
+        }
         miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
         miduoduo.basePath = {
             base : "<%=baseUrl%>",
             picUrl : "<%=baseUrl%>" + "img"
         };
         miduoduo.user || (miduoduo.user = {}); //id username access_token
-        miduoduo.user.username = "123123";
+        //miduoduo.user.username = "123123";
         miduoduo.user.phone = miduoduo.user.username;
-        miduoduo.user.id = 4;
-        miduoduo.os  = {};
-        miduoduo.os.mddApp = window.WebViewJavascriptBridge || false;
+        //miduoduo.user.id = 4;
+
+       document.addEventListener('WebViewJavascriptBridgeReady', function() {
+           WebViewJavascriptBridge.defaultHandler(handle_action)
+       }, false);
+       function handle_action(data, responseCallback) {
+           var state = true;
+           var rst = {
+               action: 'q_before_quit',
+               result: {
+                   value: state,
+                   message: '',
+               }
+           }
+           responseCallback(rst);
+       };
+
         seajs.config({
             base: "<%=baseJsUrl%>",
             alias: {

@@ -11,7 +11,7 @@ define(function(require, exports) {
         datePanel(date);
         $(".curr-y").text(year);
         $(".curr-m").text(month);
-        $(".part3").touchSlide({isLoop : false, isAuto : false});
+        $(".part2").touchSlide({ui : "year-panel-container", isLoop : false, isAuto : false, pos : -0.89 * ($(".year-panel-container").width()), index : 8});
     }
 
     function buildYearPanel(year) {
@@ -50,4 +50,9 @@ define(function(require, exports) {
         $div.append(frag);
         $(".dayNum").append($div);
     }
+
+    //事件区
+    $(".curr-y").on("click", function() {
+        $(".year-panel-container").css("-webkit-transform", "translate3d(-88.8%, 0, 0)").animate({opacity : 1}, 300);
+    });
 });
