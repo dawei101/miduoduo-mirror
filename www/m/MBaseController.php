@@ -8,7 +8,7 @@ use yii\web\HttpException;
 class MBaseController extends BaseController
 {
 
-    public $layout = 'main';
+    public $layout = 'bootstrap';
 
     public function beforeAction($action)
     {

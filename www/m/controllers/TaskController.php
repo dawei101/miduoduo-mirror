@@ -84,54 +84,6 @@ class TaskController extends \m\MBaseController
             ]);
     }
 
-    public function actionApply()
-    {
-        $gid = Yii::$app->request->get('gid');
-        $task = null;
-        if ($gid){
-            $task = Task::find()->where(['gid'=>$gid])->one();
-        }
-        if (!$task){
-            $this->render404();
-        }
-        $user_id = Yii::$app->user->id;
-        $resume = Resume::find()->where(['user_id'=>$user_id])->one();
-        if (!$resume){
-            return $this->redirect('/resume/edit');
-        }
-        if ($task && !TaskApplicant::isApplied($user_id, $task->id)){
-
-            $tc = new TaskApplicant;
-            $tc->task_id = $task->id;
-            $tc->user_id = Yii::$app->user->id;
-
-            if (Utils::isPhonenum($task->contact_phonenum)){
-                Yii::$app->sms_pusher->push(
-                    $resume->phonenum,
-                    ['task'=>$task, 'resume'=>$resume],
-                    'to-applicant-task-applied-done'
-                );
-                Yii::$app->sms_pusher->push(
-                    $task->contact_phonenum,
-                    ['task'=>$task, 'resume'=>$resume],
-                    'to-company-get-new-application'
-                );
-                $tc->applicant_alerted = true;
-                $tc->company_alerted = true;
-            } else {
-               Yii::$app->sms_pusher->push(
-                    $resume->phonenum,
-                    ['task'=>$task, 'resume'=>$resume],
-                    'to-applicant-task-need-touch-actively'
-                );
-                $tc->company_alerted = false;
-                $tc->applicant_alerted = true;
-            }
-            $tc->save();
-        }
-        return $this->redirect(Url::toRoute(['/task/view', 'gid'=>$gid]));
-    }
-
     public function actionView()
     {
         $this->layout = 'main';

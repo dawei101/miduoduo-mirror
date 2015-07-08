@@ -43,6 +43,7 @@ class TaskApplicantController extends \m\MBaseController
     {
         $task_id = Yii::$app->request->post('task_id');
         $user_id = Yii::$app->user->id;
+
         if (!$task_id){
             $this->render404();
         }
@@ -51,13 +52,12 @@ class TaskApplicantController extends \m\MBaseController
             $this->render404();
         }
 
-        $tc = TaskApplicant::find(['task_id'=>$task_id,
-            'user_id'=>$user_id
-        ])->one();
-
-        $resume = Resume::find()->where(['user_id'=>$user_id])->one();
+        $tc = TaskApplicant::findOne(
+            ['task_id'=>$task_id, 'user_id'=>$user_id ]);
 
         if (!$tc){
+            $resume = Resume::find()->where(['user_id'=>$user_id])->one();
+
             $tc = new TaskApplicant;
             $tc->task_id = $task_id;
             $tc->user_id = $user_id;
@@ -84,13 +84,17 @@ class TaskApplicantController extends \m\MBaseController
                 $tc->company_alerted = false;
                 $tc->applicant_alerted = true;
             }
+            $tc->save();
+            return $this->renderJson([
+                'success'=> true,
+                'message' => '报名成功',
+            ]);
         }
-
-        $tc->save();
         return $this->renderJson([
-            'success'=> true,
-            'message' => '报名成功',
-        ]);
+                'success'=> false,
+                'message' => '已报过名',
+            ]);
+
     }
 
     public function actionDelete()

@@ -83,7 +83,8 @@ $this->nav_right_title = '首页';
             <div style="background: #a5abb2;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
         <?php } else if ($app && $app->status==10) { ?>
             <div style="background: #ff7b5d;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
-        <?php } else { ?>
+        <?php }
+        if(!$app) { ?>
          <div id="apply" class="midd-l bottom-bnt bottom-bnt-bm">我要报名</div>
         <?php } ?>
     <?php } ?>
