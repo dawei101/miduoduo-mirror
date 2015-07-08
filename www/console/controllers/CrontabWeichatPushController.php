@@ -67,7 +67,7 @@ class CrontabWeichatPushController extends Controller
                 foreach( $userlist as $key => $value ){
                     $pusher->pushWeichatMsg(
                         $value['openid'],
-                        'qwENcjpEuIBn53LHyFh4-PmmpVaSmL04WpylDX1JkaE',
+                        Yii::$app->params['weichat']['tmp_weichat']['nearby'],
                         $params,
                         $gotoUrl,
                         $pushGroup

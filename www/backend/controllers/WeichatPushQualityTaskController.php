@@ -137,7 +137,7 @@ class WeichatPushQualityTaskController extends BBaseController
             foreach( $userlist as $key => $value ){
                 $pusher->pushWeichatMsg(
                     $value['openid'],
-                    'NoEWsq5BpBRdEymm3-W6YrYoBBkyWCFNUkfJhpCbYcc',
+                    Yii::$app->params['weichat']['tmp_weichat']['quality'],
                     $params,
                     $gotoUrl,
                     $pushGroup
