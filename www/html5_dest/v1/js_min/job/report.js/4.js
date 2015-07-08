@@ -1,0 +1,1 @@
+define(function(require,exports){require("zepto");var url=(require("../widget/api"),require("../widget/url-handle"));url.getParams(window.location.search).job_id});

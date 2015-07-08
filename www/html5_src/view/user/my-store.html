@@ -1,0 +1,21 @@
+<%include ../header.html%>
+<%-css("user/my-store")%>
+<%-mainJs("user/my-store")%>
+</head>
+<body>
+<div class="top">
+    <div class="tab">
+        <div class="tab1 act" >可报名</div>
+        <div class="tab2">已结束</div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="list"></div>
+    <div class="pullUp">加载中...</div>
+</div>
+
+<!--职位列表-->
+<%include ../widget/job-list-tpl.html%>
+</body>
+</html>

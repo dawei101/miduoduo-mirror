@@ -11,20 +11,9 @@ use api\modules\BaseActiveController;
  */
 class TaskApplicantController extends BaseActiveController
 {
-    public $modelClass = 'api\common\models\TaskApplicant';
+    public $modelClass = 'common\models\TaskApplicant';
 
-    public function buildBaseQuery()
-    {
-        $model = $this->modelClass;
-        $query = $model::find()->where(['user_id'=>\Yii::$app->user->id]);
-        return $query;
-    }
-
-    public function checkAccess($action, $model = null, $params = [])
-    {
-        if ($action=='view' && $model->user_id!=\Yii::$app->user->id){
-            throw new ForbiddenHttpException('No access to view this address');
-        }
-        parent::checkAccess($action, $model, $params);
-    }
+    public $id_column = 'task_id';
+    public $auto_filter_user = true;
+    public $user_identifier_column = 'user_id';
 }

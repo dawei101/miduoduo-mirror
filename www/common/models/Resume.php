@@ -136,30 +136,45 @@ class Resume extends \common\BaseActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public function getHome()
+    public function getService_types()
+    {
+        return $this->hasMany(ServiceType::className(), ['id' => 'service_type_id'])
+            ->viaTable(UserHasServiceType::tableName(), ['user_id' => 'user_id']);
+    }
+
+    public function getFreetimes()
+    {
+        return $this->hasMany(Freetime::className(), ['user_id' => 'user_id']);
+    }
+
+    public function getHome_address()
     {
         return $this->hasOne(Address::className(), ['id' => 'home']);
     }
 
-    public function getWorkplace()
+    public function getWorkplace_address()
     {
         return $this->hasOne(Address::className(), ['id' => 'workplace']);
     }
 
-    public function extraFields()
+    public function getGender_label()
     {
-        return ['user', 'home', 'workplace'];
+        return static::$GENDERS[$this->gender];
+    }
+
+    public function getGrade_label()
+    {
+        return static::$GRADES[$this->grade];
     }
 
     public function fields()
     {
+        return array_merge(parent::fields(), ['grade_label', 'gender_label']);
+    }
 
-        ['id', 'name', 'phonenum', 'gender', 'birthdate',
-            'degree', 'nation', 'height', 'is_student',
-            'college', 'avatar', 'gov_id', 'grade',
-            'created_time', 'updated_time', 'status',
-            'user_id', 'home', 'workplace', 'origin',
-            'major', 'job_willes'];
+    public function extraFields()
+    {
+        return ['user', 'home_address', 'workplace_address', 'service_types', 'freetimes'];
     }
 
 }

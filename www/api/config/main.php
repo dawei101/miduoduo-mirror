@@ -52,14 +52,45 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/address', 'v1/resume',
-                        'v1/offline-order', 'v1/task', 'v1/freetime',
+                    'controller' => [
+                        'v1/address',
+                        'v1/offline-order',
+                        'v1/resume',
+                        'v1/freetime',
+                        'v1/task',
                         'v1/task-applicant',
-                        'v1/task-collection',
                         'v1/district',
                         'v1/sys-message',
+                        'v1/message',
+                        'v1/complaint',
+                        'v1/user-service-type',
+                        'v1/service-type',
                     ],
                     'pluralize' => '',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/task-collection'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'GET exists/<id:\d+>' => 'exists',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/freetime'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'POST free-all' => 'free-all',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/task-address'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'GET nearby' => 'nearby',
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',

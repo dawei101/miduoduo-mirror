@@ -3,6 +3,7 @@
 namespace api\modules\v1\controllers;
  
 use api\modules\BaseActiveController;
+use common\Utils;
  
 /**
  * Address Controller API
@@ -11,7 +12,9 @@ use api\modules\BaseActiveController;
  */
 class TaskController extends BaseActiveController
 {
-    public $modelClass = 'api\common\models\Task';
+    public $modelClass = 'common\models\Task';
+
+    public $id_column = 'id';
 
     public function actions()
     {

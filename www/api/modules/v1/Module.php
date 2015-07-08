@@ -17,18 +17,17 @@ class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'api\modules\v1\controllers';
 
-    public function init()
-    {
-        parent::init();        
-    }
-
+    public $publicActions = [
+        // 'controller' => actions
+        'entry' => ['*'],
+        'task' => ['*'],
+        'task-address' => ['nearby']
+    ];
 
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-
-        $controller = Yii::$app->controller->id;
-        if ($controller!='entry'){
+        if (!$this->isActionPublic()){
             // 留出auth controller 登录
             $behaviors['authenticator'] = [
                 'class' => CompositeAuth::className(),
@@ -40,6 +39,19 @@ class Module extends \yii\base\Module
             ];
         }
         return $behaviors;
+    }
+
+    public function isActionPublic()
+    {
+        $controller = Yii::$app->controller->id;
+        $action = Yii::$app->controller->action->id;
+        if (isset($this->publicActions[$controller])){
+            $record = $this->publicActions[$controller];
+            if (in_array('*', $record) || in_array($action, $record)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

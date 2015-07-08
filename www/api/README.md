@@ -4,7 +4,8 @@ BASE_URL = 'http://api.miduoduo.cn'
 
 ##Login 
 ###通过验证码与手机登陆步骤
--1
+- 1
+```
     POST /v1/entry/vcode
         参数:    phonenum=手机号
     RETURN:
@@ -13,8 +14,9 @@ BASE_URL = 'http://api.miduoduo.cn'
         OR:
         { "result": false,
           "message": 错误提示 }
-
--2
+```
+- 2
+```
     POST /v1/entry/vlogin
 
         参数:   phonenum=手机号
@@ -32,7 +34,9 @@ BASE_URL = 'http://api.miduoduo.cn'
                 "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288"
                 }
         }
+```
 ###通过手机号密码登陆
+```
     POST /v1/entry/login
 
         参数:   phonenum=手机号
@@ -50,9 +54,10 @@ BASE_URL = 'http://api.miduoduo.cn'
                 "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288"
                 }
         }
-
+```
 ###注册
--1
+- 1
+```
     POST /v1/entry/vcode-for-signup
         参数:    phonenum=手机号
     RETURN:
@@ -61,8 +66,9 @@ BASE_URL = 'http://api.miduoduo.cn'
         OR:
         { "result": false,
           "message": 错误提示 }
-
--2
+```
+- 2
+```
     POST /v1/entry/signup
 
         参数:   phonenum=手机号
@@ -80,8 +86,9 @@ BASE_URL = 'http://api.miduoduo.cn'
                 "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288"
                 }
         }
-
+```
 ###修改密码
+```
     POST /v1/user/set-password
     auth required
         参数:   password=修改的密码
@@ -99,7 +106,7 @@ BASE_URL = 'http://api.miduoduo.cn'
                 }
         }
     备注：* 重新设置密码后，之前的access_token将失效
-
+```
 
 ##request请求 标识认证信息
 
@@ -172,14 +179,7 @@ BASE_URL = 'http://api.miduoduo.cn'
         * DELETE /version/model/id
 
 ### 执行失败全局返回说明
-* 参见http协议
-
-### rest api 举例
-以任务列表(职位列表)为例，任务的model名为task
-* 获取task
-    * GET http://api.test.chongdd.cn/v1/task
-* 获取某服务类别的task
-    GET (http://api.test.chongdd.cn/v1/task?filters=[["=", "service_type_id", 10]])
+* http请求返回的status,[参见http协议](https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81)
 
 具体api
 =============================
@@ -191,7 +191,6 @@ BASE_URL = 'http://api.miduoduo.cn'
 
 * 获取城市的区域
     * GET /version/district?filters=[["=", "parent_id", city_id]]
-
 * 区域
 ```
     {
@@ -207,138 +206,82 @@ BASE_URL = 'http://api.miduoduo.cn'
     },
 ```
 
-### 职位
-* 职位列表
-    * GET /version/task?expand=company,service_type,city,district,user
-* 职位详情
+### 任务类型
+* 任务类型列表
+    * GET /version/service-type
+* 类型详情(几乎无用)
+    * GET /version/task/id
+
+### 任务（职位）
+考虑某任务可设置多个地址，addresses为预留
+* 任务列表
+    * GET /version/task?expand=company,service_type,city,district,user,addresses
+* 附近任务列表
+    * 任务列表基础上加入lng=123.121313&lat=45.1231414&distance=1000
+        * 如：
+            GET /version/task?expand=company,service_type,city,district,user&lng=123.121313&lat=45.1231414&distance=1000
+* 任务详情
     * GET /version/task/gid
 
-* 职位
-```
-    {
-      "gid": "14339329187365",
-      "title": "传单发兼职",
-      "clearance_period": 0,
-      "salary": "120.00",
-      "salary_unit": 0,
-      "salary_note": "",
-      "from_date": "2015-06-03",
-      "company_name": "北京宠爱有家信息技术有限公司",
-      "company_introduction": null,
-      "contact": null,
-      "contact_phonenum": null,
-      "to_date": "2015-06-20",
-      "from_time": "10:00:00",
-      "to_time": "20:00:00",
-      "need_quantity": 100,
-      "got_quantity": 0,
-      "created_time": "2015-06-10 18:41:58",
-      "updated_time": null,
-      "detail": "Alter table jz_resume add job_wishes varchar(1000);Alter table jz_resume add job_wishes varchar(1000);Alter table jz_resume add job_wishes varchar(1000);",
-      "requirement": "",
-      "address": "京市北京朝阳冠军城",
-      "age_requirement": null,
-      "height_requirement": null,
-      "status": 0,
-      "user_id": 5,
-      "service_type_id": 1,
-      "city_id": 3,
-      "district_id": 4,
-      "company_id": 0,
-      "gender_requirement": null,
-      "degree_requirement": null,
-      "city": {
-        "id": 3,
-        "parent_id": 2,
-        "name": "北京市",
-        "level": "city",
-        "citycode": "010",
-        "postcode": "110100",
-        "center": "116.405285,39.904989",
-        "full_name": "北京市-北京市市辖区",
-        "disabled": 0
-      },
-      "district": {
-        "id": 4,
-        "parent_id": 3,
-        "name": "东城区",
-        "level": "district",
-        "citycode": "010",
-        "postcode": "110101",
-        "center": "116.418757,39.917544",
-        "full_name": "北京市-北京市市辖区-东城区",
-        "disabled": 0
-      },
-      "user": {
-        "id": 5,
-        "username": "18661775819",
-        "email": null,
-        "status": 0,
-        "created_time": "2015-06-09 20:29:55",
-        "updated_time": "2015-06-23 15:21:43",
-        "name": null,
-        "is_staff": 0
-      },
-      "service_type": {
-        "id": 1,
-        "name": "传单",
-        "created_time": null,
-        "updated_time": null,
-        "modified_by": "",
-        "status": 0
-      },
-      "company": null
-    },
-```
-
-###简历 Resume
-
-* 获取自己简历
-    * GET /version/resume/user_id
-* 更新自己简历
-    * PUT /version/resume/user_id
-
-###时间表 Freetime
-
-* 获取自己的时间表
-    * GET /version/freetime
-* 获取某天的时间表
-    * GET /version/freetime/user_id,day_of_week
-    * day_of_week ＝ range(1-7)
-* 更新某天的时间表
-    * PUT /version/freetime/user_id,day_of_week
-    * post params = {"morning": 1, "afternoon": 0}  | "evening"
-    * 参数可以提交多个
-
-###Address 地址
-* 获取地址列表
-    * GET /version/address
-* 添加新地址
-    * POST /version/address
-    * params: province,city,district,address,lat,lng,user_id
-* 修改已有地址
-    * PUT /version/address/id
-    * params: province,city,district,address,lat,lng,user_id
-
 ###任务报名
-
 * 获取已报名的任务列表 
     * GET /version/task-applicant?expand=task
 * 报名某任务
     * PUT /version/task-applicant
     * params: user_id, task_id
 * 取消报名某任务
-    * DELETE /version/task-applicant/user_id,task_id
+    * DELETE /version/task-applicant/task_id
+* 获取某任务报名情况
+    * GET /version/task-applicant/task_id
+    *  如果未报名 return 404
 
-###Message 消息
-* 获取消息列表
-    * GET /version/sys-message
-* 获取消息详情(用不到)
-    * GET /version/sys-message/id
+###简历 Resume
 
-###User 资料
-* 获取当前用户资料
-    * GET /version/user/user_id
+* 获取自己简历(使用须取列表中第一个)
+    * GET /version/resume?expand=service_types,free_times,home_address,workplace_address
+* 获取自己的简历
+    * GET /version/resume/user_id?expand=service_types,free_times,home_address,workplace_address
+* 更新自己简历
+    * PUT /version/resume/user_id
+* 创建自己简历
+    * POST /vesion/resume
+
+###时间表 Freetime(获取简历时可直接获取)
+
+* 获取自己一周的时间表
+    * GET /version/freetime
+* 获取某天的时间表
+    * GET /version/freetime/day_of_week
+    * day_of_week ＝ range(1-7)
+* 更新某天的时间表
+    * PUT /version/freetime/day_of_week
+* 更改所有时间为free
+    * POST /version/freetime/free-all
+
+###设置我可做的服务
+
+* 获取可做的服务列表(获取简历时直接获取)
+    * GET /version/user-service-type
+* 添加可做服务
+    * POST /version/user-service-type
+        * params: {service_type_id: 10}
+* 删除可做服务
+    * DELETE /version/user-service-type/service_type_id
+
+
+###Address 地址
+* 获取自己的地址列表
+    * GET /version/address
+* 查看某地址
+    * GET /version/address/id
+* 添加新地址
+    * POST /version/address
+    * params: province,city,district,address,lat,lng
+* 修改已有地址
+    * PUT /version/address/id
+    * params: province,city,district,address,lat,lng
+* 删除已有地址
+    * DELETE /version/address/id
 
 ###收藏
 
@@ -348,10 +291,31 @@ BASE_URL = 'http://api.miduoduo.cn'
     * PUT /version/task-collection
     * params: user_id, task_id
 * 取消收藏某任务
-    * DELETE /version/task-collection/user_id,task_id
+    * DELETE /version/task-collection/task_id
+* 获取收藏某任务的细节
+    * GET /version/task-collection/task_id
+    * 如果未收藏return 404
+
+### Message 普通消息
+* 获取消息列表
+    * GET /version/message
+* 获取消息详情(用不到)
+    * GET /version/message/id
+* 标记信息为read
+    * PUT /version/message/id
+      params = 随便
+
+### System Message 系统消息
+* 获取消息列表
+    * GET /version/sys-message
+* 获取消息详情(用不到)
+    * GET /version/sys-message/id
+* 标记信息为read
+    * PUT /version/sys-message/id
+      params = 随便
 
 
-### 关于跨域
+## 关于跨域
 [Http access control - CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 原理：
 * 浏览器发送http request 带着 origin

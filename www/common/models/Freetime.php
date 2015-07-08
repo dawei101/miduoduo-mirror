@@ -59,4 +59,23 @@ class Freetime extends \common\BaseActiveRecord
     {
         return new FreetimeQuery(get_called_class());
     }
+
+    public static function createForUser($user_id){
+        $fs = Freetime::find()->where(['user_id'=>$user_id])->all();
+        $fsd = [];
+        foreach ($fs as $f) {
+            $fsd[$f->dayofweek] = $f;
+        }
+        for ($i=1;$i<=7;$i++) {
+            if (!isset($fsd[$i])){
+                $nf = new Freetime();
+                $nf->user_id = $user_id;
+                $nf->dayofweek = $i;
+                $nf->morning = 0;
+                $nf->afternoon = 0;
+                $nf->evening = 0;
+                $nf->save();
+            }
+        }
+    }
 }

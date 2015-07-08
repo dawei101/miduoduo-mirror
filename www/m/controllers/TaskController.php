@@ -7,16 +7,19 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
+use common\Utils;
 use common\models\Task;
+use common\models\TaskCollection;
+use common\models\TaskApplicant;
 use common\models\Resume;
 use common\models\District;
 use common\models\ServiceType;
-use common\models\TaskApplicant;
 use yii\data\Pagination;
 
 
 class TaskController extends \m\MBaseController
 {
+
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -91,13 +94,37 @@ class TaskController extends \m\MBaseController
             $this->render404();
         }
         $user_id = Yii::$app->user->id;
-        if (!Resume::find()->where(['user_id'=>$user_id])->exists()){
+        $resume = Resume::find()->where(['user_id'=>$user_id])->one();
+        if (!$resume){
             return $this->redirect('/resume/edit');
         }
         if ($task && !TaskApplicant::isApplied($user_id, $task->id)){
             $tc = new TaskApplicant;
             $tc->task_id = $task->id;
             $tc->user_id = Yii::$app->user->id;
+
+            if (Utils::isPhonenum($task->contact_phonenum)){
+                Yii::$app->sms_pusher->push(
+                    $resume->phonenum,
+                    ['task'=>$task, 'resume'=>$resume],
+                    'to-applicant-task-applied-done'
+                );
+                Yii::$app->sms_pusher->push(
+                    $task->contact_phonenum,
+                    ['task'=>$task, 'resume'=>$resume],
+                    'to-company-get-new-application'
+                );
+                $tc->applicant_alerted = true;
+                $tc->company_alerted = true;
+            } else {
+               Yii::$app->sms_pusher->push(
+                    $resume->phonenum,
+                    ['task'=>$task, 'resume'=>$resume],
+                    'to-applicant-task-need-touch-actively'
+                );
+                $tc->company_alerted = false;
+                $tc->applicant_alerted = true;
+            }
             $tc->save();
         }
         return $this->redirect(Url::toRoute(['/task/view', 'gid'=>$gid]));
@@ -105,6 +132,8 @@ class TaskController extends \m\MBaseController
 
     public function actionView()
     {
+        $this->layout = 'main';
+
         $gid = Yii::$app->request->get('gid');
         $task = null;
         if ($gid){
@@ -112,8 +141,20 @@ class TaskController extends \m\MBaseController
                 ->with('city')->with('district')->one();
         }
         if ($task){
+            $collected = false;
+            $app = null;
+            if (!Yii::$app->user->isGuest){
+                $collected = TaskCollection::find()->where(
+                    ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->exists();
+                $app = TaskApplicant::find()->where(
+                    ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->one();
+            }
             return $this->render('view', 
-                ['task'=>$task, ]
+                [
+                    'task'=>$task,
+                    'collected'=>$collected,
+                    'app'=> $app,
+                ]
             );
         } else {
             $this->render404("未知的信息");

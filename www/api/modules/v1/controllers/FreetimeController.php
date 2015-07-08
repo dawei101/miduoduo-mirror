@@ -2,6 +2,7 @@
  
 namespace api\modules\v1\controllers;
  
+use Yii;
 use api\modules\BaseActiveController;
  
 /**
@@ -11,21 +12,36 @@ use api\modules\BaseActiveController;
  */
 class FreetimeController extends BaseActiveController
 {
-    public $modelClass = 'api\common\models\Freetime';
+    public $modelClass = 'common\models\Freetime';
 
-    public function buildBaseQuery()
+    public $id_column = 'dayofweek';
+    public $auto_filter_user = true;
+    public $user_identifier_column = 'user_id';
+
+    public $page_size = 10000;
+
+    public function actions()
     {
-        $model = $this->modelClass;
-        $query = $model::find()->where(['user_id'=>\Yii::$app->user->id]);
-        return $query;
+        $as = parent::actions();
+        unset($as['create']);
+        return $as;
     }
 
-    public function checkAccess($action, $model = null, $params = [])
-    {
-        if ($action=='view' && $model->user_id!=\Yii::$app->user->id){
-            throw new ForbiddenHttpException('No access to view this address');
+    public function beforeAction($action) {
+        $query = $this->buildBaseQuery();
+        if ($query->count()<7) {
+            $m = $this->modelClass;
+            $m::createForUser(Yii::$app->user->id);
         }
-        parent::checkAccess($action, $model, $params);
+        return parent::beforeAction($action);
     }
 
+    public function actionFreeAll(){
+        $m = $this->modelClass;
+        $m::updateAll(['morning'=>1, 'afternoon'=>1, 'evening'=>1], 'user_id='.Yii::$app->user->id);
+        return $this->renderJson([
+            "success" => true,
+            "message" => '设置成功',
+        ]);
+    }
 }

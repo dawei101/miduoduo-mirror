@@ -13,52 +13,52 @@ AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="zh-CN">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta http-equiv="pragma" content="no-cache">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
-
+    <link  rel="shortcut icon"  href="img/miduoduo.ico" />
+    <meta name="format-detection" content="telephone=no">
+    <title><?=$this->page_title?> - 米多多兼职</title>
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
-<div class="container">
-    <nav class="navbar-fixed-top top-nav" role="navigation">
-        <div class="nav-head text-center">
-         <?php if ($this->nav_left_link){ ?>
-             <a style="height: 50px; line-height: 50px; min-width:60px;" class="text-left pull-left" href="<?=$this->nav_left_link?>">
-                <span class="glyphicon glyphicon-chevron-left"> </span>
-                <?=$this->nav_left_title?>
-            </a>
-         <?php } else {?>
-            <a style="height: 50px; line-height: 50px; min-width:60px;" class="text-left pull-left"> </a>
-         <?php }?>
-         <span><?=$this->title?></span>
-         <?php if ($this->nav_right_link){ ?>
-             <a style="height: 50px; line-height: 50px; min-width:60px;" class="text-right pull-right" href="<?=$this->nav_right_link?>">
-                <?=$this->nav_right_title?></a>
-         <?php } else {?>
-            <a style="height: 50px; line-height: 50px; min-width:60px;" class="text-right pull-right">&nbsp;</a>
-         <?php }?>
-    </nav>
-    <nav class="top-nav"></nav>
-    <?= $content ?>
+<!-- 添加隐藏的logo图片300*300用于微信分享图标 - start -->
+<div style="display:none;">
+    <img src="/static/img/weichat_icon.jpg" /> 
 </div>
+<!-- 添加隐藏的logo图片300*300用于微信分享图标 - end -->
+<div style="height:50px;"></div>
+<!--======固定顶部======-->
+<nav class="mdd-top-nav"> <?=$this->title?>
+    <?php if ($this->nav_left_link){ ?>
+        <a href="<?=$this->nav_left_link?>" class="position-l"><i class="iconfont">&#xe60b;</i>  <?=$this->nav_left_title?>  </a> 
+    <?php } ?>
+    <?php if ($this->nav_right_link){ ?>
+        <a href="<?=$this->nav_right_link?>" class="position-r"><?=$this->nav_right_title?><span class="last-icon"></span></a>
+    <?php } ?>
+</nav>
+<?= $content ?>
 <?php $this->endBody() ?>
-
-
-
 <script>
     GB={};
     GB.is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
     GB.click_event = GB.is_mobile?'touchstart':'click';
+    GB.login = function($next){
+        document.cookie = 'next=' + location.href+ '; expires=Fri, 3 Aug 2030 20:47:11 UTC; path=/';
+        location.href = '/user/login';
+    }
+    GB.signup = function($next){
+        document.cookie = 'next=' + location.href+ '; expires=Fri, 3 Aug 2030 20:47:11 UTC; path=/';
+        location.href = '/user/vsignup';
+    }
     $(function() {
         FastClick.attach(document.body);
     });

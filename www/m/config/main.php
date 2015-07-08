@@ -5,7 +5,14 @@ $param_files =
      __DIR__ . '/params.php',
      __DIR__ . '/params-local.php'];
 
-$params = [];
+$params = [
+    'weichat'=>[
+        'appid'     => 'wxc940e677d43db45d',                // 微信公众号ID
+        'secret'    => '284769fa88c6ba0496cc2aa06ef1d7c4',  // 微信secret
+        'scope1'    => 'snsapi_base',                       // 获取基本信息
+        'scope2'    => 'snsapi_userinfo',                   // 获取详细信息
+        ]
+    ];
 
 foreach ($param_files as $f){
     if (file_exists($f)){
@@ -53,8 +60,8 @@ return [
             'showScriptName' => false,
             'enablePrettyUrl' => true,
             'rules' => [
-                'origin/v<version:[\d]+>/?' => 'origin/handle',
-                'origin/v<version:[\d]+>/<action:[\w\d]+>' => 'origin/handle',
+                'origin/h5v<version:[\d]+>/?' => 'origin/handle',
+                'origin/h5v<version:[\d]+>/<file:[\-\.\_\w\d\/]+>' => 'origin/handle',
             ],
         ],
         'view' => [

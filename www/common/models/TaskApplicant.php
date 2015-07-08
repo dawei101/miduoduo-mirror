@@ -17,6 +17,13 @@ use Yii;
  */
 class TaskApplicant extends \common\BaseActiveRecord
 {
+
+    public static $STATUSES = [
+        0 => '等待企业确认',
+        10 => '报名成功',
+    ];
+
+    
     /**
      * @inheritdoc
      */
@@ -33,8 +40,10 @@ class TaskApplicant extends \common\BaseActiveRecord
         return [
             [['created_time'], 'safe'],
             [['user_id', 'task_id'], 'required'],
-            [['user_id', 'task_id'], 'integer'],
+            [['user_id', 'task_id', 'status'], 'integer'],
             ['created_time', 'default', 'value'=>time(), 'on'=>'insert'],
+            ['task_id', 'unique', 'targetAttribute' => ['task_id', 'user_id'], 'message'=>'已报名过'],
+            [['company_alerted', 'applicant_alerted'], 'default', 'value'=>'false'],
         ];
     }
 
@@ -48,6 +57,8 @@ class TaskApplicant extends \common\BaseActiveRecord
             'created_time' => '申请时间',
             'user_id' => '用户',
             'task_id' => '任务',
+            'company_alerted' => '已通知企业?',
+            'applicant_alerted' => '已通知用户?',
         ];
     }
 
@@ -89,6 +100,20 @@ class TaskApplicant extends \common\BaseActiveRecord
         ])->exists();
     }
 
+    public function getStatus_label()
+    {
+        return $this::$STATUSES[$this->status];
+    }
+
+    public function getStatus_options()
+    {
+        return $this::$STATUSES;
+    }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['status_label', 'status_options']);
+    }
 
     public function extraFields()
     {

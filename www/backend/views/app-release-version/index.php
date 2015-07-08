@@ -28,9 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'device_type',
             'app_version',
+            'api_version',
             'html_version',
             'update_url:url',
-            // 'release_time',
+            'release_time',
+            'h5_map_file',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

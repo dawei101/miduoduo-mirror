@@ -9,7 +9,6 @@ use yii\filters\AccessControl;
 
 use common\Utils;
 use common\models\LoginWithDynamicCodeForm;
-use common\sms\SmsSenderFactory;
 
 use frontend\FBaseController;
 use frontend\models\PasswordResetRequestForm;
@@ -77,8 +76,7 @@ class UserController extends FBaseController
                 'msg'=> "手机号码不正确"
             ]);
         }
-        $sender = SmsSenderFactory::getSender();
-        if ($sender->sendVerifyCode($phonenum)){
+        if (Utils::sendVerifyCode($phonenum)){
             return $this->renderJson([
                     'result'=> true,
                     'msg'=> "验证码已发送"

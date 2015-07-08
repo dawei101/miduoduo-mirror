@@ -19,7 +19,7 @@ class AppReleaseVersionSearch extends AppReleaseVersion
     {
         return [
             [['id', 'device_type'], 'integer'],
-            [['app_version', 'html_version', 'update_url', 'release_time'], 'safe'],
+            [['app_version', 'html_version', 'update_url', 'release_time', 'h5_map_file'], 'safe'],
         ];
     }
 
@@ -63,7 +63,8 @@ class AppReleaseVersionSearch extends AppReleaseVersion
 
         $query->andFilterWhere(['like', 'app_version', $this->app_version])
             ->andFilterWhere(['like', 'html_version', $this->html_version])
-            ->andFilterWhere(['like', 'update_url', $this->update_url]);
+            ->andFilterWhere(['like', 'update_url', $this->update_url])
+            ->andFilterWhere(['like', 'h5_map_file', $this->h5_map_file]);
 
         return $dataProvider;
     }
