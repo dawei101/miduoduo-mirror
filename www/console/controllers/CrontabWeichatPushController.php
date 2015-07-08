@@ -40,7 +40,7 @@ class CrontabWeichatPushController extends Controller
         // 根据$pushid 查询对应的消息模板
         $pushset        = new WeichatPushSetPushset();
         $pushset_arr    = $pushset->find()->where(['id'=>$pushid])->asArray()->one();
-        $pushtemp_id    = $pushset_arr['template_weichat_id'];
+        $pushtemp_id    = $pushset_arr['template_push_id'];
         if( $pushtemp_id ){
             $pushtemp       = new WeichatPushSetTemplatePushList();
             $pushtemp_arr   = $pushtemp->find()->where(['id'=>$pushtemp_id])->asArray()->one();
