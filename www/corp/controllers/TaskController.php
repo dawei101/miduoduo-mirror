@@ -70,7 +70,7 @@ class TaskController extends FBaseController
         $data['company_id'] = $company_id;
 
         if ($model->load($data, '')) {
-            if ($user = $regModel->save()) {
+            if ($user = $model->save()) {
                 return $this->goHome();
             }
         }
