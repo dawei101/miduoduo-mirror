@@ -13,8 +13,12 @@
     <link rel="stylesheet" href="<%=baseCssUrl%>base<%=styleFileExt%>"/>
     <script type="text/javascript" src="<%=baseJsUrl%>/third_party/sea.js" ></script>
     <script>
+       // alert(window.WebViewJavascriptBridge);
+        //alert(JSON.stringify(window.miduoduo));
         window.miduoduo || (window.miduoduo = {});
+        miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
         miduoduo.basePath = {
+            base : "<%=baseUrl%>",
             picUrl : "<%=baseUrl%>" + "img"
         };
         miduoduo.user || (miduoduo.user = {}); //id username access_token

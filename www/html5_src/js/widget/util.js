@@ -1,6 +1,7 @@
 define(function(require, exports) {
     function app(option, callback) {
-        WebViewJavascriptBridge.send(json, callback);
+        alert(JSON.stringify(option));
+        window.WebViewJavascriptBridge.send(option, callback);
     }
     function push(url) {
         var opts = {
@@ -63,9 +64,9 @@ define(function(require, exports) {
 
     //跳转、兼容app和web页面
     function href(_url) {
-        //_url += '/v1/'   //编译的时候加上这句话
+        _url = miduoduo.basePath.base + _url ;
+        alert(_url);
         if (!miduoduo.os.mddApp) {
-            window.location.href = "http://www.baidu.com"
             window.location.href = _url;
         } else {
             push(_url);
