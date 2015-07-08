@@ -46,8 +46,11 @@ class WeichatPushSetPushsetController extends BBaseController
      */
     public function actionView($id)
     {
+        $ops    = $this->getOps();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'ops'   => $ops,
         ]);
     }
 

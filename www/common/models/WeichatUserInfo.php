@@ -16,6 +16,8 @@ use Yii;
  * @property string $weichat_name
  * @property string $weichat_head_pic
  * @property integer $is_receive_nearby_msg
+ * @property integer $origin_type
+ * @property string $origin_detail
  */
 class WeichatUserInfo extends \yii\db\ActiveRecord
 {

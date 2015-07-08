@@ -36,7 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_time',
             'weichat_name',
             'weichat_head_pic',
-            'is_receive_nearby_msg',
+            [   
+                'attribute' => 'is_receive_nearby_msg',
+                'value'=>$model->is_receive_nearby_msg ? '是' : '否',
+            ],
         ],
     ]) ?>
 
