@@ -7,6 +7,8 @@ use yii\web\BadRequestHttpException;
 use corp\FBaseController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\data\Pagination;
+
 use common\models\Company;
 use common\models\Task;
 use common\models\TaskAddress;
@@ -61,6 +63,13 @@ class TaskController extends FBaseController
 
     public function actionIndex()
     {
+        $query = Task::find(['user_id' => Yii::$app->user->id]);
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount' => $count]);
+        $tasks = $query->offset($pagination->offset)
+                        ->limit($pagination->limit)
+                        ->all();
+        print_r($tasks);
         return $this -> render('index');
     }
 
