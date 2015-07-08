@@ -30,16 +30,14 @@ define(function(require, exports, module) {
         /*属性写在构造函数中*/
         function TouchSlide(el, opts) {
             var self = this;
-            self.pos = 0;
-            self.preIndex = 0;
             self.wrap = el;
-            self.index = 0;
             self.ul = self.wrap.find(opts.ul);
             self.li = self.ul.find(opts.li);
             self.len = self.li.length;
             self.ul.css("width", (self.len + (opts.isLoop ? 2 : 0))*100 + "%");
             self.li.css("width", (100/(self.len + (opts.isLoop ? 2 : 0))) + "%" );
             self.liWidth = self.li.width();
+            self.ulWidth = self.ul.width();
             self.numBox = self.wrap.find(opts.numBox);
             self.isLoop = opts.isLoop;
             self.isAuto = opts.isAuto;
@@ -49,6 +47,10 @@ define(function(require, exports, module) {
             self.speed = opts.speed;
             self.autoTime = opts.autoTime;
             self.timer = null;
+            self.pos = opts.pos || 0;
+            self.posByPX = self.pos * self.ulWidth * 0.01; //像素位置
+            self.preIndex = 0;
+            self.index = 0;
             //执行
             self.init();
         }
@@ -132,22 +134,25 @@ define(function(require, exports, module) {
                         self.index--;
                     }
                 }
-                var pp = self.liWidth*(Math.abs(self.preIndex-self.index));
+                var pp = 100/(self.len+2)*(Math.abs(self.preIndex-self.index));
                 if(arguments[0] == 0) { pp = pp*-1}
                 self.pos = self.pos + pp;
+                self.posByPX = self.pos * self.ulWidth * 0.01; //像素位置
                 self.ul.animate({
-                        "-webkit-transform" : "translate(" + self.pos + "px,0)"
-                     //   "left": -self.liWidth * self.index + "px"
+                        "-webkit-transform" : "translate(" + self.pos + "%,0)"
+                        //   "left": -self.liWidth * self.index + "px"
                     },
                     self.speed,
                     function() {
                         self.lazyLoad && self.loadImg(self.index);
                         if (self.index > self.len - 1) {
                             self.pos = 0;
+                            self.posByPX = self.pos * self.ulWidth * 0.01;
                             self.ul.css("-webkit-transform", "translate(0,0)");
                             self.index = 0;
                         } else if (self.index < 0) {
                             self.pos = (-self.liWidth * (self.len - 1));
+                            self.posByPX = self.pos * self.ulWidth * 0.01;
                             self.ul.css("-webkit-transform", "translate(" +(-self.liWidth * (self.len - 1)) + ",0)");
                             self.index = self.len - 1;
                         }
@@ -214,14 +219,13 @@ define(function(require, exports, module) {
 
                         //向左滑动
                         if (x < 0) {
-                            console.log(self.pos);
-                            x += self.pos;
+                            x += self.posByPX;
                             spirit = 0;
                             self.ul.css("-webkit-transform", "translate(" + x + "px"+ ",0)");
                         }
                         //向右滑动
                         else {
-                            x += self.pos;
+                            x += self.posByPX;
                             spirit = 1;
                             self.ul.css("-webkit-transform", "translate(" + x + "px"+ ",0)");
                         }
