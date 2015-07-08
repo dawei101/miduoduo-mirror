@@ -26,7 +26,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'weichat_head_pic')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'is_receive_nearby_msg')->textInput() ?>
+    <?= $form->field($model, 'is_receive_nearby_msg')->dropDownList(
+        array(1=>'是',0=>'否')
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

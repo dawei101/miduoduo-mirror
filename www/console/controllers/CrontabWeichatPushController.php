@@ -34,7 +34,7 @@ class CrontabWeichatPushController extends Controller
      */
     public function actionNearbyTaks($pushtime=1){
         // 根据pushtime 查询这次需要推送的消息
-        $pushid_arr     = WeichatPushSetPushset::find()->where(['push_time'=>$pushtime])->asArray()->one();
+        $pushid_arr     = WeichatPushSetPushset::find()->where(['push_time'=>$pushtime,'status'=>1])->asArray()->one();
         $pushid         = $pushid_arr['id'];
 
         // 根据$pushid 查询对应的消息模板
@@ -46,7 +46,7 @@ class CrontabWeichatPushController extends Controller
             $pushtemp_arr   = $pushtemp->find()->where(['id'=>$pushtemp_id])->asArray()->one();
         }
         
-        if($pushtemp_arr['title']){
+        if(isset($pushtemp_arr['title'])){
             $params         = array(
                 array('name'=>'keyword1','value'=>$pushtemp_arr['title'],'color'=>'#0000FE'), 
                 array('name'=>'keyword2','value'=>'实时通知','color'=>'#222'), 

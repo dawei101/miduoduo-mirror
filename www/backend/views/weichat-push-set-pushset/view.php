@@ -29,11 +29,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'push_time:datetime',
-            'push_way',
-            'status',
-            'template_push_id',
-            'template_weichat_id',
+            [   
+                'attribute' => 'push_time',
+                'value'=>$ops['pushtime'][$model->push_time],
+            ],
+            [   
+                'attribute' => 'push_way',
+                'value'=>$ops['pushtype'][$model->push_way],
+            ],
+            [   
+                'attribute' => 'status',
+                'value'=>$ops['status'][$model->status],
+            ],
+            [   
+                'attribute' => 'template_push_id',
+                'value'=>$ops['tmp_list'][$model->template_push_id],
+            ],
+            [   
+                'attribute' => 'template_weichat_id',
+                'value'=>$ops['tmp_weichat'][$model->template_weichat_id],
+            ],
+            
             'created_time',
             'update_time',
         ],

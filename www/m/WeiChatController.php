@@ -4,7 +4,7 @@ namespace m;
 use Yii;
 use common\BaseController;
 use yii\web\HttpException;
-use m\models\WeichatUserInfo;
+use common\models\WeichatUserInfo;
 
 // 如果已经尝试获取过用户微信信息，则不执行任何操作，否则尝试获取用户微信信息
 class WeiChatController extends BaseController{
@@ -148,6 +148,7 @@ class WeiChatController extends BaseController{
             $weichat->userid    = $userid;
             $weichat->created_time    = $datetime;
             $weichat->updated_time    = $datetime;
+            $weichat->is_receive_nearby_msg = 1;    // 新绑定的用户，默认接受微信推送消息
             $weichat->save();
         }
         return true;
