@@ -146,11 +146,18 @@ $this->title = '米多多兼职平台';
                             <li>
                                 <div class="pull-left title-left text-center"><em>*</em>工作内容</div>
                                 <div class="pull-left right-box">
+                                    <!--
                                     <div id="editor" class="edit">
                                         <p>工作时间：</p>
                                         <p>工作薪酬：</p>
                                         <p>工作要求：</p>
                                     </div>
+                                -->
+                                    <textarea name="detail">
+                                        工作时间：aaa
+                                        工作薪酬：bbb
+                                        工作要求：ccc
+                                    </textarea>
                                 </div>
                             </li>
                             <li>
