@@ -66,15 +66,19 @@ class TaskController extends FBaseController
 
     public function actionPublish()
     {
-        $model = new TaskPublishModel();
+        $model = new Task();
         $company_id = Yii::$app->getSession()->getFlash('current_company_id');
         if(!$company_id) {
-            $company_id = Company::findByCurrentUser()->id;
+            $company_id = 383;
         }
         $data = Yii::$app->request->post();
         $data['company_id'] = $company_id;
+        $data['user_id'] = Yii::$app->user->id;
+        print_r($data);
         $model->setAttributes($data);
-        print_r($model)
+        if ($model->save()) {
+            print_r($model);
+        }
 
         return $this -> render('publish');
     }
