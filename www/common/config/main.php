@@ -1,24 +1,7 @@
 <?php
 $root_path = dirname(dirname(__DIR__));
 
-$params = [
-        'weichat'=>[
-            'appid'     => 'wxf18755b4d95797ac',                // 微信公众号ID
-            'secret'    => '42e2440d817f1c4d2889790e2a3369e4',  // 微信secret
-            'scope1'    => 'snsapi_base',                       // 获取基本信息
-            'scope2'    => 'snsapi_userinfo',                   // 获取详细信息
-            'pushset'   => [
-                'pushtime'      => [1=>'12:00',2=>'19:30'],     // 推送时间
-                'pushtype'      => [1=>'固定内容',2=>'用户偏好'],   // 推送类型
-                'status'        => [1=>'启用',2=>'停用'],           // 状态
-                'tmp_weichat'   => [1=>'兼职',2=>'通知'],           // 微信模板
-            ],
-            'tmp_weichat'  => [
-                'quality'   => '3_dIRci_3IDpL3E1D69Vm17w_LB_4AM6ATB7f4Qw3H8',     // 优单模板
-                'nearby'    => 'cMI9HFLDvuHJrhakSszPCre8oWaUA6nSVv74pCpoN3c',     // 附近模板
-            ],
-        ],
-    ];
+$params = [];
 
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
