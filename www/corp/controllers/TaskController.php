@@ -7,6 +7,7 @@ use yii\web\BadRequestHttpException;
 use corp\FBaseController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use common\models\Company;
 use common\models\Task;
 use common\models\TaskAddress;
 
@@ -66,13 +67,15 @@ class TaskController extends FBaseController
     public function actionPublish()
     {
         $model = new TaskPublishModel();
-        $company_id = Yii::$app->getSession()->setFlash('success', 'New password was saved.');
+        $company_id = Yii::$app->getSession()->getFlash('current_company_id');
+        if(!$company_id) {
+            $company_id = Company::findByCurrentUser()->id;
+        }
         $data = Yii::$app->request->post();
         $data['company_id'] = $company_id;
+        $model->setAttributes($data);
+        print_r($model)
 
-        if ($model->load($data, '')) {
-            print_r($model);
-        }
         return $this -> render('publish');
     }
 
