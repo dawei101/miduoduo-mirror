@@ -49,10 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $model->user->username;
              },
             ],
-            [
-                'attribute' => 'created_time',
-                'format' => ['date', 'php:y-m-d H:m'],
-            ],
+            'created_time',
             'company_alerted:boolean',
             'applicant_alerted:boolean',
             'status_label',
