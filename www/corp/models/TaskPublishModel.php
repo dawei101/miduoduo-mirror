@@ -19,10 +19,14 @@ class TaskPublish extends Model
     public $from_time;
     public $to_date;
     public $to_time;
+    public $need_quantity;
+    public $gender_requirement;
+    public $height_requirement;
+    public $age_requirement;
+    public $degree_requirement;
+
     public $contact;
     public $contact_phonenum;
-    public $gender_requirement;
-    public $need_quantity;
 
 
     private $_user = false;

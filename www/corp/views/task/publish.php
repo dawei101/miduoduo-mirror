@@ -127,6 +127,7 @@ $this->title = '米多多兼职平台';
                                     </div>
                                     <input type="text" class="dz-input" placeholder="详细位位置，多地址用“；”隔开，如：地址A；地址B">
                                     <button class="queren">确认</button>
+                                    <!--
                                     <div class="dl-xs">
                                         <p><i class="iconfont">&#xe60e;</i>米多多会根据您填写的地址把信息推送给不同位置的兼职者，帮您精准定位！请直接在左侧修改内容标红地址或在地图上选择地址（拖动可修改）</p>
                                         <ul class="pull-left dl-left">
@@ -139,6 +140,7 @@ $this->title = '米多多兼职平台';
                                         </ul>
                                         <div class="pull-right dl-pic"><img src="img/ditu.jpg" width="400" height="300"></div>
                                     </div>
+                                -->
                                 </div>
                             </li>
                             <li>
