@@ -74,10 +74,9 @@ class TaskController extends FBaseController
         $data = Yii::$app->request->post();
         $data['company_id'] = $company_id;
         $data['user_id'] = Yii::$app->user->id;
-        print_r($data);
         $model->setAttributes($data);
         if ($model->save()) {
-            print_r($model);
+            return $this->redirect('/task/');
         }
 
         return $this -> render('publish');
