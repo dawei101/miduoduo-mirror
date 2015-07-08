@@ -62,7 +62,7 @@ $this->title = '米多多兼职平台';
                                             <li data-value="3">湖南省</li>
                                             <li data-value="4">四川省</li>
                                         </ul>
-                                        <input type="hidden" name="service_type_id" value=""/>
+                                        <input type="hidden" name="service_type_id" value="1"/>
                                     </div>
                                 </div>
                             </li>
@@ -70,7 +70,7 @@ $this->title = '米多多兼职平台';
                                 <div class="pull-left title-left text-center"><em>*</em>工作时间</div>
                                 <div class="pull-left right-box div">
                                     <div class="riqi">
-                                        <input name="from_date" type="text" readonly style="width: 200px" name="reservation" class="reservation"   value="选择您的起始日期" />
+                                        <input name="from_date" type="text" style="width: 200px" name="reservation" class="reservation" placeholder="选择您的起始日期" value="2016-06-10"/>
                                         <div class="nice-select times" name="nice-select">
                                             <input name="from_time" type="text" value="13:00" ><i class="iconfont">&#xe60d;</i>
                                             <ul>
@@ -105,7 +105,7 @@ $this->title = '米多多兼职平台';
                             <li>
                                 <div class="pull-left title-left text-center"><em>*</em>截止日期</div>
                                 <div class="pull-left right-box">
-                                    <input name="to_date" type="text" readonly style="width: 200px" name="birthday" id="birthday" value="2013-06-12" />
+                                    <input name="to_date" type="text" readonly style="width: 200px" name="birthday" id="birthday" value="2016-06-12" />
                                 </div>
                             </li>
                             <li>
