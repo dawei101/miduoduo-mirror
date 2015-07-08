@@ -55,7 +55,7 @@ $this->nav_right_title = '首页';
     <dl>
        <dt>公司信息</dt>
        <dd><?=$task->company_name?></dd>
-       <dd><a href="callto:<?=$task->contact_phonenum?>"><i class="iconfont">&#xe611;</i>电话咨询</a>
+       <dd><a href="tel:<?=$task->contact_phonenum?>"><i class="iconfont">&#xe611;</i>电话咨询</a>
             <div>
                 <p>联系人：<?=$task->contact?></p>
                 <p>联系电话:<?=$task->contact_phonenum?></p>

@@ -19,7 +19,7 @@ class TaskApplicant extends \common\BaseActiveRecord
 {
 
     public static $STATUSES = [
-        0 => '等待企业确认',
+        0 => '已报名',
         10 => '报名成功',
     ];
 
