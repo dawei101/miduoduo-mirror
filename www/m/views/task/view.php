@@ -72,14 +72,16 @@ $this->nav_right_title = '首页';
         <i class="iconfont">&#xe60d;</i><span style="display:block">已收藏</span>
      </a>
     <?php } ?>
-        <a href="/complaint/create?gid=<?=$task->gid?>" class="midd-l bottom-box">
+     <a href="/complaint/create?id=<?=$task->id?>" class="midd-l bottom-box">
         <i class="iconfont">&#xe60f;</i><span style="display:block">举报</span>
-    </a>
+     </a>
     <?php if (Yii::$app->user->isGuest){ ?>
          <div class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
     <?php } else { ?>
-        <?php if ($app){ ?>
-            <div class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
+        <?php if ($app && $app->status==0){ ?>
+            <div style="background: #a5abb2;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
+        <?php } else if ($app && $app->status==10) { ?>
+            <div style="background: #ff7b5d;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
         <?php } else { ?>
          <div id="apply" class="midd-l bottom-bnt bottom-bnt-bm">我要报名</div>
         <?php } ?>

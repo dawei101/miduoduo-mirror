@@ -57,6 +57,8 @@ class TaskApplicant extends \common\BaseActiveRecord
             'created_time' => '申请时间',
             'user_id' => '用户',
             'task_id' => '任务',
+            'status' => '状态',
+            'status_label' => '状态',
             'company_alerted' => '已通知企业?',
             'applicant_alerted' => '已通知用户?',
         ];

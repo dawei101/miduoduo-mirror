@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'company_alerted:boolean',
             'applicant_alerted:boolean',
+            'status_label',
             ['class' => 'yii\grid\ActionColumn', 'template' => '{update}'],
         ],
     ]); ?>

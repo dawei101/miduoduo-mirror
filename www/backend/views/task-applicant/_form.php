@@ -19,6 +19,8 @@ use yii\widgets\ActiveForm;
 
     <p>任务名: <?= $model->task->title ?></p>
 
+    <?= $form->field($model, 'status')->dropdownList($model::$STATUSES) ?>
+
     <?= $form->field($model, 'company_alerted')->checkbox() ?>
 
     <?= $form->field($model, 'applicant_alerted')->checkbox() ?>
