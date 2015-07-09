@@ -30,7 +30,7 @@ class TaskController extends FBaseController
                  'class' => AccessControl::className(),
                  'rules' => [
                      [
-                         'actions' => ['index','publish'],
+                         'actions' => ['index','publish', 'edit', 'refresh', 'down', 'delete'],
                          'allow' => true,
                          'roles' => ['@'],
                      ],
@@ -88,6 +88,12 @@ class TaskController extends FBaseController
         }
 
         return $this -> render('publish');
+    }
+
+    public function actionEdit($gid)
+    {
+        $task = Task::findOne(['gid' => $gid]);
+        return $this->render('publish', ['task' => $task]);
     }
 
 }
