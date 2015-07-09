@@ -11,7 +11,7 @@ use common\Utils;
 use common\models\LoginWithDynamicCodeForm;
 use common\models\User;
 use common\sms\SmsSenderFactory;
-use common\sms\Company;
+use common\models\Company;
 
 use corp\FBaseController;
 use corp\models\PasswordResetRequestForm;
@@ -160,9 +160,11 @@ class UserController extends FBaseController
     public function actionAddContactInfo()
     {
         $model = new Company;
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
+        $model->setAttributes(Yii::$app->request->post(), false);
+        if ($model->validate() && $model->save()) {
             return $this->goHome();
         }
+        print_r($model);
         return $this->render('addContactInfo', ['model' => $model]);
     }
 }
