@@ -78,12 +78,15 @@ class TaskController extends FBaseController
     {
         $model = new Task();
         $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
         $company_id = $company->id;
         $data = Yii::$app->request->post();
         $data['company_id'] = $company_id;
         $data['user_id'] = Yii::$app->user->id;
         $model->setAttributes($data, false);
-        if ($model->save()) {
+        if ($model->validate() && $model->save()) {
             return $this->redirect('/task/');
         }
 
@@ -94,6 +97,21 @@ class TaskController extends FBaseController
     {
         $task = Task::findOne(['gid' => $gid]);
         return $this->render('publish', ['task' => $task]);
+    }
+
+    public function actionRefresh($gid)
+    {
+        $task = Task::findOne(['gid' => $gid]);
+    }
+
+    public function actionDown
+    {
+        $task = Task::findOne(['gid' => $gid]);
+    }
+
+    public function actionDelete
+    {
+        $task = Task::findOne(['gid' => $gid]);
     }
 
 }
