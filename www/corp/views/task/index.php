@@ -53,14 +53,14 @@ $this->title = '米多多兼职平台';
                    </div>
                    <div>
                    <div class="pull-left zhiwei-lis-left">
-                       <div><span>200元/日</span><span>月结</span><span>仅限男</span></div>
+                       <div><span><?=$task->salary.'/'.$task->getSalary_unit_label()?></span><span><?=$task->salary_note?></span><span><?=$task->gender_requirement?></span></div>
                        <div>北京－朝阳</div>
-                       <div class="fb-sj">发布时间：2015-06-30 10:00</div>
+                       <div class="fb-sj">发布时间：<?=$task->created_time?></div>
                    </div>
                    <div class="pull-left zhiwei-lis-right">
                         <div>编号：<?=$task->gid?></div>
                         <div class="zhiwei-zt">
-                           <div class="pull-left shenqing-zt text-center">已申请：167人</div>
+                           <div class="pull-left shenqing-zt text-center">已申请：<?=$task->got_quantity?>人</div>
                            <div class="pull-left news text-center">new</div>
                         </div>
                    </div>
