@@ -63,14 +63,13 @@ class TaskController extends FBaseController
 
     public function actionIndex()
     {
-        $query = Task::find(['user_id' => Yii::$app->user->id]);
+        $query = Task::find()->where(['user_id' => Yii::$app->user->id]);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $tasks = $query->offset($pagination->offset)
                         ->limit($pagination->limit)
                         ->all();
-        print_r($tasks);
-        return $this -> render('index');
+        return $this -> render('index', ['tasks' => $tasks]);
     }
 
     public function actionPublish()
