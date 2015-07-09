@@ -66,24 +66,8 @@ $this->title = '米多多兼职平台';
                    </div>
                 </li>
               <?php }?>
-                <li>
-                   <div class="zhiwei-lis-title">
-                        <h2 class="pull-left">汽车之家app推广</h2>
-                        <div class="pull-left bt-span"><span>刷新</span><span>编辑</span><span>下线</span><span>删除</span></div>
-                   </div>
-                   <div>
-                   <div class="pull-left zhiwei-lis-left">
-                       <div><span>200元/日</span><span>月结</span><span>仅限男</span></div>
-                       <div>北京－朝阳</div>
-                       <div class="fb-sj">发布时间：2015-06-30 10:00</div>
-                   </div>
-                   <div class="pull-left zhiwei-lis-right">
-                        <div>编号：00099888</div>
-                        <div class="zhiwei-zt"><div class="bg-left pull-left"></div><div class="bg-text pull-left text-center">过期</div><div class="bg-right pull-left"></div></div>
-                   </div>
-                   </div>
-                </li>
-                  <div class="pagination pagers pull-right pagination-lg">
+              <!--
+                <div class="pagination pagers pull-right pagination-lg">
                       <a href="#">&laquo;</a>
                       <a href="#">1</a>
                       <a href="#">2</a>
@@ -92,6 +76,8 @@ $this->title = '米多多兼职平台';
                       <a href="#">5</a>
                       <a href="#">&raquo;</a>
                 </div>
+            -->
+            <?=LinkPager::widget(['pagination' => $pagination])?>
             </ul>
         </div>
       </div>

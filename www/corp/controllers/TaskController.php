@@ -69,7 +69,7 @@ class TaskController extends FBaseController
         $tasks = $query->offset($pagination->offset)
                         ->limit($pagination->limit)
                         ->all();
-        return $this -> render('index', ['tasks' => $tasks]);
+        return $this -> render('index', ['tasks' => $tasks, 'pagination' => $pagination]);
     }
 
     public function actionPublish()
