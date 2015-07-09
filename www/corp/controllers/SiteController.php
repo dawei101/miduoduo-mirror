@@ -49,6 +49,9 @@ class SiteController extends FBaseController
 
     public function actionIndex()
     {
+        if (!\Yii::$app->user->isGuest) {
+            return $this->redirect('/task/');
+        }
         return $this -> render('index');
     }
 

@@ -63,7 +63,9 @@ class TaskController extends FBaseController
 
     public function actionIndex()
     {
-        $query = Task::find();
+        $query = Task::find()
+                        ->where(['user_id'=>Yii::$app->user->id])
+                        ->addOrderBy(['updated_time'=>SORT_DESC]);;
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $tasks = $query->offset($pagination->offset)
@@ -75,10 +77,8 @@ class TaskController extends FBaseController
     public function actionPublish()
     {
         $model = new Task();
-        $company_id = Yii::$app->getSession()->getFlash('current_company_id');
-        if(!$company_id) {
-            $company_id = 383;
-        }
+        $company = Company::findByCurrentUser();
+        $company_id = $company->id;
         $data = Yii::$app->request->post();
         $data['company_id'] = $company_id;
         $data['user_id'] = Yii::$app->user->id;
