@@ -82,7 +82,7 @@ class TaskController extends FBaseController
         $data = Yii::$app->request->post();
         $data['company_id'] = $company_id;
         $data['user_id'] = Yii::$app->user->id;
-        $model->setAttributes($data);
+        $model->setAttributes($data, false);
         if ($model->save()) {
             return $this->redirect('/task/');
         }
