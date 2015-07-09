@@ -81,6 +81,15 @@ class Company extends \common\BaseActiveRecord
         return static::findOne(['user_id' => Yii::$app->user->id]);
     }
 
+    public function beforeSave($insert)
+    {
+        if ($this->isNewRecord){
+            $user_id = Yii::$app->user->id;
+            $this->user_id = $user_id;
+        }
+        return parent::beforeSave($insert);
+    }
+
     public static function createCompanyWithCurrentUser(){
         $company = new Company;
         $company->user_id = Yii::$app->user->id;

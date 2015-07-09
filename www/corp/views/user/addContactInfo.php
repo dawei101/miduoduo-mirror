@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <!--
                 <form action="/user/add-contact-info" method="post" id="form">
                 -->
-                <?php $form = ActiveForm::begin(['action'=>'/user/add-contact-info']);?>
+                <?php $form = ActiveForm::begin(['action'=>'/user/add-contact-info', 'options'=>['id'=>'form']]);?>
                     <div class="tx-box">
                         <span class="pull-left text-right">企业名称 </span>
                         <div class="midd-input-group pull-left">
