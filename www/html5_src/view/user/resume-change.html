@@ -8,12 +8,12 @@
     <div class="main1">
 
         <ul class="resume-part1">
-            <li >
+            <!--<li >
                 <div class="title">照片</div>
                 <div class="con control">
                     <input class="js-col" name="avatar" type="text"  placeholder="请上传个人照片"/>
                 </div>
-            </li>
+            </li>-->
             <li>
                 <div class="title">姓名</div>
                 <div class="con">
@@ -51,7 +51,7 @@
             <li>
                 <div class="title">居住地点</div>
                 <div class="con control js-set-address">
-                    <input type="text" placeholder="请选择居住地点" value="<?=user.home_address?>"/>
+                    <input disabled type="text" placeholder="请选择居住地点" value="<?=user.home_address?>"/>
                 </div>
             </li>
         </ul>
@@ -69,7 +69,7 @@
                     <? typeID += e.id + ','; }); ?>
                     </span>
 
-                    <input type="<?=(typeID ? 'hidden' : 'text')?>" placeholder="请选择您擅长的兼职类别" value="<?=typeID?>"/>
+                    <input disabled type="<?=(typeID ? 'hidden' : 'text')?>" placeholder="请选择您擅长的兼职类别" value="<?=typeID?>"/>
                 </div>
             </li>
             <li class="sub2">

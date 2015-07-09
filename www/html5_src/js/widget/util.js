@@ -1,6 +1,6 @@
 define(function(require, exports) {
     function app(option, callback) {
-        WebViewJavascriptBridge.send(json, callback);
+        window.WebViewJavascriptBridge.send(option, callback);
     }
     function push(url) {
         var opts = {
@@ -63,9 +63,8 @@ define(function(require, exports) {
 
     //跳转、兼容app和web页面
     function href(_url) {
-        //_url += '/v1/'   //编译的时候加上这句话
+        _url = miduoduo.basePath.base + _url ;
         if (!miduoduo.os.mddApp) {
-            window.location.href = "http://www.baidu.com"
             window.location.href = _url;
         } else {
             push(_url);
@@ -93,6 +92,23 @@ define(function(require, exports) {
         appLocation(callback);
     }
 
+    //设置confirm
+    function cf(_opt, callback) {
+       var opt =  {
+            action: 'b_alert',
+            data : {
+                'disappear_delay' : -1,
+                'title': _opt.title,
+                'message': _opt.message,
+                'operation' : {
+                    'cancel' : '取消',
+                    'ok' : '确定'
+                }
+            }
+       }
+       app(opt, callback);
+    }
+
     //日期格式化输出
     Date.prototype.Format = function (fmt) { //author: meizz
         var o = {
@@ -114,4 +130,5 @@ define(function(require, exports) {
     exports.showTips = showTips;
     exports.auth = auth;
     exports.setAddress = setAddress;
+    exports.cf = cf;
 });

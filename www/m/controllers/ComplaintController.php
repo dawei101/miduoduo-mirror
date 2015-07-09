@@ -40,17 +40,24 @@ class ComplaintController extends MBaseController
     public function actionCreate()
     {
         $model = new Complaint();
-        $tgid = Yii::$app->request->get('gid');
-        $task = $tgid?Task::find()->where(['gid'=> $tgid])->one():null;
+        $tid = Yii::$app->request->get('id');
+        $task = $tid?Task::findOne($tid):null;
         if (!$task){
-            return $this->redirect404();
+            return $this->render404();
         }
-
+        $default_phonenum = '';
+        if (!Yii::$app->user->isGuest){
+            $model->user_id = Yii::$app->user->id;
+            $default_phonenum = Yii::$app->user->identity->username;
+        }
+        $model->task_id = $tid;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/task/view', 'id' => $gid]);
+            $to = '/task/view?gid=' . $task->gid;
+            return $this->redirectWithSucceedMsg($to, '您的投诉我们已经收到，感谢你让我们成长');
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'default_phonenum' => $default_phonenum,
             ]);
         }
     }

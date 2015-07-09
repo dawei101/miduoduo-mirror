@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use common\models\Task;
+use common\models\Resume;
 
 /**
  * This is the model class for table "{{%complaint}}".
@@ -38,6 +40,7 @@ class Complaint extends \common\BaseActiveRecord
             [['created_time'], 'safe'],
             ['phonenum', 'match', 'pattern'=>'/^1[345789]\d{9}$/',
                 'message'=>'手机号不正确，目前仅支持中国大陆手机号.'],
+            ['user_id', 'default', 'value'=> 0],
         ];
     }
 
@@ -65,5 +68,15 @@ class Complaint extends \common\BaseActiveRecord
     public static function find()
     {
         return new ComplaintQuery(get_called_class());
+    }
+
+    public function getTask()
+    {
+        return $this->hasOne(Task::className(), ['id' => 'task_id']);
+    }
+
+    public function getResume()
+    {
+        return $this->hasOne(Resume::className(), ['user_id' => 'user_id']);
     }
 }

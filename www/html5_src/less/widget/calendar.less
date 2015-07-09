@@ -1,0 +1,141 @@
+@import "../atom";
+@grass : #00b966;
+.calendar {
+  .pf;
+  bottom: 0;
+  .part1 {
+    .clearfix;
+    .w(100%);
+    .year,.month {
+      .pr;
+      .w(50%);
+      .left;
+      div {
+        padding: 4%;
+        .f(1.5rem);
+      }
+      .curr-y,.curr-m {
+        .w(50%);
+        .auto;
+        .c;
+      }
+      .pre-y,.pre-m {
+        .pa;
+        left: 6%;
+        top: 0;
+        .fc(@grass);
+      }
+      .next-y,.next-m {
+        .pa;
+        top: 0;
+        right: 6%;
+        .fc(@grass);
+      }
+    }
+  }
+  .part2 {
+    .pr;
+    .w(100%);
+    .dayName {
+      padding: 2%;
+      .clearfix;
+      border-bottom: 1px solid @grass;
+      div {
+        .w(100/7%);
+        float: left;
+        .c;
+        .fc(@grass);
+      }
+    }
+    .dayNum {
+      .clearfix;
+      .day-panel {
+        .clearfix;
+        div {
+          .w(100/7%);
+          padding: 6% 0;
+          .left;
+          .c;
+        }
+      }
+
+    }
+  }
+
+  .part3 {
+    .pa;
+    .pt(105%);
+    bottom: 0;
+    .w(100%);
+    overflow: hidden;
+    -webkit-transform: translate3d(0,100%,0);
+    opacity: 1 !important;
+    .year-panel-container {
+      .pa;
+      top: 0;
+      .w(900%); //9个年面板
+      .clearfix;
+      -webkit-transform: translate3d(-88.8%,0,0);
+      opacity: 0;
+      .bgc(#fff);
+      .year-panel {
+        .left;
+        .clearfix;
+        .w(100/9%);
+        div {
+          .w(100/3%);
+          padding: 11% 0;
+          .left;
+          .c;
+        }
+      }
+    }
+  }
+
+  .year-panel-container {
+    .pa;
+    top: 0;
+    bottom: 0;
+    .w(900%); //9个年面板
+    .clearfix;
+    -webkit-transform: translate3d(-88.8%,100%,0);
+    opacity: 0;
+    .bgc(#fff);
+    .year-panel {
+      .left;
+      .clearfix;
+      .w(100/9%);
+      div {
+        .w(100/3%);
+        padding: 11% 0;
+        .left;
+        .c;
+      }
+    }
+  }
+
+  .month-panel-container {
+    .pa;
+    top: 0;
+    bottom: 0;
+    .w(100%);
+    -webkit-transform: translate3d(0,100%,0);
+    opacity: 0;
+    .bgc(#fff);
+    li {
+      .w(100/3%);
+      padding: 11% 0;
+      .left;
+      .c;
+    }
+  }
+
+  .m-act {
+    .bgc(#00b966);
+    .fc(#fff);
+  }
+  .y-act {
+    .bgc(#00b966);
+    .fc(#fff);
+  }
+}
