@@ -119,6 +119,7 @@ class Task extends \common\BaseActiveRecord
             [['contact', 'contact_phonenum'], 'required'],
             ['contact_phonenum', 'match', 'pattern'=>'/^(1[345789]\d{9})|(\d{3,4}\-?\d{7,8})$/',
                 'message'=>'请输入正确的电话'],
+            ['clearance_period', 'default', 'value'=>0],
         ];
     }
 
