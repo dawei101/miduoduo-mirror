@@ -3,16 +3,17 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\WeichatUserInfo;
+use common\models\WeichatErweimaLog;
 use yii\data\ActiveDataProvider;
-use backend\BBaseController;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\BBaseController;
 
 /**
- * WeichatUserInfoController implements the CRUD actions for WeichatUserInfo model.
+ * WeichatErweimaLogController implements the CRUD actions for WeichatErweimaLog model.
  */
-class WeichatUserInfoController extends BBaseController
+class WeichatErweimaLogController extends BBaseController
 {
     public function behaviors()
     {
@@ -21,13 +22,14 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Lists all WeichatUserInfo models.
+     * Lists all WeichatErweimaLog models.
      * @return mixed
      */
     public function actionIndex()
     {
+        $erweimaid  = Yii::$app->request->get('id');
         $dataProvider = new ActiveDataProvider([
-            'query' => WeichatUserInfo::find(),
+            'query' => WeichatErweimaLog::find()->where(['erweima_id'=>$erweimaid]),
         ]);
 
         return $this->render('index', [
@@ -36,7 +38,7 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Displays a single WeichatUserInfo model.
+     * Displays a single WeichatErweimaLog model.
      * @param integer $id
      * @return mixed
      */
@@ -48,13 +50,13 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Creates a new WeichatUserInfo model.
+     * Creates a new WeichatErweimaLog model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new WeichatUserInfo();
+        $model = new WeichatErweimaLog();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -66,7 +68,7 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Updates an existing WeichatUserInfo model.
+     * Updates an existing WeichatErweimaLog model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -85,7 +87,7 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Deletes an existing WeichatUserInfo model.
+     * Deletes an existing WeichatErweimaLog model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -98,15 +100,15 @@ class WeichatUserInfoController extends BBaseController
     }
 
     /**
-     * Finds the WeichatUserInfo model based on its primary key value.
+     * Finds the WeichatErweimaLog model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return WeichatUserInfo the loaded model
+     * @return WeichatErweimaLog the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = WeichatUserInfo::findOne($id)) !== null) {
+        if (($model = WeichatErweimaLog::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

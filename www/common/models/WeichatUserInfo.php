@@ -35,9 +35,9 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['userid', 'status', 'is_receive_nearby_msg'], 'integer'],
+            [['userid', 'status', 'is_receive_nearby_msg', 'origin_type'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['openid', 'weichat_name', 'weichat_head_pic'], 'string', 'max' => 200]
+            [['openid', 'weichat_name', 'weichat_head_pic', 'origin_detail'], 'string', 'max' => 200]
         ];
     }
 
@@ -56,6 +56,8 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
             'weichat_name' => '用户微信姓名',
             'weichat_head_pic' => '用户微信头像',
             'is_receive_nearby_msg' => '是否接收微信附近兼职的推送',
+            'origin_type' => '渠道来源-分类',
+            'origin_detail' => '渠道来源-详情',
         ];
     }
 }
