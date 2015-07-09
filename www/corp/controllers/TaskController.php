@@ -104,12 +104,12 @@ class TaskController extends FBaseController
         $task = Task::findOne(['gid' => $gid]);
     }
 
-    public function actionDown
+    public function actionDown($gid)v
     {
         $task = Task::findOne(['gid' => $gid]);
     }
 
-    public function actionDelete
+    public function actionDelete($gid)
     {
         $task = Task::findOne(['gid' => $gid]);
     }
