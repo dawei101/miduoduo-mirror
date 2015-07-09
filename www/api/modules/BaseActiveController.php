@@ -9,6 +9,8 @@ use yii\db\Query;
 use yii\web\Response;
 use yii\web\HttpException;
 
+use common\BaseActiveRecord;
+
 
 class BaseActiveController extends ActiveController
 {
@@ -58,7 +60,13 @@ class BaseActiveController extends ActiveController
         $model = $this->modelClass;
         $tc = $this->buildBaseQuery()->andWhere([$this->id_column=>$id])->one();
         if (!$tc){
-            return new $model;
+            if (Yii::$app->response->format == \yii\web\Response::FORMAT_JSON) {
+                echo "false";
+            }
+            if (Yii::$app->response->format == \yii\web\Response::FORMAT_XML) {
+                echo "<root />";
+            }
+            Yii::$app->end();
         }
         return $tc;
     }
