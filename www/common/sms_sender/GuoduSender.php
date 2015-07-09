@@ -36,7 +36,7 @@ class GuoduSender extends Component
         $params["OperID"] = $this->account;
         $params["OperPass"] = $this->password;
         $params["AppendID"] = $this->appendID;
-        $params["Content"] = iconv("UTF-8", "GBK", $content);
+        $params["Content"] = iconv("UTF-8", "GBK//TRANSLIT", $content);
         $params["SendTime"] = date('Ymdhis');
         $params["ValidTime"] = date('Ymdhis', strtotime('+1 hour'));
         $params["ContentType"] = 15;
