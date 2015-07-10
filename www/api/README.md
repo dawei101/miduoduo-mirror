@@ -227,7 +227,7 @@ BASE_URL = 'http://api.miduoduo.cn'
 * 获取已报名的任务列表 
     * GET /version/task-applicant?expand=task
 * 报名某任务
-    * PUT /version/task-applicant
+    * POST /version/task-applicant
     * params: user_id, task_id
 * 取消报名某任务
     * DELETE /version/task-applicant/task_id
