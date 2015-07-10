@@ -7,6 +7,7 @@ use common\models\TaskAddress;
 use common\models\Company;
 use common\models\District;
 use common\models\ServiceType;
+use common\models\ConfigRecommend;
 
 /**
  * This is the model class for table "{{%task}}".
@@ -228,6 +229,10 @@ class Task extends \common\BaseActiveRecord
     public function getService_type()
     {
         return $this->hasOne(ServiceType::className(), ['id' => 'service_type_id']);
+    }
+
+    public function getRecommend(){
+        return $this->hasOne(ConfigRecommend::className(),['task_id'=>'gid']);
     }
 
     public function getLabels()

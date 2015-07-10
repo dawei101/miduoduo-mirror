@@ -60,26 +60,28 @@ class SiteController extends MBaseController
     {
         //只有北京
         $city_id    = 3;
-
         // 查询出需要展示的 gids
-        $gid        = ConfigRecommend::find()->where(['type'=>1,'city_id'=>$city_id])->limit(10)->asArray()->addOrderBy(['display_order'=>SORT_DESC])->all();
+        // type=1 标示查询的是M端的推荐信息
+        $gid        = ConfigRecommend::find()->where(['type'=>1,'city_id'=>$city_id])->limit(10)->asArray()->all();
         $gids       = '';
         foreach( $gid as $key => $value ){
             $gids   .= $value['task_id'].',';
         }
         $gids   = trim($gids,',');
+
+
         if($gids){
 
             // 查询数据显示
-            $query = Task::find()->with('city')->with('district');
-            $query = $query->where('`gid` in('.$gids.')')
-                //->addOrderBy(['id'=>SORT_DESC])
-                ->limit(5);
-                ;
+            $tasks      = Task::find()->limit(10)
+            ->where('`gid` in('.$gids.')')
+            ->addOrderBy(['display_order'=>SORT_DESC])
+            ->joinWith('recommend')->all();
+
             $city = District::findOne($city_id);
             //print_r( $query->all() );exit;
             return $this->render('index', 
-                ['tasks'=>$query->all(),
+                ['tasks'=>$tasks,
                  'city'=>$city,
                 ]);
 
