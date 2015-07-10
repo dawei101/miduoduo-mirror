@@ -76,13 +76,14 @@ define(function(require, exports) {
         if (!miduoduo.os.mddApp) {
             alert(msg);
         } else {
-            toast(msg);
+            toast("app:" + msg);
         }
     }
 
     //注册、登陆
     function auth() {
         appAuth(function(data) {
+            alert("hi:" + data);
             window.location.reload(); //登陆成功直接重新加载页面
         });
     }

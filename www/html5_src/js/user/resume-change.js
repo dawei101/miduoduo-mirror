@@ -3,6 +3,7 @@ define(function(require, exports) {
     var tpl = require("../widget/tpl-engine");
     var api = require("../widget/api");
     var util = require("../widget/util");
+    var calendar = require("../widget/calendar");
 
     document.addEventListener('WebViewJavascriptBridgeReady', function() {
         WebViewJavascriptBridge.defaultHandler(handle_action)
@@ -28,6 +29,7 @@ define(function(require, exports) {
         console.log(data);
         var user = data.items[0];
         $("body").append(tpl.parse("main-tpl", {"user" : user}));
+        calendar.initCalendar(user.birthdate && new Date(user.birthdate.replace(/-/g,"/")));
         var $days = $(".dateTitle");
         var freeTimes = user.freetimes;
         freeTimes.forEach(function(e) {
@@ -45,6 +47,10 @@ define(function(require, exports) {
 
         });
 
+        //生日
+        $(".js-birthday").on("click", function() {
+            $(".calendar-widget, .shade-widget").show(300);
+        });
         //性别
         $(".sex").find("div").on("click", function() {
             $(this).addClass("sex-act").siblings().removeClass("sex-act");

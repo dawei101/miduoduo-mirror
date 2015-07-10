@@ -32,7 +32,7 @@ define(function(require, exports) {
             }, "json");
             $.get(api.gen('task-collection/' + taskID), function(data) {
                 console.log(data);
-                if (data instanceof Array && data.length == 0) {
+                if (data == 'false') {
 
                 } else {
                     $(".store").addClass("store-act");
@@ -63,7 +63,7 @@ define(function(require, exports) {
     }
 
     $("body").on("click", ".report", function() { //举报
-        util.href("/view/job/report.html?job_gid=" + taskID)
+        util.href("view/job/report.html?job_gid=" + taskID)
     }).on("click", ".store", function() {
         if (miduoduo.user.id) {
             var $this = $(this);

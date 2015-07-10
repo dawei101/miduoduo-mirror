@@ -1,7 +1,11 @@
+<%include ../header.html%>
+<%-css("widget/calendar")%>
+<%-mainJs("widget/calendar")%>
+<body>
+
 <!--初始化构建dom-->
 <!--滚动的的时候构建dom-->
 <!--选年或月的时候-->
-<div class="shade-widget"></div>
 <div class="calendar-widget">
     <div class="part1">
         <div class="year">
@@ -28,8 +32,8 @@
         <div class="dayNum">
 
         </div>
-        <div class="year-slide">
-            <ul class="year-panel-container" ></ul>
+        <div class="year-panel">
+            <ul class="year-panel-container" style="-webkit-transform: translate3d(-88.8%, 100%, 0);"></ul>
         </div>
         <ul class="month-panel-container">
             <li>1</li>
@@ -46,4 +50,11 @@
             <li>12</li>
         </ul>
     </div>
+    <div class="part3">
+
+    </div>
+    <div class="part4"></div>
 </div>
+
+</body>
+</html>

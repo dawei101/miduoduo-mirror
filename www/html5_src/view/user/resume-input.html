@@ -25,7 +25,7 @@
             <li>
                 <div class="title ">出生年月</div>
                 <div class="con control">
-                    <input name="birthdate" type="text" class="js-col" placeholder="请选择真实日期"/>
+                    <input readonly name="birthdate" type="text" class="js-col js-birthday" placeholder="请选择真实日期"/>
                 </div>
             </li>
             <li>
@@ -116,5 +116,6 @@
     </div>
 </script>
 <%include ./resume-job-type.html%>
+<%include ../widget/calendar.html%>
 </body>
 </html>
