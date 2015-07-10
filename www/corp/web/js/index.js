@@ -1,7 +1,7 @@
 //首页登陆
 $('#login .zc-btn').click(function(e){
     $.post('/user/login', $(this).closest('form').serialize())
-    .done(function(data){
+    .done(function(str){
         var data = JSON.parse(str);
         if (data.result === true) {
             window.location = '/task/';
