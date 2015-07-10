@@ -18,6 +18,7 @@ use m\models\ContactForm;
 use common\models\Task;
 use common\models\Resume;
 use common\models\District;
+use common\models\ConfigRecommend;
 
 /**
  * Site controller
@@ -58,19 +59,47 @@ class SiteController extends MBaseController
     public function actionIndex()
     {
         //只有北京
-        $city_id = 3;
-        $query = Task::find()->with('city')->with('district');
-        $query = $query->where(['city_id'=>$city_id])
-            ->addOrderBy(['id'=>SORT_DESC])
-            ->limit(5);
-            ;
-        $city = District::findOne($city_id);
-        return $this->render('index', 
-            ['tasks'=>$query->all(),
-             'city'=>$city,
-            ]);
+        $city_id    = 3;
 
-        return $this->render('index');
+        // 查询出需要展示的 gids
+        $gid        = ConfigRecommend::find()->where(['type'=>1,'city_id'=>$city_id])->limit(10)->asArray()->addOrderBy(['display_order'=>SORT_DESC])->all();
+        $gids       = '';
+        foreach( $gid as $key => $value ){
+            $gids   .= $value['task_id'].',';
+        }
+        $gids   = trim($gids,',');
+        if($gids){
+
+            // 查询数据显示
+            $query = Task::find()->with('city')->with('district');
+            $query = $query->where('`gid` in('.$gids.')')
+                //->addOrderBy(['id'=>SORT_DESC])
+                ->limit(5);
+                ;
+            $city = District::findOne($city_id);
+            //print_r( $query->all() );exit;
+            return $this->render('index', 
+                ['tasks'=>$query->all(),
+                 'city'=>$city,
+                ]);
+
+            return $this->render('index');
+        }else{
+            //只有北京
+            $city_id = 3;
+            $query = Task::find()->with('city')->with('district');
+            $query = $query->where(['city_id'=>$city_id])
+                ->addOrderBy(['id'=>SORT_DESC])
+                ->limit(5);
+                ;
+            $city = District::findOne($city_id);
+            return $this->render('index', 
+                ['tasks'=>$query->all(),
+                 'city'=>$city,
+                ]);
+
+            return $this->render('index');
+        }
     }
 
     public function actionContact()

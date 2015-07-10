@@ -31,6 +31,12 @@ return [
         ],
     ],
 
+    'config'=>[
+        'recommend_type' => [       // 推荐信息分类
+            1 => 'M端-首页推荐',
+        ],
+    ],
+
     /*
         'weichat'=>[
             'appid'     => 'wxf18755b4d95797ac',                // 微信公众号ID

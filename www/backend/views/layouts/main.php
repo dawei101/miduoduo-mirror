@@ -45,6 +45,8 @@ AppAsset::register($this);
                 <li><a href="/weichat-user-info">微信推送-绑定用户</a></li>
                 <li><a href="/weichat-erweima">微信二维码</a></li>
                 <li>&nbsp;</li>
+                <li><a href="/config-recommend">后台配置-推荐兼职</a></li>
+                <li>&nbsp;</li>
                 <li><a href="/app-release-version">应用发布管理</a></li>
                 <li>
                     <a href="/support/report-bug">
