@@ -102,16 +102,29 @@ class TaskController extends FBaseController
     public function actionRefresh($gid)
     {
         $task = Task::findOne(['gid' => $gid]);
+        $task->updated_time = time();
+        if($task->save()){
+            return $this->renderJson(['result' => false]);
+        }
+        return $this->renderJson(['result' => false, 'error' => $task->errors]);
     }
 
-    public function actionDown($gid)v
+    public function actionDown($gid)
     {
-        $task = Task::findOne(['gid' => $gid]);
+        $task->updated_time = time();
+        if($task->save()){
+            return $this->renderJson(['result' => false]);
+        }
+        return $this->renderJson(['result' => false, 'error' => $task->errors]);
     }
 
     public function actionDelete($gid)
     {
-        $task = Task::findOne(['gid' => $gid]);
+        $task->updated_time = time();
+        if($task->save()){
+            return $this->renderJson(['result' => false]);
+        }
+        return $this->renderJson(['result' => false, 'error' => $task->errors]);
     }
 
 }
