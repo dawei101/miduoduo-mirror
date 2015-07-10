@@ -63,6 +63,9 @@ class Task extends \common\BaseActiveRecord
         0=>'正常',
         10=>'删除',
         20=>'下线',
+        30=>'审核中',
+        40=>'审核未通过',
+        50=>'过期',
     ];
 
     public function getStatus_label()
