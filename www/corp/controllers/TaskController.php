@@ -96,6 +96,14 @@ class TaskController extends FBaseController
     public function actionEdit($gid)
     {
         $task = Task::findOne(['gid' => $gid]);
+        if (!$task) {
+            return $this->goHome();
+        }
+        if ($task->load(Yii::$app->request->post())) {
+            if ($task->validate() && $task->save()) {
+                return $this->redirect('/task/');
+            }
+        }
         return $this->render('publish', ['task' => $task]);
     }
 
@@ -103,6 +111,8 @@ class TaskController extends FBaseController
     {
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
+        $task->from_time = substr($task->from_time, -3);
+        $task->to_time = substr($task->to_time, -3);
         if($task->save()){
             return $this->renderJson(['result' => false]);
         }
@@ -112,6 +122,9 @@ class TaskController extends FBaseController
     public function actionDown($gid)
     {
         $task->updated_time = time();
+        $task->status = 1;
+        $task->from_time = substr($task->from_time, -3);
+        $task->to_time = substr($task->to_time, -3);
         if($task->save()){
             return $this->renderJson(['result' => false]);
         }
@@ -121,6 +134,9 @@ class TaskController extends FBaseController
     public function actionDelete($gid)
     {
         $task->updated_time = time();
+        $task->status = 2;
+        $task->from_time = substr($task->from_time, -3);
+        $task->to_time = substr($task->to_time, -3);
         if($task->save()){
             return $this->renderJson(['result' => false]);
         }

@@ -59,6 +59,7 @@ class ResumeController extends FBaseController
 
     public function actionIndex()
     {
+        
         return $this -> render('index');
     }
 
