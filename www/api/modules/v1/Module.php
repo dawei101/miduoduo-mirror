@@ -21,6 +21,8 @@ class Module extends \yii\base\Module
         // 'controller' => actions
         'entry' => ['*'],
         'task' => ['*'],
+        'district' => ['*'],
+        'service-type' => ['*'],
         'task-address' => ['nearby']
     ];
 
