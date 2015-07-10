@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'clearance_period_label',
             'salary',
             'salary_unit_label',
+            'status_label',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

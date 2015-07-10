@@ -14,8 +14,10 @@ define(function (require, exports) {
     var watchScroll = function () {
         idDataLoad = false;
         //pullUp.attr('status', 'loading');
+        pullUp.show();
         $.get(url, urlData, function (res) {
             //pullUp.attr('status', 'tap');
+            pullUp.hide();
             urlData.page++;
             idDataLoad = true;
             callback(res);

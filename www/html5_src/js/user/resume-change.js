@@ -4,6 +4,26 @@ define(function(require, exports) {
     var api = require("../widget/api");
     var util = require("../widget/util");
 
+    document.addEventListener('WebViewJavascriptBridgeReady', function() {
+        WebViewJavascriptBridge.defaultHandler(handle_action)
+    }, false);
+    //jsbridge 主动监听
+    function handle_action(data, responseCallback) {
+        var rst = {
+            action: 'q_before_quit',
+            result: {
+                value: true
+            }
+        }
+        util.cf({title : "注意", message : "确定放弃编辑吗？"}, function(data) {
+            data = JSON.parse(data);
+            if (data.result.value == 0) {
+                rst.result.value = false;
+            }
+            responseCallback(rst);
+        });
+    };
+
     $.get(api.gen("resume?expand=service_types,freetimes,home_address,workplace_address"), function(data) {
         console.log(data);
         var user = data.items[0];
@@ -76,7 +96,12 @@ define(function(require, exports) {
         $(".js-set-address").on("click", function() {
             var $this = $(this);
             util.setAddress(function(data) {
-                alert(data);
+                alert("app返回的地址信息：" + JSON.stringify(data));
+                data = JSON.parse(data);
+                $this.find("input").val(data.address);
+                $.post(api.gen("address"), data, function(data) {
+                    console.log(data);
+                });
             });
         })
         require("./resume-job-type");

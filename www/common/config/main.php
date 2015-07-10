@@ -1,5 +1,8 @@
 <?php
 $root_path = dirname(dirname(__DIR__));
+
+$params = [];
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
@@ -62,8 +65,8 @@ return [
         'm' => $root_path . '/m',
         'html5_src' => $root_path . '/html5_src',
         'html5_dest' => $root_path . '/html5_dest',
-        'corp' => $root_path . '/corp'
     ],
     'language'=>'zh-CN',
     'timeZone' => 'Asia/Shanghai',
+    'params' => $params,
 ];

@@ -25,9 +25,10 @@ $this->nav_right_title = '首页';
   </div>
   <div class="list-tag">
     <span class="tag-im">￥<?= floor($task->salary); ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span>
-    <?php foreach($task->labels as $label) {?>
+    <?php if ($task->labels_str){
+     foreach($task->labels as $label) {?>
         <span><?=$label?></span>
-    <?php }?>
+    <?php }}?>
   </div>
 </div>
 <div class="list-subsection">
@@ -46,20 +47,20 @@ $this->nav_right_title = '首页';
 </div>
 <div class="list-subsection">
     <dl>
+       <dt>工作内容</dt>
+       <dd class="detail"><?=$task->detail?></dd>
+    </dl>
+</div>
+<div class="list-subsection">
+    <dl>
        <dt>公司信息</dt>
        <dd><?=$task->company_name?></dd>
-       <dd><a href="callto:<?=$task->contact_phonenum?>"><i class="iconfont">&#xe611;</i>电话咨询</a>
+       <dd><a href="tel:<?=$task->contact_phonenum?>"><i class="iconfont">&#xe611;</i>电话咨询</a>
             <div>
                 <p>联系人：<?=$task->contact?></p>
                 <p>联系电话:<?=$task->contact_phonenum?></p>
            </div>
       </dd>
-    </dl>
-</div>
-<div class="list-subsection">
-    <dl>
-       <dt>工作内容</dt>
-       <dd class="detail"><?=$task->detail?></dd>
     </dl>
 </div>
 <div class="mdd-bottom-nav">
@@ -72,15 +73,18 @@ $this->nav_right_title = '首页';
         <i class="iconfont">&#xe60d;</i><span style="display:block">已收藏</span>
      </a>
     <?php } ?>
-        <a href="/complaint/create?gid=<?=$task->gid?>" class="midd-l bottom-box">
+     <a href="/complaint/create?id=<?=$task->id?>" class="midd-l bottom-box">
         <i class="iconfont">&#xe60f;</i><span style="display:block">举报</span>
-    </a>
+     </a>
     <?php if (Yii::$app->user->isGuest){ ?>
          <div class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
     <?php } else { ?>
-        <?php if ($app){ ?>
-            <div class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
-        <?php } else { ?>
+        <?php if ($app && $app->status==0){ ?>
+            <div style="background: #a5abb2;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
+        <?php } else if ($app && $app->status==10) { ?>
+            <div style="background: #ff7b5d;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
+        <?php }
+        if(!$app) { ?>
          <div id="apply" class="midd-l bottom-bnt bottom-bnt-bm">我要报名</div>
         <?php } ?>
     <?php } ?>
@@ -136,7 +140,7 @@ $(function(){
             }
             console.info(data);
         }).fail(function(jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status=302){
+            if (jqXHR.status==302){
                 GB.login(location.href);
             }
         });;

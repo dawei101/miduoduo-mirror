@@ -59,6 +59,16 @@ class Task extends \common\BaseActiveRecord
         3=>'月',
     ];
 
+    public static $STATUSES = [
+        0=>'正常',
+        10=>'下线',
+    ];
+
+    public function getStatus_label()
+    {
+        return static::$STATUSES[$this->status];
+    }
+
 
     public function getClearance_period_label()
     {
@@ -109,6 +119,7 @@ class Task extends \common\BaseActiveRecord
             [['contact', 'contact_phonenum'], 'required'],
             ['contact_phonenum', 'match', 'pattern'=>'/^(1[345789]\d{9})|(\d{3,4}\-?\d{7,8})$/',
                 'message'=>'请输入正确的电话'],
+            ['clearance_period', 'default', 'value'=>0],
         ];
     }
 
@@ -148,6 +159,7 @@ class Task extends \common\BaseActiveRecord
             'age_requirement' => '年龄',
             'height_requirement' => '身高',
             'status' => '状态',
+            'status_label' => '状态',
             'city_id' => '城市',
             'district_id' => '区域',
 
@@ -269,7 +281,7 @@ class Task extends \common\BaseActiveRecord
             'city_id', 'district_id', 'company_id',
             'gender_requirement', 'degree_requirement',
             'clearance_period_label', 'salary_unit_label',
-            'labels', 'label_options',
+            'labels', 'label_options', 'status_label',
         ];
     }
 }
