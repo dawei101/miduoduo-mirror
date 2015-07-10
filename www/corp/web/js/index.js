@@ -2,7 +2,11 @@
 $('#login .zc-btn').click(function(e){
     $.post('/user/login', $(this).closest('form').serialize())
     .done(function(data){
-        console.log(data);
+        var data = JSON.parse(str);
+        if (data.result === true) {
+            window.location = '/task/';
+            return;
+        }
     });
     return false;
 });
@@ -12,7 +16,7 @@ $('#hr .zc-btn').click(function(e){
     $.post('/user/register', $(this).closest('form').serialize())
     .done(function(str){
         var data = JSON.parse(str);
-        if (data.result === false) {
+        if (data.result === true) {
             window.location = '/user/add-contact-info';
             return;
         }
