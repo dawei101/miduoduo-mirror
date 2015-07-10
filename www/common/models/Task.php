@@ -61,7 +61,8 @@ class Task extends \common\BaseActiveRecord
 
     public static $STATUSES = [
         0=>'正常',
-        10=>'下线',
+        10=>'删除',
+        20＝'下线',
     ];
 
     public function getStatus_label()
@@ -175,14 +176,14 @@ class Task extends \common\BaseActiveRecord
         return parent::beforeValidate();
     }
 
-    public function beforeSave($insert) 
+    public function beforeSave($insert)
     {
-        if ($this->isNewRecord){ 
-            $user_id = Yii::$app->user->id; 
-            $this->user_id = $user_id; 
-            $this->gid = time() . mt_rand(100, 999) . $user_id; 
+        if ($this->isNewRecord){
+            $user_id = Yii::$app->user->id;
+            $this->user_id = $user_id;
+            $this->gid = time() . mt_rand(100, 999) . $user_id;
         }
-        return parent::beforeSave($insert); 
+        return parent::beforeSave($insert);
     }
 
     public function tidyTitle()
@@ -271,7 +272,7 @@ class Task extends \common\BaseActiveRecord
     {
         return [
             'id', 'gid', 'title', 'clearance_period', 'salary', 'salary_unit',
-            'salary_note', 'from_date', 
+            'salary_note', 'from_date',
             'contact', 'contact_phonenum',
             'to_date', 'from_time', 'to_time', 'need_quantity',
             'got_quantity', 'created_time', 'updated_time', 'detail',

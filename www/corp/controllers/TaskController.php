@@ -122,7 +122,7 @@ class TaskController extends FBaseController
     public function actionDown($gid)
     {
         $task->updated_time = time();
-        $task->status = 1;
+        $task->status = 20;
         $task->from_time = substr($task->from_time, -3);
         $task->to_time = substr($task->to_time, -3);
         if($task->save()){
@@ -134,7 +134,7 @@ class TaskController extends FBaseController
     public function actionDelete($gid)
     {
         $task->updated_time = time();
-        $task->status = 2;
+        $task->status = 10;
         $task->from_time = substr($task->from_time, -3);
         $task->to_time = substr($task->to_time, -3);
         if($task->save()){
