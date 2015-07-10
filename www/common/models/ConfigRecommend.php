@@ -41,8 +41,8 @@ class ConfigRecommend extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'task_id' => '任务ID，gid',
-            'type' => '类型，如m端首页推荐，网页端首页推荐等',
+            'task_id' => '任务gid',
+            'type' => '类型',
             'city_id' => '城市ID',
             'display_order' => '排序，越大越靠前',
         ];

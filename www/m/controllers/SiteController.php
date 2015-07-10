@@ -62,7 +62,10 @@ class SiteController extends MBaseController
         $city_id    = 3;
         // 查询出需要展示的 gids
         // type=1 标示查询的是M端的推荐信息
-        $gid        = ConfigRecommend::find()->where(['type'=>1,'city_id'=>$city_id])->limit(10)->asArray()->all();
+        $gid        = ConfigRecommend::find()->where(['type'=>1,'city_id'=>$city_id])
+            ->limit(15)
+            ->addOrderBy(['display_order'=>SORT_DESC])
+            ->asArray()->all();
         $gids       = '';
         foreach( $gid as $key => $value ){
             $gids   .= $value['task_id'].',';
@@ -73,7 +76,7 @@ class SiteController extends MBaseController
         if($gids){
 
             // 查询数据显示
-            $tasks      = Task::find()->limit(10)
+            $tasks      = Task::find()
             ->where('`gid` in('.$gids.')')
             ->addOrderBy(['display_order'=>SORT_DESC])
             ->joinWith('recommend')->all();
