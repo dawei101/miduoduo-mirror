@@ -70,12 +70,21 @@ $this->nav_right_title = '首页';
      </a>
     <?php } else { ?>
      <a class="midd-l bottom-box pitch-on">
-        <i class="iconfont">&#xe60d;</i><span style="display:block">已收藏</span>
+        <i class="iconfont">&#xe607;</i><span style="display:block">已收藏</span>
      </a>
     <?php } ?>
-     <a href="/complaint/create?id=<?=$task->id?>" class="midd-l bottom-box">
+
+
+      <?php if(!$complainted){ ?>
+        <a href="/complaint/create?id=<?=$task->id?>" class="midd-l bottom-box">
         <i class="iconfont">&#xe60f;</i><span style="display:block">举报</span>
      </a>
+    <?php } else { ?>
+        <a  class="midd-l bottom-box">
+        <i class="iconfont">&#xe60f;</i><span style="display:block">已举报</span>
+        </a>
+    <?php } ?>
+
     <?php if (Yii::$app->user->isGuest){ ?>
          <div class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
     <?php } else { ?>
@@ -117,6 +126,7 @@ $(function(){
             var d = $.parseJSON(data);
             if (d['success']){
                 $("#collect").addClass('pitch-on');
+                $("#collect").find('i').html('&#xe607');
                 $("#collect").find('span').html('已收藏');
             }
             console.info(data);
