@@ -1,8 +1,11 @@
 @import "../atom";
 @grass : #00b966;
-.calendar {
+.calendar-widget {
+  .none;
   .pf;
   bottom: 0;
+  z-index: 10000;
+  .bgc(#fff);
   .part1 {
     .clearfix;
     .w(100%);
@@ -92,14 +95,16 @@
     }
   }
 
+  .year-panel {
+    .w(100%);
+  }
   .year-panel-container {
+    .none;
     .pa;
     top: 0;
     bottom: 0;
     .w(900%); //9个年面板
     .clearfix;
-    -webkit-transform: translate3d(-88.8%,100%,0);
-    opacity: 0;
     .bgc(#fff);
     .year-panel {
       .left;
@@ -115,12 +120,11 @@
   }
 
   .month-panel-container {
+    .none;
     .pa;
     top: 0;
     bottom: 0;
     .w(100%);
-    -webkit-transform: translate3d(0,100%,0);
-    opacity: 0;
     .bgc(#fff);
     li {
       .w(100/3%);
@@ -138,4 +142,21 @@
     .bgc(#00b966);
     .fc(#fff);
   }
+  .d-act {
+    .bgc(#00b966);
+    .fc(#fff);
+  }
+  .unCurrMonthDay {
+    .grey;
+  }
+}
+
+.shade-widget {
+  .none;
+  .pf;
+  .w(100%);
+  z-index: 9000;
+  top: 0;
+  bottom: 0;
+  background: rgba(85,90,103,0.8);
 }

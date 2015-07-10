@@ -106,7 +106,7 @@ define(function(require, exports, module) {
                     }
                 } else {
                     self.lazyLoad && self.loadImg(0);
-                    self.ul.width(self.liWidth * self.len);
+                    //self.ul.width(self.liWidth * self.len);
                 }
             },
             /*移动*/
@@ -139,7 +139,6 @@ define(function(require, exports, module) {
                 self.pos = self.pos + pp;
                 self.ul.animate({
                         "-webkit-transform" : "translate3d(" + self.pos + "px,0,0)"
-                        //   "left": -self.liWidth * self.index + "px"
                     },
                     self.speed,
                     function() {
@@ -195,7 +194,6 @@ define(function(require, exports, module) {
                 var startX, startY, ulOffset, spirit = null,startClose = false;
 
                 function touchStart(event) {
-                    console.log(self.allowTouch);
                     if (!self.allowTouch) {
                         startClose = true;
                         return;
@@ -227,7 +225,6 @@ define(function(require, exports, module) {
 
                         //向左滑动
                         if (x < 0) {
-                            console.log(self.pos);
                             x += self.pos;
                             spirit = 0;
                             self.ul.css("-webkit-transform", "translate3d(" + x + "px"+ ",0,0)");

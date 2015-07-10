@@ -2,18 +2,14 @@ define(function(require, exports) {
     require("zepto-ext");
     var api = require("../widget/api");
     var util = require("../widget/util");
+    var calendar = require("../widget/calendar");
+
 
     document.addEventListener('WebViewJavascriptBridgeReady', function() {
         WebViewJavascriptBridge.defaultHandler(handle_action)
     }, false);
     //jsbridge 主动监听
     function handle_action(data, responseCallback) {
-        var rst = {
-            action: 'q_before_quit',
-            result: {
-                value: true
-            }
-        }
         if (location.hash != "") {
             location.hash = "";
             rst.result.value = false;
@@ -34,6 +30,7 @@ define(function(require, exports) {
     var tpl = require("../widget/tpl-engine");
     $("body").append(tpl.parse("main1-tpl", {}));
     $("body").append(tpl.parse("main2-tpl", {}));
+    calendar.initCalendar();
 
     $(".next-btn").on("click", function() {
         location.hash = "#main2";
@@ -50,6 +47,11 @@ define(function(require, exports) {
         }
     })
 
+    //生日
+    $(".js-birthday").on("click", function() {
+        $(".calendar-widget, .shade-widget").show(300);
+
+    });
     //性别
     $(".sex").find("div").on("click", function() {
         $(this).addClass("sex-act").siblings().removeClass("sex-act");
