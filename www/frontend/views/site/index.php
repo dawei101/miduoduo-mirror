@@ -24,8 +24,8 @@ $this->title = '米多多兼职平台';
     </nav>
     <div class="banner"><img src="/static/img/banner.png" width="751" height="407">
       <h1>米多多 | 大学生兼职平台</h1>
-      <div class="erweima"><img src="/static/img/erweima.png" width="140" height="140">
-        <p>扫码进入m站</p>
+      <div class="erweima"><img src="/static/img/showqrcode-2.jpeg" width="140" height="140">
+        <p>微信公众账号</p>
       </div>
     </div>
   </div>
@@ -116,7 +116,7 @@ $this->title = '米多多兼职平台';
         <li class="xian"></li>
         <li class="attention-us">
             <h2>关注我们</h2>
-            <div class="erwei"><img src="/static/img/fooerwei.jpg" width="70" height="70"><div class="er-text"><a style="text-decoration:none; color:#fff" href="<?=Yii::$app->params['baseurl.m']?>">扫码进入m站</a></div></div>
+            <div class="erwei"><img src="/static/img/showqrcode-2.jpeg" width="70" height="70"><div class="er-text"><a style="text-decoration:none; color:#fff" href="<?=Yii::$app->params['baseurl.m']?>">微信公众账号</a></div></div>
             <!-- <div class="erwei"><img src="/static/img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>-->
        </li>
      </ul>
