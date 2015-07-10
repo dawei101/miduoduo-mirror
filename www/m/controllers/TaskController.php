@@ -10,6 +10,7 @@ use yii\helpers\Url;
 use common\Utils;
 use common\models\Task;
 use common\models\TaskCollection;
+use common\models\Complaint;
 use common\models\TaskApplicant;
 use common\models\Resume;
 use common\models\District;
@@ -96,9 +97,12 @@ class TaskController extends \m\MBaseController
         }
         if ($task){
             $collected = false;
+            $complainted = false;
             $app = null;
             if (!Yii::$app->user->isGuest){
                 $collected = TaskCollection::find()->where(
+                    ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->exists();
+                $complainted = Complaint::find()->where(
                     ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->exists();
                 $app = TaskApplicant::find()->where(
                     ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->one();
@@ -107,6 +111,7 @@ class TaskController extends \m\MBaseController
                 [
                     'task'=>$task,
                     'collected'=>$collected,
+                    'complainted'=>$complainted,
                     'app'=> $app,
                 ]
             );
