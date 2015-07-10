@@ -62,7 +62,7 @@ class Task extends \common\BaseActiveRecord
     public static $STATUSES = [
         0=>'正常',
         10=>'删除',
-        20＝'下线',
+        20=>'下线',
     ];
 
     public function getStatus_label()

@@ -110,11 +110,11 @@ class TaskController extends FBaseController
     public function actionRefresh($gid)
     {
         $task = Task::findOne(['gid' => $gid]);
-        $task->updated_time = time();
-        $task->from_time = substr($task->from_time, -3);
-        $task->to_time = substr($task->to_time, -3);
+        $task->updated_time = date("Y-m-d H:i:s");
+        $task->from_time = substr($task->from_time, 0, -3);
+        $task->to_time = substr($task->to_time, 0, -3);
         if($task->save()){
-            return $this->renderJson(['result' => false]);
+            return $this->renderJson(['result' => true]);
         }
         return $this->renderJson(['result' => false, 'error' => $task->errors]);
     }
@@ -123,10 +123,10 @@ class TaskController extends FBaseController
     {
         $task->updated_time = time();
         $task->status = 20;
-        $task->from_time = substr($task->from_time, -3);
-        $task->to_time = substr($task->to_time, -3);
+        $task->from_time = substr($task->from_time, 0, -3);
+        $task->to_time = substr($task->to_time, 0, -3);
         if($task->save()){
-            return $this->renderJson(['result' => false]);
+            return $this->renderJson(['result' => true]);
         }
         return $this->renderJson(['result' => false, 'error' => $task->errors]);
     }
@@ -135,10 +135,10 @@ class TaskController extends FBaseController
     {
         $task->updated_time = time();
         $task->status = 10;
-        $task->from_time = substr($task->from_time, -3);
-        $task->to_time = substr($task->to_time, -3);
+        $task->from_time = substr($task->from_time, 0, -3);
+        $task->to_time = substr($task->to_time, 0, -3);
         if($task->save()){
-            return $this->renderJson(['result' => false]);
+            return $this->renderJson(['result' => true]);
         }
         return $this->renderJson(['result' => false, 'error' => $task->errors]);
     }
