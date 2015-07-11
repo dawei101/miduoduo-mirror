@@ -8,6 +8,8 @@ use corp\FBaseController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
+use common\models\TaskApplicant;
+
 
 /**
  * Site controller
@@ -59,7 +61,8 @@ class ResumeController extends FBaseController
 
     public function actionIndex()
     {
-        
+        $results = TaskApplicant::findByCorpUserId(2035);
+        print_r($result);
         return $this -> render('index');
     }
 
