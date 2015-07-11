@@ -54,12 +54,12 @@ $this->title = '米多多兼职平台';
                 <?php foreach ($resumes as $resume) {?>
                 <dd>
                     <div class="pull-left tab1 borser-tab-right">
-                        <div class="names"><?=$resume.name?></div>
-                        <div class="jiben"><span><?=$resume->age?>岁</span><span><?=($resume->gender==0)?'男':'女'?></span><span><?=$resume->college?></span></div>
+                        <div class="names"><?=$resume['name']?></div>
+                        <div class="jiben"><span><?=$resume['age']?>岁</span><span><?=($resume['gender']==0)?'男':'女'?></span><span><?=$resume['college']?></span></div>
                     </div>
-                    <div class="pull-left tab2 text-center borser-tab-right"><?=$resume->title?></div>
-                    <div class="pull-left tab3 text-center borser-tab-right"><?=$resume->phonenum?></div>
-                    <div class="pull-left tab4 text-center borser-tab-right"><?=$resume->created_time?></div>
+                    <div class="pull-left tab2 text-center borser-tab-right"><?=$resume['title']?></div>
+                    <div class="pull-left tab3 text-center borser-tab-right"><?=$resume['phonenum']?></div>
+                    <div class="pull-left tab4 text-center borser-tab-right"><?=$resume['created_time']?></div>
                     <div class="pull-left tab5"><button class="pull-left jishou">接受报名</button><button class="pull-left jujue">不合适</button></div>
                 </dd>
                 <?php }?>
