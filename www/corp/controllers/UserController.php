@@ -164,11 +164,10 @@ class UserController extends FBaseController
         if ($model->validate() && $model->save()) {
             return $this->goHome();
         }
-        print_r($model);
         return $this->render('addContactInfo', ['model' => $model]);
     }
 
-    public function actoinInfo()
+    public function actionInfo()
     {
         return $this->render('info');
     }

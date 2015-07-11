@@ -63,7 +63,7 @@
                         <P>5、申请人所填写的真实姓名、身份证号码必须与提交的证件信息一致。</P>
                    </div>
                    <div class="id-img">
-                   <img src="img/shenfenzheng.jpg"></div>
+                   <img src="/img/shenfenzheng.jpg"></div>
                 </div>
               </li>
                 <button class="queding-bt">确定</button>
