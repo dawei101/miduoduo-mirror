@@ -249,7 +249,13 @@ class Task extends \common\BaseActiveRecord
 
     public function getLabels()
     {
-        return explode(',', $this->labels_str);
+        $arr = [];
+        if ($this->labels_str){
+            $arr = explode(',', $this->labels_str);
+        }
+        $arr[] = $this->clearance_period_label;
+        $arr[] = substr($this->from_date, 5) . '至' . substr($this->to_date, 5);
+        return $arr;
     }
 
     public function setLabels($labels)

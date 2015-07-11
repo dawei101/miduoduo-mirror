@@ -11,7 +11,7 @@ use api\modules\BaseActiveController;
  */
 class ResumeController extends BaseActiveController
 {
-    public $modelClass = 'common\models\Resume';
+    public $modelClass = 'api\common\models\Resume';
 
     public function actions()
     {
