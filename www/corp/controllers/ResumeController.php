@@ -61,7 +61,7 @@ class ResumeController extends FBaseController
         ];
     }
 
-    public static function findByCorpUserId($corpUserId)
+    public function findByCorpUserId($corpUserId)
     {
         $query = new Query;
         $query ->select([
@@ -80,16 +80,23 @@ class ResumeController extends FBaseController
 				'jz_task.id =jz_task_applicant.task_id')
              ->where(['jz_task.user_id' => $corpUserId]);
 
-        $command = $query->createCommand();
-        $data = $command->queryAll();
+        // $command = $query->createCommand();
+        // $data = $command->queryAll();
 
-        $pages = new Pagination(['totalCount' => $query->count()]);
-        return $data;
+        return $query;
     }
 
     public function actionIndex()
     {
-        $resumes = TaskApplicant::findByCorpUserId(Yii::$app->user->id);
+        $query = $this->findByCorpUserId(Yii::$app->user->id);
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount' => $count]);
+        $resumes = $query->offset($pagination->offset)
+                         ->limit($pagination->limit)
+                         ->all();
+
+        $pages = new Pagination(['totalCount' => $query->count()]);
+        print_r($resumes);
         return $this -> render('index', ['resumes' => $resumes]);
     }
 
