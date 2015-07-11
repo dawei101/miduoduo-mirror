@@ -61,9 +61,13 @@ class ResumeController extends FBaseController
         ];
     }
 
-    public function findByCorpUserId($corpUserId)
+    public function findByCorpUserId($corpUserId, $status=false)
     {
         $query = new Query;
+        $codition = ['jz_task.user_id' => $corpUserId];
+        if ($status !== false) {
+            $condition['status'] = $status;
+        }
         $query ->select([
             'jz_task_applicant.id',
             'jz_task_applicant.created_time',
@@ -78,14 +82,14 @@ class ResumeController extends FBaseController
 				'jz_resume.user_id =jz_task_applicant.user_id')
              ->join('INNER JOIN', 'jz_task',
 				'jz_task.id =jz_task_applicant.task_id')
-             ->where(['jz_task.user_id' => $corpUserId]);
+             ->where($condition);
 
         return $query;
     }
 
-    public function actionIndex()
+    public function actionIndex($status=false)
     {
-        $query = $this->findByCorpUserId(Yii::$app->user->id);
+        $query = $this->findByCorpUserId(Yii::$app->user->id, $status);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $resumes = $query->offset($pagination->offset)
@@ -108,7 +112,7 @@ class ResumeController extends FBaseController
     public function actionPass($aid)
     {
         $resume = TaskApplicant::findOne(['id' => $aid]);
-        $resume->have_read = 10;
+        $resume->status = 10;
         if ($resume->save()) {
             return $this->renderJson(['result' => true]);
         }
@@ -118,7 +122,7 @@ class ResumeController extends FBaseController
     public function actionReject($aid)
     {
         $resume = TaskApplicant::findOne(['id' => $aid]);
-        $resume->have_read = 20;
+        $resume->status = 20;
         if ($resume->save()) {
             return $this->renderJson(['result' => true]);
         }
