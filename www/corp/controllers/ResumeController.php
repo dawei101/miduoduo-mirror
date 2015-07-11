@@ -61,9 +61,8 @@ class ResumeController extends FBaseController
 
     public function actionIndex()
     {
-        $results = TaskApplicant::findByCorpUserId(2035);
-        print_r($result);
-        return $this -> render('index');
+        $resumes = TaskApplicant::findByCorpUserId(Yii::$app->user->id);
+        return $this -> render('index', ['resumes' => $resumes]);
     }
 
 
