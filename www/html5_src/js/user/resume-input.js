@@ -125,9 +125,29 @@ define(function(require, exports) {
 
         var $sc = $(".js-special-col");
         data[$sc.attr("name")] = $sc.find(".sex-act").data("val");
-        data["phonenum"] = miduoduo.user.phone;
         console.log("简历",data);
         $.post(api.gen("resume"), data, function(data) {
+            //验证失败
+            if (arguments[2].status == 422) {
+                var tipsArr = data
+                var tipsStr = "";
+                tipsArr.forEach(function(e) {
+                    tipsStr += e.message + "\n";
+                });
+                if (window.WebViewJavascriptBridge) {
+                    var opts = {
+                        action: 'b_toast_alert',
+                        data: {
+                            'message' : tipsStr,
+                            'disappear_delay' : 2000
+                        }
+                    }
+                    window.WebViewJavascriptBridge.send(opts, null);
+                } else {
+                    alert(tipsStr);
+                }
+                return;
+            }
             if (miduoduo.os.mddApp) {
                 util.pop();
             } else {

@@ -39,7 +39,7 @@ define(function(require, exports, module) {
                     $("body").append(tpl.parse("job-type-list-tpl", {list : data.items}));
                     _this.isLoad = true;
                 } else {
-                    console.error("加载区域列表出错", data);
+                    console.error("加载职位类型列表出错", data);
                 }
                 _this.notLoadOver = false;
             })
@@ -96,11 +96,17 @@ define(function(require, exports, module) {
 
     buildJobList();
     function buildJobList() {
-        $(".jobList").remove();
-        var urlParam = {"page" : 1, "per-page" : 30, "expand" : expandStr, "filters" : handleFiltersObj(filtersObj)}
+        $(".jobs-container").empty();
+        $(".no-data").hide();
+        var urlParam = {"page" : 1, "expand" : expandStr, "filters" : handleFiltersObj(filtersObj)}
         //职位列表，滚动加载
         sLoad.startWatch(api.gen(url), urlParam, function(data) {
-            $(".content").find(".pullUp").before(tpl.parse("job-list-tpl", {"jobs" : data.items}));
+            $(".jobs-container").append(tpl.parse("job-list-tpl", {"jobs" : data.items}));
+            setTimeout(function() {
+                if ($(".jobList").length == 0) {
+                    $(".no-data").fadeIn();
+                }
+            }, 200)
         });
 
         function handleFiltersObj(obj) {
@@ -112,7 +118,7 @@ define(function(require, exports, module) {
         }
     }
 
-    $(".content").on("click", "a", function(e) {
+    $(".jobs-container").on("click", "a", function(e) {
         e.preventDefault();
         util.href($(this).attr("href"));
     })

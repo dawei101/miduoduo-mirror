@@ -31,44 +31,27 @@ define(function(require, exports) {
 
     $.pageInitGet = function(/* url, data, success, dataType */){
         //显示遮罩
-        //...
+        $(".init-shade").show();
+
         initGetReqNum += 1;
         var options = parseArguments.apply(null, arguments);
         var callback = options.success;
-        options.success = function() {initGetReqCallbakcAspect(callback)}
+        options.success = function(data) {initGetReqCallbakcAspect(data, callback)}
         options.error = handleError;
         return $.ajax(options)
     }
 
-    function initGetReqCallbakcAspect(cb) {
+    function initGetReqCallbakcAspect(data, cb) {
         initGetReqNum--;
-        cb();
+        cb(data);
         if (initGetReqNum == 0) {
             //去除遮罩
+            $(".init-shade").hide();
         }
     }
 
     function handleError(res) {
-        //验证失败
-        if (res.status == 422) {
-            var tipsArr = JSON.parse(res.response);
-            var tipsStr = "";
-            tipsArr.forEach(function(e) {
-                tipsStr += e.message + "\n";
-            });
-            if (window.WebViewJavascriptBridge) {
-                var opts = {
-                    action: 'b_toast_alert',
-                    data: {
-                        'message' : tipsStr,
-                        'disappear_delay' : 2000
-                    }
-                }
-                window.WebViewJavascriptBridge.send(opts, null);
-            } else {
-                alert(tipsStr);
-            }
-        }
+        //401跳转到登陆页面
         if (res.status == 401) {
             if (window.WebViewJavascriptBridge) {
                 WebViewJavascriptBridge.send({"action" : "b_require_auth", "data" : {}}, function(data){location.reload()});
