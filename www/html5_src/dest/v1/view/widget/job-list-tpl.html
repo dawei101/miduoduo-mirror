@@ -1,5 +1,13 @@
+<div class="job-list-widget">
+    <div class="jobs-container"></div>
+    <div class="pullUp">
+        加载中...
+    </div>
+    <div class="no-data">没有数据</div>
+</div>
 <!--职位列表模板-->
 <script type="text/html" id="job-list-tpl">
+    <? if (this.jobs && this.jobs.length > 0) {?>
     <div class="jobList">
         <? var showOthers = this.showOthers;?>
         <? this.jobs.forEach(function(e) { ?>
@@ -31,4 +39,5 @@
         <? } ?>
         <? }); ?>
     </div>
+    <? } ?>
 </script>

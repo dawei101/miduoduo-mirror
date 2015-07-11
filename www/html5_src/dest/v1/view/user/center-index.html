@@ -28,10 +28,8 @@
             miduoduo.user = JSON.parse(window.localStorage.getItem("userInfo")) || miduoduo.user;
             miduoduo.os.mddApp = true;
         }catch(e){
-            alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
+            //alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
         }
-        alert("是否在APP中：" + miduoduo.os.mddApp);
-        alert("是否有jsbrige对象:" + window.WebViewJavascriptBridge);
         miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
         miduoduo.basePath = {
             base : "/v1/",
@@ -80,11 +78,11 @@
             <span class="login" style="display: none">登陆</span>
     </div>
     <div class="nav">
-        <a class="item" href="/view/user/my-job.html">我的兼职</a>
-        <a class="item" href="/view/user/my-store.html">我的收藏</a>
+        <a class="item" href="view/user/my-job.html">我的兼职</a>
+        <a class="item" href="view/user/my-store.html">我的收藏</a>
         <a class="item js-my-resume" href="javascript:void(0);">我的简历</a>
     </div>
-    <div class="contact-us item" href="/view/user/contact-us.html">联系我们</div>
+    <div class="contact-us item" href="view/user/contact-us.html">联系我们</div>
 
     <!--已登陆tpl-->
     <script type="text/html" id="already-login-tpl">
@@ -92,5 +90,8 @@
         <span   class="name"><?=this.user.name?></span>
         <span class="phone"><?=this.user.phone?></span>
     </script>
+
+<div class="init-shade">
+</div>
 </body>
 </html>
