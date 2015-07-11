@@ -105,3 +105,7 @@
   </div>
 </div>
 <!-- InstanceEndEditable -->
+
+<?php
+$this->registerJsFile('/js/miduoduo.js');
+?>
