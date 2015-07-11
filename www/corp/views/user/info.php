@@ -34,29 +34,24 @@
       </div>
       <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
         <div class="right-center">
-        <form>
+        <?php $form = ActiveForm::begin();?>
           <ul class="tianxie-box" style="border:none">
               <li>
                 <div class="pull-left title-left text-center">公司名称</div>
                 <div class="pull-left right-box">
-                  <input type="text" placeholder="输入公司名称">
+                  <input type="text" placeholder="输入公司名称" value="<?=$company->name?>">
                 </div>
               </li>
               <li>
                   <div class="pull-left title-left text-center">所属行业</div>
                   <div class="pull-left right-box zhiweileibie">
                     <div class="nice-select" name="nice-select">
-                      <input type="text" value="选择行业" >
+                      <input type="text" placeholder="选择行业" value="<?=$company->service?>" >
                       <i class="iconfont">&#xe60d;</i>
                       <ul>
-                        <li>礼仪</li>
-                        <li>广东省</li>
-                        <li>湖南省</li>
-                        <li>四川省</li>
-                        <li>湖北省</li>
-                        <li>广东省</li>
-                        <li>湖南省</li>
-                        <li>四川省</li>
+                        <?php foreach($services as $service) {?>
+                        <li><?=$service->name?></li>
+                        <?php }?>
                       </ul>
                     </div>
                   </div>
@@ -65,7 +60,7 @@
                   <div class="pull-left title-left text-center">企业性质</div>
                   <div class="pull-left right-box zhiweileibie">
                     <div class="nice-select" name="nice-select">
-                      <input type="text" value="选择公司性质" >
+                      <input type="text" placeholder="选择公司性质" value="<?=$company->corp_type?>">
                       <i class="iconfont">&#xe60d;</i>
                       <ul>
                         <li data-value="1">国企</li>
@@ -79,7 +74,7 @@
                   <div class="pull-left title-left text-center">企业规模</div>
                   <div class="pull-left right-box zhiweileibie">
                     <div class="nice-select" name="nice-select">
-                      <input type="text" value="选择公司规模" >
+                      <input type="text" placeholder="选择公司规模" value="<?=$company->corp_size?>">
                       <i class="iconfont">&#xe60d;</i>
                       <ul>
                         <li>礼仪</li>
@@ -93,12 +88,14 @@
                 <li>
                   <div class="pull-left title-left text-center">公司简介</div>
                   <div class="pull-left right-box zhiweileibie">
-                    <textarea id="textarea" class="text-area" onblur="if(this.innerHTML==''){this.innerHTML='请填写您的公司简介';this.style.color='#999'}" style="COLOR: #999" onfocus="if(this.innerHTML=='请填写您的公司简介'){this.innerHTML='';this.style.color='#999'}">请填写您的公司简介</textarea>
+                    <textarea id="textarea" class="text-area" onblur="if(this.innerHTML==''){this.innerHTML='请填写您的公司简介';this.style.color='#999'}" style="COLOR: #999" onfocus="if(this.innerHTML=='请填写您的公司简介'){this.innerHTML='';this.style.color='#999'}">
+                        <?=$company->intro?>
+                    </textarea>
                   </div>
                 </li>
                 <button class="queding-bt">确定</button>
            </ul>
-        </form>
+        <?php ActiveForm::end(); ?>
         </div>
       </div>
     </div>

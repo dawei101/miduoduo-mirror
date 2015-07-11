@@ -12,6 +12,7 @@ use common\models\LoginWithDynamicCodeForm;
 use common\models\User;
 use common\sms\SmsSenderFactory;
 use common\models\Company;
+use common\models\ServiceType;
 
 use corp\FBaseController;
 use corp\models\PasswordResetRequestForm;
@@ -169,12 +170,31 @@ class UserController extends FBaseController
 
     public function actionInfo()
     {
-        return $this->render('info');
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+        $company->setAttributes(Yii::$app->request->post(), false);
+        if ($company->validate() && $company->save()) {
+            return $this->goHome();
+        }
+
+        $services = ServiceType::find()->all();
+        return $this->render('info', ['company' => $company, 'services' => $services]);
     }
 
     public function actionAccount()
     {
-        return $this->render('account');
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+        $company->setAttributes(Yii::$app->request->post(), false);
+        if ($company->validate() && $company->save()) {
+            return $this->goHome();
+        }
+
+        return $this->render('account', ['model' => $company]);
     }
 
     public function actionPersonalCert()
