@@ -92,7 +92,6 @@ class ResumeController extends FBaseController
                          ->limit($pagination->limit)
                          ->all();
 
-        $pages = new Pagination(['totalCount' => $query->count()]);
         return $this -> render('index', ['resumes' => $resumes, 'pagination' => $pagination]);
     }
 
