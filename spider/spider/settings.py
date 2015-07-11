@@ -29,7 +29,7 @@ BAIDU_MAP_KEY = 'oUVOlwx2f8Ok7iGt30CcB2aQ'
 
 MYSQL_CONFIG = {
         "host":"localhost", 
-        "user":"root",
+        "user":"miduoduo",
         "passwd":"123123",
         "db":"miduoduo",
         "use_unicode": True,
