@@ -51,85 +51,19 @@ $this->title = '米多多兼职平台';
                     <div class="pull-left tab4">投递时间</div>
                     <div class="pull-left tab5">操作</div>
                 </dt>
+                <?php foreach ($resumes as $resume) {?>
                 <dd>
                     <div class="pull-left tab1 borser-tab-right">
-                        <div class="names">习明湖</div>
-                        <div class="jiben"><span>19岁</span><span>男</span><span>中国传媒大学</span></div>
+                        <div class="names"><?=$resume.name?></div>
+                        <div class="jiben"><span><?=$resume->age?>岁</span><span><?=($resume->gender==0)?'男':'女'?></span><span><?=$resume->college?></span></div>
                     </div>
-                    <div class="pull-left tab2 text-center borser-tab-right">美团派餐工作</div>
-                    <div class="pull-left tab3 text-center borser-tab-right">18600098028</div>
-                    <div class="pull-left tab4 text-center borser-tab-right">2015-06-29 10:00</div>
+                    <div class="pull-left tab2 text-center borser-tab-right"><?=$resume->title?></div>
+                    <div class="pull-left tab3 text-center borser-tab-right"><?=$resume->phonenum?></div>
+                    <div class="pull-left tab4 text-center borser-tab-right"><?=$resume->created_time?></div>
                     <div class="pull-left tab5"><button class="pull-left jishou">接受报名</button><button class="pull-left jujue">不合适</button></div>
                 </dd>
-                 <dd>
-                    <div class="pull-left tab1 borser-tab-right">
-                        <div class="names">习明湖</div>
-                        <div class="jiben"><span>19岁</span><span>男</span><span>中国传媒大学</span></div>
-                    </div>
-                    <div class="pull-left tab2 text-center borser-tab-right">美团派餐工作</div>
-                    <div class="pull-left tab3 text-center borser-tab-right">18600098028</div>
-                    <div class="pull-left tab4 text-center borser-tab-right">2015-06-29 10:00</div>
-                    <div class="pull-left tab5"><button class="pull-left jishou">接受报名</button><button class="pull-left jujue">不合适</button></div>
-                </dd>
-                 <dd>
-                    <div class="pull-left tab1 borser-tab-right">
-                        <div class="names">习明湖</div>
-                        <div class="jiben"><span>19岁</span><span>男</span><span>中国传媒大学</span></div>
-                    </div>
-                    <div class="pull-left tab2 text-center borser-tab-right">美团派餐工作</div>
-                    <div class="pull-left tab3 text-center borser-tab-right">18600098028</div>
-                    <div class="pull-left tab4 text-center borser-tab-right">2015-06-29 10:00</div>
-                    <div class="pull-left tab5"><button class="pull-left jishou">接受报名</button><button class="pull-left jujue">不合适</button></div>
-                </dd>
-                 <dd>
-                    <div class="pull-left tab1 borser-tab-right">
-                        <div class="names">习明湖</div>
-                        <div class="jiben"><span>19岁</span><span>男</span><span>中国传媒大学</span></div>
-                    </div>
-                    <div class="pull-left tab2 text-center borser-tab-right">美团派餐工作</div>
-                    <div class="pull-left tab3 text-center borser-tab-right">18600098028</div>
-                    <div class="pull-left tab4 text-center borser-tab-right">2015-06-29 10:00</div>
-                    <div class="pull-left tab5"><button class="pull-left jishou">接受报名</button><button class="pull-left jujue">不合适</button></div>
-                </dd>
-                 <dd>
-                    <div class="pull-left tab1 borser-tab-right">
-                        <div class="names">习明湖</div>
-                        <div class="jiben"><span>19岁</span><span>男</span><span>中国传媒大学</span></div>
-                    </div>
-                    <div class="pull-left tab2 text-center borser-tab-right">美团派餐工作</div>
-                    <div class="pull-left tab3 text-center borser-tab-right">18600098028</div>
-                    <div class="pull-left tab4 text-center borser-tab-right">2015-06-29 10:00</div>
-                    <div class="pull-left tab5"><button class="pull-left jishou">接受报名</button><button class="pull-left jujue">不合适</button></div>
-                </dd>
-                 <dd>
-                    <div class="pull-left tab1 borser-tab-right">
-                        <div class="names">习明湖</div>
-                        <div class="jiben"><span>19岁</span><span>男</span><span>中国传媒大学</span></div>
-                    </div>
-                    <div class="pull-left tab2 text-center borser-tab-right">美团派餐工作</div>
-                    <div class="pull-left tab3 text-center borser-tab-right">18600098028</div>
-                    <div class="pull-left tab4 text-center borser-tab-right">2015-06-29 10:00</div>
-                    <div class="pull-left tab5"><button class="pull-left jishou">接受报名</button><button class="pull-left jujue">不合适</button></div>
-                </dd> <dd>
-                    <div class="pull-left tab1 borser-tab-right">
-                        <div class="names">习明湖</div>
-                        <div class="jiben"><span>19岁</span><span>男</span><span>中国传媒大学</span></div>
-                    </div>
-                    <div class="pull-left tab2 text-center borser-tab-right">美团派餐工作</div>
-                    <div class="pull-left tab3 text-center borser-tab-right">18600098028</div>
-                    <div class="pull-left tab4 text-center borser-tab-right">2015-06-29 10:00</div>
-                    <div class="pull-left tab5"><button class="pull-left jishou">接受报名</button><button class="pull-left jujue">不合适</button></div>
-                </dd>
-                 <dd>
-                    <div class="pull-left tab1 borser-tab-right">
-                        <div class="names">习明湖</div>
-                        <div class="jiben"><span>19岁</span><span>男</span><span>中国传媒大学</span></div>
-                    </div>
-                    <div class="pull-left tab2 text-center borser-tab-right">美团派餐工作</div>
-                    <div class="pull-left tab3 text-center borser-tab-right">18600098028</div>
-                    <div class="pull-left tab4 text-center borser-tab-right">2015-06-29 10:00</div>
-                    <div class="pull-left tab5"><button class="pull-left jishou">接受报名</button><button class="pull-left jujue">不合适</button></div>
-                </dd>
+                <?php }?>
+
                 <div class="pagination pagers pull-right pagination-lg">
                       <a href="#" >&laquo;</a>
                       <a href="#" class="actives">1</a>

@@ -100,7 +100,7 @@ class TaskApplicant extends \common\BaseActiveRecord
     {
         $query = new Query;
         $query ->select([
-            'jz_task_applicant.id as applican-id',
+            'jz_task_applicant.id',
             'jz_task_applicant.created_time',
             'jz_resume.name',
             'TIMESTAMPDIFF(YEAR, jz_resume.birthdate , CURDATE()) as age',
