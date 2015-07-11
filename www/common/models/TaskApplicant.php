@@ -3,7 +3,6 @@
 namespace common\models;
 
 use Yii;
-use yii\db\Query;
 /**
  * This is the model class for table "{{%task_applicant}}".
  *
@@ -94,30 +93,6 @@ class TaskApplicant extends \common\BaseActiveRecord
     public static function find()
     {
         return new TaskApplicantQuery(get_called_class());
-    }
-
-    public static function findByCorpUserId($corpUserId)
-    {
-        $query = new Query;
-        $query ->select([
-            'jz_task_applicant.id',
-            'jz_task_applicant.created_time',
-            'jz_resume.name',
-            'TIMESTAMPDIFF(YEAR, jz_resume.birthdate , CURDATE()) as age',
-            'jz_resume.gender',
-            'jz_resume.college',
-            'jz_resume.phonenum',
-            'jz_task.title']
-            )->from('jz_task_applicant')
-             ->join('INNER JOIN', 'jz_resume',
-				'jz_resume.user_id =jz_task_applicant.user_id')
-             ->join('INNER JOIN', 'jz_task',
-				'jz_task.id =jz_task_applicant.task_id')
-             ->where(['jz_task.user_id' => $corpUserId]);
-
-        $command = $query->createCommand();
-        $data = $command->queryAll();
-        return $data;
     }
 
     public static function isApplied($user_id, $task_id)
