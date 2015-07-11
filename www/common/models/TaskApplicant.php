@@ -23,6 +23,11 @@ class TaskApplicant extends \common\BaseActiveRecord
         20 => '不合适',
     ];
 
+    public static $HAVE_READS = [
+        0 => '未读',
+        1 => '已读',
+    ];
+
 
     /**
      * @inheritdoc
@@ -40,7 +45,7 @@ class TaskApplicant extends \common\BaseActiveRecord
         return [
             [['created_time'], 'safe'],
             [['user_id', 'task_id'], 'required'],
-            [['user_id', 'task_id', 'status'], 'integer'],
+            [['user_id', 'task_id', 'status', 'have_read'], 'integer'],
             ['created_time', 'default', 'value'=>time(), 'on'=>'insert'],
             ['task_id', 'unique', 'targetAttribute' => ['task_id', 'user_id'], 'message'=>'已报名过'],
             [['company_alerted', 'applicant_alerted'], 'default', 'value'=>'false'],

@@ -50,10 +50,10 @@ $this->title = '米多多兼职平台';
                    <div class="zhiwei-lis-title">
                         <h2 class="pull-left"><?=$task->title?></h2>
                         <div class="pull-left bt-span">
-                            <a href="#" class="task-refresh" gid="<?=$task->gid?>">刷新</a>
-                            <a href="#" class="task-edit" gid="<?=$task->gid?>">编辑</a>
-                            <a href="#" class="task-down" gid="<?=$task->gid?>">下线</a>
-                            <a href="#" class="task-delete" gid="<?=$task->gid?>">删除</a>
+                            <span class="task-refresh" gid="<?=$task->gid?>">刷新</span>
+                            <span class="task-edit" gid="<?=$task->gid?>">编辑</span>
+                            <span class="task-down" gid="<?=$task->gid?>">下线</span>
+                            <span class="task-delete" gid="<?=$task->gid?>">删除</span>
                         </div>
                    </div>
                    <div>

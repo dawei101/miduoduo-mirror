@@ -28,7 +28,7 @@ class ResumeController extends FBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'read', 'pass', 'reject'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -96,5 +96,33 @@ class ResumeController extends FBaseController
         return $this -> render('index', ['resumes' => $resumes, 'pagination' => $pagination]);
     }
 
+    public function actionRead($aid)
+    {
+        $resume = TaskApplicant::findOne(['id' => $aid]);
+        $resume->have_read = 1;
+        if ($resume->save()) {
+            return $this->renderJson(['result' => true]);
+        }
+        return $this->renderJson(['result' => false, 'error' => $resume->errors]);
+    }
 
+    public function actionPass($aid)
+    {
+        $resume = TaskApplicant::findOne(['id' => $aid]);
+        $resume->have_read = 10;
+        if ($resume->save()) {
+            return $this->renderJson(['result' => true]);
+        }
+        return $this->renderJson(['result' => false, 'error' => $resume->errors]);
+    }
+
+    public function actionReject($aid)
+    {
+        $resume = TaskApplicant::findOne(['id' => $aid]);
+        $resume->have_read = 20;
+        if ($resume->save()) {
+            return $this->renderJson(['result' => true]);
+        }
+        return $this->renderJson(['result' => false, 'error' => $resume->errors]);
+    }
 }
