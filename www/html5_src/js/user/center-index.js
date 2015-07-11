@@ -4,7 +4,6 @@ define(function(require, exports) {
     var util = require("../widget/util");
     var $obj = $(".state");
 
-
     //如果登陆，展示用户id
     if (miduoduo.user.id) {
         $obj.append(miduoduo.user.username);

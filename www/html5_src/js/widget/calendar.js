@@ -89,11 +89,10 @@ define(function(require, exports) {
     function bindEvent() {
         var noSlide = true;
         $(".curr-y").on("click", function() {
-
-
+            $yearPanelContainer.fadeIn(100);
             $(".dayNum,.dayName").css("opacity", "0");
             $(".month-panel-container").fadeOut(0);
-            $yearPanelContainer.fadeIn();
+
 
             if (noSlide) {
                 var yearPanelconterWidth = $(".year-panel-container").width();
