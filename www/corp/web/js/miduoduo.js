@@ -85,6 +85,17 @@ $(document).click(function(){
   
   
   
+  jQuery(function() {
+      jQuery("#jquery-tagbox-text").tagBox();
+      jQuery("#jquery-tagbox-select").tagBox({ 
+        enableDropdown: true, 
+        dropdownSource: function() {
+          return jQuery("#jquery-tagbox-select-options");
+        }
+      });
+    });
+  
+  
 
 
 	
