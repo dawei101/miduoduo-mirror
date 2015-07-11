@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-
+use yii\db\Query;
 /**
  * This is the model class for table "{{%task_applicant}}".
  *
