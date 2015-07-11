@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    require("zepto");
+    require("zepto-ext");
     var sLoad = require("../widget/scroll-load");
     var api = require("../widget/api");
     var tpl = require("../widget/tpl-engine");

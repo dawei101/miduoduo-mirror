@@ -27,6 +27,27 @@ define(function(require, exports) {
         return $.ajax(options);
     }
 
+    var initGetReqNum = 0;
+
+    $.pageInitGet = function(/* url, data, success, dataType */){
+        //显示遮罩
+        //...
+        initGetReqNum += 1;
+        var options = parseArguments.apply(null, arguments);
+        var callback = options.success;
+        options.success = function() {initGetReqCallbakcAspect(callback)}
+        options.error = handleError;
+        return $.ajax(options)
+    }
+
+    function initGetReqCallbakcAspect(cb) {
+        initGetReqNum--;
+        cb();
+        if (initGetReqNum == 0) {
+            //去除遮罩
+        }
+    }
+
     function handleError(res) {
         //验证失败
         if (res.status == 422) {
@@ -47,9 +68,8 @@ define(function(require, exports) {
             } else {
                 alert(tipsStr);
             }
-
         }
-        if (res.status == 422) {
+        if (res.status == 401) {
             if (window.WebViewJavascriptBridge) {
                 WebViewJavascriptBridge.send({"action" : "b_require_auth", "data" : {}}, function(data){location.reload()});
             }

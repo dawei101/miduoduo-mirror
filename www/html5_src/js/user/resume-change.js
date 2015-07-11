@@ -124,7 +124,14 @@ define(function(require, exports) {
             data["phonenum"] = miduoduo.user.phone;
             console.log("简历",data);
             $.put(api.gen("resume/" + miduoduo.user.id), data, function(data) {
-                util.showTips("修改成功！");
+                util.showTips("修改成功！", function() {
+                    if (miduoduo.os.mddApp) {
+                        util.pop();
+                    } else {
+                        //location.replace("view/user/center-index.html");
+                        alert("兼容app外浏览器，待定");
+                    }
+                });
             })
         })
     });

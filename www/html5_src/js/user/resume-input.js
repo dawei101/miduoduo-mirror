@@ -10,12 +10,19 @@ define(function(require, exports) {
     }, false);
     //jsbridge 主动监听
     function handle_action(data, responseCallback) {
+        var rst = {
+            action: 'q_before_quit',
+            result: {
+                value: true
+            }
+        }
         if (location.hash != "") {
             location.hash = "";
             rst.result.value = false;
             responseCallback(rst);
         } else {
             util.cf({title : "注意", message : "确定放弃编辑吗？"}, function(data) {
+                alert("confirm对话框：" + data + " "  + JSON.stringify(rst));
                 data = JSON.parse(data);
                 if (data.result.value == 0) {
                     rst.result.value = false;
@@ -87,7 +94,7 @@ define(function(require, exports) {
     })
     //可兼类型
     $(".js-sel-service-type").on("click", function(e) {
-        $(".sel-job-type").animate({"-webkit-transform" : "translate3d(0,0,0)"}, 500)
+        $(".sel-job-type").show();
         /*var typeCodeStr = $(this).find("input").val();
         if (typeCodeStr) {
             var typeCode = typeCodeStr.split(",");
@@ -121,7 +128,13 @@ define(function(require, exports) {
         data["phonenum"] = miduoduo.user.phone;
         console.log("简历",data);
         $.post(api.gen("resume"), data, function(data) {
-            console.log(data);
+            if (miduoduo.os.mddApp) {
+                util.pop();
+            } else {
+                //location.replace("view/user/center-index.html");
+                alert("兼容app外浏览器，待定");
+            }
+
         })
     })
 

@@ -9,7 +9,7 @@ define(function(require, exports) {
         }
         app(opts, null);
     }
-    function toast(msg) {
+    function toast(msg, callback) {
         var opts = {
             action: 'b_toast_alert',
             data: {
@@ -17,7 +17,7 @@ define(function(require, exports) {
                 'disappear_delay' : 1500
             }
         }
-        app(opts, null);
+        app(opts, callback);
     }
     function appAuth(callback) {
         var opts = {
@@ -72,11 +72,12 @@ define(function(require, exports) {
     }
 
     //toast
-    function showTips(msg) {
+    function showTips(msg, callback) {
         if (!miduoduo.os.mddApp) {
             alert(msg);
+            callback();
         } else {
-            toast("app:" + msg);
+            toast("app:" + msg, callback);
         }
     }
 
@@ -87,6 +88,7 @@ define(function(require, exports) {
             window.location.reload(); //登陆成功直接重新加载页面
         });
     }
+
 
     //设置地址
     function setAddress(callback) {
@@ -108,6 +110,11 @@ define(function(require, exports) {
             }
        }
        app(opt, callback);
+    }
+
+    //撤销页面
+    function pop() {
+        app({ action: 'b_pop', data : {}}, null);
     }
 
     //日期格式化输出
@@ -132,4 +139,5 @@ define(function(require, exports) {
     exports.auth = auth;
     exports.setAddress = setAddress;
     exports.cf = cf;
+    exports.pop = pop;
 });
