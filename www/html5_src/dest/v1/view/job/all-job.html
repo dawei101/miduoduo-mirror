@@ -28,10 +28,8 @@
             miduoduo.user = JSON.parse(window.localStorage.getItem("userInfo")) || miduoduo.user;
             miduoduo.os.mddApp = true;
         }catch(e){
-            alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
+            //alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
         }
-        alert("是否在APP中：" + miduoduo.os.mddApp);
-        alert("是否有jsbrige对象:" + window.WebViewJavascriptBridge);
         miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
         miduoduo.basePath = {
             base : "/v1/",
@@ -82,38 +80,17 @@
 <div class="job-filter" style="position: static">
 
 </div>
-<div class="content">
-<div class="pullUp">
-    加载中...
-</div>
-</div>
-<!--区域列表-->
-<script type="text/html" id="district-list-tpl">
-    <ul class="district-list js-top-filter-btn" data-btn="js-district-btn">
-        <li data-all="district">全部区域</li>
-        <? this.list.forEach(function(item){ ?>
-       <li data-uid="district:district_id:<?=item.id?>"><?=item.name?></li>
-        <? }); ?>
-    </ul>
-</script>
-<!--兼职类型列表-->
-<script type="text/html" id="job-type-list-tpl" >
-    <ul class="job-type-list js-top-filter-btn" data-btn="js-job-type-btn">
-        <li data-all="service-type">全部</li>
-        <? this.list.forEach(function(item){ ?>
-        <li data-uid="service-type:service_type_id:<?=item.id?>"><?=item.name?></li>
-        <? }); ?>
-    </ul>
-</script>
-<!--排序列表-->
-<script type="text/html" id="sort-list-tpl" >
-    <ul class="sort-list js-top-filter-btn">
-        <li>默认</li>
-    </ul>
-</script>
 <!--职位列表-->
+<div class="job-list-widget">
+    <div class="jobs-container"></div>
+    <div class="pullUp">
+        加载中...
+    </div>
+    <div class="no-data">没有数据</div>
+</div>
 <!--职位列表模板-->
 <script type="text/html" id="job-list-tpl">
+    <? if (this.jobs && this.jobs.length > 0) {?>
     <div class="jobList">
         <? var showOthers = this.showOthers;?>
         <? this.jobs.forEach(function(e) { ?>
@@ -145,6 +122,33 @@
         <? } ?>
         <? }); ?>
     </div>
+    <? } ?>
 </script>
+<!--区域列表-->
+<script type="text/html" id="district-list-tpl">
+    <ul class="district-list js-top-filter-btn" data-btn="js-district-btn">
+        <li data-all="district">全部区域</li>
+        <? this.list.forEach(function(item){ ?>
+       <li data-uid="district:district_id:<?=item.id?>"><?=item.name?></li>
+        <? }); ?>
+    </ul>
+</script>
+<!--兼职类型列表-->
+<script type="text/html" id="job-type-list-tpl" >
+    <ul class="job-type-list js-top-filter-btn" data-btn="js-job-type-btn">
+        <li data-all="service-type">全部</li>
+        <? this.list.forEach(function(item){ ?>
+        <li data-uid="service-type:service_type_id:<?=item.id?>"><?=item.name?></li>
+        <? }); ?>
+    </ul>
+</script>
+<!--排序列表-->
+<script type="text/html" id="sort-list-tpl" >
+    <ul class="sort-list js-top-filter-btn">
+        <li>默认</li>
+    </ul>
+</script>
+<div class="init-shade">
+</div>
 </body>
 </html>

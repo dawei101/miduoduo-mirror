@@ -28,10 +28,8 @@
             miduoduo.user = JSON.parse(window.localStorage.getItem("userInfo")) || miduoduo.user;
             miduoduo.os.mddApp = true;
         }catch(e){
-            alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
+            //alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
         }
-        alert("是否在APP中：" + miduoduo.os.mddApp);
-        alert("是否有jsbrige对象:" + window.WebViewJavascriptBridge);
         miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
         miduoduo.basePath = {
             base : "/v1/",
@@ -102,7 +100,7 @@
             <section>
                 <div class="sub-title">工作周期</div>
                 <p class="info">
-                    <?=data.from_date + "至" + data.to_date?>
+                    <?=data.from_date + " 至 " + data.to_date?>
                     <?=data.from_time + "-" + data.to_time?>
                 </p>
             </section>
@@ -112,6 +110,12 @@
                     <?=data.address?>
                 </p>
             </section>
+        </div>
+        <div class="part4">
+            <div class="sub-title">工作内容</div>
+            <p class="info">
+                <?=data.detail?>
+            </p>
         </div>
         <div class="part3">
             <div class="sub-part">
@@ -128,16 +132,10 @@
                 电话咨询
             </a>
         </div>
-        <div class="part4">
-            <div class="sub-title">公司信息</div>
-            <p class="info">
-                <?=data.detail?>
-            </p>
-        </div>
         <div class="part5">
             <div class="store">
                 <div style="visibility: hidden;padding-bottom: 36%">藏</div><br/>
-                收藏
+                <span>收藏</span>
             </div>
             <div class="report">
                 <div style="visibility: hidden;padding-bottom: 36%">报</div> <br/>

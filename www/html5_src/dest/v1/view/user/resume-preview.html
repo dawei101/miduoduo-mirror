@@ -28,10 +28,8 @@
             miduoduo.user = JSON.parse(window.localStorage.getItem("userInfo")) || miduoduo.user;
             miduoduo.os.mddApp = true;
         }catch(e){
-            alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
+            //alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
         }
-        alert("是否在APP中：" + miduoduo.os.mddApp);
-        alert("是否有jsbrige对象:" + window.WebViewJavascriptBridge);
         miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
         miduoduo.basePath = {
             base : "/v1/",
@@ -131,7 +129,7 @@
         <ul class="resume-part3">
             <li class="sub1">
                 <div class="title">可兼类别</div>
-                <div class="con">
+                <div class="con service-type-show">
                     <? user.service_types && user.service_types.forEach(function(type) {?>
                     <?=type.name?>
                     <? });?>
