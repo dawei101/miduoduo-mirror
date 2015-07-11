@@ -78,9 +78,9 @@ class ResumeController extends FBaseController
             'jz_resume.phonenum',
             'jz_task.title']
             )->from('jz_task_applicant')
-             ->join('INNER JOIN', 'jz_resume',
+             ->join('LEFT OUTER JOIN', 'jz_resume',
 				'jz_resume.user_id = jz_task_applicant.user_id')
-             ->join('INNER JOIN', 'jz_task',
+             ->join('LEFT OUTER JOIN', 'jz_task',
 				'jz_task.id = jz_task_applicant.task_id')
              ->where($condition);
 
