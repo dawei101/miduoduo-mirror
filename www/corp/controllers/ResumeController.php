@@ -61,12 +61,12 @@ class ResumeController extends FBaseController
         ];
     }
 
-    public function findByCorpUserId($corpUserId, $status=false)
+    public function findByCorpUserId($corpUserId, $read=false)
     {
         $query = new Query;
         $condition = ['jz_task.user_id' => $corpUserId];
-        if ($status !== false) {
-            $condition['jz_task_applicant.status'] = $status;
+        if ($read !== false) {
+            $condition['jz_task_applicant.have_read'] = $read;
         }
         $query ->select([
             'jz_task_applicant.id',
@@ -79,17 +79,17 @@ class ResumeController extends FBaseController
             'jz_task.title']
             )->from('jz_task_applicant')
              ->join('INNER JOIN', 'jz_resume',
-				'jz_resume.user_id =jz_task_applicant.user_id')
+				'jz_resume.user_id = jz_task_applicant.user_id')
              ->join('INNER JOIN', 'jz_task',
-				'jz_task.id =jz_task_applicant.task_id')
+				'jz_task.id = jz_task_applicant.task_id')
              ->where($condition);
 
         return $query;
     }
 
-    public function actionIndex($status=false)
+    public function actionIndex($read=false)
     {
-        $query = $this->findByCorpUserId(Yii::$app->user->id, $status);
+        $query = $this->findByCorpUserId(Yii::$app->user->id, $read);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $resumes = $query->offset($pagination->offset)
