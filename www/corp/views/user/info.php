@@ -93,7 +93,7 @@
                     </textarea>
                   </div>
                 </li>
-                <button class="queding-bt">确定</button>
+                <button class="queding-bt" onclick="$(this).closest('form').submit();">确定</button>
            </ul>
         <?php ActiveForm::end(); ?>
         </div>
