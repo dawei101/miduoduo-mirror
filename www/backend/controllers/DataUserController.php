@@ -33,14 +33,38 @@ class DataUserController extends BDataBaseController
      */
     public function actionIndex()
     {
-        echo $this->getDataRows();exit;
-        // 
-        $dataProvider = new ActiveDataProvider([
-            'query' => DataDaily::find(),
-        ]);
+        // 默认时间范围
+        $defaultDateStart   = date("Y-m-d",time()-604800);
+        $defaultDateEnd     = date("Y-m-d",time());;
+        // 得到选择的日期
+        $dateStart  = Yii::$app->request->get('dateStart') ? Yii::$app->request->get('dateStart') : $defaultDateStart;
+        $dateEnd    = Yii::$app->request->get('dateEnd') ? Yii::$app->request->get('dateEnd') : $defaultDateEnd;
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
+        // 数据类型
+        $data_type  = Yii::$app->request->get('type_id') ? Yii::$app->request->get('type_id') : 1;
+        // 城市
+        $city_id    = Yii::$app->request->get('city_id') ? Yii::$app->request->get('city_id') : 0;
+        // 只有北京
+        $city_id    = 0;
+
+        // 统计数据的列项 注册总量、简历总量
+        $dataRows   = '';
+        if( $data_type == 3 ){
+            
+        }elseif( $data_type == 2 ){
+            $labels     = array('ztl','zzxtl','htxz','zqxz','yhxz','zdsh','zgq','jrgq');
+            $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
+        }else{
+            $labels     = array('zczl','jlzl','tdzl','tdrs','jrzczl','jrjlzl','jrtdzl','jrtdrs');
+            $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
+        }
+
+        // 渲染
+        return $this->render('index',[
+            'data_type' => $data_type,
+            'dataRows'  => $dataRows,    
+            'dateStart' => $dateStart,
+            'dateEnd'   => $dateEnd,
         ]);
     }
 
