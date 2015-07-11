@@ -1,9 +1,9 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use console\BaseMigration;
 
-class m150705_071505_task_pool_of_spider extends Migration
+class m150705_071505_task_pool_of_spider extends BaseMigration
 {
     public function up()
     {
