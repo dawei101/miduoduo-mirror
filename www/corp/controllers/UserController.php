@@ -35,11 +35,11 @@ class UserController extends FBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['register-success', 'login', 'register', 'vcode','request-password-reset', 'reset-password'],
+                        'actions' => ['login', 'register', 'vcode','request-password-reset', 'reset-password'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['add-contact-info','logout'],
+                        'actions' => ['add-contact-info','logout', 'info', 'account', 'personal-cert', 'corp-cert'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -166,5 +166,25 @@ class UserController extends FBaseController
         }
         print_r($model);
         return $this->render('addContactInfo', ['model' => $model]);
+    }
+
+    public function actoinInfo()
+    {
+        return $this->render('info');
+    }
+
+    public function actionAccount()
+    {
+        return $this->render('account');
+    }
+
+    public function actionPersonalCert()
+    {
+        return $this->render('personal-cert');
+    }
+
+    public function actionCorpCert()
+    {
+        return $this->render('corp-cert');
     }
 }
