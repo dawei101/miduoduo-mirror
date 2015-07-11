@@ -80,9 +80,6 @@ class ResumeController extends FBaseController
 				'jz_task.id =jz_task_applicant.task_id')
              ->where(['jz_task.user_id' => $corpUserId]);
 
-        // $command = $query->createCommand();
-        // $data = $command->queryAll();
-
         return $query;
     }
 
@@ -96,8 +93,7 @@ class ResumeController extends FBaseController
                          ->all();
 
         $pages = new Pagination(['totalCount' => $query->count()]);
-        print_r($resumes);
-        return $this -> render('index', ['resumes' => $resumes]);
+        return $this -> render('index', ['resumes' => $resumes, 'pagination' => $pagination]);
     }
 
 

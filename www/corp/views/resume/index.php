@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\widgets\LinkPager;
 
 /* @var $this yii\web\View */
 $this->title = '米多多兼职平台';
@@ -63,7 +64,8 @@ $this->title = '米多多兼职平台';
                     <div class="pull-left tab5"><button class="pull-left jishou">接受报名</button><button class="pull-left jujue">不合适</button></div>
                 </dd>
                 <?php }?>
-
+                <?=LinkPager::widget(['pagination' => $pagination])?>
+<!--
                 <div class="pagination pagers pull-right pagination-lg">
                       <a href="#" >&laquo;</a>
                       <a href="#" class="actives">1</a>
@@ -73,6 +75,7 @@ $this->title = '米多多兼职平台';
                       <a href="#">5</a>
                       <a href="#">&raquo;</a>
                 </div>
+            -->
             </dl>
         </div>
       </div>
