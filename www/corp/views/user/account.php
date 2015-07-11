@@ -1,3 +1,11 @@
+<?php
+
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+
+/* @var $this yii\web\View */
+$this->title = '米多多兼职平台';
+?>
 <!-- InstanceBeginEditable name="EditRegion3" -->
 <div class="body-box">
 <div class="midd-kong"></div>
