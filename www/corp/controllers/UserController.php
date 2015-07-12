@@ -199,8 +199,10 @@ class UserController extends FBaseController
             if (!$user->validatePassword($old_password)) {
                 return $this->render('account', ['errmsg'=>'原密码错误']);
             }
-
-            if ($company->validate() && $company->save()) {
+			
+			$user->setPassword(new_password);
+        	$user->removePasswordResetToken();
+            if ($user->validate() && $user->save()) {
                 return $this->goHome();
             }
         }
