@@ -188,14 +188,20 @@ class UserController extends FBaseController
 
     public function actionAccount()
     {
-        $company = Company::findByCurrentUser();
-        if (!$company) {
-            return $this->redirect('/user/add-contact-info');
-        }
         if (Yii::$app->request->isPost) {
-            $company->setAttributes(Yii::$app->request->post(), false);
+            $old_password = Yii::$app->request->post('old_password');
+            $new_password = Yii::$app->request->post('new_password');
+            $confirm = Yii::$app->request->post('confirm');
+            if (strcmp($new_password, $confirm) != 0) {
+                return $this->renderJson(['result'=>false, 'message'=>'新密码不一致']);
+            }
+            $user = Yii::$app->user;
+            if (!$user->validatePassword($this->password)) {
+                return $this->renderJson(['result'=>false, 'message'=>'原密码错误']);
+            }
+
             if ($company->validate() && $company->save()) {
-                return $this->goHome();
+                return $this->renderJson(['result'=>true]);
             }
         }
 
