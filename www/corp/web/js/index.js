@@ -1,5 +1,6 @@
 //首页普通登陆
 $('#cbox-2 .myNavs .zc-btn').click(function(e){
+    $("#cbox-2 .myNavs .error-message").hide();
     $.post('/user/login', $(this).closest('form').serialize())
     .done(function(str){
         var data = JSON.parse(str);
@@ -35,6 +36,7 @@ $('#cbox-2 .hotNavs .zc-btn').click(function(e){
 
 //首页注册
 $('#cbox-1 .zc-btn').click(function(e){
+    $("#cbox-1 .error-message").hide();
     $.post('/user/register', $(this).closest('form').serialize())
     .done(function(str){
         var data = JSON.parse(str);
@@ -61,6 +63,8 @@ $('#cbox-1 .zc-btn').click(function(e){
 
 //注册发送验证码
 $('.yz-btn').on('click', function(){
+	$(this).removeClass('yz-btn');
+	$(this).addClass('yz-btn-jx');
     $.get('/user/vcode', $(this).closest('form').serialize())
     .done(function(data){
         console.log(data);
