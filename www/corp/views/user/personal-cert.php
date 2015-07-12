@@ -61,7 +61,9 @@ $this->title = '米多多兼职平台';
                 <div class="pull-left right-box">
                   <div class="form-group">
                       <label class="shangchuan" for="id-img">上传图片</label>
-                      <input name="person_idcard_pic" type="file" id="id-img" style="display:none;"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
+                      <input name="person_idcard_pic" type="file" id="id-img" style="display:none;">
+                      <?= $form->field($model, 'person_idcard_pic')->fileInput() ?>
+                      <span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
                    </div>
                   <div class="tishi">
                         <p>1、在拍摄证件时，确保图片清晰（证件底纹、字体、人物照片、头像清晰），无模糊，无白光点等。</p>
