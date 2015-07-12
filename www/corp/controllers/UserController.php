@@ -210,11 +210,17 @@ class UserController extends FBaseController
 
     public function actionPersonalCert()
     {
+    	if(Yii::$app->request->isPost){
+    		print_r(Yii::$app->request->post());
+    	}
         return $this->render('personal-cert');
     }
 
     public function actionCorpCert()
     {
+    	if(Yii::$app->request->isPost){
+    		print_r(Yii::$app->request->post());
+    	}
         return $this->render('corp-cert');
     }
 }

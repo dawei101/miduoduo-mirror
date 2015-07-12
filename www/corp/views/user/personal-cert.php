@@ -47,13 +47,13 @@ $this->title = '米多多兼职平台';
               <li>
                 <div class="pull-left title-left text-center">发布人姓名</div>
                 <div class="pull-left right-box">
-                  <input name="publisher_name" type="text" placeholder="输入发布人姓名">
+                  <input name="person_name" value="<?=$company->person_name?>" type="text" placeholder="输入发布人姓名">
                 </div>
               </li>
               <li>
                 <div class="pull-left title-left text-center">发布人身份证</div>
                 <div class="pull-left right-box">
-                  <input name="publisher_idcard" type="text" placeholder="输入发布人身份证">
+                  <input name="person_idcard" value="<?=$company->person_idcard?>" type="text" placeholder="输入发布人身份证">
                 </div>
               </li>
               <li>
@@ -61,7 +61,7 @@ $this->title = '米多多兼职平台';
                 <div class="pull-left right-box">
                   <div class="form-group">
                       <label class="shangchuan" for="id-img">上传图片</label>
-                      <input name="publisher_idcard_pic" type="file" id="id-img" style="display:none;"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
+                      <input name="person_idcard_pic" type="file" id="id-img" style="display:none;"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
                    </div>
                   <div class="tishi">
                         <p>1、在拍摄证件时，确保图片清晰（证件底纹、字体、人物照片、头像清晰），无模糊，无白光点等。</p>
