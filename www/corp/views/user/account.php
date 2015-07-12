@@ -71,3 +71,11 @@ $this->title = '米多多兼职平台';
   </div>
 </div>
 <!-- InstanceEndEditable -->
+<script type="script/javascript">
+$('.queding-bt').on('click', function(){
+    $.post('/user/account', $(this).closest('form').serialize())
+    .done(function(data){
+        console.log(data);
+    });
+});
+</script>
