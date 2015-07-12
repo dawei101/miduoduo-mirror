@@ -1,5 +1,5 @@
-//首页登陆
-$('#login .zc-btn').click(function(e){
+//首页普通登陆
+$('#cbox-2 .myNavs .zc-btn').click(function(e){
     $.post('/user/login', $(this).closest('form').serialize())
     .done(function(str){
         var data = JSON.parse(str);
@@ -11,8 +11,20 @@ $('#login .zc-btn').click(function(e){
     return false;
 });
 
+$('#cbox-2 .hotNavs .zc-btn').click(function(e){
+    $.post('/user/vlogin', $(this).closest('form').serialize())
+    .done(function(str){
+        var data = JSON.parse(str);
+        if (data.result === true) {
+            window.location = '/task/';
+            return;
+        }
+    });
+    return false;
+});
+
 //首页注册
-$('#hr .zc-btn').click(function(e){
+$('#cbox-1 .zc-btn').click(function(e){
     $.post('/user/register', $(this).closest('form').serialize())
     .done(function(str){
         var data = JSON.parse(str);

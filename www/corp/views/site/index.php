@@ -84,7 +84,7 @@ $this->title = '米多多兼职平台';
     </div>
   </div>
 </div>
-!--======主体部分======-->
+<!--======主体部分======-->
 <div class="container cent">
   <div class="row">
     <div class="col-sm-12 col-md-4 col-lg-4">
