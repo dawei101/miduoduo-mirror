@@ -86,10 +86,9 @@ $this->title = '米多多兼职平台';
                       <input name="corp_size" type="text" placeholder="选择公司规模" value="<?=$company->corp_size?>">
                       <i class="iconfont">&#xe60d;</i>
                       <ul>
-                        <li>礼仪</li>
-                        <li>广东省</li>
-                        <li>湖南省</li>
-                        <li>四川省</li>
+                        <li>0-20人</li>
+                        <li>20-100人</li>
+                        <li>100人以上</li>
                       </ul>
                     </div>
                   </div>
