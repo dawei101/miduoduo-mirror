@@ -6,6 +6,7 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 use common\Utils;
 use common\models\LoginWithDynamicCodeForm;
@@ -20,6 +21,7 @@ use corp\models\ResetPasswordForm;
 use corp\models\SignupForm;
 use corp\models\LoginForm;
 use corp\models\ContactForm;
+use corp\models\PersonalCertForm;
 
 /**
  * Site controller
@@ -212,10 +214,11 @@ class UserController extends FBaseController
 
     public function actionPersonalCert()
     {
+    	$company = Company::findByCurrentUser();
     	if(Yii::$app->request->isPost){
     		print_r(Yii::$app->request->post());
     	}
-        return $this->render('personal-cert');
+        return $this->render('personal-cert',['company' => $company]);
     }
 
     public function actionCorpCert()
