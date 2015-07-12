@@ -106,8 +106,7 @@ class UserController extends FBaseController
             ]);
         }
 
-        $sender = SmsSenderFactory::getSender();
-        if ($sender->sendVerifyCode($username)){
+        if (Utils::sendVerifyCode($username)){
             return $this->renderJson([
                     'result'=> true,
                     'msg'=> "验证码已发送"
@@ -222,7 +221,7 @@ class UserController extends FBaseController
 
 			move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);
     	}
-        return $this->render('personal-cert',['company' => $company);
+        return $this->render('personal-cert',['company' => $company]);
     }
 
     public function actionCorpCert()
