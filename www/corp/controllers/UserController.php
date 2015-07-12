@@ -192,9 +192,11 @@ class UserController extends FBaseController
         if (!$company) {
             return $this->redirect('/user/add-contact-info');
         }
-        $company->setAttributes(Yii::$app->request->post(), false);
-        if ($company->validate() && $company->save()) {
-            return $this->goHome();
+        if (Yii::$app->request->isPost) {
+            $company->setAttributes(Yii::$app->request->post(), false);
+            if ($company->validate() && $company->save()) {
+                return $this->goHome();
+            }
         }
 
         return $this->render('account', ['model' => $company]);

@@ -42,29 +42,29 @@ $this->title = '米多多兼职平台';
       </div>
       <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
         <div class="right-center">
-        <form>
+        <?php $form = ActiveForm::begin();?>
           <ul class="tianxie-box" style="border:none">
               <li>
                 <div class="pull-left title-left text-center">当前密码</div>
                 <div class="pull-left right-box">
-                  <input type="text" placeholder="输入当前密码">
+                  <input name="old_password" type="text" placeholder="输入当前密码">
                 </div>
               </li>
               <li>
                 <div class="pull-left title-left text-center">新设密码</div>
                 <div class="pull-left right-box">
-                  <input type="text" placeholder="输入您的新密码">
+                  <input name="new_password" type="text" placeholder="输入您的新密码">
                 </div>
               </li>
               <li>
                 <div class="pull-left title-left text-center">确认密码</div>
                 <div class="pull-left right-box">
-                  <input type="text" placeholder="再次输入您的新密码">
+                  <input name="confirm" type="text" placeholder="再次输入您的新密码">
                 </div>
               </li>
                 <button class="queding-bt">确定</button>
            </ul>
-        </form>
+        <?php ActiveForm::end(); ?>
         </div>
       </div>
     </div>
