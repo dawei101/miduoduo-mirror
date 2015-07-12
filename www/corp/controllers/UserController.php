@@ -217,9 +217,9 @@ class UserController extends FBaseController
     	
     	if(Yii::$app->request->isPost){
     		$uploaddir = '/var/www/uploads/';
-			$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
+			$uploadfile = $uploaddir . basename($_FILES['person_idcard_pic']['name']);
 
-			move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);
+			move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile);
     	}
         return $this->render('personal-cert',['company' => $company]);
     }
