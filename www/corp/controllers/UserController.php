@@ -205,7 +205,7 @@ class UserController extends FBaseController
             }
         }
 
-        return $this->render('account', ['model' => $company]);
+        return $this->render('account');
     }
 
     public function actionPersonalCert()
