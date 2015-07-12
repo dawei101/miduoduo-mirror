@@ -195,7 +195,7 @@ class UserController extends FBaseController
             if (strcmp($new_password, $confirm) != 0) {
                 return $this->render('account', ['errmsg'=>'新密码不一致']);
             }
-            $user = Yii::$app->user;
+            $user = User::findIdentity(Yii::$app->user->id);
             if (!$user->validatePassword($old_password)) {
                 return $this->render('account', ['errmsg'=>'原密码错误']);
             }
