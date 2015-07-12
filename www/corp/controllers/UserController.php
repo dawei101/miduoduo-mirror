@@ -202,7 +202,7 @@ class UserController extends FBaseController
                 return $this->render('account', ['errmsg'=>'原密码错误']);
             }
 			
-			$user->setPassword(new_password);
+			$user->setPassword($new_password);
         	$user->removePasswordResetToken();
             if ($user->validate() && $user->save()) {
                 return $this->goHome();
