@@ -47,7 +47,8 @@ AppAsset::register($this);
                 <em style="background:#fed732  ; border-radius:20px; padding:0 10px;  color:#fff; z-index:40">1</em>
             -->
                 </a></li>
-            <li><a href="#">用户中心</a></li>
+            <li><a href="/user/info">用户中心</a></li>
+            <li><a href="/user/logout">退出</a></li>
           </ul>
         </div>
       </div>
