@@ -6,6 +6,8 @@ $('#cbox-2 .myNavs .zc-btn').click(function(e){
         if (data.result === true) {
             window.location = '/task/';
             return;
+        }else{
+        	$(".error_message").show();
         }
     });
     return false;

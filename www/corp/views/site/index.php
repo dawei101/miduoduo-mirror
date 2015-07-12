@@ -64,7 +64,7 @@ $this->title = '米多多兼职平台';
                         <?php $form = ActiveForm::begin();?>
                         <div class="midd-input-group">
                           <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">
-                          <span class="yz-btn-jx pull-left text-center">验证码已60s</span> </div>
+                          <span class="yz-btn pull-left text-center">发送验证码</span> </div>
                         <div class="midd-input-group">
                           <input name="vcode" type="text" class="input-q"  placeholder="请输入短信验证码">
                         </div>
