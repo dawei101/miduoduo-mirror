@@ -62,7 +62,6 @@ $this->title = '米多多兼职平台';
                   <div class="form-group">
                       <label class="shangchuan" for="id-img">上传图片</label>
                       <input name="person_idcard_pic" type="file" id="id-img" style="display:none;">
-                      <?= $form->field($model, 'person_idcard_pic')->fileInput() ?>
                       <span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
                    </div>
                   <div class="tishi">

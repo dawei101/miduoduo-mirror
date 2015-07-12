@@ -215,13 +215,14 @@ class UserController extends FBaseController
     public function actionPersonalCert()
     {
     	$company = Company::findByCurrentUser();
-    	$model = new PersonalCertForm;
     	
     	if(Yii::$app->request->isPost){
-    		$model->person_idcard_pic = UploadedFile::getInstance($model, 'person_idcard_pic');
-    		print_r($model);
+    		$uploaddir = '/var/www/uploads/';
+			$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
+
+			move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile);
     	}
-        return $this->render('personal-cert',['company' => $company, 'model'=>$model]);
+        return $this->render('personal-cert',['company' => $company);
     }
 
     public function actionCorpCert()
