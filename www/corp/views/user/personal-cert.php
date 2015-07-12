@@ -42,18 +42,18 @@ $this->title = '米多多兼职平台';
       </div>
       <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
         <div class="right-center">
-        <form>
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
           <ul class="tianxie-box" style="border:none">
               <li>
                 <div class="pull-left title-left text-center">发布人姓名</div>
                 <div class="pull-left right-box">
-                  <input type="text" placeholder="输入您的新密码">
+                  <input type="text" placeholder="输入发布人姓名">
                 </div>
               </li>
               <li>
                 <div class="pull-left title-left text-center">发布人身份证</div>
                 <div class="pull-left right-box">
-                  <input type="text" placeholder="再次输入您的新密码">
+                  <input type="text" placeholder="输入发布人身份证">
                 </div>
               </li>
               <li>
@@ -76,7 +76,7 @@ $this->title = '米多多兼职平台';
               </li>
                 <button class="queding-bt">确定</button>
            </ul>
-        </form>
+        <?php ActiveForm::end(); ?>
         </div>
       </div>
     </div>

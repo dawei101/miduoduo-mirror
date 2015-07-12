@@ -193,11 +193,11 @@ class UserController extends FBaseController
             $new_password = Yii::$app->request->post('new_password');
             $confirm = Yii::$app->request->post('confirm');
             if (strcmp($new_password, $confirm) != 0) {
-                return $this->render('account', ['error_message'=>'新密码不一致']);
+                return $this->render('account', ['errmsg'=>'新密码不一致']);
             }
             $user = Yii::$app->user;
             if (!$user->validatePassword($old_password)) {
-                return $this->render('account', ['error_message'=>'原密码错误']);
+                return $this->render('account', ['errmsg'=>'原密码错误']);
             }
 
             if ($company->validate() && $company->save()) {
@@ -205,7 +205,7 @@ class UserController extends FBaseController
             }
         }
 
-        return $this->render('account');
+        return $this->render('account', ['errmsg'=>'']);
     }
 
     public function actionPersonalCert()
