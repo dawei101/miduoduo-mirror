@@ -65,6 +65,7 @@ $('#cbox-1 .zc-btn').click(function(e){
 $('.yz-btn').on('click', function(){
 	$(this).removeClass('yz-btn');
 	$(this).addClass('yz-btn-jx');
+	$(this).html('验证码已发送');
     $.get('/user/vcode', $(this).closest('form').serialize())
     .done(function(data){
         console.log(data);
