@@ -42,6 +42,7 @@ $this->title = '米多多兼职平台';
       </div>
       <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
         <div class="right-center">
+        <div class="error-message"><?=$error_message?></div>
         <?php $form = ActiveForm::begin();?>
           <ul class="tianxie-box" style="border:none">
               <li>
@@ -71,11 +72,3 @@ $this->title = '米多多兼职平台';
   </div>
 </div>
 <!-- InstanceEndEditable -->
-<script type="script/javascript">
-$('.queding-bt').on('click', function(){
-    $.post('/user/account', $(this).closest('form').serialize())
-    .done(function(data){
-        console.log(data);
-    });
-});
-</script>
