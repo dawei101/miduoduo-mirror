@@ -7,7 +7,15 @@ $('#cbox-2 .myNavs .zc-btn').click(function(e){
             window.location = '/task/';
             return;
         }else{
-        	$(".error_message").show();
+        	var error = '';
+        	if(data.error.username){
+        		error += data.error.username[0];
+        	}
+        	if(data.error.password){
+        		error += data.error.password[0];
+        	}
+        	$("#cbox-2 .myNavs .error-message").html(error);
+        	$("#cbox-2 .myNavs .error-message").show();
         }
     });
     return false;
