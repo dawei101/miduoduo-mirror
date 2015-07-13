@@ -37,6 +37,7 @@ class m150702_100832_change_tables_unicode extends BaseMigration
        alter table jz_user_has_service_type     convert to character set utf8 collate utf8_unicode_ci;
        alter table jz_user_readed_sys_message   convert to character set utf8 collate utf8_unicode_ci;
        alter table jz_weichat_user_info         convert to character set utf8 collate utf8_unicode_ci;
+       alter table jz_weichat_push_set_template_push_item         convert to character set utf8 collate utf8_unicode_ci;;
             ";
         $this->execSqls($sqls);
     }
