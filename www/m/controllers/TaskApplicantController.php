@@ -66,6 +66,11 @@ class TaskApplicantController extends \m\MBaseController
             }
 
             $tc = new TaskApplicant;
+            // 记录渠道
+            $origin = Yii::$app->session->get('origin') ? Yii::$app->session->get('origin') : '';
+            if( $origin ){
+                $tc->origin = $origin;
+            }
             $tc->task_id = $task_id;
             $tc->user_id = $user_id;
 

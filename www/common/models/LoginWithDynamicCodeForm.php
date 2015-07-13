@@ -18,6 +18,7 @@ class LoginWithDynamicCodeForm extends Model
     public $rememberMe = true;
 
     public $signup_only = false;
+    public $origin;
 
     private $_user = false;
 
