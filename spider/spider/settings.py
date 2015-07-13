@@ -15,7 +15,7 @@ SPIDER_MODULES = ['spider.spiders']
 NEWSPIDER_MODULE = 'spider.spiders'
 
 COOKIES_ENABLED=True
-COOKIES_DEBUG = True
+COOKIES_DEBUG = False
 
 MYSQL_CONFIG = {
         "host":"localhost", 
