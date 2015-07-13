@@ -63,8 +63,12 @@ class TaskController extends FBaseController
 
     public function actionIndex()
     {
+        $condition = ['user_id'=>Yii::$app->user->id];
+        if (Yii::$app->request.get('status')) {
+            $condition['status'] = $status;
+        }
         $query = Task::find()
-                        ->where(['user_id'=>Yii::$app->user->id])
+                        ->where($condition)
                         ->addOrderBy(['updated_time'=>SORT_DESC]);;
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);

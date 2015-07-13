@@ -20,24 +20,23 @@ $this->title = '米多多兼职平台';
           </dl>
           <dl>
             <dt  class="default-title" class=""><i class="iconfont">&#xe612;</i>职位管理</dt>
-            <dd class="default-lis"><a href="#">全部</a></dd>
-            <dd class="default-lis"><a href="#">显示中</a></dd>
-            <dd class="default-lis"><a href="#">审核中</a></dd>
-            <dd class="default-lis"><a href="#">审核未通过</a></dd>
+            <dd class="default-lis"><a href="/task">全部</a></dd>
+            <dd class="default-lis"><a href="/task?status=0">显示中</a></dd>
+            <dd class="default-lis"><a href="/task?status=30">审核中</a></dd>
+            <dd class="default-lis"><a href="/task?status=40">审核未通过</a></dd>
           </dl>
           <dl  class="pitch-current">
             <dt class="default-title"><i class="iconfont">&#xe60c;</i>简历管理</dt>
-            <dd class="current"><a href="#">全部</a></dd>
-            <dd class="default-lis"><a href="#">未查看</a></dd>
-            <dd class="default-lis"><a href="#">已查看</a></dd>
-            <dd class="default-lis"><a href="#">全部</a></dd>
+            <dd class="current"><a href="/resume">全部</a></dd>
+            <dd class="default-lis"><a href="/resume?read=0">未查看</a></dd>
+            <dd class="default-lis"><a href="/resume?read=1">已查看</a></dd>
           </dl>
           <dl>
             <dt class="default-title"><i class="iconfont">&#xe60b;</i>用户中心</dt>
-            <dd class="default-lis"><a href="#">我的资料</a></dd>
-            <dd class="default-lis"><a href="#">我的账号</a></dd>
-            <dd class="default-lis"><a href="#">个人认证</a></dd>
-            <dd class="default-lis"><a href="#">企业认证</a></dd>
+            <dd class="default-lis"><a href="/user/info">我的资料</a></dd>
+            <dd class="default-lis"><a href="/user/account">我的账号</a></dd>
+            <dd class="default-lis"><a href="/user/personal-cert">个人认证</a></dd>
+            <dd class="default-lis"><a href="/user/corp-cert">企业认证</a></dd>
           </dl>
         </div>
       </div>
