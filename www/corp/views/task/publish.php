@@ -276,3 +276,6 @@ $this->title = '米多多兼职平台';
         </div>
     </div>
 <!-- InstanceEndEditable -->
+<?php
+$this->registerJsFile('/js/publish.js');
+?>
