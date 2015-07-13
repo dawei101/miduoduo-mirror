@@ -330,7 +330,7 @@ class BDataBaseController extends BBaseController
 
                 // 总关注
                 $zgz    = User::findBySql("SELECT count(2) 'zgz' FROM ".$tablePrefix."weichat_user_log WHERE event_type=1 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
-                $zgz    = $zgz['zgz'];
+                $zgz    = $zgz['zgz'] + 771;    // 771 为之前的关注数据
                 $model_zgz  = clone $model;
                 $model_zgz->key    = 'zgz';
                 $model_zgz->value  = $zgz;
