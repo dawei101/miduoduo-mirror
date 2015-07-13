@@ -64,7 +64,8 @@ class TaskController extends FBaseController
     public function actionIndex()
     {
         $condition = ['user_id'=>Yii::$app->user->id];
-        if (Yii::$app->request->get('status')) {
+        $status = Yii::$app->request->get('status');
+        if ($status) {
             $condition['status'] = $status;
         }
         $query = Task::find()

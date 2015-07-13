@@ -18,13 +18,13 @@ $this->title = '米多多兼职平台';
                             <dt class="pitch-on"><i class="iconfont">&#xe609;</i>我要发布</dt>
                         </dl>
                         <dl>
-                          <dt  class="default-title" class=""><i class="iconfont">&#xe612;</i>职位管理</dt>
+                          <dt class="default-title" class=""><i class="iconfont">&#xe612;</i>职位管理</dt>
                           <dd class="default-lis"><a href="/task">全部</a></dd>
                           <dd class="default-lis"><a href="/task?status=0">显示中</a></dd>
                           <dd class="default-lis"><a href="/task?status=30">审核中</a></dd>
                           <dd class="default-lis"><a href="/task?status=40">审核未通过</a></dd>
                         </dl>
-                        <dl  class="pitch-current">
+                        <dl  class="default-title">
                           <dt class="default-title"><i class="iconfont">&#xe60c;</i>简历管理</dt>
                           <dd class="default-lis"><a href="/resume">全部</a></dd>
                           <dd class="default-lis"><a href="/resume?read=0">未查看</a></dd>
