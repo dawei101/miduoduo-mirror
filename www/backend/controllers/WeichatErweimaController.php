@@ -16,6 +16,12 @@ use backend\BBaseController;
  */
 class WeichatErweimaController extends BBaseController
 {
+
+    public function getViewPath()
+    {
+        return Yii::getAlias('@backend/views/wechat/weichat-erweima');
+    }
+
     public function behaviors()
     {
         $bhvs = parent::behaviors();

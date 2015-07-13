@@ -1,10 +1,16 @@
 <?php $this->beginContent('@m/views/layouts/main.php'); ?>
-<div class="container">
-     <div style="font-size:1.6em; width:80%; margin:0 auto; padding:50px 0 30px; background:url(/static/img/suc-icon.png) left no-repeat; padding-left:70px">
+<?php
+
+$this->title = "操作成功";
+?>
+<div class="xiugaichenggong">
+     <div class="xiugai-cg">
         <?=$message?>
     </div>
-    <p class="block-btn">
-    <a class="btn btn-primary btn-lg btn-block" href="<?=$next?>" >确定</a>
-    </p>
+</div>
+
+<a href="<?=$next?>" >
+ <button type="button" class="btn-anniu"> 确定 </button>
+</a>
 </div>
 <?php $this->endContent(); ?>

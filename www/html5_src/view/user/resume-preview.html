@@ -8,12 +8,12 @@
     <div class="main1">
 
         <ul class="resume-part1">
-            <li >
+            <!--<li >
                 <div class="title">照片</div>
                 <div class="con ">
                     <img src="<?=user.avatar?>" alt=""/>
                 </div>
-            </li>
+            </li>-->
             <li>
                 <div class="title">姓名</div>
                 <div class="con">
@@ -60,7 +60,7 @@
         <ul class="resume-part3">
             <li class="sub1">
                 <div class="title">可兼类别</div>
-                <div class="con">
+                <div class="con service-type-show">
                     <? user.service_types && user.service_types.forEach(function(type) {?>
                     <?=type.name?>
                     <? });?>

@@ -55,9 +55,7 @@ class Company extends \common\BaseActiveRecord
             'license_img' => '营业执照照片',
             'examined_time' => '审核日期',
             'examined_by' => '审核人',
-            'user_id' => '用户',
             'status' => '状态',
-            'examined_by' => '审核人',
             'user_id' => '用户',
             'contact_phone' => '联系电话',
             'contact_email' => '招聘邮箱'

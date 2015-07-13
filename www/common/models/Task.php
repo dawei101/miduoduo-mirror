@@ -7,6 +7,7 @@ use common\models\TaskAddress;
 use common\models\Company;
 use common\models\District;
 use common\models\ServiceType;
+use common\models\ConfigRecommend;
 
 /**
  * This is the model class for table "{{%task}}".
@@ -41,6 +42,7 @@ use common\models\ServiceType;
  * @property integer $status
  * @property integer $city_id
  * @property integer $district_id
+ * @property string $origin
  * @property string $labels_str
  */
 class Task extends \common\BaseActiveRecord
@@ -50,6 +52,7 @@ class Task extends \common\BaseActiveRecord
         0=>'月结',
         1=>'周结',
         2=>'日结',
+        3=>'完工结',
     ];
 
     public static $SALARY_UNITS = [
@@ -57,7 +60,26 @@ class Task extends \common\BaseActiveRecord
         1=>'天',
         2=>'周',
         3=>'月',
+        4=>'次',
     ];
+
+    public static $STATUSES = [
+        0=>'正常',
+        10=>'已下线',
+        20=>'已删除',
+        100=>'爬取需编辑',
+    ];
+
+    const STATUS_OK = 0;
+    const STATUS_OFFLINE = 10;
+    const STATUS_DELETED = 20;
+    const STATUS_UNCONFIRMED_FROM_SPIDER = 100;
+
+
+    public function getStatus_label()
+    {
+        return static::$STATUSES[$this->status];
+    }
 
 
     public function getClearance_period_label()
@@ -94,7 +116,7 @@ class Task extends \common\BaseActiveRecord
                 'height_requirement', 'status', 'city_id', 'district_id',
                 'company_id'], 'integer'],
             [['salary'], 'number'],
-            [['salary_note', 'detail', 'requirement'], 'string'],
+            [['salary_note', 'detail', 'requirement', 'origin'], 'string'],
             [['from_date', 'to_date', 'from_time', 'to_time',
                 'created_time', 'updated_time'], 'safe'],
             [['gid'], 'string', 'max' => 1000],
@@ -104,11 +126,12 @@ class Task extends \common\BaseActiveRecord
             [['from_date', 'to_date'], 'date', 'format' => 'yyyy-M-d'],
             [['from_time', 'to_time'], 'date', 'format' => 'H:i'],
             ['got_quantity', 'default', 'value'=>0],
-            ['company_id', 'default', 'value'=>0],
             ['status', 'default', 'value'=>0],
             [['contact', 'contact_phonenum'], 'required'],
             ['contact_phonenum', 'match', 'pattern'=>'/^(1[345789]\d{9})|(\d{3,4}\-?\d{7,8})$/',
                 'message'=>'请输入正确的电话'],
+            ['clearance_period', 'default', 'value'=>0],
+            ['origin', 'default', 'value'=>'internal'],
         ];
     }
 
@@ -148,6 +171,7 @@ class Task extends \common\BaseActiveRecord
             'age_requirement' => '年龄',
             'height_requirement' => '身高',
             'status' => '状态',
+            'status_label' => '状态',
             'city_id' => '城市',
             'district_id' => '区域',
 
@@ -155,6 +179,7 @@ class Task extends \common\BaseActiveRecord
             'contact_phonenum'=>'联系手机',
             'labels_str'=>'标签',
 
+            'origin'=>'来源',
         ];
     }
 
@@ -218,9 +243,19 @@ class Task extends \common\BaseActiveRecord
         return $this->hasOne(ServiceType::className(), ['id' => 'service_type_id']);
     }
 
+    public function getRecommend(){
+        return $this->hasOne(ConfigRecommend::className(),['task_id'=>'gid']);
+    }
+
     public function getLabels()
     {
-        return explode(',', $this->labels_str);
+        $arr = [];
+        if ($this->labels_str){
+            $arr = explode(',', $this->labels_str);
+        }
+        $arr[] = $this->clearance_period_label;
+        $arr[] = substr($this->from_date, 5) . '至' . substr($this->to_date, 5);
+        return $arr;
     }
 
     public function setLabels($labels)
@@ -269,7 +304,7 @@ class Task extends \common\BaseActiveRecord
             'city_id', 'district_id', 'company_id',
             'gender_requirement', 'degree_requirement',
             'clearance_period_label', 'salary_unit_label',
-            'labels', 'label_options',
+            'labels', 'label_options', 'status_label',
         ];
     }
 }

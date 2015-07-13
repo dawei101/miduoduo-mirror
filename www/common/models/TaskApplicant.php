@@ -19,7 +19,7 @@ class TaskApplicant extends \common\BaseActiveRecord
 {
 
     public static $STATUSES = [
-        0 => '等待企业确认',
+        0 => '已报名',
         10 => '报名成功',
     ];
 
@@ -44,6 +44,7 @@ class TaskApplicant extends \common\BaseActiveRecord
             ['created_time', 'default', 'value'=>time(), 'on'=>'insert'],
             ['task_id', 'unique', 'targetAttribute' => ['task_id', 'user_id'], 'message'=>'已报名过'],
             [['company_alerted', 'applicant_alerted'], 'default', 'value'=>'false'],
+            ['status', 'default', 'value'=>0],
         ];
     }
 
@@ -57,6 +58,8 @@ class TaskApplicant extends \common\BaseActiveRecord
             'created_time' => '申请时间',
             'user_id' => '用户',
             'task_id' => '任务',
+            'status' => '状态',
+            'status_label' => '状态',
             'company_alerted' => '已通知企业?',
             'applicant_alerted' => '已通知用户?',
         ];

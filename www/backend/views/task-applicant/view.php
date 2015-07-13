@@ -22,9 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'task.title',
+            'resume.name',
             'created_time',
             'resume.name',
-            'task.title',
+            'company_alerted:boolean',
+            'applicant_alerted:boolean',
+            'status_label',
         ],
     ]) ?>
 

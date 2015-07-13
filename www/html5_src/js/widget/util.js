@@ -1,6 +1,6 @@
 define(function(require, exports) {
     function app(option, callback) {
-        WebViewJavascriptBridge.send(json, callback);
+        window.WebViewJavascriptBridge.send(option, callback);
     }
     function push(url) {
         var opts = {
@@ -9,7 +9,7 @@ define(function(require, exports) {
         }
         app(opts, null);
     }
-    function toast(msg) {
+    function toast(msg, callback) {
         var opts = {
             action: 'b_toast_alert',
             data: {
@@ -17,7 +17,7 @@ define(function(require, exports) {
                 'disappear_delay' : 1500
             }
         }
-        app(opts, null);
+        app(opts, callback);
     }
     function appAuth(callback) {
         var opts = {
@@ -63,9 +63,8 @@ define(function(require, exports) {
 
     //跳转、兼容app和web页面
     function href(_url) {
-        //_url += '/v1/'   //编译的时候加上这句话
+        _url = miduoduo.basePath.base + _url ;
         if (!miduoduo.os.mddApp) {
-            window.location.href = "http://www.baidu.com"
             window.location.href = _url;
         } else {
             push(_url);
@@ -73,24 +72,49 @@ define(function(require, exports) {
     }
 
     //toast
-    function showTips(msg) {
+    function showTips(msg, callback) {
         if (!miduoduo.os.mddApp) {
             alert(msg);
+            callback();
         } else {
-            toast(msg);
+            toast("app:" + msg, callback);
         }
     }
 
     //注册、登陆
     function auth() {
         appAuth(function(data) {
+            alert("hi:" + data);
             window.location.reload(); //登陆成功直接重新加载页面
         });
     }
 
+
     //设置地址
     function setAddress(callback) {
         appLocation(callback);
+    }
+
+    //设置confirm
+    function cf(_opt, callback) {
+       var opt =  {
+            action: 'b_alert',
+            data : {
+                'disappear_delay' : -1,
+                'title': _opt.title,
+                'message': _opt.message,
+                'operation' : {
+                    'cancel' : '取消',
+                    'ok' : '确定'
+                }
+            }
+       }
+       app(opt, callback);
+    }
+
+    //撤销页面
+    function pop() {
+        app({ action: 'b_pop', data : {}}, null);
     }
 
     //日期格式化输出
@@ -114,4 +138,6 @@ define(function(require, exports) {
     exports.showTips = showTips;
     exports.auth = auth;
     exports.setAddress = setAddress;
+    exports.cf = cf;
+    exports.pop = pop;
 });

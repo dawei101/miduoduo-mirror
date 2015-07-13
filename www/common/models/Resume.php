@@ -73,6 +73,7 @@ class Resume extends \common\BaseActiveRecord
             ['job_wishes', 'string', 'max'=>500],
             ['major', 'string', 'max'=>200],
             ['gender', 'default', 'value'=>0],
+            ['grade', 'default', 'value'=>0],
         ];
     }
 
@@ -169,7 +170,7 @@ class Resume extends \common\BaseActiveRecord
 
     public function fields()
     {
-        return array_merge(parent::fields(), ['grade_label', 'gender_label']);
+        return array_merge(parent::fields(), ['gender_label']);
     }
 
     public function extraFields()

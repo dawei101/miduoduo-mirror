@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'license_img',
             'examined_time',
             'status',
-            'address_id',
             'examined_by',
             'user_id',
         ],

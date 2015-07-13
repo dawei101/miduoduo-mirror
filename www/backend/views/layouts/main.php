@@ -32,11 +32,14 @@ AppAsset::register($this);
                 </li>
                 <li><a href="/user">账号管理</a></li>
                 <li><a href="/resume">人才库</a></li>
+                <li><a href="/company">企业库</a></li>
                 <li><a href="/service-type">任务类型</a></li>
                 <li><a href="/task">任务</a></li>
                 <li><a href="/task-applicant">任务报名单</a></li>
+                <li><a href="/complaint">投诉列表</a></li>
+                <li><a href="/config-recommend">后台配置-推荐兼职</a></li>
                 
-                <li><a href="/app-release-version">应用发布管理</a></li>
+                <li>&nbsp;</li>
                 <li><a href="/weichat-push-set-pushset">微信推送-附近</a></li>
                 <li><a href="/weichat-push-set-template-push-list">微信推送-附近-模板</a></li>
                 <li><a href="/weichat-push-quality-task">微信推送-优单</a></li>
@@ -45,6 +48,11 @@ AppAsset::register($this);
 		
                 <li><a href="/data-user">数据统计</a></li>
                 <li>&nbsp;</li>
+
+                <li><a href="/task-pool">爬虫-任务列表</a></li>
+                <li><a href="/task-pool-white-list">爬虫-白名单(黑名单)</a></li>
+                <li>&nbsp;</li>
+                <li><a href="/app-release-version">应用发布管理</a></li>
                 <li>
                     <a href="/support/report-bug">
                     <span class="glyphicon glyphicon-flag" style="color:red;"></span> 提交bug

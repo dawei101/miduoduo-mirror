@@ -3,11 +3,33 @@ define(function(require, exports) {
     var tpl = require("../widget/tpl-engine");
     var api = require("../widget/api");
     var util = require("../widget/util");
+    var calendar = require("../widget/calendar");
+
+    document.addEventListener('WebViewJavascriptBridgeReady', function() {
+        WebViewJavascriptBridge.defaultHandler(handle_action)
+    }, false);
+    //jsbridge 主动监听
+    function handle_action(data, responseCallback) {
+        var rst = {
+            action: 'q_before_quit',
+            result: {
+                value: true
+            }
+        }
+        util.cf({title : "注意", message : "确定放弃编辑吗？"}, function(data) {
+            data = JSON.parse(data);
+            if (data.result.value == 0) {
+                rst.result.value = false;
+            }
+            responseCallback(rst);
+        });
+    };
 
     $.get(api.gen("resume?expand=service_types,freetimes,home_address,workplace_address"), function(data) {
         console.log(data);
         var user = data.items[0];
         $("body").append(tpl.parse("main-tpl", {"user" : user}));
+        calendar.initCalendar(user.birthdate && new Date(user.birthdate.replace(/-/g,"/")));
         var $days = $(".dateTitle");
         var freeTimes = user.freetimes;
         freeTimes.forEach(function(e) {
@@ -25,6 +47,10 @@ define(function(require, exports) {
 
         });
 
+        //生日
+        $(".js-birthday").on("click", function() {
+            $(".calendar-widget, .shade-widget").show(300);
+        });
         //性别
         $(".sex").find("div").on("click", function() {
             $(this).addClass("sex-act").siblings().removeClass("sex-act");
@@ -76,7 +102,12 @@ define(function(require, exports) {
         $(".js-set-address").on("click", function() {
             var $this = $(this);
             util.setAddress(function(data) {
-                alert(data);
+                alert("app返回的地址信息：" + JSON.stringify(data));
+                data = JSON.parse(data);
+                $this.find("input").val(data.address);
+                $.post(api.gen("address"), data, function(data) {
+                    console.log(data);
+                });
             });
         })
         require("./resume-job-type");
@@ -93,7 +124,14 @@ define(function(require, exports) {
             data["phonenum"] = miduoduo.user.phone;
             console.log("简历",data);
             $.put(api.gen("resume/" + miduoduo.user.id), data, function(data) {
-                util.showTips("修改成功！");
+                util.showTips("修改成功！", function() {
+                    if (miduoduo.os.mddApp) {
+                        util.pop();
+                    } else {
+                        //location.replace("view/user/center-index.html");
+                        alert("兼容app外浏览器，待定");
+                    }
+                });
             })
         })
     });

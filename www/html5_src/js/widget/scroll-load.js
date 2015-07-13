@@ -13,8 +13,10 @@ define(function (require, exports) {
 
     var watchScroll = function () {
         idDataLoad = false;
+        pullUp.animate({"opacity" : 1}, 400);
         //pullUp.attr('status', 'loading');
         $.get(url, urlData, function (res) {
+            pullUp.css("opacity" , 0);
             //pullUp.attr('status', 'tap');
             urlData.page++;
             idDataLoad = true;
@@ -41,6 +43,9 @@ define(function (require, exports) {
      */
     var startWatch = function (_url, urlParam, _callback, _pullUp) {
         url = _url;
+        if (!urlParam["per-page"]) {
+            urlParam["per-page"] = 50;
+        }
         urlData = urlParam;
         callback = _callback;
         watchScroll();
