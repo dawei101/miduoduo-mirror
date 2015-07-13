@@ -279,4 +279,5 @@ $this->title = '米多多兼职平台';
 <?php
 $this->registerJsFile('/js/publish.js');
 $this->registerJsFile('/js/miduoduo.js');
+$this->registerJsFile('/js/jquery.tagbox.js');
 ?>
