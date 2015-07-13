@@ -27,7 +27,7 @@ $this->title = '米多多兼职平台';
           </dl>
           <dl  class="pitch-current">
             <dt class="default-title"><i class="iconfont">&#xe60c;</i>简历管理</dt>
-            <dd class="<?=array_key_exists('read', $_GET)?'current':'default-lis'?>"><a href="/resume">全部</a></dd>
+            <dd class="<?=!array_key_exists('read', $_GET)?'current':'default-lis'?>"><a href="/resume">全部</a></dd>
             <dd class="<?=array_key_exists('read', $_GET)&&$_GET['read']==0?'current':'default-lis'?>"><a href="/resume?read=0">未查看</a></dd>
             <dd class="<?=array_key_exists('read', $_GET)&&$_GET['read']==1?'current':'default-lis'?>"><a href="/resume?read=1">已查看</a></dd>
           </dl>
