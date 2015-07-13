@@ -200,7 +200,7 @@ class UserController extends FBaseController
             if (!$user->validatePassword($old_password)) {
                 return $this->render('account', ['errmsg'=>'原密码错误']);
             }
-			
+
 			$user->setPassword($new_password);
         	$user->removePasswordResetToken();
             if ($user->validate() && $user->save()) {
@@ -214,7 +214,7 @@ class UserController extends FBaseController
     public function actionPersonalCert()
     {
     	$company = Company::findByCurrentUser();
-    	
+
     	if(Yii::$app->request->isPost){
     		$uploaddir = '/var/www/uploads/';
 			$uploadfile = $uploaddir . basename($_FILES['person_idcard_pic']['name']);
@@ -226,9 +226,10 @@ class UserController extends FBaseController
 
     public function actionCorpCert()
     {
+        $company = Company::findByCurrentUser();
     	if(Yii::$app->request->isPost){
     		print_r(Yii::$app->request->post());
     	}
-        return $this->render('corp-cert');
+        return $this->render('corp-cert',['company' => $company]);
     }
 }
