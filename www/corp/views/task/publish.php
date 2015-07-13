@@ -274,7 +274,6 @@ $this->title = '米多多兼职平台';
 <?php
 $this->registerJsFile('/js/data/daterangepicker.js');
 $this->registerJsFile('/js/data/moment.js');
-$this->registerCssFile('/js/data/daterangepicker-bs3.css');
 $this->registerJsFile('/js/fuwenben/bootstrap-wysiwyg.js');
 $this->registerJsFile('/js/fuwenben/external/jquery.hotkeys.js');
 $this->registerJsFile('/js/publish.js');
