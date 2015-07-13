@@ -29,7 +29,17 @@ class DataUserController extends BDataBaseController
     {
         // 默认时间范围
         $defaultDateStart   = date("Y-m-d",time()-604800);
-        $defaultDateEnd     = date("Y-m-d",time());;
+        $defaultDateEnd     = date("Y-m-d",time());
+
+        // 快速筛选连接,昨天，七天，三十天
+        $ztDateStart        = date("Y-m-d",time()-86400);
+        $ztDateEnd          = date("Y-m-d",time()-86400);      
+        $sstDateStart       = date("Y-m-d",time()-2592000);
+        $sstDateEnd         = $defaultDateEnd;
+        $ztUrl              = "&dateStart=".$ztDateStart."&dateEnd=".$ztDateEnd;
+        $qtUrl              = "&dateStart=".$defaultDateStart."&dateEnd=".$defaultDateEnd;
+        $sstUrl             = "&dateStart=".$sstDateStart."&dateEnd=".$sstDateEnd;
+
         // 得到选择的日期
         $dateStart  = Yii::$app->request->get('dateStart') ? Yii::$app->request->get('dateStart') : $defaultDateStart;
         $dateEnd    = Yii::$app->request->get('dateEnd') ? Yii::$app->request->get('dateEnd') : $defaultDateEnd;
@@ -60,6 +70,11 @@ class DataUserController extends BDataBaseController
             'dataRows'  => $dataRows,    
             'dateStart' => $dateStart,
             'dateEnd'   => $dateEnd,
+            'ztUrl'     => $ztUrl,
+            'qtUrl'     => $qtUrl,
+            'sstUrl'    => $sstUrl,
+            'data_type' => $data_type,
+            'city_id'   => $city_id,
         ]);
     }
 

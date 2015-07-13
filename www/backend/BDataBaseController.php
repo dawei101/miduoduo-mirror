@@ -104,6 +104,7 @@ class BDataBaseController extends BBaseController
         // 最终返回的数据
         $dataRows   = array();
         // 遍历第一层--日期
+        $dataArr    = array_reverse($dataArr);
         foreach( $dataArr as $k1 => $v1 ){
             $data2          = array();
             // 遍历第二层--字段

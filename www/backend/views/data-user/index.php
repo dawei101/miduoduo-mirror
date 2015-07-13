@@ -75,6 +75,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]);?>
                 &nbsp;
                 <button class="btn btn-success" type="submit">搜索</button>
+                &nbsp;&nbsp;快速查看：
+                <a href="/data-user?type_id=<?= $data_type ?>&city_id=<?= $city_id ?><?= $ztUrl ?>">昨天</a> | 
+                <a href="/data-user?type_id=<?= $data_type ?>&city_id=<?= $city_id ?><?= $qtUrl ?>">7天</a> | 
+                <a href="/data-user?type_id=<?= $data_type ?>&city_id=<?= $city_id ?><?= $sstUrl ?>">30天</a>
             <?php ActiveForm::end(); ?>
         </div>
         <div>&nbsp;</div>
@@ -84,14 +88,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <th>日期</th>
                     <th>总关注</th>
-                    <th>今日关注</th>
+                    <th>当日关注</th>
                     <th>总退订</th>
-                    <th>今日退订</th>
-                    <th>今日推送人数</th>
-                    <th>今日推送总量</th>
-                    <th>今日微信注册</th>
-                    <th>今日微信投递人数</th>
-                    <th>今日微信投递总量</th>
+                    <th>当日退订</th>
+                    <th>当日推送人数</th>
+                    <th>当日推送总量</th>
+                    <th>当日微信注册</th>
+                    <th>当日微信投递人数</th>
+                    <th>当日微信投递总量</th>
                 </tr>
             </thead>
             <tbody>
@@ -123,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th>用户新增</th>
                     <th>总待审核</th>
                     <th>总过期</th>
-                    <th>今日过期</th>
+                    <th>当日过期</th>
                 </tr>
             </thead>
             <tbody>
@@ -151,10 +155,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th>简历总量</th>
                     <th>投递总量</th>
                     <th>投递人数</th>
-                    <th>新增注册总量</th>
-                    <th>新增简历总量</th>
-                    <th>新增投递总量</th>
-                    <th>新增投递人数</th>
+                    <th>当日注册总量</th>
+                    <th>当日简历总量</th>
+                    <th>当日投递总量</th>
+                    <th>当日投递人数</th>
                 </tr>
             </thead>
             <tbody>
