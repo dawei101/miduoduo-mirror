@@ -1,8 +1,5 @@
-<?php
-
-use yii\db\Schema;
+e yii\db\Schema;
 use console\BaseMigration;
-
 class m150707_233142_weichat_push extends BaseMigration
 {
     public function up()
@@ -10,90 +7,81 @@ class m150707_233142_weichat_push extends BaseMigration
         $sqls = "
 CREATE TABLE `jz_weichat_accesstoken` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `access_token` varchar(200) DEFAULT NULL COMMENT 'å¾®ä¿¡çš„access_token',
-  `expires_in` int(11) DEFAULT NULL COMMENT 'è¿‡æœŸæ—¶é—´',
-  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'åˆ›å»ºæ—¶é—´',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'æ›´æ–°æ—¶é—´',
-  `used_times` int(11) DEFAULT '0' COMMENT 'ä½¿ç”¨æ¬¡æ•°',
+  `access_token` varchar(200) DEFAULT NULL COMMENT 'Î¢ÐÅµÄaccess_token',
+  `expires_in` int(11) DEFAULT NULL COMMENT '¹ýÆÚÊ±¼ä',
+  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '´´½¨Ê±¼ä',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '¸üÐÂÊ±¼ä',
+  `used_times` int(11) DEFAULT '0' COMMENT 'Ê¹ÓÃ´ÎÊý',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-
 CREATE TABLE `jz_weichat_push_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `push_group` varchar(200) DEFAULT NULL COMMENT 'æŽ¨é€åˆ†ç»„ï¼ˆå¦‚ç¾¤æŽ¨200äººï¼Œåˆ™è¿™æ¬¡åˆ†ä¸ºä¸€ç»„ï¼‰',
-  `openid` varchar(200) DEFAULT NULL COMMENT 'ç”¨æˆ·å¾®ä¿¡ID',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'æŽ¨é€æ—¶é—´',
-  `result` varchar(100) DEFAULT NULL COMMENT 'æŽ¨é€ç»“æžœ',
-  `return_msg` varchar(400) DEFAULT NULL COMMENT 'æŽ¨é€è¿”å›žä¿¡æ¯',
+  `push_group` varchar(200) DEFAULT NULL COMMENT 'ÍÆËÍ·Ö×é£¨ÈçÈºÍÆ200ÈË£¬ÔòÕâ´Î·ÖÎªÒ»×é£©',
+  `openid` varchar(200) DEFAULT NULL COMMENT 'ÓÃ»§Î¢ÐÅID',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'ÍÆËÍÊ±¼ä',
+  `result` varchar(100) DEFAULT NULL COMMENT 'ÍÆËÍ½á¹û',
+  `return_msg` varchar(400) DEFAULT NULL COMMENT 'ÍÆËÍ·µ»ØÐÅÏ¢',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-
 CREATE TABLE `jz_weichat_push_quality_task` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `gid` varchar(100) DEFAULT NULL COMMENT 'å…·ä½“ä»»åŠ¡çš„gid',
-  `title` varchar(200) DEFAULT NULL COMMENT 'æ¶ˆæ¯æ ‡é¢˜',
-  `company_name` varchar(200) DEFAULT NULL COMMENT 'å…¬å¸åç§°',
-  `task_name` varchar(200) DEFAULT NULL COMMENT 'ä»»åŠ¡åç§°',
-  `task_type` varchar(100) DEFAULT NULL COMMENT 'ä»»åŠ¡ç±»åˆ«',
-  `location` varchar(100) DEFAULT NULL COMMENT 'å·¥ä½œåœ°ç‚¹',
-  `price` varchar(100) DEFAULT NULL COMMENT 'è–ªèµ„',
-  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'åˆ›å»ºæ—¶é—´',
-  `updated_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
-  `has_pushed` tinyint(4) DEFAULT '0' COMMENT 'æ˜¯å¦æŽ¨é€è¿‡',
-  `pushed_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'æŽ¨é€æ—¶é—´',
-  `push_group` varchar(100) DEFAULT NULL COMMENT 'æŽ¨é€åˆ†ç»„ï¼Œç”¨äºŽæŸ¥çœ‹æ—¥å¿—ä¸­æœ¬æ¬¡æŽ¨é€çš„ç›¸å…³æ•°æ®',
+  `gid` varchar(100) DEFAULT NULL COMMENT '¾ßÌåÈÎÎñµÄgid',
+  `title` varchar(200) DEFAULT NULL COMMENT 'ÏûÏ¢±êÌâ',
+  `company_name` varchar(200) DEFAULT NULL COMMENT '¹«Ë¾Ãû³Æ',
+  `task_name` varchar(200) DEFAULT NULL COMMENT 'ÈÎÎñÃû³Æ',
+  `task_type` varchar(100) DEFAULT NULL COMMENT 'ÈÎÎñÀà±ð',
+  `location` varchar(100) DEFAULT NULL COMMENT '¹¤×÷µØµã',
+  `price` varchar(100) DEFAULT NULL COMMENT 'Ð½×Ê',
+  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '´´½¨Ê±¼ä',
+  `updated_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'ÐÞ¸ÄÊ±¼ä',
+  `has_pushed` tinyint(4) DEFAULT '0' COMMENT 'ÊÇ·ñÍÆËÍ¹ý',
+  `pushed_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'ÍÆËÍÊ±¼ä',
+  `push_group` varchar(100) DEFAULT NULL COMMENT 'ÍÆËÍ·Ö×é£¬ÓÃÓÚ²é¿´ÈÕÖ¾ÖÐ±¾´ÎÍÆËÍµÄÏà¹ØÊý¾Ý',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
 CREATE TABLE `jz_weichat_push_set_pushset` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `push_time` tinyint(4) DEFAULT '0' COMMENT 'æŽ¨é€æ—¶é—´é€‰æ‹©',
-  `push_way` tinyint(4) DEFAULT '0' COMMENT 'é€‰æ‹©æŽ¨é€æ–¹å¼',
-  `status` tinyint(4) DEFAULT '1' COMMENT 'çŠ¶æ€',
-  `template_push_id` int(11) DEFAULT '0' COMMENT 'é€‰æ‹©æŽ¨é€æ¶ˆæ¯åˆ—è¡¨æ¨¡æ¿',
-  `template_weichat_id` int(11) DEFAULT '0' COMMENT 'é€‰æ‹©å¯¹åº”çš„å¾®ä¿¡æ¨¡æ¿',
-  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'åˆ›å»ºæ—¶é—´',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'æ›´æ–°æ—¶é—´',
-  `latest_push_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'ä¸Šæ¬¡æŽ¨é€æ—¶é—´',
-  `latest_push_group` varchar(100) DEFAULT NULL COMMENT 'ä¸Šæ¬¡æŽ¨é€åˆ†ç»„ï¼Œç”¨äºŽæŸ¥çœ‹æ—¥å¿—ä¸­æœ¬æ¬¡æŽ¨é€çš„ç›¸å…³æ•°æ®',
+  `push_time` tinyint(4) DEFAULT '0' COMMENT 'ÍÆËÍÊ±¼äÑ¡Ôñ',
+  `push_way` tinyint(4) DEFAULT '0' COMMENT 'Ñ¡ÔñÍÆËÍ·½Ê½',
+  `status` tinyint(4) DEFAULT '1' COMMENT '×´Ì¬',
+  `template_push_id` int(11) DEFAULT '0' COMMENT 'Ñ¡ÔñÍÆËÍÏûÏ¢ÁÐ±íÄ£°å',
+  `template_weichat_id` int(11) DEFAULT '0' COMMENT 'Ñ¡Ôñ¶ÔÓ¦µÄÎ¢ÐÅÄ£°å',
+  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '´´½¨Ê±¼ä',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '¸üÐÂÊ±¼ä',
+  `latest_push_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'ÉÏ´ÎÍÆËÍÊ±¼ä',
+  `latest_push_group` varchar(100) DEFAULT NULL COMMENT 'ÉÏ´ÎÍÆËÍ·Ö×é£¬ÓÃÓÚ²é¿´ÈÕÖ¾ÖÐ±¾´ÎÍÆËÍµÄÏà¹ØÊý¾Ý',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
 CREATE TABLE `jz_weichat_push_set_template_push_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `task_id` varchar(200) DEFAULT NULL COMMENT 'ä»»åŠ¡IDï¼Œgid',
-  `template_push_id` int(11) DEFAULT NULL COMMENT 'æ‰€å±žæŽ¨é€æ¶ˆæ¯åˆ—è¡¨æ¨¡æ¿',
-  `display_order` smallint(6) DEFAULT '1' COMMENT 'æŽ’åºï¼Œè¶Šå¤§è¶Šé å‰',
+  `task_id` varchar(200) DEFAULT NULL COMMENT 'ÈÎÎñID£¬gid',
+  `template_push_id` int(11) DEFAULT NULL COMMENT 'ËùÊôÍÆËÍÏûÏ¢ÁÐ±íÄ£°å',
+  `display_order` smallint(6) DEFAULT '1' COMMENT 'ÅÅÐò£¬Ô½´óÔ½¿¿Ç°',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-
 CREATE TABLE `jz_weichat_push_set_template_push_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `title` varchar(500) DEFAULT NULL COMMENT 'æ¨¡æ¿æ ‡é¢˜',
-  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'åˆ›å»ºæ—¶é—´',
-  `updated_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
-  `status` tinyint(4) DEFAULT '1' COMMENT 'çŠ¶æ€ï¼ˆ1æ­£å¸¸ï¼Œ0åˆ é™¤ï¼‰',
-  `create_user` int(11) DEFAULT NULL COMMENT 'åˆ›å»ºäºº',
+  `title` varchar(500) DEFAULT NULL COMMENT 'Ä£°å±êÌâ',
+  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '´´½¨Ê±¼ä',
+  `updated_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'ÐÞ¸ÄÊ±¼ä',
+  `status` tinyint(4) DEFAULT '1' COMMENT '×´Ì¬£¨1Õý³££¬0É¾³ý£©',
+  `create_user` int(11) DEFAULT NULL COMMENT '´´½¨ÈË',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
 CREATE TABLE `jz_weichat_push_set_template_weichat` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `title` varchar(500) DEFAULT NULL COMMENT 'æ¨¡æ¿æ ‡é¢˜',
-  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'åˆ›å»ºæ—¶é—´',
-  `updated_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
-  `status` tinyint(4) DEFAULT '1' COMMENT 'çŠ¶æ€',
-  `create_user` int(11) DEFAULT NULL COMMENT 'åˆ›å»ºäºº',
-  `weichat_template_id` varchar(200) DEFAULT NULL COMMENT 'å¯¹åº”çš„å¾®ä¿¡æ¨¡æ¿ID',
+  `title` varchar(500) DEFAULT NULL COMMENT 'Ä£°å±êÌâ',
+  `created_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '´´½¨Ê±¼ä',
+  `updated_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'ÐÞ¸ÄÊ±¼ä',
+  `status` tinyint(4) DEFAULT '1' COMMENT '×´Ì¬',
+  `create_user` int(11) DEFAULT NULL COMMENT '´´½¨ÈË',
+  `weichat_template_id` varchar(200) DEFAULT NULL COMMENT '¶ÔÓ¦µÄÎ¢ÐÅÄ£°åID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-ALTER TABLE `jz_weichat_user_info` ADD `is_receive_nearby_msg` tinyint(4) DEFAULT '0' COMMENT 'æ˜¯å¦æŽ¥æ”¶å¾®ä¿¡é™„è¿‘å…¼èŒçš„æŽ¨é€';
-
+ALTER TABLE `jz_weichat_user_info` ADD `is_receive_nearby_msg` tinyint(4) DEFAULT '0' COMMENT 'ÊÇ·ñ½Óæ”????ÐÅ¸½½ü¼æÖ°µÄÍÆËÍ';
         ";
         $this->execSqls($sqls);
     }
-
     public function down()
     {
         $this->dropTable('jz_weichat_accesstoken');
