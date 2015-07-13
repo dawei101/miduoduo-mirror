@@ -36,7 +36,7 @@
             <li>
                 <div class="title">身高</div>
                 <div class="con tag">
-                    <input class="js-col" name="height" type="text" placeholder="请输入身高" value="<?=user.height ?>"/>
+                    <input class="js-col" name="height" pattern="[0-9]"  type="text" placeholder="请输入身高" value="<?=user.height ?>"/>
                 </div>
             </li>
         </ul>
@@ -63,7 +63,7 @@
                 <div class="title">可兼类别</div>
                 <div class="con control js-sel-service-type">
                     <?var typeID = "";?>
-                    <span>
+                    <span class="service-type-show">
                     <? user.service_types && user.service_types.forEach(function(e){ ?>
                         <?=e.name?>
                     <? typeID += e.id + ','; }); ?>

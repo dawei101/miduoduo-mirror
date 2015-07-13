@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
         $cities = (new Query)->select('city')->from(TaskPool::tableName())->distinct()->all();
+        $city_filter = [];
         foreach($cities as $row){
             $city_filter[$row['city']] = $row['city'];
         }

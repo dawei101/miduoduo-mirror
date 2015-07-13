@@ -17,7 +17,7 @@ define(function(require, exports) {
         if (miduoduo.user.id) {
             var reqOver = 2;
             $.get(api.gen('task-applicant/' + taskID + '?expand=task'), function(data) {
-                if (!data.task) { //没有报名
+                if (!data) { //没有报名
                 } else {
                     var $obj = $(".control-btn");
                     $obj.off("click");
@@ -31,11 +31,9 @@ define(function(require, exports) {
                 showBarWhenReqOver();
             }, "json");
             $.get(api.gen('task-collection/' + taskID), function(data) {
-                console.log(data);
-                if (data == 'false') {
-
+                if (!data) {
                 } else {
-                    $(".store").addClass("store-act");
+                    $(".store").addClass("store-act").find("span").text("已收藏");
                 }
                 showBarWhenReqOver();
             }, "json");
@@ -51,10 +49,11 @@ define(function(require, exports) {
         }
 
         $(".control-btn").on("click", function() {
+            var $this = $(this);
             if (miduoduo.user.id) {
-                $.put(api.gen("task-applicant"), {user_id : miduoduo.user.id, task_id: taskID}, function(data) {
+                $.post(api.gen("task-applicant"), {user_id : miduoduo.user.id, task_id: taskID}, function(data) {
                     console.log(data);
-                    $(this).text("等待企业确认").css("background", "#a5abb2").off("click");
+                    $this.text("等待企业确认").css("background", "#a5abb2").off("click");
                 });
             } else {
                 showLoginDialog(true);
@@ -72,11 +71,13 @@ define(function(require, exports) {
                     console.log(data);
                 });
                 $this.addClass("store-act");
+                $this.find("span").text("已收藏");
             } else {
                 $.delete(api.gen("task-collection/" + taskID), function(data) {
                     console.log(data);
                 });
                 $this.removeClass("store-act");
+                $this.find("span").html("收藏");
             }
         } else {
             showLoginDialog(true);
