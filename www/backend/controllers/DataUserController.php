@@ -17,14 +17,8 @@ class DataUserController extends BDataBaseController
 {
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
+        $bhvs = parent::behaviors();
+        return $bhvs;
     }
 
     /**
