@@ -147,6 +147,10 @@ $(function(){
             var d = $.parseJSON(data);
             if (d['success']){
                 location.reload();
+            } else {
+                if (d.redirect_to){
+                    location.href=d.redirect_to;
+                }
             }
             console.info(data);
         }).fail(function(jqXHR, textStatus, errorThrown) {

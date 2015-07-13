@@ -57,6 +57,13 @@ class TaskApplicantController extends \m\MBaseController
 
         if (!$tc){
             $resume = Resume::find()->where(['user_id'=>$user_id])->one();
+            if (!$resume){
+                return $this->renderJson([
+                    'success'=> false,
+                    'redirect_to'=> '/resume/edit',
+                    'message' => '需要填写简历',
+                ]);
+            }
 
             $tc = new TaskApplicant;
             $tc->task_id = $task_id;
@@ -94,7 +101,6 @@ class TaskApplicantController extends \m\MBaseController
                 'success'=> false,
                 'message' => '已报过名',
             ]);
-
     }
 
     public function actionDelete()
