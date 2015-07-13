@@ -33,10 +33,11 @@ ul li{list-style:none;}
 .help-block{font-size:0.8em; margin-bottom:10px;text-align:right; color:#f00; width:92%; padding-right:4%; display:none;}
 /*======顶部固定导航======*/
 .mdd-top-nav{width:100%; height:50px; position:fixed; top:0; left:0; right:0; background:#fed732; text-align:center; line-height:50px; color:#2a3141; font-size:1.3em; z-index:100000 }
-.mdd-top-nav a{display:block;width:20%;color:#2a3141; font-size:0.75em; position:absolute; text-align:left; text-indent:1em }
+.mdd-top-nav a{display:block;width:25%;color:#2a3141; font-size:0.75em; position:absolute; text-align:left; text-indent:1em }
 .position-l{position:relative; top:0; left:0;}
 .position-r{position:relative; top:0; right:0;}
 .position-l .iconfont,.position-r .iconfont{font-size:1.3em;}
+.position-r span{float: right; margin-right: 10px}
 /*======顶部引导提示语=======*/
 .lead{width:94%; padding:2% 3%; font-size:1em; color:#a5abb2; font-size:0.8em; line-height:0.5em;}
 /*======修改密码成功=======*/
@@ -83,7 +84,7 @@ ul li{list-style:none;}
 .list-title span{float:right;font-size:0.8em; line-height:25px; display:block; color:#a5abb2; font-style:normal; font-weight:normal}
 .list-title h2{font-style:normal; font-weight:normal; font-size:1.2em; line-height:25px; width:80%; float:left; color:#2a3141}
 .list-tag{margin-top:0.5em; /*border-bottom:1px #f3f3f3 solid;*/overflow:hidden; clear:both }
-.list-tag span{display:block; float:left; padding:1px 5px; border-radius:4px; border:1px #f2f2f2 solid; color:#86888a; margin-right:10px; margin-top:5px; margin-bottom:5%;}
+.list-tag span{display:block; float:left; padding:1px 5px; border-radius:4px; border:1px #f2f2f2 solid; color:#86888a; margin-left:10px; margin-top:5px; margin-bottom:5%;}
 .list-tag .tag-im{border-color:#fe8e75; color:#f64c26;}
 .jianzhi-time,.jianzhi-dizhi{width:97%; padding:1em 3% 0 0; color:#606c77; overflow:hidden; color:#999}
 .jianzhi-time  .iconfont{color:#00b966; /*font-size:0.8em;*/ margin-right:10px; margin-left:3px;}
@@ -93,20 +94,21 @@ ul li{list-style:none;}
 /*======详情页======*/
 .midd-xiangqing{color:#2a3141; padding:4% 3% 0; background:#fff; /*width:94%;*/ display:block; border-bottom:1px solid #f3f3f3; overflow:hidden; margin-bottom:0.5em;}
 .list-subsection{width:100%; margin-bottom:0.5em; background:#fff;}
-.list-subsection dl{width:90%; padding:4% 5%;border-bottom:1px solid #f3f3f3; overflow:hidden}
-.list-subsection dl dt{font-size:1.2em; line-height:25px; color:#a5abb2; padding:0% 0 2%;}
+.list-subsection dl{width:100%; padding:4% 5%;border-bottom:1px solid #f3f3f3; overflow:hidden}
+.list-subsection dl dt{font-size:1.0em; line-height:25px; color:#a5abb2; padding:0% 0 2%;}
 .list-subsection dl dd{font-size:1em; line-height:25px; color:#2a3141}
 .list-subsection dl dd .jianzhi-time,.list-subsection dl dd .jianzhi-dizhi{ color:#2a3141}
 .list-subsection dl dd a{float:right;display:block; color:#a5abb2; overflow:hidden;padding-top:0.5em; font-size:0.9em; text-align:center; margin-bottom: 6px;}
 .list-subsection dl dd a .iconfont{color:#00b966; font-size:2.2em; display:block;}
 .list-subsection dl dd p{line-height:25px; padding:0.5% 0}
+.gs-bb{border-bottom:#f3f3f3 solid 1px; border-bottom: 1px dashed #f2f2f2;margin-bottom: 0.6em;padding-bottom: 0.6em;}
 
 /*=============列表页筛�?=================*/
 .guding-top{position:fixed; top:50px; left:0; right:0; z-index:9000; background:#fff;}
 .select {color:#999;float: left;font-weight:normal; width:33.1%; font-size:1em; border-right:1px #eee solid; border-bottom:1px #d0d0d0 solid; height:50px; background-color:#fff;}
 .select dt {border:none;cursor: pointer;display: inline-block;line-height:50px;width:100%;z-index: 99;text-align:center; height:50px; overflow:hidden;}
 .select dd {background: #fff none repeat scroll 0 0;border: 1px solid #fff;left: 0;position: absolute;top:51px;z-index: 80000;display: none;width:100%;padding-bottom:100px;overflow:auto; width:100%; height:350px;}
-.select dd li{width:100%; line-height:50px;border-bottom:1px #eee solid; padding-left:15px;}
+.select dd li{width:100%; line-height:50px;border-bottom:1px #eee solid; padding-left:15px;list-style: none;}
 .select dd li a{color:#333; display:block;width:100%;  text-decoration:none;}
 .midd-logo-top{width:100%; background:#fed732; padding:60px 0;}
 .midd-logo-top .logo img{display:block; margin:0 auto; width:180px; height:90px;}
@@ -188,8 +190,8 @@ ul li{list-style:none;}
 .mdd-bottom-nav{width:100%; overflow:hidden; position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid #d0d0d0; text-align:center;  color:#fff;}
 .bottom-box{width:20%;color:#a5abb2;padding:2% 0}
 .pitch-on{color:#00b966;}/*收藏和举报之后选中的样式*/
-.bottom-box .iconfont{font-size:2.0em; width:100%; display:block; margin-bottom:5px;}
-.bottom-bnt{width:55%; border-radius:4px;  padding:3% 0;font-size:1.3rem; margin: 0.6em 0;}
+.bottom-box .iconfont{font-size:1.3em; width:100%; display:block; margin-bottom:5px;}
+.bottom-bnt{width:55%; border-radius:4px;  padding:3% 0;font-size:1.0rem; margin: 0.6em 0;}
 .bottom-bnt-bm{background-color:#00b966; cursor:pointer}
 .bottom-bnt-cg{background-color:#ff7b5d;}
 .bottom-bnt-qr{background-color:#a5abb2;}
@@ -216,6 +218,7 @@ ul li{list-style:none;}
 	body{-webkit-text-size-adjust: none; max-width:440px; margin:0 auto;}
 	.mdd-top-nav,.guding-top,.guding-top-s,.mdd-bottom-nav{width:440px; margin:0 auto;}
 }
+
 
 
 
