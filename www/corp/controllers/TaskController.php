@@ -11,6 +11,7 @@ use yii\data\Pagination;
 
 use common\models\Company;
 use common\models\Task;
+use common\models\ServiceType;
 use common\models\TaskAddress;
 
 use corp\models\TaskPublishModel;
@@ -95,7 +96,8 @@ class TaskController extends FBaseController
             return $this->redirect('/task/');
         }
 
-        return $this -> render('publish');
+		$services = ServiceType::find()->all();
+        return $this -> render('publish', ['services'=>$services]);
     }
 
     public function actionEdit($gid)

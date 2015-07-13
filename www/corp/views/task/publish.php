@@ -61,14 +61,9 @@ $this->title = '米多多兼职平台';
                                     <div class="nice-select" name="nice-select">
                                         <input type="text" value=" ===选择职位类别===" ><i class="iconfont">&#xe60d;</i>
                                         <ul>
-                                            <li  data-value="1">礼仪</li>
-                                            <li>广东省</li>
-                                            <li>湖南省</li>
-                                            <li>四川省</li>
-                                            <li>湖北省</li>
-                                            <li>广东省</li>
-                                            <li>湖南省</li>
-                                            <li>四川省</li>
+                                        	<?php foreach($services as $service) {?>
+                        					<li><?=$service->name?></li>
+                        					<?php }?>
                                         </ul>
                                         <input type="hidden" name="service_type_id" value="1"/>
                                         <p class="cuowu">内容不能为空!</p>
