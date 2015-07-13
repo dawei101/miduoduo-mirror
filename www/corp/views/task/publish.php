@@ -277,6 +277,6 @@ $this->registerJsFile('/js/data/moment.js');
 $this->registerCssFile('/js/data/daterangepicker-bs3.css');
 $this->registerJsFile('/js/fuwenben/external/jquery.hotkeys.js');
 $this->registerJsFile('/js/publish.js');
-$this->registerJsFile('/js/miduoduo.js');
 $this->registerJsFile('/js/jquery.tagbox.js');
+$this->registerJsFile('/js/miduoduo.js');
 ?>
