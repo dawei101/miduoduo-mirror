@@ -278,4 +278,5 @@ $this->title = '米多多兼职平台';
 <!-- InstanceEndEditable -->
 <?php
 $this->registerJsFile('/js/publish.js');
+$this->registerJsFile('/js/miduoduo.js');
 ?>
