@@ -270,13 +270,6 @@ $this->title = '米多多兼职平台';
             </div>
         </div>
     </div>
-<script src="/js/miduoduo.js"></script>
-<script src="/js/data/moment.js"></script>
-<script src="/js/data/daterangepicker.js"></script>
-
-<script src="/js/fuwenben/bootstrap-wysiwyg.js"></script>
-<script src="/js/fuwenben/external/jquery.hotkeys.js"></script>
-<script src="/js/jquery.tagbox.js"></script>
 <!-- InstanceEndEditable -->
 <?php
 $this->registerJsFile('/js/publish.js');
