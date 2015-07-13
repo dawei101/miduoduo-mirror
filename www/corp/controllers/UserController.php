@@ -216,20 +216,39 @@ class UserController extends FBaseController
     	$company = Company::findByCurrentUser();
 
     	if(Yii::$app->request->isPost){
+            $hash = Yii::$app->getSecurity()->generateRandomString();
     		$uploaddir = '/var/www/uploads/';
-			$uploadfile = $uploaddir . basename($_FILES['person_idcard_pic']['name']);
-
-			move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile);
+			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
+			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
+            }
+            $company->setAttributes(Yii::$app->request->post(), false);
+            $company->person_idcard_pic = $hash;
+            if (!$company->validate() || !$company->save()) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
+            }
+            return $this->goHome();
     	}
-        return $this->render('personal-cert',['company' => $company]);
+        return $this->render('personal-cert',['company' => $company, 'error'=>false]);
     }
 
     public function actionCorpCert()
     {
         $company = Company::findByCurrentUser();
     	if(Yii::$app->request->isPost){
-    		print_r(Yii::$app->request->post());
+            $hash = Yii::$app->getSecurity()->generateRandomString();
+    		$uploaddir = '/var/www/uploads/';
+			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
+			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
+            }
+            $company->setAttributes(Yii::$app->request->post(), false);
+            $company->person_idcard_pic = $hash;
+            if (!$company->validate() || !$company->save()) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
+            }
+            return $this->goHome();
     	}
-        return $this->render('corp-cert',['company' => $company]);
+        return $this->render('corp-cert',['company'=>$company, 'error'=>false]);
     }
 }
