@@ -21,7 +21,7 @@ define(function(require, exports, module) {
         util.href($(this).data("url"));
     })
     $(".top-nav .item2").on("click", function() {
-
+        util.href($(this).data("url"));
     })
 
     //职位列表，滚动加载

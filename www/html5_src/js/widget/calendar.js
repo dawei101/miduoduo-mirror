@@ -19,10 +19,18 @@ define(function(require, exports) {
         }
         buildYearPanel(year + 1, currDateObj && currDateObj.getFullYear());
         datePanel(currDateObj || date);
+        buildMonthPanel(currDateObj || date);
         $(".curr-y").text(year);
         $(".curr-m").text(month);
 
         bindEvent();
+    }
+
+    function buildMonthPanel(date) {
+        var m = date.getMonth();
+        var $currMonth = $(".month-panel-container").children().eq(m - 1);
+        $currMonth.addClass("m-act");
+        currSelObj.m = $currMonth;
     }
 
     function buildYearPanel(lastYear, currYear) {

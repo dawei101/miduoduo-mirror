@@ -10,6 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="/v1/css/base.css"/>
+    <script type="text/javascript" src="/v1/js_min//third_party/WebViewJavascriptBridge.js" ></script>
     <script type="text/javascript" src="/v1/js_min//third_party/sea.js" ></script>
     <script>
         if (!window.miduoduo) { //如果app没有注入该变量，则认为不在app里
@@ -28,7 +29,7 @@
             miduoduo.user = JSON.parse(window.localStorage.getItem("userInfo")) || miduoduo.user;
             miduoduo.os.mddApp = true;
         }catch(e){
-            //alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
+            alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
         }
         miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
         miduoduo.basePath = {

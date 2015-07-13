@@ -39,7 +39,7 @@ define(function(require, exports) {
     $("body").append(tpl.parse("main2-tpl", {}));
     calendar.initCalendar();
 
-    $(".next-btn").on("click", function() {
+    /*$(".next-btn").on("click", function() {
         location.hash = "#main2";
     })
 
@@ -52,7 +52,7 @@ define(function(require, exports) {
             $(".main2").show();
 
         }
-    })
+    })*/
 
     //生日
     $(".js-birthday").on("click", function() {
