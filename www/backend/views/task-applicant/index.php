@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  'value'=>function($model){
  //var_dump($model->resume->name);die();
                     // return $model->user->username . "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>查看简历</a>";
-                     return "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>".$model->resume->name."</a>";
+                     return "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>". ($model->resume?($model->resume->name):'') ."</a>";
 
                  },
                  'label'=>'简历',

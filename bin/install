@@ -2,6 +2,7 @@
 
 curl -sS https://getcomposer.org/installer | php
 
+apt-get install -y munin-node
 
 apt-get install -y php5=5.5\*
 apt-get install -y apache2=2.4\*
