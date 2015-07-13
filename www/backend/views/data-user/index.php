@@ -79,7 +79,38 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div>&nbsp;</div>
         <?php if($data_type==3){ ?>
-            3333
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>总关注</th>
+                    <th>今日关注</th>
+                    <th>总退订</th>
+                    <th>今日退订</th>
+                    <th>今日推送人数</th>
+                    <th>今日推送总量</th>
+                    <th>今日微信注册</th>
+                    <th>今日微信投递人数</th>
+                    <th>今日微信投递总量</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dataRows as $k => $v){ ?>
+                <tr data-key="2">
+                    <td><?= isset($v['date']) ? $v['date'] : 0 ?></td>
+                    <td><?= isset($v['zgz']) ? $v['zgz'] : 0 ?></td>
+                    <td><?= isset($v['jrgz']) ? $v['jrgz'] : 0 ?></td>
+                    <td><?= isset($v['ztd']) ? $v['ztd'] : 0 ?></td>
+                    <td><?= isset($v['jrtd']) ? $v['jrtd'] : 0 ?></td>
+                    <td><?= isset($v['jrtsrs']) ? $v['jrtsrs'] : 0 ?></td>
+                    <td><?= isset($v['jrtszl']) ? $v['jrtszl'] : 0 ?></td>
+                    <td><?= isset($v['jrwxzc']) ? $v['jrwxzc'] : 0 ?></td>
+                    <td><?= isset($v['jrwxtdrs']) ? $v['jrwxtdrs'] : 0 ?></td>
+                    <td><?= isset($v['jrwxtdzl']) ? $v['jrwxtdzl'] : 0 ?></td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
         <?php }elseif($data_type==2){ ?>
         <table class="table table-striped table-bordered">
             <thead>

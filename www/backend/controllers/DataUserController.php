@@ -50,7 +50,8 @@ class DataUserController extends BDataBaseController
         // 统计数据的列项 注册总量、简历总量
         $dataRows   = '';
         if( $data_type == 3 ){
-            
+            $labels     = array('zgz','jrgz','ztd','jrtd','jrtsrs','jrtszl','jrwxzc','jrwxtdrs','jrwxtdzl');
+            $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
         }elseif( $data_type == 2 ){
             $labels     = array('ztl','zzxtl','htxz','zqxz','yhxz','zdsh','zgq','jrgq');
             $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);

@@ -5,11 +5,15 @@ use m\MBaseController;
 use Yii;
 use common\models\WeichatErweima;
 use common\models\WeichatErweimaLog;
+use common\WeichatBase;
 
 class WeichatController extends MBaseController{
     public function actionIndex(){
         // 第一次接入微信，做验证
-        // echo Yii::$app->request->get("echostr");exit;
+        if( Yii::$app->request->get("echostr") ){
+            echo Yii::$app->request->get("echostr");
+            exit;
+        }
         $this->responseMsg();
     }
 
@@ -42,6 +46,10 @@ class WeichatController extends MBaseController{
                                 <FuncFlag>0</FuncFlag>
                                 </xml>
                 "; 
+
+                // 创建对象：用户微信行为
+                $WeichatErweimaLog  = new WeichatBase();
+
                 // 如果是消息类型
                 if( $msgtype == 'text' ){
                     if(!empty( $keyword )){
@@ -63,7 +71,18 @@ class WeichatController extends MBaseController{
                         if( $Ticket ){
                             $re_contentStr  = $this->getReturnMsgByTicket($Ticket,$fromUsername,1);
                         }else{
+                           // 单纯的关注事件
                            $re_contentStr  = "感谢您关注米多多！ \n点击下面的链接即可快速进行注册：http://m.miduoduo.cn/user/vsignup"; 
+                            // 保存数据
+                            if($fromUsername){
+                                $WeichatErweimaLog->saveEventLog($fromUsername,1);  // 1表示关注事件
+                            }
+                        }
+                    // 取消关注事件
+                    }elseif( $event == 'unsubscribe' ){
+                        // 保存数据
+                        if($fromUsername){
+                            $WeichatErweimaLog->saveEventLog($fromUsername,2);  // 2表示取消关注事件
                         }
                     }else{
                         $re_contentStr  = "感谢您关注米多多！ \n点击下面的链接即可快速进行注册：http://m.miduoduo.cn/user/vsignup";
@@ -98,4 +117,6 @@ class WeichatController extends MBaseController{
 
         return $reMsg;
     }
+
+
 }

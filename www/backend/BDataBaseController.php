@@ -52,6 +52,9 @@ class BDataBaseController extends BBaseController
      *
      */
     public function getDataRows($type=1,$city_id,$dateStart,$dateEnd,$labels){
+        // 数据库表前缀
+        $tablePrefix    = Yii::$app->db->tablePrefix;
+
         $where  = '';
         
         // 城市筛选
@@ -91,7 +94,7 @@ class BDataBaseController extends BBaseController
             SELECT
                 *, sum(`value`)
             FROM
-                jz_data_daily
+                ".$tablePrefix."data_daily
             WHERE
                 type = '".$type."'
                 ".$where."
@@ -135,6 +138,9 @@ class BDataBaseController extends BBaseController
      *
      */
     private function checkDataNew($dataArr,$type,$city_id){
+        // 数据库表前缀
+        $tablePrefix    = Yii::$app->db->tablePrefix;
+
         $datastr        = implode("','",$dataArr);
         $datastr        = "'".$datastr."'";
 
@@ -169,7 +175,7 @@ class BDataBaseController extends BBaseController
                 $model->type    = $type;
 
                 // 注册总量
-                $zczl   = User::findBySql("SELECT count(2) 'zczl' FROM jz_user WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $zczl   = User::findBySql("SELECT count(2) 'zczl' FROM ".$tablePrefix."user WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
                 $zczl   = $zczl['zczl'];
                 $model_zczl  = clone $model;
                 $model_zczl->key    = 'zczl';
@@ -177,7 +183,7 @@ class BDataBaseController extends BBaseController
                 $model_zczl->save();
 
                 // 今日注册总量
-                $jrzczl   = User::findBySql("SELECT count(2) 'jrzczl' FROM jz_user WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrzczl   = User::findBySql("SELECT count(2) 'jrzczl' FROM ".$tablePrefix."user WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
                 $jrzczl   = $jrzczl['jrzczl'];
                 $model_jrzczl  = clone $model;
                 $model_jrzczl->key    = 'jrzczl';
@@ -185,7 +191,7 @@ class BDataBaseController extends BBaseController
                 $model_jrzczl->save();
 
                 // 简历总量
-                $jlzl   = Resume::findBySql("SELECT count(2) 'jlzl' FROM jz_resume WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $jlzl   = Resume::findBySql("SELECT count(2) 'jlzl' FROM ".$tablePrefix."resume WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
                 $jlzl   = $jlzl['jlzl'];
                 $model_jlzl  = clone $model;
                 $model_jlzl->key    = 'jlzl';
@@ -193,7 +199,7 @@ class BDataBaseController extends BBaseController
                 $model_jlzl->save();
 
                 // 今日简历总量
-                $jrjlzl   = User::findBySql("SELECT count(2) 'jrjlzl' FROM jz_resume WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrjlzl   = User::findBySql("SELECT count(2) 'jrjlzl' FROM ".$tablePrefix."resume WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
                 $jrjlzl   = $jrjlzl['jrjlzl'];
                 $model_jrjlzl  = clone $model;
                 $model_jrjlzl->key    = 'jrjlzl';
@@ -201,7 +207,7 @@ class BDataBaseController extends BBaseController
                 $model_jrjlzl->save();
 
                 // 投递总量
-                $tdzl   = User::findBySql("SELECT count(2) 'tdzl' FROM jz_task_applicant WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $tdzl   = User::findBySql("SELECT count(2) 'tdzl' FROM ".$tablePrefix."task_applicant WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
                 $tdzl   = $tdzl['tdzl'];
                 $model_tdzl  = clone $model;
                 $model_tdzl->key    = 'tdzl';
@@ -209,7 +215,7 @@ class BDataBaseController extends BBaseController
                 $model_tdzl->save();
 
                 // 今日投递总量
-                $jrtdzl   = User::findBySql("SELECT count(2) 'jrtdzl' FROM jz_task_applicant WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrtdzl   = User::findBySql("SELECT count(2) 'jrtdzl' FROM ".$tablePrefix."task_applicant WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
                 $jrtdzl   = $jrtdzl['jrtdzl'];
                 $model_jrtdzl  = clone $model;
                 $model_jrtdzl->key    = 'jrtdzl';
@@ -217,7 +223,7 @@ class BDataBaseController extends BBaseController
                 $model_jrtdzl->save();
 
                 // 投递人数
-                $tdrs   = User::findBySql("SELECT count(DISTINCT(user_id)) 'tdrs' FROM jz_task_applicant WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $tdrs   = User::findBySql("SELECT count(DISTINCT(user_id)) 'tdrs' FROM ".$tablePrefix."task_applicant WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
                 $tdrs   = $tdrs['tdrs'];
                 $model_tdrs  = clone $model;
                 $model_tdrs->key    = 'tdrs';
@@ -225,7 +231,7 @@ class BDataBaseController extends BBaseController
                 $model_tdrs->save();
 
                 // 今日投递人数
-                $jrtdrs   = User::findBySql("SELECT count(DISTINCT(user_id)) 'jrtdrs' FROM jz_task_applicant WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrtdrs   = User::findBySql("SELECT count(DISTINCT(user_id)) 'jrtdrs' FROM ".$tablePrefix."task_applicant WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
                 $jrtdrs   = $jrtdrs['jrtdrs'];
                 $model_jrtdrs  = clone $model;
                 $model_jrtdrs->key    = 'jrtdrs';
@@ -243,7 +249,7 @@ class BDataBaseController extends BBaseController
                 $model->type    = $type;
 
                 // 总贴量
-                $ztl    = User::findBySql("SELECT count(2) 'ztl' FROM jz_task WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $ztl    = User::findBySql("SELECT count(2) 'ztl' FROM ".$tablePrefix."task WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
                 $ztl    = $ztl['ztl'];
                 $model_ztl  = clone $model;
                 $model_ztl->key    = 'ztl';
@@ -251,7 +257,7 @@ class BDataBaseController extends BBaseController
                 $model_ztl->save();
 
                 // 总在线贴量
-                $zzxtl   = User::findBySql("SELECT count(2) 'zzxtl' FROM jz_task WHERE status=0 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $zzxtl   = User::findBySql("SELECT count(2) 'zzxtl' FROM ".$tablePrefix."task WHERE status=0 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
                 $zzxtl   = $zzxtl['zzxtl'];
                 $model_zzxtl  = clone $model;
                 $model_zzxtl->key    = 'zzxtl';
@@ -260,7 +266,7 @@ class BDataBaseController extends BBaseController
                 
 
                 // 后台新增
-                $htxz   = Resume::findBySql("SELECT count(2) 'htxz' FROM jz_task WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $htxz   = Resume::findBySql("SELECT count(2) 'htxz' FROM ".$tablePrefix."task WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
                 $htxz   = $htxz['htxz'];
                 $model_htxz  = clone $model;
                 $model_htxz->key    = 'htxz';
@@ -269,7 +275,7 @@ class BDataBaseController extends BBaseController
                 
 
                 // 抓取新增
-                //$zqxz   = User::findBySql("SELECT count(2) 'zqxz' FROM jz_resume WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                //$zqxz   = User::findBySql("SELECT count(2) 'zqxz' FROM ".$tablePrefix."resume WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
                 $zqxz   = 0;
                 $model_zqxz  = clone $model;
                 $model_zqxz->key    = 'zqxz';
@@ -278,7 +284,7 @@ class BDataBaseController extends BBaseController
                 
 
                 // 用户新增
-                //$yhxz   = User::findBySql("SELECT count(2) 'yhxz' FROM jz_task_applicant WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                //$yhxz   = User::findBySql("SELECT count(2) 'yhxz' FROM ".$tablePrefix."task_applicant WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
                 $yhxz   = 0;
                 $model_yhxz  = clone $model;
                 $model_yhxz->key    = 'yhxz';
@@ -287,7 +293,7 @@ class BDataBaseController extends BBaseController
                 
 
                 // 总待审核
-                //$zdsh   = User::findBySql("SELECT count(2) 'zdsh' FROM jz_task_applicant WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                //$zdsh   = User::findBySql("SELECT count(2) 'zdsh' FROM ".$tablePrefix."task_applicant WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
                 $zdsh   = 0;
                 $model_zdsh  = clone $model;
                 $model_zdsh->key    = 'zdsh';
@@ -296,7 +302,7 @@ class BDataBaseController extends BBaseController
                 
 
                 // 总过期
-                $zgq   = Resume::findBySql("SELECT count(2) 'zgq' FROM jz_task WHERE `to_date`<'".$v3."'")->asArray()->one(); 
+                $zgq   = Resume::findBySql("SELECT count(2) 'zgq' FROM ".$tablePrefix."task WHERE `to_date`<'".$v3."'")->asArray()->one(); 
                 $zgq   = $zgq['zgq'];
                 $model_zgq  = clone $model;
                 $model_zgq->key    = 'zgq';
@@ -305,12 +311,100 @@ class BDataBaseController extends BBaseController
                 
 
                 // 今日过期
-                $jrgq   = Resume::findBySql("SELECT count(2) 'jrgq' FROM jz_task WHERE `to_date`='".$v3."'")->asArray()->one(); 
+                $jrgq   = Resume::findBySql("SELECT count(2) 'jrgq' FROM ".$tablePrefix."task WHERE `to_date`='".$v3."'")->asArray()->one(); 
                 $jrgq   = $jrgq['jrgq'];
                 $model_jrgq  = clone $model;
                 $model_jrgq->key    = 'jrgq';
                 $model_jrgq->value  = $jrgq;
                 $model_jrgq->save();
+            }
+        }
+
+        // 3 微信 数据
+        // 城市的问题暂时不考虑
+        if( $type == 3 ){
+            foreach( $notExistArr as $k3 => $v3 ){
+                $model  = new DataDaily();
+                $model->date    = $v3;
+                $model->type    = $type;
+
+                // 总关注
+                $zgz    = User::findBySql("SELECT count(2) 'zgz' FROM ".$tablePrefix."weichat_user_log WHERE event_type=1 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $zgz    = $zgz['zgz'];
+                $model_zgz  = clone $model;
+                $model_zgz->key    = 'zgz';
+                $model_zgz->value  = $zgz;
+                $model_zgz->save();
+                
+
+                // 今日关注
+                $jrgz   = User::findBySql("SELECT count(2) 'jrgz' FROM ".$tablePrefix."weichat_user_log WHERE event_type=1 AND LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrgz   = $jrgz['jrgz'];
+                $model_jrgz  = clone $model;
+                $model_jrgz->key    = 'jrgz';
+                $model_jrgz->value  = $jrgz;
+                $model_jrgz->save();
+
+                // 总退订
+                $ztd    = User::findBySql("SELECT count(2) 'ztd' FROM ".$tablePrefix."weichat_user_log WHERE event_type=2 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $ztd    = $ztd['ztd'];
+                $model_ztd  = clone $model;
+                $model_ztd->key    = 'ztd';
+                $model_ztd->value  = $ztd;
+                $model_ztd->save();
+                
+
+                // 今日退订
+                $jrtd   = User::findBySql("SELECT count(2) 'jrtd' FROM ".$tablePrefix."weichat_user_log WHERE event_type=2 AND LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrtd   = $jrtd['jrtd'];
+                $model_jrtd  = clone $model;
+                $model_jrtd->key    = 'jrtd';
+                $model_jrtd->value  = $jrtd;
+                $model_jrtd->save();
+                
+
+                // 今日推送人数
+                $jrtsrs   = Resume::findBySql("SELECT count(DISTINCT(openid)) 'jrtsrs' FROM ".$tablePrefix."weichat_push_log WHERE LEFT(`create_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrtsrs   = $jrtsrs['jrtsrs'];
+                $model_jrtsrs  = clone $model;
+                $model_jrtsrs->key    = 'jrtsrs';
+                $model_jrtsrs->value  = $jrtsrs;
+                $model_jrtsrs->save();
+
+                // 今日推送总量
+                $jrtszl   = Resume::findBySql("SELECT count(2) 'jrtszl' FROM ".$tablePrefix."weichat_push_log WHERE LEFT(`create_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrtszl   = $jrtszl['jrtszl'];
+                $model_jrtszl  = clone $model;
+                $model_jrtszl->key    = 'jrtszl';
+                $model_jrtszl->value  = $jrtszl;
+                $model_jrtszl->save();
+
+                // 今日微信注册
+                $jrwxzc   = User::findBySql("SELECT count(2) 'jrwxzc' FROM ".$tablePrefix."user WHERE `origin`='weichat' AND LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrwxzc   = $jrwxzc['jrwxzc'];
+                $model_jrwxzc  = clone $model;
+                $model_jrwxzc->key    = 'jrwxzc';
+                $model_jrwxzc->value  = $jrwxzc;
+                $model_jrwxzc->save();
+
+
+                // 今日微信投递人数
+                $jrwxtdrs   = User::findBySql("SELECT count(distinct(`user_id`)) 'jrwxtdrs' FROM ".$tablePrefix."task_applicant WHERE `origin`='weichat' AND LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrwxtdrs   = $jrwxtdrs['jrwxtdrs'];
+                $model_jrwxtdrs  = clone $model;
+                $model_jrwxtdrs->key    = 'jrwxtdrs';
+                $model_jrwxtdrs->value  = $jrwxtdrs;
+                $model_jrwxtdrs->save();
+                
+
+                // 今日微信投递总量
+                $jrwxtdzl   = User::findBySql("SELECT count(2) 'jrwxtdzl' FROM ".$tablePrefix."task_applicant WHERE `origin`='weichat' AND LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrwxtdzl   = $jrwxtdzl['jrwxtdzl'];
+                $model_jrwxtdzl  = clone $model;
+                $model_jrwxtdzl->key    = 'jrwxtdzl';
+                $model_jrwxtdzl->value  = $jrwxtdzl;
+                $model_jrwxtdzl->save();
+                
             }
         }
     }

@@ -41,6 +41,12 @@ class WeiChatController extends BaseController{
                 $openid	= isset($weichat['openid']) ? $weichat['openid'] : 0;
                 $userid	= Yii::$app->session->get('__id');
                 $hasBindWeichatID	= isset($weichat['hasBindWeichatID']) ? $weichat['hasBindWeichatID'] : 0;
+
+                // 标记渠道信息
+                if( $openid ){
+                    Yii::$app->session->set('origin','weichat');
+                }
+
                 if( $openid && $userid && !$hasBindWeichatID ){
                     // 绑定，保存数据库
                     if( $this->bindWeichatID($openid,$userid) ){
@@ -65,7 +71,7 @@ class WeiChatController extends BaseController{
         $scope          = $this->scope;
         
         // 构建跳回到到的地址
-        $redirect_uri_real  = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $redirect_uri_real  = Yii::$app->params['baseurl.m'].$_SERVER['REQUEST_URI'];
         $redirect_uri       = urlencode($redirect_uri_real);
         $getCodeUrl         = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid.'&redirect_uri='.$redirect_uri.'&response_type=code&scope='.$scope.'&state=fromweichatrequest#wechat_redirect';
 

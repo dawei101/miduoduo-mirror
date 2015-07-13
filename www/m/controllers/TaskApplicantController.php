@@ -43,20 +43,33 @@ class TaskApplicantController extends \m\MBaseController
             $this->render404();
         }
 
-        $tc = TaskApplicant::find(['task_id'=>$task_id,
+        $tc = TaskApplicant::find()->where(['task_id'=>$task_id,
             'user_id'=>$user_id
-        ])->one();
+        ])->asArray()->one();
 
         if (!$tc){
             $tc = new TaskApplicant;
+
+            // 记录渠道
+            $origin = Yii::$app->session->get('origin') ? Yii::$app->session->get('origin') : '';
+            if( $origin ){
+                $tc->origin = $origin;
+            }
+        
+            $tc->task_id = $task_id;
+            $tc->user_id = $user_id;
+
+            $tc->save();
+            return $this->renderJson([
+                'success'=> true,
+                'message' => '报名成功',
+            ]);
+        }else{
+            return $this->renderJson([
+                'success'=> false,
+                'message' => '请勿重复报名',
+            ]);
         }
-        $tc->task_id = $task_id;
-        $tc->user_id = $user_id;
-        $tc->save();
-        return $this->renderJson([
-            'success'=> true,
-            'message' => '报名成功',
-        ]);
     }
 
     public function actionDelete()

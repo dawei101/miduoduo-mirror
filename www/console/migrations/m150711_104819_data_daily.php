@@ -19,6 +19,17 @@ CREATE TABLE `jz_data_daily` (
   `city_id` int(11) DEFAULT '0' COMMENT '城市维度',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1579 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `jz_weichat_user_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `openid` varchar(200) DEFAULT '' COMMENT '微信ID',
+  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `event_type` tinyint(4) DEFAULT '0' COMMENT '事件类型(1关注、2取消关注)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `jz_user` ADD `origin` VARCHAR(200) DEFAULT NULL COMMENT '渠道来源';
+ALTER TABLE `jz_task_applicant` ADD `origin` VARCHAR(200) DEFAULT NULL COMMENT '渠道来源';
         ";
         $this->execSqls($sqls);
     }
@@ -26,6 +37,7 @@ CREATE TABLE `jz_data_daily` (
     public function down()
     {
         $this->dropTable('jz_data_daily');
+        $this->dropTable('jz_weichat_user_log');
         return true;
     }
 }
