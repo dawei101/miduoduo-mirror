@@ -19,8 +19,6 @@ define(function(require, exports) {
             responseCallback(rst);
         } else {
             util.cf({title : "注意", message : "确定放弃编辑吗？"}, function(data) {
-                alert("confirm对话框：" + data + " "  + JSON.stringify(rst));
-                data = JSON.parse(data);
                 if (data.result.value == 0) {
                     rst.result.value = false;
                 }
@@ -108,7 +106,6 @@ define(function(require, exports) {
             if (!data) {
                 return;
             }
-            data = JSON.parse(data);
             $this.find("input").val(data.address);
             $.post(api.gen("address"), data, function(data) {
                 console.log(data);

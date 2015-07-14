@@ -56,7 +56,6 @@ define(function(require, exports) {
                 WebViewJavascriptBridge.send({"action" : "b_require_auth", "data" : {}}, function(data){location.reload()});
             }
         }
-        console.log(arguments);
        alert("访问异常：" + res.status + " " + res.statusText);
     }
 

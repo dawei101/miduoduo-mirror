@@ -13,7 +13,6 @@ define(function(require, exports) {
 
     //我的简历跳转逻辑
     if (miduoduo.user.id) {
-
         $.pageInitGet(api.gen("resume?expand=service_types,freetimes,home_address,workplace_address"), function(data) {
             console.log(data);
             if (data.items && data.items.length > 0) {
