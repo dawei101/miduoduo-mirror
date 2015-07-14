@@ -28,13 +28,6 @@ AppAsset::register($this);
     <link href="/js/data/daterangepicker-bs3.css" type="text/css" rel="stylesheet" />
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/miduoduo.js" defer="true"></script>
-	<script src="/js/data/moment.js"></script>
-	<script src="/js/data/daterangepicker.js"></script>
-
-	<script src="/js/fuwenben/bootstrap-wysiwyg.js"></script>
-	<script src="/js/fuwenben/external/jquery.hotkeys.js"></script>
-	<script src="/js/jquery.tagbox.js"></script>
 </head>
 <body>
     <?php $this->beginBody() ?>
