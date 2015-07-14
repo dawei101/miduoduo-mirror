@@ -19,7 +19,7 @@
             miduoduo.os.mddApp = false;
             miduoduo.user = {};
         } else {
-            miduoduo.user = JSON.parse(miduoduo.user) ? JSON.parse(miduoduo.user) : {};
+            miduoduo.user = miduoduo.user ? miduoduo.user : {};
             miduoduo.os  = {};
             miduoduo.os.mddApp = true;
         }
@@ -29,23 +29,19 @@
             miduoduo.user = JSON.parse(window.localStorage.getItem("userInfo")) || miduoduo.user;
             miduoduo.os.mddApp = true;
         }catch(e){
-            alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
+            //alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
         }
-        miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
+        miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.miduoduo.cn/v1/");
         miduoduo.basePath = {
             base : "/v1/",
             picUrl : "/v1/" + "img"
         };
         miduoduo.user.phone = miduoduo.user.username;
 
-       document.addEventListener('WebViewJavascriptBridgeReady', function() {
-           WebViewJavascriptBridge.defaultHandler(handle_action)
-       }, false);
+        WebViewJavascriptBridge.defaultHandler(handle_action)
        function handle_action(data, responseCallback) {
-           data = JSON.parse(data);
            if (data && data.action == "b_require_auth") {
-               window.localStorage.setItem("userInfo", data.data);
-               alert("从登陆页返回，即将reload:" + JSON.stringify(data));
+               window.localStorage.setItem("userInfo", JSON.stringify(data.data));
                location.reload();
            }
 
@@ -106,7 +102,7 @@
             <li>
                 <div class="title">身高</div>
                 <div class="con tag">
-                    <input class="js-col" name="height" pattern="[0-9]"  type="text" placeholder="请输入身高" value="<?=user.height ?>"/>
+                    <input class="js-col" name="height" pattern="[0-9]"  type="tel" placeholder="请输入身高" value="<?=user.height ?>"/>
                 </div>
             </li>
         </ul>
@@ -121,7 +117,7 @@
             <li>
                 <div class="title">居住地点</div>
                 <div class="con control js-set-address">
-                    <input disabled type="text" placeholder="请选择居住地点" value="<?=user.home_address?>"/>
+                    <input readonly type="text" placeholder="请选择居住地点" value="<?=user.home_address?>"/>
                 </div>
             </li>
         </ul>
@@ -151,12 +147,12 @@
                     <div class="sub2-con-val">开阔视野</div>
                 </div>
             </li>
-            <li class="sub3">
+            <!--<li class="sub3">
                 <div class="title">微信账号</div>
                 <div class="con">
                     <input type="text" placeholder="请输入您在用的微信账号"/>
                 </div>
-            </li>
+            </li>-->
         </ul>
         <ul class="resume-part4">
             <li>
@@ -257,6 +253,10 @@
             <li>11</li>
             <li>12</li>
         </ul>
+    </div>
+    <div class="bottom-btn">
+        <div class="cancel">取消</div>
+        <div class="ensure">确定</div>
     </div>
 </div>
 

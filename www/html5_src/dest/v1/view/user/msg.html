@@ -19,7 +19,7 @@
             miduoduo.os.mddApp = false;
             miduoduo.user = {};
         } else {
-            miduoduo.user = JSON.parse(miduoduo.user) ? JSON.parse(miduoduo.user) : {};
+            miduoduo.user = miduoduo.user ? miduoduo.user : {};
             miduoduo.os  = {};
             miduoduo.os.mddApp = true;
         }
@@ -29,23 +29,19 @@
             miduoduo.user = JSON.parse(window.localStorage.getItem("userInfo")) || miduoduo.user;
             miduoduo.os.mddApp = true;
         }catch(e){
-            alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
+            //alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
         }
-        miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
+        miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.miduoduo.cn/v1/");
         miduoduo.basePath = {
             base : "/v1/",
             picUrl : "/v1/" + "img"
         };
         miduoduo.user.phone = miduoduo.user.username;
 
-       document.addEventListener('WebViewJavascriptBridgeReady', function() {
-           WebViewJavascriptBridge.defaultHandler(handle_action)
-       }, false);
+        WebViewJavascriptBridge.defaultHandler(handle_action)
        function handle_action(data, responseCallback) {
-           data = JSON.parse(data);
            if (data && data.action == "b_require_auth") {
-               window.localStorage.setItem("userInfo", data.data);
-               alert("从登陆页返回，即将reload:" + JSON.stringify(data));
+               window.localStorage.setItem("userInfo", JSON.stringify(data.data));
                location.reload();
            }
 
@@ -88,7 +84,16 @@
 </div>
 
 <script>seajs.use('user/msg')</script>
+<!--这里的类都写到base.css里-->
+<!--页面加载的时候初始化遮罩-->
 <div class="init-shade">
 </div>
+<!--回到顶部-->
+<!--<span class="gotop" style="">
+	<img src="http://i.meilishuo.net/css/images/wap/tuan/gotop.png" />
+</span>-->
+<script>
+
+</script>
 </body>
 </html>
