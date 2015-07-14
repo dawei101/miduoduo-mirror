@@ -104,7 +104,7 @@ class TaskController extends FBaseController
             }
             $gender_requirement = Yii::$app->request->post('gender_requirement');
             if ($gender_requirement) {
-                $model->gender_requirement = array_search(Task::$GENDER_REQUIREMENT);
+                $model->gender_requirement = array_search($gender_requirement, Task::$GENDER_REQUIREMENT);
             }
             $height_requirement = Yii::$app->request->post('height_requirement');
             if ($height_requirement) {
