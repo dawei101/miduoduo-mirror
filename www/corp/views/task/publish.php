@@ -176,7 +176,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
-                                            <input name="height_requirement" type="text" class="text-center" placeholder="身高" value="<?=$task->height_requirement?TASK::$HEIGHT_REQUIREMENT[$task->height_requirement]:''?>">
+                                            <input name="height_requirement" type="text" class="text-center" placeholder="身高" value="<?=$task->height_requirement!==false?TASK::$HEIGHT_REQUIREMENT[$task->height_requirement]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>150cm以下</li>
@@ -188,7 +188,7 @@ $this->title = '米多多兼职平台';
                                     </div>
                                     <div class="add-ons">
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="face_requirement" type="text" placeholder="形象" value="<?=$task->face_requirement?TASK::$FACE_REQUIREMENT[$task->face_requirement]:''?>">
+                                            <input name="face_requirement" type="text" placeholder="形象" value="<?=$task->face_requirement!==false?TASK::$FACE_REQUIREMENT[$task->face_requirement]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>好</li>
@@ -197,7 +197,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="talk_requirement" type="text" placeholder="沟通能力" value="<?=$task->talk_requirement?TASK::$TALK_REQUIREMENT[$task->talk_requirement]:''?>">
+                                            <input name="talk_requirement" type="text" placeholder="沟通能力" value="<?=$task->talk_requirement!==false?TASK::$TALK_REQUIREMENT[$task->talk_requirement]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>强</li>
@@ -205,7 +205,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="health_certificated" type="text" placeholder="健康证" value="<?=$task->health_certificated?TASK::$HEALTH_CERTIFICATED[$task->health_certificated]:''?>">
+                                            <input name="health_certificated" type="text" placeholder="健康证" value="<?=$task->health_certificated!==false?TASK::$HEALTH_CERTIFICATED[$task->health_certificated]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>有</li>
@@ -213,7 +213,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="degree_requirement" type="text" placeholder="学历" value="<?=$task->degree_requirement?TASK::$DEGREE_REQUIREMENT[$task->degree_requirement]:''?>">
+                                            <input name="degree_requirement" type="text" placeholder="学历" value="<?=$task->degree_requirement!==false?TASK::$DEGREE_REQUIREMENT[$task->degree_requirement]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>本科以上</li>
@@ -224,7 +224,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="weight_requirement" type="text" placeholder="体重" value="<?=$task->weight_requirement?TASK::$WEIGHT_REQUIREMENT[$task->weight_requirement]:''?>">
+                                            <input name="weight_requirement" type="text" placeholder="体重" value="<?=$task->weight_requirement!==false?TASK::$WEIGHT_REQUIREMENT[$task->weight_requirement]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>60kg以下</li>
@@ -242,7 +242,7 @@ $this->title = '米多多兼职平台';
                                             <input name="salary" type="text" class="pull-left" placeholder="数量，如100" value="<?=$task->salary?>">
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
-                                            <input name="salary_unit" type="text" class="text-center" placeholder="金额单位" value="<?=$task->salary_unit?TASK::$SALARY_UNITS[$task->salary_unit]:''?>">
+                                            <input name="salary_unit" type="text" class="text-center" placeholder="金额单位" value="<?=$task->salary_unit!==false?TASK::$SALARY_UNITS[$task->salary_unit]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>元/天</li>
@@ -250,7 +250,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left ma-right ma-right" name="nice-select">
-                                            <input type="text" class="text-center" name="clearance_period" placeholder="结算方式" value="<?=$task->clearance_period?TASK::$CLEARANCE_PERIODS[$task->clearance_period]:''?>">
+                                            <input type="text" class="text-center" name="clearance_period" placeholder="结算方式" value="<?=$task->clearance_period!==false?TASK::$CLEARANCE_PERIODS[$task->clearance_period]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>周结</li>
