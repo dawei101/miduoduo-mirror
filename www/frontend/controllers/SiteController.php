@@ -56,6 +56,18 @@ class SiteController extends FBaseController
         // echo 'ok';die();//可以到这里
         // $this->redirect(\Yii::$app->params['baseurl.m']);
         // $this->layout= false;
+        $mobileAgent = array("iphone", "ipod", "ipad", "android", "mobile", "blackberry", "webos", "incognito", "webmate", "bada", "nokia", "lg", "ucweb", "skyfire");
+        
+        $browser = $_SERVER['HTTP_USER_AGENT'];
+        $isMobile = false;
+          
+        foreach($mobileAgent as $search){
+            if(stristr($browser,$search)!=false){
+                $isMobile = true;
+                header("Location:".\Yii::$app->params['baseurl.m']);
+                exit;
+            }
+        }
         return $this -> renderPartial('index');
         //return $this->render('index');
     }
