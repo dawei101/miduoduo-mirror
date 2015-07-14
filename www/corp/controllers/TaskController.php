@@ -130,7 +130,7 @@ class TaskController extends FBaseController
             if ($weight_requirement) {
                 $model->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
-            $model->service_type_id = SeriviceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
+            $model->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
 
             if ($model->validate() && $model->save()) {
                 return $this->redirect('/task/');
@@ -186,7 +186,7 @@ class TaskController extends FBaseController
             if ($weight_requirement) {
                 $task->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
-            $task->service_type_id = SeriviceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
+            $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             if ($task->validate() && $task->save()) {
                 return $this->redirect('/task/');
             }
