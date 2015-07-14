@@ -46,11 +46,11 @@ class ContactUs extends \common\BaseActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'content' => 'Content',
-            'created_time' => 'Created Time',
-            'phonenum' => 'Phonenum',
-            'status' => 'Status',
+            'title' => '标题',
+            'content' => '内容',
+            'created_time' => '创建时间',
+            'phonenum' => '手机号',
+            'status' => '状态',
         ];
     }
 
