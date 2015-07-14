@@ -138,7 +138,7 @@ class TaskController extends FBaseController
         }
 
 		$services = ServiceType::find()->all();
-        return $this -> render('publish', ['services'=>$services, 'task'=>false]);
+        return $this -> render('publish', ['services'=>$services, 'task'=>$model]);
     }
 
     public function actionEdit($gid)

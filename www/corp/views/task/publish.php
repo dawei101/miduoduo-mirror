@@ -60,7 +60,7 @@ $this->title = '米多多兼职平台';
                                 <div class="pull-left title-left text-center"><em>*</em>兼职类别</div>
                                 <div class="pull-left right-box zhiweileibie">
                                     <div class="nice-select" name="nice-select">
-                                        <input type="text" placeholder=" ===选择职位类别===" value=""><i class="iconfont">&#xe60d;</i>
+                                        <input type="text" placeholder=" ===选择职位类别===" value="<?=$task->getService_type()->name?>"><i class="iconfont">&#xe60d;</i>
                                         <ul>
                                         	<?php foreach($services as $service) {?>
                         					<li><?=$service->name?></li>
