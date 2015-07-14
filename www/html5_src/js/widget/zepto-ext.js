@@ -28,6 +28,7 @@ define(function(require, exports) {
     }
 
     var initGetReqNum = 0;
+<<<<<<< HEAD
 
     $.pageInitGet = function(/* url, data, success, dataType */){
         //显示遮罩
@@ -41,6 +42,20 @@ define(function(require, exports) {
         return $.ajax(options)
     }
 
+=======
+
+    $.pageInitGet = function(/* url, data, success, dataType */){
+        //显示遮罩
+        $(".init-shade").show();
+        initGetReqNum += 1;
+        var options = parseArguments.apply(null, arguments);
+        var callback = options.success;
+        options.success = function(data) {initGetReqCallbakcAspect(data, callback)}
+        options.error = handleError;
+        return $.ajax(options)
+    }
+
+>>>>>>> origin/gy-fex
     function initGetReqCallbakcAspect(data, cb) {
         initGetReqNum--;
         cb(data);
@@ -57,7 +72,6 @@ define(function(require, exports) {
                 WebViewJavascriptBridge.send({"action" : "b_require_auth", "data" : {}}, function(data){location.reload()});
             }
         }
-        console.log(arguments);
        alert("访问异常：" + res.status + " " + res.statusText);
     }
 

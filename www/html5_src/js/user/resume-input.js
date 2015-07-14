@@ -4,10 +4,7 @@ define(function(require, exports) {
     var util = require("../widget/util");
     var calendar = require("../widget/calendar");
 
-
-    document.addEventListener('WebViewJavascriptBridgeReady', function() {
-        WebViewJavascriptBridge.defaultHandler(handle_action)
-    }, false);
+    WebViewJavascriptBridge.defaultHandler(handle_action);
     //jsbridge 主动监听
     function handle_action(data, responseCallback) {
         var rst = {
@@ -22,8 +19,11 @@ define(function(require, exports) {
             responseCallback(rst);
         } else {
             util.cf({title : "注意", message : "确定放弃编辑吗？"}, function(data) {
+<<<<<<< HEAD
                 alert("confirm对话框：" + data + " "  + JSON.stringify(rst));
                 data = JSON.parse(data);
+=======
+>>>>>>> origin/gy-fex
                 if (data.result.value == 0) {
                     rst.result.value = false;
                 }
@@ -39,7 +39,7 @@ define(function(require, exports) {
     $("body").append(tpl.parse("main2-tpl", {}));
     calendar.initCalendar();
 
-    $(".next-btn").on("click", function() {
+    /*$(".next-btn").on("click", function() {
         location.hash = "#main2";
     })
 
@@ -52,7 +52,7 @@ define(function(require, exports) {
             $(".main2").show();
 
         }
-    })
+    })*/
 
     //生日
     $(".js-birthday").on("click", function() {
@@ -108,8 +108,9 @@ define(function(require, exports) {
     $(".js-set-address").on("click", function() {
         var $this = $(this);
         util.setAddress(function(data) {
-            alert("app返回的地址信息：" + JSON.stringify(data));
-            data = JSON.parse(data);
+            if (!data) {
+                return;
+            }
             $this.find("input").val(data.address);
             $.post(api.gen("address"), data, function(data) {
                 console.log(data);
@@ -148,12 +149,18 @@ define(function(require, exports) {
                 }
                 return;
             }
+<<<<<<< HEAD
             if (miduoduo.os.mddApp) {
                 util.pop();
             } else {
                 //location.replace("view/user/center-index.html");
                 alert("兼容app外浏览器，待定");
             }
+=======
+            util.showTips("提交成功", function() {
+                util.pop();
+            })
+>>>>>>> origin/gy-fex
 
         })
     })
