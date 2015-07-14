@@ -51,7 +51,7 @@ $this->title = '米多多兼职平台';
                             <li>
                                 <div class="pull-left title-left text-center"><em>*</em>兼职标题</div>
                                 <div class="pull-left right-box">
-                                    <input name="title" type="text" placeholder="请简述职位标题，字数控制在20字内">
+                                    <input name="title" type="text" placeholder="请简述职位标题，字数控制在20字内" value="<?=$task->title?>">
                                     <p class="cuowu">内容不能为空!</p>
                                 </div>
                             </li>
@@ -59,13 +59,13 @@ $this->title = '米多多兼职平台';
                                 <div class="pull-left title-left text-center"><em>*</em>兼职类别</div>
                                 <div class="pull-left right-box zhiweileibie">
                                     <div class="nice-select" name="nice-select">
-                                        <input type="text" value=" ===选择职位类别===" ><i class="iconfont">&#xe60d;</i>
+                                        <input type="text" placeholder=" ===选择职位类别===" value=""><i class="iconfont">&#xe60d;</i>
                                         <ul>
                                         	<?php foreach($services as $service) {?>
                         					<li><?=$service->name?></li>
                         					<?php }?>
                                         </ul>
-                                        <input type="hidden" name="service_type_id" value="1"/>
+                                        <input type="hidden" name="service_type_id" value="<?=$task->service_type_id?>"/>
                                         <p class="cuowu">内容不能为空!</p>
                                     </div>
                                 </div>
@@ -74,9 +74,9 @@ $this->title = '米多多兼职平台';
                                 <div class="pull-left title-left text-center"><em>*</em>工作时间</div>
                                 <div class="pull-left right-box div">
                                     <div class="riqi">
-                                        <input name="from_date" type="text" readonly style="width: 200px" name="reservation" class="reservation"   value="2015-08-01" />
+                                        <input name="from_date" type="text" readonly style="width: 200px" name="reservation" class="reservation" value="<?=$task?$task->from_date:'2015-08-01'?>" />
                                         <div class="nice-select times" name="nice-select">
-                                            <input name="from_time" type="text" value="13:00" ><i class="iconfont">&#xe60d;</i>
+                                            <input name="from_time" type="text" value="<?=$task?$task->from_time:'13:00'?>" ><i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>00:00</li>
                                                 <li>00:30</li>
@@ -90,7 +90,7 @@ $this->title = '米多多兼职平台';
                                         </div>
                                         <span class="pull-left">至</span>
                                         <div class="nice-select times" name="nice-select">
-                                            <input name="to_time" type="text" value="13:00" ><i class="iconfont">&#xe60d;</i>
+                                            <input name="to_time" type="text" value="<?=$task?$task->to_time:'13:00'?>" ><i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>00:00</li>
                                                 <li>00:30</li>
@@ -110,7 +110,7 @@ $this->title = '米多多兼职平台';
                                 <div class="pull-left title-left text-center"><em>*</em>截止日期</div>
                                 <div class="pull-left right-box">
                                     <div class="riqi">
-                                        <input name="to_date" type="text" readonly style="width: 200px" name="birthday" id="birthday" value="2015-08-12" /></div>
+                                        <input name="to_date" type="text" readonly style="width: 200px" name="birthday" id="birthday" value="<?=$task?$task->to_date:'2015-09-01'?>" /></div>
                                         <p class="cuowu">内容不能为空!</p>
                                     </div>
                                 </li>
@@ -147,18 +147,22 @@ $this->title = '米多多兼职平台';
                                     <div class="pull-left title-left text-center"><em>*</em>工作内容</div>
                                     <div class="pull-left right-box">
                                         <div id="editor" class="edit">
+                                            <?php if($task) {
+                                                echo $task->detail;
+                                            }else{?>
                                             <p>工作时间：</p>
                                             <p>工作薪酬：</p>
                                             <p>工作要求：</p>
+                                            <?}?>
                                         </div>
-                                        <input type="hidden" name="detail">
+                                        <input type="hidden" name="detail" value="$task->detail"/>
                                         <p class="cuowu">内容不能为空!</p>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="pull-left title-left text-center"><em>*</em>人员要求</div>
                                     <div class="pull-left right-box input-z">
-                                        <div class="nice-select pull-left ma-right"><input name="need_quantity" type="text" class="pull-left" placeholder="人数"></div>
+                                        <div class="nice-select pull-left ma-right"><input name="need_quantity" type="text" class="pull-left" placeholder="人数" value="<?$task->need_quantity?>"></div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
                                             <input name="gender_requirement" type="text" class="text-center" value="性别" >
                                             <i class="iconfont">&#xe60d;</i>
