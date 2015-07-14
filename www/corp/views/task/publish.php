@@ -131,12 +131,12 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select quyu" name="nice-select">
-                                            <input type="text" value="北京" >
+                                            <input name="city" type="text" value="北京" >
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>不限</li>
                                                 <li>一个</li>
-                                                <li>多少个</li>
+                                                <li>多个</li>
                                             </ul>
                                         </div>
                                         <input type="text" id="jquery-tagbox-text" />

@@ -58,7 +58,53 @@ class Task extends \common\BaseActiveRecord
         2=>'周',
         3=>'月',
     ];
-
+    
+    public static $GENDER_REQUIREMENT = [
+    	0=>'男女不限',
+    	1=>'男',
+    	2=>'女',
+    ];
+    
+    public static $HEIGHT_REQUIREMENT = [
+    	0=>'不限',
+    	1=>'150cm以下',
+    	2=>'150cm',
+    	3=>'155cm',
+    ];
+    
+    public static $FACE_REQUIREMENT = [
+    	0=>'一般',
+    	1=>'好',
+    	2=>'非常好',
+    ];
+    
+    public static $TALK_REQUIREMENT = [
+    	0=>'一般',
+    	1=>'强',
+    ];
+    
+    public static $HEALTH_CERTIFICATED = [
+    	0=>'无',
+    	1=>'有',
+    ];
+    
+    public static $DEGREE_REQUIREMENT = [
+    	0=>'无',
+    	1=>'高中',
+    	2=>'大专',
+    	3=>'本科',
+    	4=>'本科以上',
+    ];
+    
+    public static $WEIGHT_REQUIREMENT = [
+    	0=>'不限',
+    	1=>'60kg以下',
+    	2=>'60-65kg',
+    	3=>'65-70kg',
+    	4=>'70-75kg',
+    ];
+    
+    
     public static $STATUSES = [
         0=>'正常',
         10=>'删除',

@@ -87,13 +87,53 @@ class TaskController extends FBaseController
         if (!$company) {
             return $this->redirect('/user/add-contact-info');
         }
-        $company_id = $company->id;
-        $data = Yii::$app->request->post();
-        $data['company_id'] = $company_id;
-        $data['user_id'] = Yii::$app->user->id;
-        $model->setAttributes($data, false);
-        if ($model->validate() && $model->save()) {
-            return $this->redirect('/task/');
+        if (Yii::$app->request->isPost) {
+            $company_id = $company->id;
+            $data = Yii::$app->request->post();
+            $data['company_id'] = $company_id;
+            $data['user_id'] = Yii::$app->user->id;
+            $model->setAttributes($data, false);
+
+            $clearance_period = Yii::$app->request->post('clearance_period');
+            if ($clearance_period) {
+                $model->clearance_period = array_search(Task::$CLEARANCE_PERIODS);
+            }
+            $salary_unit = Yii::$app->request->post('salary_unit');
+            if ($salary_unit) {
+                $model->salary_unit = array_search(Task::$SALARY_UNITS);
+            }
+            $gender_requirement = Yii::$app->request->post('gender_requirement');
+            if ($gender_requirement) {
+                $model->gender_requirement = array_search(Task::$GENDER_REQUIREMENT);
+            }
+            $height_requirement = Yii::$app->request->post('height_requirement');
+            if ($height_requirement) {
+                $model->height_requirement = array_search(Task::$HEIGHT_REQUIREMENT);
+            }
+            $face_requirement = Yii::$app->request->post('face_requirement');
+            if ($face_requirement) {
+                $model->face_requirement = array_search(Task::$FACE_REQUIREMENT);
+            }
+            $talk_requirement = Yii::$app->request->post('talk_requirement');
+            if ($talk_requirement) {
+                $model->talk_requirement = array_search(Task::$TALK_REQUIREMENT);
+            }
+            $health_certificated = Yii::$app->request->post('health_certificated');
+            if ($health_certificated) {
+                $model->health_certificated = array_search(Task::$HEALTH_CERTIFICATED);
+            }
+            $degree_requirement = Yii::$app->request->post('degree_requirement');
+            if ($degree_requirement) {
+                $model->degree_requirement = array_search(Task::$DEGREE_REQUIREMENT);
+            }
+            $weight_requirement = Yii::$app->request->post('weight_requirement');
+            if ($weight_requirement) {
+                $model->weight_requirement = array_search(Task::$WEIGHT_REQUIREMENT);
+            }
+
+            if ($model->validate() && $model->save()) {
+                return $this->redirect('/task/');
+            }
         }
 
 		$services = ServiceType::find()->all();
