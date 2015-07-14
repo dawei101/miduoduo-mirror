@@ -87,4 +87,21 @@ class WechatPusher extends WeichatBase
         $log->return_msg    = $returnMsg;
         $log->save();
     }
+
+    // 报名微信推送消息
+    public function toApplicantTaskAppliedDone($task,$touser){
+        // 微信推送
+        $weichatTempID  = Yii::$app->params['weichat']['tmp_weichat']['applicant'];
+        $params         = array(
+            array('name'=>'first','value'=>'您好，本岗位您已报名成功','color'=>'#444'), 
+            array('name'=>'keyword1','value'=>$task->gid,'color'=>'#444'),
+            array('name'=>'keyword2','value'=>$task->title,'color'=>'#0000FE'),
+            array('name'=>'keyword3','value'=>$task->from_date.'至'.$task->to_date,'color'=>'#444'),
+            array('name'=>'keyword4','value'=>$task->address,'color'=>'#444'),
+            array('name'=>'keyword5','value'=>$task->contact.' '.$task->contact_phonenum,'color'=>'#444'),
+            array('name'=>'remark','value'=>"联系时，请告知是从米多多投递的。如遇任何招聘问题，请致电米多多。01084991662。也可点此内容进入职位详情投诉。",'color'=>'#999')
+        );
+        $gotoUrl        = Yii::$app->params['baseurl.m'].'/task/view?gid='.$task->gid;
+        $this->pushWeichatMsg($touser,$weichatTempID,$params,$gotoUrl);
+    }
 }
