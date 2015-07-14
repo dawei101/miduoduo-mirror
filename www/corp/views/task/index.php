@@ -18,8 +18,8 @@ $this->title = '米多多兼职平台';
           <dl>
             <dt class="default-title"><i class="iconfont">&#xe609;</i>我要发布</dt>
           </dl>
-          <dl>
-            <dt class="pitch-current" class=""><i class="iconfont">&#xe612;</i>职位管理</dt>
+          <dl class="pitch-current">
+            <dt class=""><i class="iconfont">&#xe612;</i>职位管理</dt>
             <dd class="<?=!array_key_exists('status', $_GET)?'current':'default-lis'?>"><a href="/task">全部</a></dd>
             <dd class="<?=array_key_exists('status', $_GET)&&$_GET['status']==0?'current':'default-lis'?>"><a href="/task?status=0">显示中</a></dd>
             <dd class="<?=array_key_exists('status', $_GET)&&$_GET['status']==30?'current':'default-lis'?>"><a href="/task?status=30">审核中</a></dd>

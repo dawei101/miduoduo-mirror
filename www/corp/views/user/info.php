@@ -31,8 +31,8 @@ $this->title = '米多多兼职平台';
             <dd class="default-lis"><a href="/resume?read=0">未查看</a></dd>
             <dd class="default-lis"><a href="/resume?read=1">已查看</a></dd>
           </dl>
-          <dl>
-            <dt class="pitch-current"><i class="iconfont">&#xe60b;</i>用户中心</dt>
+          <dl class="pitch-current">
+            <dt class="default-title"><i class="iconfont">&#xe60b;</i>用户中心</dt>
             <dd class="current"><a href="/user/info">我的资料</a></dd>
             <dd class="default-lis"><a href="/user/account">我的账号</a></dd>
             <dd class="default-lis"><a href="/user/personal-cert">个人认证</a></dd>
