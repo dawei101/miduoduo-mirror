@@ -323,6 +323,10 @@ BASE_URL = 'http://api.miduoduo.cn'
     * POST /version/complain
       params = {title: ,content:, task_id:, phonenum:, }
 
+### 联系我们
+    * POST /version/contact-us
+      params = {title: optional,content: required, phonenum: required, }
+
 ## 关于跨域
 [Http access control - CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 原理：
