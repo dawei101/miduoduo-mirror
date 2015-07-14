@@ -205,7 +205,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="health_certificated" type="text" placeholder="健康证" value="<?=$task->health_certificated:TASK::$HEALTH_CERTIFICATED[$task->health_certificated]:''?>">
+                                            <input name="health_certificated" type="text" placeholder="健康证" value="<?=$task->health_certificated?TASK::$HEALTH_CERTIFICATED[$task->health_certificated]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>有</li>
