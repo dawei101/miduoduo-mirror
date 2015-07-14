@@ -152,7 +152,8 @@ class TaskController extends FBaseController
                 return $this->redirect('/task/');
             }
         }
-        return $this->render('publish', ['task' => $task]);
+        $services = ServiceType::find()->all();
+        return $this->render('publish', ['task' => $task, 'services'=>$services]);
     }
 
     public function actionRefresh($gid)
