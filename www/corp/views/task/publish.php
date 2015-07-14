@@ -164,7 +164,7 @@ $this->title = '米多多兼职平台';
                                     <div class="pull-left right-box input-z">
                                         <div class="nice-select pull-left ma-right"><input name="need_quantity" type="text" class="pull-left" placeholder="人数" value="<?$task->need_quantity?>"></div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
-                                            <input name="gender_requirement" type="text" class="text-center" value="性别" >
+                                            <input name="gender_requirement" type="text" class="text-center" placeholder="性别">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>男女不限</li>
@@ -173,7 +173,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
-                                            <input name="height_requirement" type="text" class="text-center" value="身高" >
+                                            <input name="height_requirement" type="text" class="text-center" placeholder="身高" >
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>150cm以下</li>
@@ -185,7 +185,7 @@ $this->title = '米多多兼职平台';
                                     </div>
                                     <div class="add-ons">
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="face_requirement" type="text" value="形象" >
+                                            <input name="face_requirement" type="text" placeholder="形象" >
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>好</li>
@@ -194,7 +194,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="talk_requirement" type="text" value="沟通能力" >
+                                            <input name="talk_requirement" type="text" placeholder="沟通能力" >
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>强</li>
@@ -202,7 +202,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="health_certificated" type="text" value="健康证" >
+                                            <input name="health_certificated" type="text" placeholder="健康证" >
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>有</li>
@@ -210,7 +210,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="degree" type="text" value="学历" >
+                                            <input name="degree" type="text" placeholder="学历" >
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>本科以上</li>
@@ -221,7 +221,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="weight" type="text" value="体重" >
+                                            <input name="weight" type="text" placeholder="体重" >
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>60kg以下</li>
