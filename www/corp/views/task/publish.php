@@ -205,7 +205,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="health_certificated" type="text" placeholder="健康证" value="<?=TASK::$HEALTH_CERTIFICATED[$task->health_certificated]?>">
+                                            <input name="health_certificated" type="text" placeholder="健康证" value="<?=$task->health_certificated:TASK::$HEALTH_CERTIFICATED[$task->health_certificated]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>有</li>
@@ -213,7 +213,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="degree_requirement" type="text" placeholder="学历" value="<?=TASK::$DEGREE_REQUIREMENT[$task->degree_requirement]?>">
+                                            <input name="degree_requirement" type="text" placeholder="学历" value="<?=$task->degree_requirement?TASK::$DEGREE_REQUIREMENT[$task->degree_requirement]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>本科以上</li>
