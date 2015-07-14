@@ -167,7 +167,7 @@ $this->title = '米多多兼职平台';
                                             <input name="need_quantity" type="text" class="pull-left" placeholder="人数" value="<?=$task->need_quantity?>">
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
-                                            <input name="gender_requirement" type="text" class="text-center" placeholder="性别" value="<?=$task->gender_requirement?TASK::$GENDER_REQUIREMENT[$task->gender_requirement]:''?>">
+                                            <input name="gender_requirement" type="text" class="text-center" placeholder="性别" value="<?=$task->gender_requirement!==false?TASK::$GENDER_REQUIREMENT[$task->gender_requirement]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>男女不限</li>
