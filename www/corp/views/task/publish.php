@@ -118,6 +118,15 @@ $this->title = '米多多兼职平台';
                                 <li>
                                     <div class="pull-left title-left text-center"><em>*</em>工作地址</div>
                                     <div class="pull-left right-box">
+                                    <div class="nice-select quyu" name="nice-select">
+                                        <input id="address_count" type="text" placeholder="地址" >
+                                        <i class="iconfont">&#xe60d;</i>
+                                        <ul>
+                                            <li>不限</li>
+                                            <li>一个</li>
+                                            <li>多个</li>
+                                        </ul>
+                                    </div>
                                         <div class="nice-select quyu" name="nice-select">
                                             <input type="text" value="北京" ><i class="iconfont">&#xe60d;</i>
                                             <ul>
@@ -129,15 +138,6 @@ $this->title = '米多多兼职平台';
                                                 <li>通州</li>
                                                 <li>平谷区</li>
                                                 <li>怀柔区</li>
-                                            </ul>
-                                        </div>
-                                        <div class="nice-select quyu" name="nice-select">
-                                            <input name="city" type="text" value="北京" >
-                                            <i class="iconfont">&#xe60d;</i>
-                                            <ul>
-                                                <li>不限</li>
-                                                <li>一个</li>
-                                                <li>多个</li>
                                             </ul>
                                         </div>
                                         <input type="text" id="jquery-tagbox-text" />
