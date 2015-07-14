@@ -4,32 +4,46 @@ define(function(require, exports, module) {
     var api = require("../widget/api");
     var tpl = require("../widget/tpl-engine");
     var util = require("../widget/util")
+    var urlHandle = require("../widget/url-handle");
+    var urlParam = urlHandle.getParams(window.location.search); //district＝id&type＝id
+
+    var filtersObj = {};
+    var expandStr = "";
+    if (urlParam.district) {
+        filtersObj.district = ["=", "district_id", urlParam.district];
+        expandStr += 'district,';
+    }
+    if (urlParam.type) {
+        filtersObj["service-type"] = ["=", "service_type_id", urlParam.type];
+        expandStr += 'service-type,';
+    }
+
     var url = "task";
+    //初始化查询列表
+    $.pageInitGet(api.gen("service-type"), function(data) {
+        if (data && data.items.length > 0) {
+            $("body").append(tpl.parse("job-type-list-tpl", {list : data.items}));
+            urlParam.type && $(".js-job-type-btn").text($("#type-" + urlParam.type).text());
+        }
+    }, "json");
+    $.pageInitGet(api.gen('district?filters=[["=",%20"parent_id",3]]'), function(data) {
+        if (data && data.items.length > 0) {
+            $("body").append(tpl.parse("district-list-tpl", {list : data.items}));
+            urlParam.district && $(".js-district-btn").text($("#district-" + urlParam.district).text());
+        }
+    }, "json");
+    $("body").append(tpl.parse("sort-list-tpl",null));
 
     $(".js-district-btn").on("click", function() {
-        var _this = $(this)[0];
-        if (!_this.isLoad && !_this.notLoadOver) {
-            _this.notLoadOver = true;
-            //加载区域列表
-            $.get(api.gen('district?filters=[["=",%20"parent_id",3]]'), function(data) {
-                if (data && data.items.length > 0) {
-                    $(".js-top-filter-btn").hide();
-                    $("body").append(tpl.parse("district-list-tpl", {list : data.items}));
-                    _this.isLoad = true;
-                } else {
-                    console.error("加载区域列表出错", data);
-                }
-                _this.notLoadOver = false;
-            }, "json")
-        } else {
-            var $obj = $(".district-list");
-            $obj.siblings(".js-top-filter-btn").hide();
-            $obj.toggle();
-        }
+        $(this).toggleClass("filter-btn-act").siblings().removeClass("filter-btn-act");
+        var $obj = $(".district-list");
+        $obj.siblings(".js-top-filter-btn").hide();
+        $obj.toggle();
 
     });
 
     $(".js-job-type-btn").on("click", function() {
+<<<<<<< HEAD
         var _this = $(this)[0];
         if (!_this.isLoad && !_this.notLoadOver) {
             _this.notLoadOver = true;
@@ -49,33 +63,34 @@ define(function(require, exports, module) {
             $obj.toggle();
 
         }
+=======
+        $(this).toggleClass("filter-btn-act").siblings().removeClass("filter-btn-act");
+        var $obj = $(".job-type-list");
+        $obj.siblings(".js-top-filter-btn").hide();
+        $obj.toggle();
+>>>>>>> origin/gy-fex
     })
 
     $(".js-sort-btn").on("click", function() {
-        var _this = $(this)[0];
-        if (!_this.isLoad) {
-            _this.isLoad = true;
-            $("body").append(tpl.parse("sort-list-tpl",null));
-        } else {
-           var $obj = $(".sort-list");
-            $obj.siblings(".js-top-filter-btn").hide();
-            $obj.toggle();
-        }
+        $(this).toggleClass("filter-btn-act").siblings().removeClass("filter-btn-act");
+       var $obj = $(".sort-list");
+        $obj.siblings(".js-top-filter-btn").hide();
+        $obj.toggle();
     });
 
-    var expandStr = "";
-    var filtersObj = {};
     $("body").on("click", ".district-list li", function() {
-
+        $(".job-filter>a").removeClass("filter-btn-act");
         buildFilterParam($(this));
     }).on("click", ".job-type-list li", function() {
+        $(".job-filter>a").removeClass("filter-btn-act");
         buildFilterParam($(this));
     }).on("click", ".sort-list li", function() {
-        $(this).parent().hide();
+        $(".job-filter>a").removeClass("filter-btn-act");
+        $(this).parent().hide().scrollTop(0);
     })
 
     function buildFilterParam($this) {
-        $this.parent().hide();
+        $this.parent().scrollTop(0).hide();
         var allTag = $this.data("all");
         if(allTag) {
             expandStr = expandStr.replace(allTag+",", "");
@@ -110,6 +125,7 @@ define(function(require, exports, module) {
         });
 
         function handleFiltersObj(obj) {
+            console.log("filtersObj", obj);
             var tempArr = [];
             for (var i in obj) {
                 tempArr.push(obj[i]);

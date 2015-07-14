@@ -26,7 +26,7 @@ define(function(require, exports) {
     });
 
     $("body").on("click", ".submit-btn", function() {
-        util.href("/view/user/resume-change.html");
+        util.href("view/user/resume-change.html");
     })
 
 });

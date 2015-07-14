@@ -10,6 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="/v1/css/base.css"/>
+    <script type="text/javascript" src="/v1/js_min//third_party/WebViewJavascriptBridge.js" ></script>
     <script type="text/javascript" src="/v1/js_min//third_party/sea.js" ></script>
     <script>
         if (!window.miduoduo) { //如果app没有注入该变量，则认为不在app里
@@ -18,7 +19,7 @@
             miduoduo.os.mddApp = false;
             miduoduo.user = {};
         } else {
-            miduoduo.user = JSON.parse(miduoduo.user) ? JSON.parse(miduoduo.user) : {};
+            miduoduo.user = miduoduo.user ? miduoduo.user : {};
             miduoduo.os  = {};
             miduoduo.os.mddApp = true;
         }
@@ -30,21 +31,17 @@
         }catch(e){
             //alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
         }
-        miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
+        miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.miduoduo.cn/v1/");
         miduoduo.basePath = {
             base : "/v1/",
             picUrl : "/v1/" + "img"
         };
         miduoduo.user.phone = miduoduo.user.username;
 
-       document.addEventListener('WebViewJavascriptBridgeReady', function() {
-           WebViewJavascriptBridge.defaultHandler(handle_action)
-       }, false);
+        WebViewJavascriptBridge.defaultHandler(handle_action)
        function handle_action(data, responseCallback) {
-           data = JSON.parse(data);
            if (data && data.action == "b_require_auth") {
-               window.localStorage.setItem("userInfo", data.data);
-               alert("从登陆页返回，即将reload:" + JSON.stringify(data));
+               window.localStorage.setItem("userInfo", JSON.stringify(data.data));
                location.reload();
            }
 
@@ -81,17 +78,17 @@
         <img src="/v1/img/index/item1.png" alt=""/>
         <span>最新职位</span>
     </div>
-    <div class="item2">
+    <div class="item2" data-url="view/job/all-job.html?type=12">
         <img src="/v1/img/index/item2.png" alt=""/>
-        <span>暑期工</span>
+        <span>促销专员</span>
     </div>
-    <div class="item3">
-        <img src="/v1/img/index/item3.png" alt=""/>
-        <span>日结</span>
+    <div class="item3" data-url="view/job/all-job.html?type=1">
+        <img src="/v1/img/index/item4.png" alt=""/>
+        <span>派单</span>
     </div>
-    <div class="item4">
+    <div class="item4" data-url="view/job/all-job.html?type=5">
         <img src="/v1/img/index/item3.png" alt=""/>
-        <span>实习</span>
+        <span>临时工</span>
     </div>
 </div>
 
@@ -124,7 +121,7 @@
                 <div class="pub-time"><?=pubDate?></div>
             </div>
             <div class="part2">
-                <div class="firstDiv"><?=+task.salary + "/" + (task.salary_unit_label || "?")?></div>
+                <div class="firstDiv"><?=+task.salary + "元/" + (task.salary_unit_label || "?")?></div>
                 <? task.labels && task.labels.forEach(function(label, i){?>
                 <?if (label) {?>
                 <div ><?=label?></div>
@@ -149,7 +146,7 @@
     <ul>
         <? this.banners.forEach(function(e) {?>
         <li>
-            <a href="http://www.baidu.com">
+            <a data-tag="<?=e.tag?>" href="<?=e.url?>">
                 <img src="<?=e.imgSrc?>" alt=""/>
             </a>
         </li>

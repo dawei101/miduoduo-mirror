@@ -6,11 +6,11 @@
 <div class="login-dialog">
     <div class="main-panel">
         <div class="login-tips">
-            您好，报名兼职职位需要登陆米多多！
+            您好，报名兼职需要登录米多多！
         </div>
         <div class="login-btn">
-            <div>立即注册</div>
-            <div class="go-login">现在登陆</div>
+            <div class="go-reg">立即注册</div>
+            <div class="go-login">现在登录</div>
         </div>
         <div class="close-login-dialog">x</div>
     </div>
@@ -29,10 +29,22 @@
         </div>
         <div class="part2">
             <section>
+                <div class="sub-title">招聘人数</div>
+                <p class="info">
+                    <?=data.need_quantity?>人
+                </p>
+            </section>
+            <section>
                 <div class="sub-title">工作周期</div>
                 <p class="info">
+<<<<<<< HEAD
                     <?=data.from_date + " 至 " + data.to_date?>
+=======
+                    <?=data.from_date.substr(data.from_date.indexOf("-") + 1) + " 至 " + data.to_date.substr(data.to_date.indexOf("-") + 1)?>
+                    <? if (data.from_time) {?>
+>>>>>>> origin/gy-fex
                     <?=data.from_time + "-" + data.to_time?>
+                    <? } ?>
                 </p>
             </section>
             <section>
@@ -41,6 +53,12 @@
                     <?=data.address?>
                 </p>
             </section>
+        </div>
+        <div class="part4">
+            <div class="sub-title">工作内容</div>
+            <p class="info">
+                <?=data.detail?>
+            </p>
         </div>
         <div class="part3">
             <div class="sub-part">
@@ -57,19 +75,20 @@
                 电话咨询
             </a>
         </div>
-        <div class="part4">
-            <div class="sub-title">公司信息</div>
-            <p class="info">
-                <?=data.detail?>
-            </p>
+        <div class="part5-placeholder">
+            <div>占位</div>
         </div>
         <div class="part5">
             <div class="store">
+<<<<<<< HEAD
                 <div style="visibility: hidden;padding-bottom: 36%">藏</div><br/>
+=======
+                <div style="visibility: hidden;padding-bottom: 20%">藏</div><br/>
+>>>>>>> origin/gy-fex
                 <span>收藏</span>
             </div>
             <div class="report">
-                <div style="visibility: hidden;padding-bottom: 36%">报</div> <br/>
+                <div style="visibility: hidden;padding-bottom: 20%">报</div> <br/>
                 举报
             </div>
             <div class="control-btn js-unapply">
@@ -78,5 +97,4 @@
         </div>
     </div>
 </script>
-</body>
-</html>
+<%include ../footer.html%>

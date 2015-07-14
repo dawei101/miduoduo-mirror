@@ -19,6 +19,7 @@ define(function(require, exports) {
         }
         app(opts, callback);
     }
+    //登陆
     function appAuth(callback) {
         var opts = {
             action: 'b_require_auth',
@@ -26,6 +27,16 @@ define(function(require, exports) {
             }
         }
         app(opts, callback);
+    }
+
+    //注册
+    function appReg() {
+        var opts = {
+            action: 'b_require_reg',
+            data: {
+            }
+        }
+        app(opts);
     }
 
     function appLocation(callback) {
@@ -75,20 +86,35 @@ define(function(require, exports) {
     function showTips(msg, callback) {
         if (!miduoduo.os.mddApp) {
             alert(msg);
+<<<<<<< HEAD
             callback();
         } else {
             toast("app:" + msg, callback);
+=======
+            callback && callback();
+        } else {
+            toast(msg, callback);
+>>>>>>> origin/gy-fex
         }
     }
 
-    //注册、登陆
+    //登陆
     function auth() {
         appAuth(function(data) {
-            alert("hi:" + data);
             window.location.reload(); //登陆成功直接重新加载页面
         });
     }
 
+<<<<<<< HEAD
+=======
+    //注册
+    function reg() {
+        appReg(function(data) {
+            window.location.reload();
+        });
+    }
+
+>>>>>>> origin/gy-fex
 
     //设置地址
     function setAddress(callback) {
@@ -137,6 +163,7 @@ define(function(require, exports) {
     exports.href = href;
     exports.showTips = showTips;
     exports.auth = auth;
+    exports.reg = reg;
     exports.setAddress = setAddress;
     exports.cf = cf;
     exports.pop = pop;

@@ -1,7 +1,12 @@
 define(function(require, exports) {
     //线上环境去掉下面这句
+<<<<<<< HEAD
     miduoduo.user.access_token = "FeeZJwOwj2mrtDMusQGu5xhjpX2dmD5F_1436590845";
     miduoduo.user.id = 5;
+=======
+   // miduoduo.user.access_token = "FeeZJwOwj2mrtDMusQGu5xhjpX2dmD5F_1436590845";
+    //miduoduo.user.id = 5;
+>>>>>>> origin/gy-fex
     var accessToken = miduoduo.user.access_token;
     //通用版本
     var commonVersion = window.miduoduo.api_baseurl;
