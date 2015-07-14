@@ -53,10 +53,10 @@ class Task extends \common\BaseActiveRecord
     ];
 
     public static $SALARY_UNITS = [
-        0=>'小时',
-        1=>'天',
-        2=>'周',
-        3=>'月',
+        0=>'元/小时',
+        1=>'元/天',
+        2=>'元/周',
+        3=>'元/月',
     ];
     
     public static $GENDER_REQUIREMENT = [
