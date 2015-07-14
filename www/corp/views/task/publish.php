@@ -66,7 +66,7 @@ $this->title = '米多多兼职平台';
                         					<li><?=$service->name?></li>
                         					<?php }?>
                                         </ul>
-                                        <input type="hidden" name="service_type_id" value="<?=$task->service_type_id?>"/>
+                                        <input type="hidden" name="service_type_id" value="<?=<?=$task->service_type_id?$task->getService_type()->one()->name:''?>?>"/>
                                         <p class="cuowu">内容不能为空!</p>
                                     </div>
                                 </div>
