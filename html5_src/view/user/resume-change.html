@@ -1,0 +1,119 @@
+<%include ../header.html%>
+<%-css("user/resume-change")%>
+<%-mainJs("user/resume-change")%>
+</head>
+<body>
+<script type="text/html" id="main-tpl">
+    <? var user = this.user;?>
+    <div class="main1">
+
+        <ul class="resume-part1">
+            <!--<li >
+                <div class="title">照片</div>
+                <div class="con control">
+                    <input class="js-col" name="avatar" type="text"  placeholder="请上传个人照片"/>
+                </div>
+            </li>-->
+            <li>
+                <div class="title">姓名</div>
+                <div class="con">
+                    <input class="js-col" name="name" type="text" placeholder="请输入真实姓名" value="<?=user.name?>"/>
+                </div>
+            </li>
+            <li>
+                <div class="title ">出生年月</div>
+                <div class="con control">
+                    <input readonly class="js-col js-birthday" name="birthdate" type="text" placeholder="请选择真实日期" value="<?=user.birthdate ?>"/>
+                </div>
+            </li>
+            <li>
+                <div class="title">性别</div>
+                <div class="con sex js-special-col" name="gender">
+                    <div class="<?=user.gender == 0 ? 'sex-act' : '' ?>" data-val="0">男</div>
+                    <div class="<?=user.gender == 1 ? 'sex-act' : '' ?>" data-val="1">女</div>
+                </div>
+            </li>
+            <li>
+                <div class="title">身高</div>
+                <div class="con tag">
+                    <input class="js-col" name="height" pattern="[0-9]"  type="tel" placeholder="请输入身高" value="<?=user.height ?>"/>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="resume-part2">
+            <li>
+                <div class="title">学校</div>
+                <div class="con">
+                    <input class="js-col" name="college" type="text"  placeholder="请输入学校" value="<?=user.height ?>"/>
+                </div>
+            </li>
+            <li>
+                <div class="title">居住地点</div>
+                <div class="con control js-set-address">
+                    <input readonly type="text" placeholder="请选择居住地点" value="<?=user.home_address?>"/>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main2">
+        <ul class="resume-part3">
+            <li class="sub1">
+                <div class="title">可兼类别</div>
+                <div class="con control js-sel-service-type">
+                    <?var typeID = "";?>
+                    <span class="service-type-show">
+                    <? user.service_types && user.service_types.forEach(function(e){ ?>
+                        <?=e.name?>
+                    <? typeID += e.id + ','; }); ?>
+                    </span>
+
+                    <input disabled type="<?=(typeID ? 'hidden' : 'text')?>" placeholder="请选择您擅长的兼职类别" value="<?=typeID?>"/>
+                </div>
+            </li>
+            <li class="sub2">
+                <div class="title">更在意的</div>
+                <div class="con">
+                    <div class="sub2-con-val">获得工作经验</div>
+                    <div class="sub2-con-val">实习证明</div>
+                    <div class="sub2-con-val">赚零花钱</div>
+                    <div class="sub2-con-val">开阔视野</div>
+                </div>
+            </li>
+            <!--<li class="sub3">
+                <div class="title">微信账号</div>
+                <div class="con">
+                    <input type="text" placeholder="请输入您在用的微信账号"/>
+                </div>
+            </li>-->
+        </ul>
+        <ul class="resume-part4">
+            <li>
+                <div class="title">
+                    <div class="t1">可兼职时间</div>
+                    <div class="t2 freetime-all">全选</div>
+                </div>
+                <div class="con">
+                    <?
+                        var indexLen = 7;
+                        var numConvert = ["一", "二", "三", "四", "五", "六", "日"];
+                        for (var i = 0; i < indexLen; i++ ) {
+                    ?>
+                    <div class="dateCol <?if(i==0){?>first-col<?}?>">
+                        <div class="dateTitle">周<?=numConvert[i]?></div>
+                        <div class="time">上午</div>
+                        <div class="time">下午</div>
+                        <div class="time">晚上</div>
+                    </div>
+                    <? } ?>
+                </div>
+            </li>
+        </ul>
+        <div class="submit-btn">提交</div>
+    </div>
+</script>
+<%include ./resume-job-type.html%>
+<%include ../widget/calendar.html%>
+</body>
+</html>

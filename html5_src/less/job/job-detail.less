@@ -1,0 +1,207 @@
+@import "../atom.less";
+body {
+  .bgc(#eee);
+}
+.main {
+  .w(100%);
+  .clearfix;
+  & > div {
+    padding: 0 4%;
+    .mb(10px);
+    .clearfix;
+    .bgc(#fff);
+    border-bottom: 1px solid #d0d0d0
+  }
+  section {
+    border-bottom: 1px solid #eee;
+    padding: 3% 0;
+    .sub-title {
+      .w(100%);
+      .grey;
+      .f2;
+      .pb(3%);
+    }
+    .info {
+      .black;
+      .f2;
+    }
+  }
+  .part1 {
+    padding: 4%;
+    .title {
+      .w(100%);
+      .black;
+      .f3
+    }
+    .label {
+      .left;
+      .mr(2%);
+      .mt(3%);
+      padding: 4px;
+      border: 1px solid #d2d5d8;
+      .border-r;
+      .f1;
+      .grey;
+    }
+    .firstLabel {
+      border: 1px solid #ff7b5d;
+      color: #ff7b5d;
+    }
+  }
+
+  .part3, .part4 {
+    padding: 3% 4%;
+    .sub-part {
+      .w(70%);
+      .clearfix;
+      display: inline-block;
+      box-sizing: border-box;
+      vertical-align: middle;
+      border-right: 1px solid #f2f2f2;
+    }
+    .sub-title {
+      .w(100%);
+      .grey;
+      .f2;
+      .pb(3%);
+    }
+    .info {
+      .f2;
+      .black;
+      line-height: 25px;
+    }
+    p {.f2; line-height: 24px}
+    .tel {
+      .pr;
+      .w(28%);
+      .c;
+      display: inline-block;
+      vertical-align: middle;
+      &:after {
+        .if-tel;
+        position: absolute;
+        top: -14%;
+        font-size: 1.5rem;
+        left: 0;
+        right: 0;
+        .fc(#0cbc6d);
+      }
+    }
+  }
+
+  .part5-placeholder {
+    padding: 2%;
+    visibility: hidden;
+    border-top: 1px solid #eee;
+    div {
+      padding: 4%;
+    }
+  }
+  .part5 {
+    display: none;
+    padding: 2%;
+    .pf;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    .mb(0);
+    border: 0;
+    .f(0); //解决inline-block空白间距的问题。 间距原因：回车
+    border-top: 1px solid #eee;
+    div {
+      .f(1.2rem);
+      .ml(2%);
+      .w(14%);
+      display: inline-block;
+      vertical-align: middle;
+      .c;
+    }
+    .store, .report {
+      .pr;
+      .f1;
+      .grey;
+      &:after {
+        .if-store;
+        .pa;
+        top: 5%;
+        left: 0;
+        right: 0;
+        .c;
+        .f(1.2rem);
+        .fc(#606c77);
+      }
+    }
+    .store-act {
+      .fc(#00b966);
+      &:after{
+        .fc(#00b966);
+      }
+    }
+    .report {
+      &:after {
+        .if-report;
+        font-weight: bold;
+      }
+    }
+    .control-btn {
+      .w(63%);
+      .ml(3%);
+      .pt(4%);
+      .pb(4%);
+      .border-r;
+      .c;
+      .bgc(#00b966);
+      .fc(#fff);
+    }
+    .btn-wait-confirm {
+      .bgc(#a5abb2);
+    }
+    .btn-apply-success {
+      .bgc(#ff7b5d);
+    }
+  }
+}
+
+.login-dialog {
+  .none;
+  .pf;
+  .w(100%);
+  .h(100%);
+  background: rgba(85,90,103,0.3);
+  z-index: 10000;
+  .main-panel {
+    .pa;
+    top: 26%;
+    left: 10%;
+    right: 10%;
+    .bgc(#fff);
+    .border-r(5px);
+    .login-tips {
+      padding: 12% 5%;
+      border-bottom: 1px solid #a5abb2;
+      .c;
+    }
+    .login-btn {
+      div {
+        .w(49%);
+        padding: 5% 0;
+        display: inline-block;
+        vertical-align: middle;
+        box-sizing: border-box;
+        border-right: 1px solid #a5abb2;
+        .c;
+        .f3;
+        .fc(#00b966);
+      }
+      .go-login {
+        border-right: 0px;
+      }
+    }
+    .close-login-dialog {
+      .pa;
+      top: 0%;
+      right: 0%;
+      padding: 2%;
+    }
+  }
+}
