@@ -270,7 +270,7 @@ $this->title = '米多多兼职平台';
             </div>
         </div>
     </div>
-	<script src="js/miduoduo.js"></script>
+	<script src="/js/miduoduo.js"></script>
 	<script src="/js/data/moment.js"></script>
 	<script src="/js/data/daterangepicker.js"></script>
 
