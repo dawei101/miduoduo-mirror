@@ -8,19 +8,26 @@ define(function(require, exports, module) {
 
     //轮播
     var banners = [
-        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner1.jpg"},
-        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner2.jpg"},
-        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner1.jpg"},
-        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner2.jpg"}
+        {url: "view/job/job-detail.html?task=476", imgSrc : miduoduo.basePath.picUrl + "/index/banner2.png"},
+        {"tag" : "handle", url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner0.png"},
 
     ]
     $(".imageSlide").html(tpl.parse("banner-slide-tpl", {"banners" : banners}));
     $("#bannerSlider").touchSlide();
 
-    $(".top-nav .item1").on("click", function() {
-        util.href($(this).data("url"));
-    })
-    $(".top-nav .item2").on("click", function() {
+    $("#bannerSlider").on("click", "a", function(e) {
+        e.preventDefault();
+        var tag = $(this).data("tag");
+        if (tag == "handle") {
+            if (!miduoduo.user.id) {
+                util.auth();
+            }
+        } else {
+            util.href($(this).attr("href"));
+        }
+    });
+
+    $(".top-nav > div").on("click", function() {
         util.href($(this).data("url"));
     })
 

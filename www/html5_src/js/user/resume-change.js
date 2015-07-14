@@ -5,9 +5,7 @@ define(function(require, exports) {
     var util = require("../widget/util");
     var calendar = require("../widget/calendar");
 
-    document.addEventListener('WebViewJavascriptBridgeReady', function() {
-        WebViewJavascriptBridge.defaultHandler(handle_action)
-    }, false);
+    WebViewJavascriptBridge.defaultHandler(handle_action);
     //jsbridge 主动监听
     function handle_action(data, responseCallback) {
         var rst = {
@@ -102,7 +100,9 @@ define(function(require, exports) {
         $(".js-set-address").on("click", function() {
             var $this = $(this);
             util.setAddress(function(data) {
-                alert("app返回的地址信息：" + JSON.stringify(data));
+                if (!data) {
+                    return;
+                }
                 data = JSON.parse(data);
                 $this.find("input").val(data.address);
                 $.post(api.gen("address"), data, function(data) {

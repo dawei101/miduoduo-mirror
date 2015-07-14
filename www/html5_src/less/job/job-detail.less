@@ -35,7 +35,7 @@ body {
     }
     .label {
       .left;
-      .mr(1%);
+      .mr(2%);
       .mt(3%);
       padding: 4px;
       border: 1px solid #d2d5d8;
@@ -92,6 +92,7 @@ body {
   .part5-placeholder {
     padding: 2%;
     visibility: hidden;
+    border-top: 1px solid #eee;
     div {
       padding: 4%;
     }
@@ -106,8 +107,9 @@ body {
     .mb(0);
     border: 0;
     .f(0); //解决inline-block空白间距的问题。 间距原因：回车
+    border-top: 1px solid #eee;
     div {
-      .f(1rem);
+      .f(1.2rem);
       .ml(2%);
       .w(14%);
       display: inline-block;
@@ -169,19 +171,20 @@ body {
   z-index: 10000;
   .main-panel {
     .pa;
-    top: 20%;
+    top: 26%;
     left: 10%;
     right: 10%;
     .bgc(#fff);
     .border-r(5px);
     .login-tips {
-      padding: 20% 5%;
+      padding: 12% 5%;
       border-bottom: 1px solid #a5abb2;
+      .c;
     }
     .login-btn {
       div {
         .w(49%);
-        padding: 10% 0;
+        padding: 5% 0;
         display: inline-block;
         vertical-align: middle;
         box-sizing: border-box;
@@ -196,9 +199,9 @@ body {
     }
     .close-login-dialog {
       .pa;
-      top: 1%;
-      right: 1%;
-      padding: 4%;
+      top: 0%;
+      right: 0%;
+      padding: 2%;
     }
   }
 }

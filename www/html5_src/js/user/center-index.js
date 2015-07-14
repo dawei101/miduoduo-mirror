@@ -25,9 +25,12 @@ define(function(require, exports) {
     }
 
     //注册、登陆
-    $(".state").find("span").on("click", function() {
+    $(".login").on("click", function() {
         util.auth();
     });
+    $(".register").on("click", function() {
+        util.reg();
+    })
     $(".item").on("click", function(e) {
         e.preventDefault();
         if (miduoduo.user.id) {
