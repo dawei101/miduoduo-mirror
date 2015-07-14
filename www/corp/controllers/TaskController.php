@@ -147,7 +147,46 @@ class TaskController extends FBaseController
         if (!$task) {
             return $this->goHome();
         }
-        if ($task->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isPost) {
+            $task->setAttributes(Yii::$app->request->post(), false);
+
+            $clearance_period = Yii::$app->request->post('clearance_period');
+            if ($clearance_period) {
+                $task->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);
+            }
+            $salary_unit = substr(Yii::$app->request->post('salary_unit'), 2);
+            if ($salary_unit) {
+                $task->salary_unit = array_search($salary_unit, Task::$SALARY_UNITS);
+            }
+            $gender_requirement = Yii::$app->request->post('gender_requirement');
+            if ($gender_requirement) {
+                $task->gender_requirement = array_search($gender_requirement, Task::$GENDER_REQUIREMENT);
+            }
+            $height_requirement = Yii::$app->request->post('height_requirement');
+            if ($height_requirement) {
+                $task->height_requirement = array_search($height_requirement,Task::$HEIGHT_REQUIREMENT);
+            }
+            $face_requirement = Yii::$app->request->post('face_requirement');
+            if ($face_requirement) {
+                $task->face_requirement = array_search($face_requirement,Task::$FACE_REQUIREMENT);
+            }
+            $talk_requirement = Yii::$app->request->post('talk_requirement');
+            if ($talk_requirement) {
+                $task->talk_requirement = array_search($talk_requirement,Task::$TALK_REQUIREMENT);
+            }
+            $health_certificated = Yii::$app->request->post('health_certificated');
+            if ($health_certificated) {
+                $task->health_certificated = array_search($health_certificated,Task::$HEALTH_CERTIFICATED);
+            }
+            $degree_requirement = Yii::$app->request->post('degree_requirement');
+            if ($degree_requirement) {
+                $task->degree_requirement = array_search($degree_requirement,Task::$DEGREE_REQUIREMENT);
+            }
+            $weight_requirement = Yii::$app->request->post('weight_requirement');
+            if ($weight_requirement) {
+                $task->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
+            }
+            $task->service_type_id = SeriviceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             if ($task->validate() && $task->save()) {
                 return $this->redirect('/task/');
             }
