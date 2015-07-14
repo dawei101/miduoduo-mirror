@@ -28,13 +28,13 @@ class DataUserController extends BDataBaseController
     public function actionIndex()
     {
         // 默认时间范围
-        $defaultDateStart   = date("Y-m-d",time()-604800);
+        $defaultDateStart   = date("Y-m-d",time()-7*24*60*60);
         $defaultDateEnd     = date("Y-m-d",time());
 
         // 快速筛选连接,昨天，七天，三十天
-        $ztDateStart        = date("Y-m-d",time()-86400);
-        $ztDateEnd          = date("Y-m-d",time()-86400);      
-        $sstDateStart       = date("Y-m-d",time()-2592000);
+        $ztDateStart        = date("Y-m-d",time()-1*24*60*60);
+        $ztDateEnd          = date("Y-m-d",time()-1*24*60*60);      
+        $sstDateStart       = date("Y-m-d",time()-30*24*60*60);
         $sstDateEnd         = $defaultDateEnd;
         $ztUrl              = "&dateStart=".$ztDateStart."&dateEnd=".$ztDateEnd;
         $qtUrl              = "&dateStart=".$defaultDateStart."&dateEnd=".$defaultDateEnd;
