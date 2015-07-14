@@ -61,6 +61,19 @@ class Complaint extends \common\BaseActiveRecord
         ];
     }
 
+    public function getStatus_options()
+    {
+        return [
+            0 => '等待处理',
+            10=> '处理完成',
+        ];
+    }
+
+    public function getStatus_label()
+    {
+        return $this->getStatus_options()[$this->status];
+    }
+
     /**
      * @inheritdoc
      * @return ComplaintQuery the active query used by this AR class.
@@ -79,4 +92,17 @@ class Complaint extends \common\BaseActiveRecord
     {
         return $this->hasOne(Resume::className(), ['user_id' => 'user_id']);
     }
+
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['status_label', 'status_options']);
+    }
+
+    public function extraFields()
+    {
+        return ['task'];
+    }
+
+
 }
