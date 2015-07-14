@@ -238,6 +238,17 @@ class BDataBaseController extends BBaseController
                 $model_jrtdrs->key    = 'jrtdrs';
                 $model_jrtdrs->value  = $jrtdrs;
                 $model_jrtdrs->save();
+
+                // 今日新投递人数（第一次投递的人数）
+                $jrxyhtd   = User::findBySql("SELECT count(DISTINCT(user_id)) 'jrxyhtd' FROM jz_task_applicant WHERE LEFT(`created_time`,10)='".$v3."'
+                AND user_id NOT IN(
+                    SELECT ao.user_id from jz_task_applicant ao WHERE LEFT(ao.`created_time`,10)<'".$v3."'
+                )")->asArray()->one(); 
+                $jrxyhtd   = $jrxyhtd['jrxyhtd'];
+                $model_jrxyhtd  = clone $model;
+                $model_jrxyhtd->key    = 'jrxyhtd';
+                $model_jrxyhtd->value  = $jrxyhtd;
+                $model_jrxyhtd->save();
             }
         }
 
@@ -331,7 +342,8 @@ class BDataBaseController extends BBaseController
 
                 // 总关注
                 $zgz    = User::findBySql("SELECT count(2) 'zgz' FROM ".$tablePrefix."weichat_user_log WHERE event_type=1 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
-                $zgz    = $zgz['zgz'] + 771;    // 771 为之前的关注数据
+                $zqx    = User::findBySql("SELECT count(2) 'zqx' FROM ".$tablePrefix."weichat_user_log WHERE event_type=2 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $zgz    = $zgz['zgz'] - $zqx['zqx'] + 846;    // 846 为之前的关注数据
                 $model_zgz  = clone $model;
                 $model_zgz->key    = 'zgz';
                 $model_zgz->value  = $zgz;

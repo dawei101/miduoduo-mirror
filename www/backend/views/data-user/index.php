@@ -79,6 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <a href="/data-user?type_id=<?= $data_type ?>&city_id=<?= $city_id ?><?= $ztUrl ?>">昨天</a> | 
                 <a href="/data-user?type_id=<?= $data_type ?>&city_id=<?= $city_id ?><?= $qtUrl ?>">7天</a> | 
                 <a href="/data-user?type_id=<?= $data_type ?>&city_id=<?= $city_id ?><?= $sstUrl ?>">30天</a>
+                ------------
+                <a class="btn btn-danger" onclick="if(confirm('如统计数据无误，请勿清空缓存，否则造成服务器压力，是否继续？')){window.location.href='/index.php/data-user/clearup'}" href="javascript:;">清空缓存</a>
             <?php ActiveForm::end(); ?>
         </div>
         <div>&nbsp;</div>
@@ -87,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <thead>
                 <tr>
                     <th>日期</th>
-                    <th>总关注</th>
+                    <th>剩余关注</th>
                     <th>当日关注</th>
                     <th>总退订</th>
                     <th>当日退订</th>
@@ -96,6 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th>当日微信注册</th>
                     <th>当日微信投递人数</th>
                     <th>当日微信投递总量</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -111,6 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= isset($v['jrwxzc']) ? $v['jrwxzc'] : 0 ?></td>
                     <td><?= isset($v['jrwxtdrs']) ? $v['jrwxtdrs'] : 0 ?></td>
                     <td><?= isset($v['jrwxtdzl']) ? $v['jrwxtdzl'] : 0 ?></td>
+                    
                 </tr>
                 <?php } ?>
             </tbody>
@@ -159,6 +163,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th>当日简历总量</th>
                     <th>当日投递总量</th>
                     <th>当日投递人数</th>
+                    <th>当日新用户投递</th>
                 </tr>
             </thead>
             <tbody>
@@ -173,6 +178,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= isset($v['jrjlzl']) ? $v['jrjlzl'] : 0 ?></td>
                     <td><?= isset($v['jrtdzl']) ? $v['jrtdzl'] : 0 ?></td>
                     <td><?= isset($v['jrtdrs']) ? $v['jrtdrs'] : 0 ?></td>
+                    <td><?= isset($v['jrxyhtd']) ? $v['jrxyhtd'] : 0 ?></td>
                 </tr>
                 <?php } ?>
             </tbody>

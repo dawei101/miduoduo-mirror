@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\BDataBaseController;
+use common\models\DataDaily;
 
 /**
  * DataUserController implements the CRUD actions for DataDaily model.
@@ -29,7 +30,7 @@ class DataUserController extends BDataBaseController
     {
         // 默认时间范围
         $defaultDateStart   = date("Y-m-d",time()-7*24*60*60);
-        $defaultDateEnd     = date("Y-m-d",time());
+        $defaultDateEnd     = date("Y-m-d",time()-1*24*60*60);
 
         // 快速筛选连接,昨天，七天，三十天
         $ztDateStart        = date("Y-m-d",time()-1*24*60*60);
@@ -60,7 +61,7 @@ class DataUserController extends BDataBaseController
             $labels     = array('ztl','zzxtl','htxz','zqxz','yhxz','zdsh','zgq','jrgq');
             $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
         }else{
-            $labels     = array('zczl','jlzl','tdzl','tdrs','jrzczl','jrjlzl','jrtdzl','jrtdrs');
+            $labels     = array('zczl','jlzl','tdzl','tdrs','jrzczl','jrjlzl','jrtdzl','jrtdrs','jrxyhtd');
             $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
         }
 
@@ -125,6 +126,12 @@ class DataUserController extends BDataBaseController
                 'model' => $model,
             ]);
         }
+    }
+
+    // 清空缓存
+    public function actionClearup(){
+        DataDaily::deleteAll();
+        $this->redirect('/data-user');
     }
 
     /**
