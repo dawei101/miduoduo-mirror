@@ -153,7 +153,7 @@ $this->title = '米多多兼职平台';
                                             <p>工作时间：</p>
                                             <p>工作薪酬：</p>
                                             <p>工作要求：</p>
-                                            <?}?>
+                                            <?php  }?>
                                         </div>
                                         <input type="hidden" name="detail" value="$task->detail"/>
                                         <p class="cuowu">内容不能为空!</p>
