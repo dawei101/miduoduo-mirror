@@ -153,6 +153,8 @@ class TaskController extends FBaseController
             }
         }
         $services = ServiceType::find()->all();
+        $task->from_time = substr($task->from_time, 0, -3);
+        $task->to_time = substr($task->to_time, 0, -3);
         return $this->render('publish', ['task' => $task, 'services'=>$services]);
     }
 
