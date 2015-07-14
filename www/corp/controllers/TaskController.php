@@ -98,7 +98,7 @@ class TaskController extends FBaseController
             if ($clearance_period) {
                 $model->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);
             }
-            $salary_unit = substr(Yii::$app->request->post('salary_unit'), 2);
+            $salary_unit = Yii::$app->request->post('salary_unit');
             if ($salary_unit) {
                 $model->salary_unit = array_search($salary_unit, Task::$SALARY_UNITS);
             }
@@ -154,7 +154,7 @@ class TaskController extends FBaseController
             if ($clearance_period) {
                 $task->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);
             }
-            $salary_unit = substr(Yii::$app->request->post('salary_unit'), 2);
+            $salary_unit = Yii::$app->request->post('salary_unit');
             if ($salary_unit) {
                 $task->salary_unit = array_search($salary_unit, Task::$SALARY_UNITS);
             }
