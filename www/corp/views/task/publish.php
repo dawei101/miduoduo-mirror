@@ -74,7 +74,7 @@ $this->title = '米多多兼职平台';
                                 <div class="pull-left title-left text-center"><em>*</em>工作时间</div>
                                 <div class="pull-left right-box div">
                                     <div class="riqi">
-                                        <input name="from_date" type="text" readonly style="width: 200px" name="reservation" class="reservation"   value="选择您的起始日期" />
+                                        <input name="from_date" type="text" readonly style="width: 200px" name="reservation" class="reservation"   value="2015-08-01" />
                                         <div class="nice-select times" name="nice-select">
                                             <input name="from_time" type="text" value="13:00" ><i class="iconfont">&#xe60d;</i>
                                             <ul>
@@ -110,7 +110,7 @@ $this->title = '米多多兼职平台';
                                 <div class="pull-left title-left text-center"><em>*</em>截止日期</div>
                                 <div class="pull-left right-box">
                                     <div class="riqi">
-                                        <input name="to_date" type="text" readonly style="width: 200px" name="birthday" id="birthday" value="2013-06-12" /></div>
+                                        <input name="to_date" type="text" readonly style="width: 200px" name="birthday" id="birthday" value="2015-08-12" /></div>
                                         <p class="cuowu">内容不能为空!</p>
                                     </div>
                                 </li>
