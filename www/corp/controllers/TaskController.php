@@ -98,7 +98,7 @@ class TaskController extends FBaseController
             if ($clearance_period) {
                 $model->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);
             }
-            $salary_unit = Yii::$app->request->post('salary_unit');
+            $salary_unit = substr(Yii::$app->request->post('salary_unit'), 2);
             if ($salary_unit) {
                 $model->salary_unit = array_search($salary_unit, Task::$SALARY_UNITS);
             }
@@ -108,7 +108,7 @@ class TaskController extends FBaseController
             }
             $height_requirement = Yii::$app->request->post('height_requirement');
             if ($height_requirement) {
-                $model->height_requirement = array_search($gender_requirement,Task::$HEIGHT_REQUIREMENT);
+                $model->height_requirement = array_search($height_requirement,Task::$HEIGHT_REQUIREMENT);
             }
             $face_requirement = Yii::$app->request->post('face_requirement');
             if ($face_requirement) {
@@ -130,6 +130,7 @@ class TaskController extends FBaseController
             if ($weight_requirement) {
                 $model->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
+            $model->service_type_id = SeriviceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
 
             if ($model->validate() && $model->save()) {
                 return $this->redirect('/task/');
