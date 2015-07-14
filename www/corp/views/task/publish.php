@@ -158,7 +158,7 @@ $this->title = '米多多兼职平台';
                                 <li>
                                     <div class="pull-left title-left text-center"><em>*</em>人员要求</div>
                                     <div class="pull-left right-box input-z">
-                                        <div class="nice-select pull-left ma-right"><input type="text" class="pull-left" placeholder="人数"></div>
+                                        <div class="nice-select pull-left ma-right"><input name="need_quantity" type="text" class="pull-left" placeholder="人数"></div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
                                             <input name="gender_requirement" type="text" class="text-center" value="性别" >
                                             <i class="iconfont">&#xe60d;</i>
@@ -231,7 +231,7 @@ $this->title = '米多多兼职平台';
                                 <li>
                                     <div class="pull-left title-left text-center"><em>*</em>薪酬</div>
                                     <div class="pull-left right-box input-z">
-                                        <div class="nice-select pull-left ma-right"><input type="text" class="pull-left" placeholder="数量，如100"></div>
+                                        <div class="nice-select pull-left ma-right"><input name="salary" type="text" class="pull-left" placeholder="数量，如100"></div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
                                             <input name="salary_unit" type="text" class="text-center" placeholder="金额单位" >
                                             <i class="iconfont">&#xe60d;</i>
