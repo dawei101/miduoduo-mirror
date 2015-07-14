@@ -54,7 +54,7 @@ $this->title = '米多多兼职平台';
                 <?php foreach ($resumes as $resume) {?>
                 <dd>
                     <div class="pull-left tab1 borser-tab-right">
-                        <div class="names" aid="<?=$resume['id']?>"><?=$resume['name']?></div>
+                        <div class="names" aid="<?=$resume['id']?>"><span style="float: left; display: block; line-height: 20px; padding: 0 10px;"><?=$resume['name']?></span></div>
                         <div class="jiben"><span><?=$resume['age']?>岁</span><span><?=($resume['gender']==0)?'男':'女'?></span><span><?=$resume['college']?></span></div>
                     </div>
                     <div class="pull-left tab2 text-center borser-tab-right"><?=$resume['title']?></div>
