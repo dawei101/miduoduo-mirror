@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use yii\bootstrap\ActiveForm;
-
+use common\models\Task;
 /* @var $this yii\web\View */
 $this->title = '米多多兼职平台';
 ?>
@@ -57,7 +57,8 @@ $this->title = '米多多兼职平台';
                    </div>
                    <div>
                    <div class="pull-left zhiwei-lis-left">
-                       <div><span><?=$task->getSalary_unit_label()?></span><span><?=$task->getClearance_period_label()?></span><span><?=$task->gender_requirement?></span></div>
+                       <div><span><?=$task->salary.$task->getSalary_unit_label()?></span><span><?=$task->getClearance_period_label()?></span>
+                           <span><?=TASK::$GENDER_REQUIREMENT[$task->gender_requirement?>]</span></div>
                        <div>北京－朝阳</div>
                        <div class="fb-sj">发布时间：<?=$task->created_time?></div>
                    </div>
