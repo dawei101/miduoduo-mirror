@@ -36,7 +36,7 @@
             <li>
                 <div class="title">身高</div>
                 <div class="con tag">
-                    <input class="js-col" name="height" pattern="[0-9]"  type="text" placeholder="请输入身高" value="<?=user.height ?>"/>
+                    <input class="js-col" name="height" pattern="[0-9]"  type="tel" placeholder="请输入身高" value="<?=user.height ?>"/>
                 </div>
             </li>
         </ul>
@@ -51,7 +51,7 @@
             <li>
                 <div class="title">居住地点</div>
                 <div class="con control js-set-address">
-                    <input disabled type="text" placeholder="请选择居住地点" value="<?=user.home_address?>"/>
+                    <input readonly type="text" placeholder="请选择居住地点" value="<?=user.home_address?>"/>
                 </div>
             </li>
         </ul>

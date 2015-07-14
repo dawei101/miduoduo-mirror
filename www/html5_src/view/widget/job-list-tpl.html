@@ -22,7 +22,7 @@
                 <div class="pub-time"><?=pubDate?></div>
             </div>
             <div class="part2">
-                <div class="firstDiv"><?=+task.salary + "/" + (task.salary_unit_label || "?")?></div>
+                <div class="firstDiv"><?=+task.salary + "元/" + (task.salary_unit_label || "?")?></div>
                 <? task.labels && task.labels.forEach(function(label, i){?>
                 <?if (label) {?>
                 <div ><?=label?></div>

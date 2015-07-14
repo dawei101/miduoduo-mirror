@@ -20,18 +20,22 @@ define(function(require, exports, module) {
     $("body").append(tpl.parse("sort-list-tpl",null));
 
     $(".js-district-btn").on("click", function() {
+        $(this).toggleClass("filter-btn-act").siblings().removeClass("filter-btn-act");
         var $obj = $(".district-list");
         $obj.siblings(".js-top-filter-btn").hide();
         $obj.toggle();
+
     });
 
     $(".js-job-type-btn").on("click", function() {
+        $(this).toggleClass("filter-btn-act").siblings().removeClass("filter-btn-act");
         var $obj = $(".job-type-list");
         $obj.siblings(".js-top-filter-btn").hide();
         $obj.toggle();
     })
 
     $(".js-sort-btn").on("click", function() {
+        $(this).toggleClass("filter-btn-act").siblings().removeClass("filter-btn-act");
        var $obj = $(".sort-list");
         $obj.siblings(".js-top-filter-btn").hide();
         $obj.toggle();
@@ -40,16 +44,18 @@ define(function(require, exports, module) {
     var expandStr = "";
     var filtersObj = {};
     $("body").on("click", ".district-list li", function() {
-
+        $(".job-filter>a").removeClass("filter-btn-act");
         buildFilterParam($(this));
     }).on("click", ".job-type-list li", function() {
+        $(".job-filter>a").removeClass("filter-btn-act");
         buildFilterParam($(this));
     }).on("click", ".sort-list li", function() {
-        $(this).parent().hide();
+        $(".job-filter>a").removeClass("filter-btn-act");
+        $(this).parent().hide().scrollTop(0);
     })
 
     function buildFilterParam($this) {
-        $this.parent().hide();
+        $this.parent().scrollTop(0).hide();
         var allTag = $this.data("all");
         if(allTag) {
             expandStr = expandStr.replace(allTag+",", "");
