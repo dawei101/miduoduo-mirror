@@ -28,8 +28,8 @@ $this->title = '米多多兼职平台';
           <dl  class="pitch-current">
             <dt class="default-title"><i class="iconfont">&#xe60c;</i>简历管理</dt>
             <dd class="<?=!array_key_exists('status', $_GET)?'current':'default-lis'?>"><a href="/resume">全部</a></dd>
-            <dd class="<?=array_key_exists('status', $_GET)&&$_GET['status']==10?'current':'default-lis'?>"><a href="/resume?read=10">已接受</a></dd>
-            <dd class="<?=array_key_exists('status', $_GET)&&$_GET['status']==0?'current':'default-lis'?>"><a href="/resume?read=0">未处理</a></dd>
+            <dd class="<?=array_key_exists('status', $_GET)&&$_GET['status']==10?'current':'default-lis'?>"><a href="/resume?status=10">已接受</a></dd>
+            <dd class="<?=array_key_exists('status', $_GET)&&$_GET['status']==0?'current':'default-lis'?>"><a href="/resume?status=0">未处理</a></dd>
           </dl>
           <dl>
             <dt class="default-title"><i class="iconfont">&#xe60b;</i>用户中心</dt>
