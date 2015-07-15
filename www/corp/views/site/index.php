@@ -38,8 +38,9 @@ $this->title = '米多多兼职平台';
                   <input name="password" type="text" class="input-q"  placeholder="请设置登录密码">
                 </div>
                 <div class="midd-xieyi">    
-                  <input name="reg-agree" class="pull-left" type="checkbox" value="">
-                  <a href="">同意米多多兼职企业用户协议</a></div>
+ <!--                 <input name="reg-agree" class="pull-left" type="checkbox" value="">
+                  <a href="">同意米多多兼职企业用户协议</a>-->
+</div>
                 <a href="#" class="zc-btn">注册</a>
               </div>
             <?php ActiveForm::end(); ?>
@@ -69,9 +70,9 @@ $this->title = '米多多兼职平台';
                           <input name="vcode" type="text" class="input-q"  placeholder="请输入短信验证码">
                         </div>
                         <div class="midd-xieyi">
-                          <label>
+ <!--                         <label>
                             <input name="rememberMe" class="pull-left" type="checkbox" value="">
-                            <span>两周内自动登录</span></label>
+                            <span>两周内自动登录</span></label> -->
                         </div>
                         <a href="#" class="zc-btn">登录</a>
                       <?php ActiveForm::end(); ?>
