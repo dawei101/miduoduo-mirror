@@ -89,7 +89,7 @@ js调用native 方法原理
         action: 'b_push',
         data = {
             'has_nav': true,
-            'back_refresh': true,
+            'has_tab': false,
             'title': 'push 新页面',
             'left_action': null, // null可以取消任何显示
             'right_action': {title: '消息' ,action: {'action':action,'data' : data}],
@@ -145,12 +145,19 @@ js调用native 方法原理
 ```
     {
         action: 'b_get_current_location',
-        data: {},
+        data: { // data可以为空，
+            'title': ,
+            'address': ,
+            latitude: ,
+            longitude: ,
+        },
     }
     Return:
     {
         action: 'b_get_current_location',
         result = {
+            'title': ,
+            'address': ,
             latitude: ,
             longitude: ,
             },
