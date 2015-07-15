@@ -213,7 +213,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .shenqing-zt{width:140px; height:40px; border-radius:4px; background:#00b966; color:#fff; line-height:40px; margin-top:5px;font-size:16px; }
 .news{width:48px; height:20px; line-height:18px; color:#fff; font-size:16px; background:#ef1d1d; margin-top:20px; border-radius:10px; margin-left:20px;}
 
-.jianli-lis{width:790px; padding:30px; overflow:hidden; color:#606c77; border:1px #eee solid}
+.jianli-lis{width:790px; padding:30px; overflow:hidden; color:#606c77;}
 .jianli-lis .tab-title{width:750px; height:40px; background:#eee; text-align:center; line-height:40px; font-size:16px;}
 .tab1{width:170px; padding-left:10px;}
 .tab2{width:170px;}
