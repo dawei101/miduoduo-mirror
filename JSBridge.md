@@ -109,7 +109,9 @@ js调用native 方法原理
 ```
     {
         action: 'b_pop',
-        data: {},
+        data: {
+            'back_refresh':true // 返回刷新上一个页面
+        },
     }
     Return:
         No return;
