@@ -19,10 +19,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <h2>手机号码验证通过！ 重设密码</h2>
         <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
           <div class="midd-input-group">
-            <input name="password" type="text" class="input-q"  placeholder="请输入新密码">
+            <input name="password" type="password" class="input-q"  placeholder="请输入新密码">
           </div>
           <div class="midd-input-group">
-            <input name="password1" type="text" class="input-q"  placeholder="再次输入密码">
+            <input name="password1" type="password" class="input-q"  placeholder="再次输入密码">
           </div>
           <a href="#" class="zc-btn">确定</a>
         <?php ActiveForm::end(); ?>

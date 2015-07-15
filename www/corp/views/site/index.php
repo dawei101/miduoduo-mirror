@@ -35,9 +35,9 @@ $this->title = '米多多兼职平台';
                   <input name="vcode" type="text" class="input-q"  placeholder="请输入短信验证码">
                 </div>
                 <div class="midd-input-group">
-                  <input name="password" type="text" class="input-q"  placeholder="请设置登录密码">
+                  <input name="password" type="password" class="input-q"  placeholder="请设置登录密码">
                 </div>
-                <div class="midd-xieyi">    
+                <div class="midd-xieyi">
  <!--                 <input name="reg-agree" class="pull-left" type="checkbox" value="">
                   <a href="">同意米多多兼职企业用户协议</a>-->
 </div>
@@ -53,7 +53,7 @@ $this->title = '米多多兼职平台';
                       <input name="username" type="text" class="input-q"  placeholder="用户名">
                     </div>
                     <div class="midd-input-group">
-                      <input name="password" type="text" class="input-q"  placeholder="密码">
+                      <input name="password" type="password" class="input-q"  placeholder="密码">
                     </div>
                     <div class="midd-xieyi">
                       <input name="rememberme" class="pull-left" type="checkbox" value="">记住我 <a href="/user/request-password-reset" class=" pull-right">忘记密码</a></div>
