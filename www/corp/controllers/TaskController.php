@@ -100,7 +100,7 @@ class TaskController extends FBaseController
             }
             $salary_unit = Yii::$app->request->post('salary_unit');
             if ($salary_unit) {
-                $model->salary_unit = array_search($salary_unit, '元/'.Task::$SALARY_UNITS);
+                $model->salary_unit = array_search($salary_unit, Task::$SALARY_UNITS);
             }
             $gender_requirement = Yii::$app->request->post('gender_requirement');
             if ($gender_requirement) {
@@ -156,7 +156,7 @@ class TaskController extends FBaseController
             }
             $salary_unit = Yii::$app->request->post('salary_unit');
             if ($salary_unit) {
-                $task->salary_unit = array_search($salary_unit, '元/'.Task::$SALARY_UNITS);
+                $task->salary_unit = array_search($salary_unit, Task::$SALARY_UNITS);
             }
             $gender_requirement = Yii::$app->request->post('gender_requirement');
             if ($gender_requirement) {
