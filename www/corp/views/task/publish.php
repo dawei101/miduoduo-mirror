@@ -68,7 +68,6 @@ $this->title = '米多多兼职平台';
                         					<?php }?>
                                         </ul>
                                         <input type="hidden" name="service_type_id" value="<?=$task->service_type_id?$task->getService_type()->one()->name:''?>"/>
-                                        <label><input name="" type="checkbox" class="changqi" value="">长期招聘</label>
                                     </div>
                                 </div>
                             </li>
