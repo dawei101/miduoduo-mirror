@@ -112,6 +112,8 @@ js调用native 方法原理
         action: 'b_pop',
         data: {
             'back_refresh':true // 返回刷新上一个页面
+            'quit_login': true //退出登陆
+            //  简历页 url .....XXX.html?login=1
         },
     }
     Return:
