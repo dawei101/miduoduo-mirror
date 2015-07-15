@@ -35,7 +35,7 @@ define(function(require, exports) {
         if (miduoduo.user.id) {
             util.href($(this).attr("href"));
         } else {
-            util.showTips("您还没有登陆！");
+            util.showTips("您还没有登录！");
         }
     });
     $(".js-my-resume").on("click", function(e) {
@@ -46,7 +46,7 @@ define(function(require, exports) {
             }
             util.href($(this).attr("href"));
         } else {
-            util.showTips("您还没有登陆！");
+            util.showTips("您还没有登录！");
         }
     });
 

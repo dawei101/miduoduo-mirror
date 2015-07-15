@@ -28,7 +28,6 @@ define(function(require, exports) {
         console.log(data);
         var user = data.items[0];
         $("body").append(tpl.parse("main-tpl", {"user" : user}));
-        alert(JSON.stringify(user.home_address));
         calendar.initCalendar(user.birthdate && new Date(user.birthdate.replace(/-/g,"/")));
         var $days = $(".dateTitle");
         var freeTimes = user.freetimes;
