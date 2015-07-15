@@ -34,6 +34,20 @@ $this->params['breadcrumbs'][] = $this->title;
     $('.zc-btn').on('click', function(){
         $(this).closest('form').submit();
     });
+    $('.yz-btn').on('click', function(){
+        var phone = $(this).closest('form').find('[name="username"]').val();
+        if (phone.length == 0) {
+            alert("请输入手机号");
+            return;
+        }
+    	$(this).removeClass('yz-btn');
+    	$(this).addClass('yz-btn-jx');
+    	$(this).html('验证码已发送');
+        $.get('/user/vcode', $(this).closest('form').serialize())
+        .done(function(data){
+            console.log(data);
+        });
+    });
 <?php
 if($model->errors){
     echo 'alert("'.array_shift(array_values($model->errors))[0].'");';

@@ -29,7 +29,7 @@ class PasswordResetRequestForm extends Model
 
             ['vcode', 'filter', 'filter' => 'trim'],
             ['vcode', 'required'],
-            ['vcode', 'match', 'pattern'=>'/^\d{6}$/', 'message'=>'验证码不正确.'],
+            ['vcode', 'match', 'pattern'=>'/^\d{4}$/', 'message'=>'验证码不正确.'],
             ['vcode', function ($attribute, $params) {
                 if (!$this->hasErrors()) {
                     if(!Utils::validateVerifyCode($this->username, $this->vcode)){

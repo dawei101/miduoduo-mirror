@@ -31,3 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
   </div>
 </div>
 <!-- InstanceEndEditable -->
+<script type="text/javascript">
+    $('.zc-btn').on('click', function(){
+        $(this).closest('form').submit();
+    });
+</script>
