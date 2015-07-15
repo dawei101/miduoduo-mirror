@@ -47,6 +47,7 @@ $this->title = '米多多兼职平台';
                 <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
                     <div class="right-center">
                         <div class="conter-title">发布兼职职位</div>
+                        <!--<div class="tishi-cs">您今天的发布次数已经用完，请明天再来哟 ~ 立即认证可增加发布条数，<a href="#">去认证</a></div>-->
                         <?php $form = ActiveForm::begin();?>
                         <ul class="tianxie-box">
                             <li>
@@ -67,51 +68,54 @@ $this->title = '米多多兼职平台';
                         					<?php }?>
                                         </ul>
                                         <input type="hidden" name="service_type_id" value="<?=$task->service_type_id?$task->getService_type()->one()->name:''?>"/>
-                                        <p class="cuowu">内容不能为空!</p>
+                                        <label><input name="" type="checkbox" class="changqi" value="">长期招聘</label>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="pull-left title-left text-center"><em>*</em>工作时间</div>
-                                <div class="pull-left right-box div">
-                                    <div class="riqi">
-                                        <input name="from_date" type="text" readonly style="width: 200px" name="reservation" class="reservation" value="<?=$task?$task->from_date:'2015-08-01'?>" />
-                                        <div class="nice-select times" name="nice-select">
-                                            <input name="from_time" type="text" value="<?=$task?$task->from_time:'13:00'?>" ><i class="iconfont">&#xe60d;</i>
-                                            <ul>
-                                                <li>00:00</li>
-                                                <li>00:30</li>
-                                                <li>01:00</li>
-                                                <li>01:30</li>
-                                                <li>02:00</li>
-                                                <li>02:30</li>
-                                                <li>03:00</li>
-                                                <li>03:30</li>
-                                            </ul>
-                                        </div>
-                                        <span class="pull-left">至</span>
-                                        <div class="nice-select times" name="nice-select">
-                                            <input name="to_time" type="text" value="<?=$task?$task->to_time:'13:00'?>" ><i class="iconfont">&#xe60d;</i>
-                                            <ul>
-                                                <li>00:00</li>
-                                                <li>00:30</li>
-                                                <li>01:00</li>
-                                                <li>01:30</li>
-                                                <li>02:00</li>
-                                                <li>02:30</li>
-                                                <li>03:00</li>
-                                                <li>03:30</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <p class="cuowu">内容不能为空!</p>
-                                </div>
+                              <div class="pull-left title-left text-center"><em>*</em>工作时间</div>
+                              <div class="pull-left right-box div">
+                                <div class="riqi">
+                                  <input type="text" readonly style="width: 330px" name="from_date" class="reservation" value="<?=$task?$task->from_date:'2015-08-01'?>" placeholder="选择您的工作起始日期"/>
+                                  <label><input name="" type="checkbox" class="changqi" value="">长期招聘</label>
+                              </div>
+                              <p class="cuowu">内容不能为空!</p>
+                              <div class="time-xz">
+                                  <div class="nice-select times" name="nice-select">
+                                    <input name="from_time" type="text" value="<?=$task?$task->from_time:'13:00'?>" ><i class="iconfont">&#xe60d;</i>
+                                    <ul>
+                                      <li>00:00</li>
+                                      <li>00:30</li>
+                                      <li>01:00</li>
+                                      <li>01:30</li>
+                                      <li>02:00</li>
+                                      <li>02:30</li>
+                                      <li>03:00</li>
+                                      <li>03:30</li>
+                                    </ul>
+                                  </div>
+                                  <span class="pull-left">至</span>
+                                  <div class="nice-select times" name="nice-select">
+                                    <input name="to_time" type="text" value="<?=$task?$task->to_time:'13:00'?>" ><i class="iconfont">&#xe60d;</i>
+                                    <ul>
+                                      <li>00:00</li>
+                                      <li>00:30</li>
+                                      <li>01:00</li>
+                                      <li>01:30</li>
+                                      <li>02:00</li>
+                                      <li>02:30</li>
+                                      <li>03:00</li>
+                                      <li>03:30</li>
+                                    </ul>
+                                  </div>
+                              </div>
+                              <p class="cuowu">内容不能为空!</p>
                             </li>
                             <li>
-                                <div class="pull-left title-left text-center"><em>*</em>截止日期</div>
+                                <div class="pull-left title-left text-center"><em>*</em>报名截止日期</div>
                                 <div class="pull-left right-box">
                                     <div class="riqi">
-                                        <input name="to_date" type="text" readonly style="width: 200px" name="birthday" id="birthday" value="<?=$task?$task->to_date:'2015-09-01'?>" /></div>
+                                        <input name="to_date" type="text" readonly style="width: 330px" name="birthday" id="birthday" value="<?=$task?$task->to_date:'2015-09-01'?>" /></div>
                                         <p class="cuowu">内容不能为空!</p>
                                     </div>
                                 </li>
@@ -148,7 +152,7 @@ $this->title = '米多多兼职平台';
                                     <div class="pull-left title-left text-center"><em>*</em>工作内容</div>
                                     <div class="pull-left right-box">
                                         <div id="editor" class="edit">
-                                            <?php if($task) {
+                                            <?php if($task->detail) {
                                                 echo $task->detail;
                                             }else{?>
                                             <p>工作时间：</p>
@@ -167,7 +171,7 @@ $this->title = '米多多兼职平台';
                                             <input name="need_quantity" type="text" class="pull-left" placeholder="人数" value="<?=$task->need_quantity?>">
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
-                                            <input name="gender_requirement" type="text" class="text-center" placeholder="性别" value="<?=$task->gender_requirement!=false?TASK::$GENDER_REQUIREMENT[$task->gender_requirement]:''?>">
+                                            <input name="gender_requirement" type="text" placeholder="性别" value="<?=$task->gender_requirement!=false?TASK::$GENDER_REQUIREMENT[$task->gender_requirement]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>男女不限</li>
@@ -176,7 +180,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
-                                            <input name="height_requirement" type="text" class="text-center" placeholder="身高" value="<?=$task->height_requirement!=false?TASK::$HEIGHT_REQUIREMENT[$task->height_requirement]:''?>">
+                                            <input name="height_requirement" type="text" placeholder="身高" value="<?=$task->height_requirement!=false?TASK::$HEIGHT_REQUIREMENT[$task->height_requirement]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>150cm以下</li>
@@ -242,7 +246,7 @@ $this->title = '米多多兼职平台';
                                             <input name="salary" type="text" class="pull-left" placeholder="数量，如100" value="<?=$task->salary?>">
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
-                                            <input name="salary_unit" type="text" class="text-center" placeholder="金额单位" value="<?=$task->salary_unit!=false?TASK::$SALARY_UNITS[$task->salary_unit]:''?>">
+                                            <input name="salary_unit" type="text" placeholder="金额单位" value="<?=$task->salary_unit!=false?TASK::$SALARY_UNITS[$task->salary_unit]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>元/天</li>
@@ -250,7 +254,7 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left ma-right ma-right" name="nice-select">
-                                            <input type="text" class="text-center" name="clearance_period" placeholder="结算方式" value="<?=$task->clearance_period!=false?TASK::$CLEARANCE_PERIODS[$task->clearance_period]:''?>">
+                                            <input type="text" name="clearance_period" placeholder="结算方式" value="<?=$task->clearance_period!=false?TASK::$CLEARANCE_PERIODS[$task->clearance_period]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>周结</li>
