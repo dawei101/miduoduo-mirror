@@ -4,6 +4,8 @@ define(function(require, exports) {
     var util = require("../widget/util");
     var calendar = require("../widget/calendar");
 
+    var homeID;
+
     WebViewJavascriptBridge.defaultHandler(handle_action);
     //jsbridge 主动监听
     function handle_action(data, responseCallback) {
@@ -102,12 +104,13 @@ define(function(require, exports) {
     //居住地点
     $(".js-set-address").on("click", function() {
         var $this = $(this);
-        util.setAddress(function(data) {
+        util.setAddress($(this).find("input").val(), function(data) {
             if (!data) {
                 return;
             }
             $this.find("input").val(data.address);
             $.post(api.gen("address"), data, function(data) {
+                homeID = data.id;
                 console.log(data);
             });
         });
@@ -121,6 +124,7 @@ define(function(require, exports) {
 
         var $sc = $(".js-special-col");
         data[$sc.attr("name")] = $sc.find(".sex-act").data("val");
+        data.home = homeID;
         console.log("简历",data);
         $.post(api.gen("resume"), data, function(data) {
             //验证失败
@@ -145,7 +149,7 @@ define(function(require, exports) {
                 return;
             }
             util.showTips("提交成功", function() {
-                util.pop();
+                util.pop(true);
             })
 
         })

@@ -1,3 +1,4 @@
+<%setTitle("修改简历")%>
 <%include ../header.html%>
 <%-css("user/resume-change")%>
 <%-mainJs("user/resume-change")%>
@@ -51,7 +52,7 @@
             <li>
                 <div class="title">居住地点</div>
                 <div class="con control js-set-address">
-                    <input readonly type="text" placeholder="请选择居住地点" value="<?=user.home_address?>"/>
+                    <input readonly type="text" placeholder="请选择居住地点" value="<?=user.home_address ? user.home_address.address : ''?>"/>
                 </div>
             </li>
         </ul>
@@ -60,7 +61,7 @@
     <div class="main2">
         <ul class="resume-part3">
             <li class="sub1">
-                <div class="title">可兼类别</div>
+                <div class="title">兼职意向</div>
                 <div class="con control js-sel-service-type">
                     <?var typeID = "";?>
                     <span class="service-type-show">
@@ -69,7 +70,7 @@
                     <? typeID += e.id + ','; }); ?>
                     </span>
 
-                    <input disabled type="<?=(typeID ? 'hidden' : 'text')?>" placeholder="请选择您擅长的兼职类别" value="<?=typeID?>"/>
+                    <input readonly type="<?=(typeID ? 'hidden' : 'text')?>" placeholder="请选择您擅长的兼职类别" value="<?=typeID?>"/>
                 </div>
             </li>
             <li class="sub2">
