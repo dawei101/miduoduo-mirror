@@ -31,5 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
   </div>
 </div>
 <script type="text/javascript">
-    $('.zc-btn').closest('form').submit();
+    $('.zc-btn').on('click', function(){
+        $(this).closest('form').submit();
+    });
 </script>
