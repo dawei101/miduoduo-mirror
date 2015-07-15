@@ -130,7 +130,7 @@ class UserController extends FBaseController
         if (!$user) {
             return $this->renderJson(['result' => false, 'error' => '这个手机号没有注册过，请先注册.']);
         }
-        if (！Yii::$app->user->login($user, 3600 * 24 * 30);) {
+        if (!Yii::$app->user->login($user, 3600 * 24 * 30)) {
             return $this->renderJson(['result' => false, 'error' => '登录失败，请再试一次']);
         }
         return $this->renderJson(['result' => true]);
