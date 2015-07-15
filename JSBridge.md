@@ -22,7 +22,7 @@ js调用native 方法原理
         action: 'b_require_auth',
         data: {
             'message': '请先登陆'
-            'resume' : true //是否需要简历填写
+            'url' : view/x.html //登录后跳转
             }
     }
 
