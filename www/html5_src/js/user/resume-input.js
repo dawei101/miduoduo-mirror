@@ -3,7 +3,7 @@ define(function(require, exports) {
     var api = require("../widget/api");
     var util = require("../widget/util");
     var calendar = require("../widget/calendar");
-
+    var urlHandle = require("../widget/url-handle")
     var homeID;
 
     WebViewJavascriptBridge.defaultHandler(handle_action);
@@ -149,7 +149,11 @@ define(function(require, exports) {
                 return;
             }
             util.showTips("提交成功", function() {
-                util.pop(true);
+                if (urlHandle.getParams(window.location.search).login == 1) {
+                    util.popLogin(true);
+                } else {
+                    util.pop(true);
+                }
             })
 
         })
