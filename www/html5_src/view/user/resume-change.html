@@ -52,7 +52,7 @@
             <li>
                 <div class="title">居住地点</div>
                 <div class="con control js-set-address">
-                    <input readonly type="text" placeholder="请选择居住地点" value="<?=user.home_address ? user.home_address.address : ''?>"/>
+                    <input readonly type="text" placeholder="请选择居住地点" value="<?=user.home_address ? user.home_address.address : ''?>" data-address='<?=user.home_address? JSON.stringify(user.home_address) : null?>' />
                 </div>
             </li>
         </ul>

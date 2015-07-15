@@ -20,20 +20,22 @@ define(function(require, exports) {
         app(opts, callback);
     }
     //登陆
-    function appAuth(callback) {
+    function appAuth(url, callback) {
         var opts = {
             action: 'b_require_auth',
             data: {
+                "url" : url
             }
         }
         app(opts, callback);
     }
 
     //注册
-    function appReg() {
+    function appReg(url) {
         var opts = {
             action: 'b_require_reg',
             data: {
+                "url" : url
             }
         }
         app(opts);
@@ -92,17 +94,23 @@ define(function(require, exports) {
         }
     }
 
-    //登陆
-    function auth() {
-        appAuth(function(data) {
-            window.location.reload(); //登陆成功直接重新加载页面
+    /**
+     * 登陆
+     * @param url 登陆成功后跳转的页面
+     */
+    function auth(url) {
+        appAuth(url, function(data) {
+            //window.location.reload(); //登陆成功直接重新加载页面
         });
     }
 
-    //注册
-    function reg() {
-        appReg(function(data) {
-            window.location.reload();
+    /**
+     * 注册
+     * @param url 注册成功后跳转的页面
+     */
+    function reg(url) {
+        appReg(url, function(data) {
+            //window.location.reload();
         });
     }
 
@@ -134,6 +142,11 @@ define(function(require, exports) {
         app({ action: 'b_pop', data : { "back_refresh" : isBackRefresh}}, null);
     }
 
+    //撤销登陆页面：撤销登录页会刷新所有webview
+    function popLogin (isPopLogin) {
+        app({ action: 'b_pop', data : { "quit_login" : isPopLogin}}, null);
+    }
+
     //日期格式化输出
     Date.prototype.Format = function (fmt) { //author: meizz
         var o = {
@@ -158,4 +171,5 @@ define(function(require, exports) {
     exports.setAddress = setAddress;
     exports.cf = cf;
     exports.pop = pop;
+    exports.popLogin = popLogin;
 });
