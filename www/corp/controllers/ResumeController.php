@@ -71,12 +71,15 @@ class ResumeController extends FBaseController
         $query ->select([
             'jz_task_applicant.id',
             'jz_task_applicant.created_time',
+            'jz_task_applicant.status',
             'jz_resume.name',
             'TIMESTAMPDIFF(YEAR, jz_resume.birthdate , CURDATE()) as age',
             'jz_resume.gender',
             'jz_resume.college',
             'jz_resume.phonenum',
-            'jz_task.title']
+            'jz_task.title',
+            'jz_task.gid',
+            ]
             )->from('jz_task_applicant')
              ->join('LEFT OUTER JOIN', 'jz_resume',
 				'jz_resume.user_id = jz_task_applicant.user_id')
