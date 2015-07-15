@@ -71,6 +71,8 @@ $('.yz-btn').on('click', function(){
     var phone = $(this).closest('form').find('[name="username"]').val();
     if (phone.length == 0) {
         $('.error-message').html("请输入手机号");
+        $('.error-message').show();
+        return;
     }
 	$(this).removeClass('yz-btn');
 	$(this).addClass('yz-btn-jx');
