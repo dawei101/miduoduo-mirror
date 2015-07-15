@@ -14,5 +14,11 @@ $config = yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/../config/main-local.php')
 );
 
+header('Access-Control-Allow-Origin: *');
+if("OPTIONS" == $_SERVER['REQUEST_METHOD']) {
+    header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE');
+    exit(0);
+}
+
 $application = new yii\web\Application($config);
 $application->run();
