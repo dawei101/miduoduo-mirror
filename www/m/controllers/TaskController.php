@@ -74,8 +74,6 @@ class TaskController extends \m\MBaseController
             'totalCount' => $countQuery->count()]);
         $tasks = $query->offset($pages->offset)
             ->limit($pages->limit)->all();
-        var_dump($query);
-
 
         $city = District::findOne($city_id);
         return $this->render('index', 
