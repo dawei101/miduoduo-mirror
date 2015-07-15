@@ -87,7 +87,7 @@
     <div class="main">
         <div class="part1">
             <div class="title"><?=data.title?></div>
-            <div class="label firstLabel"><?=+data.salary + "/" + (data.salary_unit_label || "?")?></div>
+            <div class="label firstLabel"><?=+data.salary + "元/" + (data.salary_unit_label || "?")?></div>
             <? data.labels.forEach(function(item){ ?>
             <div class="label">
                 <?=item?>
@@ -138,6 +138,7 @@
                 电话咨询
             </a>
         </div>
+        <div class="report-tips">如收取费用或欺诈，点击下方举报</div>
         <div class="part5-placeholder">
             <div>占位</div>
         </div>

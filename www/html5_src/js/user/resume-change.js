@@ -28,6 +28,7 @@ define(function(require, exports) {
         console.log(data);
         var user = data.items[0];
         $("body").append(tpl.parse("main-tpl", {"user" : user}));
+        alert(JSON.stringify(user.home_address));
         calendar.initCalendar(user.birthdate && new Date(user.birthdate.replace(/-/g,"/")));
         var $days = $(".dateTitle");
         var freeTimes = user.freetimes;
@@ -100,7 +101,7 @@ define(function(require, exports) {
         //居住地点
         $(".js-set-address").on("click", function() {
             var $this = $(this);
-            util.setAddress($(this).find("input").val(), function(data) {
+            util.setAddress($(this).find("input").data("address"), function(data) {
                 if (!data) {
                     return;
                 }
@@ -121,7 +122,6 @@ define(function(require, exports) {
 
             var $sc = $(".js-special-col");
             data[$sc.attr("name")] = $sc.find(".sex-act").data("val");
-            data["phonenum"] = miduoduo.user.phone;
             data.home = homeID;
             console.log("简历",data);
             $.put(api.gen("resume/" + miduoduo.user.id), data, function(data) {

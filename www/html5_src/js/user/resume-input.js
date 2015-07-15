@@ -1,10 +1,14 @@
 define(function(require, exports) {
     require("zepto-ext");
-    var api = require("../widget/api");
     var util = require("../widget/util");
     var calendar = require("../widget/calendar");
     var urlHandle = require("../widget/url-handle")
     var homeID;
+    var access_token = urlHandle.getParams(window.location.search).access_token; //app调用简历页时用
+    if (access_token) {
+        miduoduo.user.access_token = access_token;
+    }
+    var api = require("../widget/api");
 
     WebViewJavascriptBridge.defaultHandler(handle_action);
     //jsbridge 主动监听
@@ -15,18 +19,18 @@ define(function(require, exports) {
                 value: true
             }
         }
-        if (location.hash != "") {
-            location.hash = "";
-            rst.result.value = false;
+
+        util.cf({title : "注意", message : "确定放弃编辑吗？"}, function(data) {
+            if (data.result.value == 1 && urlHandle.getParams(window.location.search).login == 1) {
+                util.popLogin(true);
+                return;
+            }
+            if (data.result.value == 0) {
+                rst.result.value = false;
+            }
             responseCallback(rst);
-        } else {
-            util.cf({title : "注意", message : "确定放弃编辑吗？"}, function(data) {
-                if (data.result.value == 0) {
-                    rst.result.value = false;
-                }
-                responseCallback(rst);
-            });
-        }
+        });
+
 
     };
 
@@ -104,14 +108,13 @@ define(function(require, exports) {
     //居住地点
     $(".js-set-address").on("click", function() {
         var $this = $(this);
-        util.setAddress($(this).find("input").val(), function(data) {
+        util.setAddress(null, function(data) {
             if (!data) {
                 return;
             }
             $this.find("input").val(data.address);
             $.post(api.gen("address"), data, function(data) {
                 homeID = data.id;
-                console.log(data);
             });
         });
     })
@@ -148,6 +151,7 @@ define(function(require, exports) {
                 }
                 return;
             }
+            window.localStorage.hasResume = true;
             util.showTips("提交成功", function() {
                 if (urlHandle.getParams(window.location.search).login == 1) {
                     util.popLogin(true);
