@@ -1,6 +1,6 @@
 <?php
 return [
-    'adminEmail' => 'webmaster@miduoduo.com',
+    'adminEmail' => 'webmaster@miduoduo.cn',
     'supportEmail' => 'contact@miduoduo.cn',
     'bugEmail' => '1bbd853df30a46a695cd7d350bee6caa+lukps3jjzxxxx3gr1rzd@boards.trello.com',
 

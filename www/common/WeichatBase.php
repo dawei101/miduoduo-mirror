@@ -5,10 +5,24 @@ use Yii;
 use common\models\WeichatAccesstoken;
 use common\models\WeichatUserLog;
 
-class WeichatBase{
+class WeichatBase
+{
 
+    static $session = null;
+
+    public static function getSession(){
+
+        if (!static::$session) {
+            static::$session = new WeichatBase();
+        }
+        return static::$session;
+    }
 
     private $_access_token_key = 'wechat_access_token';
+
+
+    //运行时access_token 有可能在cache释放
+    private $_access_token = null;
 
     /**
      *
@@ -20,19 +34,24 @@ class WeichatBase{
      * @return str access-token
      *
      */
+
+
     public function getWeichatAccessToken(){
-        $access_token = Yii::$app->cache->get($this->_access_token_key);
-        if($access_token){
-            $appid = Yii::$app->params['weichat']['appid'];
-            $secret = Yii::$app->params['weichat']['secret'];
-            $getTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$secret;
-            $json = $this->getWeichatAPIdata($getTokenUrl);
-            $arr = json_decode($json); 
-            $access_token = $arr->access_token;
-            Yii::$app->cache->set(
-                $this->_access_token_key, $access_token, 1.8 * 60 * 60);
+
+        if (!$this->_access_token){
+            $this->_access_token = Yii::$app->cache->get($this->_access_token_key);
+            if($this->_access_token){
+                $appid = Yii::$app->params['weichat']['appid'];
+                $secret = Yii::$app->params['weichat']['secret'];
+                $getTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$secret;
+                $json = $this->getWeichatAPIdata($getTokenUrl);
+                $arr = json_decode($json); 
+                $this->_access_token = $arr->access_token;
+                Yii::$app->cache->set(
+                    $this->_access_token_key, $access_token, 1.8 * 60 * 60);
+            }
         }
-        return $access_token;
+        return $this->_access_token;
     }
 
     /**
@@ -77,10 +96,10 @@ class WeichatBase{
     public function getWeichatAPIdata($targetUrl,$getData=''){
         // 请求的数据
         $curlobj    = curl_init();
-        curl_setopt($curlobj, CURLOPT_URL,$targetUrl);
+        curl_setopt($curlobj, CURLOPT_URL, $targetUrl);
         curl_setopt($curlobj, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curlobj, CURLOPT_HEADER, 0);
-        curl_setopt($curlobj, CURLOPT_POSTFIELDS,$getData);
+        curl_setopt($curlobj, CURLOPT_POSTFIELDS, $getData);
         curl_setopt($curlobj, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curlobj, CURLOPT_SSL_VERIFYHOST, FALSE);
         $returnstr  = curl_exec($curlobj);
@@ -99,5 +118,50 @@ class WeichatBase{
         $userModel->created_time    = date("Y-m-d H:i:s",time());
         $userModel->event_type      = $event_type;
         $userModel->save();
+    }
+
+    private $_ticket_key = '_wechat_jsapi_ticket';
+
+    public function getJsapiTicket()
+    {
+        $ticket = Yii::$app->cache->get($this->_ticket_key);
+        if (!$ticket) {
+
+            $baseurl = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="
+                . $this->getWeichatAccessToken()
+                ."&type=jsapi";
+            $retry = 3;
+            while ($retry>0 && !$ticket){
+                try {
+                    $c = file_get_contents($baseurl);
+                    $arr = json_decode($c);
+                    if ($arr['errcode']==0){
+                        $ticket = $arr['ticket'];
+                        Yii::$app->cache->set(
+                            $this->_ticket_key, $ticket, 1.8 * 60 * 60);
+                    }
+                } catch (Exception $e) {
+                    Yii::warning("Get wechat jsapi ticket failed with error: " . $e->getMessage());
+                }
+                $retry -= 1;
+            }
+        }
+        return $ticket;
+    }
+
+    public function signParams($params){
+        $params['jsapi_ticket'] = $this->getJsapiTicket();
+        if (!isset($params['noncestr'])){
+            $params['noncestr'] = strval(rand(10000, 99999));
+        }
+        if (!isset($params['timestamp'])){
+            $params['timestamp'] = time() . '';
+        }
+        ksort($params);
+        $arr = [];
+        foreach ($params as $k=>$v){
+            $arr[] = $k . '=' . $v;
+        }
+        return sha1(implode('&', $arr));
     }
 }

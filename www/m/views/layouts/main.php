@@ -1,15 +1,21 @@
 <?php
+
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
+use yii\helpers\Url;
+
 use m\assets\AppAsset;
+use m\assets\WechatAsset;
 use m\widgets\Alert;
+use common\Utils;
+use common\WeichatBase;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 AppAsset::register($this);
+if (Utils::isInWechat()){
+    WechatAsset::register($this);
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -59,6 +65,29 @@ AppAsset::register($this);
     });
 </script>
 <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
+<?php
+$wc_session = WeichatBase::getSession();
+if (Utils::isInWechat()){
+    $params = [
+        'url'=> Url::current(),
+        'nonceStr'=> ''. rand(100000, 999999),
+        'jsapi_ticket'=> $wc_session->getJsapiTicket(),
+        'timestamp'=> time(),
+    ];
+    $params['signature'] = $wc_session->signParams($params);
+    $params['jsApiList'] = $this->wechat_apis;
+    $params['debug'] = YII_DEBUG;
+    $params['appId'] = Yii::$app->params['weichat']['appid'];
+    $params_json = json_encode($params);
+?>
+    <div style="display:none;">
+        <img src="/static/img/weichat_icon.jpg" /> 
+    </div>
+    <script>
+        wx.config(<?=$params_json?>);
+    </script>
+<?php } ?>
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
