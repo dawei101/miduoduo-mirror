@@ -40,6 +40,14 @@ class PasswordResetRequestForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'username' => '手机号',
+            'vcode' => '验证码',
+        ];
+    }
+
     /**
      * Sends an email with a link, for resetting the password.
      *

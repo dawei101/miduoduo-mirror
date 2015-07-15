@@ -76,7 +76,7 @@ $('.yz-btn').on('click', function(){
         $('.error-message').show(2);
         return;
     }
-    if(phone.match(/^1[3|4|5|8][0-9]\d{4,8}$/)){
+    if(!phone.match(/^1[3|4|5|8][0-9]\d{4,8}$/)){
         $('.error-message').html("请输入正确的手机号");
         $('.error-message').show(2);
         return;
