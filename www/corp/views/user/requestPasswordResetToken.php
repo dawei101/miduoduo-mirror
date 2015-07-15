@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">
           <span class="yz-btn pull-left text-center">获取验证码</span> </div>
         <div class="midd-input-group">
-          <input name="password" type="text" class="input-q"  placeholder="请输入短信验证码">
+          <input name="vcode" type="text" class="input-q"  placeholder="请输入短信验证码">
         </div>
         <a href="#" class="zc-btn">下一步</a>
         </div>
@@ -34,4 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
     $('.zc-btn').on('click', function(){
         $(this).closest('form').submit();
     });
+<?php
+if($model->errors){
+    echo 'alert("'.array_shift(array_values($model->errors))[0].'");';
+} ?>
+
 </script>
