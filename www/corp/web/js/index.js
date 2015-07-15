@@ -29,7 +29,12 @@ $('#cbox-2 .hotNavs .zc-btn').click(function(e){
         if (data.result === true) {
             window.location = '/task/';
             return;
+        }else{
+        	var error = data.error;
+        	$("#cbox-2 .myNavs .error-message").html(error);
+        	$("#cbox-2 .myNavs .error-message").show();
         }
+
     });
     return false;
 });

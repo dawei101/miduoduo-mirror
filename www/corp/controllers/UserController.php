@@ -38,7 +38,7 @@ class UserController extends FBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'register', 'vcode','request-password-reset', 'reset-password'],
+                        'actions' => ['login', 'register', 'vcode','request-password-reset', 'reset-password', 'vlogin'],
                         'allow' => true,
                     ],
                     [
@@ -52,6 +52,7 @@ class UserController extends FBaseController
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['get'],
+                    'vlogin' => ['post'],
                 ],
             ],
         ];
@@ -116,6 +117,23 @@ class UserController extends FBaseController
                 'result'=> false,
                 'msg'=> "验证码发送失败, 请稍后重试。"
         ]);
+    }
+
+    public function actionVlogin()
+    {
+        $username = Yii::$app->request->post('username');
+        $vcode = Yii::$app->request->post('vcode');
+        if(!Utils::validateVerifyCode($username, $vcode)){
+            return $this->renderJson(['result' => false, 'error' => '手机号或验证码不正确.']);
+        }
+        $user = User::findByUsername($username);
+        if (!$user) {
+            return $this->renderJson(['result' => false, 'error' => '这个手机号没有注册过，请先注册.']);
+        }
+        if (！Yii::$app->user->login($user, 3600 * 24 * 30);) {
+            return $this->renderJson(['result' => false, 'error' => '登录失败，请再试一次']);
+        }
+        return $this->renderJson(['result' => true]);
     }
 
     public function actionLogout()
