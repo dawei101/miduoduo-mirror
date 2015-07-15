@@ -66,7 +66,7 @@ class TaskController extends FBaseController
     {
         $condition = ['user_id'=>Yii::$app->user->id];
         $status = Yii::$app->request->get('status');
-        if ($status) {
+        if (array_key_exists('status', $_GET)) {
             $condition['status'] = $status;
         }
         $query = Task::find()
