@@ -42,12 +42,24 @@ $this->params['breadcrumbs'][] = $this->title;
         }
     	$(this).removeClass('yz-btn');
     	$(this).addClass('yz-btn-jx');
-    	$(this).html('验证码已发送');
+        counter($(this), 60);
         $.get('/user/vcode', $(this).closest('form').serialize())
         .done(function(data){
             console.log(data);
         });
     });
+    function counter($el, n) {
+        (function loop() {
+           $el.html("重新发送(" + n + ")");
+           if (n--) {
+               setTimeout(loop, 1000);
+           }else {
+               $el.addClass('yz-btn');
+           	   $el.removeClass('yz-btn-jx');
+                  $el.html('发送验证码');
+           }
+        })();
+    }
 <?php
 if($model->errors){
     echo 'alert("'.array_shift(array_values($model->errors))[0].'");';

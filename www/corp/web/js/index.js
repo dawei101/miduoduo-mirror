@@ -92,7 +92,7 @@ $('.yz-btn').on('click', function(){
 
 function counter($el, n) {
     (function loop() {
-       $el.html("验证码已发送(" + n + ")");
+       $el.html("重新发送(" + n + ")");
        if (n--) {
            setTimeout(loop, 1000);
        }else {
