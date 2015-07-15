@@ -75,7 +75,7 @@ $this->title = '米多多兼职平台';
                               <div class="pull-left title-left text-center"><em>*</em>工作时间</div>
                               <div class="pull-left right-box div">
                                 <div class="riqi">
-                                  <input type="text" readonly style="width: 330px" name="from_date" class="reservation" value="<?=$task?$task->from_date:'2015-08-01'?>" placeholder="选择您的工作起始日期"/>
+                                  <input type="text" readonly style="width: 330px" name="from_date" class="reservation" value="<?=$task->from_date?$task->from_date:date('Y-m-d')?>" placeholder="选择您的工作起始日期"/>
                                   <label><input name="" type="checkbox" class="changqi" value="">长期招聘</label>
                               </div>
                               <p class="cuowu">内容不能为空!</p>
@@ -114,7 +114,7 @@ $this->title = '米多多兼职平台';
                                 <div class="pull-left title-left text-center"><em>*</em>报名截止日期</div>
                                 <div class="pull-left right-box">
                                     <div class="riqi">
-                                        <input name="to_date" type="text" readonly style="width: 330px" name="birthday" id="birthday" value="<?=$task?$task->to_date:'2015-09-01'?>" /></div>
+                                        <input name="to_date" type="text" readonly style="width: 330px" name="birthday" id="birthday" value="<?=$task->to_date?$task->to_date:date('Y-m-d')?>" /></div>
                                         <p class="cuowu">内容不能为空!</p>
                                     </div>
                                 </li>
