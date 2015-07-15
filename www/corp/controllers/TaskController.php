@@ -100,7 +100,7 @@ class TaskController extends FBaseController
             }
             $salary_unit = Yii::$app->request->post('salary_unit');
             if ($salary_unit) {
-                $model->salary_unit = array_search($salary_unit, Task::$SALARY_UNITS);
+                $model->salary_unit = array_search($salary_unit, '元/'.Task::$SALARY_UNITS);
             }
             $gender_requirement = Yii::$app->request->post('gender_requirement');
             if ($gender_requirement) {
@@ -131,7 +131,7 @@ class TaskController extends FBaseController
                 $model->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
             $model->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
-            $model->status = 1;
+            $model->status = 30;
             if ($model->validate() && $model->save()) {
                 return $this->redirect('/task/');
             }
@@ -156,7 +156,7 @@ class TaskController extends FBaseController
             }
             $salary_unit = Yii::$app->request->post('salary_unit');
             if ($salary_unit) {
-                $task->salary_unit = array_search($salary_unit, Task::$SALARY_UNITS);
+                $task->salary_unit = array_search($salary_unit, '元/'.Task::$SALARY_UNITS);
             }
             $gender_requirement = Yii::$app->request->post('gender_requirement');
             if ($gender_requirement) {
@@ -211,6 +211,7 @@ class TaskController extends FBaseController
 
     public function actionDown($gid)
     {
+        $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
         $task->status = 20;
         $task->from_time = substr($task->from_time, 0, -3);
@@ -223,6 +224,7 @@ class TaskController extends FBaseController
 
     public function actionDelete($gid)
     {
+        $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
         $task->status = 10;
         $task->from_time = substr($task->from_time, 0, -3);
