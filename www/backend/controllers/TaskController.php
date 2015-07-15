@@ -124,4 +124,11 @@ class TaskController extends BBaseController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionPassed($id,$status){
+        $model = $this->findModel($id);
+        $model->status = $status;
+        $model->save();   
+        return $this->redirect(['task/index']);
+    }
 }

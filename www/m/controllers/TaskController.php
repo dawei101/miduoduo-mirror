@@ -59,7 +59,7 @@ class TaskController extends \m\MBaseController
         }
 
         $query = Task::find()->where(['status'=>Task::STATUS_OK]);
-        $query = $query->where(['city_id'=>$city_id]);
+        $query = $query->andWhere(['city_id'=>$city_id]);
         if (!empty($district)){
             $query = $query->where(['district_id'=>$district]);
         }

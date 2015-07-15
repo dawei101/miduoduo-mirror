@@ -64,13 +64,15 @@ class Task extends \common\BaseActiveRecord
     ];
 
     public static $STATUSES = [
-        0=>'正常',
+        0 =>'正常',
+        1 =>'待审核',
         10=>'已下线',
         20=>'已删除',
         100=>'爬取需编辑',
     ];
 
     const STATUS_OK = 0;
+    const STATUS_UN_PASSED = 1;
     const STATUS_OFFLINE = 10;
     const STATUS_DELETED = 20;
     const STATUS_UNCONFIRMED_FROM_SPIDER = 100;
