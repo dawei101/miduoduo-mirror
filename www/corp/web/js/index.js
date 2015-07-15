@@ -83,9 +83,22 @@ $('.yz-btn').on('click', function(){
     }
 	$(this).removeClass('yz-btn');
 	$(this).addClass('yz-btn-jx');
-	$(this).html('验证码已发送');
+    counter($(this), 60);
     $.get('/user/vcode', $(this).closest('form').serialize())
     .done(function(data){
         console.log(data);
     });
 });
+
+function counter($el, n) {
+    (function loop() {
+       $el.html("验证码已发送(" + n + ")");
+       if (n--) {
+           setTimeout(loop, 1000);
+       }else {
+           $el.addClass('yz-btn');
+       	   $el.removeClass('yz-btn-jx');
+              $el.html('发送验证码');
+       }
+    })();
+}
