@@ -60,7 +60,10 @@ $this->title = '米多多兼职平台';
                     <div class="pull-left tab2 text-center borser-tab-right"><?=$resume['title']?></div>
                     <div class="pull-left tab3 text-center borser-tab-right"><?=$resume['phonenum']?$resume['phonenum']:'&nbsp;'?></div>
                     <div class="pull-left tab4 text-center borser-tab-right"><?=$resume['created_time']?></div>
+                    <!--
                     <div class="pull-left tab5"><button class="pull-left jishou" aid="<?=$resume['id']?>">接受报名</button><button class="pull-left jujue" aid="<?=$resume['id']?>">不合适</button></div>
+                -->
+                    <div class="pull-left tab5"><div class="yijishou"?>">已接受</div></div>
                 </dd>
                 <?php }?>
                 <?=LinkPager::widget(['pagination' => $pagination])?>
