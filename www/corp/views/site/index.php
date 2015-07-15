@@ -38,11 +38,12 @@ $this->title = '米多多兼职平台';
                   <input name="password" type="text" class="input-q"  placeholder="请设置登录密码">
                 </div>
                 <div class="midd-xieyi">
+                    <!--
                   <input name="reg-agree" class="pull-left" type="checkbox" value="">
-                  <a href="">同意米多多兼职企业用户协议</a></div>
+                  <a href="">同意米多多兼职企业用户协议</a></div> -->
                 <a href="#" class="zc-btn">注册</a>
-              <?php ActiveForm::end(); ?>
               </div>
+            <?php ActiveForm::end(); ?>
               <div id="cbox-2" class="cbox">
                 <div class="ctnerTab"><a href="#" class="on">普通方式登录</a> <a href="#">手机动态码登录</a></div>
                <div class="myNavs rtNavs">
