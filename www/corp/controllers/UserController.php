@@ -107,12 +107,23 @@ class UserController extends FBaseController
             ]);
         }
 
+        if (Yii::$app->request->get('check_existed') == 1) {
+            $user = User::findByUsername($username);
+            if ($user) {
+                return $this->renderJson([
+                        'result'=> false,
+                        'msg'=> "手机号已注册"
+                ]);
+            }
+        }
+
         if (Utils::sendVerifyCode($username)){
             return $this->renderJson([
                     'result'=> true,
                     'msg'=> "验证码已发送"
             ]);
         }
+
         return $this->renderJson([
                 'result'=> false,
                 'msg'=> "验证码发送失败, 请稍后重试。"
