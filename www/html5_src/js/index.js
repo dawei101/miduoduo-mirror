@@ -8,36 +8,36 @@ define(function(require, exports, module) {
 
     //轮播
     var banners = [
-        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner1.jpg"},
-        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner2.jpg"},
-        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner1.jpg"},
-        {url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner2.jpg"}
+        {url: "view/job/job-detail.html?task=476", imgSrc : miduoduo.basePath.picUrl + "/index/banner2.png"},
+        {"tag" : "handle", url: "", imgSrc : miduoduo.basePath.picUrl + "/index/banner0.png"},
 
     ]
     $(".imageSlide").html(tpl.parse("banner-slide-tpl", {"banners" : banners}));
     $("#bannerSlider").touchSlide();
 
-    $(".top-nav .item1").on("click", function() {
-        util.href($(this).data("url"));
-    })
-    $(".top-nav .item2").on("click", function() {
-        var action = 'b_push';
-        var data = {'has_nav':true ,'has_tab':false , 'title': 'push 新页面', 'url':'http://192.168.1.217/NewPage.html',
-            'left_action': {'title': '消息' ,'action': {'action':'left_action','data' : 'left 按钮点击'} },
-            'right_action': {'title': '消息' ,'action': {'action':'right_action','data' : '右边按钮点击'} }}
+    $("#bannerSlider").on("click", "a", function(e) {
+        e.preventDefault();
+        var tag = $(this).data("tag");
+        if (tag == "handle") {
+            if (!miduoduo.user.id) {
+                util.auth();
+            }
+        } else {
+            util.href($(this).attr("href"));
+        }
+    });
 
-        var json = {'action':action,'data' : data}
-        window.WebViewJavascriptBridge.send(json, function (result) {
-            alert(' 返回 。。。。。');
-        });
+    $(".top-nav > div").on("click", function() {
+        util.href($(this).data("url"));
     })
 
     //职位列表，滚动加载
-    sLoad.startWatch(api.gen("task"), {"page" : 1, "per-page" : 30}, function(data) {
-        $(".content").find(".pullUp").before(tpl.parse("job-list-tpl", {"jobs" : data.items}));
+    sLoad.startWatch(api.gen("task"), {"page" : 1}, function(data) {
+        $(".jobs-container").append(tpl.parse("job-list-tpl", {"jobs" : data.items}));
+
     });
 
-    $(".content").on("click", "a", function(e) {
+    $(".jobs-container").on("click", "a", function(e) {
         e.preventDefault();
         util.href($(this).attr("href"));
     })

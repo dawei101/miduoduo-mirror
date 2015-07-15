@@ -2,10 +2,11 @@ define(function(require, exports) {
     require("zepto-ext");
     var api = require("../widget/api");
     var util = require("../widget/util");
+    var calendar = require("../widget/calendar");
 
-    document.addEventListener('WebViewJavascriptBridgeReady', function() {
-        WebViewJavascriptBridge.defaultHandler(handle_action)
-    }, false);
+    var homeID;
+
+    WebViewJavascriptBridge.defaultHandler(handle_action);
     //jsbridge 主动监听
     function handle_action(data, responseCallback) {
         var rst = {
@@ -20,7 +21,6 @@ define(function(require, exports) {
             responseCallback(rst);
         } else {
             util.cf({title : "注意", message : "确定放弃编辑吗？"}, function(data) {
-                data = JSON.parse(data);
                 if (data.result.value == 0) {
                     rst.result.value = false;
                 }
@@ -34,8 +34,9 @@ define(function(require, exports) {
     var tpl = require("../widget/tpl-engine");
     $("body").append(tpl.parse("main1-tpl", {}));
     $("body").append(tpl.parse("main2-tpl", {}));
+    calendar.initCalendar();
 
-    $(".next-btn").on("click", function() {
+    /*$(".next-btn").on("click", function() {
         location.hash = "#main2";
     })
 
@@ -48,8 +49,13 @@ define(function(require, exports) {
             $(".main2").show();
 
         }
-    })
+    })*/
 
+    //生日
+    $(".js-birthday").on("click", function() {
+        $(".calendar-widget, .shade-widget").show(300);
+
+    });
     //性别
     $(".sex").find("div").on("click", function() {
         $(this).addClass("sex-act").siblings().removeClass("sex-act");
@@ -85,7 +91,7 @@ define(function(require, exports) {
     })
     //可兼类型
     $(".js-sel-service-type").on("click", function(e) {
-        $(".sel-job-type").animate({"-webkit-transform" : "translate3d(0,0,0)"}, 500)
+        $(".sel-job-type").show();
         /*var typeCodeStr = $(this).find("input").val();
         if (typeCodeStr) {
             var typeCode = typeCodeStr.split(",");
@@ -98,11 +104,13 @@ define(function(require, exports) {
     //居住地点
     $(".js-set-address").on("click", function() {
         var $this = $(this);
-        util.setAddress(function(data) {
-            alert("app返回的地址信息：" + JSON.stringify(data));
-            data = JSON.parse(data);
+        util.setAddress($(this).find("input").val(), function(data) {
+            if (!data) {
+                return;
+            }
             $this.find("input").val(data.address);
             $.post(api.gen("address"), data, function(data) {
+                homeID = data.id;
                 console.log(data);
             });
         });
@@ -116,10 +124,34 @@ define(function(require, exports) {
 
         var $sc = $(".js-special-col");
         data[$sc.attr("name")] = $sc.find(".sex-act").data("val");
-        data["phonenum"] = miduoduo.user.phone;
+        data.home = homeID;
         console.log("简历",data);
         $.post(api.gen("resume"), data, function(data) {
-            console.log(data);
+            //验证失败
+            if (arguments[2].status == 422) {
+                var tipsArr = data
+                var tipsStr = "";
+                tipsArr.forEach(function(e) {
+                    tipsStr += e.message + "\n";
+                });
+                if (window.WebViewJavascriptBridge) {
+                    var opts = {
+                        action: 'b_toast_alert',
+                        data: {
+                            'message' : tipsStr,
+                            'disappear_delay' : 2000
+                        }
+                    }
+                    window.WebViewJavascriptBridge.send(opts, null);
+                } else {
+                    alert(tipsStr);
+                }
+                return;
+            }
+            util.showTips("提交成功", function() {
+                util.pop(true);
+            })
+
         })
     })
 

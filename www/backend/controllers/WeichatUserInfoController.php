@@ -14,6 +14,12 @@ use yii\filters\VerbFilter;
  */
 class WeichatUserInfoController extends BBaseController
 {
+
+    public function getViewPath()
+    {
+        return Yii::getAlias('@backend/views/wechat/weichat-user-info');
+    }
+
     public function behaviors()
     {
         $bhvs = parent::behaviors();

@@ -1,11 +1,13 @@
 <?php
 
 namespace common\models;
+use \DateTime;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\TaskApplicant;
+
 
 /**
  * TaskApplicantSearch represents the model behind the search form about `common\models\TaskApplicant`.
@@ -19,6 +21,7 @@ class TaskApplicantSearch extends TaskApplicant
     {
         return [
             [['id', 'user_id', 'task_id'], 'integer'],
+            [['created_time'], 'date'],
             [['created_time'], 'safe'],
         ];
     }
@@ -55,9 +58,16 @@ class TaskApplicantSearch extends TaskApplicant
             return $dataProvider;
         }
 
+        if ($this->created_time){
+            $from_date = $this->created_time;
+            $date = DateTime::createFromFormat('Y-m-d', $this->created_time);
+            $to_date = $date->modify('+1 day')->format('Y-m-d');
+            $query->andWhere(['>=', 'created_time', $from_date]);
+            $query->andWhere(['<', 'created_time', $to_date]);
+        }
+
         $query->andFilterWhere([
             'id' => $this->id,
-            'created_time' => $this->created_time,
             'user_id' => $this->user_id,
             'task_id' => $this->task_id,
         ]);

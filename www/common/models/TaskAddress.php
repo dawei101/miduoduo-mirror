@@ -35,11 +35,12 @@ class TaskAddress extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['lat', 'lng', 'task_id', 'user_id'], 'required'],
+            [['lat', 'lng', 'task_id'], 'required'],
             [['lat', 'lng'], 'number'],
             [['task_id', 'user_id'], 'integer'],
             [['province', 'city', 'district'], 'string', 'max' => 45],
             [['address', 'title'], 'string', 'max' => 200],
+            ['user_id', 'default', 'value'=> 0],
         ];
     }
 

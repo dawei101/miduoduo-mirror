@@ -9,7 +9,7 @@ define(function(require, exports) {
         }
         app(opts, null);
     }
-    function toast(msg) {
+    function toast(msg, callback) {
         var opts = {
             action: 'b_toast_alert',
             data: {
@@ -17,8 +17,9 @@ define(function(require, exports) {
                 'disappear_delay' : 1500
             }
         }
-        app(opts, null);
+        app(opts, callback);
     }
+    //登陆
     function appAuth(callback) {
         var opts = {
             action: 'b_require_auth',
@@ -28,11 +29,21 @@ define(function(require, exports) {
         app(opts, callback);
     }
 
-    function appLocation(callback) {
+    //注册
+    function appReg() {
+        var opts = {
+            action: 'b_require_reg',
+            data: {
+            }
+        }
+        app(opts);
+    }
+
+    function appLocation(address, callback) {
         var opts = {
             action : "b_get_address",
             data : {
-                "title" : "附近地点"
+                "address" : address
             }
         }
         app(opts, callback);
@@ -72,24 +83,33 @@ define(function(require, exports) {
     }
 
     //toast
-    function showTips(msg) {
+    function showTips(msg, callback) {
         if (!miduoduo.os.mddApp) {
             alert(msg);
+            callback && callback();
         } else {
-            toast(msg);
+            toast(msg, callback);
         }
     }
 
-    //注册、登陆
+    //登陆
     function auth() {
         appAuth(function(data) {
             window.location.reload(); //登陆成功直接重新加载页面
         });
     }
 
+    //注册
+    function reg() {
+        appReg(function(data) {
+            window.location.reload();
+        });
+    }
+
+
     //设置地址
-    function setAddress(callback) {
-        appLocation(callback);
+    function setAddress(address, callback) {
+        appLocation(address, callback);
     }
 
     //设置confirm
@@ -107,6 +127,11 @@ define(function(require, exports) {
             }
        }
        app(opt, callback);
+    }
+
+    //撤销页面
+    function pop(isBackRefresh) {
+        app({ action: 'b_pop', data : { "back_refresh" : isBackRefresh}}, null);
     }
 
     //日期格式化输出
@@ -129,6 +154,8 @@ define(function(require, exports) {
     exports.href = href;
     exports.showTips = showTips;
     exports.auth = auth;
+    exports.reg = reg;
     exports.setAddress = setAddress;
     exports.cf = cf;
+    exports.pop = pop;
 });

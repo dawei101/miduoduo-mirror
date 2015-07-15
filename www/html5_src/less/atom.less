@@ -2,19 +2,19 @@
 * 定义路径
 **/
 @pic_ver : `"?"+(new Date()).getTime()`;
-@pic_url: "/img/";
+@pic_url: "/v1/img/";
 @var: 20px;
 @f:1/16rem;
 /**
 * 站内
 **/
-@black : #2a3141; //工作标题、tab标题等
-.black() {color:@black}
+@black : #666; //工作标题、tab标题等
+.black() {color: @black}
 @grey : #a5abb2; //灰色字体
 .grey() {color: @grey;}
-.f1 {font-size: 12*@f}
-.f2 {font-size: 14*@f}
-.f3 {font-size: 16*@f}
+.f1 {font-size: 14*@f}
+.f2 {font-size: 16*@f}
+.f3 {font-size: 18*@f}
 .if-font-family {font-family:"iconfont" !important;}
 //实心三角向下
 .if-triangle-down() { content: '\e6c4'; .if-font-family};
@@ -26,6 +26,14 @@
 .if-checkbox-select() {content : '\e630'; .if-font-family}
 //对勾
 .if-correct() {content: '\e648'; .if-font-family}
+//钟表
+.if-clock() {
+  content: '\e64d'; .if-font-family;
+}
+//齿轮
+.if-gear() {
+  content: '\e619'; .if-font-family;
+}
 //个人中心-->消息列表页 报名消息图标
 .if-msg-page-icon1() {
   content : '\e61a'; .if-font-family;

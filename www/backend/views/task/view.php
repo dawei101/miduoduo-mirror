@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'origin',
             'title',
             'user_id',
             'contact',
@@ -58,9 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
 **/
             'status',
 
-            'company_name',
-            'company_introduction:ntext',
-
+            'company.name',
             'address',
             'city_id',
         ],

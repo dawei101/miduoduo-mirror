@@ -57,7 +57,7 @@ $this->title = '米多多兼职平台';
                         <div class="names" aid="<?=$resume['id']?>"><span style="float: left; display: block; line-height: 20px; padding: 0 10px;"><?=$resume['name']?></span></div>
                         <div class="jiben"><span><?=$resume['age']?>岁</span><span><?=($resume['gender']==0)?'男':'女'?></span><span><?=$resume['college']?></span></div>
                     </div>
-                    <div class="pull-left tab2 text-center borser-tab-right"><a href="http://m.miduoduo.cn/task/view?gid=<?=$resume['gid']?>" target="blank"><?=$resume['title']?></a></div>
+                    <div class="pull-left tab2 text-center borser-tab-right"><a href="<?=Yii::$app->params['baseurl.m']?>/task/view?gid=<?=$resume['gid']?>" target="blank"><?=$resume['title']?></a></div>
                     <div class="pull-left tab3 text-center borser-tab-right"><?=$resume['phonenum']?$resume['phonenum']:'&nbsp;'?></div>
                     <div class="pull-left tab4 text-center borser-tab-right"><?=$resume['created_time']?></div>
                     <?php if($resume['status'] == 0) {?>

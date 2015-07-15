@@ -23,3 +23,26 @@ textarea{
   .appearance-n;
 }
 
+.init-shade {
+  .none;
+  .pf;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  &:after {
+    content : url('/img/loading.png');
+    position: absolute;
+    top: 41%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    -webkit-animation:init-shade-animate 1s linear 0s infinite;
+  }
+}
+
+@-webkit-keyframes init-shade-animate
+{
+  from {-webkit-transform:rotate(0deg);}
+  to {-webkit-transform:rotate(360deg);}
+}

@@ -3,6 +3,7 @@ namespace common;
 
 use Yii;
 use common\models\WeichatAccesstoken;
+use common\models\WeichatUserLog;
 
 class WeichatBase{
 
@@ -103,5 +104,14 @@ class WeichatBase{
         curl_close($curlobj);
         
         return $returnstr;
+    }
+
+    // 保存用户微信行为数据
+    public function saveEventLog($openid,$event_type){
+        $userModel  = new WeichatUserLog();
+        $userModel->openid          = (string)$openid;
+        $userModel->created_time    = date("Y-m-d H:i:s",time());
+        $userModel->event_type      = $event_type;
+        $userModel->save();
     }
 }

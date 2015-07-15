@@ -235,7 +235,7 @@ class UserController extends FBaseController
 
     	if(Yii::$app->request->isPost){
             $hash = Yii::$app->getSecurity()->generateRandomString();
-    		$uploaddir = '/var/www/uploads/';
+    		$uploaddir = '/service/data/media/';
 			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
 			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
@@ -255,7 +255,7 @@ class UserController extends FBaseController
         $company = Company::findByCurrentUser();
     	if(Yii::$app->request->isPost){
             $hash = Yii::$app->getSecurity()->generateRandomString();
-    		$uploaddir = '/var/www/uploads/';
+    		$uploaddir = '/service/data/media';
 			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
 			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);

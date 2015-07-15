@@ -23,8 +23,8 @@ $this->nav_right_title = '个人中心';
 
 
 <ul class="bxslider">
+      <li><a href="/task/view?gid=14367640572382369"><img src="/static/img/banner1.png" ></a></li>
       <li><a href="/hongbao.html"><img src="/static/img/hongbao.png" ></a></li>
-      <li><a href="/user/vlogin"><img src="/static/img/zhuce.png" ></a></li>
 </ul>
 
 <div id="content"> 
@@ -50,7 +50,14 @@ $this->nav_right_title = '个人中心';
         </p>
         <div class="te-x">
           <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-            <?=$task->city->name?>-<?=$task->district->name?>-<?=$task->address?>
+            <?php
+            if ($task->city) {
+                echo $task->city->name . '-';
+            }
+            if ($task->district) {
+                echo $task->district->name . '-';
+            } ?>
+            <?=$task->address?>
           </p>
           <span class="label label-default train hidden">距我5km</span></div>
       </div>

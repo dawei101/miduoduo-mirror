@@ -16,6 +16,11 @@ use common\models\WeichatPushQualityTask;
  */
 class WeichatPushQualityTaskController extends BBaseController
 {
+    public function getViewPath()
+    {
+        return Yii::getAlias('@backend/views/wechat/weichat-push-quality-task');
+    }
+
     public function behaviors()
     {
         $bhvs = parent::behaviors();

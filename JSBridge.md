@@ -22,6 +22,7 @@ js调用native 方法原理
         action: 'b_require_auth',
         data: {
             'message': '请先登陆'
+            'url' : view/x.html //登录后跳转
             }
     }
 
@@ -109,7 +110,11 @@ js调用native 方法原理
 ```
     {
         action: 'b_pop',
-        data: {},
+        data: {
+            'back_refresh':true // 返回刷新上一个页面
+            'quit_login': true //退出登陆
+            //  简历页 url .....XXX.html?login=1
+        },
     }
     Return:
         No return;
@@ -126,6 +131,13 @@ js调用native 方法原理
         action: 'b_get_address',
         data: {
             'title': '附近地点',
+            address: {
+               name: 地址名称,
+               address: 具体地址,
+               city: 城市,
+               latitude: ,
+               longitude: ,
+            }
         }
     }
     Return:
@@ -145,12 +157,19 @@ js调用native 方法原理
 ```
     {
         action: 'b_get_current_location',
-        data: {},
+        data: { // data可以为空，
+            'title': ,
+            'address': ,
+            latitude: ,
+            longitude: ,
+        },
     }
     Return:
     {
         action: 'b_get_current_location',
         result = {
+            'title': ,
+            'address': ,
             latitude: ,
             longitude: ,
             },

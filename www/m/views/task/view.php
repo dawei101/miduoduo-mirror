@@ -70,12 +70,21 @@ $this->nav_right_title = '首页';
      </a>
     <?php } else { ?>
      <a class="midd-l bottom-box pitch-on">
-        <i class="iconfont">&#xe60d;</i><span style="display:block">已收藏</span>
+        <i class="iconfont">&#xe607;</i><span style="display:block">已收藏</span>
      </a>
     <?php } ?>
-     <a href="/complaint/create?id=<?=$task->id?>" class="midd-l bottom-box">
+
+
+      <?php if(!$complainted){ ?>
+        <a href="/complaint/create?id=<?=$task->id?>" class="midd-l bottom-box">
         <i class="iconfont">&#xe60f;</i><span style="display:block">举报</span>
      </a>
+    <?php } else { ?>
+        <a  class="midd-l bottom-box">
+        <i class="iconfont">&#xe60f;</i><span style="display:block">已举报</span>
+        </a>
+    <?php } ?>
+
     <?php if (Yii::$app->user->isGuest){ ?>
          <div class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
     <?php } else { ?>
@@ -85,21 +94,29 @@ $this->nav_right_title = '首页';
             <div style="background: #ff7b5d;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
         <?php }
         if(!$app) { ?>
-         <div id="apply" class="midd-l bottom-bnt bottom-bnt-bm">我要报名</div>
+         <div id="apply" class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
         <?php } ?>
     <?php } ?>
 </div>
 
 <!--=======以藏的弹出层======-->
 <div class="cd-popup" role="alert">
+<input type="hidden" value="<?= $resume ?>" id="getResume">
   <div class="cd-popup-container">
-    <p>你好，报名兼职职位需要登录米多多！</p>
+    <p><?= (Yii::$app->user->isGuest) ? '你好，报名兼职职位需要登录米多多！':'你好，报名兼职职位需要填写简历！' ?></p>
     <ul class="cd-buttons">
-      <li><a onclick="GB.signup(location.href);">立即注册</a></li>
-      <li><a onclick="GB.login(location.href);">现在登录</a></li>
+    <?php if(Yii::$app->user->isGuest) { ?> 
+        <li><a onclick="GB.signup(location.href);">立即注册</a></li>
+        <li><a onclick="GB.login(location.href);">现在登录</a></li>
+
+    <?php }else{ ?>
+        <li><a href="/resume/edit">去填简历</a></li>
+        <li><a href="">取消</a></li>
+     <?php }?>
+      
     </ul>
     <a href="#" class="cd-popup-close img-replace">关闭</a>
-  </div> <!-- cd-popup-container -->
+  </div> 
 </div>
 <div style="height:90px"></div>
 
@@ -117,6 +134,7 @@ $(function(){
             var d = $.parseJSON(data);
             if (d['success']){
                 $("#collect").addClass('pitch-on');
+                $("#collect").find('i').html('&#xe607');
                 $("#collect").find('span').html('已收藏');
             }
             console.info(data);

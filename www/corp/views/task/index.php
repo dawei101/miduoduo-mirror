@@ -47,7 +47,7 @@ $this->title = '米多多兼职平台';
             <?php foreach ($tasks as $task) {?>
                 <li>
                    <div class="zhiwei-lis-title">
-                        <h2 class="pull-left"><a href="http://m.miduoduo.cn/task/view?gid=<?=$task->gid?>" target="blank"><?=$task->title?></a></h2>
+                        <h2 class="pull-left"><a href="<?=Yii::$app->params['baseurl.m']?>/task/view?gid=<?=$task->gid?>" target="blank"><?=$task->title?></a></h2>
                         <div class="pull-left bt-span">
                             <span class="task-refresh" gid="<?=$task->gid?>">刷新</span>
                             <span class="task-edit" gid="<?=$task->gid?>">编辑</span>

@@ -17,7 +17,7 @@ define(function(require, exports) {
         if (miduoduo.user.id) {
             var reqOver = 2;
             $.get(api.gen('task-applicant/' + taskID + '?expand=task'), function(data) {
-                if (!data.task) { //没有报名
+                if (!data) { //没有报名
                 } else {
                     var $obj = $(".control-btn");
                     $obj.off("click");
@@ -31,11 +31,9 @@ define(function(require, exports) {
                 showBarWhenReqOver();
             }, "json");
             $.get(api.gen('task-collection/' + taskID), function(data) {
-                console.log(data);
-                if (data instanceof Array && data.length == 0) {
-
+                if (!data) {
                 } else {
-                    $(".store").addClass("store-act");
+                    $(".store").addClass("store-act").find("span").text("已收藏");
                 }
                 showBarWhenReqOver();
             }, "json");
@@ -51,10 +49,11 @@ define(function(require, exports) {
         }
 
         $(".control-btn").on("click", function() {
+            var $this = $(this);
             if (miduoduo.user.id) {
-                $.put(api.gen("task-applicant"), {user_id : miduoduo.user.id, task_id: taskID}, function(data) {
+                $.post(api.gen("task-applicant"), {user_id : miduoduo.user.id, task_id: taskID}, function(data) {
                     console.log(data);
-                    $(this).text("等待企业确认").css("background", "#a5abb2").off("click");
+                    $this.text("等待企业确认").css("background", "#a5abb2").off("click");
                 });
             } else {
                 showLoginDialog(true);
@@ -63,7 +62,12 @@ define(function(require, exports) {
     }
 
     $("body").on("click", ".report", function() { //举报
-        util.href("/view/job/report.html?job_gid=" + taskID)
+        if (miduoduo.user.id) {
+            util.href("view/job/report.html?job_gid=" + taskID)
+        } else {
+            showLoginDialog(true);
+        }
+
     }).on("click", ".store", function() {
         if (miduoduo.user.id) {
             var $this = $(this);
@@ -72,11 +76,13 @@ define(function(require, exports) {
                     console.log(data);
                 });
                 $this.addClass("store-act");
+                $this.find("span").text("已收藏");
             } else {
                 $.delete(api.gen("task-collection/" + taskID), function(data) {
                     console.log(data);
                 });
                 $this.removeClass("store-act");
+                $this.find("span").html("收藏");
             }
         } else {
             showLoginDialog(true);
@@ -89,8 +95,11 @@ define(function(require, exports) {
         action ? $obj.show() : $obj.hide();
 
     }
-    $(".login-btn").on("click", function() {
+    $(".go-login").on("click", function() {
         util.auth();
+    });
+    $(".go-reg").on("click", function() {
+        util.reg();
     });
     $(".close-login-dialog").on("click", function() {
         $(this).parents(".login-dialog").hide();

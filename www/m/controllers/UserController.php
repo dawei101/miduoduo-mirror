@@ -149,6 +149,17 @@ class UserController extends MBaseController
         ]);//this model is ready for insert into db 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             if ($signuping){
+
+                // 如果是注册，记录渠道
+                $origin = Yii::$app->session->get('origin') ? Yii::$app->session->get('origin') : '';
+                if( $origin ){
+                    // 更新用户渠道来源信息
+                    $userid     = Yii::$app->user->id;
+                    $userModel  = User::findOne($userid);
+                    $userModel->origin  = $origin;
+                    $userModel->update();
+                }
+
                 $url = Url::to([
                         '/user/reset-password',
                         'next' => '/resume/edit'

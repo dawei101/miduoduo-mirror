@@ -1,50 +1,48 @@
+
 <!doctype html>
 <html >
 <head>
     <meta charset="utf-8">
-    <title>米多多兼职 </title>
+    <title>我的职位</title>
     <meta name="keywords" content="米多多、快速兼职" />
     <meta name="description" content="米多多兼职" />
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
-
     <link rel="stylesheet" href="/v1/css/base.css"/>
+    <script type="text/javascript" src="/v1/js_min//third_party/WebViewJavascriptBridge.js" ></script>
     <script type="text/javascript" src="/v1/js_min//third_party/sea.js" ></script>
     <script>
-        if (!localStorage.miduoduo) { //如果app没有注入该变量，则认为不在app里
+        if (!window.miduoduo) { //如果app没有注入该变量，则认为不在app里
             window.miduoduo = {};
             miduoduo.os  = {};
             miduoduo.os.mddApp = false;
             miduoduo.user = {};
         } else {
-            miduoduo = localStorage.miduoduo;
-            miduoduo.user = JSON.parse(miduoduo.user);
+            miduoduo.user = miduoduo.user ? miduoduo.user : {};
             miduoduo.os  = {};
             miduoduo.os.mddApp = true;
         }
+
         try{
             window.localStorage = LocalStorage;
-            miduoduo.user = JSON.parse(window.localStorage.getItem("userInfo")) || {};
+            miduoduo.user = JSON.parse(window.localStorage.getItem("userInfo")) || miduoduo.user;
+            miduoduo.os.mddApp = true;
         }catch(e){
-            alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
+            //alert("LocalStorage ERROR : can't find android class LocalStorage. switching to raw localStorage")
         }
-        miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.test.chongdd.cn/v1/");
+        miduoduo.api_baseurl || (miduoduo.api_baseurl = "http://api.miduoduo.cn/v1/");
         miduoduo.basePath = {
             base : "/v1/",
             picUrl : "/v1/" + "img"
         };
         miduoduo.user.phone = miduoduo.user.username;
 
-       document.addEventListener('WebViewJavascriptBridgeReady', function() {
-           WebViewJavascriptBridge.defaultHandler(handle_action)
-       }, false);
+        WebViewJavascriptBridge.defaultHandler(handle_action)
        function handle_action(data, responseCallback) {
-           data = JSON.parse(data);
            if (data && data.action == "b_require_auth") {
-               window.localStorage.setItem("userInfo", data.data);
-               alert("从登陆页返回，即将reload:" + JSON.stringify(data));
+               window.localStorage.setItem("userInfo", JSON.stringify(data.data));
                location.reload();
            }
 
@@ -80,16 +78,17 @@
         </div>
     </div>
 
-    <div class="content">
-        <div class="list">
-
-        </div>
-        <div class="pullUp">加载中...</div>
-    </div>
-
     <!--职位列表-->
-    <!--职位列表模板-->
+    <div class="job-list-widget">
+    <div class="jobs-container"></div>
+    <div class="pullUp">
+        加载中...
+    </div>
+    <div class="no-data">没有数据</div>
+</div>
+<!--职位列表模板-->
 <script type="text/html" id="job-list-tpl">
+    <? if (this.jobs && this.jobs.length > 0) {?>
     <div class="jobList">
         <? var showOthers = this.showOthers;?>
         <? this.jobs.forEach(function(e) { ?>
@@ -104,7 +103,7 @@
                 <div class="pub-time"><?=pubDate?></div>
             </div>
             <div class="part2">
-                <div class="firstDiv"><?=+task.salary + "/" + (task.salary_unit_label || "?")?></div>
+                <div class="firstDiv"><?=+task.salary + "元/" + (task.salary_unit_label || "?")?></div>
                 <? task.labels && task.labels.forEach(function(label, i){?>
                 <?if (label) {?>
                 <div ><?=label?></div>
@@ -121,6 +120,8 @@
         <? } ?>
         <? }); ?>
     </div>
+    <? } ?>
 </script>
+
 </body>
 </html>

@@ -7,21 +7,31 @@ define(function(require, exports, module) {
 
     $(".tab").find("div").on("click", function() {
         $(this).addClass("act").siblings().removeClass("act");
-        $(".content").find(".list").empty();
+        $(".no-data").hide();
+        $(".jobs-container").empty();
         if ($(this).index() == 0) {
-            sLoad.startWatch(api.gen('task-collection?expand=task&filters=[[">=","task.to_date","' + new Date().Format("yyyy-MM-dd") + '"]]'), {"page" : 1, "per-page" : 30}, function(data) {
-                $(".content").find(".list").append(tpl.parse("job-list-tpl", {"jobs" : data.items}));
+            sLoad.startWatch(api.gen('task-collection?expand=task&filters=[[">=","task.to_date","' + new Date().Format("yyyy-MM-dd") + '"]]'), {"page" : 1}, function(data) {
+                $(".jobs-container").append(tpl.parse("job-list-tpl", {"jobs" : data.items}));
+                setTimeout(function() {
+                    if ($(".jobList").length == 0) {
+                        $(".no-data").fadeIn();
+                    }
+                }, 200);
             });
         } else {
-            sLoad.startWatch(api.gen('task-collection?expand=task&filters=[["<","task.to_date","' + new Date().Format("yyyy-MM-dd") + '"]]'), {"page" : 1, "per-page" : 30}, function(data) {
-                console.log(data);
-                $(".content").find(".list").append(tpl.parse("job-list-tpl", {"jobs" : data.items}));
+            sLoad.startWatch(api.gen('task-collection?expand=task&filters=[["<","task.to_date","' + new Date().Format("yyyy-MM-dd") + '"]]'), {"page" : 1}, function(data) {
+                $(".jobs-container").append(tpl.parse("job-list-tpl", {"jobs" : data.items}));
+                setTimeout(function() {
+                    if ($(".jobList").length == 0) {
+                        $(".no-data").fadeIn();
+                    }
+                }, 200);
             });
         }
     })
     $(".tab1").click();
 
-    $(".content").on("click", "a", function(e) {
+    $(".jobs-container").on("click", "a", function(e) {
         e.preventDefault();
         util.href($(this).attr("href"));
     })

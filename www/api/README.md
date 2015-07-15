@@ -227,7 +227,7 @@ BASE_URL = 'http://api.miduoduo.cn'
 * 获取已报名的任务列表 
     * GET /version/task-applicant?expand=task
 * 报名某任务
-    * PUT /version/task-applicant
+    * POST /version/task-applicant
     * params: user_id, task_id
 * 取消报名某任务
     * DELETE /version/task-applicant/task_id
@@ -314,6 +314,18 @@ BASE_URL = 'http://api.miduoduo.cn'
     * PUT /version/sys-message/id
       params = 随便
 
+### 投诉举报
+* 获取我举报过的任务列表
+    * GET /version/complain
+* 获取消息详情(用不到)
+    * GET /version/complain/task_id
+* 举报
+    * POST /version/complain
+      params = {title: ,content:, task_id:, phonenum:, }
+
+### 联系我们
+    * POST /version/contact-us
+      params = {title: optional,content: required, phonenum: required, }
 
 ## 关于跨域
 [Http access control - CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)

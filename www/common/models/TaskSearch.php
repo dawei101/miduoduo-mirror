@@ -20,7 +20,6 @@ class TaskSearch extends Task
         return [
             [['id', 'clearance_period', 'salary_unit', 'need_quantity', 'got_quantity', 'user_id', 'service_type_id', 'gender_requirement', 'degree_requirement', 'age_requirement', 'height_requirement', 'status', 'city_id'], 'integer'],
             [['title', 'salary_note', 'from_date', 'to_date', 'from_time', 'to_time', 'created_time', 'updated_time', 'detail', 'requirement'], 'safe'],
-
             [['salary'], 'number'],
         ];
     }

@@ -22,8 +22,8 @@ class BaseController extends Controller
             <head>
                 <meta charset='UTF-8'>
                 <script type='text/javascript'>
-                    window.location.href = '$to';
-                </script>
+            " . 'setTimeout("window.location.href = \''.$to.'\';", 3000);'
+            . " </script>
                 <title>跳转</title>
             </head>
             <body>
