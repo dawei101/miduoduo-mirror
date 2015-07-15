@@ -68,6 +68,10 @@ $('#cbox-1 .zc-btn').click(function(e){
 
 //注册发送验证码
 $('.yz-btn').on('click', function(){
+    var phone = $(this).closest('form').find('[name="username"]').val();
+    if (phone.length == 0) {
+        $('.error-message').html("请输入手机号");
+    }
 	$(this).removeClass('yz-btn');
 	$(this).addClass('yz-btn-jx');
 	$(this).html('验证码已发送');
