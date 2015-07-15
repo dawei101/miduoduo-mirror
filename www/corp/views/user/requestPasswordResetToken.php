@@ -30,7 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
   </div>
 </div>
-<!-- InstanceEndEditable -->
-<?php
-$this->registerJsFile('/js/index.js');
-?>
+<script type="text/javascript">
+    $('.zc-btn').closest('form').submit();
+</script>
