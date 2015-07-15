@@ -65,7 +65,7 @@ class ResumeController extends FBaseController
     {
         $query = new Query;
         $condition = ['jz_task.user_id' => $corpUserId];
-        if ($read !== false) {
+        if ($status !== false) {
             $condition['jz_task_applicant.status'] = $status;
         }
         $query ->select([
