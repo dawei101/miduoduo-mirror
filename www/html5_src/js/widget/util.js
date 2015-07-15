@@ -39,11 +39,11 @@ define(function(require, exports) {
         app(opts);
     }
 
-    function appLocation(callback) {
+    function appLocation(address, callback) {
         var opts = {
             action : "b_get_address",
             data : {
-                "title" : "附近地点"
+                "address" : address
             }
         }
         app(opts, callback);
@@ -108,8 +108,8 @@ define(function(require, exports) {
 
 
     //设置地址
-    function setAddress(callback) {
-        appLocation(callback);
+    function setAddress(address, callback) {
+        appLocation(address, callback);
     }
 
     //设置confirm
@@ -130,8 +130,8 @@ define(function(require, exports) {
     }
 
     //撤销页面
-    function pop() {
-        app({ action: 'b_pop', data : {}}, null);
+    function pop(isBackRefresh) {
+        app({ action: 'b_pop', data : { "back_refresh" : isBackRefresh}}, null);
     }
 
     //日期格式化输出
