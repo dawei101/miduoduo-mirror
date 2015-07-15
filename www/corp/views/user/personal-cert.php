@@ -27,13 +27,13 @@ $this->title = '米多多兼职平台';
           <dl  class="default-title">
             <dt class="default-title"><i class="iconfont">&#xe60c;</i>简历管理</dt>
             <dd class="default-lis"><a href="/resume">全部</a></dd>
-            <dd class="default-lis"><a href="/resume?read=0">未查看</a></dd>
-            <dd class="default-lis"><a href="/resume?read=1">已查看</a></dd>
+            <dd class="default-lis"><a href="/resume?status=10">已接受</a></dd>
+            <dd class="default-lis"><a href="/resume?status=0">未处理</a></dd>
           </dl>
           <dl class="pitch-current">
             <dt class="default-title"><i class="iconfont">&#xe60b;</i>用户中心</dt>
             <dd class="default-lis"><a href="/user/info">我的资料</a></dd>
-            <dd class="default-lis"><a href="/user/account">我的账号</a></dd>
+            <dd class="default-lis"><a href="/user/account">修改密码</a></dd>
             <dd class="current"><a href="/user/personal-cert">个人认证</a></dd>
             <dd class="default-lis"><a href="/user/corp-cert">企业认证</a></dd>
           </dl>
@@ -83,7 +83,7 @@ $this->title = '米多多兼职平台';
   </div>
 </div>
 <!-- InstanceEndEditable -->
-<script>    
+<script>
 $("#file0").change(function(){
         var objUrl = getObjectURL(this.files[0]) ;
             console.log("objUrl = "+objUrl) ;
@@ -92,7 +92,7 @@ $("#file0").change(function(){
                             }
 }) ;
 function getObjectURL(file) {
-        var url = null ; 
+        var url = null ;
             if (window.createObjectURL!=undefined) { // basic
                         url = window.createObjectURL(file) ;
                             } else if (window.URL!=undefined) { // mozilla(firefox)
@@ -103,6 +103,3 @@ function getObjectURL(file) {
             return url ;
 }
 </script>
-
-
-

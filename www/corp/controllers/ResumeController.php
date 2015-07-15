@@ -61,12 +61,12 @@ class ResumeController extends FBaseController
         ];
     }
 
-    public function findByCorpUserId($corpUserId, $read=false)
+    public function findByCorpUserId($corpUserId, $status=false)
     {
         $query = new Query;
         $condition = ['jz_task.user_id' => $corpUserId];
         if ($read !== false) {
-            $condition['jz_task_applicant.have_read'] = $read;
+            $condition['jz_task_applicant.status'] = $status;
         }
         $query ->select([
             'jz_task_applicant.id',
@@ -90,9 +90,9 @@ class ResumeController extends FBaseController
         return $query;
     }
 
-    public function actionIndex($read=false)
+    public function actionIndex($status=false)
     {
-        $query = $this->findByCorpUserId(Yii::$app->user->id, $read);
+        $query = $this->findByCorpUserId(Yii::$app->user->id, $status);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $resumes = $query->offset($pagination->offset)
