@@ -89,7 +89,7 @@ js调用native 方法原理
         action: 'b_push',
         data = {
             'has_nav': true,
-            'has_tab': false,
+            'back_refresh': true,
             'title': 'push 新页面',
             'left_action': null, // null可以取消任何显示
             'right_action': {title: '消息' ,action: {'action':action,'data' : data}],
