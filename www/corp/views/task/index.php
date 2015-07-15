@@ -42,7 +42,7 @@ $this->title = '米多多兼职平台';
       </div>
       <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
         <div class="right-center">
-          <!--<div class="conter-title">发布兼职职位</div>-->
+          <div class="conter-title">职位管理</div>
             <ul class="zhiwei-lis">
             <?php foreach ($tasks as $task) {?>
                 <li>
