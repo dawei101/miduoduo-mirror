@@ -15,8 +15,8 @@ $('#cbox-2 .myNavs .zc-btn').click(function(e){
         	if(data.error.password){
         		error += data.error.password[0];
         	}
-        	$("#cbox-2 .myNavs .error-message").html(error);
-        	$("#cbox-2 .myNavs .error-message").show();
+        	$(".error-message").html(error);
+        	$(".error-message").show();
         }
     });
     return false;
@@ -32,8 +32,8 @@ $('#cbox-2 .hotNavs .zc-btn').click(function(e){
             return;
         }else{
         	var error = data.error;
-        	$("#cbox-2 .myNavs .error-message").html(error);
-        	$("#cbox-2 .myNavs .error-message").show();
+        	$(".error-message").html(error);
+        	$(".error-message").show();
         }
 
     });
@@ -60,8 +60,8 @@ $('#cbox-1 .zc-btn').click(function(e){
         	if(data.error.password){
         		error += data.error.password[0];
         	}
-        	$("#cbox-1 .error-message").html(error);
-        	$("#cbox-1 .error-message").show();
+        	$(".error-message").html(error);
+        	$(".error-message").show();
         }
     });
     return false;

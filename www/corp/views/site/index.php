@@ -45,9 +45,9 @@ $this->title = '米多多兼职平台';
               </div>
             <?php ActiveForm::end(); ?>
               <div id="cbox-2" class="cbox">
+                <div class="error-message">用户名不能为空！</div>
                 <div class="ctnerTab"><a href="#" class="on">普通方式登录</a> <a href="#">手机动态码登录</a></div>
                <div class="myNavs rtNavs">
-               <div class="error-message">用户名不能为空！</div>
                     <?php $form = ActiveForm::begin();?>
                         <div class="midd-input-group">
                       <input name="username" type="text" class="input-q"  placeholder="用户名">
@@ -61,7 +61,6 @@ $this->title = '米多多兼职平台';
                    <?php ActiveForm::end(); ?>
                 </div>
                 <div class="hotNavs rtNavs">
-                <div class="error-message">手机号不能为空！</div>
                         <?php $form = ActiveForm::begin();?>
                         <div class="midd-input-group">
                           <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">

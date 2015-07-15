@@ -39,14 +39,14 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .banner h3{font-size:34px; color:#f55b38; margin:40px 0;}
 
 /*======首页选项卡======*/
-.menusWrapper{width:100%; height:60px; margin-bottom:20px;border-bottom: 3px solid #eeeeee; }
+.menusWrapper{width:100%; height:60px; margin-bottom: 20px; border-bottom: 3px solid #eeeeee; }
 .menusWrapper a{width:45%; float:left; text-align:center; height:60px; line-height:60px; color:#2a3141; font-size:18px; text-decoration:none; display:block; margin-left:3%;}
 .menusWrapper .active{border-bottom: 3px solid #00b966;}
 .ctnerWrapper{width:100%;}
 .ctnerTab a{display:block; line-height:30px; text-align:center; color:#a5abba; width:50%; float:left}
 .ctnerTab{height:30px; margin-bottom:10px;}
 .ctnerTab .on{color:#00b966}
-.error-message{width:90%; height:20px; background:#ff7b5d; color:#fff; position:absolute; top:65px; left:17px; text-indent:1em; display:none;}
+.error-message { background: #ff7b5d none repeat scroll 0 0;color: #fff;display: none; height: 20px; margin: -15px auto 5px; width: 90%;}
 .myNavs,.hotNavs{position:relative;}
 .myNavs .error-message,.hotNavs .error-message{position:absolute; top:-65px; left:17px; text-indent:1em; display:none;}
 
