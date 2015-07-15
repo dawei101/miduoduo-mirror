@@ -1,4 +1,6 @@
 jQuery(document).ready(function($){
+	if($('#getResume').val())
+		return false;
 	//open popup
 	$('.cd-popup-trigger').on('click', function(event){
 		event.preventDefault();
