@@ -37,10 +37,9 @@ $this->title = '米多多兼职平台';
                 <div class="midd-input-group">
                   <input name="password" type="text" class="input-q"  placeholder="请设置登录密码">
                 </div>
-                <div class="midd-xieyi">
-                    <!--
+                <div class="midd-xieyi">    
                   <input name="reg-agree" class="pull-left" type="checkbox" value="">
-                  <a href="">同意米多多兼职企业用户协议</a></div> -->
+                  <a href="">同意米多多兼职企业用户协议</a></div>
                 <a href="#" class="zc-btn">注册</a>
               </div>
             <?php ActiveForm::end(); ?>
