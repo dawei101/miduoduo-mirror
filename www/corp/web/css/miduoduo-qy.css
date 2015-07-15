@@ -200,7 +200,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .zhiwei-lis{width:790px; padding:30px; overflow:hidden;}
 .zhiwei-lis li{width:750px; border:1px #d2d5d8 solid; overflow:hidden; margin-bottom:20px;}
 .zhiwei-lis-title{width:750px; border-bottom:1px #eee dashed; overflow:hidden; height:40px; border-bottom:1px #ccc dashed; margin-bottom:5px;}
-.zhiwei-lis-title h2{width:510px; line-height:40px; color:#3388ff; font-size:16px;padding-left:20px;}
+.zhiwei-lis-title h2{width:500px; line-height:40px; color:#3388ff; font-size:16px;padding-left:20px;}
 .bt-span{height:30px; padding-top:10px;}
 .zhiwei-lis-title span{border:1px #00b966 solid; border-radius:4px; padding:2px 4px; margin-top:10px; margin-right:20px; cursor:pointer;}
 .zhiwei-lis-left{width:510px; height:90px; line-height:30px; padding-left:20px; color:#606c77}
