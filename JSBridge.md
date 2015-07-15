@@ -22,6 +22,7 @@ js调用native 方法原理
         action: 'b_require_auth',
         data: {
             'message': '请先登陆'
+            'url' : view/x.html //登录后跳转
             }
     }
 
@@ -109,7 +110,9 @@ js调用native 方法原理
 ```
     {
         action: 'b_pop',
-        data: {},
+        data: {
+            'back_refresh':true // 返回刷新上一个页面
+        },
     }
     Return:
         No return;
