@@ -19,20 +19,33 @@ define(function(require, exports) {
         }
         app(opts, callback);
     }
-    function appAuth(callback) {
+    //登陆
+    function appAuth(url, callback) {
         var opts = {
             action: 'b_require_auth',
             data: {
+                "url" : url
             }
         }
         app(opts, callback);
     }
 
-    function appLocation(callback) {
+    //注册
+    function appReg(url) {
+        var opts = {
+            action: 'b_require_reg',
+            data: {
+                "url" : url
+            }
+        }
+        app(opts);
+    }
+
+    function appLocation(address, callback) {
         var opts = {
             action : "b_get_address",
             data : {
-                "title" : "附近地点"
+                "address" : address
             }
         }
         app(opts, callback);
@@ -75,24 +88,36 @@ define(function(require, exports) {
     function showTips(msg, callback) {
         if (!miduoduo.os.mddApp) {
             alert(msg);
-            callback();
+            callback && callback();
         } else {
-            toast("app:" + msg, callback);
+            toast(msg, callback);
         }
     }
 
-    //注册、登陆
-    function auth() {
-        appAuth(function(data) {
-            alert("hi:" + data);
-            window.location.reload(); //登陆成功直接重新加载页面
+    /**
+     * 登陆
+     * @param url 登陆成功后跳转的页面
+     */
+    function auth(url) {
+        appAuth(url, function(data) {
+            //window.location.reload(); //登陆成功直接重新加载页面
+        });
+    }
+
+    /**
+     * 注册
+     * @param url 注册成功后跳转的页面
+     */
+    function reg(url) {
+        appReg(url, function(data) {
+            //window.location.reload();
         });
     }
 
 
     //设置地址
-    function setAddress(callback) {
-        appLocation(callback);
+    function setAddress(address, callback) {
+        appLocation(address, callback);
     }
 
     //设置confirm
@@ -113,8 +138,13 @@ define(function(require, exports) {
     }
 
     //撤销页面
-    function pop() {
-        app({ action: 'b_pop', data : {}}, null);
+    function pop(isBackRefresh) {
+        app({ action: 'b_pop', data : { "back_refresh" : isBackRefresh}}, null);
+    }
+
+    //撤销登陆页面：撤销登录页会刷新所有webview
+    function popLogin (isPopLogin) {
+        app({ action: 'b_pop', data : { "quit_login" : isPopLogin}}, null);
     }
 
     //日期格式化输出
@@ -137,7 +167,9 @@ define(function(require, exports) {
     exports.href = href;
     exports.showTips = showTips;
     exports.auth = auth;
+    exports.reg = reg;
     exports.setAddress = setAddress;
     exports.cf = cf;
     exports.pop = pop;
+    exports.popLogin = popLogin;
 });

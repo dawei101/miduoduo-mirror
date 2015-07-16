@@ -143,9 +143,9 @@ class EntryController extends BaseActiveController
         $username = Yii::$app->request->post('phonenum');
         $password = Yii::$app->request->post('password');
         if(!(empty($username) || empty($password))){
-            $user = User::findOne([
+            $user = User::find()->with('resume')->where([
                 'username' => $username,
-            ]);
+            ])->one();
             if($user){
                 if($user->validatePassword($password)){
                     $user->generateAccessToken();
@@ -159,6 +159,7 @@ class EntryController extends BaseActiveController
                             'username'=> $username,
                             'password'=> $password,
                             'access_token'=> $user->access_token,
+                            'resume' => $user->resume?$user->resume->toArray():null,
                         ]
                     ]);
                 }
@@ -226,6 +227,7 @@ class EntryController extends BaseActiveController
                     'username'=> $phonenum,
                     'password'=> '',
                     'access_token'=> $user->access_token,
+                    'resume' => $user->resume?$user->resume->toArray():null,
                 ]
             ]);
         }

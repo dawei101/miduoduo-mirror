@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    require("zepto");
+    require("zepto-ext");
     var tpl = require("../widget/tpl-engine");
     var sLoad = require("../widget/scroll-load");
     var api = require("../widget/api");
@@ -27,7 +27,7 @@ define(function(require, exports, module) {
         util.href("view/job/report.html?job-gid=" + $(this).parent().data("gid"));
     })
 
-    $(".jobs-container").on("click", "a", function(e) {
+    $(".jobs-container").on("click", ".jobList > a", function(e) {
         e.preventDefault();
         util.href($(this).attr("href"));
     })

@@ -2,6 +2,7 @@
  
 namespace api\modules\v1\controllers;
  
+
 use api\modules\BaseActiveController;
  
 /**
@@ -16,4 +17,17 @@ class TaskApplicantController extends BaseActiveController
     public $id_column = 'task_id';
     public $auto_filter_user = true;
     public $user_identifier_column = 'user_id';
+
+    public function actions()
+    {
+        $as = parent::actions();
+        $as['create'] = [
+            'class' => 'api\modules\v1\models\ApplyTaskAction',
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
+            'scenario' => $this->createScenario,
+        ];
+        return $as;
+    }
+
 }

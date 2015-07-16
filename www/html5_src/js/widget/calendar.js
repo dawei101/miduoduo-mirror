@@ -19,10 +19,18 @@ define(function(require, exports) {
         }
         buildYearPanel(year + 1, currDateObj && currDateObj.getFullYear());
         datePanel(currDateObj || date);
+        buildMonthPanel(currDateObj || date);
         $(".curr-y").text(year);
         $(".curr-m").text(month);
 
         bindEvent();
+    }
+
+    function buildMonthPanel(date) {
+        var m = date.getMonth();
+        var $currMonth = $(".month-panel-container").children().eq(m - 1);
+        $currMonth.addClass("m-act");
+        currSelObj.m = $currMonth;
     }
 
     function buildYearPanel(lastYear, currYear) {
@@ -117,7 +125,7 @@ define(function(require, exports) {
             var y = $(".curr-y").text();
             var d = currSelObj.d.text();
 
-            $(this).parent().fadeOut(0,function() {
+            $(this).parent().fadeOut(100,function() {
                 datePanel(new Date(y+"/"+m + "/" + d));
                 $(".dayNum,.dayName").fadeIn();
             });
@@ -136,7 +144,7 @@ define(function(require, exports) {
             var m = $(".curr-m").text();
             var d = currSelObj.d.text();
 
-            $(this).parent().parent().fadeOut(0,function() {
+            $(this).parent().parent().fadeOut(100,function() {
                 datePanel(new Date(y+"/"+m + "/" + d));
                 $(".dayNum,.dayName").fadeIn();
             });
@@ -148,12 +156,19 @@ define(function(require, exports) {
             }
             $(this).addClass("d-act");
             currSelObj.d = $(this);
+        })
+
+        $(".ensure").on("click", function() {
             var y = $(".curr-y").text();
             var m = $(".curr-m").text();
             var d =  currSelObj.d.text();
             console.log(y + "-" + m + "-" +d);
             $(".js-birthday").val(y + "-" + m + "-" + d);
-            $(".calendar-widget, .shade-widget").hide(300);
+            $(".calendar-widget, .shade-widget").fadeOut();
+        })
+
+        $(".cancel").on("click", function() {
+            $(".calendar-widget, .shade-widget").fadeOut();
         })
     }
 

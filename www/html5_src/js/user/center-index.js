@@ -13,7 +13,6 @@ define(function(require, exports) {
 
     //我的简历跳转逻辑
     if (miduoduo.user.id) {
-
         $.pageInitGet(api.gen("resume?expand=service_types,freetimes,home_address,workplace_address"), function(data) {
             console.log(data);
             if (data.items && data.items.length > 0) {
@@ -25,15 +24,29 @@ define(function(require, exports) {
     }
 
     //注册、登陆
-    $(".state").find("span").on("click", function() {
+    $(".login").on("click", function() {
         util.auth();
     });
-    $(".item").on("click", function(e) {
+    $(".register").on("click", function() {
+        util.reg();
+    })
+    $(".cc,.contact-us").on("click", function(e) {
         e.preventDefault();
         if (miduoduo.user.id) {
             util.href($(this).attr("href"));
         } else {
-            util.showTips("您还没有登陆！");
+            util.showTips("您还没有登录！");
+        }
+    });
+    $(".js-my-resume").on("click", function(e) {
+        e.preventDefault();
+        if (miduoduo.user.id) {
+            if (window.localStorage.hasResume) {
+                $(this).attr("href", "view/user/resume-preview.html");
+            }
+            util.href($(this).attr("href"));
+        } else {
+            util.showTips("您还没有登录！");
         }
     });
 

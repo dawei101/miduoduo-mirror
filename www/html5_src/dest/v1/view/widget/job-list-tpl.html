@@ -19,15 +19,15 @@
                     var ct = new Date(task.created_time);
                     var pubDate = ct.getMonth()+1 + "-" + ct.getDate();
                 ?>
-                <div class="pub-time"><?=pubDate?></div>
             </div>
             <div class="part2">
-                <div class="firstDiv"><?=+task.salary + "/" + (task.salary_unit_label || "?")?></div>
+                <div class="firstDiv"><?="<span class='job-money'>"+ (+task.salary) + "</span>元/" + (task.salary_unit_label || "?")?></div>
                 <? task.labels && task.labels.forEach(function(label, i){?>
                 <?if (label) {?>
                 <div ><?=label?></div>
                 <? } ?>
                 <? }); ?>
+                <div class="pub-time"><?=pubDate?></div>
             </div>
         </a>
         <? if (showOthers) {?>

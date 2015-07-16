@@ -6,11 +6,21 @@ define(function(require, exports) {
     var util = require("../widget/util");
     var taskID = urlHandle.getParams(window.location.search).task;
     var url = "task/" + taskID;
-    $.getJSON(api.gen(url), function(data) {
+    var noResume; //是否填写过简历
+    $.pageInitGet(api.gen(url), function(data) {
         console.log(data);
         $("body").append(tpl.parse("main-tpl", {"data" : data}));
         buildControlBar();
-    });
+    }, "json");
+
+    if (miduoduo.user.id) {
+        $.pageInitGet(api.gen("resume?expand=service_types,freetimes,home_address,workplace_address"), function(data) {
+            console.log(data);
+            if (data.items && data.items.length <= 0) { //显示填写简历弹窗
+                noResume = true;
+            }
+        }, "json");
+    }
 
     //构建控制栏
     function buildControlBar() {
@@ -51,10 +61,18 @@ define(function(require, exports) {
         $(".control-btn").on("click", function() {
             var $this = $(this);
             if (miduoduo.user.id) {
-                $.post(api.gen("task-applicant"), {user_id : miduoduo.user.id, task_id: taskID}, function(data) {
-                    console.log(data);
-                    $this.text("等待企业确认").css("background", "#a5abb2").off("click");
-                });
+                if (noResume) {
+                    util.cf({title : "注意", message : "报名兼职需要填写简历！"}, function(data) {
+                        if (data.result.value == 1) {
+                            util.href("view/user/resume-input.html");
+                        }
+                    });
+                } else {
+                    $.post(api.gen("task-applicant"), {user_id : miduoduo.user.id, task_id: taskID}, function(data) {
+                        console.log(data);
+                        $this.text("等待企业确认").css("background", "#a5abb2").off("click");
+                    });
+                }
             } else {
                 showLoginDialog(true);
             }
@@ -62,7 +80,12 @@ define(function(require, exports) {
     }
 
     $("body").on("click", ".report", function() { //举报
-        util.href("view/job/report.html?job_gid=" + taskID)
+        if (miduoduo.user.id) {
+            util.href("view/job/report.html?job_gid=" + taskID)
+        } else {
+            showLoginDialog(true);
+        }
+
     }).on("click", ".store", function() {
         if (miduoduo.user.id) {
             var $this = $(this);
@@ -90,8 +113,11 @@ define(function(require, exports) {
         action ? $obj.show() : $obj.hide();
 
     }
-    $(".login-btn").on("click", function() {
-        util.auth();
+    $(".go-login").on("click", function() {
+        util.auth("view/user/resume-input.html?login=1");
+    });
+    $(".go-reg").on("click", function() {
+        util.reg("view/user/resume-input.html?login=1");
     });
     $(".close-login-dialog").on("click", function() {
         $(this).parents(".login-dialog").hide();

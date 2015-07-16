@@ -1,5 +1,5 @@
 define(function(require, exports) {
-    require("zepto");
+    require("zepto-ext");
     var tpl = require("../widget/tpl-engine");
     var api = require("../widget/api");
     var util = require("../widget/util");
@@ -26,7 +26,7 @@ define(function(require, exports) {
     });
 
     $("body").on("click", ".submit-btn", function() {
-        util.href("/view/user/resume-change.html");
+        util.href("view/user/resume-change.html");
     })
 
 });

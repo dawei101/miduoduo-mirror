@@ -59,13 +59,15 @@ class TaskController extends \m\MBaseController
             $this->render404('未知的城市');
         }
 
-        $query = Task::find()->where(['status'=>Task::STATUS_OK]);
-        $query = $query->where(['city_id'=>$city_id]);
+        $query = Task::find();
+        $query->where(['status'=>Task::STATUS_OK]);
+        $query->andWhere(['>', 'to_date', date("Y-m-d")]);
+        $query = $query->andWhere(['city_id'=>$city_id]);
         if (!empty($district)){
-            $query = $query->where(['district_id'=>$district]);
+            $query->andWhere(['district_id'=>$district]);
         }
         if (!empty($service_type)){
-            $query = $query->where(['service_type_id'=>$service_type]);
+            $query->andWhere(['service_type_id'=>$service_type]);
         }
         $query->addOrderBy(['id'=>SORT_DESC]);
         $countQuery = clone $query;
@@ -73,7 +75,6 @@ class TaskController extends \m\MBaseController
             'totalCount' => $countQuery->count()]);
         $tasks = $query->offset($pages->offset)
             ->limit($pages->limit)->all();
-
 
         $city = District::findOne($city_id);
         return $this->render('index', 
@@ -89,7 +90,8 @@ class TaskController extends \m\MBaseController
     public function actionView()
     {
         $this->layout = 'main';
-
+        $user_id = Yii::$app->user->id;
+        $resume =(bool) Resume::find()->where(['user_id'=>$user_id])->one();
         $gid = Yii::$app->request->get('gid');
         $task = null;
         if ($gid){
@@ -114,6 +116,7 @@ class TaskController extends \m\MBaseController
                     'collected'=>$collected,
                     'complainted'=>$complainted,
                     'app'=> $app,
+                    'resume'=> $resume,
                 ]
             );
         } else {

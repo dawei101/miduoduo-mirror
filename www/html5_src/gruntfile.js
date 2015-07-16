@@ -43,7 +43,10 @@ module.exports = function(grunt) {
             options: {
                 compress: true,
                 yuicompress: true,
-                optimization: 2
+                optimization: 2,
+                modifyVars: {
+                    pic_url: '"/v1/img/"' //重写atom.less里的变量
+                }
             },
             compile: {
                 expand: true,

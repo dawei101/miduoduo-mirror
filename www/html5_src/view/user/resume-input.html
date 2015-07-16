@@ -1,3 +1,4 @@
+<%setTitle("完善简历")%>
 <%include ../header.html%>
 <%-css("user/resume-input")%>
 <%-mainJs("user/resume-input")%>
@@ -38,7 +39,7 @@
             <li>
                 <div class="title">身高</div>
                 <div class="con tag">
-                    <input name="height" type="text" class="js-col" placeholder="请输入身高"/>
+                    <input name="height" type="tel" class="js-col" placeholder="请输入身高"/>
                 </div>
             </li>
         </ul>
@@ -53,22 +54,22 @@
             <li>
                 <div class="title">居住地点</div>
                 <div class="con control js-set-address">
-                    <input disabled type="text" placeholder="请选择居住地点"/>
+                    <input readonly type="text" placeholder="请选择居住地点"/>
                 </div>
             </li>
         </ul>
-        <div class="next-btn">下一步</div>
+        <!--<div class="next-btn">下一步</div>-->
     </div>
 </script>
 
 <script type="text/html" id="main2-tpl">
     <div class="main2">
-        <div class="tips">
+        <!--<div class="tips">
             补充兼职意向，推荐职位更靠谱
-        </div>
+        </div>-->
         <ul class="resume-part3">
             <li class="sub1">
-                <div class="title">可兼类别</div>
+                <div class="title">兼职意向</div>
                 <div class="con control js-sel-service-type">
                     <span class="service-type-show"></span>
                     <input type="text" readonly placeholder="请选择您擅长的兼职类别"/>
@@ -83,12 +84,12 @@
                     <div class="sub2-con-val">开阔视野</div>
                 </div>
             </li>
-            <li class="sub3">
+            <!--<li class="sub3">
                 <div class="title">微信账号</div>
                 <div class="con">
                     <input type="text" placeholder="请输入您在用的微信账号"/>
                 </div>
-            </li>
+            </li>-->
         </ul>
         <ul class="resume-part4">
             <li>

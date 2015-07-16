@@ -1,3 +1,4 @@
+<%setTitle("个人中心")%>
 <%include ../header.html%>
 <%-css("user/center-index")%>
 <%-mainJs("user/center-index")%>
@@ -6,16 +7,16 @@
     <div class="state">
             <img src="<%=baseImgUrl%>user/default-avatar.jpg" alt=""/>
             <span   class="register" style="display: none">注册</span>
-            <span class="login" style="display: none">登陆</span>
+            <span class="login" style="display: none">登录</span>
     </div>
     <div class="nav">
-        <a class="item" href="view/user/my-job.html">我的兼职</a>
-        <a class="item" href="view/user/my-store.html">我的收藏</a>
-        <a class="item js-my-resume" href="javascript:void(0);">我的简历</a>
+        <a class="item cc" href="view/user/my-job.html">我的兼职</a>
+        <a class="item cc" href="view/user/my-store.html">我的收藏</a>
+        <a class="item js-my-resume" href="">我的简历</a>
     </div>
     <div class="contact-us item" href="view/user/contact-us.html">联系我们</div>
 
-    <!--已登陆tpl-->
+    <!--已登录tpl-->
     <script type="text/html" id="already-login-tpl">
         <img src="<?=this.user.avatar?>" alt=""/>
         <span   class="name"><?=this.user.name?></span>

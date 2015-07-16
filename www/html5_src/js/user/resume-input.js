@@ -1,13 +1,16 @@
 define(function(require, exports) {
     require("zepto-ext");
-    var api = require("../widget/api");
     var util = require("../widget/util");
     var calendar = require("../widget/calendar");
+    var urlHandle = require("../widget/url-handle")
+    var homeID;
+    var access_token = urlHandle.getParams(window.location.search).access_token; //app调用简历页时用
+    if (access_token) {
+        miduoduo.user.access_token = access_token;
+    }
+    var api = require("../widget/api");
 
-
-    document.addEventListener('WebViewJavascriptBridgeReady', function() {
-        WebViewJavascriptBridge.defaultHandler(handle_action)
-    }, false);
+    WebViewJavascriptBridge.defaultHandler(handle_action);
     //jsbridge 主动监听
     function handle_action(data, responseCallback) {
         var rst = {
@@ -16,20 +19,18 @@ define(function(require, exports) {
                 value: true
             }
         }
-        if (location.hash != "") {
-            location.hash = "";
-            rst.result.value = false;
+
+        util.cf({title : "注意", message : "确定放弃编辑吗？"}, function(data) {
+            if (data.result.value == 1 && urlHandle.getParams(window.location.search).login == 1) {
+                util.popLogin(true);
+                return;
+            }
+            if (data.result.value == 0) {
+                rst.result.value = false;
+            }
             responseCallback(rst);
-        } else {
-            util.cf({title : "注意", message : "确定放弃编辑吗？"}, function(data) {
-                alert("confirm对话框：" + data + " "  + JSON.stringify(rst));
-                data = JSON.parse(data);
-                if (data.result.value == 0) {
-                    rst.result.value = false;
-                }
-                responseCallback(rst);
-            });
-        }
+        });
+
 
     };
 
@@ -39,7 +40,7 @@ define(function(require, exports) {
     $("body").append(tpl.parse("main2-tpl", {}));
     calendar.initCalendar();
 
-    $(".next-btn").on("click", function() {
+    /*$(".next-btn").on("click", function() {
         location.hash = "#main2";
     })
 
@@ -52,7 +53,7 @@ define(function(require, exports) {
             $(".main2").show();
 
         }
-    })
+    })*/
 
     //生日
     $(".js-birthday").on("click", function() {
@@ -107,12 +108,13 @@ define(function(require, exports) {
     //居住地点
     $(".js-set-address").on("click", function() {
         var $this = $(this);
-        util.setAddress(function(data) {
-            alert("app返回的地址信息：" + JSON.stringify(data));
-            data = JSON.parse(data);
+        util.setAddress(null, function(data) {
+            if (!data) {
+                return;
+            }
             $this.find("input").val(data.address);
             $.post(api.gen("address"), data, function(data) {
-                console.log(data);
+                homeID = data.id;
             });
         });
     })
@@ -125,6 +127,7 @@ define(function(require, exports) {
 
         var $sc = $(".js-special-col");
         data[$sc.attr("name")] = $sc.find(".sex-act").data("val");
+        data.home = homeID;
         console.log("简历",data);
         $.post(api.gen("resume"), data, function(data) {
             //验证失败
@@ -148,12 +151,14 @@ define(function(require, exports) {
                 }
                 return;
             }
-            if (miduoduo.os.mddApp) {
-                util.pop();
-            } else {
-                //location.replace("view/user/center-index.html");
-                alert("兼容app外浏览器，待定");
-            }
+            window.localStorage.hasResume = true;
+            util.showTips("提交成功", function() {
+                if (urlHandle.getParams(window.location.search).login == 1) {
+                    util.popLogin(true);
+                } else {
+                    util.pop(true);
+                }
+            })
 
         })
     })

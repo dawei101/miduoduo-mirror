@@ -64,8 +64,57 @@ class Task extends \common\BaseActiveRecord
         4=>'次',
     ];
 
+    public static $GENDER_REQUIREMENT = [
+    	0=>'男女不限',
+    	1=>'男',
+    	2=>'女',
+    ];
+
+    public static $HEIGHT_REQUIREMENT = [
+    	0=>'不限',
+    	1=>'150cm以下',
+    	2=>'150cm',
+    	3=>'155cm',
+    ];
+
+    public static $FACE_REQUIREMENT = [
+    	0=>'一般',
+    	1=>'好',
+    	2=>'非常好',
+    ];
+
+    public static $TALK_REQUIREMENT = [
+    	0=>'一般',
+    	1=>'强',
+    ];
+
+    public static $HEALTH_CERTIFICATED = [
+    	0=>'无',
+    	1=>'有',
+    ];
+
+    public static $DEGREE_REQUIREMENT = [
+    	0=>'无',
+    	1=>'高中',
+    	2=>'大专',
+    	3=>'本科',
+    	4=>'本科以上',
+    ];
+
+    public static $WEIGHT_REQUIREMENT = [
+    	0=>'不限',
+    	1=>'60kg以下',
+    	2=>'60-65kg',
+    	3=>'65-70kg',
+    	4=>'70-75kg',
+    ];
+
+
     public static $STATUSES = [
         0=>'正常',
+        30=>'审核中',
+        40=>'审核未通过',
+        50=>'过期',
         10=>'已下线',
         20=>'已删除',
         100=>'爬取需编辑',
@@ -189,14 +238,14 @@ class Task extends \common\BaseActiveRecord
         return parent::beforeValidate();
     }
 
-    public function beforeSave($insert) 
+    public function beforeSave($insert)
     {
-        if ($this->isNewRecord){ 
-            $user_id = Yii::$app->user->id; 
-            $this->user_id = $user_id; 
-            $this->gid = time() . mt_rand(100, 999) . $user_id; 
+        if ($this->isNewRecord){
+            $user_id = Yii::$app->user->id;
+            $this->user_id = $user_id;
+            $this->gid = time() . mt_rand(100, 999) . $user_id;
         }
-        return parent::beforeSave($insert); 
+        return parent::beforeSave($insert);
     }
 
     public function tidyTitle()
@@ -299,7 +348,7 @@ class Task extends \common\BaseActiveRecord
     {
         return [
             'id', 'gid', 'title', 'clearance_period', 'salary', 'salary_unit',
-            'salary_note', 'from_date', 
+            'salary_note', 'from_date',
             'contact', 'contact_phonenum',
             'to_date', 'from_time', 'to_time', 'need_quantity',
             'got_quantity', 'created_time', 'updated_time', 'detail',

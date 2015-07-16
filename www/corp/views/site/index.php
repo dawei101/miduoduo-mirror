@@ -7,7 +7,6 @@ use yii\bootstrap\ActiveForm;
 $this->title = '米多多兼职平台';
 ?>
 <!-- InstanceBeginEditable name="EditRegion3" -->
-
 <!--======banner======-->
 <div class="midd-kong"></div>
 <div class="banner">
@@ -23,53 +22,61 @@ $this->title = '米多多兼职平台';
       </div>
       <div class="col-sm-12 col-md-6 col-lg-5">
         <div class="tab">
-          <ul id="myTab">
-            <!-- class="nav nav-tabs"-->
-            <li class="active"><a href="/demo/bootstrap-tab-plugin1.htm#hr" data-toggle="tab">企业HR注册</a> </li>
-            <li><a href="/demo/bootstrap-tab-plugin1.htm#login" data-toggle="tab">登录</a></li>
-            </li>
-          </ul>
-          <div id="myTabContent" class="tab-content fixde">
-            <div class="tab-pane fade in active" id="hr">
-              <?php $form = ActiveForm::begin();?>
-                <div class="error-message">验证码错误</div>
-                <!--错误提示-->
-                <div class="midd-input-group">
-                  <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">
+          <div class="menusWrapper"> <a class="active" href="javascript:;">企业HR注册</a> <a href="javascript:;">登录</a> </div>
+          <div class="ctnerWrapper">
+            <div class="ctnerBox">
+              <div id="cbox-1" class="cbox">
+              <div class="error-message">手机号不能为空！</div>
+                  <?php $form = ActiveForm::begin();?>
+                    <div class="midd-input-group">
+                  <input name="username" type="text" class="pull-left" placeholder="请输入手机号">
                   <span class="yz-btn pull-left text-center">发送验证码</span> </div>
                 <div class="midd-input-group">
                   <input name="vcode" type="text" class="input-q"  placeholder="请输入短信验证码">
                 </div>
                 <div class="midd-input-group">
-                  <input name="password" type="text" class="input-q"  placeholder="请设置登录密码">
+                  <input name="password" type="password" class="input-q"  placeholder="请设置登录密码">
                 </div>
                 <div class="midd-xieyi">
-                  <input name="" class="pull-left" type="checkbox" value="">
-                  <a href="">同意米多多兼职企业用户协议</a></div>
+ <!--                 <input name="reg-agree" class="pull-left" type="checkbox" value="">
+                  <a href="">同意米多多兼职企业用户协议</a>-->
+</div>
                 <a href="#" class="zc-btn">注册</a>
-              <?php ActiveForm::end(); ?>
-            </div>
-            <div class="tab-pane fade" id="login">
-              <?php $form = ActiveForm::begin();?>
-                <div class="error-message">验证码错误</div>
-                <div class="midd-input-group">
-                  <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">
-                  <span class="yz-btn-jx pull-left text-center">验证码已60s</span> </div>
-                <div class="midd-input-group">
-                  <input name="password" type="text" class="input-q"  placeholder="请输入短信验证码">
+              </div>
+            <?php ActiveForm::end(); ?>
+              <div id="cbox-2" class="cbox">
+                <div class="error-message">用户名不能为空！</div>
+                <div class="ctnerTab"><a href="#" class="on">普通方式登录</a> <a href="#">手机动态码登录</a></div>
+               <div class="myNavs rtNavs">
+                    <?php $form = ActiveForm::begin();?>
+                        <div class="midd-input-group">
+                      <input name="username" type="text" class="input-q"  placeholder="用户名">
+                    </div>
+                    <div class="midd-input-group">
+                      <input name="password" type="password" class="input-q"  placeholder="密码">
+                    </div>
+                    <div class="midd-xieyi">
+                      <input name="rememberme" class="pull-left" type="checkbox" value="">记住我 <a href="/user/request-password-reset" class=" pull-right">忘记密码</a></div>
+                    <a href="#" class="zc-btn"> 登录</a>
+                   <?php ActiveForm::end(); ?>
                 </div>
-                <div class="midd-xieyi">
-                  <label>
-                    <input name="" class="pull-left" type="checkbox" value="">
-                    <span>两周内自动登录</span></label>
+                <div class="hotNavs rtNavs">
+                        <?php $form = ActiveForm::begin();?>
+                        <div class="midd-input-group">
+                          <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">
+                          <span class="yz-btn pull-left text-center">发送验证码</span> </div>
+                        <div class="midd-input-group">
+                          <input name="vcode" type="text" class="input-q"  placeholder="请输入短信验证码">
+                        </div>
+                        <div class="midd-xieyi">
+ <!--                         <label>
+                            <input name="rememberMe" class="pull-left" type="checkbox" value="">
+                            <span>两周内自动登录</span></label> -->
+                        </div>
+                        <a href="#" class="zc-btn">登录</a>
+                      <?php ActiveForm::end(); ?>
                 </div>
-                <a href="#" class="zc-btn">注册</a>
-              <?php ActiveForm::end(); ?>
-              <div class="or">
-                <div class="or-l"></div>
-                <div class="or-c">or</div>
-                <div class="or-l"></div>
-                <a href="#">使用普通登录方式&gt;&gt;</a> </div>
+              </div>
             </div>
           </div>
         </div>
@@ -103,6 +110,21 @@ $this->title = '米多多兼职平台';
     </div>
   </div>
 </div>
+<script>
+  $('.ctnerTab a').click(function(){
+			if(!$(this).hasClass('on')){
+				$('.ctnerTab a').removeClass('on').eq($(this).index()).addClass('on');
+				$('.rtNavs').stop(true,true).hide().eq($(this).index()).show();
+			}
+		});
+
+		$('.menusWrapper a').click(function(){
+			if(!$(this).hasClass('active')){
+				$('.menusWrapper a').removeClass('active').eq($(this).index()).addClass('active');
+				$('.cbox').stop(true,true).animate().hide().eq($(this).index()).animate().show();
+			}
+		});
+</script>
 <!-- InstanceEndEditable -->
 <?php
 $this->registerJsFile('/js/index.js');
