@@ -81,12 +81,17 @@ $('.yz-btn').on('click', function(){
         $('.error-message').show(2);
         return;
     }
-	$(this).removeClass('yz-btn');
-	$(this).addClass('yz-btn-jx');
-    counter($(this), 60);
     $.get('/user/vcode', $(this).closest('form').serialize())
-    .done(function(data){
-        console.log(data);
+    .done(function(str){
+        var data = JSON.parse(str);
+        if(data.result === true) {
+            $(this).removeClass('yz-btn');
+            $(this).addClass('yz-btn-jx');
+            counter($(this), 60);
+            return;
+        }
+        $('.error-message').html(data.msg);
+        $('.error-message').show();
     });
 });
 
