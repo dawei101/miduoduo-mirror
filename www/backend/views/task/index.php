@@ -62,18 +62,34 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                 },
                 'filter' => Task::$SALARY_UNITS,
             ],
-            'status_label',
+            [
+                'attribute' => 'status',
+                'value' => function ($model){
+                    return $model->status_label;
+                },
+                'filter' => Task::$STATUSES,
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete} {examine}',
+                'template' => '{view} {update} {delete} | {adopt} {reject}',
                 'buttons' => [
-                    'examine' => function ($url, $model, $key) {
+                    'adopt' => function ($url, $model, $key) {
                         $options = [
                             'title' => '审核通过',
                             'aria-label' => '审核通过',
                             'data-pjax' => '0',
+                            'data-method' => 'post',
                         ];
                         return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url, $options);
+                    },
+                    'reject' => function ($url, $model, $key) {
+                        $options = [
+                            'title' => '审核不通过',
+                            'aria-label' => '审核不通过',
+                            'data-pjax' => '0',
+                            'data-method' => 'post',
+                        ];
+                        return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url, $options);
                     }
                 ],
             

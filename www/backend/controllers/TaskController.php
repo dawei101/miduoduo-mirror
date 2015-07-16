@@ -16,6 +16,21 @@ use yii\filters\VerbFilter;
 class TaskController extends BBaseController
 {
 
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+           'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'reject' => ['post'],
+                    'adopt' => ['post'],
+                ],
+            ],
+        ]);
+    }
+
+
+
     /**
      * Lists all Task models.
      * @return mixed
@@ -98,19 +113,29 @@ class TaskController extends BBaseController
         );
     }
 
-    /**
-     * Deletes an existing Task model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
+    public function changeStatus($id, $status)
     {
-        Task::updateAll(['status'=> Task::STATUS_DELETED], 'id=:id',
+        Task::updateAll(['status'=> $status], 'id=:id',
             $params=[':id'=>$id]);
-
         return $this->redirect(['index']);
     }
+
+    public function actionDelete($id)
+    {
+        return $this->changeStatus($id, $status=Task::STATUS_DELETED);
+    }
+
+    public function actionReject($id)
+    {
+        return $this->changeStatus($id, $status=Task::STATUS_UN_PASSED);
+    }
+
+    public function actionAdopt($id)
+    {
+        return $this->changeStatus($id, $status=Task::STATUS_OK);
+    }
+
+
 
     /**
      * Finds the Task model based on its primary key value.
