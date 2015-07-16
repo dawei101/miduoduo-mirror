@@ -8,6 +8,7 @@ use common\models\Company;
 use common\models\District;
 use common\models\ServiceType;
 use common\models\ConfigRecommend;
+use common\models\WeichatPushSetTemplatePushItem;
 
 /**
  * This is the model class for table "{{%task}}".
@@ -298,6 +299,10 @@ class Task extends \common\BaseActiveRecord
 
     public function getRecommend(){
         return $this->hasOne(ConfigRecommend::className(),['task_id'=>'gid']);
+    }
+
+    public function getWeichanpushitem(){
+        return $this->hasOne(WeichatPushSetTemplatePushItem::className(),['task_id'=>'gid']);
     }
 
     public function getLabels()
