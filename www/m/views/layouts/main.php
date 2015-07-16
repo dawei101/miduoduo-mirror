@@ -1,15 +1,20 @@
 <?php
+
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
+
 use m\assets\AppAsset;
+use m\assets\WechatAsset;
 use m\widgets\Alert;
+use common\Utils;
+use common\WeichatBase;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 AppAsset::register($this);
+if (Utils::isInWechat()){
+    WechatAsset::register($this);
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -30,11 +35,6 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-<!-- 添加隐藏的logo图片300*300用于微信分享图标 - start -->
-<div style="display:none;">
-    <img src="/static/img/weichat_icon.jpg" /> 
-</div>
-<!-- 添加隐藏的logo图片300*300用于微信分享图标 - end -->
 <div style="height:50px;"></div>
 <!--======固定顶部======-->
 <nav class="mdd-top-nav"> <?=$this->title?>
@@ -64,6 +64,22 @@ AppAsset::register($this);
     });
 </script>
 <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
+<?php
+if (Utils::isInWechat()){ ?>
+    <div style="display:none;">
+        <img src="/static/img/weichat_icon.jpg" /> 
+    </div>
+    <?php if (count($this->wechat_apis)>0){ 
+        $wc_session = WeichatBase::getSession();
+        $params = $wc_session->generateConfigParams();
+        $params['jsApiList'] = $this->wechat_apis;
+        $params_json = json_encode($params);
+    ?>
+    <script>
+        wx.config(<?=$params_json?>);
+    </script>
+    <?php } ?>
+<?php } ?>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

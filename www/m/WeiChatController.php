@@ -2,8 +2,9 @@
 namespace m;
 
 use Yii;
-use common\BaseController;
 use yii\web\HttpException;
+use yii\helpers\Url;
+use common\BaseController;
 use common\models\WeichatUserInfo;
 
 // 如果已经尝试获取过用户微信信息，则不执行任何操作，否则尝试获取用户微信信息
@@ -23,14 +24,19 @@ class WeiChatController extends BaseController{
         $this->weichatState         = Yii::$app->request->get('state') ? Yii::$app->request->get('state') : $this->weichatState;
         $this->isWeichatWeb         = $this->isWeichatWeb();
 
-        if( $this->isWeichatWeb ){
+        Yii::trace("wechat appid is " . $this->appid);
+
+        if( $this->isWeichatWeb){
             // 第一次进入，判断是否获取过微信ID
+            Yii::trace("This request is from wechat");
             if( !$this->hasFetchWeichatID ){
                 if( $this->weichatState == 'fromweichatrequest' ){
                     // 2. 获取用户微信信息
+                    Yii::trace("|||||||||||||||->get wechat info");
                     $this->getWeichatInfoFetch();
                 }else{
                     // 1. 跳转到微信授权页面
+                    Yii::trace("|||||||||||||||->jump wechat info");
                     $this->getWeichatInfoJump();
                 }
             // 已经尝试获取过微信信息，则不在处理
@@ -38,9 +44,9 @@ class WeiChatController extends BaseController{
                 // 判断已登录用户，是否已经绑定微信
                 // 如果SESSION里面有openid，并且用户登陆了，这里就去绑定
                 $weichat= Yii::$app->session->get('weichat');
-                $openid	= isset($weichat['openid']) ? $weichat['openid'] : 0;
-                $userid	= Yii::$app->session->get('__id');
-                $hasBindWeichatID	= isset($weichat['hasBindWeichatID']) ? $weichat['hasBindWeichatID'] : 0;
+                $openid = isset($weichat['openid']) ? $weichat['openid'] : 0;
+                $userid = Yii::$app->session->get('__id');
+                $hasBindWeichatID = isset($weichat['hasBindWeichatID']) ? $weichat['hasBindWeichatID'] : 0;
 
                 // 标记渠道信息
                 if( $openid ){
@@ -51,8 +57,8 @@ class WeiChatController extends BaseController{
                     // 绑定，保存数据库
                     if( $this->bindWeichatID($openid,$userid) ){
                         // 标记已经尝试过绑定
-                        $weichatInfo	= Yii::$app->session->get('weichat');
-                        $weichatInfo['hasBindWeichatID']	= 1;
+                        $weichatInfo  = Yii::$app->session->get('weichat');
+                        $weichatInfo['hasBindWeichatID']  = 1;
                         Yii::$app->session->set('weichat',$weichatInfo);
                     }else{
                         // 绑定失败
@@ -61,6 +67,8 @@ class WeiChatController extends BaseController{
                     // 不作操作
                 }
             }
+        } else {
+            Yii::trace("This request is not from wechat");
         }
     }
 
@@ -71,8 +79,9 @@ class WeiChatController extends BaseController{
         $scope          = $this->scope;
         
         // 构建跳回到到的地址
-        $redirect_uri_real  = Yii::$app->params['baseurl.m'].$_SERVER['REQUEST_URI'];
+        $redirect_uri_real  = Url::current([], $scheme=true);
         $redirect_uri       = urlencode($redirect_uri_real);
+        Yii::trace("Go to wechat auth page with rediret uri : " . $redirect_uri);
         $getCodeUrl         = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid.'&redirect_uri='.$redirect_uri.'&response_type=code&scope='.$scope.'&state=fromweichatrequest#wechat_redirect';
 
         $this->redirect($getCodeUrl);
@@ -109,7 +118,7 @@ class WeiChatController extends BaseController{
         Yii::$app->session->set('weichat',$weichatInfo);
     }
 
-	// 请求微信的接口数据
+  // 请求微信的接口数据
     private function getWeichatAPIdata($targetUrl){
         // 请求的数据
         $curlobj    = curl_init();
@@ -143,8 +152,8 @@ class WeiChatController extends BaseController{
     }
     
     // 获取过微信账号、登录后--绑定微信账号
-	private function bindWeichatID($openid,$userid){
-		// 判断是否已经绑定
+  private function bindWeichatID($openid,$userid){
+    // 判断是否已经绑定
         $weichat_result = WeichatUserInfo::find()->where(['userid'=>$userid])->one();
         if( !$weichat_result ){
             $datetime       = date("Y-m-d H:i:s",time());
@@ -158,14 +167,17 @@ class WeiChatController extends BaseController{
             $weichat->save();
         }
         return true;
-	}
+  }
 
     // 判断是否是微信浏览器
     // 这个方法在IOS正常使用
     private function isWeichatWeb(){ 
-	if ( stripos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
-			return 1;
-	}	
-	return 0;
-}
+      Yii::trace("request User agent is " . Yii::$app->request->userAgent);
+      if ( stripos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+          Yii::trace("judged request is from wechat");
+          return 1;
+      }
+      Yii::trace("judged request is not from wechat");
+      return 0;
+    }
 }

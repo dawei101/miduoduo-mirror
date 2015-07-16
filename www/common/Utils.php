@@ -77,4 +77,13 @@ class Utils
         return $vcode==$code;
     }
 
+
+    /**
+     * 微信跑龙套
+     *
+     */
+    public static function isInWechat()
+    {
+        return stripos(Yii::$app->request->getUserAgent(), 'MicroMessenger') !== false;
+    }
 }

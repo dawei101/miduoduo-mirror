@@ -3,6 +3,7 @@ namespace m;
 
 use Yii;
 use common\BaseController;
+use m\WeiChatController;
 use yii\web\HttpException;
 
 class MBaseController extends BaseController

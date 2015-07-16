@@ -8,23 +8,25 @@ use common\models\WeichatErweimaLog;
 use common\WeichatBase;
 
 class WeichatController extends MBaseController{
+
     public function actionIndex(){
         // 第一次接入微信，做验证
         if( Yii::$app->request->get("echostr") ){
             echo Yii::$app->request->get("echostr");
             exit;
         }
+        Yii::trace("Get message from wechat.");
         $this->responseMsg();
     }
 
     private function responseMsg(){
-		// get post data, May be due to the different environments
-		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        // get post data, May be due to the different environments
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
-      	// extract post data
-		if (!empty($postStr)){
+          // extract post data
+        if (!empty($postStr)){
                 libxml_disable_entity_loader(true);
-              	$postObj        = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+                  $postObj        = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $fromUsername   = $postObj->FromUserName;   // 微信用户ID
                 $toUsername     = $postObj->ToUserName;     // 开发者账号
                 $keyword        = trim($postObj->Content);  // 用户输入信息
@@ -38,7 +40,7 @@ class WeichatController extends MBaseController{
                 // 返回消息模板
                 $re_textTpl     = "
                                 <xml>
-							    <ToUserName><![CDATA[%s]]></ToUserName>
+                                <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
                                 <CreateTime>%s</CreateTime>
                                 <MsgType><![CDATA[%s]]></MsgType>
@@ -92,8 +94,8 @@ class WeichatController extends MBaseController{
                 echo $resultStr;
         }else {
             // 没有POST参数过来
-        	echo "access denied";
-        	exit;
+            echo "access denied";
+            exit;
         }
         
     }
