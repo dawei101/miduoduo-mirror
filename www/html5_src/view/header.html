@@ -42,7 +42,7 @@
        function handle_action(data, responseCallback) {
            if (data && data.action == "b_require_auth") {
                window.localStorage.setItem("userInfo", JSON.stringify(data.data));
-               location.reload();
+               window.WebViewJavascriptBridge.send({action : "b_refresh_all", data : {}}, null);
            }
 
            var state = true;

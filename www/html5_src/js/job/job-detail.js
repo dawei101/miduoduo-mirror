@@ -13,6 +13,12 @@ define(function(require, exports) {
         buildControlBar();
     }, "json");
 
+    window.MDD = {
+        reload : function() {
+            location.reload();
+        }
+    }
+
     if (miduoduo.user.id) {
         $.pageInitGet(api.gen("resume?expand=service_types,freetimes,home_address,workplace_address"), function(data) {
             console.log(data);
@@ -64,6 +70,7 @@ define(function(require, exports) {
                 if (noResume) {
                     util.cf({title : "注意", message : "报名兼职需要填写简历！"}, function(data) {
                         if (data.result.value == 1) {
+                            window.location.hash = "apply";
                             util.href("view/user/resume-input.html");
                         }
                     });
@@ -74,38 +81,57 @@ define(function(require, exports) {
                     });
                 }
             } else {
+                window.location.hash = "apply";
                 showLoginDialog(true);
             }
         })
+
+        $(".report").on("click", function() { //举报
+            if (miduoduo.user.id) {
+                util.href("view/job/report.html?job_gid=" + taskID)
+            } else {
+                window.location.hash = "report";
+                showLoginDialog(true);
+            }
+
+        });
+        $(".store").on("click", function() {
+            if (miduoduo.user.id) {
+                var $this = $(this);
+                if (!$this.hasClass("store-act")) {
+                    $.post(api.gen("task-collection"), {task_id : taskID}, function(data) {
+                        console.log(data);
+                    });
+                    $this.addClass("store-act");
+                    $this.find("span").text("已收藏");
+                } else {
+                    $.delete(api.gen("task-collection/" + taskID), function(data) {
+                        console.log(data);
+                    });
+                    $this.removeClass("store-act");
+                    $this.find("span").html("收藏");
+                }
+            } else {
+                window.location.hash = "store";
+                showLoginDialog(true);
+            }
+        })
+        //根据hash判断是否是登陆回调回来的页面
+        if (miduoduo.user.id) {
+            switch (window.location.hash) {
+                case "#apply" :
+                    $(".control-btn").click();
+                    break;
+                case "#store" :
+                    $(".store").click();
+                    break;
+                case "#report" :
+                    $(".report").click();
+                    break;
+            }
+        }
     }
 
-    $("body").on("click", ".report", function() { //举报
-        if (miduoduo.user.id) {
-            util.href("view/job/report.html?job_gid=" + taskID)
-        } else {
-            showLoginDialog(true);
-        }
-
-    }).on("click", ".store", function() {
-        if (miduoduo.user.id) {
-            var $this = $(this);
-            if (!$this.hasClass("store-act")) {
-                $.post(api.gen("task-collection"), {task_id : taskID}, function(data) {
-                    console.log(data);
-                });
-                $this.addClass("store-act");
-                $this.find("span").text("已收藏");
-            } else {
-                $.delete(api.gen("task-collection/" + taskID), function(data) {
-                    console.log(data);
-                });
-                $this.removeClass("store-act");
-                $this.find("span").html("收藏");
-            }
-        } else {
-            showLoginDialog(true);
-        }
-    })
 
     //显示登陆弹层
     function showLoginDialog(action) {

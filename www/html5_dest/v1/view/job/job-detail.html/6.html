@@ -42,6 +42,7 @@
         WebViewJavascriptBridge.defaultHandler(handle_action)
        function handle_action(data, responseCallback) {
            if (data && data.action == "b_require_auth") {
+               alert("用户信息" + JSON.stringify(data.data));
                window.localStorage.setItem("userInfo", JSON.stringify(data.data));
                window.WebViewJavascriptBridge.send({action : "b_refresh_all", data : {}}, null);
            }
@@ -106,7 +107,7 @@
                 <p class="info">
                     <?=data.from_date.substr(data.from_date.indexOf("-") + 1) + " 至 " + data.to_date.substr(data.to_date.indexOf("-") + 1)?>
                     <? if (data.from_time) {?>
-                    <?=data.from_time.substring(0, data.from_time.lastIndexOf(":")) + "-" + data.to_time.substring(0, data.to_time.lastIndexOf(":"))?>
+                    <?=data.from_time + "-" + data.to_time?>
                     <? } ?>
                 </p>
             </section>

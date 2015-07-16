@@ -3,7 +3,7 @@
 <html >
 <head>
     <meta charset="utf-8">
-    <title>我的收藏</title>
+    <title>我的职位</title>
     <meta name="keywords" content="米多多、快速兼职" />
     <meta name="description" content="米多多兼职" />
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -42,6 +42,7 @@
         WebViewJavascriptBridge.defaultHandler(handle_action)
        function handle_action(data, responseCallback) {
            if (data && data.action == "b_require_auth") {
+               alert("用户信息" + JSON.stringify(data.data));
                window.localStorage.setItem("userInfo", JSON.stringify(data.data));
                window.WebViewJavascriptBridge.send({action : "b_refresh_all", data : {}}, null);
            }
@@ -66,19 +67,20 @@
         })
     </script>
 
-<link rel='stylesheet' type='text/css' href='/v1/css/user/my-store.css'/>
-<script>seajs.use('user/my-store')</script>
+<link rel='stylesheet' type='text/css' href='/v1/css/user/my-job.css'/>
+<script>seajs.use('user/my-job')</script>
 </head>
 <body>
-<div class="top">
-    <div class="tab">
-        <div class="tab1 act" >可报名</div>
-        <div class="tab2">已结束</div>
+    <div class="top">
+        <div class="tab">
+            <div class="tab1 act" data-status="0">待确认</div>
+            <div class="tab2" data-status="10">报名成功</div>
+            <div class="tab3">全部</div>
+        </div>
     </div>
-</div>
 
-<!--职位列表-->
-<div class="job-list-widget">
+    <!--职位列表-->
+    <div class="job-list-widget">
     <div class="jobs-container"></div>
     <div class="pullUp">
         加载中...

@@ -309,7 +309,7 @@ BASE_URL = 'http://api.miduoduo.cn'
 
 ### System Message 系统消息
 * 获取消息列表
-    * GET /version/sys-message
+    * GET /version/sys-message?expand=read_flag
 * 获取消息详情(用不到)
     * GET /version/sys-message/id
 * 标记信息为read
