@@ -9,12 +9,9 @@ use common\models\District;
 use common\models\ServiceType;
 use m\assets\WechatAsset;
 
-$this->title = ($current_service_type?$current_service_type->name:'') . '兼职列表';
+$this->title = '附近' . ($current_service_type?$current_service_type->name:'') . '兼职列表';
 
-
-$districts = District::find()->where(['parent_id'=>$city->id])->all();
 $service_types = ServiceType::find()->where(['status'=>0])->all();
-
 
 $this->nav_left_link = 'javascript:window.history.back()';
 $this->nav_right_link = '/';
@@ -26,19 +23,7 @@ $this->wechat_apis = ['getLocation'];
 ?>
 
   <nav class="navbar-fixed-top top-nav" style="top: 50px;" role="navigation">
-    <dl class="select">
-        <dt style=" white-space: nowrap;"><?=$current_district->name?> <span class="caret"></span>
-</dt><span class="inverted-triangle"></span>
-        <dd> 
-          <ul>
-          <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>''])?>">全城</a></li>
-<?php foreach($districts as $district) { ?>
-    <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>$district->id])?>"><?=$district->name?></a></li>
-<?php } ?>
-          </ul>
-        </dd>
-     </dl>
-    <dl class="select">
+    <dl class="select"  style="width:50%;">
         <dt><?=$current_service_type?$current_service_type->name:'全部'?><span class="caret"></span> </dt>
         <dd> 
           <ul>
@@ -49,7 +34,7 @@ $this->wechat_apis = ['getLocation'];
           </ul>
         </dd>
      </dl>
-     <dl class="select">
+     <dl class="select" style="width:50%;">
         <dt>排序 <span class="caret"></span> </dt>
         <dd> 
           <ul>
@@ -61,7 +46,7 @@ $this->wechat_apis = ['getLocation'];
   </nav>
   <div style="height:50px;"></div>
 <?=
-  $this->render('@m/views/task/task-list.php', [
+  $this->render('@m/views/task/nearest-task-list.php', [
         'tasks' => $tasks,
         'pages' => $pages
     ]);

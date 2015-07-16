@@ -2,6 +2,8 @@
 namespace common;
 
 use Yii;
+use yii\helpers\Url;
+use Exception;
 use common\models\WeichatAccesstoken;
 use common\models\WeichatUserLog;
 
@@ -40,7 +42,7 @@ class WeichatBase
 
         if (!$this->_access_token){
             $this->_access_token = Yii::$app->cache->get($this->_access_token_key);
-            if($this->_access_token){
+            if(!$this->_access_token){
                 $appid = Yii::$app->params['weichat']['appid'];
                 $secret = Yii::$app->params['weichat']['secret'];
                 $getTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$secret;
@@ -48,7 +50,8 @@ class WeichatBase
                 $arr = json_decode($json); 
                 $this->_access_token = $arr->access_token;
                 Yii::$app->cache->set(
-                    $this->_access_token_key, $access_token, 1.8 * 60 * 60);
+                    $this->_access_token_key,
+                    $this->_access_token, 1.8 * 60 * 60);
             }
         }
         return $this->_access_token;
@@ -126,7 +129,6 @@ class WeichatBase
     {
         $ticket = Yii::$app->cache->get($this->_ticket_key);
         if (!$ticket) {
-
             $baseurl = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="
                 . $this->getWeichatAccessToken()
                 ."&type=jsapi";
@@ -135,33 +137,46 @@ class WeichatBase
                 try {
                     $c = file_get_contents($baseurl);
                     $arr = json_decode($c);
-                    if ($arr['errcode']==0){
-                        $ticket = $arr['ticket'];
+                    if ($arr->errcode==0){
+                        $ticket = $arr->ticket;
                         Yii::$app->cache->set(
                             $this->_ticket_key, $ticket, 1.8 * 60 * 60);
                     }
+                    Yii::info("Wechat jsapi ticket response code is " . $arr->errorcode);
                 } catch (Exception $e) {
                     Yii::warning("Get wechat jsapi ticket failed with error: " . $e->getMessage());
                 }
                 $retry -= 1;
             }
         }
+        if (!$ticket) {
+            throw new Exception('微信出错');
+        }
         return $ticket;
     }
 
     public function signParams($params){
-        $params['jsapi_ticket'] = $this->getJsapiTicket();
-        if (!isset($params['noncestr'])){
-            $params['noncestr'] = strval(rand(10000, 99999));
-        }
-        if (!isset($params['timestamp'])){
-            $params['timestamp'] = time() . '';
-        }
         ksort($params);
-        $arr = [];
+        $s = '';
         foreach ($params as $k=>$v){
-            $arr[] = $k . '=' . $v;
+            $s .= strtolower($k) . '=' . $v . '&';
         }
-        return sha1(implode('&', $arr));
+        $s = substr($s, 0, -1);
+        return sha1($s);
+    }
+
+    public function generateConfigParams()
+    {
+        $params = [
+            'url'=> Url::current([], $scheme=true),
+            'nonceStr'=> ''. rand(100000, 999999),
+            'jsapi_ticket'=> $this->getJsapiTicket(),
+            'timestamp'=> time(),
+        ];
+        $params['signature'] = $this->signParams($params);
+        unset($params['url']);
+        $params['debug'] = YII_DEBUG;
+        $params['appId'] = Yii::$app->params['weichat']['appid'];
+        return $params;
     }
 }

@@ -2,8 +2,9 @@
 namespace m;
 
 use Yii;
-use common\BaseController;
 use yii\web\HttpException;
+use yii\helpers\Url;
+use common\BaseController;
 use common\models\WeichatUserInfo;
 
 // 如果已经尝试获取过用户微信信息，则不执行任何操作，否则尝试获取用户微信信息
@@ -78,7 +79,7 @@ class WeiChatController extends BaseController{
         $scope          = $this->scope;
         
         // 构建跳回到到的地址
-        $redirect_uri_real  = Yii::$app->params['baseurl.m'].$_SERVER['REQUEST_URI'];
+        $redirect_uri_real  = Url::current([], $scheme=true);
         $redirect_uri       = urlencode($redirect_uri_real);
         Yii::trace("Go to wechat auth page with rediret uri : " . $redirect_uri);
         $getCodeUrl         = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid.'&redirect_uri='.$redirect_uri.'&response_type=code&scope='.$scope.'&state=fromweichatrequest#wechat_redirect';

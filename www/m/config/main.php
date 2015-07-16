@@ -36,7 +36,7 @@ return [
             ],
         ],
         'formatter' => [
-            'class' => 'yii\i18n\Formatter',
+            'class' => 'common\Formatter',
             'dateFormat' => 'php:m-d',
             'datetimeFormat' => 'php:m-d H:i',
             'timeFormat' => 'php:H:i',

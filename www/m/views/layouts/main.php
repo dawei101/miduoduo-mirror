@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 use m\assets\AppAsset;
 use m\assets\WechatAsset;
@@ -66,28 +65,21 @@ if (Utils::isInWechat()){
 </script>
 <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
 <?php
-$wc_session = WeichatBase::getSession();
-if (Utils::isInWechat()){
-    $params = [
-        'url'=> Url::current(),
-        'nonceStr'=> ''. rand(100000, 999999),
-        'jsapi_ticket'=> $wc_session->getJsapiTicket(),
-        'timestamp'=> time(),
-    ];
-    $params['signature'] = $wc_session->signParams($params);
-    $params['jsApiList'] = $this->wechat_apis;
-    $params['debug'] = YII_DEBUG;
-    $params['appId'] = Yii::$app->params['weichat']['appid'];
-    $params_json = json_encode($params);
-?>
+if (Utils::isInWechat()){ ?>
     <div style="display:none;">
         <img src="/static/img/weichat_icon.jpg" /> 
     </div>
+    <?php if (count($this->wechat_apis)>0){ 
+        $wc_session = WeichatBase::getSession();
+        $params = $wc_session->generateConfigParams();
+        $params['jsApiList'] = $this->wechat_apis;
+        $params_json = json_encode($params);
+    ?>
     <script>
         wx.config(<?=$params_json?>);
     </script>
+    <?php } ?>
 <?php } ?>
-
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

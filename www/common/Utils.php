@@ -86,5 +86,4 @@ class Utils
     {
         return stripos(Yii::$app->request->getUserAgent(), 'MicroMessenger') !== false;
     }
-
 }

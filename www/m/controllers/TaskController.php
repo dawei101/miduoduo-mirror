@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\helpers\Url;
 use common\Utils;
 use common\models\Task;
+use common\models\TaskAddress;
 use common\models\TaskCollection;
 use common\models\Complaint;
 use common\models\TaskApplicant;
@@ -29,7 +30,7 @@ class TaskController extends \m\MBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view','nearby'],
+                        'actions' => ['index', 'view','nearby', 'nearest'],
                         'allow' => true,
                     ],
                     [
@@ -46,6 +47,41 @@ class TaskController extends \m\MBaseController
                 ],
             ],
         ]);
+    }
+
+    public function actionNearest($lat, $lng, $distance=2000, $service_type=null)
+    {
+        $query = TaskAddress::find();
+        $query = TaskAddress::buildNearbyQuery($query, $lat, $lng, $distance);
+        $query->innerJoin('jz_task', $on='jz_task.id=jz_task_address.task_id');
+        if ($service_type){
+            $query->andWhere('jz_task.service_type_id=' . $service_type);
+        }
+        $query->andWhere(['jz_task.status'=>Task::STATUS_OK]);
+        //$query->andWhere(['>', 'jz_task.to_date', date("Y-m-d")]);
+        $query->addOrderBy(['jz_task.id'=>SORT_DESC]);
+        $tas = $query->with('task')->all();
+
+        $pages =  new Pagination(['pageSize'=>Yii::$app->params['pageSize'],
+            'totalCount' => count($tas)]);
+
+        $tasks = [];
+        foreach ($tas as $ta){
+            $task = $ta->task;
+            $distance = $ta->distance($lat=$lat, $lng=$lng);
+            $tasks[] = ['task'=>$task, 'distance'=>$distance];
+        }
+
+        uasort($tasks, function($a, $b){
+            return $a['distance'] < $b['distance'] ? -1:1;
+        });
+
+
+        return $this->render('nearest', 
+            ['tasks'=>array_slice($tasks, $pages->offset, $pages->limit),
+             'pages'=> $pages,
+             'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
+            ]);
     }
 
     public function actionIndex()

@@ -106,6 +106,19 @@ class TaskAddress extends \common\BaseActiveRecord
         return $query;
     }
 
+    function rad($v){
+        return $v * pi()/180.0;
+    }
 
+    public function distance($lat, $lng)
+    {
+       $rlat1 = $this->rad($this->lat);
+        $rlat2 = $this->rad($lat);
+        $rt = $rlat1 - $rlat2;
+        $rg = $this->rad($this->lng) - $this->rad($lng);
+        $s = (2 * asin(sqrt(pow(sin($rt/2), 2))) +
+            cos($rlat1)*cos($rlat2) * pow(sin($rg/2),2)) * 6372.797 * 1000;
+        return $s;
 
+    }
 }
