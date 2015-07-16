@@ -12,7 +12,6 @@ use common\models\District;
 $this->title = '数据';
 $this->params['breadcrumbs'][] = $this->title;
 
-
 ?>
 <div class="data-daily-index">
 
@@ -358,9 +357,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </style>
 <?php $this->endBlock('css') ?>
 <?php $this->beginBlock('js') ?>
-    <script src="/js/jquery.timepicker.min.js" ></script>
-
-    <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script> 
     <script>
         $(function () {
             $(".show-highcharts").click(function(){
