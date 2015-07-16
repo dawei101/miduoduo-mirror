@@ -22,6 +22,7 @@ class AppAsset extends AssetBundle
         'css/dashboard.css',
     ];
     public $js = [
+        'js/highcharts.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

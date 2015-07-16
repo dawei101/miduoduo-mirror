@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\BDataBaseController;
+use common\models\DataDaily;
 
 /**
  * DataUserController implements the CRUD actions for DataDaily model.
@@ -28,8 +29,18 @@ class DataUserController extends BDataBaseController
     public function actionIndex()
     {
         // 默认时间范围
-        $defaultDateStart   = date("Y-m-d",time()-604800);
-        $defaultDateEnd     = date("Y-m-d",time());;
+        $defaultDateStart   = date("Y-m-d",time()-7*24*60*60);
+        $defaultDateEnd     = date("Y-m-d",time()-1*24*60*60);
+
+        // 快速筛选连接,昨天，七天，三十天
+        $ztDateStart        = date("Y-m-d",time()-1*24*60*60);
+        $ztDateEnd          = date("Y-m-d",time()-1*24*60*60);      
+        $sstDateStart       = date("Y-m-d",time()-30*24*60*60);
+        $sstDateEnd         = $defaultDateEnd;
+        $ztUrl              = "&dateStart=".$ztDateStart."&dateEnd=".$ztDateEnd;
+        $qtUrl              = "&dateStart=".$defaultDateStart."&dateEnd=".$defaultDateEnd;
+        $sstUrl             = "&dateStart=".$sstDateStart."&dateEnd=".$sstDateEnd;
+
         // 得到选择的日期
         $dateStart  = Yii::$app->request->get('dateStart') ? Yii::$app->request->get('dateStart') : $defaultDateStart;
         $dateEnd    = Yii::$app->request->get('dateEnd') ? Yii::$app->request->get('dateEnd') : $defaultDateEnd;
@@ -50,7 +61,7 @@ class DataUserController extends BDataBaseController
             $labels     = array('ztl','zzxtl','htxz','zqxz','yhxz','zdsh','zgq','jrgq');
             $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
         }else{
-            $labels     = array('zczl','jlzl','tdzl','tdrs','jrzczl','jrjlzl','jrtdzl','jrtdrs');
+            $labels     = array('zczl','jlzl','tdzl','tdrs','jrzczl','jrjlzl','jrtdzl','jrtdrs','jrxyhtd');
             $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
         }
 
@@ -60,6 +71,11 @@ class DataUserController extends BDataBaseController
             'dataRows'  => $dataRows,    
             'dateStart' => $dateStart,
             'dateEnd'   => $dateEnd,
+            'ztUrl'     => $ztUrl,
+            'qtUrl'     => $qtUrl,
+            'sstUrl'    => $sstUrl,
+            'data_type' => $data_type,
+            'city_id'   => $city_id,
         ]);
     }
 
@@ -110,6 +126,12 @@ class DataUserController extends BDataBaseController
                 'model' => $model,
             ]);
         }
+    }
+
+    // 清空缓存
+    public function actionClearup(){
+        DataDaily::deleteAll();
+        $this->redirect('/data-user');
     }
 
     /**
