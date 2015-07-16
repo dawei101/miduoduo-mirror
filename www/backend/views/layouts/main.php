@@ -36,7 +36,6 @@ AppAsset::register($this);
                 <li><a href="/service-type">任务类型</a></li>
                 <li><a href="/task">任务</a></li>
                 <li><a href="/task-applicant">任务报名单</a></li>
-                <li><a href="/task/index2">待审核列表</a></li>
                 <li><a href="/complaint">投诉列表</a></li>
                 <li><a href="/contact-us">联系我们的客户</a></li>
                 <li><a href="/config-recommend">后台配置-推荐兼职</a></li>
