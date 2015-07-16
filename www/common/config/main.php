@@ -31,6 +31,12 @@ return [
             'account' => 'bjcayj',
             'password' => 'cayj001',
         ],
+        'voice_sender' => [
+            'class' => 'common\voice_sender\YuntongxunSender',
+            'account' =>'aaf98fda449fa4cc0144b3fe88fa0f5f',
+            'app_id' => 'aaf98f894e91da24014e9538f64a027d',
+            'account_token' => '160bc8047a564a129b5ca2ef7c51d79d',
+        ],
         'app_pusher' => [
             'class' => 'common\pusher\AppPusher',
             'app_key' => '2ca0b9dfc8faa0381d1deb06',
@@ -71,6 +77,7 @@ return [
     'aliases' => [
         'api' => $root_path . '/api',
         'm' => $root_path . '/m',
+        'corp' => $root_path . '/corp',
         'html5_src' => $root_path . '/html5_src',
         'html5_dest' => $root_path . '/html5_dest',
     ],

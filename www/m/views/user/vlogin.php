@@ -56,6 +56,7 @@ $this->nav_right_title = '登录';
         var help=fp.find('.help-block');
         var wait=60;
         function time(o) {
+            help.html('请您留意短信或来电');
             if (wait == 0) { 
                 o.removeClass('form-yzm-c').removeAttr("disabled");
                 o.html("获取验证码");

@@ -55,8 +55,13 @@ class Utils
 
     public static function sendVerifyCode($phonenum)
     {
+
+        $exists = Yii::$app->cache->get(Utils::getVcodeCachekey($phonenum));
         $code = Utils::generateVerifyCode();
         Utils::cacheVerifyCode($phonenum, $code);
+        if ($exists){
+            return Yii::$app->voice_sender->voiceVerify($phonenum, $code);
+        }
         $msg = "您的验证码为" . $code . ", 请不要告诉其他人【米多多】";
         return Yii::$app->sms_sender->send($phonenum, $msg);
     }

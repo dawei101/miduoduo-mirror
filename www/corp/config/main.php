@@ -46,6 +46,11 @@ return [
             'showScriptName' => false,
             'enablePrettyUrl' => true,
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => false,
+            ],
+        ],
     ],
     'params' => $params,
 ];

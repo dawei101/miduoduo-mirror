@@ -100,7 +100,7 @@ define(function(require, exports) {
         //居住地点
         $(".js-set-address").on("click", function() {
             var $this = $(this);
-            util.setAddress($(this).find("input").val(), function(data) {
+            util.setAddress($(this).find("input").data("address"), function(data) {
                 if (!data) {
                     return;
                 }
@@ -121,7 +121,6 @@ define(function(require, exports) {
 
             var $sc = $(".js-special-col");
             data[$sc.attr("name")] = $sc.find(".sex-act").data("val");
-            data["phonenum"] = miduoduo.user.phone;
             data.home = homeID;
             console.log("简历",data);
             $.put(api.gen("resume/" + miduoduo.user.id), data, function(data) {

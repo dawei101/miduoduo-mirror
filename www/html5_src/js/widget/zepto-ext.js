@@ -53,10 +53,12 @@ define(function(require, exports) {
         //401跳转到登陆页面
         if (res.status == 401) {
             if (window.WebViewJavascriptBridge) {
+                window.localStorage.userInfo = null;
                 WebViewJavascriptBridge.send({"action" : "b_require_auth", "data" : {}}, function(data){location.reload()});
+                $(".init-shade").hide();
             }
         }
-       alert("访问异常：" + res.status + " " + res.statusText);
+       //alert("访问异常：" + res.status + " " + res.statusText);
     }
 
     function parseArguments(url, data, success, dataType) {
