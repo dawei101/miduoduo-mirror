@@ -6,6 +6,12 @@ define(function(require, exports, module) {
     var api = require("widget/api");
     var util = require("widget/util");
 
+    window.MDD = {
+        reload : function() {
+            location.reload();
+        }
+    }
+
     //轮播
     var banners = [
         {url: "view/job/job-detail.html?task=476", imgSrc : miduoduo.basePath.picUrl + "/index/banner2.png"},

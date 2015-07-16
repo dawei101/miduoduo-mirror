@@ -64,7 +64,7 @@
                 <div class="title">兼职意向</div>
                 <div class="con control js-sel-service-type">
                     <?var typeID = "";?>
-                    <span class="service-type-show">
+                    <span class="service-type-show" style="<?if(user.service_types && user.service_types.length > 0){?>display:block<?}?>">
                     <? user.service_types && user.service_types.forEach(function(e){ ?>
                         <?=e.name?>
                     <? typeID += e.id + ','; }); ?>

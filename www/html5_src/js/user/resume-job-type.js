@@ -38,7 +38,7 @@ define(function(require, exports) {
         } else {
             $st.find("input").show();
         }
-        $st.find("span").text(typesStr);
+        $st.find("span").text(typesStr).show();
         $(".sel-job-type").hide();
         $(".main2").show();
 
