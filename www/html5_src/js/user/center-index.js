@@ -4,6 +4,12 @@ define(function(require, exports) {
     var util = require("../widget/util");
     var $obj = $(".state");
 
+    window.MDD = {
+        reload : function() {
+            location.reload();
+        }
+    }
+
     //如果登陆，展示用户id
     if (miduoduo.user.id) {
         $obj.append(miduoduo.user.username);
