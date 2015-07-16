@@ -106,7 +106,7 @@ class TaskController extends BBaseController
      */
     public function actionDelete($id)
     {
-        Task::updateAll(['status'=> 10], 'status=0 and id=:id',
+        Task::updateAll(['status'=> Task::STATUS_DELETED], 'id=:id',
             $params=[':id'=>$id]);
 
         return $this->redirect(['index']);

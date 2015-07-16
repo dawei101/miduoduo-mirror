@@ -45,6 +45,7 @@ class ServiceTypeSearch extends ServiceType
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder'=>['id'=>SORT_ASC]],
         ]);
 
         $this->load($params);
