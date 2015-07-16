@@ -60,8 +60,6 @@ return [
                         'v1/task',
                         'v1/task-applicant',
                         'v1/district',
-                        'v1/sys-message',
-                        'v1/message',
                         'v1/complaint',
                         'v1/user-service-type',
                         'v1/service-type',
@@ -83,6 +81,22 @@ return [
                     'pluralize' => '',
                     'extraPatterns' => [
                         'POST free-all' => 'free-all',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/message'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'POST update-all' => 'update-all',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/sys-message'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'POST update-all' => 'update-all',
                     ],
                 ],
                 [
