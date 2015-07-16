@@ -85,21 +85,78 @@ $this->params['breadcrumbs'][] = $this->title;
                 <a class="btn btn-danger" onclick="if(confirm('如统计数据无误，请勿清空缓存，否则造成服务器压力，是否继续？')){window.location.href='/index.php/data-user/clearup'}" href="javascript:;">清空缓存</a>
             <?php ActiveForm::end(); ?>
         </div>
-        <div>&nbsp;</div>
+        <div style="font-weight:bold;color:blue;margin-top:10px;">
+            点击表头可显示走势图
+        </div>
+        
         <?php if($data_type==3){ ?>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>日期</th>
-                    <th>剩余关注</th>
-                    <th>当日关注</th>
-                    <th>总退订</th>
-                    <th>当日退订</th>
-                    <th>当日推送人数</th>
-                    <th>当日推送总量</th>
-                    <th>当日微信注册</th>
-                    <th>当日微信投递人数</th>
-                    <th>当日微信投递总量</th>
+                    <th class="show-highcharts" id="zgz">
+                        剩余关注
+                        <?php $zgz='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $zgz .= isset($v['zgz']) ? $v['zgz']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='zgz-data' value='".trim($zgz,',')."'>"; ?>
+                        <input type='hidden' id='zgz-title' value='剩余关注'>
+                    </th>
+                    <th class="show-highcharts" id="jrgz">
+                        当日关注
+                        <?php $jrgz='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrgz .= isset($v['jrgz']) ? $v['jrgz']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrgz-data' value='".trim($jrgz,',')."'>"; ?>
+                        <input type='hidden' id='jrgz-title' value='当日关注'>
+                    </th>
+                    <th class="show-highcharts" id="ztd">
+                        总退订
+                        <?php $ztd='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $ztd .= isset($v['ztd']) ? $v['ztd']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='ztd-data' value='".trim($ztd,',')."'>"; ?>
+                        <input type='hidden' id='ztd-title' value='总退订'>
+                    </th>
+                    <th class="show-highcharts" id="jrtd">
+                        当日退订
+                        <?php $jrtd='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrtd .= isset($v['jrtd']) ? $v['jrtd']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrtd-data' value='".trim($jrtd,',')."'>"; ?>
+                        <input type='hidden' id='jrtd-title' value='当日退订'>
+                    </th>
+                    <th class="show-highcharts" id="jrtsrs">
+                        当日推送人数
+                        <?php $jrtsrs='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrtsrs .= isset($v['jrtsrs']) ? $v['jrtsrs']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrtsrs-data' value='".trim($jrtsrs,',')."'>"; ?>
+                        <input type='hidden' id='jrtsrs-title' value='当日推送人数'>
+                    </th>
+                    <th class="show-highcharts" id="jrtszl">
+                        当日推送总量
+                        <?php $jrtszl='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrtszl .= isset($v['jrtszl']) ? $v['jrtszl']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrtszl-data' value='".trim($jrtszl,',')."'>"; ?>
+                        <input type='hidden' id='jrtszl-title' value='当日推送总量'>
+                    </th>
+                    <th class="show-highcharts" id="jrwxzc">
+                        当日微信注册
+                        <?php $jrwxzc='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrwxzc .= isset($v['jrwxzc']) ? $v['jrwxzc']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrwxzc-data' value='".trim($jrwxzc,',')."'>"; ?>
+                        <input type='hidden' id='jrwxzc-title' value='当日微信注册'>
+                    </th>
+                    <th class="show-highcharts" id="jrwxtdrs">
+                        当日微信投递人数
+                        <?php $jrwxtdrs='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrwxtdrs .= isset($v['jrwxtdrs']) ? $v['jrwxtdrs']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrwxtdrs-data' value='".trim($jrwxtdrs,',')."'>"; ?>
+                        <input type='hidden' id='jrwxtdrs-title' value='当日微信投递人数'>
+                    </th>
+                    <th class="show-highcharts" id="jrwxtdzl">
+                        当日微信投递总量
+                        <?php $jrwxtdzl='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrwxtdzl .= isset($v['jrwxtdzl']) ? $v['jrwxtdzl']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrwxtdzl-data' value='".trim($jrwxtdzl,',')."'>"; ?>
+                        <input type='hidden' id='jrwxtdzl-title' value='当日微信投递总量'>
+                    </th>
                     
                 </tr>
             </thead>
@@ -126,14 +183,62 @@ $this->params['breadcrumbs'][] = $this->title;
             <thead>
                 <tr>
                     <th>日期</th>
-                    <th>总贴量</th>
-                    <th>总在线贴量</th>
-                    <th>后台新增</th>
-                    <th>抓取新增</th>
-                    <th>用户新增</th>
-                    <th>总待审核</th>
-                    <th>总过期</th>
-                    <th>当日过期</th>
+                    <th class="show-highcharts" id="ztl">
+                        总贴量
+                        <?php $ztl='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $ztl .= isset($v['ztl']) ? $v['ztl']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='ztl-data' value='".trim($ztl,',')."'>"; ?>
+                        <input type='hidden' id='ztl-title' value='总贴量'>
+                    </th>
+                    <th class="show-highcharts" id="zzxtl">
+                        总在线贴量
+                        <?php $zzxtl='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $zzxtl .= isset($v['zzxtl']) ? $v['zzxtl']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='zzxtl-data' value='".trim($zzxtl,',')."'>"; ?>
+                        <input type='hidden' id='zzxtl-title' value='总在线贴量'>
+                    </th>
+                    <th class="show-highcharts" id="htxz">
+                        后台新增
+                        <?php $htxz='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $htxz .= isset($v['htxz']) ? $v['htxz']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='htxz-data' value='".trim($htxz,',')."'>"; ?>
+                        <input type='hidden' id='htxz-title' value='后台新增'>
+                    </th>
+                    <th class="show-highcharts" id="zqxz">
+                        抓取新增
+                        <?php $zqxz='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $zqxz .= isset($v['zqxz']) ? $v['zqxz']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='zqxz-data' value='".trim($zqxz,',')."'>"; ?>
+                        <input type='hidden' id='zqxz-title' value='抓取新增'>
+                    </th>
+                    <th class="show-highcharts" id="yhxz">
+                        用户新增
+                        <?php $yhxz='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $yhxz .= isset($v['yhxz']) ? $v['yhxz']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='yhxz-data' value='".trim($yhxz,',')."'>"; ?>
+                        <input type='hidden' id='yhxz-title' value='用户新增'>
+                    </th>
+                    <th class="show-highcharts" id="zdsh">
+                        总待审核
+                        <?php $zdsh='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $zdsh .= isset($v['zdsh']) ? $v['zdsh']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='zdsh-data' value='".trim($zdsh,',')."'>"; ?>
+                        <input type='hidden' id='zdsh-title' value='总待审核'>
+                    </th>
+                    <th class="show-highcharts" id="zgq">
+                        总过期
+                        <?php $zgq='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $zgq .= isset($v['zgq']) ? $v['zgq']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='zgq-data' value='".trim($zgq,',')."'>"; ?>
+                        <input type='hidden' id='zgq-title' value='总过期'>
+                    </th>
+                    <th class="show-highcharts" id="jrgq">
+                        当日过期
+                        <?php $jrgq='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrgq .= isset($v['jrgq']) ? $v['jrgq']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrgq-data' value='".trim($jrgq,',')."'>"; ?>
+                        <input type='hidden' id='jrgq-title' value='当日过期'>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -157,15 +262,69 @@ $this->params['breadcrumbs'][] = $this->title;
             <thead>
                 <tr>
                     <th>日期</th>
-                    <th>注册总量</th>
-                    <th>简历总量</th>
-                    <th>投递总量</th>
-                    <th>投递人数</th>
-                    <th>当日注册总量</th>
-                    <th>当日简历总量</th>
-                    <th>当日投递总量</th>
-                    <th>当日投递人数</th>
-                    <th>当日新用户投递</th>
+                    <th class="show-highcharts" id="zczl">
+                        注册总量
+                        <?php $zczl='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $zczl .= isset($v['zczl']) ? $v['zczl']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='zczl-data' value='".trim($zczl,',')."'>"; ?>
+                        <input type='hidden' id='zczl-title' value='注册总量'>
+                    </th>
+                    <th class="show-highcharts" id="jlzl">
+                        简历总量
+                        <?php $jlzl='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jlzl .= isset($v['jlzl']) ? $v['jlzl']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jlzl-data' value='".trim($jlzl,',')."'>"; ?>
+                        <input type='hidden' id='jlzl-title' value='简历总量'>
+                    </th>
+                    <th class="show-highcharts" id="tdzl">
+                        投递总量
+                        <?php $tdzl='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $tdzl .= isset($v['tdzl']) ? $v['tdzl']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='tdzl-data' value='".trim($tdzl,',')."'>"; ?>
+                        <input type='hidden' id='tdzl-title' value='投递总量'>
+                    </th>
+                    <th class="show-highcharts" id="tdrs">
+                        投递人数
+                        <?php $tdrs='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $tdrs .= isset($v['tdrs']) ? $v['tdrs']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='tdrs-data' value='".trim($tdrs,',')."'>"; ?>
+                        <input type='hidden' id='tdrs-title' value='投递人数'>
+                    </th>
+                    <th class="show-highcharts" id="jrzczl">
+                        当日注册总量
+                        <?php $jrzczl='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrzczl .= isset($v['jrzczl']) ? $v['jrzczl']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrzczl-data' value='".trim($jrzczl,',')."'>"; ?>
+                        <input type='hidden' id='jrzczl-title' value='当日注册总量'>
+                    </th>
+                    <th class="show-highcharts" id="jrjlzl">
+                        当日简历总量
+                        <?php $jrjlzl='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrjlzl .= isset($v['jrjlzl']) ? $v['jrjlzl']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrjlzl-data' value='".trim($jrjlzl,',')."'>"; ?>
+                        <input type='hidden' id='jrjlzl-title' value='当日简历总量'>
+                    </th>
+                    <th class="show-highcharts" id="jrtdzl">
+                        当日投递总量
+                        <?php $jrtdzl='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrtdzl .= isset($v['jrtdzl']) ? $v['jrtdzl']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrtdzl-data' value='".trim($jrtdzl,',')."'>"; ?>
+                        <input type='hidden' id='jrtdzl-title' value='当日投递总量'>
+                    </th>
+                    <th class="show-highcharts" id="jrtdrs">
+                        当日投递人数
+                        <?php $jrtdrs='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrtdrs .= isset($v['jrtdrs']) ? $v['jrtdrs']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrtdrs-data' value='".trim($jrtdrs,',')."'>"; ?>
+                        <input type='hidden' id='jrtdrs-title' value='当日投递人数'>
+                    </th>
+                    <th class="show-highcharts" id="jrxyhtd">
+                        当日新用户投递
+                        <?php $jrxyhtd='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrxyhtd .= isset($v['jrxyhtd']) ? $v['jrxyhtd']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrxyhtd-data' value='".trim($jrxyhtd,',')."'>"; ?>
+                        <input type='hidden' id='jrxyhtd-title' value='当日新用户投递'>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -187,13 +346,75 @@ $this->params['breadcrumbs'][] = $this->title;
         </table>
         <?php } ?>
     </div>
-
+    <div id="container" style="height:400px;border:1px solid #ccc;padding-top:10px;"></div>
 </div>
 
 <?php $this->beginBlock('css') ?>
     <link href="/css/jquery.timepicker.css" media="all" rel="stylesheet" />
+    <style>
+        .show-highcharts{
+            cursor:pointer;
+        }
+    </style>
 <?php $this->endBlock('css') ?>
 <?php $this->beginBlock('js') ?>
     <script src="/js/jquery.timepicker.min.js" ></script>
+
+    <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script> 
+    <script>
+        $(function () {
+            $(".show-highcharts").click(function(){
+                var dataid      = $(this).attr('id');
+                var datavalue   = eval('['+$("#"+dataid+"-data").val()+']');
+                var datatitle   = $("#"+dataid+"-title").val();
+                makeHighcharts(datavalue,datatitle);
+                $('html, body, .content').animate({scrollTop: $(document).height()},500); 
+            });
+            function makeHighcharts(datavalue,datatitle){
+                $('#container').highcharts({
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: datatitle+'-走势图'
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: [
+                            <?php $dataRows=array_reverse($dataRows);foreach($dataRows as $k => $v){ ?>    
+                                <?= isset($v['date']) ? "'".$v['date']."'," : 0 ?>
+                            <?php } ?>
+                        ]
+                    },
+                    yAxis: {
+                        title: {
+                            text: ''
+                        }
+                    },
+                    tooltip: {
+                        enabled: false,
+                        formatter: function() {
+                            return '<b>'+ this.series.name +'</b><br/>'+this.x +': '+ this.y +'°C';
+                        }
+                    },
+                    plotOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: true
+                            },
+                            enableMouseTracking: true
+                        }
+                    },
+                    series: [{
+                        name: datatitle,
+                        data: datavalue
+                    }]
+                });
+            }
+        });
+    </script>
+    
 <?php $this->endBlock() ?>
 
