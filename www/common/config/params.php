@@ -17,7 +17,7 @@ return [
 
     'nearby_search.max_distance' => 5000, // 单位米
 
-    'downloadApp.android' => 'http://miduoduo.oss-cn-beijing.aliyuncs.com/app/miduoduo-1.0.apk',
+    'downloadApp.android' => 'http://dd.myapp.com/16891/BFBA839C0F4B194CE8F700FAACBA1E89.apk',
 
     'weichat'=>[
         'appid'     => 'wxc940e677d43db45d',                // 微信公众号ID
