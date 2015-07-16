@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\TaskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '任务订单';
+$this->title = '待带审核列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-index">
@@ -14,13 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('创建任务订单', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,//过滤模型
         'columns' => [
             'gid',
             [
@@ -30,10 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->gid ."'>" . $model->title . "</a>";
                 } 
             ] ,
-            'clearance_period_label',
-            'salary',
-            'salary_unit_label',
-            //'status_label',
+            'status_label',
+            [
+                'label'=>'操作',
+                'format'=>'raw',
+                'value' => function($model){
+                    $furl = "/task/passed/?id=" . $model->id."&status=40";
+                    $surl = "/task/passed/?id=" . $model->id."&status=0";
+                    return Html::a('通过审核', $surl) .'|'. Html::a('未通过审核', $furl) ; 
+                }
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
