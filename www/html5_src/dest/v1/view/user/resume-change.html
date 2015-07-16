@@ -42,7 +42,6 @@
         WebViewJavascriptBridge.defaultHandler(handle_action)
        function handle_action(data, responseCallback) {
            if (data && data.action == "b_require_auth") {
-               alert("用户信息" + JSON.stringify(data.data));
                window.localStorage.setItem("userInfo", JSON.stringify(data.data));
                window.WebViewJavascriptBridge.send({action : "b_refresh_all", data : {}}, null);
            }
@@ -131,7 +130,7 @@
                 <div class="title">兼职意向</div>
                 <div class="con control js-sel-service-type">
                     <?var typeID = "";?>
-                    <span class="service-type-show">
+                    <span class="service-type-show" style="<?if(user.service_types && user.service_types.length > 0){?>display:block<?}?>">
                     <? user.service_types && user.service_types.forEach(function(e){ ?>
                         <?=e.name?>
                     <? typeID += e.id + ','; }); ?>
