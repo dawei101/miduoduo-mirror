@@ -26,6 +26,7 @@ js调用native 方法原理
             }
     }
 
+   
     Return :
     {
         action: 'b_require_auth',
@@ -36,9 +37,20 @@ js调用native 方法原理
       }
 
     附：
+         在defaultHandler 接收返回数据
         如果未登陆，不返回任何东西，或返回access_token为null
 ```
 
+* 刷新页面
+```
+    {
+        action: 'b_refresh_all',
+        data: { }
+        
+        附：
+            接收到事件，会调用 js MDD.reload() 函数，html 在该接口自己刷新 
+    }
+```
 
 * 提示框
 ```

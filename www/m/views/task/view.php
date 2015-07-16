@@ -94,7 +94,15 @@ $this->nav_right_title = '首页';
             <div style="background: #ff7b5d;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
         <?php }
         if(!$app) { ?>
-         <div id="apply" class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
+            <?php if ($task->status > 0){ ?>
+                <div style="background: #a5abb2;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$task->status_label?></div>
+            <?php }else{ ?>
+                <?php if(strtotime($task->to_date.' 00:00:01') > time()){ ?>
+                    <div id="apply" class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
+                <?php }else{ ?>
+                    <div style="background: #a5abb2;" class="midd-l bottom-bnt bottom-bnt-bm">已过期</div>
+                <?php } ?>
+            <?php } ?>
         <?php } ?>
     <?php } ?>
 </div>
