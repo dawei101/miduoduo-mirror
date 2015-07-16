@@ -51,7 +51,7 @@ class UserController extends BaseActiveController
             'message'=> "修改成功",
             'result' => [
                 'id'=> $user->id,
-                'username'=> $username,
+                'username'=> $user->username,
                 'password'=> $password,
                 'access_token'=> $user->access_token,
                 'resume' => $user->resume?$user->resume->toArray():null,
