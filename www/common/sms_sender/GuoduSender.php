@@ -1,6 +1,7 @@
 <?php
 namespace common\sms_sender;
 
+use Yii;
 use yii\base\Component;
 use Exception;
 
@@ -54,7 +55,7 @@ class GuoduSender extends Component
                 return true;
             }
         }
-        Yii::error("Error::failed sending $phonenum with content: $content, error msg:" . $this->errors[$code]);
+        Yii::error("Error::failed sending ". $params["DesMobile"] ." with content: $content, error msg:" . $this->errors[$code]);
         return false;
     }
 
