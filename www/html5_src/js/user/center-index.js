@@ -30,12 +30,23 @@ define(function(require, exports) {
     $(".register").on("click", function() {
         util.reg();
     })
-    $(".item").on("click", function(e) {
+    $(".cc,.contact-us").on("click", function(e) {
         e.preventDefault();
         if (miduoduo.user.id) {
             util.href($(this).attr("href"));
         } else {
-            util.showTips("您还没有登陆！");
+            util.showTips("您还没有登录！");
+        }
+    });
+    $(".js-my-resume").on("click", function(e) {
+        e.preventDefault();
+        if (miduoduo.user.id) {
+            if (window.localStorage.hasResume) {
+                $(this).attr("href", "view/user/resume-preview.html");
+            }
+            util.href($(this).attr("href"));
+        } else {
+            util.showTips("您还没有登录！");
         }
     });
 

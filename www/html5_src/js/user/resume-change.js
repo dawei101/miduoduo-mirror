@@ -5,6 +5,8 @@ define(function(require, exports) {
     var util = require("../widget/util");
     var calendar = require("../widget/calendar");
 
+    var homeID;
+
     WebViewJavascriptBridge.defaultHandler(handle_action);
     //jsbridge 主动监听
     function handle_action(data, responseCallback) {
@@ -98,13 +100,13 @@ define(function(require, exports) {
         //居住地点
         $(".js-set-address").on("click", function() {
             var $this = $(this);
-            util.setAddress(function(data) {
+            util.setAddress($(this).find("input").data("address"), function(data) {
                 if (!data) {
                     return;
                 }
                 $this.find("input").val(data.address);
                 $.post(api.gen("address"), data, function(data) {
-                    console.log(data);
+                    homeID = data.id;
                 });
             });
         })
@@ -119,12 +121,12 @@ define(function(require, exports) {
 
             var $sc = $(".js-special-col");
             data[$sc.attr("name")] = $sc.find(".sex-act").data("val");
-            data["phonenum"] = miduoduo.user.phone;
+            data.home = homeID;
             console.log("简历",data);
             $.put(api.gen("resume/" + miduoduo.user.id), data, function(data) {
                 util.showTips("修改成功！", function() {
                     if (miduoduo.os.mddApp) {
-                        util.pop();
+                        util.pop(true);
                     } else {
                         //location.replace("view/user/center-index.html");
                         alert("兼容app外浏览器，待定");

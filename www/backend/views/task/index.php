@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>'操作',
                 'format'=>'raw',
                 'value' => function($model){
-                    $furl = "/task/passed/?id=" . $model->id."&status=1";
+                    $furl = "/task/passed/?id=" . $model->id."&status=40";
                     $surl = "/task/passed/?id=" . $model->id."&status=0";
                     return Html::a('通过审核', $surl) .'|'. Html::a('未通过审核', $furl) ; 
                 }

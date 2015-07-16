@@ -258,4 +258,11 @@ class User extends BaseActiveRecord implements IdentityInterface
             'name' , 'is_staff'
         ];
     }
+
+    public function getResume(){
+        
+        return $this->hasOne(Resume::className(), ['user_id' => 'id']);
+    }
+
+
 }

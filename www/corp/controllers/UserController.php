@@ -6,11 +6,14 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 use common\Utils;
 use common\models\LoginWithDynamicCodeForm;
 use common\models\User;
 use common\sms\SmsSenderFactory;
+use common\models\Company;
+use common\models\ServiceType;
 
 use corp\FBaseController;
 use corp\models\PasswordResetRequestForm;
@@ -18,6 +21,7 @@ use corp\models\ResetPasswordForm;
 use corp\models\SignupForm;
 use corp\models\LoginForm;
 use corp\models\ContactForm;
+use corp\models\PersonalCertForm;
 
 /**
  * Site controller
@@ -34,11 +38,11 @@ class UserController extends FBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['register-success', 'login', 'register', 'vcode','request-password-reset', 'reset-password'],
+                        'actions' => ['login', 'register', 'vcode','request-password-reset', 'reset-password', 'vlogin'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['add-contact-info','logout'],
+                        'actions' => ['add-contact-info','logout', 'info', 'account', 'personal-cert', 'corp-cert'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -47,7 +51,8 @@ class UserController extends FBaseController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['get'],
+                    'vlogin' => ['post'],
                 ],
             ],
         ];
@@ -102,8 +107,7 @@ class UserController extends FBaseController
             ]);
         }
 
-        $sender = SmsSenderFactory::getSender();
-        if ($sender->sendVerifyCode($username)){
+        if (Utils::sendVerifyCode($username)){
             return $this->renderJson([
                     'result'=> true,
                     'msg'=> "验证码已发送"
@@ -113,6 +117,23 @@ class UserController extends FBaseController
                 'result'=> false,
                 'msg'=> "验证码发送失败, 请稍后重试。"
         ]);
+    }
+
+    public function actionVlogin()
+    {
+        $username = Yii::$app->request->post('username');
+        $vcode = Yii::$app->request->post('vcode');
+        if(!Utils::validateVerifyCode($username, $vcode)){
+            return $this->renderJson(['result' => false, 'error' => '手机号或验证码不正确.']);
+        }
+        $user = User::findByUsername($username);
+        if (!$user) {
+            return $this->renderJson(['result' => false, 'error' => '这个手机号没有注册过，请先注册.']);
+        }
+        if (!Yii::$app->user->login($user, 3600 * 24 * 30)) {
+            return $this->renderJson(['result' => false, 'error' => '登录失败，请再试一次']);
+        }
+        return $this->renderJson(['result' => true]);
     }
 
     public function actionLogout()
@@ -137,12 +158,14 @@ class UserController extends FBaseController
         ]);
     }
 
-    public function actionResetPassword($token)
+    public function actionResetPassword($token='')
     {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
+            // throw new Bad RequestHttpException($e->getMessage());
+            //just for test
+            return $this->render('resetPassword');
         }
 
         if ($model->load(Yii::$app->request->post(), '') && $model->validate() && $model->resetPassword()) {
@@ -151,22 +174,99 @@ class UserController extends FBaseController
             return $this->goHome();
         }
 
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionRegisterSuccess()
-    {
-        return $this->render('registerSuccess');
+        return $this->render('resetPassword');
     }
 
     public function actionAddContactInfo()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post(), '') && $model->validate() && $model->saveContactInfo()) {
+        $model = new Company;
+        $model->setAttributes(Yii::$app->request->post(), false);
+        if ($model->validate() && $model->save()) {
             return $this->goHome();
         }
         return $this->render('addContactInfo', ['model' => $model]);
+    }
+
+    public function actionInfo()
+    {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
+        if (Yii::$app->request->isPost) {
+            $company->setAttributes(Yii::$app->request->post(), false);
+            if ($company->validate() && $company->save()) {
+                return $this->goHome();
+            }
+        }
+
+        $services = ServiceType::find()->all();
+        return $this->render('info', ['company' => $company, 'services' => $services]);
+    }
+
+    public function actionAccount()
+    {
+        if (Yii::$app->request->isPost) {
+            $old_password = Yii::$app->request->post('old_password');
+            $new_password = Yii::$app->request->post('new_password');
+            $confirm = Yii::$app->request->post('confirm');
+            if (strcmp($new_password, $confirm) != 0) {
+                return $this->render('account', ['errmsg'=>'新密码不一致']);
+            }
+            $user = User::findIdentity(Yii::$app->user->id);
+            if (!$user->validatePassword($old_password)) {
+                return $this->render('account', ['errmsg'=>'原密码错误']);
+            }
+
+			$user->setPassword($new_password);
+        	$user->removePasswordResetToken();
+            if ($user->validate() && $user->save()) {
+                return $this->goHome();
+            }
+        }
+
+        return $this->render('account', ['errmsg'=>'']);
+    }
+
+    public function actionPersonalCert()
+    {
+    	$company = Company::findByCurrentUser();
+
+    	if(Yii::$app->request->isPost){
+            $hash = Yii::$app->getSecurity()->generateRandomString();
+    		$uploaddir = '/service/data/media/';
+			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
+			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
+            }
+            $company->setAttributes(Yii::$app->request->post(), false);
+            $company->person_idcard_pic = $hash;
+            if (!$company->validate() || !$company->save()) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
+            }
+            return $this->goHome();
+    	}
+        return $this->render('personal-cert',['company' => $company, 'error'=>false]);
+    }
+
+    public function actionCorpCert()
+    {
+        $company = Company::findByCurrentUser();
+    	if(Yii::$app->request->isPost){
+            $hash = Yii::$app->getSecurity()->generateRandomString();
+    		$uploaddir = '/service/data/media';
+			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
+			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
+            }
+            $company->setAttributes(Yii::$app->request->post(), false);
+            $company->person_idcard_pic = $hash;
+            if (!$company->validate() || !$company->save()) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
+            }
+            return $this->goHome();
+    	}
+        return $this->render('corp-cert',['company'=>$company, 'error'=>false]);
     }
 }
