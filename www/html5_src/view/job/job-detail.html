@@ -61,7 +61,7 @@
             <div class="sub-part">
                 <div class="sub-title">公司信息</div>
                 <p class="info">
-                    <?=data.company_name || '没有记录公司名称'?> <br/>
+                    <?if(data.company_name){?><?=data.company_name || ''?> <br/><?}?>
                     联系人：<?=data.contact?> <br/>
                     联系方式：<?=data.contact_phonenum?> <br/>
                 </p>

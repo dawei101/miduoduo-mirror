@@ -42,8 +42,9 @@
         WebViewJavascriptBridge.defaultHandler(handle_action)
        function handle_action(data, responseCallback) {
            if (data && data.action == "b_require_auth") {
+               alert("用户信息" + JSON.stringify(data.data));
                window.localStorage.setItem("userInfo", JSON.stringify(data.data));
-               location.reload();
+               window.WebViewJavascriptBridge.send({action : "b_refresh_all", data : {}}, null);
            }
 
            var state = true;
@@ -70,6 +71,7 @@
 <script>seajs.use('user/msg-detail')</script>
 </head>
 <body>
+<div class="tips">没有消息</div>
 <script type="text/html" id="msg-list-tpl">
     <ul class="msg-list">
         <? this.msgs.forEach(function(e) { ?>
