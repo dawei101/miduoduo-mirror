@@ -15,7 +15,7 @@ $this->title = '米多多兼职平台';
       <div class="col-sm-12 col-md-2 col-lg-2 padding-0" style="background:#f00">
         <div class="qiye-left">
           <dl>
-            <dt class="default-title"><i class="iconfont">&#xe609;</i>我要发布</dt>
+            <dt class="default-title"><i class="iconfont">&#xe609;</i><a href="/task/publish">我要发布</a></dt>
           </dl>
           <dl>
             <dt class="default-title"><i class="iconfont">&#xe612;</i>职位管理</dt>

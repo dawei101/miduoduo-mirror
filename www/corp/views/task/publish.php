@@ -248,17 +248,21 @@ $this->title = '米多多兼职平台';
                                             <input name="salary_unit" type="text" placeholder="金额单位" value="<?=$task->salary_unit!=false?'元/'.TASK::$SALARY_UNITS[$task->salary_unit]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
+                                                <li>元/小时</li>
                                                 <li>元/天</li>
+                                                <li>元/周</li>
                                                 <li>元/月</li>
+                                                <li>元/次</li>
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left ma-right ma-right" name="nice-select">
                                             <input type="text" name="clearance_period" placeholder="结算方式" value="<?=$task->clearance_period!=false?TASK::$CLEARANCE_PERIODS[$task->clearance_period]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
-                                                <li>周结</li>
                                                 <li>月结</li>
+                                                <li>周结</li>
                                                 <li>日结</li>
+                                                <li>完工结</li>
                                             </ul>
                                         </div>
                                         <div class="pull-left yuji">预计有25名应聘者</div>
