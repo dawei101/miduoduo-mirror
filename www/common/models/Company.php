@@ -21,37 +21,58 @@ class Company extends \common\BaseActiveRecord
 
     static $STATUSES = [
         0 => '正常',
-        1 => '未验证',
-        2 => '验证中',
-        4 => '验证失败',
         5 => '已冻结',
         10 => '已删除',
         20 => '黑名单',
     ];
 
     const STATUS_OK = 0;
-    const STATUS_WAIT_EXAMINE = 1;
-    const STATUS_EXAMINEING = 2;
-    const STATUS_EXAMINE_FAILED = 4;
     const STATUS_FREEZED = 5;
     const STATUS_DELETED = 10;
     const STATUS_BLACKLISTED =20;
 
     static $EXAMINE_VALUES = [
-        1 => '身份证验证',
-        2 => '营业执照验证',
+
+        0 => '未验证',
+        1 => '已开始验证',
+
+        16 => '身份证验证通过',
+        32 => '营业执照验证通过',
     ];
 
-    const GOVID_PASS_EXAM = 1;
-    const LICENSE_PASS_EXAM = 2;
+    const EXAM_GOVID_PASSED = 16;
+    const EXAM_LICENSE_PASSED = 32;
 
+    const EXAM_NOT_STARTED = 0;
+    const EXAM_START = 1;
+
+    public function getExamine_status()
+    {
+        $r = $this->exam_result;
+        if ($r==EXAM_NOT_START){
+            return static::$EXAMINE_VALUES[EXAM_NOT_START];
+        } else {
+            if ($r & 16 && $r & 32){
+                return '通过验证';
+            }
+            if ($r & 16 && !($r & 32)){
+                return '身份证通过验证'; // 营业执照未认证
+            }
+            if (!($r & 16) && $r & 32){
+                return '营业执照通过验证';
+            }
+            if (!($r & 16) && !($r & 32)){
+                return '认证未通过';
+            }
+        }
+
+    }
     static $EXAMINE_RESULTS = [
         0 => '验证未通过',
         1 => '身份证已验证',
         2 => '营业执照已验证',
         1^2 => '验证通过',
     ];
-
 
 
     /**

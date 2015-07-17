@@ -92,26 +92,57 @@ class CompanyController extends BBaseController
 
     public function changeStatus($id, $status)
     {
-        Task::updateAll(['status'=> $status], 'id=:id',
+        Company::updateAll(['status'=> $status], 'id=:id',
             $params=[':id'=>$id]);
         return $this->redirect(['index']);
     }
 
     public function actionDelete($id)
     {
-        return $this->changeStatus($id, $status=Task::STATUS_FREEZED);
+        return $this->changeStatus($id, $status=Company::STATUS_DELETED);
+    }
+
+    public function actionBlacklist($id)
+    {
+        return $this->changeStatus($id, $status=Company::STATUS_BLACKLISTED);
+    }
+
+
+    public function actionExamine($id, $value, $passed=false)
+    {
+        $company = Company::findOne($id);
+        if ($company){
+            if ($passed){
+                $company->status = $company->status 
+                    | $value | Company::EXAM_STARTED;
+            } else {
+                $company->status = ($company->status
+                    & ~$value | Company::EXAM_STARTED;
+            }
+            $company->save();
+        }
+        return $this->redirect(['index']);
+ 
+    }
+
+    public function actionRejectLicenseId($id)
+    {
+        return $this->actionExamine($id, Company::EXAM_GOVID_PASSED, false);
+    }
+
+    public function actionAdoptLicenseId($id)
+    {
+        return $this->actionExamine($id, Company::EXAM_GOVID_PASSED, true);
     }
 
     public function actionRejectGovId($id)
     {
-        Task::updateAll(['status'=> $status], 'id=:id',
-            $params=[':id'=>$id]);
-        return $this->changeStatus($id, $status=Task::STATUS_EXAMINE_FAILED);
+        return $this->actionExamine($id, Company::LICENSE_PASS_EXAM, false);
     }
 
     public function actionAdoptGovId($id)
     {
-        return $this->changeStatus($id, $status=Task::);
+        return $this->actionExamine($id, Company::LICENSE_PASS_EXAM, true);
     }
 
 
