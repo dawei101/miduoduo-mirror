@@ -307,7 +307,7 @@ $this->title = '米多多兼职平台';
                                             <input name="contact_phonenum" type="text" placeholder="联系电话" value="<?=$task->contact_phonenum?$task->contact_phonenum:$company->contact_phone?>">
                                         </div>
                                         <div  class="fixde bm-fs"><span><input name="sms_contact" type="checkbox" checked="on">短信报名</span>
-                                            <input name="" type="text" placeholder="18600098028">
+                                            <input name="" type="text" placeholder="请填写手机号码">
                                             <input type="text" placeholder="姓名+电话+性别+应聘岗位+米多多"></div>
                                     </div>
                                 </li>
