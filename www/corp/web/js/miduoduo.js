@@ -32,15 +32,17 @@ $(document).click(function(){
 
 //日期选择
  $(document).ready(function() {
-      $('.reservation').daterangepicker(null, function(start, end, label) {
-                    console.log(start.toISOString(), end.toISOString(), label);
-          });
+    $('.reservation').daterangepicker(null, function(start, end, label) {
+        var form = document.forms[0];
+        form.from_date.value = start;
+        form.to_date.value = end;
+    });
  });
   $(document).ready(function() {
-                  $('#birthday').daterangepicker({ singleDatePicker: true }, function(start, end, label) {
-                    console.log(start.toISOString(), end.toISOString(), label);
-                  });
-               });
+    $('#birthday').daterangepicker({ singleDatePicker: true }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+    });
+  });
 
 
 
