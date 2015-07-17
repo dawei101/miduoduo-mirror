@@ -31,7 +31,7 @@ class TaskController extends FBaseController
                  'class' => AccessControl::className(),
                  'rules' => [
                      [
-                         'actions' => ['index','publish', 'edit', 'refresh', 'down', 'delete'],
+                         'actions' => ['index','publish', 'edit', 'refresh', 'down', 'delete', 'success'],
                          'allow' => true,
                          'roles' => ['@'],
                      ],
@@ -64,9 +64,13 @@ class TaskController extends FBaseController
 
     public function actionIndex()
     {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
         $condition = ['user_id'=>Yii::$app->user->id];
         $status = Yii::$app->request->get('status');
-        if ($status) {
+        if (array_key_exists('status', $_GET)) {
             $condition['status'] = $status;
         }
         $query = Task::find()
@@ -131,18 +135,38 @@ class TaskController extends FBaseController
                 $model->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
             $model->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
-            $model->status = 1;
+            $model->status = 30;
+
             if ($model->validate() && $model->save()) {
+                $task_id = $model->id;
+                TaskAddress::deleteAll(['task_id' => $task_id]);
+                $addressStr = str_replace('，', ',', $data['address']);
+                $addressList = explode(',', $addressStr);
+                foreach($addressList as $item){
+                    $address = new TaskAddress;
+                    $address->title = $item;
+                    $address->lat = 0;
+                    $address->lng = 0;
+                    $address->task_id = $task_id;
+                    $address->user_id = Yii::$app->user->id;
+                    $address->save();
+                }
                 return $this->redirect('/task/');
             }
         }
 
 		$services = ServiceType::find()->all();
-        return $this -> render('publish', ['services'=>$services, 'task'=>$model]);
+        return $this -> render('publish',
+        ['services'=>$services, 'task'=>$model, 'company'=>$company, 'address'=>false]);
     }
 
     public function actionEdit($gid)
     {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
         $task = Task::findOne(['gid' => $gid]);
         if (!$task) {
             return $this->goHome();
@@ -186,19 +210,45 @@ class TaskController extends FBaseController
             if ($weight_requirement) {
                 $task->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
+            $task->status = 30;
             $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             if ($task->validate() && $task->save()) {
+                $task_id = $task->id;
+                TaskAddress::deleteAll(['task_id' => $task_id]);
+                $addressStr = str_replace('，', ',', Yii::$app->request->post('address'));
+                $addressList = explode(',', $addressStr);
+                foreach($addressList as $item){
+                    $address = new TaskAddress;
+                    $address->title = $item;
+                    $address->lat = 0;
+                    $address->lng = 0;
+                    $address->task_id = $task_id;
+                    $address->user_id = Yii::$app->user->id;
+                    $address->save();
+                }
                 return $this->redirect('/task/');
             }
         }
+        $addresses = $task->getAddresses()->all();
         $services = ServiceType::find()->all();
         $task->from_time = substr($task->from_time, 0, -3);
         $task->to_time = substr($task->to_time, 0, -3);
-        return $this->render('publish', ['task' => $task, 'services'=>$services]);
+        return $this->render('publish',
+        ['task' => $task, 'services'=>$services, 'company'=>$company, 'address'=>$addresses]);
     }
 
     public function actionRefresh($gid)
     {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = date("Y-m-d H:i:s");
         $task->from_time = substr($task->from_time, 0, -3);
@@ -211,8 +261,14 @@ class TaskController extends FBaseController
 
     public function actionDown($gid)
     {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
+        $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
-        $task->status = 20;
+        $task->status = 10;
         $task->from_time = substr($task->from_time, 0, -3);
         $task->to_time = substr($task->to_time, 0, -3);
         if($task->save()){
@@ -223,14 +279,25 @@ class TaskController extends FBaseController
 
     public function actionDelete($gid)
     {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
+        $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
-        $task->status = 10;
+        $task->status = 20;
         $task->from_time = substr($task->from_time, 0, -3);
         $task->to_time = substr($task->to_time, 0, -3);
         if($task->save()){
             return $this->renderJson(['result' => true]);
         }
         return $this->renderJson(['result' => false, 'error' => $task->errors]);
+    }
+
+    public function actionSuccess()
+    {
+        return $this->render('success');
     }
 
 }

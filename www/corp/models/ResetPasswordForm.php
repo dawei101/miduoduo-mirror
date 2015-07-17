@@ -62,4 +62,11 @@ class ResetPasswordForm extends Model
 
         return $user->save(false);
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'password' => '密码',
+        ];
+    }
 }

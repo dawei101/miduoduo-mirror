@@ -15,7 +15,7 @@ $this->title = '米多多兼职平台';
       <div class="col-sm-12 col-md-2 col-lg-2 padding-0" style="background:#f00">
         <div class="qiye-left">
           <dl>
-            <dt class="default-title"><i class="iconfont">&#xe609;</i>我要发布</dt>
+            <dt class="default-title"><i class="iconfont">&#xe609;</i><a href="/task/publish">我要发布</a></dt>
           </dl>
           <dl>
             <dt  class="default-title" class=""><i class="iconfont">&#xe612;</i>职位管理</dt>
@@ -85,21 +85,24 @@ $this->title = '米多多兼职平台';
 <!-- InstanceEndEditable -->
 <script>
 $("#file0").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-            console.log("objUrl = "+objUrl) ;
-            if (objUrl) {
-                        $("#img0").attr("src", objUrl) ;
-                            }
+    var objUrl = getObjectURL(this.files[0]) ;
+    console.log("objUrl = "+objUrl) ;
+    if (objUrl) {
+        $("#img0").attr("src", objUrl) ;
+    }
 }) ;
 function getObjectURL(file) {
-        var url = null ;
-            if (window.createObjectURL!=undefined) { // basic
-                        url = window.createObjectURL(file) ;
-                            } else if (window.URL!=undefined) { // mozilla(firefox)
-                                        url = window.URL.createObjectURL(file) ;
-                                            } else if (window.webkitURL!=undefined) { // webkit or chrome
-                                                        url = window.webkitURL.createObjectURL(file) ;
-                                                            }
-            return url ;
+    var url = null ;
+    if (window.createObjectURL!=undefined) { // basic
+        url = window.createObjectURL(file) ;
+    } else if (window.URL!=undefined) { // mozilla(firefox)
+        url = window.URL.createObjectURL(file) ;
+    } else if (window.webkitURL!=undefined) { // webkit or chrome
+        url = window.webkitURL.createObjectURL(file) ;
+    }
+    return url ;
 }
 </script>
+<!--
+<?php print_r($company)?>
+-->

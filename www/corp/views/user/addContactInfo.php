@@ -31,21 +31,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="tx-box">
                         <span class="pull-left text-right">联系人 </span>
                         <div class="midd-input-group pull-left">
-                            <input name="contact" type="text" class="input-q"  placeholder="负责招聘的联系人姓名">
+                            <input name="contact_name" type="text" class="input-q"  placeholder="负责招聘的联系人姓名">
                         </div>
                         <em class="pull-right">*</em>
                     </div>
                     <div class="tx-box">
                         <span class="pull-left text-right">公司联系电话 </span>
                         <div class="midd-input-group pull-left">
-                            <input name="phone" type="text" class="input-q"  placeholder="请填写真实有效手机/座机号码">
+                            <input name="contact_phone" type="text" class="input-q"  placeholder="请填写真实有效手机/座机号码">
                         </div>
                         <em class="pull-right">*</em>
                     </div>
                     <div class="tx-box">
                         <span class="pull-left text-right"> 接收简历邮箱 </span>
                         <div class="midd-input-group pull-left">
-                            <input name="email" type="text" class="input-q"  placeholder="请填写公司邮箱，审核通过后不可更改">
+                            <input name="contact_email" type="text" class="input-q"  placeholder="请填写公司邮箱，审核通过后不可更改">
                         </div>
                         <em class="pull-right">*</em>
                     </div>

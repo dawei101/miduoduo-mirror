@@ -107,12 +107,23 @@ class UserController extends FBaseController
             ]);
         }
 
+        if (Yii::$app->request->get('check_existed') == 1) {
+            $user = User::findByUsername($username);
+            if ($user) {
+                return $this->renderJson([
+                        'result'=> false,
+                        'msg'=> "手机号已注册"
+                ]);
+            }
+        }
+
         if (Utils::sendVerifyCode($username)){
             return $this->renderJson([
                     'result'=> true,
                     'msg'=> "验证码已发送"
             ]);
         }
+
         return $this->renderJson([
                 'result'=> false,
                 'msg'=> "验证码发送失败, 请稍后重试。"
@@ -179,10 +190,16 @@ class UserController extends FBaseController
 
     public function actionAddContactInfo()
     {
-        $model = new Company;
-        $model->setAttributes(Yii::$app->request->post(), false);
-        if ($model->validate() && $model->save()) {
-            return $this->goHome();
+        $model = Company::findByCurrentUser();
+        if (!$model) {
+            $model = new Company;
+        }
+        if(Yii::$app->request->isPost){
+            $model->setAttributes(Yii::$app->request->post(), false);
+            $model->user_id = Yii::$app->user->id;
+            if ($model->validate() && $model->save()) {
+                return $this->redirect('/task/publish');
+            }
         }
         return $this->render('addContactInfo', ['model' => $model]);
     }
@@ -231,7 +248,10 @@ class UserController extends FBaseController
 
     public function actionPersonalCert()
     {
-    	$company = Company::findByCurrentUser();
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
 
     	if(Yii::$app->request->isPost){
             $hash = Yii::$app->getSecurity()->generateRandomString();
@@ -253,15 +273,25 @@ class UserController extends FBaseController
     public function actionCorpCert()
     {
         $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
     	if(Yii::$app->request->isPost){
             $hash = Yii::$app->getSecurity()->generateRandomString();
-    		$uploaddir = '/service/data/media';
+    		$uploaddir = '/service/data/media/';
 			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
 			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
+
+            $hash1 = Yii::$app->getSecurity()->generateRandomString();
+            $uploadfile = $uploaddir . $hash1;
+            if(!move_uploaded_file($_FILES['corp_idcard_pic']['tmp_name'], $uploadfile)) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
+            }
             $company->setAttributes(Yii::$app->request->post(), false);
             $company->person_idcard_pic = $hash;
+            $company->corp_idcard_pic = $hash1;
             if (!$company->validate() || !$company->save()) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
             }

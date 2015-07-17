@@ -10,7 +10,8 @@ use yii\filters\AccessControl;
 use yii\db\Query;
 use yii\data\Pagination;
 
-use common\models\TaskApplicant;
+use corp\models\TaskApplicant;
+use common\models\Task;
 
 
 /**
@@ -61,45 +62,31 @@ class ResumeController extends FBaseController
         ];
     }
 
-    public function findByCorpUserId($corpUserId, $status=false)
-    {
-        $query = new Query;
-        $condition = ['jz_task.user_id' => $corpUserId];
-        if ($status !== false) {
-            $condition['jz_task_applicant.status'] = $status;
-        }
-        $query ->select([
-            'jz_task_applicant.id',
-            'jz_task_applicant.created_time',
-            'jz_task_applicant.status',
-            'jz_resume.name',
-            'TIMESTAMPDIFF(YEAR, jz_resume.birthdate , CURDATE()) as age',
-            'jz_resume.gender',
-            'jz_resume.college',
-            'jz_resume.phonenum',
-            'jz_task.title',
-            'jz_task.gid',
-            ]
-            )->from('jz_task_applicant')
-             ->join('LEFT OUTER JOIN', 'jz_resume',
-				'jz_resume.user_id = jz_task_applicant.user_id')
-             ->join('LEFT OUTER JOIN', 'jz_task',
-				'jz_task.id = jz_task_applicant.task_id')
-             ->where($condition);
-
-        return $query;
-    }
-
     public function actionIndex($status=false)
     {
-        $query = $this->findByCorpUserId(Yii::$app->user->id, $status);
-        $count = $query->count();
+        $tasks = Task::findAll([
+            'user_id'=>Yii::$app->user->id
+        ]);
+        $task_ids = [];
+        foreach($tasks as $task){
+            $task_ids[] = $task->id;
+        }
+        $query = TaskApplicant::find()
+            ->with('resume')->with('task')
+            ->where(['in', 'task_id', $task_ids]);
+        if ($status!==false){
+            $query->andWhere(['status'=>$status]);
+        }
+
+        $cloneQuery = clone $query;
+        $count = $cloneQuery->count();
         $pagination = new Pagination(['totalCount' => $count]);
-        $resumes = $query->offset($pagination->offset)
+        $task_apps = $query->offset($pagination->offset)
                          ->limit($pagination->limit)
                          ->all();
 
-        return $this -> render('index', ['resumes' => $resumes, 'pagination' => $pagination]);
+        return $this -> render('index',
+            ['task_apps' => $task_apps, 'pagination' => $pagination]);
     }
 
     public function actionRead($aid)

@@ -178,9 +178,14 @@ class Resume extends \common\BaseActiveRecord
         return static::$STATUSES[$this->status];
     }
 
+    public function getAge()
+    {
+        return date('Y', time()) - date('Y', $this->birthdate);
+    }
+
     public function fields()
     {
-        return array_merge(parent::fields(), ['gender_label']);
+        return array_merge(parent::fields(), ['gender_label', 'age']);
     }
 
     public function extraFields()

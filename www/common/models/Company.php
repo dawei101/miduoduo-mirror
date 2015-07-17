@@ -65,15 +65,7 @@ class Company extends \common\BaseActiveRecord
                 return '认证未通过';
             }
         }
-
     }
-    static $EXAMINE_RESULTS = [
-        0 => '验证未通过',
-        1 => '身份证已验证',
-        2 => '营业执照已验证',
-        1^2 => '验证通过',
-    ];
-
 
     /**
      * @inheritdoc
