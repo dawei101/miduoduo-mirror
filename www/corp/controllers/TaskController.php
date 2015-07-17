@@ -142,7 +142,8 @@ class TaskController extends FBaseController
         }
 
 		$services = ServiceType::find()->all();
-        return $this -> render('publish', ['services'=>$services, 'task'=>$model]);
+        return $this -> render('publish',
+        ['services'=>$services, 'task'=>$model, 'company'=>$company]);
     }
 
     public function actionEdit($gid)
@@ -203,7 +204,8 @@ class TaskController extends FBaseController
         $services = ServiceType::find()->all();
         $task->from_time = substr($task->from_time, 0, -3);
         $task->to_time = substr($task->to_time, 0, -3);
-        return $this->render('publish', ['task' => $task, 'services'=>$services]);
+        return $this->render('publish',
+        ['task' => $task, 'services'=>$services, 'company'=>$company]);
     }
 
     public function actionRefresh($gid)
