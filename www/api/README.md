@@ -304,15 +304,19 @@ BASE_URL = 'http://api.miduoduo.cn'
 * 标记信息为read
     * PUT /version/message/id
       params = 随便
+* 标记所有信息为read
+    * POST /version/message/update-all
 
 ### System Message 系统消息
 * 获取消息列表
-    * GET /version/sys-message
+    * GET /version/sys-message?expand=read_flag
 * 获取消息详情(用不到)
     * GET /version/sys-message/id
 * 标记信息为read
     * PUT /version/sys-message/id
       params = 随便
+* 标记所有信息为read
+    * POST /version/sys-message/update-all
 
 ### 投诉举报
 * 获取我举报过的任务列表

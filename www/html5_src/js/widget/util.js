@@ -99,6 +99,7 @@ define(function(require, exports) {
      * @param url 登陆成功后跳转的页面
      */
     function auth(url) {
+        url && (url = miduoduo.basePath.base + url);
         appAuth(url, function(data) {
             //window.location.reload(); //登陆成功直接重新加载页面
         });
@@ -109,6 +110,7 @@ define(function(require, exports) {
      * @param url 注册成功后跳转的页面
      */
     function reg(url) {
+        url && (url = miduoduo.basePath.base + url);
         appReg(url, function(data) {
             //window.location.reload();
         });

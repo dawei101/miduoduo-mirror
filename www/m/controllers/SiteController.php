@@ -94,7 +94,7 @@ class SiteController extends MBaseController
             $city_id = 3;
             $query = Task::find()->where(['status'=>Task::STATUS_OK])
                 ->with('city')->with('district');
-            $query = $query->where(['city_id'=>$city_id])
+            $query = $query->andWhere(['city_id'=>$city_id])
                 ->addOrderBy(['id'=>SORT_DESC])
                 ->limit(5);
                 ;

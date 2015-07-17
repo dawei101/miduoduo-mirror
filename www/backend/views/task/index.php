@@ -22,18 +22,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'id',
+            'gid',
             [
                 'label' => '标题',
                 'format' => 'raw',
                 'value' => function($model){
                     return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->gid ."'>" . $model->title . "</a>";
-                }
+                } 
             ] ,
             'clearance_period_label',
             'salary',
             'salary_unit_label',
-            'status_label',
+            //'status_label',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

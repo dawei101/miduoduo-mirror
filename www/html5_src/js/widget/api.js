@@ -1,7 +1,7 @@
 define(function(require, exports) {
     //线上环境去掉下面这句
-    //miduoduo.user.access_token = "ea0oBqTmXwsJ-8o9LrvT9g-_1TzZhTSI_1436966169";
-    //miduoduo.user.id = 3023;
+    //miduoduo.user.access_token = "3UVwFYP-mLXryNWho2B74XkKLxHuSLPM_1437045153";
+    //miduoduo.user.id = 837;
     var accessToken = miduoduo.user.access_token;
     //通用版本
     var commonVersion = window.miduoduo.api_baseurl;

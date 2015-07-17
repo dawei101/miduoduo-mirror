@@ -40,7 +40,7 @@
                 <p class="info">
                     <?=data.from_date.substr(data.from_date.indexOf("-") + 1) + " 至 " + data.to_date.substr(data.to_date.indexOf("-") + 1)?>
                     <? if (data.from_time) {?>
-                    <?=data.from_time + "-" + data.to_time?>
+                    <?=data.from_time.substring(0, data.from_time.lastIndexOf(":")) + "-" + data.to_time.substring(0, data.to_time.lastIndexOf(":"))?>
                     <? } ?>
                 </p>
             </section>
@@ -61,7 +61,7 @@
             <div class="sub-part">
                 <div class="sub-title">公司信息</div>
                 <p class="info">
-                    <?=data.company_name || '没有记录公司名称'?> <br/>
+                    <?if(data.company_name){?><?=data.company_name || ''?> <br/><?}?>
                     联系人：<?=data.contact?> <br/>
                     联系方式：<?=data.contact_phonenum?> <br/>
                 </p>
