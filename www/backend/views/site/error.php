@@ -1,5 +1,6 @@
 <?php
 
+use Yii;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -18,10 +19,10 @@ $this->title = $name;
     </div>
 
     <p>
-        The above error occurred while the Web server was processing your request.
+        我们的服务器在响应您的请求时，发现有问题。
     </p>
     <p>
-        Please contact us if you think this is a server error. Thank you.
+        如果需要帮助，请联系<a style="color:red;" href="mailto:<?=Yii::$app->params['adminEmail']?>"> 我们的开发同学</a>
     </p>
 
 </div>

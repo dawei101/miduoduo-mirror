@@ -19,16 +19,16 @@ class SiteController extends BBaseController
      */
     public function behaviors()
     {
-        return [
+        return array_merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'index'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -40,7 +40,7 @@ class SiteController extends BBaseController
                     'logout' => ['post'],
                 ],
             ],
-        ];
+        ]);
     }
 
     /**
@@ -57,7 +57,13 @@ class SiteController extends BBaseController
 
     public function actionIndex()
     {
-        return $this->render('index');
+        if (Yii::$app->user->isGuest){
+            return $this->redirect('site/login');
+        }
+        if (Yii::$app->user->can('admin')){
+            return $this->render('index');
+        }
+        return $this->redirect(Yii::$app->params['baseurl.m']);
     }
 
     public function actionLogin()

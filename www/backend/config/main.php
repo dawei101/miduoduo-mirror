@@ -13,9 +13,6 @@ foreach ($param_files as $f){
     }
 }
 
-
-
-
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
