@@ -290,24 +290,24 @@ $this->title = '米多多兼职平台';
                                                 <li>完工结</li>
                                             </ul>
                                         </div>
-                                        <div class="pull-left yuji">预计有25名应聘者</div>
+                                        <!--<div class="pull-left yuji">预计有25名应聘者</div>-->
                                     </div>
                                 </li>
                                 <li>
                                     <div class="pull-left title-left text-center">报名方式</div>
                                     <div class="pull-left right-box baoming">
                                         <div class="bm-text">请至少选择一种报名方式</div>
-                                        <div class="fixde bm-fs"><span><input name="phone_contact" type="checkbox" value="">电话报名</span>
+                                        <div class="fixde bm-fs"><span><input name="phone_contact" type="checkbox" checked="on" >电话报名</span>
                                             <input name="contact" type="text" placeholder="联系人" value="<?=$task->contact?$task->contact:$company->contact_name?>">
                                             <input name="contact_phonenum" type="text" placeholder="联系电话" value="<?=$task->contact_phonenum?$task->contact_phonenum:$company->contact_phone?>">
                                         </div>
-                                        <div  class="fixde bm-fs"><span><input name="sms_contact" type="checkbox" value="">短信报名</span>
+                                        <div  class="fixde bm-fs"><span><input name="sms_contact" type="checkbox" checked="on">短信报名</span>
                                             <input name="" type="text" placeholder="18600098028">
                                             <input type="text" placeholder="姓名+电话+性别+应聘岗位+米多多"></div>
                                     </div>
                                 </li>
                             </ul>
-                            <div class="agree"><input name="" type="checkbox" value="">我已阅读并同意<a href="#">米多多发布兼职协议</a></div>
+                            <div class="agree"><input name="" type="checkbox" checked="on">我已阅读并同意<a href="#">米多多发布兼职协议</a></div>
                             <button class="fabu-bt">发布职位</button>
                             <?php ActiveForm::end(); ?>
                         </div>
