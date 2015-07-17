@@ -37,6 +37,7 @@ return [
         ],
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
+            'defaultTimeZone' => 'Asia/Shanghai',
             'timeZone' => 'Asia/Shanghai',
             'dateFormat' => 'php:Y-m-d',
             'datetimeFormat' => 'php:Y-m-d H:i',
