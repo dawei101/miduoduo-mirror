@@ -54,7 +54,7 @@ $this->title = '米多多兼职平台';
                             <span class="task-edit" gid="<?=$task->gid?>">编辑</span>
                             <span class="task-down" gid="<?=$task->gid?>">下线</span>
                             <span class="task-delete" gid="<?=$task->gid?>">删除</span>
-                            <?php }else{?>
+                            <?php }else if($task->status != 20){?>
                             <span class="task-edit" gid="<?=$task->gid?>">编辑</span>
                             <?php }?>
                         </div>
