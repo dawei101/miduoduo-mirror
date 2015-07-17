@@ -20,12 +20,6 @@ class WeichatPushSetTemplatePushItemController extends BBaseController
         return Yii::getAlias('@backend/views/wechat/weichat-push-set-template-push-item');
     }
 
-    public function behaviors()
-    {
-        $bhvs = parent::behaviors();
-        return $bhvs;
-    }
-
     /**
      * Lists all WeichatPushSetTemplatePushItem models.
      * @return mixed

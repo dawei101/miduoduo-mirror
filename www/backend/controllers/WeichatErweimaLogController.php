@@ -22,12 +22,6 @@ class WeichatErweimaLogController extends BBaseController
         return Yii::getAlias('@backend/views/wechat/weichat-erweima-log');
     }
 
-    public function behaviors()
-    {
-        $bhvs = parent::behaviors();
-        return $bhvs;
-    }
-
     /**
      * Lists all WeichatErweimaLog models.
      * @return mixed

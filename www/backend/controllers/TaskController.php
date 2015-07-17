@@ -16,13 +16,6 @@ use yii\filters\VerbFilter;
 class TaskController extends BBaseController
 {
 
-    public function behaviors()
-    {
-        $bhvs = parent::behaviors();
-        return $bhvs;
-    }
-
-
     /**
      * Lists all Task models.
      * @return mixed

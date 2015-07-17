@@ -14,18 +14,6 @@ use yii\filters\VerbFilter;
  */
 class TaskCollectionController extends Controller
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all TaskCollection models.
      * @return mixed

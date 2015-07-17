@@ -14,18 +14,6 @@ use yii\filters\VerbFilter;
  */
 class AppReleaseVersionController extends BBaseController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all AppReleaseVersion models.
      * @return mixed
