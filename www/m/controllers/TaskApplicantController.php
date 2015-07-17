@@ -115,6 +115,8 @@ class TaskApplicantController extends \m\MBaseController
                 $tc->applicant_alerted = true;
             }
             $tc->save();
+            $task->got_quantity += 1;
+            $task->save();
             return $this->renderJson([
                 'success'=> true,
                 'message' => '报名成功',
