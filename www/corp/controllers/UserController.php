@@ -241,8 +241,8 @@ class UserController extends CBaseController
                 return $this->render('account', ['errmsg'=>'原密码错误']);
             }
 
-			$user->setPassword($new_password);
-        	$user->removePasswordResetToken();
+            $user->setPassword($new_password);
+            $user->removePasswordResetToken();
             if ($user->validate() && $user->save()) {
                 return $this->goHome();
             }
@@ -258,20 +258,19 @@ class UserController extends CBaseController
             return $this->redirect('/user/add-contact-info');
         }
 
-    	if(Yii::$app->request->isPost){
-            $hash = Yii::$app->getSecurity()->generateRandomString();
-    		$uploaddir = '/service/data/media/';
-			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
-			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
+        if(Yii::$app->request->isPost){
+            $filename = Utils::saveUploadFile('person_idcard_pic');
+            if(!$filename) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
+            $company->person_idcard_pic = $filename;
+
             $company->setAttributes(Yii::$app->request->post(), false);
-            $company->person_idcard_pic = $hash;
             if (!$company->validate() || !$company->save()) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
             }
             return $this->goHome();
-    	}
+        }
         return $this->render('personal-cert',['company' => $company, 'error'=>false]);
     }
 
@@ -281,27 +280,25 @@ class UserController extends CBaseController
         if (!$company) {
             return $this->redirect('/user/add-contact-info');
         }
-    	if(Yii::$app->request->isPost){
-            $hash = Yii::$app->getSecurity()->generateRandomString();
-    		$uploaddir = '/service/data/media/';
-			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
-			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
+        if(Yii::$app->request->isPost){
+            $filename = Utils::saveUploadFile('person_idcard_pic');
+            if(!$filename) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
+            $company->person_idcard_pic = $filename;
 
-            $hash1 = Yii::$app->getSecurity()->generateRandomString();
-            $uploadfile = $uploaddir . $hash1;
-            if(!move_uploaded_file($_FILES['corp_idcard_pic']['tmp_name'], $uploadfile)) {
+            $filename = Utils::saveUploadFile('corp_idcard_pic');
+            if(!$filename) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
+            $company->corp_idcard_pic = $filename;
+
             $company->setAttributes(Yii::$app->request->post(), false);
-            $company->person_idcard_pic = $hash;
-            $company->corp_idcard_pic = $hash1;
             if (!$company->validate() || !$company->save()) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
             }
             return $this->goHome();
-    	}
+        }
         return $this->render('corp-cert',['company'=>$company, 'error'=>false]);
     }
 }

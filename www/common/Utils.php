@@ -83,4 +83,16 @@ class Utils
         return $vcode==$code;
     }
 
+    public static function saveUploadFile($input_name)
+    {
+        $hash = Yii::$app->getSecurity()->generateRandomString() . '-' . intval(microtime(true)*10000);
+        $ext = pathinfo( $_FILES[$input_name]['name'], PATHINFO_EXTENSION);
+        $filename = $hash . '.' . $ext;
+        $uploadfile = Yii::getAlias('@media/' . $filename);
+        if(move_uploaded_file($_FILES[$input_name]['tmp_name'], $uploadfile)) {
+            return $filename;
+        }
+        return false;
+    }
+
 }

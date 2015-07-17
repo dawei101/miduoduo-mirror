@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use common\models\Company;
+
 /* @var $this yii\web\View */
 /* @var $model common\models\Company */
 /* @var $form yii\widgets\ActiveForm */
@@ -14,10 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->dropdownList([
-        0 => '正常',
-        1 => '删除',
-    ]) ?>
+    <?= $form->field($model, 'status')->dropdownList(Company::STATUSES) ?>
 
     <?= $form->field($model, 'introduction')->textArea() ?>
 
