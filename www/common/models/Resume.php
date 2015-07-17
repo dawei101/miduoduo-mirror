@@ -35,9 +35,14 @@ use common\models\Address;
 class Resume extends \common\BaseActiveRecord
 {
 
-    /**
-     * @inheritdoc
-     */
+    public static $STATUSES = [
+        0 => '正常',
+        10 => '已删除',
+    ];
+
+    const STATUS_OK = 0;
+    const STATUS_DELETED = 10;
+
     public static function tableName()
     {
         return '{{%resume}}';
@@ -166,6 +171,11 @@ class Resume extends \common\BaseActiveRecord
     public function getGrade_label()
     {
         return static::$GRADES[$this->grade];
+    }
+
+    public function getStatus_label()
+    {
+        return static::$STATUSES[$this->status];
     }
 
     public function fields()

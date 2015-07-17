@@ -45,7 +45,7 @@ class Company extends \common\BaseActiveRecord
     const GOVID_PASS_EXAM = 1;
     const LICENSE_PASS_EXAM = 2;
 
-    static $EXAMINE_STATUSES = [
+    static $EXAMINE_RESULTS = [
         0 => '验证未通过',
         1 => '身份证已验证',
         2 => '营业执照已验证',
@@ -69,7 +69,7 @@ class Company extends \common\BaseActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['id', 'status', 'examined_by', 'user_id'], 'integer'],
+            [['id', 'status', 'examined_by', 'user_id', 'exam_result'], 'integer'],
             [['examined_time'], 'safe'],
             [['name', 'license_id', 'license_img'], 'string', 'max' => 500],
             [['name', 'license_id', 'license_img', 'contact_phone', 'contact_email', 'contact_name'], 'string', 'max' => 500],
