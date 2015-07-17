@@ -88,7 +88,7 @@ define(function(require, exports) {
 
         $(".report").on("click", function() { //举报
             if (miduoduo.user.id) {
-                util.href("view/job/report.html?job_gid=" + taskID)
+                util.href("view/job/report.html?job-gid=" + taskID)
             } else {
                 window.location.hash = "report";
                 showLoginDialog(true);
