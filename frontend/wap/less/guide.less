@@ -1,0 +1,48 @@
+@import "atom.less";
+body, html {
+  .h(100%);
+}
+#bannerSlider {
+  .h(100%);
+}
+.imageSlide{
+  border: 0px solid black;
+  position: relative;
+  overflow: hidden;
+  font-size: 0;
+  .w(100%);
+  ul{
+    .h(100%);
+    position: absolute;
+    top:0;
+    .clearfix;
+    li{
+      .h(100%);
+      position: relative;
+      float: left;
+      display: inline;
+      img{.w (100%);.h(100%)}
+    }
+  }
+  .num{
+    text-align: right;
+    position: absolute;
+    .w (100%);
+    right: 15px;
+    bottom: 10px;
+    z-index: 10;
+    b{
+      .i_block;
+      .w (8px);
+      .h (8px);
+      margin: 6px 8px 0 0;
+      .bgc(#fff);
+      -webkit-border-radius: 100%;
+      border-radius: 100%;
+    }
+    .cur{
+      .bgc (#999);
+    }
+
+  }
+}

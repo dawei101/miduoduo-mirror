@@ -1,0 +1,107 @@
+<%setTitle("简历预览")%>
+<%include ../header.html%>
+<%-css("user/resume-preview")%>
+<%-mainJs("user/resume-preview")%>
+</head>
+<body>
+<script type="text/html" id="main-tpl">
+    <? var user = this.user;?>
+    <div class="main1">
+
+        <ul class="resume-part1">
+            <!--<li >
+                <div class="title">照片</div>
+                <div class="con ">
+                    <img src="<?=user.avatar?>" alt=""/>
+                </div>
+            </li>-->
+            <li>
+                <div class="title">姓名</div>
+                <div class="con">
+                    <?=user.name?>
+                </div>
+            </li>
+            <li>
+                <div class="title ">出生年月</div>
+                <div class="con ">
+                    <?=user.birthdate ?>
+                </div>
+            </li>
+            <li>
+                <div class="title">性别</div>
+                <div class="con sex">
+                    <?=user.gender_label ?>
+                </div>
+            </li>
+            <li>
+                <div class="title">身高</div>
+                <div class="con tag">
+                    <?=user.height ?>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="resume-part2">
+            <li>
+                <div class="title">学校</div>
+                <div class="con ">
+                    <?=user.height ?>
+                </div>
+            </li>
+            <li>
+                <div class="title">居住地点</div>
+                <div class="con ">
+                    <?=user.home_address ? user.home_address.address : ""?>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main2">
+        <ul class="resume-part3">
+            <li class="sub1">
+                <div class="title">兼职意向</div>
+                <div class="con service-type-show">
+                    <? user.service_types && user.service_types.forEach(function(type) {?>
+                    <?=type.name?>
+                    <? });?>
+                </div>
+            </li>
+            <li class="sub2">
+                <div class="title">更在意的</div>
+                <div class="con">
+
+                </div>
+            </li>
+            <!--<li class="sub3">
+                <div class="title">微信账号</div>
+                <div class="con">
+                </div>
+            </li>-->
+        </ul>
+        <ul class="resume-part4">
+            <li>
+                <div class="title">
+                    <div class="t1">可兼职时间</div>
+                </div>
+                <div class="con">
+                    <?
+                        var indexLen = 7;
+                        var numConvert = ["一", "二", "三", "四", "五", "六", "日"];
+                        for (var i = 0; i < indexLen; i++ ) {
+                    ?>
+                    <div class="dateCol <?if(i==0){?>first-col<?}?>">
+                        <div class="dateTitle">周<?=numConvert[i]?></div>
+                        <div class="time">上午</div>
+                        <div class="time">下午</div>
+                        <div class="time">晚上</div>
+                    </div>
+                    <? } ?>
+                </div>
+            </li>
+        </ul>
+        <div class="submit-btn">修改简历</div>
+    </div>
+</script>
+</body>
+</html>
