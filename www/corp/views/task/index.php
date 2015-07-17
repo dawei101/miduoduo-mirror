@@ -55,14 +55,14 @@ $this->title = '米多多兼职平台';
                             <span class="task-down" gid="<?=$task->gid?>">下线</span>
                             <span class="task-delete" gid="<?=$task->gid?>">删除</span>
                             <?php }else{?>
-                            <span class="task-edit" gid="<?=$task->gid?>">编辑</span>    
+                            <span class="task-edit" gid="<?=$task->gid?>">编辑</span>
                             <?php }?>
                         </div>
                    </div>
                    <div>
                    <div class="pull-left zhiwei-lis-left">
                        <div><span><?=$task->salary.$task->getSalary_unit_label()?></span><span><?=$task->getClearance_period_label()?></span>
-                           <span><?=TASK::$GENDER_REQUIREMENT[$task->gender_requirement]?></span></div>
+                           <span><?=$task->gender_requirement?TASK::$GENDER_REQUIREMENT[$task->gender_requirement]:''?></span></div>
                        <div>北京－朝阳</div>
                        <div class="fb-sj">发布时间：<?=$task->created_time?></div>
                    </div>
