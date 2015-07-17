@@ -54,7 +54,13 @@ $this->wechat_apis = ['getLocation'];
         <dd> 
           <ul>
             <li><a href="#">默认</a></li>
-            <li><a href="javascript:getLocation(function(loc){location.href='/task/nearest?lat='+loc.lat+'&'+'lng='+loc.lng});">附近的</a></li>
+            <li>
+		<?php if($location['id']){ ?>
+			<a href="task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>">附近的</a>
+		<?php }else{ ?>
+			<a href="javascript:getLocation(function(loc){location.href='/task/nearest?lat='+loc.lat+'&'+'lng='+loc.lng});">附近的</a>
+		<?php } ?>
+</li>
           </ul>
         </dd>
      </dl>

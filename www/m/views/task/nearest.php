@@ -38,13 +38,17 @@ $this->wechat_apis = ['getLocation'];
         <dt>排序 <span class="caret"></span> </dt>
         <dd> 
           <ul>
-            <li><a href="#">默认</a></li>
-            <li><a href="javascript:getLocation(function(loc){location.href='/task/nearest?lat='+loc.lat+'&'+'lng='+loc.lng});">附近的</a></li>
+            <li><a href="/task">默认</a></li>
+            <li>
+		<a href="javascript:getLocation(function(loc){location.href='/task/nearest?lat='+loc.lat+'&'+'lng='+loc.lng});">
+			附近的
+		</a></li>
           </ul>
         </dd>
      </dl>
   </nav>
   <div style="height:50px;"></div>
+  <div style="padding:10px 0 10px 15px;" id="street"></div>
 <?=
   $this->render('@m/views/task/nearest-task-list.php', [
         'tasks' => $tasks,
@@ -53,6 +57,7 @@ $this->wechat_apis = ['getLocation'];
 ?>
   <!--===========以上是固定在顶部的==============--> 
 <?php $this->beginBlock('js') ?>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=hpxbNzYQLjj5NBpokpbzGfjR"></script>
 <script type="text/javascript">
 window.wx_ready = false;
 function getLocation(callback) {
@@ -135,6 +140,34 @@ $(function(){
       $("body").click(function(i){ !$(i.target).parents(".select").first().is(s) ? _hide():"";});
     });
 });
+
+// 坐标转地址
+pointToStreet(<?= Yii::$app->request->get('lat') ?>,<?= Yii::$app->request->get('lng') ?>,1);
+function pointToStreet(lng,lat,type){
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");
+    
+	var point = new BMap.Point(lat,lng);
+    
+	//map.centerAndZoom(point,12);
+    //alert(map);
+	var geoc = new BMap.Geocoder();    
+    geoc.getLocation(point, function(rs){
+        var addComp = rs.addressComponents;
+        if(type==1){
+            document.getElementById('street').innerHTML = ''+ addComp.district + ", " + addComp.street + addComp.streetNumber+"附近 <a href='javascript:;' onclick='reLocation()'>[重新定位]</a>";
+        }else{
+            location.href='/task/nearest?lat='+lat+'&'+'lng='+lng;
+        }
+    });  
+}
+
+function reLocation(){
+    document.getElementById('street').innerHTML = '正在重新定位...'
+    getLocation(function(loc){
+        pointToStreet(loc.lng,loc.lat,2);
+    });
+}
 </script>
 <?php $this->endBlock('js') ?>
 

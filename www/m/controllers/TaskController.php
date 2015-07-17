@@ -19,7 +19,7 @@ use common\models\ServiceType;
 use yii\data\Pagination;
 use common\models\WeichatPushSetTemplatePushItem;
 use common\models\ConfigRecommend;
-
+use common\models\UserLocation;
 
 class TaskController extends \m\MBaseController
 {
@@ -31,7 +31,7 @@ class TaskController extends \m\MBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view','nearby', 'nearest'],
+                        'actions' => ['index', 'view','nearby', 'nearest','location'],
                         'allow' => true,
                     ],
                     [
@@ -52,6 +52,25 @@ class TaskController extends \m\MBaseController
 
     public function actionNearest($lat, $lng, $distance=2000, $service_type=null)
     {
+        $user_id    = Yii::$app->user->id;
+        // 保存地理位置
+        $location   = UserLocation::find()->where(['user_id'=>$user_id,'latitude'=>$lat])->one();
+        $location_m = new UserLocation();
+        $datetime   = date("Y-m-d H:i:s",time());
+        if( $location ){
+            $location->updated_time   = $datetime;
+            $location->use_nums       = $location->use_nums + 1;
+            $location->save();
+        }else{
+            $location_m->user_id    = $user_id;
+            $location_m->latitude   = $lat;
+            $location_m->longitude  = $lng;
+            $location_m->created_time   = $datetime;
+            $location_m->updated_time   = $datetime;
+            $location_m->use_nums       = 1;
+            $location_m->save();
+        }
+
         $query = TaskAddress::find();
         $query = TaskAddress::buildNearbyQuery($query, $lat, $lng, $distance);
         $query->innerJoin('jz_task', $on='jz_task.id=jz_task_address.task_id');
@@ -85,6 +104,17 @@ class TaskController extends \m\MBaseController
             ]);
     }
 
+    // 用户选择位置
+    public function actionLocation(){
+        $model      = UserLocation::findOne(['id'=>2]);
+        return $this->render(
+            'location',
+            [
+                'model'     => $model,
+            ]
+        );	
+    }
+
     public function actionIndex()
     {
         //只有北京
@@ -115,14 +145,21 @@ class TaskController extends \m\MBaseController
             ->limit($pages->limit)->all();
 
         $city = District::findOne($city_id);
-        return $this->render('index', 
+        
+	// 查询当前用户的已有最新位置信
+    $user_id    = Yii::$app->user->id;
+	$location   = UserLocation::find()->where(['user_id'=>$user_id])
+        ->asArray()->addOrderBy('`id` desc')->one();
+
+    return $this->render('index', 
             ['tasks'=>$tasks,
              'city'=>$city,
              'pages'=> $pages,
              'current_district' => 
                 empty($district)?$city:District::findOne($district),
              'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
-            ]);
+             'location' => $location,    
+	]);
     }
 
     public function actionView()
