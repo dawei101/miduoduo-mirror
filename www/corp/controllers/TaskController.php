@@ -237,7 +237,7 @@ class TaskController extends FBaseController
 
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
-        $task->status = 20;
+        $task->status = 10;
         $task->from_time = substr($task->from_time, 0, -3);
         $task->to_time = substr($task->to_time, 0, -3);
         if($task->save()){
@@ -255,7 +255,7 @@ class TaskController extends FBaseController
 
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
-        $task->status = 10;
+        $task->status = 20;
         $task->from_time = substr($task->from_time, 0, -3);
         $task->to_time = substr($task->to_time, 0, -3);
         if($task->save()){
