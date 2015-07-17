@@ -34,8 +34,8 @@ $(document).click(function(){
  $(document).ready(function() {
     $('.reservation').daterangepicker(null, function(start, end, label) {
         var form = document.forms[0];
-        form.from_date.value = start;
-        form.to_date.value = end;
+        form.from_date.value = start.format('YYYY-MM-DD');
+        form.to_date.value = end.format('YYYY-MM-DD');
     });
  });
   $(document).ready(function() {
