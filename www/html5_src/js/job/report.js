@@ -4,8 +4,7 @@ define(function(require, exports) {
     var util = require("../widget/util");
     var url = require("../widget/url-handle");
 
-    var jobID = url.getParams(window.location.search).job_gid;
-
+    var jobID = url.getParams(window.location.search)["job-gid"];
     $(".btn-submit").on("click", function() {
         $.post(api.gen("complaint"), {"task_id" : jobID, "content" : $(".content").val(), "phonenum" : $(".tel").val()}, function(data) {
             var msg = "";
