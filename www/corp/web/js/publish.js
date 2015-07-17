@@ -13,21 +13,23 @@ $('form').on('submit', function(){
     form.salary_unit.value = su;
     var valid = true;
     if (form.title.value.length == 0) {
-        $('title-error').html('请输入兼职标题');
-        $('title-error').show();
+        $('.title-error').html('请输入兼职标题');
+        $('.title-error').show();
         valid = false;
     }
     if (form.service_type_id.value.length == 0) {
-        $('service_type_id-error').html('请选择兼职类别');
-        $('service_type_id-error').show();
+        $('.service_type_id-error').html('请选择兼职类别');
+        $('.service_type_id-error').show();
         valid = false;
     }
     if (form.service_type_id.value.length == 0) {
-        $('service_type_id-error').html('请选择兼职类别');
-        $('service_type_id-error').show();
+        $('.service_type_id-error').html('请选择兼职类别');
+        $('.service_type_id-error').show();
         valid = false;
     }
-
+    if(valid === false){
+        $('html,body').scrollTop(0);
+    }
     return valid;
 
 });
