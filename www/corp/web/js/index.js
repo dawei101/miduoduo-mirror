@@ -1,3 +1,7 @@
+$('.top_switcher').on('click', function(){
+    $('.error-message').hide();
+});
+
 //首页普通登陆
 $('#cbox-2 .myNavs .zc-btn').click(function(e){
     $(".error-message").hide();

@@ -22,7 +22,7 @@ $this->title = '米多多兼职平台';
       </div>
       <div class="col-sm-12 col-md-6 col-lg-5">
         <div class="tab">
-          <div class="menusWrapper"> <a class="active" href="javascript:;">企业HR注册</a> <a href="javascript:;">登录</a> </div>
+          <div class="menusWrapper"> <a class="active top_switcher" href="javascript:;">企业HR注册</a> <a href="javascript:;" class="top_switcher">登录</a> </div>
           <div class="ctnerWrapper">
             <div class="ctnerBox">
               <div id="cbox-1" class="cbox">
