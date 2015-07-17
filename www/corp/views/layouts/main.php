@@ -5,6 +5,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use corp\assets\AppAsset;
 use corp\widgets\Alert;
+use common\Utils;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -69,8 +70,8 @@ AppAsset::register($this);
                 <div class="row">
                     <div class="col-sm-12 col-md-4 col-lg-4">
                         <h2>联系我们</h2>
-                        <p>邮箱：pangleimewe@126.com</p>
-                        <p>电话：400-7890886</p>
+                        <p>邮箱：<?=Utils::getApp()->params['supportEmail']?></p>
+                        <p>电话：<?=Utils::getApp()->params['supportTel']?></p>
                     </div>
                     <div class="col-sm-12 col-md-4 col-lg-4">
                         <h2>关于我们</h2>

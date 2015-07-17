@@ -4,7 +4,7 @@ namespace corp\controllers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use corp\FBaseController;
+use corp\CBaseController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\Pagination;
@@ -19,7 +19,7 @@ use corp\models\TaskPublishModel;
 /**
  * Site controller
  */
-class TaskController extends FBaseController
+class TaskController extends CBaseController
 {
     /**
      * @inheritdoc

@@ -4,7 +4,7 @@ namespace corp\controllers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use corp\FBaseController;
+use corp\CBaseController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\Company;
@@ -13,7 +13,7 @@ use common\models\Company;
 /**
  * Site controller
  */
-class SiteController extends FBaseController
+class SiteController extends CBaseController
 {
     /**
      * @inheritdoc

@@ -4,7 +4,7 @@ namespace corp\controllers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use corp\FBaseController;
+use corp\CBaseController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\db\Query;
@@ -17,7 +17,7 @@ use common\models\Task;
 /**
  * Site controller
  */
-class ResumeController extends FBaseController
+class ResumeController extends CBaseController
 {
     /**
      * @inheritdoc
@@ -72,7 +72,6 @@ class ResumeController extends FBaseController
             $task_ids[] = $task->id;
         }
         $query = TaskApplicant::find()
-            ->with('resume')->with('task')
             ->where(['in', 'task_id', $task_ids]);
         if ($status!==false){
             $query->andWhere(['status'=>$status]);
@@ -81,6 +80,7 @@ class ResumeController extends FBaseController
         $cloneQuery = clone $query;
         $count = $cloneQuery->count();
         $pagination = new Pagination(['totalCount' => $count]);
+        $query-> with('resume')->with('task');
         $task_apps = $query->offset($pagination->offset)
                          ->limit($pagination->limit)
                          ->all();

@@ -110,14 +110,14 @@ class CompanyController extends BBaseController
 
     public function actionExamine($id, $value, $passed=false)
     {
-        $company = Company::findOne($id);
+        $company = $this->findModel($id);
         if ($company){
             if ($passed){
                 $company->status = $company->status 
                     | $value | Company::EXAM_STARTED;
             } else {
                 $company->status = ($company->status
-                    & ~$value | Company::EXAM_STARTED;
+                    & ~$value) | Company::EXAM_STARTED;
             }
             $company->save();
         }
@@ -145,17 +145,6 @@ class CompanyController extends BBaseController
         return $this->actionExamine($id, Company::LICENSE_PASS_EXAM, true);
     }
 
-
-
-    public function action
-
-    /**
-     * Finds the Company model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Company the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Company::findOne($id)) !== null) {

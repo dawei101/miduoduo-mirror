@@ -180,7 +180,10 @@ class Resume extends \common\BaseActiveRecord
 
     public function getAge()
     {
-        return date('Y', time()) - date('Y', $this->birthdate);
+        if ($this->birthdate){
+            return intval(date('Y', time())) - intval(explode(',', strval($this->birthdate))[0]);
+        }
+        return 0;
     }
 
     public function fields()

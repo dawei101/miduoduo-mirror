@@ -15,7 +15,7 @@ use common\sms\SmsSenderFactory;
 use common\models\Company;
 use common\models\ServiceType;
 
-use corp\FBaseController;
+use corp\CBaseController;
 use corp\models\PasswordResetRequestForm;
 use corp\models\ResetPasswordForm;
 use corp\models\SignupForm;
@@ -26,7 +26,7 @@ use corp\models\PersonalCertForm;
 /**
  * Site controller
  */
-class UserController extends FBaseController
+class UserController extends CBaseController
 {
     /**
      * @inheritdoc

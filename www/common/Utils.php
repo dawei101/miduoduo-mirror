@@ -5,6 +5,12 @@ use Yii;
 
 class Utils
 {
+
+    public static function getApp()
+    {
+        return Yii::$app;
+    }
+
     public static function isPhonenum($phonenum)
     {
         return preg_match("/^1[345789]\d{9}$/",$phonenum);

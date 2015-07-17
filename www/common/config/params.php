@@ -2,6 +2,7 @@
 return [
     'adminEmail' => 'webmaster@miduoduo.com',
     'supportEmail' => 'contact@miduoduo.cn',
+    'supportTel' => '010-84991662',
     'bugEmail' => '1bbd853df30a46a695cd7d350bee6caa+lukps3jjzxxxx3gr1rzd@boards.trello.com',
 
     'baidu.map.server_key' => 'oUVOlwx2f8Ok7iGt30CcB2aQ',
