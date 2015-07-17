@@ -49,10 +49,12 @@ $this->title = '米多多兼职平台';
                    <div class="zhiwei-lis-title">
                         <h2 class="pull-left"><a href="<?=Yii::$app->params['baseurl.m']?>/task/view?gid=<?=$task->gid?>" target="blank"><?=$task->title?></a></h2>
                         <div class="pull-left bt-span">
+                            <?php if($task->status == 0){?>
                             <span class="task-refresh" gid="<?=$task->gid?>">刷新</span>
                             <span class="task-edit" gid="<?=$task->gid?>">编辑</span>
                             <span class="task-down" gid="<?=$task->gid?>">下线</span>
                             <span class="task-delete" gid="<?=$task->gid?>">删除</span>
+                            <?php }?>
                         </div>
                    </div>
                    <div>
@@ -64,10 +66,18 @@ $this->title = '米多多兼职平台';
                    </div>
                    <div class="pull-left zhiwei-lis-right">
                         <div>编号：<?=$task->gid?></div>
+                        <?php if($task->status == 0){?>
                         <div class="zhiwei-zt">
                            <div class="pull-left shenqing-zt text-center">已申请：<?=$task->got_quantity?>人</div>
                            <div class="pull-left news text-center">new</div>
                         </div>
+                        <?php }else{?>
+                           <div class="zhiwei-zt">
+                               <div class="bg-left pull-left"></div>
+                               <div class="bg-text pull-left text-center"><?=$task->getStatus_label()?></div>
+                               <div class="bg-right pull-left"></div>
+                           </div>
+                        <?php }?>
                    </div>
                    </div>
                 </li>
