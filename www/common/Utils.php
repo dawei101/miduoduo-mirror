@@ -95,4 +95,10 @@ class Utils
         return false;
     }
 
+    public static function urlOfFile($filename)
+    {
+        return (substr($filename, 0, 4 ) === "http")?$filename:(
+            Yii::$app->params['baseurl.media'] . '/' . $filename);
+    }
+
 }

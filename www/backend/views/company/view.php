@@ -1,5 +1,6 @@
 <?php
 
+use common\Utils;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -30,8 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'license_id',
-            'license_img',
+            [
+                'attribute' => 'person_idcard_pic',
+                'format' => 'raw',
+                'value' => $model->person_idcard_pic?Html::img(Utils::urlOfFile($model->person_idcard_pic)):'无',
+            ],
+            [
+                'attribute' => 'corp_idcard_pic',
+                'format' => 'raw',
+                'value' => $model->corp_idcard_pic?Html::img(Utils::urlOfFile($model->corp_idcard_pic)):'无',
+            ],
             'examined_time',
             'status',
             'examined_by',

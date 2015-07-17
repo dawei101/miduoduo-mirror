@@ -88,7 +88,7 @@ class Company extends \common\BaseActiveRecord
             [['name', 'license_id', 'license_img', 'contact_phone', 'contact_email', 'contact_name'], 'string', 'max' => 500],
             [['introduction'], 'string'],
             ['contact_email', 'email'],
-            ['status', 'default', 'value'=>1],
+            ['status', 'default', 'value'=>0],
             ['contact_phone', 'match', 'pattern'=>'/^(1[345789]\d{9})|(0\d{2,3}\-?\d{7,8})$/',
                 'message'=>'电话号码格式不正确.'],
             [['name', 'contact_name', 'contact_phone', 'contact_email'], 'required']
@@ -112,7 +112,10 @@ class Company extends \common\BaseActiveRecord
             'user_id' => '用户',
             'contact_phone' => '联系电话',
             'contact_name' => '联系人',
-            'contact_email' => '招聘邮箱'
+            'contact_email' => '招聘邮箱',
+            'person_idcard_pic' => '身份证照片',
+            'corp_idcard_pic' => '营业执照照片',
+
         ];
     }
 

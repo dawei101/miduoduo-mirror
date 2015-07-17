@@ -15,6 +15,7 @@ return [
     'baseurl.backend' => 'http://dashboard.miduoduo.cn',
     'baseurl.frontend' => 'http://www.miduoduo.cn',
     'baseurl.h5_origin' => 'http://origin.miduoduo.cn',
+    'baseurl.media' => 'http://media.miduoduo.cn',
 
     'nearby_search.max_distance' => 5000, // 单位米
 
