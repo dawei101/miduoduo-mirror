@@ -1,0 +1,21 @@
+<%setTitle("消息列表")%>
+<%include ../header.html%>
+<%-css("user/msg-detail")%>
+<%-mainJs("user/msg-detail")%>
+</head>
+<body>
+<div class="tips">没有消息</div>
+<script type="text/html" id="msg-list-tpl">
+    <ul class="msg-list">
+        <? this.msgs.forEach(function(e) { ?>
+        <li>
+            <div class="time"><?=e.created_time?></div>
+            <div class="content">
+                <?=e.message?>
+            </div>
+        </li>
+        <? }); ?>
+    </ul>
+</script>
+</body>
+</html>
