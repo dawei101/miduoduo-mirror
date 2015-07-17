@@ -20,25 +20,39 @@ class Company extends \common\BaseActiveRecord
 {
 
     static $STATUSES = [
-        0 => '未验证',
-        1 => '验证失败',
+        0 => '正常',
+        1 => '未验证',
         2 => '验证中',
-        4 => '已冻结',
-
-        8 => '身份证验证通过',
-        8&(8<<1) => '营业执照验证通过',
+        4 => '验证失败',
+        5 => '已冻结',
+        10 => '已删除',
+        20 => '黑名单',
     ];
 
-    const STATUS_WAIT_EXAMINE = 0;
-    const STATUS_EXAMINE_FAILED = 1;
-    const STATUS_EXAMINEDING = 2;
+    const STATUS_OK = 0;
+    const STATUS_WAIT_EXAMINE = 1;
+    const STATUS_EXAMINEING = 2;
+    const STATUS_EXAMINE_FAILED = 4;
+    const STATUS_FREEZED = 5;
+    const STATUS_DELETED = 10;
+    const STATUS_BLACKLISTED =20;
 
-    const STATUS_FREEZED = 4;
+    static $EXAMINE_VALUES = [
+        1 => '身份证验证',
+        2 => '营业执照验证',
+    ];
 
-    const STATUS_GOVID_EXAMINED = 8;
-    const STATUS_LICENSE = 8&(8<<1);
-    const STATUS_EXAMINED = 8&(8<<1);
- 
+    const GOVID_PASS_EXAM = 1;
+    const LICENSE_PASS_EXAM = 2;
+
+    static $EXAMINE_STATUSES = [
+        0 => '验证未通过',
+        1 => '身份证已验证',
+        2 => '营业执照已验证',
+        1^2 => '验证通过',
+    ];
+
+
 
     /**
      * @inheritdoc
@@ -60,7 +74,7 @@ class Company extends \common\BaseActiveRecord
             [['name', 'license_id', 'license_img'], 'string', 'max' => 500],
             [['name', 'license_id', 'license_img', 'contact_phone', 'contact_email', 'contact_name'], 'string', 'max' => 500],
             [['introduction'], 'string'],
-            ['status', 'default', 'value'=>0],
+            ['status', 'default', 'value'=>1],
         ];
     }
 
@@ -80,6 +94,7 @@ class Company extends \common\BaseActiveRecord
             'status' => '状态',
             'user_id' => '用户',
             'contact_phone' => '联系电话',
+            'contact_name' => '联系人',
             'contact_email' => '招聘邮箱'
         ];
     }
@@ -91,6 +106,11 @@ class Company extends \common\BaseActiveRecord
     public static function find()
     {
         return new CompanyQuery(get_called_class());
+    }
+
+    public function getStatus_label()
+    {
+        return static::$STATUSES[$this->status];
     }
 
     /**

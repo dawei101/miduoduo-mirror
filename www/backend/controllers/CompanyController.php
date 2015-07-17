@@ -90,18 +90,33 @@ class CompanyController extends BBaseController
         }
     }
 
-    /**
-     * Deletes an existing Company model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
+    public function changeStatus($id, $status)
     {
-        $this->findModel($id)->delete();
-
+        Task::updateAll(['status'=> $status], 'id=:id',
+            $params=[':id'=>$id]);
         return $this->redirect(['index']);
     }
+
+    public function actionDelete($id)
+    {
+        return $this->changeStatus($id, $status=Task::STATUS_FREEZED);
+    }
+
+    public function actionRejectGovId($id)
+    {
+        Task::updateAll(['status'=> $status], 'id=:id',
+            $params=[':id'=>$id]);
+        return $this->changeStatus($id, $status=Task::STATUS_EXAMINE_FAILED);
+    }
+
+    public function actionAdoptGovId($id)
+    {
+        return $this->changeStatus($id, $status=Task::);
+    }
+
+
+
+    public function action
 
     /**
      * Finds the Company model based on its primary key value.

@@ -40,9 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'invited_by',
             'created_time:date',
             ['attribute' => 'status', 'value'=>function($model){
-                return User::$STATUS_LABELS[$model->status];
+                return User::$STATUSES[$model->status];
                 },
-                'filter'=>User::$STATUS_LABELS
+                'filter'=>User::$STATUSES
             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'name',
             'email:email',
-            ['attribute'=>'status', 'value'=>User::$STATUS_LABELS[$model->status]],
+            ['attribute'=>'status', 'value'=>User::$STATUSES[$model->status]],
             'created_time',
             'updated_time',
         ],

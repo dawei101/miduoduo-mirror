@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Company;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -7,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\CompanySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Companies';
+$this->title = '企业库';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="company-index">
@@ -27,14 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'license_id',
-            'license_img',
-            'examined_time',
-            // 'status',
-            // 'address_id',
-            // 'examined_by',
-            // 'user_id',
-
+            'contact_phone',
+            'contact_name',
+            'contact_email',
+            [
+                'attribute' => 'status',
+                'value' => function($model){
+                    return $model->status_label;
+                },
+                'filter' => Company::$STATUSES,
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

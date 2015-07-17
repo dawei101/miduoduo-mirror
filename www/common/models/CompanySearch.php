@@ -19,7 +19,9 @@ class CompanySearch extends Company
     {
         return [
             [['id', 'status', 'examined_by', 'user_id'], 'integer'],
-            [['name', 'license_id', 'license_img', 'examined_time'], 'safe'],
+            [['contact_name', 'contact_phone', 
+            'contact_email', 'name',
+            'license_id', 'license_img', 'examined_time'], 'safe'],
         ];
     }
 
@@ -61,6 +63,9 @@ class CompanySearch extends Company
             'examined_time' => $this->examined_time,
             'status' => $this->status,
             'examined_by' => $this->examined_by,
+            'contact_phone' => $this->contact_phone,
+            'contact_name' => $this->contact_name,
+            'contact_email' => $this->contact_email,
             'user_id' => $this->user_id,
         ]);
 

@@ -43,9 +43,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'gov_id',
             ['attribute' => 'status', 'value'=>
                 function ($model){
-                    return Resume::$STATUS_LABELS[$model->status];
+                    return Resume::$STATUSES[$model->status];
                 },
-            'filter'=>Resume::$STATUS_LABELS
+            'filter'=>Resume::$STATUSES
             ],
 
 
