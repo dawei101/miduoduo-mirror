@@ -126,6 +126,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .pitch-on .iconfont{margin:0 10px 0 10px; font-size:20px;color:#00b966;}
 .default-title .iconfont{margin:0 10px 0 20px; font-size:18px; color:#fed732;}
 .default-title{ color:#a5abb2;}
+.default-title a{color:#a5abb2;}
 .default-lis a{ color:#606c77;}
 .right-center{background:#fff; overflow:hidden; height:100% !important; min-height:940px;}
 .conter-title{height:48px; border-bottom:1px #00b966 solid; width:100%; color:#2a3141; font-size:18px; line-height:48px; padding-left:40px; background:#FFF;}
