@@ -52,7 +52,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 
 
 .tab{ background: #fff none repeat scroll 0 0;height: auto;margin: 0 auto;min-height: 400px;overflow: hidden;padding-bottom: 20px; width: 75%; height:400px; position:relative}
-.midd-input-group{width:90%; margin:0 auto 10px; border:1px #eee solid;padding:2px; overflow:hidden;clear: both;}
+.midd-input-group{width:90%; margin:0 auto 10px; border:1px #eee solid;padding:2px; overflow:hidden;}
 .midd-input-group input{width:60%; line-height:30px;font-size:16px; text-indent:1em; padding:10px 0; border:none; color:2a3141 }
 /*验证码状态样式*/
 /*.midd-input-group .yz-btn{width:40%; background:#606c77;font-size:16px; padding:5% 0;  color:#fff; cursor:pointer;}

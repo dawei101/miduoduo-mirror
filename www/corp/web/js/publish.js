@@ -6,5 +6,7 @@ $(function() {
 
 $('form').on('submit', function(){
     $("[name='detail']")[0].value = $("#editor").html();
-    $("[name='salary_unit']")[0].value = $("[name='salary_unit']")[0].value.substring(2);
+    var su = $("[name='salary_unit']")[0].value;
+    if(su.indexOf('/') >= 0) su = su.substring(2);
+    $("[name='salary_unit']")[0].value = su;
 });
