@@ -22,14 +22,29 @@ $('form').on('submit', function(){
         $('.service_type_id-error').show();
         valid = false;
     }
-    if (form.service_type_id.value.length == 0) {
-        $('.service_type_id-error').html('请选择兼职类别');
-        $('.service_type_id-error').show();
+    if (form.need_quantity.value.length == 0) {
+        $('.need_quantity-error').html('请输入人数');
+        $('.need_quantity-error').show();
+        valid = false;
+    }
+    if (form.salary.value.length == 0) {
+        $('.salary-error').html('请输入薪酬');
+        $('.salary-error').show();
+        valid = false;
+    }else if (form.salary_unit.value.length == 0) {
+        $('.salary-error').html('请选择金额单位');
+        $('.salary-error').show();
+        valid = false;
+    }else if (form.clearance_period.value.length == 0) {
+        $('.salary-error').html('请选择结算方式');
+        $('.salary-error').show();
         valid = false;
     }
     if(valid === false){
         $('html,body').scrollTop(0);
     }
+
+    
     return valid;
 
 });
