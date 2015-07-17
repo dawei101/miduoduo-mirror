@@ -7,6 +7,7 @@ use yii\web\BadRequestHttpException;
 use corp\FBaseController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use common\models\Company;
 
 
 /**
@@ -49,10 +50,14 @@ class SiteController extends FBaseController
 
     public function actionIndex()
     {
-        if (!\Yii::$app->user->isGuest) {
-            return $this->redirect('/task/');
+        if (\Yii::$app->user->isGuest) {
+            return $this -> render('index');
         }
-        return $this -> render('index');
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+        return $this->redirect('/task/');
     }
 
 

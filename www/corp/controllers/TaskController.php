@@ -64,6 +64,10 @@ class TaskController extends FBaseController
 
     public function actionIndex()
     {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
         $condition = ['user_id'=>Yii::$app->user->id];
         $status = Yii::$app->request->get('status');
         if (array_key_exists('status', $_GET)) {
@@ -143,6 +147,11 @@ class TaskController extends FBaseController
 
     public function actionEdit($gid)
     {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
         $task = Task::findOne(['gid' => $gid]);
         if (!$task) {
             return $this->goHome();
@@ -199,6 +208,16 @@ class TaskController extends FBaseController
 
     public function actionRefresh($gid)
     {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = date("Y-m-d H:i:s");
         $task->from_time = substr($task->from_time, 0, -3);
@@ -211,6 +230,11 @@ class TaskController extends FBaseController
 
     public function actionDown($gid)
     {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
         $task->status = 20;
@@ -224,6 +248,11 @@ class TaskController extends FBaseController
 
     public function actionDelete($gid)
     {
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
         $task->status = 10;

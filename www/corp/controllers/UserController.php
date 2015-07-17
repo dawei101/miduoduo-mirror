@@ -242,7 +242,10 @@ class UserController extends FBaseController
 
     public function actionPersonalCert()
     {
-    	$company = Company::findByCurrentUser();
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
 
     	if(Yii::$app->request->isPost){
             $hash = Yii::$app->getSecurity()->generateRandomString();
@@ -264,6 +267,9 @@ class UserController extends FBaseController
     public function actionCorpCert()
     {
         $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
     	if(Yii::$app->request->isPost){
             $hash = Yii::$app->getSecurity()->generateRandomString();
     		$uploaddir = '/service/data/media';
