@@ -47,7 +47,9 @@ class TaskPoolSearch extends TaskPool
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder'=>['id'=>SORT_DESC]],
+            'sort' => ['defaultOrder'=>
+                ['release_date'=>SORT_DESC]
+            ],
         ]);
 
         $this->load($params);
