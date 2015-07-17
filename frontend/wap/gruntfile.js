@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
     //生成文件的目标根路径
-    var targetRootPath = "../../mdd-compile/v1/";
+    var targetRootPath = "../../../compile-mdd/frontend/dest/v1/";
     //ejs常量
     var destRootPath = "/v1/";
     var destCssRootPath = destRootPath + "css/";
