@@ -87,7 +87,11 @@ class Company extends \common\BaseActiveRecord
             [['name', 'license_id', 'license_img'], 'string', 'max' => 500],
             [['name', 'license_id', 'license_img', 'contact_phone', 'contact_email', 'contact_name'], 'string', 'max' => 500],
             [['introduction'], 'string'],
+            ['contact_email', 'email'],
             ['status', 'default', 'value'=>1],
+            ['contact_phone', 'match', 'pattern'=>'/^(1[345789]\d{9})|(0\d{2,3}\-?\d{7,8})$/',
+                'message'=>'电话号码格式不正确.'],
+            [['name', 'contact_name', 'contact_phone', 'contact_email'], 'required']
         ];
     }
 

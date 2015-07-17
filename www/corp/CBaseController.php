@@ -2,14 +2,29 @@
 namespace corp;
 
 use Yii;
+use yii\filters\AccessControl;
 use common\BaseController;
 
 class CBaseController extends BaseController
 {
-    public function renderJson($data)
+
+    public function behaviors()
     {
-        header('Content-type: application/json');
-        echo json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
-        Yii::$app->end();
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['corp'],
+                    ],
+                ],
+                'denyCallback' => function($rule, $action){
+                    if (!Yii::$app->user->isGuest){
+                        return $this->redirect('/user/add-contact-info');
+                    }
+                },
+            ],
+       ];
     }
 }

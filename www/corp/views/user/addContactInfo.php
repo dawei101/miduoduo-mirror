@@ -20,34 +20,48 @@ $this->params['breadcrumbs'][] = $this->title;
                 <!--
                 <form action="/user/add-contact-info" method="post" id="form">
                 -->
-                <?php $form = ActiveForm::begin(['action'=>'/user/add-contact-info', 'options'=>['id'=>'form']]);?>
+                <?php 
+                    $errors = $model->getErrors();
+                    $form = ActiveForm::begin(['action'=>'/user/add-contact-info', 'options'=>['id'=>'form']]);?>
                     <div class="tx-box">
                         <span class="pull-left text-right">企业名称 </span>
                         <div class="midd-input-group pull-left">
-                            <input name="name" type="text" class="input-q"  placeholder="准确填写公司名，提升投递量">
+                            <input name="name" value="<?=$model->name?>" type="text" class="input-q"  placeholder="准确填写公司名，提升投递量">
                         </div>
                         <em class="pull-right">*</em>
+                        <?php if(isset($errors['name'])){ ?>
+                        <p class="cuowu ql title-error" style="display: block;"><?=implode(' ', $errors['name'])?></p>
+                        <?php } ?>
                     </div>
                     <div class="tx-box">
                         <span class="pull-left text-right">联系人 </span>
                         <div class="midd-input-group pull-left">
-                            <input name="contact_name" type="text" class="input-q"  placeholder="负责招聘的联系人姓名">
+                        <input name="contact_name" value="<?=$model->contact_name?>" type="text" class="input-q"  placeholder="负责招聘的联系人姓名">
                         </div>
                         <em class="pull-right">*</em>
+                        <?php if(isset($errors['contact_name'])){ ?>
+                        <p class="cuowu ql title-error" style="display: block;"><?=implode(' ', $errors['contact_name'])?></p>
+                        <?php } ?>
                     </div>
                     <div class="tx-box">
                         <span class="pull-left text-right">公司联系电话 </span>
                         <div class="midd-input-group pull-left">
-                            <input name="contact_phone" type="text" class="input-q"  placeholder="请填写真实有效手机/座机号码">
+                            <input  name="contact_phone" value="<?=$model->contact_phone?>" type="text" class="input-q"  placeholder="请填写真实有效手机/座机号码(带区号)">
                         </div>
                         <em class="pull-right">*</em>
+                        <?php if(isset($errors['contact_phone'])){ ?>
+                        <p class="cuowu ql title-error" style="display: block;"><?=implode(' ', $errors['contact_phone'])?></p>
+                        <?php } ?>
                     </div>
                     <div class="tx-box">
                         <span class="pull-left text-right"> 接收简历邮箱 </span>
                         <div class="midd-input-group pull-left">
-                            <input name="contact_email" type="text" class="input-q"  placeholder="请填写公司邮箱，审核通过后不可更改">
+                            <input value="<?=$model->contact_email?>" name="contact_email" type="text" class="input-q"  placeholder="请填写公司邮箱，审核通过后不可更改">
                         </div>
                         <em class="pull-right">*</em>
+                        <?php if(isset($errors['contact_email'])){ ?>
+                        <p class="cuowu ql title-error" style="display: block;"><?=implode(' ', $errors['contact_email'])?></p>
+                        <?php } ?>
                     </div>
                     <div class="tx-box">
                         <span class="pull-left text-right"></span>

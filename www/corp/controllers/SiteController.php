@@ -15,26 +15,12 @@ use common\models\Company;
  */
 class SiteController extends CBaseController
 {
-    /**
-     * @inheritdoc
-     */
+
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                    'login' => ['post'],
-                    'register' => ['post'],
-                ],
-            ],
-        ];
+        return [];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -52,10 +38,6 @@ class SiteController extends CBaseController
     {
         if (\Yii::$app->user->isGuest) {
             return $this -> render('index');
-        }
-        $company = Company::findByCurrentUser();
-        if (!$company) {
-            return $this->redirect('/user/add-contact-info');
         }
         return $this->redirect('/task/');
     }

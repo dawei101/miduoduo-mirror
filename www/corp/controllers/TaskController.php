@@ -21,34 +21,7 @@ use corp\models\TaskPublishModel;
  */
 class TaskController extends CBaseController
 {
-    /**
-     * @inheritdoc
-     */
-     public function behaviors()
-     {
-         return [
-             'access' => [
-                 'class' => AccessControl::className(),
-                 'rules' => [
-                     [
-                         'actions' => ['index','publish', 'edit', 'refresh', 'down', 'delete', 'success'],
-                         'allow' => true,
-                         'roles' => ['@'],
-                     ],
-                 ],
-             ],
-             'verbs' => [
-                 'class' => VerbFilter::className(),
-                 'actions' => [
-                     'logout' => ['post'],
-                 ],
-             ],
-         ];
-     }
 
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -88,9 +61,6 @@ class TaskController extends CBaseController
     {
         $model = new Task();
         $company = Company::findByCurrentUser();
-        if (!$company) {
-            return $this->redirect('/user/add-contact-info');
-        }
         if (Yii::$app->request->isPost) {
             $company_id = $company->id;
             $data = Yii::$app->request->post();
@@ -155,7 +125,7 @@ class TaskController extends CBaseController
             }
         }
 
-		$services = ServiceType::find()->all();
+        $services = ServiceType::find()->all();
         return $this -> render('publish',
         ['services'=>$services, 'task'=>$model, 'company'=>$company, 'address'=>false]);
     }
@@ -163,9 +133,6 @@ class TaskController extends CBaseController
     public function actionEdit($gid)
     {
         $company = Company::findByCurrentUser();
-        if (!$company) {
-            return $this->redirect('/user/add-contact-info');
-        }
 
         $task = Task::findOne(['gid' => $gid]);
         if (!$task) {
@@ -239,16 +206,6 @@ class TaskController extends CBaseController
 
     public function actionRefresh($gid)
     {
-        $company = Company::findByCurrentUser();
-        if (!$company) {
-            return $this->redirect('/user/add-contact-info');
-        }
-
-        $company = Company::findByCurrentUser();
-        if (!$company) {
-            return $this->redirect('/user/add-contact-info');
-        }
-
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = date("Y-m-d H:i:s");
         $task->from_time = substr($task->from_time, 0, -3);
@@ -261,11 +218,6 @@ class TaskController extends CBaseController
 
     public function actionDown($gid)
     {
-        $company = Company::findByCurrentUser();
-        if (!$company) {
-            return $this->redirect('/user/add-contact-info');
-        }
-
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
         $task->status = 10;
@@ -279,11 +231,6 @@ class TaskController extends CBaseController
 
     public function actionDelete($gid)
     {
-        $company = Company::findByCurrentUser();
-        if (!$company) {
-            return $this->redirect('/user/add-contact-info');
-        }
-
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = time();
         $task->status = 20;

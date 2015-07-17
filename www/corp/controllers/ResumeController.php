@@ -5,8 +5,6 @@ use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use corp\CBaseController;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use yii\db\Query;
 use yii\data\Pagination;
 
@@ -19,36 +17,7 @@ use common\models\Task;
  */
 class ResumeController extends CBaseController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['index', 'read', 'pass', 'reject'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                    'login' => ['post'],
-                    'register' => ['post'],
-                ],
-            ],
-        ];
-    }
 
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [

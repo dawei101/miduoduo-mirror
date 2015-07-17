@@ -7,6 +7,7 @@ use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
+use yii\helpers\ArrayHelper;
 
 use common\Utils;
 use common\models\LoginWithDynamicCodeForm;
@@ -33,7 +34,7 @@ class UserController extends CBaseController
      */
     public function behaviors()
     {
-        return [
+        return ArrayHelper::merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
@@ -42,7 +43,7 @@ class UserController extends CBaseController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['add-contact-info','logout', 'info', 'account', 'personal-cert', 'corp-cert'],
+                        'actions' => ['add-contact-info','logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -55,7 +56,7 @@ class UserController extends CBaseController
                     'vlogin' => ['post'],
                 ],
             ],
-        ];
+        ]);
     }
 
     /**
@@ -80,7 +81,6 @@ class UserController extends CBaseController
         if ($loginModel->load(Yii::$app->request->post(), '') && $loginModel->login()) {
             return $this->renderJson(['result' => true ]);
         }
-
         return $this->renderJson(['result' => false, 'error' => $loginModel->errors]);
     }
 
@@ -198,6 +198,11 @@ class UserController extends CBaseController
             $model->setAttributes(Yii::$app->request->post(), false);
             $model->user_id = Yii::$app->user->id;
             if ($model->validate() && $model->save()) {
+                if (!Yii::$app->user->can('corp')){
+                    $auth = Yii::$app->authManager;
+                    $role = $auth->getRole('corp');
+                    $auth->assign($role, Yii::$app->user->id);
+                }
                 return $this->redirect('/task/publish');
             }
         }
