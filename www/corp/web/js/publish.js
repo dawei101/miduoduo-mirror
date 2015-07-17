@@ -5,8 +5,17 @@ $(function() {
 });
 
 $('form').on('submit', function(){
-    $("[name='detail']")[0].value = $("#editor").html();
-    var su = $("[name='salary_unit']")[0].value;
+    var form = document.forms[0];
+    form.detail.value = $("#editor").html();
+    var su = form.salary_unit.value;
     if(su.indexOf('/') >= 0) su = su.substring(2);
-    $("[name='salary_unit']")[0].value = su;
+    form.salary_unit.value = su;
+
+    if (form.title.value.length == 0) {
+        $('title-error').html('请输入兼职标题');
+        return false;
+    }
+
+    return true;
+
 });

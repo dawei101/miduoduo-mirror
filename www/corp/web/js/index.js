@@ -71,6 +71,7 @@ $('#cbox-1 .zc-btn').click(function(e){
     return false;
 });
 
+var timer = false;
 //注册发送验证码
 $('.yz-btn').on('click', function(){
     $(".error-message").hide();
@@ -85,15 +86,22 @@ $('.yz-btn').on('click', function(){
         $('.error-message').show(2);
         return;
     }
+    $(this).removeClass('yz-btn');
+    $(this).addClass('yz-btn-jx');
+    counter($(this), 60);
     $.get('/user/vcode', $(this).closest('form').serialize())
     .done(function(str){
         var data = JSON.parse(str);
         if(data.result === true) {
-            $(this).removeClass('yz-btn');
-            $(this).addClass('yz-btn-jx');
-            counter($(this), 60);
             return;
         }
+        if (timer !== false) {
+            window.clearTimeout(timer);
+            timer = false;
+        }
+        $(this).removeClass('yz-btn-jx');
+        $(this).addClass('yz-btn');
+        $(this).html('发送验证码');
         $('.error-message').html(data.msg);
         $('.error-message').show();
     });
@@ -103,11 +111,11 @@ function counter($el, n) {
     (function loop() {
        $el.html("重新发送(" + n + ")");
        if (n--) {
-           setTimeout(loop, 1000);
+           timer = setTimeout(loop, 1000);
        }else {
            $el.addClass('yz-btn');
        	   $el.removeClass('yz-btn-jx');
-              $el.html('发送验证码');
+           $el.html('发送验证码');
        }
     })();
 }

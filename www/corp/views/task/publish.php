@@ -54,7 +54,7 @@ $this->title = '米多多兼职平台';
                                 <div class="pull-left title-left text-center"><em>*</em>兼职标题</div>
                                 <div class="pull-left right-box">
                                     <input name="title" type="text" placeholder="请简述职位标题，字数控制在20字内" value="<?=$task->title?>">
-                                    <p class="cuowu">内容不能为空!</p>
+                                    <p class="cuowu title-error">内容不能为空!</p>
                                 </div>
                             </li>
                             <li>
