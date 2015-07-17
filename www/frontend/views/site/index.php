@@ -1,4 +1,5 @@
 <?php
+
 use Yii;
 /* @var $this yii\web\View */
 $this->title = '米多多兼职平台';
@@ -7,29 +8,38 @@ $this->title = '米多多兼职平台';
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <meta name="description" content="米多多兼职网，是中国最大的正规网上兼职平台。所有兼职招聘信息全部经过人工审核，不收任何押金和费用，安全有保障。免费找兼职，就上米多多兼职网。 miduoduo.cn" />
 <meta name="keywords" content="兼职网,大学生兼职网,正规网上兼职平台" />
 <link rel="shortcut icon"  href="/static/img/miduoduo.ico" />
-<title>【米多多兼职】最靠谱有保障的兼职平台</title>
+<title>米多多/兼职平台</title>
 <link href="/static/css/miduoduo.css" type="text/css" rel="stylesheet" >
 </head>
 <body>
-<div class="top">
-  <div class="toumin-box"></div>
-  <div class="top-center">
-    <nav>
-      <div class="logo"><img src="/static/img/logo.png" width="200" height="110"></div>
-      <div class="nav"><a href="<?=Yii::$app->params['baseurl.m'] . '/task'?>"  class="contact-us">职位列表</a><a href="/corp">企业合作</a></div>
-    </nav>
-    <div class="banner"><img src="/static/img/banner.png" width="751" height="407">
-      <h1>米多多 | 大学生兼职平台</h1>
-      <div class="erweima"><img src="/static/img/showqrcode-2.jpeg" width="140" height="140">
-        <p>微信公众账号</p>
-      </div>
+<div class="nav-top">
+    <div class="nav">
+        <div class="qiuzhi-logo"><img src="/static/img/qiuzhi-logo.png" width="244" height="80"></div>
+        <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="<?=Yii::$app->params['baseurl.m'] . '/task'?>">最新兼职</a></li>
+            <li><a href="/corp">企业版</a></li>       
+        </ul>
     </div>
+</div>
+<div class="qiuzhi-banner">
+  <div class="cent">
+      <div class="pic-top"><img src="/static/img/jianzhi-pic.png" width="805" height="170"></div>
+      <div class="erwei-box">
+           <div class="erweibox">
+                <img src="/static/img/ban-erwei.jpg" width="140" height="140"><P>扫码关注微信号</P> 
+           </div>
+           <div class="erweibox">
+                <img src="/static/img/android-app.jpg" width="140" height="140"><P>下载安卓版APP</P> 
+           </div>
+      </div>
   </div>
 </div>
+
 <div class="miduoduo-one">
   <div class="miduoduo-ms">
     <div class="y-ability"><img src="/static/img/ablility-icon.png" width="75" height="80"><span>我的能力</span></div>
@@ -100,12 +110,11 @@ $this->title = '米多多兼职平台';
     <div class="text-mi">米多多，不仅仅是兼职！</div>
 </div>
 
-
 <footer>
      <ul>
         <li class="contact-us1">
             <h2>联系我们</h2>
-            <p>邮箱：contact@miduoduo.cn</p>
+            <p>邮箱：<a href="mailto:contact@miduoduo.cn">contact@miduoduo.cn</a></p>
             <p>电话：010-84991662</p>
         </li>
         <li class="about-us">
@@ -116,8 +125,8 @@ $this->title = '米多多兼职平台';
         <li class="xian"></li>
         <li class="attention-us">
             <h2>关注我们</h2>
-            <div class="erwei"><img src="/static/img/showqrcode-2.jpeg" width="70" height="70"><div class="er-text"><a style="text-decoration:none; color:#fff" href="<?=Yii::$app->params['baseurl.m']?>">微信公众账号</a></div></div>
-            <!-- <div class="erwei"><img src="/static/img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>-->
+            <div class="erwei"><img src="/static/img/android-app.jpg" width="70" height="70"><div class="er-text">扫码下载安卓App</div></div>
+            <div class="erwei"><img src="/static/img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>
        </li>
      </ul>
 </footer>
