@@ -32,7 +32,7 @@ $(document).click(function(){
 
 //日期选择
  $(document).ready(function() {
-      $('.reservation').daterangepicker({ singleDatePicker: true }, function(start, end, label) {
+      $('.reservation').daterangepicker(null, function(start, end, label) {
                     console.log(start.toISOString(), end.toISOString(), label);
           });
  });

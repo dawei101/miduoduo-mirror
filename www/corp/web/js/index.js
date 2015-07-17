@@ -86,9 +86,10 @@ $('.yz-btn').on('click', function(){
         $('.error-message').show(2);
         return;
     }
-    $(this).removeClass('yz-btn');
-    $(this).addClass('yz-btn-jx');
-    counter($(this), 60);
+    var btn = $(this);
+    btn.removeClass('yz-btn');
+    btn.addClass('yz-btn-jx');
+    counter(btn, 60);
     $.get('/user/vcode', $(this).closest('form').serialize())
     .done(function(str){
         var data = JSON.parse(str);
@@ -99,9 +100,9 @@ $('.yz-btn').on('click', function(){
             window.clearTimeout(timer);
             timer = false;
         }
-        $(this).removeClass('yz-btn-jx');
-        $(this).addClass('yz-btn');
-        $(this).html('发送验证码');
+        btn.removeClass('yz-btn-jx');
+        btn.addClass('yz-btn');
+        btn.html('发送验证码');
         $('.error-message').html(data.msg);
         $('.error-message').show();
     });
