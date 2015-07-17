@@ -190,10 +190,14 @@ class UserController extends FBaseController
 
     public function actionAddContactInfo()
     {
-        $model = new Company;
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            $model = new Company;
+        }
         $model->setAttributes(Yii::$app->request->post(), false);
+        $model->user_id = Yii::$app->user->id;
         if ($model->validate() && $model->save()) {
-            return $this->goHome();
+            return $this->redirect('/task/publish');
         }
         return $this->render('addContactInfo', ['model' => $model]);
     }
