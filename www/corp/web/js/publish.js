@@ -30,16 +30,32 @@ $('form').on('submit', function(){
         $('.need_quantity-error').html('请输入人数');
         $('.need_quantity-error').show();
         valid = false;
+    }else {
+        var value = form.need_quantity.value;
+        if (value != value.replace(/[^0-9\.]/g, '')) {
+            $('.need_quantity-error').html('人数请输入数字');
+            $('.need_quantity-error').show();
+            valid = false;
+        }
     }
     if (form.salary.value.length == 0) {
         $('.salary-error').html('请输入薪酬');
         $('.salary-error').show();
         valid = false;
-    }else if (form.salary_unit.value.length == 0) {
+    }else {
+        var value = form.salary.value;
+        if (value != value.replace(/[^0-9\.]/g, '')) {
+            $('.salary-error').html('薪酬请输入数字');
+            $('.salary-error').show();
+            valid = false;
+        }
+    }
+    if (form.salary_unit.value.length == 0) {
         $('.salary-error').html('请选择金额单位');
         $('.salary-error').show();
         valid = false;
-    }else if (form.clearance_period.value.length == 0) {
+    }
+    if (form.clearance_period.value.length == 0) {
         $('.salary-error').html('请选择结算方式');
         $('.salary-error').show();
         valid = false;
