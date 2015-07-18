@@ -56,8 +56,7 @@ $('form').on('submit', function(){
     if(valid === false){
         $('html,body').scrollTop(0);
     }
-
-
+    
     return valid;
 
 });
@@ -74,4 +73,12 @@ $('#address_count').change(function(){
         $(".tagBox-add-tag").show();
         $(".tagBox-input").show();
     }
+});
+
+$('#search-address').keypress(function(e) {
+  var code = (e.keyCode ? e.keyCode : e.which);
+  if(code==13) {
+    console.log('search address clicked');
+    return false;
+  }
 });

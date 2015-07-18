@@ -156,7 +156,10 @@ $this->title = '米多多兼职平台';
                                         </ul>
                                     </div>
                                         <div class="nice-select quyu" name="nice-select">
-                                            <input type="text" readonly value="北京" ><i class="iconfont">&#xe60d;</i>
+                                            <input type="text" readonly value="北京" >
+                                        </div>
+                                        <div class="nice-select" name="nice-select">
+                                            <input type="text" placeholder="address" id="search-address"/>
                                             <ul>
                                                 <li>朝阳区</li>
                                                 <li>海淀区</li>
@@ -168,7 +171,7 @@ $this->title = '米多多兼职平台';
                                                 <li>怀柔区</li>
                                             </ul>
                                         </div>
-                                        <input type="text" id="jquery-tagbox-text" />
+                                        <!--<input type="text" id="jquery-tagbox-text" />-->
                                         <p class="cuowu">内容不能为空!</p>
                                     </div>
                                 </li>
@@ -332,6 +335,7 @@ $this->title = '米多多兼职平台';
 	<script src="/js/fuwenben/bootstrap-wysiwyg.js"></script>
 	<script src="/js/fuwenben/external/jquery.hotkeys.js"></script>
 	<script src="/js/jquery.tagbox.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=GB9AZpYwfhnkMysnlzwSdRqq"> </script>
 <!-- InstanceEndEditable -->
 <?php
 $this->registerJsFile('/js/publish.js');
