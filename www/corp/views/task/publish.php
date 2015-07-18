@@ -158,7 +158,15 @@ $this->title = '米多多兼职平台';
                                         <div class="nice-select quyu" name="nice-select">
                                             <input type="text" readonly value="北京" >
                                         </div>
-                                        <input type="text" name="address" id="jquery-tagbox-text1" />
+                                        <input type="text" name="address" id="jquery-tagbox-text1" value="
+                                        <?php
+                                            if($address){
+                                                for($i=0,$len=count($address);$i<$len;$i++){
+                                                    if($i > 0) echo ',';
+                                                    echo $address[$i].title;
+                                                }
+                                            }
+                                        ?>" />
                                         <p class="cuowu address_error">内容不能为空!</p>
                                     </div>
                                 </li>
