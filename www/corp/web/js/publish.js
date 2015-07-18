@@ -52,3 +52,7 @@ $('form').on('submit', function(){
     return valid;
 
 });
+
+$('#address_count').change(function(){
+    console.log(123);
+});

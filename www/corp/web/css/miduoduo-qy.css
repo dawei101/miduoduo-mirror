@@ -177,8 +177,8 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .ma-right input{color:#777;}
 .add-xs{width:100px; line-height:40px; color:#606c77; font-size:16px; border:none; background:#fff; margin-left:10px; cursor:pointer}
 .add-ons{clear:both;      padding: 0 0 0 118px; margin-bottom:20px; height:40px; display:none}
-.add-ons-input{margin-right:10px;width:100px;}
-.add-ons-input input{width:100px; height:40px; text-indent:1em; color:#777;}
+.add-ons-input{margin-right:10px;width:110px;}
+.add-ons-input input{width:110px; height:40px; text-indent:1em; color:#777;}
 .add-ons-input ul{width:100px;}
 .add-ons  .iconfont {margin-left:-25px;}
 .yuji{color:#ff7b5d; line-height:40px;}
