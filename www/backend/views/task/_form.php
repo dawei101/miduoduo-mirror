@@ -19,6 +19,10 @@ use common\models\District;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'recommend')->dropDownList(
+        $model::$RECOMMEND
+    ) ?>
+
     <?= $form->field($model, 'labels_str')->label("标签(以英文','分隔)") ?>
 
     <?= $form->field($model, 'clearance_period')->dropDownList(

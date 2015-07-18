@@ -11,6 +11,7 @@ use m\assets\WechatAsset;
 
 $this->title = '附近' . ($current_service_type?$current_service_type->name:'') . '兼职列表';
 
+$districts = District::find()->where(['parent_id'=>$city->id])->all();
 $service_types = ServiceType::find()->where(['status'=>0])->all();
 
 $this->nav_left_link = 'javascript:window.history.back()';
@@ -23,26 +24,36 @@ $this->wechat_apis = ['getLocation'];
 ?>
 
   <nav class="navbar-fixed-top top-nav" style="top: 50px;" role="navigation">
-    <dl class="select"  style="width:50%;">
-        <dt><?=$current_service_type?$current_service_type->name:'全部'?><span class="caret"></span> </dt>
+    <dl class="select">
+        <dt style=" white-space: nowrap;"><?=$current_district->name?> <span class="caret"></span>
+</dt><span class="inverted-triangle"></span>
         <dd> 
           <ul>
-    <li><a href="<?=Url::current(['service_type'=>''])?>">全部</a></li>
+          <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>''])?>">全城</a></li>
+<?php foreach($districts as $district) { ?>
+    <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>$district->id])?>"><?=$district->name?></a></li>
+<?php } ?>
+          </ul>
+        </dd>
+     </dl>
+    <dl class="select">
+        <dt><?=$current_service_type?$current_service_type->name:'全部 '?><span class="caret"></span> </dt>
+        <dd> 
+          <ul>
+    <li><a href="<?=Url::current(['service_type'=>''])?>">全部 </a></li>
 <?php foreach($service_types as $st) { ?>
     <li><a href="<?=Url::current(['service_type'=>$st->id])?>"><?=$st->name?></a></li>
 <?php } ?>
           </ul>
         </dd>
      </dl>
-     <dl class="select" style="width:50%;">
-        <dt>排序 <span class="caret"></span> </dt>
+     <dl class="select">
+        <dt>附近的 <span class="caret"></span> </dt>
         <dd> 
           <ul>
-            <li><a href="/task">默认</a></li>
-            <li>
-		<a href="javascript:getLocation(function(loc){location.href='/task/nearest?lat='+loc.lat+'&'+'lng='+loc.lng});">
-			附近的
-		</a></li>
+            <li><a href="/task">默认排序</a></li>
+            <li><a href="/task?sort=fromdate">开工时间</a></li>
+            <li><a href="/task/nearest?lat=<?= Yii::$app->request->get('lat') ?>&lng=<?= Yii::$app->request->get('lng') ?>">附近的</a></li>
           </ul>
         </dd>
      </dl>

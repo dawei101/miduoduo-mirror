@@ -26,10 +26,19 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '标题',
                 'format' => 'raw',
+                'attribute' => 'title',
                 'value' => function($model){
                     return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->gid ."'>" . $model->title . "</a>";
                 } 
             ] ,
+            [
+                'label' => '是否为优单',
+                'format' => 'raw',
+                'attribute' => 'recommend',
+                'value' => function($model){
+                    return $model->getRecommend_label();
+                } 
+            ],
             'clearance_period_label',
             'salary',
             'salary_unit_label',

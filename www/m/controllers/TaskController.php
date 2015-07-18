@@ -31,7 +31,7 @@ class TaskController extends \m\MBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view','nearby', 'nearest','location'],
+                        'actions' => ['index', 'view','nearby', 'nearest'],
                         'allow' => true,
                     ],
                     [
@@ -52,23 +52,20 @@ class TaskController extends \m\MBaseController
 
     public function actionNearest($lat, $lng, $distance=2000, $service_type=null)
     {
+        //只有北京
+        $city_id = 3;
+        $district = Yii::$app->request->get('district');
+        $service_type = Yii::$app->request->get('service_type');
+        if (empty($city_id)){
+            $this->render404('未知的城市');
+        }
+        $city = District::findOne($city_id);
+
         $user_id    = Yii::$app->user->id;
-        // 保存地理位置
-        $location   = UserLocation::find()->where(['user_id'=>$user_id,'latitude'=>$lat])->one();
-        $location_m = new UserLocation();
-        $datetime   = date("Y-m-d H:i:s",time());
-        if( $location ){
-            $location->updated_time   = $datetime;
-            $location->use_nums       = $location->use_nums + 1;
-            $location->save();
-        }else{
-            $location_m->user_id    = $user_id;
-            $location_m->latitude   = $lat;
-            $location_m->longitude  = $lng;
-            $location_m->created_time   = $datetime;
-            $location_m->updated_time   = $datetime;
-            $location_m->use_nums       = 1;
-            $location_m->save();
+
+        // 保存地理位置,下次直接用
+        if($user_id){
+            TaskAddress::cacheUserLocation($user_id,$lat,$lng);
         }
 
         $query = TaskAddress::find();
@@ -100,19 +97,11 @@ class TaskController extends \m\MBaseController
         return $this->render('nearest', 
             ['tasks'=>array_slice($tasks, $pages->offset, $pages->limit),
              'pages'=> $pages,
+             'city'=>$city,
+             'current_district' => 
+             empty($district)?$city:District::findOne($district),
              'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
             ]);
-    }
-
-    // 用户选择位置
-    public function actionLocation(){
-        $model      = UserLocation::findOne(['id'=>2]);
-        return $this->render(
-            'location',
-            [
-                'model'     => $model,
-            ]
-        );	
     }
 
     public function actionIndex()
@@ -137,7 +126,22 @@ class TaskController extends \m\MBaseController
         if (!empty($service_type)){
             $query->andWhere(['service_type_id'=>$service_type]);
         }
-        $query->addOrderBy(['id'=>SORT_DESC]);
+        
+        // 排序
+        $sort   = Yii::$app->request->get('sort');
+        if( $sort == 'fromdate' ){
+            // 今天之前的，按照`order_time`排序，今天之后的，按照`from_date`排序
+            $query->addOrderBy("
+                (CASE
+                    WHEN `from_date`<='".date("Y-m-d")."' THEN `order_time`
+                    ELSE 0
+                END) DESC,`from_date` ASC,`order_time` DESC,`id` DESC
+            ");
+        }else{
+            // 默认按照`order_time`排序
+            $query->addOrderBy(['order_time'=>SORT_DESC,'id'=>SORT_DESC]);
+        }
+
         $countQuery = clone $query;
         $pages =  new Pagination(['pageSize'=>Yii::$app->params['pageSize'],
             'totalCount' => $countQuery->count()]);

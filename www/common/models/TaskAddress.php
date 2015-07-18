@@ -6,6 +6,7 @@ use Yii;
 
 use common\models\User;
 use common\models\Task;
+use common\models\UserLocation;
 
 /**
  * This is the model class for table "{{%task_address}}".
@@ -120,5 +121,24 @@ class TaskAddress extends \common\BaseActiveRecord
             cos($rlat1)*cos($rlat2) * pow(sin($rg/2),2)) * 6372.797 * 1000;
         return $s;
 
+    }
+
+    public static function cacheUserLocation($user_id,$lat,$lng){
+        $location   = UserLocation::find()->where(['user_id'=>$user_id,'latitude'=>$lat])->one();
+        $location_m = new UserLocation();
+        $datetime   = date("Y-m-d H:i:s",time());
+        if( $location ){
+            $location->updated_time   = $datetime;
+            $location->use_nums       = $location->use_nums + 1;
+            $location->save();
+        }else{
+            $location_m->user_id    = $user_id;
+            $location_m->latitude   = $lat;
+            $location_m->longitude  = $lng;
+            $location_m->created_time   = $datetime;
+            $location_m->updated_time   = $datetime;
+            $location_m->use_nums       = 1;
+            $location_m->save();
+        }
     }
 }
