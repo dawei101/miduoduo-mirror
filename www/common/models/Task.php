@@ -293,8 +293,8 @@ class Task extends \common\BaseActiveRecord
     }
 
     public function getService_type()
-    {
-        return $this->hasOne(ServiceType::className(), ['id' => 'service_type_id']);
+    { 
+        return $this->hasOne(ServiceType::className(), ['id' => 'service_type_id']);//返回一个service query
     }
 
     public function getRecommend(){

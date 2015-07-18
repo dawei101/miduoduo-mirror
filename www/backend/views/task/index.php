@@ -71,7 +71,7 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete} | {adopt} {reject}',
+                'template' => '<div style="min-width:120px;">{view} {update} {delete} | {adopt} {reject}</div>',
                 'buttons' => [
                     'adopt' => function ($url, $model, $key) {
                         $options = [
@@ -92,7 +92,6 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                         return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url, $options);
                     }
                 ],
-            
             ],
         ],
     ]); ?>

@@ -45,15 +45,15 @@ class TaskController extends BBaseController
         ]);
     }
 
-    public function actionIndex2()
-    {
-        $searchModel = new TaskSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);//我想要改这个查询条件一个查询条件 默认参数是空的
-        return $this->render('index2', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+    // public function actionIndex2()
+    // {
+    //     $searchModel = new TaskSearch();
+    //     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);//我想要改这个查询条件一个查询条件 默认参数是空的
+    //     return $this->render('index2', [
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //     ]);
+    // }
 
     /**
      * Displays a single Task model.
@@ -117,7 +117,7 @@ class TaskController extends BBaseController
     {
         Task::updateAll(['status'=> $status], 'id=:id',
             $params=[':id'=>$id]);
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);//更改为 记录用户上次访问
     }
 
     public function actionDelete($id)
