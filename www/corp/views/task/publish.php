@@ -77,7 +77,7 @@ $this->title = '米多多兼职平台';
                               <div class="pull-left right-box div">
                                 <div class="riqi">
                                   <input type="text" readonly style="width: 330px" class="reservation" value="<?=$task->from_date&&$task->to_date?$task->from_date.' - '.$task->to_date:date('Y-m-d').' - '.date('Y-m-d')?>" placeholder="选择您的工作起始日期"/>
-                                  <label><input name="long_term" type="checkbox" class="changqi" value="">长期招聘</label>
+                                  <label><input name="is_longterm" type="checkbox" class="changqi" value="">长期招聘</label>
                                   <input name="from_date" type="hidden" value="<?=$task->from_date?$task->from_date:date('Y-m-d')?>"/>
                                   <input name="to_date" type="hidden" value="<?=$task->to_date?$task->to_date:date('Y-m-d')?>"/>
                               </div>
