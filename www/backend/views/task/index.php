@@ -41,12 +41,11 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                 }
             ] ,
             [
-                'label' => '是否为优单',
-                'format' => 'raw',
                 'attribute' => 'recommend',
                 'value' => function($model){
-                    return $model->getRecommend_label();
-                } 
+                    return $model->recommend_label;
+                },
+                'filter' => Task::$RECOMMEND,
             ],
             [
 		'attribute' => 'clearance_period',
