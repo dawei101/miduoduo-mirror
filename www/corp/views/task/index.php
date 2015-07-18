@@ -61,7 +61,7 @@ $this->title = '米多多兼职平台';
                    </div>
                    <div>
                    <div class="pull-left zhiwei-lis-left">
-                       <div><span><?=sprintf("%d", $task->salary).'元/'.$task->getSalary_unit_label()?></span><span><?=$task->getClearance_period_label()?></span>
+                       <div><span><?=sprintf("%.1f", $task->salary).'元/'.$task->getSalary_unit_label()?></span><span><?=$task->getClearance_period_label()?></span>
                            <span><?=$task->gender_requirement?TASK::$GENDER_REQUIREMENT[$task->gender_requirement]:''?></span></div>
                        <div>北京－朝阳</div>
                        <div class="fb-sj">发布时间：<?=$task->created_time?></div>
