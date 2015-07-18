@@ -24,18 +24,6 @@ class TaskPoolController extends BBaseController
         return Yii::getAlias('@backend/views/spider/task-pool');
     }
 
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all TaskPool models.
      * @return mixed

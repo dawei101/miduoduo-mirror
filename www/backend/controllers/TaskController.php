@@ -18,9 +18,17 @@ class TaskController extends BBaseController
 
     public function behaviors()
     {
-        $bhvs = parent::behaviors();
-        return $bhvs;
+        return array_merge(parent::behaviors(), [
+           'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'reject' => ['post'],
+                    'adopt' => ['post'],
+                ],
+            ],
+        ]);
     }
+
 
 
     /**
@@ -32,6 +40,16 @@ class TaskController extends BBaseController
         $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionIndex2()
+    {
+        $searchModel = new TaskSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);//我想要改这个查询条件一个查询条件 默认参数是空的
+        return $this->render('index2', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -95,19 +113,29 @@ class TaskController extends BBaseController
         );
     }
 
-    /**
-     * Deletes an existing Task model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
+    public function changeStatus($id, $status)
     {
-        Task::updateAll(['status'=> 10], 'status=0 and id=:id',
+        Task::updateAll(['status'=> $status], 'id=:id',
             $params=[':id'=>$id]);
-
         return $this->redirect(['index']);
     }
+
+    public function actionDelete($id)
+    {
+        return $this->changeStatus($id, $status=Task::STATUS_DELETED);
+    }
+
+    public function actionReject($id)
+    {
+        return $this->changeStatus($id, $status=Task::STATUS_UN_PASSED);
+    }
+
+    public function actionAdopt($id)
+    {
+        return $this->changeStatus($id, $status=Task::STATUS_OK);
+    }
+
+
 
     /**
      * Finds the Task model based on its primary key value.
@@ -123,5 +151,12 @@ class TaskController extends BBaseController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionPassed($id,$status){
+        $model = $this->findModel($id);
+        $model->status = $status;
+        $model->save();   
+        return $this->redirect(['task/index2']);
     }
 }

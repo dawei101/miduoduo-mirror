@@ -74,6 +74,10 @@ class TaskApplicantController extends \m\MBaseController
             }
             $tc->task_id = $task_id;
             $tc->user_id = $user_id;
+            if (empty($resume->phonenum)){
+                $resume->phonenum = Yii::$app->user->identity->username;
+                $resume->save();
+            }
 
             if (Utils::isPhonenum($task->contact_phonenum)){
                 $weichat_base   = new WeichatBase();
@@ -87,7 +91,7 @@ class TaskApplicantController extends \m\MBaseController
                         'to-applicant-task-applied-done'
                     );
                 }
-                
+
                 Yii::$app->sms_pusher->push(
                     $task->contact_phonenum,
                     ['task'=>$task, 'resume'=>$resume],

@@ -14,18 +14,6 @@ use backend\BBaseController;
  */
 class CompanyController extends BBaseController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all Company models.
      * @return mixed

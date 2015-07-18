@@ -32,12 +32,12 @@ class ApplyTaskAction extends \yii\rest\CreateAction
                 Yii::$app->request->getUserAgent()) 
                 . '-' . Utils::getAppVersion(Yii::$app->request);
 
-            if (empty($model->phonenum)) {
-                $model->phonenum = Yii::$app->user->identity->username;
-            }
-
             $task = $model->task;
             $resume = $model->resume;
+
+            if (empty($resume->phonenum)) {
+                $resume->phonenum = Yii::$app->user->identity->username;
+            }
 
             if (Utils::isPhonenum($task->contact_phonenum)){
                 Yii::$app->sms_pusher->push(
