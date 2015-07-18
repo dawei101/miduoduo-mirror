@@ -39,7 +39,7 @@ $this->wechat_apis = ['getLocation'];
         </dd>
      </dl>
     <dl class="select">
-        <dt><?=$current_service_type?$current_service_type->name:'全部'?><span class="caret"></span> </dt>
+        <dt><?=$current_service_type?$current_service_type->name:'分类 '?><span class="caret"></span> </dt>
         <dd> 
           <ul>
     <li><a href="<?=Url::current(['service_type'=>''])?>">全部</a></li>
@@ -52,23 +52,27 @@ $this->wechat_apis = ['getLocation'];
      <dl class="select">
         <dt>
             <?php if( Yii::$app->request->get('sort')=='fromdate' ){ ?>
-                开工时间
+                按开工
+            <?php }elseif( Yii::$app->request->get('sort')=='default' ){ ?>
+                排序
             <?php }else{ ?>
-                默认排序
+                排序
             <?php } ?>
             <span class="caret"></span> 
         </dt>
         <dd> 
           <ul>
-            <li><a href="/task">默认排序</a></li>
-            <li><a href="/task?sort=fromdate">开工时间</a></li>
+            
+            <li><a href="<?=Url::current(['sort'=>'default'])?>">综合排序</a></li>
             <li>
                 <?php if($location['id']){ ?>
-                    <a href="task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>">附近的</a>
+                    <a href="/task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">按距离由近到远</a>
                 <?php }else{ ?>
-                    <a href="javascript:getLocation(function(loc){location.href='/task/nearest?lat='+loc.lat+'&'+'lng='+loc.lng});">附近的</a>
+                    <a href="javascript:getLocation(function(loc){location.href='/task/nearest?lat='+loc.lat+'&'+'lng='+loc.lng+'&service_type=<?= Yii::$app->request->get('service_type') ?>'});">按距离由近到远</a>
                 <?php } ?>
             </li>
+            <li><a href="<?=Url::current(['sort'=>'fromdate'])?>">按开工时间由近到远</a></li>
+            
           </ul>
         </dd>
      </dl>
