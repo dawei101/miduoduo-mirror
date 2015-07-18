@@ -187,7 +187,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .baoming span input{width:20px; float:left; margin-top:1px; }
 .bm-text{line-height:40px; color:#ccc; font-size:16px; margin-bottom:10px;}
 .bm-fs{margin-bottom:20px}
-.agree{line-height:40px; color:#606c77; font-size:16px;padding-left:60px;}
+.agree{margin-top:20px; color:#606c77; font-size:16px;padding-left:60px;}
 .agree input{margin:5px 14px 0 0;}
 .agree a{color:#3388ff;}
 .fabu-bt{width:200px; height:40px; background:#00b966; color:#fff; line-height:40px; border:none; margin:20px 0 30px 60px;font-size:16px}
@@ -280,7 +280,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .erwei{float:left; margin:0 10px 20px 0;}
 .erwei img{float:left;}
 .er-text{width:80px; height:70px;  font-size:16px; color:#fff; float:right; border-top:5px #fff solid;border-right:5px #fff solid;border-bottom:5px #fff solid;  line-height:25px; padding-top:5px; padding-left:5px}
-
+.ql{padding-left:115px}
 
 
 

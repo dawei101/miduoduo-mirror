@@ -263,9 +263,9 @@ $this->title = '米多多兼职平台';
                                                 <li>65-70kg</li>
                                                 <li>70-75kg</li>
                                             </ul>
-                                            <p class="cuowu need_quantity-error">内容不能为空!</p>
                                         </div>
                                     </div>
+                                    <p class="cuowu need_quantity-error ql">内容不能为空!</p>
                                 </li>
                                 <li>
                                     <div class="pull-left title-left text-center"><em>*</em>薪酬</div>
