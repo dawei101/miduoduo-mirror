@@ -103,3 +103,6 @@ function getObjectURL(file) {
             return url ;
 }
 </script>
+<!--
+<?php print_r($company)?>
+-->
