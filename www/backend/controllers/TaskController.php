@@ -117,7 +117,7 @@ class TaskController extends BBaseController
     {
         Task::updateAll(['status'=> $status], 'id=:id',
             $params=[':id'=>$id]);
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer); 
     }
 
     public function actionDelete($id)
