@@ -70,7 +70,7 @@ $this->title = '米多多兼职平台';
                         <div>编号：<?=$task->gid?></div>
                         <?php if($task->status == 0){?>
                         <div class="zhiwei-zt">
-                           <div class="pull-left shenqing-zt text-center">已申请：<?=$task->got_quantity?>人</div>
+                           <!--<div class="pull-left shenqing-zt text-center">已申请：<?=$task->got_quantity?>人</div>-->
                            <!--<div class="pull-left news text-center">new</div>-->
                         </div>
                         <?php }else{?>
