@@ -70,7 +70,7 @@ class Task extends \common\BaseActiveRecord
     ];
 
     public static $HEIGHT_REQUIREMENT = [
-    	0=>'体重无要求',
+    	0=>'不限',
     	1=>'155cm以上',
     	2=>'165cm以上',
     	3=>'170cm以上',
@@ -102,7 +102,7 @@ class Task extends \common\BaseActiveRecord
     ];
 
     public static $WEIGHT_REQUIREMENT = [
-    	0=>'不限',
+    	0=>'体重无要求',
     	1=>'60kg以下',
     	2=>'60-65kg',
     	3=>'65-70kg',

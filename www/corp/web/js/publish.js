@@ -44,7 +44,11 @@ $('form').on('submit', function(){
         $('html,body').scrollTop(0);
     }
 
-    
+    if (!form.protocol.checked) {
+        alert('请确定同意米多多发布兼职协议');
+        valid = false;
+    }
+
     return valid;
 
 });
