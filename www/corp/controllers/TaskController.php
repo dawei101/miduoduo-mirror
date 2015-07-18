@@ -137,7 +137,7 @@ class TaskController extends FBaseController
             $model->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             $model->status = 30;
             if ($model->validate() && $model->save()) {
-                return $this->redirect('/task/');
+                return $this->redirect('/task/success');
             }
         }
 
@@ -198,7 +198,7 @@ class TaskController extends FBaseController
             }
             $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             if ($task->validate() && $task->save()) {
-                return $this->redirect('/task/');
+                return $this->redirect('/task/success');
             }
         }
         $services = ServiceType::find()->all();
@@ -264,6 +264,11 @@ class TaskController extends FBaseController
             return $this->renderJson(['result' => true]);
         }
         return $this->renderJson(['result' => false, 'error' => $task->errors]);
+    }
+
+    public function actionSuccess()
+    {
+        return $this->render('success');
     }
 
 }
