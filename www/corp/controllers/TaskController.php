@@ -138,9 +138,18 @@ class TaskController extends FBaseController
             $model->status = 30;
             if ($model->validate() && $model->save()) {
                 $task_id = $model->id;
+                TaskAddress::deleteAll(['task_id' => $task_id]);
                 $addressStr = str_replace('，', ',', Yii::$app->request->post('address'));
                 $addressList = explode(',', $addressStr);
-
+                foreach($addressList as $item){
+                    $address = new TaskAddress;
+                    $address->title = $item;
+                    $address->lat = 0;
+                    $address->lng = 0;
+                    $address->task_id = $task_id;
+                    $address->user_id = Yii::$app->user->id;
+                    $address->save();
+                }
                 return $this->redirect('/task/');
             }
         }
@@ -203,6 +212,19 @@ class TaskController extends FBaseController
             $task->status = 30;
             $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             if ($task->validate() && $task->save()) {
+                $task_id = $model->id;
+                TaskAddress::deleteAll(['task_id' => $task_id]);
+                $addressStr = str_replace('，', ',', Yii::$app->request->post('address'));
+                $addressList = explode(',', $addressStr);
+                foreach($addressList as $item){
+                    $address = new TaskAddress;
+                    $address->title = $item;
+                    $address->lat = 0;
+                    $address->lng = 0;
+                    $address->task_id = $task_id;
+                    $address->user_id = Yii::$app->user->id;
+                    $address->save();
+                }
                 return $this->redirect('/task/');
             }
         }
