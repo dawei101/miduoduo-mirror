@@ -9,9 +9,9 @@
       className: 'tagBox',
       tagInputClassName: '',
       tagButtonClassName: '',
-      tagButtonTitle: '添加标签',
+      tagButtonTitle: '添加',
       confirmRemoval: true,
-      confirmRemovalText: '确定删除该标签吗？',
+      confirmRemovalText: '确定删除该地点吗？',
       completeOnSeparator: true,
       completeOnBlur: false,
       readonly: false,
@@ -20,11 +20,11 @@
       dropdownOptionsAttribute: "title",
       removeTagText: "X",
       maxTags:-1,
-      maxTagsErr: function(max_tags) { alert("最多只能添加"+max_tags+"个标签!"); },
+      maxTagsErr: function(max_tags) { alert("最多只能添加"+max_tags+"个地点!"); },
       beforeTagAdd: function(tag_to_add) {},
       afterTagAdd: function(added_tag) {}
     }
-    
+
     if (options) {
       options = jQuery.extend(defaults, options);
     } else {
@@ -35,12 +35,12 @@
 //  Hide Element
     var $elements = this;
     if($elements.length < 1) return;
-    
+
     $elements.each(function(){
       var uuid = Math.round( Math.random()*0x10000 ).toString(16) + Math.round( Math.random()*0x10000 ).toString(16);
-      
+
       var $element = jQuery(this);
-      
+
       $element.hide();
       try {
         var options_from_attribute = jQuery.parseJSON($element.attr(options.dropdownOptionsAttribute));
@@ -48,11 +48,11 @@
       } catch(e) {
         console.log(e);
       }
-      if($element.is(":disabled")) 
+      if($element.is(":disabled"))
         options.readonly = true;
       if( (jQuery.isArray($element)) && $element[0].hasAttribute("readonly") )
         options.readonly = true
-      
+
   //  Create DOM Elements
       if( (options.enableDropdown) && options.dropdownSource() != null ) {
         if(options.dropdownSource().jquery) {
@@ -77,18 +77,18 @@
       }
       var $tag_add_elem = (options.readonly) ? '' : jQuery('<a href="javascript:void(0)" class="'+options.tagButtonClassName+''+options.className+'-add-tag" id="'+options.className+'-add-tag-'+uuid+'">'+options.tagButtonTitle+'</a>');
       var $tag_list_elem = jQuery('<span class="'+options.className+'-list" id="'+options.className+'-list-'+uuid+'"></span>');
-      
+
       var $tagBox = jQuery('<span class="'+options.className+'-container"></span>').append($tag_input_elem).append($tag_add_elem).append($tag_list_elem);
-      
+
       $element.before($tagBox);
-      
+
       $element.addClass("jQTagBox");
       $element.unbind('reloadTagBox');
       $element.bind('reloadTagBox', function(){
         $tagBox.remove();
         $element.tagBox(options);
       });
-      
+
   //  Generate Tags List from Input item
       generate_tags_list( get_current_tags_list() );
       if(!options.readonly) {
@@ -139,7 +139,7 @@
         tags_list = jQuery.map(tags_list, function (item) { return jQuery.trim(item); });
         return tags_list;
       }
-      
+
       function generate_tags_list(tags_list) {
         var tags_list = jQuery.unique( tags_list.sort() ).sort();
         $tag_list_elem.html('');
@@ -156,7 +156,7 @@
         });
         $element.val(tags_list.join(options.separator));
       }
-      
+
       function add_tag(new_tag_items) {
         var tags_list = get_current_tags_list();
         new_tag_items = new_tag_items.split(options.separator);
@@ -169,7 +169,7 @@
         }
         generate_tags_list(tags_list);
       }
-      
+
       function remove_tag(old_tag_items) {
         var tags_list = get_current_tags_list();
         old_tag_items = old_tag_items.split(options.separator);
