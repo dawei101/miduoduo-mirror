@@ -200,6 +200,7 @@ class TaskController extends FBaseController
             if ($weight_requirement) {
                 $task->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
+            $task->status = 30;
             $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             if ($task->validate() && $task->save()) {
                 return $this->redirect('/task/');
