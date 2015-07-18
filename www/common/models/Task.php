@@ -287,6 +287,18 @@ class Task extends \common\BaseActiveRecord
         return $this->hasMany(TaskAddress::className(), ['task_id' => 'id']);
     }
 
+    public function getAddress_label()
+    {
+        $addresses = $task->getAddresses()->all();
+        $result = '';
+        if($addresses){
+            for($i=0,$len=count($addresses);$i<$len;$i++){
+                if($i > 0) $result.',';
+                $result.$addresses[$i]->title;
+            }
+        }
+        return $result;
+    }
 
     public function getDistrict()
     {
