@@ -1,10 +1,6 @@
 
 $(function() {
-  if ($("#address_count").val() == '一个') {
       $(".tagBox-add-tag").hide();
-  }else {
-      $(".tagBox-add-tag").show();
-  }
 });
 
 $('form').on('submit', function(){
@@ -65,22 +61,16 @@ $('#address_count').change(function(){
     var value = $(this).val();
     if (value == '一个') {
         $(".tagBox-add-tag").hide();
+        $(".tagBox-input").attr('placeholder', '请输入工作地址');
         $(".tagBox-input").show();
     }else if (value == '不限') {
         $(".tagBox-add-tag").hide();
         $(".tagBox-input").hide();
     }else{
-        $(".tagBox-add-tag").show();
+        $(".tagBox-add-tag").hide();
+        $(".tagBox-input").attr('placeholder', '请输入工作地址,多个地址用逗号分隔');
         $(".tagBox-input").show();
     }
-});
-
-$('#search-address').keypress(function(e) {
-  var code = (e.keyCode ? e.keyCode : e.which);
-  if(code==13) {
-    console.log('search address clicked');
-    return false;
-  }
 });
 
 $(function(){
@@ -145,11 +135,9 @@ $(function(){
             lis += '<li class="list-group-item"><h5>' + poi.title + '<button class="btn btn-danger pull-right" type="button" onclick="pick_poi(this, ' + i + ')" >添加</button></h5>  '+ poi.address +'</li>';
          }
          sr.html(lis);
+         sr.show();
        }
      }
     };
     var local = new BMap.LocalSearch(map, options);
-    $("#search-address").click(function(){
-        local.search(kwipt.val());
-    });
 });

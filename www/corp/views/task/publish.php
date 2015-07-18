@@ -158,20 +158,7 @@ $this->title = '米多多兼职平台';
                                         <div class="nice-select quyu" name="nice-select">
                                             <input type="text" readonly value="北京" >
                                         </div>
-                                        <div class="nice-select" name="nice-select">
-                                            <input type="text" placeholder="address" id="search-address"/>
-                                            <ul>
-                                                <li>朝阳区</li>
-                                                <li>海淀区</li>
-                                                <li>崇文区</li>
-                                                <li>昌平区</li>
-                                                <li>宣武区</li>
-                                                <li>通州</li>
-                                                <li>平谷区</li>
-                                                <li>怀柔区</li>
-                                            </ul>
-                                        </div>
-                                        <!--<input type="text" id="jquery-tagbox-text" />-->
+                                        <input type="text" name="address" id="jquery-tagbox-text" />
                                         <p class="cuowu">内容不能为空!</p>
                                     </div>
                                 </li>
@@ -328,6 +315,7 @@ $this->title = '米多多兼职平台';
             </div>
         </div>
     </div>
+<div id="map" style="display:none"></div>
 	<script src="/js/miduoduo.js"></script>
 	<script src="/js/data/moment.js"></script>
 	<script src="/js/data/daterangepicker.js"></script>

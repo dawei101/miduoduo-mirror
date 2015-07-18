@@ -26,7 +26,7 @@ class Company extends \common\BaseActiveRecord
         4 => '已冻结',
 
         8 => '身份证验证通过',
-        8&(8<<1) => '营业执照验证通过',
+       // 8&(8<<1) => '营业执照验证通过',
     ];
 
     const STATUS_WAIT_EXAMINE = 0;
@@ -36,8 +36,8 @@ class Company extends \common\BaseActiveRecord
     const STATUS_FREEZED = 4;
 
     const STATUS_GOVID_EXAMINED = 8;
-    const STATUS_LICENSE = 8&(8<<1);
-    const STATUS_EXAMINED = 8&(8<<1);
+ //   const STATUS_LICENSE = 8&(8<<1);
+ //   const STATUS_EXAMINED = 8&(8<<1);
  
 
     /**
