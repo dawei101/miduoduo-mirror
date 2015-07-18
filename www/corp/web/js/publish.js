@@ -40,14 +40,20 @@ $('form').on('submit', function(){
         $('.salary-error').show();
         valid = false;
     }
+    if (!form.phone_contact.checked && !form.sms_contact.checked) {
+        $('.enroll-error').html('请至少选择一种报名方式');
+        $('.enroll-error').show();
+        valid = false;
+    }
+    if (!form.protocol.checked) {
+        $('.protocol-error').html('请确认米多多发布兼职协议');
+        $('.protocol-error').show();
+        valid = false;
+    }
     if(valid === false){
         $('html,body').scrollTop(0);
     }
 
-    if (!form.protocol.checked) {
-        alert('请确定同意米多多发布兼职协议');
-        valid = false;
-    }
 
     return valid;
 
