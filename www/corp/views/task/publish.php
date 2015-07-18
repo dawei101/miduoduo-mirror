@@ -298,7 +298,7 @@ $this->title = '米多多兼职平台';
                                             <input name="contact_phonenum" type="text" placeholder="联系电话" value="<?=$task->contact_phonenum?$task->contact_phonenum:$company->contact_phone?>">
                                         </div>
                                         <div  class="fixde bm-fs"><span><input name="sms_contact" type="checkbox" checked>短信报名</span>
-                                            <input name="sms_phonenum" type="text" placeholder="请填写手机号码" value="<?=$task->sms_phonenum?$task->sms_phonenum:Yii::$app->user->identity?>">
+                                            <input name="sms_phonenum" type="text" placeholder="请填写手机号码" value="<?=$task->sms_phonenum ? $task->sms_phonenum : Yii::$app->user->identity->username?>">
                                         </div>
                                         <p class="cuowu enroll-error">内容不能为空!</p>
                                     </div>

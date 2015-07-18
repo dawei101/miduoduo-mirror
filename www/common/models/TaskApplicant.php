@@ -28,6 +28,11 @@ class TaskApplicant extends \common\BaseActiveRecord
         1 => '已读',
     ];
 
+    const STATUS_WAIT_EXAMINE = 0;
+    const STATUS_APPLIED = 0;
+    const STATUS_APPLY_SUCCEED = 10;
+    const STATUS_APPLY_FAILED = 20;
+
 
     /**
      * @inheritdoc
