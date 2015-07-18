@@ -42,7 +42,7 @@ $this->title = '米多多兼职平台';
       <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
         <div class="right-center">
             <div class="conter-title">企业认证</div>
-        <form>
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
           <ul class="tianxie-box" style="border:none">
               <li>
                 <div class="pull-left title-left text-center">企业名称</div>
@@ -97,7 +97,7 @@ $this->title = '米多多兼职平台';
               </li>
                 <button class="queding-bt">确定</button>
            </ul>
-        </form>
+        <?php ActiveForm::end(); ?>
         </div>
       </div>
     </div>
