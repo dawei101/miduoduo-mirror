@@ -136,6 +136,7 @@ class TaskController extends FBaseController
             }
             $model->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             $model->status = 30;
+
             if ($model->validate() && $model->save()) {
                 $task_id = $model->id;
                 TaskAddress::deleteAll(['task_id' => $task_id]);
@@ -212,7 +213,7 @@ class TaskController extends FBaseController
             $task->status = 30;
             $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             if ($task->validate() && $task->save()) {
-                $task_id = $model->id;
+                $task_id = $task->id;
                 TaskAddress::deleteAll(['task_id' => $task_id]);
                 $addressStr = str_replace('，', ',', Yii::$app->request->post('address'));
                 $addressList = explode(',', $addressStr);
