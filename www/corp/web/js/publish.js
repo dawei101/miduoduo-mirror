@@ -1,7 +1,10 @@
 
 $(function() {
-  // Handler for .ready() called.
-  $(".cuowu").hide();
+  if ($("#address_count").val() == '一个') {
+      $(".tagBox-add-tag").hide();
+  }else {
+      $(".tagBox-add-tag").show();
+  }
 });
 
 $('form').on('submit', function(){

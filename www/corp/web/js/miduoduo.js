@@ -18,6 +18,7 @@ $('[name="nice-select"] li').click(function(e){
 	var val = $(this).text();
 	var dataVal = $(this).attr("data-value");
 	$(this).parents('[name="nice-select"]').find('input').val(val);
+    $(this).parents('[name="nice-select"]').find('input').trigger('change');
 	$('[name="nice-select"] ul').hide();
 	e.stopPropagation();
 	//alert("中文值是："+val);
