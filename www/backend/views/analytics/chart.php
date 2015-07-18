@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php ActiveForm::end(); ?>
     </div>
 </div>
-<div class="container-fluid" id="chart">
+<div class="container-fluid" id="chart" style="min-height:600px;">
 </div>
 
 <?php $this->beginBlock('js') ?>

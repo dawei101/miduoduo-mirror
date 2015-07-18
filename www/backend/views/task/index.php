@@ -2,12 +2,21 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+use common\models\Task;
+use common\models\ServiceType;
+
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\TaskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = '任务订单';
 $this->params['breadcrumbs'][] = $this->title;
+
+$service_type_maps = [];
+
+foreach(ServiceType::findAll(['status'=>0]) as $s){
+    $service_type_maps[$s->id] = $s->name;
+}
 ?>
 <div class="task-index">
 
@@ -29,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'title',
                 'value' => function($model){
                     return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->gid ."'>" . $model->title . "</a>";
-                } 
+                }
             ] ,
             [
                 'label' => '是否为优单',
@@ -39,11 +48,60 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->getRecommend_label();
                 } 
             ],
-            'clearance_period_label',
+            [
+		'attribute' => 'clearance_period',
+                'value' => function ($model){
+                    return $model->clearance_period_label;
+                },
+                'filter' => Task::$CLEARANCE_PERIODS,
+            ],
+            [
+                'attribute' => 'service_type_id',
+                'value' => function ($model){
+                    return $model->service_type->name;
+                },
+                'filter' => $service_type_maps,
+            ],
             'salary',
-            'salary_unit_label',
-            //'status_label',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'salary_unit',
+                'value' => function ($model){
+                    return $model->salary_unit_label;
+                },
+                'filter' => Task::$SALARY_UNITS,
+            ],
+            [
+                'attribute' => 'status',
+                'value' => function ($model){
+                    return $model->status_label;
+                },
+                'filter' => Task::$STATUSES,
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete} | {adopt} {reject}',
+                'buttons' => [
+                    'adopt' => function ($url, $model, $key) {
+                        $options = [
+                            'title' => '审核通过',
+                            'aria-label' => '审核通过',
+                            'data-pjax' => '0',
+                            'data-method' => 'post',
+                        ];
+                        return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url, $options);
+                    },
+                    'reject' => function ($url, $model, $key) {
+                        $options = [
+                            'title' => '审核不通过',
+                            'aria-label' => '审核不通过',
+                            'data-pjax' => '0',
+                            'data-method' => 'post',
+                        ];
+                        return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url, $options);
+                    }
+                ],
+            
+            ],
         ],
     ]); ?>
 

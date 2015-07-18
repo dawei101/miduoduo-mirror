@@ -19,19 +19,6 @@ class TaskPoolWhiteListController extends BBaseController
         return Yii::getAlias('@backend/views/spider/task-pool-white-list');
     }
 
-
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all TaskPoolWhiteList models.
      * @return mixed

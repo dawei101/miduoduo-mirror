@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 use backend\models\TaskPool;
 use yii\db\Query;
@@ -31,12 +32,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'id',
-            'company_name',
+            [
+                'attribute' => 'company_name',
+                'value' => function($model){
+                    return '<a href='. 
+                            Url::current(["TaskPoolSearch[company_name]"=>$model->company_name]) 
+                       .'>'.$model->company_name.'</a>';
+                },
+                'format' => 'raw',
+            ],
+ 
             'title',
             'contact',
             'release_date',
             'to_date',
-            'phonenum',
+            [
+                'attribute' => 'phonenum',
+                'value' => function($model){
+                    return '<a href='. 
+                            Url::current(["TaskPoolSearch[phonenum]"=>$model->phonenum]) 
+                       .'>'.$model->phonenum.'</a>';
+                },
+                'format' => 'raw',
+ 
+            ],
             [
                 'attribute' => 'city',
                 'filter' => $city_filter,
@@ -51,6 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' =>[
                     'xiaolianbang'=>'校联邦',
+                    'internal'=>'内部',
                 ],
             ] ,
 
@@ -73,6 +93,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '操作',
                 'format'=>'raw',
                 'value'=> function($model){
+                    if ($model->status==$model::STATUS_ZOMBIE){
+                        return '';
+                    }
                     return '
                       <div style="width: 100px;">
                         <a href="/task-pool/view?id=' . $model->id . '" title="查看" target="_blank">

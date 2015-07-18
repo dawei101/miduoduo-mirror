@@ -31,6 +31,7 @@ class TaskPool extends \common\BaseActiveRecord
     const STATUS_UNSETTLED=0;
     const STATUS_EXPORTED=10;
     const STATUS_DROPPED=11;
+    const STATUS_ZOMBIE=20;
 
     public function getStatus_options()
     {
@@ -38,6 +39,7 @@ class TaskPool extends \common\BaseActiveRecord
             0=> '未处理',
             10=> '已导出',
             11=>'已放弃',
+            20=>'僵尸'
         ];
     }
 
@@ -114,6 +116,9 @@ class TaskPool extends \common\BaseActiveRecord
     {
         if ($this->origin=='xiaolianbang'){
             return 'http://m.xiaolianbang.com/pt/' . $this->origin_id . '/detail';
+        }
+        if ($this->origin=='internal'){
+            return "http://m.miduoduo.cn/task/view?gid=" . $this->origin_id;
         }
     }
 

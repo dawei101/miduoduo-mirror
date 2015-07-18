@@ -53,9 +53,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '申请日期',
                 'attribute' => 'created_time',
-                'format' => 'date',
                 'value' => function($model){
-                    return $model->created_time;
+                    return Yii::$app->formatter->asDate($model->created_time);
                 },
                 'filter' => DatePicker::widget([
                     'name' => 'TaskApplicantSearch[created_time]',

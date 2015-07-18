@@ -45,6 +45,9 @@ return [
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
             'enablePrettyUrl' => true,
+            'rules' => [
+                'download-app' => 'site/download-app',
+            ],
         ],
     ],
     'params' => $params,

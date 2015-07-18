@@ -5,27 +5,15 @@ namespace backend\controllers;
 use Yii;
 use common\models\ConfigRecommend;
 use common\models\ConfigRecommendSearch;
-use yii\web\Controller;
+use backend\BBaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * ConfigRecommendController implements the CRUD actions for ConfigRecommend model.
  */
-class ConfigRecommendController extends Controller
+class ConfigRecommendController extends BBaseController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all ConfigRecommend models.
      * @return mixed

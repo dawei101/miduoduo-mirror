@@ -14,18 +14,6 @@ use yii\filters\VerbFilter;
  */
 class ContactUsController extends BBaseController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all ContactUs models.
      * @return mixed

@@ -15,18 +15,6 @@ use yii\filters\VerbFilter;
  */
 class ResumeController extends BBaseController
 {
-
-    public function behaviors()
-    {
-        $bhvs = parent::behaviors();
-        $bhvs['access']['rules'][] = [
-            'actions' => ['freetimes'],
-            'allow' => true,
-            'roles' => ['admin' , 'hunter'],
-        ];
-        return $bhvs;
-    }
-
     /**
      * Lists all Resume models.
      * @return mixed
