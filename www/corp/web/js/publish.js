@@ -84,15 +84,15 @@ $('#address_count').change(function(){
     var value = $(this).val();
     if (value == '一个') {
         $(".tagBox-add-tag").hide();
-        $(".tagBox-input").attr('placeholder', '请输入工作地址');
+        $("#jquery-tagbox-text1-input").attr('placeholder', '请输入工作地址');
         $(".tagBox-input").show();
     }else if (value == '不限') {
         $(".tagBox-add-tag").hide();
-        $(".tagBox-input").hide();
+        $("#jquery-tagbox-text1").hide();
     }else{
         $(".tagBox-add-tag").hide();
-        $(".tagBox-input").attr('placeholder', '请输入工作地址,多个地址用逗号分隔');
-        $(".tagBox-input").show();
+        $("#jquery-tagbox-text1").attr('placeholder', '请输入工作地址,多个地址用逗号分隔');
+        $("#jquery-tagbox-text1").show();
     }
 });
 

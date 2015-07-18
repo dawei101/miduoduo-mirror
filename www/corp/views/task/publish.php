@@ -158,15 +158,8 @@ $this->title = '米多多兼职平台';
                                         <div class="nice-select quyu" name="nice-select">
                                             <input type="text" readonly value="北京" >
                                         </div>
-                                        <input type="text" name="address" id="jquery-tagbox-text1" 
-                                        value="<?php
-                                            if($address){
-                                                for($i=0,$len=count($address);$i<$len;$i++){
-                                                    if($i > 0) echo ',';
-                                                    echo $address[$i]->title;
-                                                }
-                                            }
-                                        ?>" />
+                                        <input type="text" name="address" id="jquery-tagbox-text1"
+                                        value="<?=$task?$task->getAddress_label():''?>" />
                                         <p class="cuowu address_error">内容不能为空!</p>
                                     </div>
                                 </li>
@@ -190,7 +183,7 @@ $this->title = '米多多兼职平台';
                                     <div class="pull-left title-left text-center"><em>*</em>人员要求</div>
                                     <div class="pull-left right-box input-z">
                                         <div class="nice-select pull-left ma-right">
-                                            <input name="need_quantity" type="text" class="pull-left" placeholder="人数" value="<?=$task->need_quantity?>">
+                                            <input name="need_quantity" type="text" class="pull-left" placeholder="人数" value="<?=$task?$task->need_quantity:''?>">
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
                                             <input name="gender_requirement" readonly type="text" placeholder="性别" value="<?=$task->gender_requirement!=false?TASK::$GENDER_REQUIREMENT[$task->gender_requirement]:'男女不限'?>">
