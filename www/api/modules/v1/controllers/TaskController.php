@@ -21,4 +21,14 @@ class TaskController extends BaseActiveController
         $actions = parent::actions();
         return ['index'=> $actions['index'], 'view'=> $actions['view']];
     }
+
+    public function buildBaseQuery()
+    {
+        $model = $this->modelClass;
+        $query = parent::buildBaseQuery();
+        $query->andWhere(['status'=>$model::STATUS_OK]);
+        return $query;
+    }
+
+
 }
