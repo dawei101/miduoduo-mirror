@@ -63,10 +63,8 @@ class TaskController extends \m\MBaseController
 
         $user_id    = Yii::$app->user->id;
 
-        // 保存地理位置,下次直接用
-        if($user_id){
-            TaskAddress::cacheUserLocation($user_id,$lat,$lng);
-        }
+        // 记录用户位置数据，保存地理位置到session,下次直接用
+        TaskAddress::cacheUserLocation($user_id,$lat,$lng);
 
         $query = TaskAddress::find();
         $query = TaskAddress::buildNearbyQuery($query, $lat, $lng, $distance);
@@ -150,20 +148,19 @@ class TaskController extends \m\MBaseController
 
         $city = District::findOne($city_id);
         
-	// 查询当前用户的已有最新位置信
-    $user_id    = Yii::$app->user->id;
-	$location   = UserLocation::find()->where(['user_id'=>$user_id])
-        ->asArray()->addOrderBy('`id` desc')->one();
+        // 查询当前用户的已有最新位置信
+        $user_id    = Yii::$app->user->id;
+        $location   = Yii::$app->session->get('location');
 
-    return $this->render('index', 
-            ['tasks'=>$tasks,
-             'city'=>$city,
-             'pages'=> $pages,
-             'current_district' => 
-                empty($district)?$city:District::findOne($district),
-             'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
-             'location' => $location,    
-	]);
+        return $this->render('index', 
+                ['tasks'=>$tasks,
+                 'city'=>$city,
+                 'pages'=> $pages,
+                 'current_district' => 
+                    empty($district)?$city:District::findOne($district),
+                 'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
+                 'location' => $location,    
+        ]);
     }
 
     public function actionView()

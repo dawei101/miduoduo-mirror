@@ -124,6 +124,9 @@ class TaskAddress extends \common\BaseActiveRecord
     }
 
     public static function cacheUserLocation($user_id,$lat,$lng){
+        if(!$user_id){
+            $user_id = 0;
+        }
         $location   = UserLocation::find()->where(['user_id'=>$user_id,'latitude'=>$lat])->one();
         $location_m = new UserLocation();
         $datetime   = date("Y-m-d H:i:s",time());
@@ -140,5 +143,8 @@ class TaskAddress extends \common\BaseActiveRecord
             $location_m->use_nums       = 1;
             $location_m->save();
         }
+        // 将数据保存到session，稍后的点击直接用
+        $location   = ['id'=>1,'latitude'=>$lat,'longitude'=>$lng];
+        Yii::$app->session->set('location',$location);
     }
 }
