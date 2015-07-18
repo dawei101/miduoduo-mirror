@@ -11,7 +11,7 @@ ul li{list-style:none;}
 .nav ul li a{ color:#d2d5d8;}
 .nav ul li a:hover{ color:#f4d039;}
 
-.qiuzhi-banner{width:100%; height:567px; background:url(../img/top-bg.jpg) center top no-repeat; background-size: 100%;}
+.qiuzhi-banner { background: rgba(0, 0, 0, 0) url("../img/top-bg.jpg") no-repeat scroll center top / 100% auto; height: 547px; width: 100%; }
 .cent{width:1080px; height:567px;margin:0 auto; overflow:hidden;}
 .pic-top img{margin:80px auto 38px; display:block;}
 .erwei-box{width:690px; height:140px;;background:rgba(255, 255, 255, 0.6)!important; filter:Alpha(opacity=60); background:#fff;  padding:20px 30px; margin:0 auto;}

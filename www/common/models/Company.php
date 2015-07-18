@@ -18,6 +18,28 @@ use Yii;
  */
 class Company extends \common\BaseActiveRecord
 {
+
+    static $STATUSES = [
+        0 => '未验证',
+        1 => '验证失败',
+        2 => '验证中',
+        4 => '已冻结',
+
+        8 => '身份证验证通过',
+        8&(8<<1) => '营业执照验证通过',
+    ];
+
+    const STATUS_WAIT_EXAMINE = 0;
+    const STATUS_EXAMINE_FAILED = 1;
+    const STATUS_EXAMINEDING = 2;
+
+    const STATUS_FREEZED = 4;
+
+    const STATUS_GOVID_EXAMINED = 8;
+    const STATUS_LICENSE = 8&(8<<1);
+    const STATUS_EXAMINED = 8&(8<<1);
+ 
+
     /**
      * @inheritdoc
      */
