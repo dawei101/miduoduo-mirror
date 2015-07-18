@@ -71,7 +71,7 @@ class Task extends \common\BaseActiveRecord
     ];
 
     public static $HEIGHT_REQUIREMENT = [
-    	0=>'不限',
+    	0=>'身高无要求',
     	1=>'155cm以上',
     	2=>'165cm以上',
     	3=>'170cm以上',
@@ -79,23 +79,23 @@ class Task extends \common\BaseActiveRecord
     ];
 
     public static $FACE_REQUIREMENT = [
-    	0=>'一般',
-    	1=>'好',
-    	2=>'非常好',
+    	0=>'形象无要求',
+    	1=>'形象好',
+    	2=>'形象非常好',
     ];
 
     public static $TALK_REQUIREMENT = [
-    	0=>'一般',
-    	1=>'强',
+    	0=>'沟通能力无要求',
+    	1=>'沟通能力强',
     ];
 
     public static $HEALTH_CERTIFICATED = [
-    	0=>'无要求',
+    	0=>'健康证无要求',
     	1=>'有健康证',
     ];
 
     public static $DEGREE_REQUIREMENT = [
-    	0=>'不限',
+    	0=>'学历无要求',
     	1=>'高中',
     	2=>'大专',
     	3=>'本科',

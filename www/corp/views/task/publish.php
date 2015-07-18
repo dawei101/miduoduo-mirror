@@ -194,10 +194,10 @@ $this->title = '米多多兼职平台';
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
-                                            <input name="height_requirement" type="text" readonly placeholder="身高" value="<?=$task->height_requirement!=false?TASK::$HEIGHT_REQUIREMENT[$task->height_requirement]:'不限'?>">
+                                            <input name="height_requirement" type="text" readonly placeholder="身高" value="<?=$task->height_requirement!=false?TASK::$HEIGHT_REQUIREMENT[$task->height_requirement]:'身高无要求'?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
-                                                <li>不限</li>
+                                                <li>身高无要求</li>
                                                 <li>155cm以上</li>
                                                 <li>165cm以上</li>
                                                 <li>170cm以上</li>
@@ -208,39 +208,39 @@ $this->title = '米多多兼职平台';
                                     </div>
                                     <div class="add-ons">
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="face_requirement" type="text" readonly placeholder="形象" value="<?=$task->face_requirement!=false?TASK::$FACE_REQUIREMENT[$task->face_requirement]:'一般'?>">
+                                            <input name="face_requirement" type="text" readonly placeholder="形象" value="<?=$task->face_requirement!=false?TASK::$FACE_REQUIREMENT[$task->face_requirement]:'形象无要求'?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
-                                                <li>好</li>
-                                                <li>一般</li>
-                                                <li>非常好</li>
+                                                <li>形象无要求</li>
+                                                <li>形象好</li>
+                                                <li>形象非常好</li>
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="talk_requirement" type="text" readonly placeholder="沟通能力" value="<?=$task->talk_requirement!=false?TASK::$TALK_REQUIREMENT[$task->talk_requirement]:'一般'?>">
+                                            <input name="talk_requirement" type="text" readonly placeholder="沟通能力" value="<?=$task->talk_requirement!=false?TASK::$TALK_REQUIREMENT[$task->talk_requirement]:'沟通能力无要求'?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
-                                                <li>强</li>
-                                                <li>一般</li>
+                                                <li>沟通能力无要求</li>
+                                                <li>沟通能力强</li>
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="health_certificated" type="text" readonly placeholder="健康证" value="<?=$task->health_certificated!=false?TASK::$HEALTH_CERTIFICATED[$task->health_certificated]:'无要求'?>">
+                                            <input name="health_certificated" type="text" readonly placeholder="健康证" value="<?=$task->health_certificated!=false?TASK::$HEALTH_CERTIFICATED[$task->health_certificated]:'健康证无要求'?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>有健康证</li>
-                                                <li>无要求</li>
+                                                <li>健康证无要求</li>
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
-                                            <input name="degree_requirement" type="text" readonly placeholder="学历" value="<?=$task->degree_requirement!=false?TASK::$DEGREE_REQUIREMENT[$task->degree_requirement]:'不限'?>">
+                                            <input name="degree_requirement" type="text" readonly placeholder="学历" value="<?=$task->degree_requirement!=false?TASK::$DEGREE_REQUIREMENT[$task->degree_requirement]:'学历无要求'?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>本科以上</li>
                                                 <li>本科</li>
                                                 <li>大专</li>
                                                 <li>高中</li>
-                                                <li>不限</li>
+                                                <li>学历无要求</li>
                                             </ul>
                                         </div>
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
