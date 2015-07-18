@@ -31,7 +31,7 @@ class TaskController extends FBaseController
                  'class' => AccessControl::className(),
                  'rules' => [
                      [
-                         'actions' => ['index','publish', 'edit', 'refresh', 'down', 'delete'],
+                         'actions' => ['index','publish', 'edit', 'refresh', 'down', 'delete', 'success'],
                          'allow' => true,
                          'roles' => ['@'],
                      ],
