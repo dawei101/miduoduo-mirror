@@ -262,7 +262,7 @@ $this->title = '米多多兼职平台';
                                     <div class="pull-left title-left text-center"><em>*</em>薪酬</div>
                                     <div class="pull-left right-box input-z">
                                         <div class="nice-select pull-left ma-right">
-                                            <input name="salary" type="text" class="pull-left" placeholder="数量，如100" value="<?=$task?sprintf("%.1f",$task->salary):''?>">
+                                            <input name="salary" type="text" class="pull-left" placeholder="数量，如100" value="<?=$task->salary?sprintf("%.1f",$task->salary):''?>">
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
                                             <input name="salary_unit" type="text" readonly placeholder="金额单位" value="<?=strlen($task->salary_unit)>0?'元/'.TASK::$SALARY_UNITS[$task->salary_unit]:''?>">
