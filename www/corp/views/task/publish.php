@@ -205,7 +205,7 @@ $this->title = '米多多兼职平台';
                                                 <li>175cm以上</li>
                                             </ul>
                                         </div>
-                                        <span class="add-xs">+添加</span>
+                                        <span class="add-xs">+其他要求</span>
                                     </div>
                                     <div class="add-ons">
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
@@ -265,7 +265,7 @@ $this->title = '米多多兼职平台';
                                             <input name="salary" type="text" class="pull-left" placeholder="数量，如100" value="<?=$task->salary?sprintf("%.1f",$task->salary):''?>">
                                         </div>
                                         <div class="nice-select pull-left ma-right" name="nice-select">
-                                            <input name="salary_unit" type="text" readonly placeholder="金额单位" value="<?=strlen($task->salary_unit)>0?'元/'.TASK::$SALARY_UNITS[$task->salary_unit]:''?>">
+                                            <input name="salary_unit" type="text" readonly placeholder="薪酬单位" value="<?=strlen($task->salary_unit)>0?'元/'.TASK::$SALARY_UNITS[$task->salary_unit]:''?>">
                                             <i class="iconfont">&#xe60d;</i>
                                             <ul>
                                                 <li>元/小时</li>
@@ -298,7 +298,7 @@ $this->title = '米多多兼职平台';
                                             <input name="contact_phonenum" type="text" placeholder="联系电话" value="<?=$task->contact_phonenum?$task->contact_phonenum:$company->contact_phone?>">
                                         </div>
                                         <div  class="fixde bm-fs"><span><input name="sms_contact" type="checkbox" checked>短信报名</span>
-                                            <input name="sms_phonenum" type="text" placeholder="请填写手机号码">
+                                            <input name="sms_phonenum" type="text" placeholder="请填写手机号码" value="<?=$task->sms_phonenum?$task->sms_phonenum:Yii::$app->user->identity?>">
                                         </div>
                                         <p class="cuowu enroll-error">内容不能为空!</p>
                                     </div>
