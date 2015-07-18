@@ -21,6 +21,11 @@ $('form').on('submit', function(){
         $('.service_type_id-error').show();
         valid = false;
     }
+    if (form.address.value.length == 0) {
+        $('.address-error').html('请输入工作地点');
+        $('.address-error').show();
+        valid = false;
+    }
     if (form.need_quantity.value.length == 0) {
         $('.need_quantity-error').html('请输入人数');
         $('.need_quantity-error').show();
@@ -43,6 +48,24 @@ $('form').on('submit', function(){
         $('.enroll-error').html('请至少选择一种报名方式');
         $('.enroll-error').show();
         valid = false;
+    }
+    if (form.phone_contact.checked) {
+        if (form.contact.value.length == 0) {
+            $('.enroll-error').html('请输入联系人');
+            $('.enroll-error').show();
+            valid = false;
+        }else if(form.contact_phone.value.length == 0){
+            $('.enroll-error').html('请输入联系电话');
+            $('.enroll-error').show();
+            valid = false;
+        }
+    }
+    if (form.sms_contact.checked) {
+        if (form.sms_contact.value.length == 0) {
+            $('.enroll-error').html('请输入报名短信');
+            $('.enroll-error').show();
+            valid = false;
+        }
     }
     if (!form.protocol.checked) {
         $('.protocol-error').html('请确认米多多发布兼职协议');

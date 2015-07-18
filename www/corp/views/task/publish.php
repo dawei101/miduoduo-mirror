@@ -159,7 +159,7 @@ $this->title = '米多多兼职平台';
                                             <input type="text" readonly value="北京" >
                                         </div>
                                         <input type="text" name="address" id="jquery-tagbox-text" />
-                                        <p class="cuowu">内容不能为空!</p>
+                                        <p class="cuowu address_error">内容不能为空!</p>
                                     </div>
                                 </li>
                                 <li>
@@ -297,9 +297,9 @@ $this->title = '米多多兼职平台';
                                             <input name="contact_phonenum" type="text" placeholder="联系电话" value="<?=$task->contact_phonenum?$task->contact_phonenum:$company->contact_phone?>">
                                         </div>
                                         <div  class="fixde bm-fs"><span><input name="sms_contact" type="checkbox" checked>短信报名</span>
-                                            <input name="" type="text" placeholder="请填写手机号码">
-                                            <input type="text" placeholder="姓名+电话+性别+应聘岗位+米多多"></div>
-                                            <p class="cuowu enroll-error">内容不能为空!</p>
+                                            <input name="sms_phonenum" type="text" placeholder="请填写手机号码">
+                                        </div>
+                                        <p class="cuowu enroll-error">内容不能为空!</p>
                                     </div>
                                 </li>
                             </ul>
