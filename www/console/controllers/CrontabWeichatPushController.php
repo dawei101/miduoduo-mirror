@@ -11,6 +11,7 @@ use common\pusher\WechatPusher;
 use common\models\WeichatPushSetPushset;
 use common\models\WeichatPushSetTemplatePushList;
 use common\models\WeichatUserInfo;
+use common\models\User;
 
 class CrontabWeichatPushController extends Controller
 {
@@ -29,10 +30,11 @@ class CrontabWeichatPushController extends Controller
      *
      * @author suixb
      * @param int $pushid 使用的推送设置
+     * @param int $preview 是否是预览
      * @return boolean 执行完成情况
      *
      */
-    public function actionNearbyTaks($pushtime=1){
+    public function actionNearbyTaks($pushtime=1,$preview=0){
         // 根据pushtime 查询这次需要推送的消息
         $pushid_arr     = WeichatPushSetPushset::find()->where(['push_time'=>$pushtime,'status'=>1])->asArray()->one();
         $pushid         = $pushid_arr['id'];
@@ -54,9 +56,24 @@ class CrontabWeichatPushController extends Controller
 
             $gotoUrl        = Yii::$app->params['baseurl.m'].'/task/nearby?id='.$pushtemp_arr['id'];
 
-            // 得到待推送的用户列表
-            // 这里只给 is_receive_nearby_msg=1 的用户发送推送
-            $userlist       = WeichatUserInfo::find()->where(['is_receive_nearby_msg'=>1])->asArray()->all();
+            
+
+            // 预览人员
+            if( $preview ){
+                $preview_user   = Yii::$app->params['weichat']['preview_user'];
+                $users          = User::find()->where('username IN('.$preview_user.')')
+                    ->joinWith('weichat')
+                    ->asArray()->all();
+                $userlist       = array();
+                foreach( $users as $k => $v ){
+                    $userlist[] = $v['weichat'];
+                }
+                //var_dump($userlist);exit;
+            }else{
+                // 得到待推送的用户列表
+                // 这里只给 is_receive_nearby_msg=1 的用户发送推送
+                $userlist       = WeichatUserInfo::find()->where(['is_receive_nearby_msg'=>1])->asArray()->all();
+            }
 
             // 本次推送的分组标识
             $pushGroup      = uniqid();
