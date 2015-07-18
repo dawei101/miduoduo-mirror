@@ -330,5 +330,5 @@ $this->registerJsFile('/js/publish.js');
 ?>
 
     <!--
-    <?php print_r($task);?>
+    <?php print_r($addresses);?>
 -->

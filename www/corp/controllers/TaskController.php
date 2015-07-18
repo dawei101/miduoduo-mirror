@@ -156,7 +156,7 @@ class TaskController extends FBaseController
 
 		$services = ServiceType::find()->all();
         return $this -> render('publish',
-        ['services'=>$services, 'task'=>$model, 'company'=>$company]);
+        ['services'=>$services, 'task'=>$model, 'company'=>$company, 'address'=>false]);
     }
 
     public function actionEdit($gid)
@@ -228,11 +228,12 @@ class TaskController extends FBaseController
                 return $this->redirect('/task/');
             }
         }
+        $addresses = $task->getAddresses()->all();
         $services = ServiceType::find()->all();
         $task->from_time = substr($task->from_time, 0, -3);
         $task->to_time = substr($task->to_time, 0, -3);
         return $this->render('publish',
-        ['task' => $task, 'services'=>$services, 'company'=>$company]);
+        ['task' => $task, 'services'=>$services, 'company'=>$company, 'address'=>$addresses]);
     }
 
     public function actionRefresh($gid)
