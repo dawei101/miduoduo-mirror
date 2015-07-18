@@ -56,7 +56,7 @@ $('form').on('submit', function(){
     if(valid === false){
         $('html,body').scrollTop(0);
     }
-    
+
     return valid;
 
 });
@@ -81,4 +81,75 @@ $('#search-address').keypress(function(e) {
     console.log('search address clicked');
     return false;
   }
+});
+
+$(function(){
+    var pois={};
+    function remove_address(btn, id){
+        $.ajax({
+            url: '/task-address/delete?id=' + id,
+            method: 'post',
+        }).done(function(dstr){
+            var data = $.parseJSON(dstr);
+            if (data.success){
+                $(btn).closest('li').remove();
+            }
+        })
+    }
+    window.remove_address = remove_address;
+    function pick_poi(btn, i){
+        var poi = pois[i];
+        var address = {
+            'TaskAddress[lat]': poi.point.lat,
+            'TaskAddress[lng]': poi.point.lng,
+            'TaskAddress[address]': poi.address,
+            'TaskAddress[city]': poi.city,
+            'TaskAddress[province]': poi.province,
+            'TaskAddress[title]': poi.title
+        };
+        $.ajax({
+            url: '/task-address/create?task_id=' + '<?=$task->id?>',
+            method: 'post',
+            data: address,
+        }).done(function(dstr){
+            var data = $.parseJSON(dstr);
+            if (data.success){
+                $(btn).closest('li').remove();
+                var nli = '<li class="list-group-item"> '
+                + '<h5>'
+                +data.result.city + ',' + data.result.title + ',' + data.result.address
+                +'<a href="#" onclick="remove_address(this, ' + data.result.id + ');" class="pull-right">'
+                +'    <span class="glyphicon glyphicon-remove"></span>'
+                +'</a>'
+                +'</h5>'
+                +'</li>';
+                $("#address-list").append(nli);
+            }
+        })
+    }
+    window.pick_poi = pick_poi;
+    var map = new BMap.Map("map");
+    var sr = $("#search-result");
+    var kwipt = $("#keyword");
+    map.centerAndZoom(new BMap.Point(116.422820,39.996632), 11);
+    var options = {
+     onSearchComplete: function(results){
+       if (local.getStatus() == BMAP_STATUS_SUCCESS){
+         // 判断状态是否正确
+         var s = [];
+         pois = {};
+         var lis = '';
+         for (var i = 0; i < results.getCurrentNumPois(); i ++){
+            var poi = results.getPoi(i);
+            pois[i] = poi;
+            lis += '<li class="list-group-item"><h5>' + poi.title + '<button class="btn btn-danger pull-right" type="button" onclick="pick_poi(this, ' + i + ')" >添加</button></h5>  '+ poi.address +'</li>';
+         }
+         sr.html(lis);
+       }
+     }
+    };
+    var local = new BMap.LocalSearch(map, options);
+    $("#search-address").click(function(){
+        local.search(kwipt.val());
+    });
 });
