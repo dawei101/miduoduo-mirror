@@ -67,7 +67,7 @@ $this->title = '米多多兼职平台';
                 <div class="pull-left right-box">
                   <div class="form-group">
                       <label class="shangchuan" for="file0">上传图片</label>
-                      <input name="corp_idcard_pic" type="file" id="file0" style="display:none;"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
+                      <input name="person_idcard_pic" type="file" id="file0" style="display:none;"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
                    </div>
                   <div class="tishi">
                         <p>1、在拍摄证件时，确保图片清晰（证件底纹、字体、人物照片、头像清晰），无模糊，无白光点等。</p>
@@ -81,11 +81,11 @@ $this->title = '米多多兼职平台';
                 </div>
               </li>
               <li>
-                <div class="pull-left title-left text-center">上传身份证照片</div>
+                <div class="pull-left title-left text-center">上传营业执照照片</div>
                 <div class="pull-left right-box">
                   <div class="form-group">
                       <label class="shangchuan" for="file1">上传图片</label>
-                      <input type="file" id="file1" style="display:none;"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
+                      <input type="file" id="file1" style="display:none;" name="corp_idcard_pic"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
                    </div>
                   <div class="tishi">
                         <p>1、加盖公章的企业营业执照副本扫描件</p>
