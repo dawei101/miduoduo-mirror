@@ -50,9 +50,11 @@ class UserController extends BaseActiveController
             'success'=> true,
             'message'=> "修改成功",
             'result' => [
-                "username"=> $user->username,
-                "password"=>$password,
-                "access_token"=> $user->access_token,
+                'id'=> $user->id,
+                'username'=> $user->username,
+                'password'=> $password,
+                'access_token'=> $user->access_token,
+                'resume' => $user->resume?$user->resume->toArray():null,
             ],
         ]);
     }

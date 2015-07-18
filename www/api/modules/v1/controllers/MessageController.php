@@ -33,4 +33,17 @@ class MessageController extends BaseActiveController
         $m->save();
         return $m;
     }
+
+
+    public function actionUpdateAll()
+    {
+        $model = $this->modelClass;
+        $model::updateAll(
+            ['read_flag'=>true],
+            [$this->user_identifier_column=>\Yii::$app->user->id, 'read_flag'=>false, ]);
+        return $this->renderJson([
+            "success" => true,
+            "message" => '设置成功',
+        ]);
+    }
 }

@@ -11,7 +11,8 @@ use common\Utils;
 use common\models\TaskApplicant;
 use common\models\Task;
 use common\models\Resume;
-
+use common\models\WeichatUserLog;
+use common\WeichatBase;
 
 class TaskApplicantController extends \m\MBaseController
 {
@@ -73,13 +74,24 @@ class TaskApplicantController extends \m\MBaseController
             }
             $tc->task_id = $task_id;
             $tc->user_id = $user_id;
+            if (empty($resume->phonenum)){
+                $resume->phonenum = Yii::$app->user->identity->username;
+                $resume->save();
+            }
 
             if (Utils::isPhonenum($task->contact_phonenum)){
-                Yii::$app->sms_pusher->push(
-                    $resume->phonenum,
-                    ['task'=>$task, 'resume'=>$resume],
-                    'to-applicant-task-applied-done'
-                );
+                $weichat_base   = new WeichatBase();
+                $weichat_id     = $weichat_base::getLoggedUserWeichatID();
+                if( $weichat_id ){
+                    Yii::$app->wechat_pusher->toApplicantTaskAppliedDone($task,$weichat_id);
+                }else{
+                    Yii::$app->sms_pusher->push(
+                        $resume->phonenum,
+                        ['task'=>$task, 'resume'=>$resume],
+                        'to-applicant-task-applied-done'
+                    );
+                }
+
                 Yii::$app->sms_pusher->push(
                     $task->contact_phonenum,
                     ['task'=>$task, 'resume'=>$resume],
@@ -88,11 +100,17 @@ class TaskApplicantController extends \m\MBaseController
                 $tc->applicant_alerted = true;
                 $tc->company_alerted = true;
             } else {
-               Yii::$app->sms_pusher->push(
-                    $resume->phonenum,
-                    ['task'=>$task, 'resume'=>$resume],
-                    'to-applicant-task-need-touch-actively'
-                );
+                $weichat_base   = new WeichatBase();
+                $weichat_id     = $weichat_base::getLoggedUserWeichatID();
+                if( $weichat_id ){
+                    Yii::$app->wechat_pusher->toApplicantTaskAppliedDone($task,$weichat_id);
+                }else{
+                    Yii::$app->sms_pusher->push(
+                        $resume->phonenum,
+                        ['task'=>$task, 'resume'=>$resume],
+                        'to-applicant-task-need-touch-actively'
+                    );
+                }
                 $tc->company_alerted = false;
                 $tc->applicant_alerted = true;
             }
@@ -118,6 +136,7 @@ class TaskApplicantController extends \m\MBaseController
             'message' => '取消成功',
         ]);
     }
+
 }
 
 

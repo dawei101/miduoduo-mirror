@@ -22,12 +22,6 @@ class WeichatErweimaController extends BBaseController
         return Yii::getAlias('@backend/views/wechat/weichat-erweima');
     }
 
-    public function behaviors()
-    {
-        $bhvs = parent::behaviors();
-        return $bhvs;
-    }
-
     /**
      * Lists all WeichatErweima models.
      * @return mixed

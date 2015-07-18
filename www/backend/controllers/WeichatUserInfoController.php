@@ -20,12 +20,6 @@ class WeichatUserInfoController extends BBaseController
         return Yii::getAlias('@backend/views/wechat/weichat-user-info');
     }
 
-    public function behaviors()
-    {
-        $bhvs = parent::behaviors();
-        return $bhvs;
-    }
-
     /**
      * Lists all WeichatUserInfo models.
      * @return mixed

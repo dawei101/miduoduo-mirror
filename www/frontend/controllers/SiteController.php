@@ -51,6 +51,11 @@ class SiteController extends FBaseController
         ];
     }
 
+    public function actionDownloadApp()
+    {
+        return $this->redirect(Yii::$app->params['downloadApp.android']);
+    }
+
     public function actionIndex()
     {
         // echo 'ok';die();//可以到这里

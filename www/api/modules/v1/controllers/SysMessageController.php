@@ -2,8 +2,8 @@
  
 namespace api\modules\v1\controllers;
  
+use Yii;
 use api\modules\BaseActiveController;
-
 use common\models\UserReadedSysMessage;
  
 /**
@@ -34,11 +34,37 @@ class SysMessageController extends BaseActiveController
     {
         $flag = UserReadedSysMessage();
         $flag->sys_message_id = $id;
-        $flag = \Yii::$app->user->id;
-        if ($model->save() === false && !$model->hasErrors())
-        {
+        $flag->user_id = \Yii::$app->user->id;
+        if ($flag->save() === false && !$flag->hasErrors()) {
             throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
         }
-        return model;
+        return $flag;
     }
+
+    public function actionUpdateAll()
+    {
+        $model = $this->modelClass;
+        $user_id = \Yii::$app->user->id;
+        $query = $this->buildBaseQuery();
+        $query->andWhere('id not in (select sys_message_id from '
+            . UserReadedSysMessage::tableName() .
+            ' where user_id = :user_id)', ['user_id'=>$user_id]);
+        $msgs = $query->all();
+        if (count($msgs)>0){
+            $rows = [];
+            foreach ($msgs as $msg){
+                $rows[] = ['user_id'=> $user_id, 'sys_message_id'=>$msg->id];
+            }
+            $cmd = Yii::$app->db->createCommand()->batchInsert(
+                UserReadedSysMessage::tableName(),
+                ['user_id', 'sys_message_id'], $rows);
+            $cmd->execute();
+        }
+        return $this->renderJson([
+            "success" => true,
+            "message" => '设置成功',
+        ]);
+    }
+
+
 }

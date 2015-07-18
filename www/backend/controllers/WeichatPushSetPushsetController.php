@@ -21,12 +21,6 @@ class WeichatPushSetPushsetController extends BBaseController
         return Yii::getAlias('@backend/views/wechat/weichat-push-set-pushset');
     }
 
-    public function behaviors()
-    {
-        $bhvs = parent::behaviors();
-        return $bhvs;
-    }
-
     /**
      * Lists all WeichatPushSetPushset models.
      * @return mixed

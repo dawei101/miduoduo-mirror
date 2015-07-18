@@ -17,6 +17,8 @@ return [
 
     'nearby_search.max_distance' => 5000, // 单位米
 
+    'downloadApp.android' => 'http://dd.myapp.com/16891/BFBA839C0F4B194CE8F700FAACBA1E89.apk',
+
     'weichat'=>[
         'appid'     => 'wxc940e677d43db45d',                // 微信公众号ID
         'secret'    => '284769fa88c6ba0496cc2aa06ef1d7c4',  // 微信secret
@@ -31,6 +33,7 @@ return [
         'tmp_weichat'  => [
             'quality'   => 'NoEWsq5BpBRdEymm3-W6YrYoBBkyWCFNUkfJhpCbYcc',     // 优单模板
             'nearby'    => 'qwENcjpEuIBn53LHyFh4-PmmpVaSmL04WpylDX1JkaE',     // 附近模板
+            'applicant' => 'srIf6HPINf-I-BmlPJSqxfJ_E-ZUFlrp_D4MUUvQFOc',     // 报名成功
         ],
     ],
 

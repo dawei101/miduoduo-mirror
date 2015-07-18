@@ -17,6 +17,7 @@ use common\models\District;
 use common\models\ServiceType;
 use yii\data\Pagination;
 use common\models\WeichatPushSetTemplatePushItem;
+use common\models\ConfigRecommend;
 
 
 class TaskController extends \m\MBaseController
@@ -58,9 +59,11 @@ class TaskController extends \m\MBaseController
             $this->render404('未知的城市');
         }
 
+
         $query = Task::find();
         $query->where(['status'=>Task::STATUS_OK]);
         $query->andWhere(['>', 'to_date', date("Y-m-d")]);
+
         $query = $query->andWhere(['city_id'=>$city_id]);
         if (!empty($district)){
             $query->andWhere(['district_id'=>$district]);
@@ -137,17 +140,16 @@ class TaskController extends \m\MBaseController
         }
         $taskid_str = trim($taskid_str,',');
 
-        $query = Task::findBySql("SELECT * FROM ".Yii::$app->db->tablePrefix."task WHERE `gid` in($taskid_str)");
+        $query = Task::find()->where("`gid` in($taskid_str)");
 
-        $countQuery = clone $query;
-        $pages =  new Pagination(['pageSize'=>Yii::$app->params['pageSize'],
-            'totalCount' => $countQuery->count()]);
-        $tasks = $query->offset($pages->offset)
-            ->limit($pages->limit)->all();
+        // 任务排序功能
+        $tasks = $query
+            ->addOrderBy(['display_order'=>SORT_DESC])
+            ->joinWith('weichanpushitem')
+            ->all();
 
         return $this->render('nearby', 
             ['tasks'=>$tasks,
-             'pages'=> $pages,
             ]);
     }
 

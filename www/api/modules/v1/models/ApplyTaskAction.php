@@ -15,39 +15,58 @@ class ApplyTaskAction extends \yii\rest\CreateAction
 
     public function run()
     {
-        $model = parent::run();
-
-        $model->origin = 'App:' . Utils::getDeviceType(
-            Yii::$app->request->getUserAgent()) 
-            . '-' . Utils::getAppVersion(Yii::$app->request);
-
-        $task = $model->task;
-        $resume = $model->resume;
-
-        if (Utils::isPhonenum($task->contact_phonenum)){
-            Yii::$app->sms_pusher->push(
-                $resume->phonenum,
-                ['task'=>$task, 'resume'=>$resume],
-                'to-applicant-task-applied-done'
-            );
-            Yii::$app->sms_pusher->push(
-                $task->contact_phonenum,
-                ['task'=>$task, 'resume'=>$resume],
-                'to-company-get-new-application'
-            );
-            $model->applicant_alerted = true;
-            $model->company_alerted = true;
-        } else {
-           Yii::$app->sms_pusher->push(
-                $resume->phonenum,
-                ['task'=>$task, 'resume'=>$resume],
-                'to-applicant-task-need-touch-actively'
-            );
-            $model->company_alerted = false;
-            $model->applicant_alerted = true;
+        if ($this->checkAccess) {
+            call_user_func($this->checkAccess, $this->id);
         }
+        /* @var $model \yii\db\ActiveRecord */
+        $model = new $this->modelClass([
+            'scenario' => $this->scenario,
+        ]);
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        if ($model->save()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+            $id = implode(',', array_values($model->getPrimaryKey(true)));
 
-        $model->save();
+            $model->origin = 'App:' . Utils::getDeviceType(
+                Yii::$app->request->getUserAgent()) 
+                . '-' . Utils::getAppVersion(Yii::$app->request);
+
+            $task = $model->task;
+            $resume = $model->resume;
+
+            if (empty($resume->phonenum)) {
+                $resume->phonenum = Yii::$app->user->identity->username;
+            }
+
+            if (Utils::isPhonenum($task->contact_phonenum)){
+                Yii::$app->sms_pusher->push(
+                    $resume->phonenum,
+                    ['task'=>$task, 'resume'=>$resume],
+                    'to-applicant-task-applied-done'
+                );
+                Yii::$app->sms_pusher->push(
+                    $task->contact_phonenum,
+                    ['task'=>$task, 'resume'=>$resume],
+                    'to-company-get-new-application'
+                );
+                $model->applicant_alerted = true;
+                $model->company_alerted = true;
+            } else {
+               Yii::$app->sms_pusher->push(
+                    $resume->phonenum,
+                    ['task'=>$task, 'resume'=>$resume],
+                    'to-applicant-task-need-touch-actively'
+                );
+                $model->company_alerted = false;
+                $model->applicant_alerted = true;
+            }
+
+            $model->save();
+
+        } elseif (!$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+        }
 
         return $model;
     }
