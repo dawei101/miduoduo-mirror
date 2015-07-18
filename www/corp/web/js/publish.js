@@ -63,5 +63,9 @@ $('form').on('submit', function(){
 });
 
 $('#address_count').change(function(){
-    console.log(123);
+    if ($(this).val() == '一个') {
+        $(".tagBox-add-tag").hide();
+    }else {
+        $(".tagBox-add-tag").show();
+    }
 });
