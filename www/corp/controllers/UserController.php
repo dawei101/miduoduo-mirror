@@ -283,8 +283,15 @@ class UserController extends FBaseController
 			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
+
+            $hash1 = Yii::$app->getSecurity()->generateRandomString();
+            $uploadfile = $uploaddir . $hash1;
+            if(!move_uploaded_file($_FILES['corp_idcard_pic']['tmp_name'], $uploadfile)) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
+            }
             $company->setAttributes(Yii::$app->request->post(), false);
             $company->person_idcard_pic = $hash;
+            $company->corp_idcard_pic = $hash1;
             if (!$company->validate() || !$company->save()) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
             }
