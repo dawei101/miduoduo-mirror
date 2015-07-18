@@ -139,7 +139,7 @@ class TaskController extends FBaseController
             if ($model->validate() && $model->save()) {
                 $task_id = $model->id;
                 TaskAddress::deleteAll(['task_id' => $task_id]);
-                $addressStr = str_replace('，', ',', Yii::$app->request->post('address'));
+                $addressStr = str_replace('，', ',', $data['address']);
                 $addressList = explode(',', $addressStr);
                 foreach($addressList as $item){
                     $address = new TaskAddress;

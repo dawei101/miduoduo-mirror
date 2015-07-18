@@ -158,7 +158,7 @@ $this->title = '米多多兼职平台';
                                         <div class="nice-select quyu" name="nice-select">
                                             <input type="text" readonly value="北京" >
                                         </div>
-                                        <input type="text" name="address" id="jquery-tagbox-text" />
+                                        <input type="text" name="address" id="jquery-tagbox-text1" />
                                         <p class="cuowu address_error">内容不能为空!</p>
                                     </div>
                                 </li>
@@ -328,3 +328,7 @@ $this->title = '米多多兼职平台';
 <?php
 $this->registerJsFile('/js/publish.js');
 ?>
+
+    <!--
+    <?php print_r($task);?>
+-->

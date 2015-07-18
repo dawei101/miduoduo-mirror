@@ -22,8 +22,8 @@ $('form').on('submit', function(){
         valid = false;
     }
     if (form.address.value.length == 0) {
-        $('.address-error').html('请输入工作地点');
-        $('.address-error').show();
+        $('.address_error').html('请输入工作地点');
+        $('.address_error').show();
         valid = false;
     }
     if (form.need_quantity.value.length == 0) {
@@ -54,14 +54,14 @@ $('form').on('submit', function(){
             $('.enroll-error').html('请输入联系人');
             $('.enroll-error').show();
             valid = false;
-        }else if(form.contact_phone.value.length == 0){
+        }else if(form.contact_phonenum.value.length == 0){
             $('.enroll-error').html('请输入联系电话');
             $('.enroll-error').show();
             valid = false;
         }
     }
     if (form.sms_contact.checked) {
-        if (form.sms_contact.value.length == 0) {
+        if (form.sms_phonenum.value.length == 0) {
             $('.enroll-error').html('请输入报名短信');
             $('.enroll-error').show();
             valid = false;
