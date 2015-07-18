@@ -158,12 +158,12 @@ $this->title = '米多多兼职平台';
                                         <div class="nice-select quyu" name="nice-select">
                                             <input type="text" readonly value="北京" >
                                         </div>
-                                        <input type="text" name="address" id="jquery-tagbox-text1" value="
-                                        <?php
+                                        <input type="text" name="address" id="jquery-tagbox-text1" 
+                                        value="<?php
                                             if($address){
                                                 for($i=0,$len=count($address);$i<$len;$i++){
                                                     if($i > 0) echo ',';
-                                                    echo $address[$i].title;
+                                                    echo $address[$i]->title;
                                                 }
                                             }
                                         ?>" />
@@ -338,5 +338,5 @@ $this->registerJsFile('/js/publish.js');
 ?>
 
     <!--
-    <?php print_r($addresses);?>
+    <?php print_r($address);?>
 -->
