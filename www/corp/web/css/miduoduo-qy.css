@@ -136,7 +136,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .tianxie-box li{width:760px; margin:20px 0; clear:both; }
 .title-left{width:98px; height:40px; line-height:40px; font-size:14px; color:#333; margin-right:20px; text-align:right;font-weight: bold;}
 .title-left em{color:#f00; float:left; margin-top:5px;}
-.right-box{width:640px; margin-bottom:15px;}
+.right-box{width:640px;}
 .right-box input{width:328px; height:40px; border:#999 solid 1px; padding:0 5px;}
 .riqi input{color:#777}
 .riqi label{line-height:30px;color:#666 !important; margin-left:10px; margin-top:5px}
@@ -158,7 +158,8 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .reservation{float:left;}
 .riqi {width:100%; height:40px; margin-bottom:0px;}
 
-.quyu{width:100px;float:left; margin-right:10px; }
+.quyu{width:100px;float:left; margin:10px 10px 10px 0; }
+.tagBox-container{margin: 10px 10px 10px 0; display: block}
 .quyu input{width:100px; padding-left:10px; color:#666}
 .quyu ul,.quyu ul li{width:100px; color:#666;}
 .right-box .dz-input{width:305px;}
@@ -172,12 +173,12 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .edit p{line-height:30px; font-size:14px; color:#606c77;}
 .input-z input{width:98px;}
 .input-z  .iconfont {margin-left:-35px;}
-.ma-right{margin-right:20px;}
+.ma-right{margin-right:20px; margin-top: 10px;}
 .ma-right ul,.ma-right ul li{width:150px; color:#777}
 .ma-right input{color:#777;}
 .add-xs{width:100px; line-height:40px; color:#606c77; font-size:16px; border:none; background:#fff; margin-left:10px; cursor:pointer}
-.add-ons{clear:both;      padding: 0 0 0 118px; margin-bottom:20px; height:40px; display:none}
-.add-ons-input{margin-right:10px;width:110px;}
+.add-ons{clear:both; padding: 0 0 0 118px; height:40px; display:none}
+.add-ons-input{margin-right:10px; margin-top:10px; width:110px;}
 .add-ons-input input{width:110px; height:40px; text-indent:1em; color:#777;}
 .add-ons-input ul{width:100px;}
 .add-ons  .iconfont {margin-left:-25px;}
@@ -281,7 +282,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .erwei img{float:left;}
 .er-text{width:80px; height:70px;  font-size:16px; color:#fff; float:right; border-top:5px #fff solid;border-right:5px #fff solid;border-bottom:5px #fff solid;  line-height:25px; padding-top:5px; padding-left:5px}
 .ql{padding-left:115px}
-
+.tl{margin:10px 0}
 
 
 
