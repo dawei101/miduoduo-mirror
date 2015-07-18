@@ -10,6 +10,11 @@ $('form').on('submit', function(){
     var su = form.salary_unit.value;
     if(su.indexOf('/') >= 0) su = su.substring(2);
     form.salary_unit.value = su;
+    if (form.is_longterm.checked) {
+        form.is_longterm.value = 1;
+    }else {
+        form.is_longterm.value = 0;
+    }
     var valid = true;
     if (form.title.value.length == 0) {
         $('.title-error').html('请输入兼职标题');
