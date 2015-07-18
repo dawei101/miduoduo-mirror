@@ -96,9 +96,7 @@ $this->title = '米多多兼职平台';
                 <li>
                   <div class="pull-left title-left text-center">公司简介</div>
                   <div class="pull-left right-box zhiweileibie">
-                    <textarea name="intro" id="textarea" class="text-area" onblur="if(this.innerHTML==''){this.innerHTML='请填写您的公司简介';this.style.color='#999'}" style="COLOR: #999" onfocus="if(this.innerHTML=='请填写您的公司简介'){this.innerHTML='';this.style.color='#999'}">
-                        <?=$company->intro?>
-                    </textarea>
+                    <textarea name="intro" id="textarea" class="text-area" onblur="if(this.innerHTML==''){this.innerHTML='请填写您的公司简介';this.style.color='#999'}" style="COLOR: #999" onfocus="if(this.innerHTML=='请填写您的公司简介'){this.innerHTML='';this.style.color='#999'}"><?=$company->intro?></textarea>
                   </div>
                 </li>
                 <button class="queding-bt" onclick="$(this).closest('form').submit();">确定</button>
