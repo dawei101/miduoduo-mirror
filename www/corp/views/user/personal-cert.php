@@ -91,13 +91,6 @@ $("#file0").change(function(){
         $("#img0").attr("src", objUrl) ;
     }
 }) ;
-$("#file1").change(function(){
-    var objUrl = getObjectURL(this.files[1]) ;
-    console.log("objUrl = "+objUrl) ;
-    if (objUrl) {
-        $("#img1").attr("src", objUrl) ;
-    }
-}) ;
 function getObjectURL(file) {
     var url = null ;
     if (window.createObjectURL!=undefined) { // basic

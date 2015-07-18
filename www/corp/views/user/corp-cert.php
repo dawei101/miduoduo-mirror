@@ -107,39 +107,28 @@ $this->title = '米多多兼职平台';
 
 <script>
 $("#file0").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-            console.log("objUrl = "+objUrl) ;
-            if (objUrl) {
-                        $("#img0").attr("src", objUrl) ;
-                            }
+    var objUrl = getObjectURL(this.files[0]) ;
+    console.log("objUrl = "+objUrl) ;
+    if (objUrl) {
+        $("#img0").attr("src", objUrl) ;
+    }
 }) ;
 $("#file1").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-            console.log("objUrl = "+objUrl) ;
-            if (objUrl) {
-                        $("#img1").attr("src", objUrl) ;
-                            }
+    var objUrl = getObjectURL(this.files[0]) ;
+    console.log("objUrl = "+objUrl) ;
+    if (objUrl) {
+        $("#img1").attr("src", objUrl) ;
+    }
 }) ;
 function getObjectURL(file) {
-        var url = null ;
-            if (window.createObjectURL!=undefined) { // basic
-                        url = window.createObjectURL(file) ;
-                            } else if (window.URL!=undefined) { // mozilla(firefox)
-                                        url = window.URL.createObjectURL(file) ;
-                                            } else if (window.webkitURL!=undefined) { // webkit or chrome
-                                                        url = window.webkitURL.createObjectURL(file) ;
-                                                            }
-            return url ;
-}
-function getObjectURL(file1) {
-        var url = null ;
-            if (window.createObjectURL!=undefined) { // basic
-                        url = window.createObjectURL(file1) ;
-                            } else if (window.URL!=undefined) { // mozilla(firefox)
-                                        url = window.URL.createObjectURL(file1) ;
-                                            } else if (window.webkitURL!=undefined) { // webkit or chrome
-                                                        url = window.webkitURL.createObjectURL(file1) ;
-                                                            }
-            return url ;
+    var url = null ;
+    if (window.createObjectURL!=undefined) { // basic
+        url = window.createObjectURL(file) ;
+    } else if (window.URL!=undefined) { // mozilla(firefox)
+        url = window.URL.createObjectURL(file) ;
+    } else if (window.webkitURL!=undefined) { // webkit or chrome
+        url = window.webkitURL.createObjectURL(file) ;
+    }
+    return url ;
 }
 </script>
