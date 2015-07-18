@@ -84,7 +84,7 @@ $this->title = '米多多兼职平台';
                               <p class="cuowu from_time-error">内容不能为空!</p>
                               <div class="time-xz">
                                   <div class="nice-select times" name="nice-select">
-                                    <input name="from_time" type="text" readonly value="<?=$task->from_time?$task->from_time:''?>" ><i class="iconfont">&#xe60d;</i>
+                                    <input name="from_time" type="text" placeholder="上班时间" readonly value="<?=$task->from_time?$task->from_time:''?>" ><i class="iconfont">&#xe60d;</i>
                                     <ul>
                                         <li>06:00</li>
                                         <li>07:00</li>
@@ -108,7 +108,7 @@ $this->title = '米多多兼职平台';
                                   </div>
                                   <span class="pull-left">至</span>
                                   <div class="nice-select times" name="nice-select">
-                                    <input name="to_time" type="text" readonly value="<?=$task->to_time?$task->to_time:''?>" ><i class="iconfont">&#xe60d;</i>
+                                    <input name="to_time" type="text" placeholder="下班时间" readonly value="<?=$task->to_time?$task->to_time:''?>" ><i class="iconfont">&#xe60d;</i>
                                     <ul>
                                         <li>06:00</li>
                                         <li>07:00</li>
