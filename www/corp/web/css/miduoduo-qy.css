@@ -259,7 +259,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .tagBox-item-content a{display:block; float:right; background:#ccc; border-radius:100px; width:18px; height:18px; text-align:center; line-height:18px; color:#fff; font-weight:bold; margin-top:6px; font-size:12px; margin-left:5px; text-decoration:none;}
 .tagBox-bullet{display:none;}
 
-.cuowu{color:#f00; font-size:12px; padding:2px 0; display:none}
+.cuowu{color:#f00; font-size:12px; padding:2px 0; display:none; clear: both;}
 .cuowu-l{color:#f00; font-size:12px; padding:2px 0; margin: -10px auto;max-width: 400px;}
 .cuowu-w{color:#f00; font-size:12px; padding:2px 0; margin: 10px auto;max-width: 400px; padding-left:50px;}
 

@@ -309,10 +309,12 @@ $this->title = '米多多兼职平台';
                                         <div  class="fixde bm-fs"><span><input name="sms_contact" type="checkbox" checked>短信报名</span>
                                             <input name="" type="text" placeholder="请填写手机号码">
                                             <input type="text" placeholder="姓名+电话+性别+应聘岗位+米多多"></div>
+                                            <p class="cuowu enroll-error">内容不能为空!</p>
                                     </div>
                                 </li>
                             </ul>
                             <div class="agree"><input name="protocol" type="checkbox" checked>我已阅读并同意<a href="#">米多多发布兼职协议</a></div>
+                            <p class="cuowu protocol-error">内容不能为空!</p>
                             <button class="fabu-bt">发布职位</button>
                             <?php ActiveForm::end(); ?>
                         </div>
