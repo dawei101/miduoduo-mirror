@@ -21,11 +21,12 @@ $('form').on('submit', function(){
         $('.title-error').show();
         valid = false;
     }
+/*
     if (form.service_type_id.value.length == 0) {
         $('.service_type_id-error').html('请选择兼职类别');
         $('.service_type_id-error').show();
         valid = false;
-    }
+    }*/
     if (form.address.value.length == 0) {
         $('.address_error').html('请输入工作地点');
         $('.address_error').show();
@@ -86,6 +87,13 @@ $('form').on('submit', function(){
             $('.enroll-error').html('请输入报名短信');
             $('.enroll-error').show();
             valid = false;
+        }else{
+            var value = form.sms_phonenum.value;
+            if(!value.match(/^1[3|4|5|8][0-9]\d{4,8}$/)){
+                $('.enroll-error').html("请输入正确的手机号");
+                $('.enroll-error').show();
+                valid = false;
+            }
         }
     }
     if (!form.protocol.checked) {
@@ -176,7 +184,7 @@ $(function(){
          for (var i = 0; i < results.getCurrentNumPois(); i ++){
             var poi = results.getPoi(i);
             pois[i] = poi;
-            lis += '<li class="list-group-item"><h5>' + poi.title + '<button class="btn btn-danger pull-right" type="button" onclick="pick_poi(this, ' + i + ')" >添加</button></h5>  '+ poi.address +'</li>';
+            lis += '<li><h2>' + poi.title + '</h2><p>' + poi.address +'</p></li>';
          }
          sr.html(lis);
          sr.show();
@@ -184,4 +192,14 @@ $(function(){
      }
     };
     var local = new BMap.LocalSearch(map, options);
+    $('#jquery-tagbox-text1').keypress(function(e){
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code == 13) {
+            local.search($(this).val());
+            sr.html();
+            return false;
+        }
+    });
 });
+
+

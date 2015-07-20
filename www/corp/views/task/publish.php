@@ -57,7 +57,8 @@ $this->title = '米多多兼职平台';
                                     <p class="cuowu title-error">内容不能为空!</p>
                                 </div>
                             </li>
-                            <li>
+<!--  
+                          <li>
                                 <div class="pull-left title-left text-center"><em>*</em>兼职类别</div>
                                 <div class="pull-left right-box zhiweileibie">
                                     <div class="nice-select tl" name="nice-select">
@@ -72,6 +73,7 @@ $this->title = '米多多兼职平台';
                                     </div>
                                 </div>
                             </li>
+-->
                             <li>
                               <div class="pull-left title-left text-center"><em>*</em>工作时间</div>
                               <div class="pull-left right-box div">
@@ -146,6 +148,7 @@ $this->title = '米多多兼职平台';
                                 <li>
                                     <div class="pull-left title-left text-center"><em>*</em>工作地址</div>
                                     <div class="pull-left right-box">
+<!--
                                     <div class="nice-select quyu" name="nice-select">
                                         <input id="address_count" type="text" placeholder="地址" value="一个">
                                         <i class="iconfont">&#xe60d;</i>
@@ -154,14 +157,16 @@ $this->title = '米多多兼职平台';
                                             <li>一个</li>
                                             <li>多个</li>
                                         </ul>
-                                    </div>
+                                    </div> 
                                         <div class="nice-select quyu" name="nice-select">
                                             <input type="text" readonly value="北京" >
-                                        </div>
+                                        </div> -->
                                         <input type="text" name="address" id="jquery-tagbox-text1"
                                         value="<?=$task?$task->getAddress_label():''?>" />
+                                        <ul class="dizhi" id="search-result" style="display:none"></ul>
                                         <p class="cuowu address_error">内容不能为空!</p>
                                     </div>
+                                    <div class="zhi"><span>删除</span><p>aaaa</p></div>
                                 </li>
                                 <li>
                                     <div class="pull-left title-left text-center"><em>*</em>工作内容</div>
