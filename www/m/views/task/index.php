@@ -68,7 +68,7 @@ $this->wechat_apis = ['getLocation'];
                 <?php if($location['id']){ ?>
                     <a href="/task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">按距离由近到远</a>
                 <?php }else{ ?>
-                    <a href="javascript:getLocation(function(loc){location.href='/task/nearest?lat='+loc.lat+'&'+'lng='+loc.lng+'&service_type=<?= Yii::$app->request->get('service_type') ?>'});">按距离由近到远</a>
+                    <a href="/task/nearest?service_type=<?= Yii::$app->request->get('service_type') ?>">按距离由近到远</a>
                 <?php } ?>
             </li>
             <li><a href="<?=Url::current(['sort'=>'fromdate'])?>">按开工时间由近到远</a></li>
@@ -87,74 +87,6 @@ $this->wechat_apis = ['getLocation'];
   <!--===========以上是固定在顶部的==============--> 
 <?php $this->beginBlock('js') ?>
 <script type="text/javascript">
-window.wx_ready = false;
-function getLocation(callback) {
-    if (window.wx_ready){
-        getWxLocation(callback);
-    } else {
-        getH5Location(callback);
-    }
-}
-<?php
-if (Utils::isInWechat()){ ?>
-    wx.ready(function(){
-        window.wx_ready = true;
-    });
-<?php } ?>
-function getWxLocation(callback) {
-    wx.getLocation({
-        type: 'wgs84',
-        success: function (res) {
-            var lat = res.latitude; // 纬度
-            var lng = res.longitude; // 经度
-            tranLocation({lat: lat, lng: lng}, function(loc){
-                callback(loc);
-            })
-        },
-        fail: function(){ getH5Location(callback);},
-        cancel: function(){getH5Location(callback);}
-    });
-}
-function getH5Location(callback) {
-  if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position){
-        var c= position.coords;
-        tranLocation({lat: c.latitude, lng: c.longitude}, function(loc){
-            callback(loc);
-        });
-      });
-  } else {
-      callback();
-  }
-}
-function tranLocation(poi, callback) {
-  var url = 'http://api.map.baidu.com/geoconv/v1/?coords='
-      + poi.lng + ',' + poi.lat + '&from=1&to=5&ak='
-      + "<?=Yii::$app->params['baidu.map.web_key']?>";
-  $.ajax({
-    'dataType': 'jsonp',
-    'url': url,
-    success: function(json){
-        console.log(json);
-        if(json['status']==0){
-            callback({lng: json.result[0].x, lat: json.result[0].y})
-        }
-    },
-    error: function(e){
-        console.log(e);
-    }
-  });
-}
-function setLocation(poi){
-    setCookie('lat', poi.lat, 60 * 60);
-    setCookie('lng', poi.lng, 60 * 60);
-}
-function setCookie(cname, cvalue, seconds) {
-    var d = new Date();
-    d.setTime(d.getTime() + (seconds*24*60*60*1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
-}
 $(function(){
     $(".select").each(function(){
       var s=$(this);

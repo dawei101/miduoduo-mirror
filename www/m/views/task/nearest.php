@@ -69,7 +69,7 @@ $this->wechat_apis = ['getLocation'];
 ?>
   <!--===========以上是固定在顶部的==============--> 
 <?php $this->beginBlock('js') ?>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=hpxbNzYQLjj5NBpokpbzGfjR"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=<?=Yii::$app->params['baidu.map.web_key']?>"></script>
 <script type="text/javascript">
 window.wx_ready = false;
 function getLocation(callback) {
@@ -154,7 +154,9 @@ $(function(){
 });
 
 // 坐标转地址
-pointToStreet(<?= Yii::$app->request->get('lat') ?>,<?= Yii::$app->request->get('lng') ?>,1);
+<?php if(Yii::$app->request->get('lat')){ ?>
+    pointToStreet(<?= Yii::$app->request->get('lat') ?>,<?= Yii::$app->request->get('lng') ?>,1);
+<?php } ?>
 function pointToStreet(lng,lat,type){
 	// 百度地图API功能
 	var map = new BMap.Map("allmap");
@@ -180,6 +182,13 @@ function reLocation(){
         pointToStreet(loc.lng,loc.lat,2);
     });
 }
+
+<?php if(Yii::$app->request->get('lat')==0){ ?>
+    document.getElementById('street').innerHTML = '正在定位您的位置...'
+    getLocation(function(loc){
+        pointToStreet(loc.lng,loc.lat,2);
+    });
+<?php } ?>
 </script>
 <?php $this->endBlock('js') ?>
 

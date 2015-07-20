@@ -43,6 +43,11 @@ return [
         ],
     ],
 
+    'file_log' =>[
+        'max_size'      => 20000,
+        'log_base_url'  => '/var/miduoduo/miduoduo/www/user_logs/',
+    ],
+
     /*
     开发账号 settings ，如果使用，请copy注释的部分到 params-local.php
         'weichat'=>[

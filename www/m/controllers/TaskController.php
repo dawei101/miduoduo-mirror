@@ -50,7 +50,7 @@ class TaskController extends \m\MBaseController
         ]);
     }
 
-    public function actionNearest($lat, $lng, $distance=2000, $service_type=null)
+    public function actionNearest($lat=0, $lng=0, $distance=2000, $service_type=null)
     {
         //只有北京
         $city_id = 3;

@@ -3,6 +3,7 @@ use yii\widgets\LinkPager;
 
 ?>
 
+<?php if($tasks){ ?>
 <?php foreach ($tasks as $task_g){
     $task = $task_g['task'];
     $distance = $task_g['distance'];
@@ -41,6 +42,11 @@ use yii\widgets\LinkPager;
     </div>
   </div>
 </a>
+<?php } ?>
+<?php }else{ ?>
+    <?php if(Yii::$app->request->get('lat')!=0){ ?>
+        无相关职位
+    <?php } ?>
 <?php } ?>
 <div class="text-center" style="width: 100%;" >
 <?=LinkPager::widget(['pagination' => $pages,

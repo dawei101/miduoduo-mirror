@@ -6,7 +6,7 @@ use Yii;
 
 use common\models\User;
 use common\models\Task;
-use common\models\UserLocation;
+use common\BaseFileLog;
 
 /**
  * This is the model class for table "{{%task_address}}".
@@ -127,22 +127,16 @@ class TaskAddress extends \common\BaseActiveRecord
         if(!$user_id){
             $user_id = 0;
         }
-        $location   = UserLocation::find()->where(['user_id'=>$user_id,'latitude'=>$lat])->one();
-        $location_m = new UserLocation();
+
         $datetime   = date("Y-m-d H:i:s",time());
-        if( $location ){
-            $location->updated_time   = $datetime;
-            $location->use_nums       = $location->use_nums + 1;
-            $location->save();
-        }else{
-            $location_m->user_id    = $user_id;
-            $location_m->latitude   = $lat;
-            $location_m->longitude  = $lng;
-            $location_m->created_time   = $datetime;
-            $location_m->updated_time   = $datetime;
-            $location_m->use_nums       = 1;
-            $location_m->save();
+
+        if( $lat ){
+            $content_arr= ['user_id'=>$user_id,'lat'=>$lat,'lng'=>$lng,'datetime'=>$datetime];
+            $log_type   = 'location';
+            $log_obj    = new BaseFileLog();
+            $log_obj->saveLog($content_arr,$log_type);
         }
+        
         // 将数据保存到session，稍后的点击直接用
         $location   = ['id'=>1,'latitude'=>$lat,'longitude'=>$lng];
         Yii::$app->session->set('location',$location);
