@@ -161,12 +161,14 @@ $this->title = '米多多兼职平台';
                                         <div class="nice-select quyu" name="nice-select">
                                             <input type="text" readonly value="北京" >
                                         </div> -->
+                                        <span class="tianj">+添加</span>
                                         <input type="text" name="address" id="jquery-tagbox-text1"
-                                        value="<?=$task?$task->getAddress_label():''?>" />
+                                        value="<?=$task?$task->getAddress_label():''?>" class="add-v"/>
                                         <ul class="dizhi" id="search-result" style="display:none"></ul>
                                         <p class="cuowu address_error">内容不能为空!</p>
                                     </div>
-                                    <div class="zhi"><span>删除</span><p>aaaa</p></div>
+                                    <div class="zhi" id="selected-address">
+                                    </div>
                                 </li>
                                 <li>
                                     <div class="pull-left title-left text-center"><em>*</em>工作内容</div>

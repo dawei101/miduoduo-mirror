@@ -127,6 +127,8 @@ $('#address_count').change(function(){
 
 $(function(){
     var pois={};
+    var current_poi = false;
+    var added_pois = new Array();
     function remove_address(btn, id){
         $.ajax({
             url: '/task-address/delete?id=' + id,
@@ -184,9 +186,19 @@ $(function(){
          for (var i = 0; i < results.getCurrentNumPois(); i ++){
             var poi = results.getPoi(i);
             pois[i] = poi;
-            lis += '<li><h2>' + poi.title + '</h2><p>' + poi.address +'</p></li>';
+            lis += '<li idx="' + i + '"><h2>' + poi.title + '</h2><p>' + poi.address +'</p></li>';
          }
          sr.html(lis);
+         sr.find('li').each(function(){
+            $(this).click(function(){
+
+                var title = $(this).find('h2').html();
+                $('#jquery-tagbox-text1').val(title);
+                sr.hide();
+                var index = $(this).attr('idx');
+                current_poi = pois[index];
+            });
+         })
          sr.show();
        }
      }
@@ -200,6 +212,19 @@ $(function(){
             return false;
         }
     });
-});
+    $('.tianj').click(function(){
+        if(current_poi === false) return;
+        var content = '<div class="p-box"><span>&times;</span><div class="dz-v">' + current_poi.title +'</div></div>';
+        $('#selected-address').html($('#selected-address').html() + content);
+        added_pois.push(current_poi);
+        current_poi = false;
+        $('#jquery-tagbox-text1').val('');
+        $('#selected-address div.p-box span').click(function(){
+            var index = $(this).parent().index();
+            $(this).parent().remove();
+        });
+    });
 
+
+});
 
