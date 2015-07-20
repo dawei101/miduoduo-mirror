@@ -117,7 +117,7 @@ class TaskController extends BBaseController
     {
         Task::updateAll(['status'=> $status], 'id=:id',
             $params=[':id'=>$id]);
-        return $this->redirect(Yii::$app->request->referrer);//更改为 记录用户上次访问
+        return $this->redirect(Yii::$app->request->referrer); 
     }
 
     public function actionDelete($id)

@@ -71,7 +71,7 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '<div style="min-width:120px;">{view} {update} {delete} | {adopt} {reject}</div>',
+                'template' => '<div style="min-width:120px">{view} {update} {delete} | {adopt} {reject}</div>',
                 'buttons' => [
                     'adopt' => function ($url, $model, $key) {
                         $options = [

@@ -63,6 +63,8 @@ class ApplyTaskAction extends \yii\rest\CreateAction
             }
 
             $model->save();
+            $task->got_quantity += 1;
+            $task->save();
 
         } elseif (!$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
