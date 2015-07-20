@@ -7,13 +7,14 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\TaskApplicant;
-
+use common\models\Task;
 
 /**
  * TaskApplicantSearch represents the model behind the search form about `common\models\TaskApplicant`.
  */
 class TaskApplicantSearch extends TaskApplicant
 {
+    public $task_title;
     /**
      * @inheritdoc
      */
@@ -22,7 +23,7 @@ class TaskApplicantSearch extends TaskApplicant
         return [
             [['id', 'user_id', 'task_id'], 'integer'],
             [['created_time'], 'date'],
-            [['created_time'], 'safe'],
+            [['created_time','task_title'], 'safe'],
         ];
     }
 
@@ -65,6 +66,13 @@ class TaskApplicantSearch extends TaskApplicant
             $to_date = $date->modify('+1 day')->format('Y-m-d');
             $query->andWhere(['>=', 'created_time', $from_date]);
             $query->andWhere(['<', 'created_time', $to_date]);
+        }
+
+        // 根据标题搜索特殊处理
+        if( isset($this->task_title) && $this->task_title ){
+            // 根据task_id（实际为任务名称），查询真正的task_id
+            $task_m = Task::find()->where("`title` LIKE '%".$this->task_title."%'")->one();
+            $this->task_id  = isset($task_m->id) ? $task_m->id : '';
         }
 
         $query->andFilterWhere([
