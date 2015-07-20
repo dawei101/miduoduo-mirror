@@ -22,6 +22,12 @@ function CallBack(str) {
 
 以下 callback 为该类型
 
+* log 调试信息打印
+```
+    window.MDD.log(message)
+
+```
+
 * 请求认证
 ```
     window.MDD.auth()
@@ -85,7 +91,6 @@ function CallBack(str) {
 
     callback：回调函数名
 ```
-
 
 * 加载中
 ```
