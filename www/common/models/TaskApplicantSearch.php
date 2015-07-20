@@ -68,18 +68,23 @@ class TaskApplicantSearch extends TaskApplicant
             $query->andWhere(['<', 'created_time', $to_date]);
         }
 
-        // 根据标题搜索特殊处理
+        // 根据标题搜索
         if( isset($this->task_title) && $this->task_title ){
-            // 根据task_id（实际为任务名称），查询真正的task_id
-            $task_m = Task::find()->where("`title` LIKE '%".$this->task_title."%'")->one();
-            $this->task_id  = isset($task_m->id) ? $task_m->id : '';
+            $task_m = Task::find()->where("`title` LIKE '%".$this->task_title."%'")->asArray()->all();
+            $_ids   = array();
+            foreach( $task_m as $k => $v ){
+                $_ids[]   = $v['id'].',';
+            }
+            $query->andFilterWhere(['in', 'task_id', $_ids]);
+        }else{
+            $query->andFilterWhere([
+                'id' => $this->id,
+                'user_id' => $this->user_id,
+                'task_id' => $this->task_id,
+            ]);
         }
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'task_id' => $this->task_id,
-        ]);
+        
 
         return $dataProvider;
     }
