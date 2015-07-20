@@ -25,11 +25,19 @@ $this->wechat_apis = ['getLocation'];
 
   <nav class="navbar-fixed-top top-nav" style="top: 50px;" role="navigation">
     <dl class="select">
-        <dt style=" white-space: nowrap;"><?=$current_district->name?> <span class="caret"></span>
+        <dt style=" white-space: nowrap;">
+            <?php if( Yii::$app->request->get('lat') ){ ?> 
+                附近
+            <?php }else{ ?>
+                <?=$current_district->name?> 
+            <?php } ?>
+        
+        <span class="caret"></span>
 </dt><span class="inverted-triangle"></span>
         <dd> 
           <ul>
           <li><a href="/task/index?city=<?= $city->id ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">全城</a></li>
+          <li><a href="/task/nearest?lat=<?= Yii::$app->request->get('lat') ?>&lng=<?= Yii::$app->request->get('lng') ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a></li>
 <?php foreach($districts as $district) { ?>
     <li><a href="/task/index?city=<?= $city->id ?>&district=<?= $district->id ?>&service_type=<?= Yii::$app->request->get('service_type') ?>"><?=$district->name?></a></li>
 <?php } ?>
@@ -48,11 +56,10 @@ $this->wechat_apis = ['getLocation'];
         </dd>
      </dl>
      <dl class="select">
-        <dt>按距离 <span class="caret"></span> </dt>
+        <dt>排序 <span class="caret"></span> </dt>
         <dd> 
           <ul>
             <li><a href="/task?service_type=<?= Yii::$app->request->get('service_type') ?>">综合排序</a></li>
-            <li><a href="/task/nearest?lat=<?= Yii::$app->request->get('lat') ?>&lng=<?= Yii::$app->request->get('lng') ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">按距离由近到远</a></li>
             <li><a href="/task?sort=fromdate&service_type=<?= Yii::$app->request->get('service_type') ?>">按开工时间由近到远</a></li>
             
           </ul>

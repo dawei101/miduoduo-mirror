@@ -31,7 +31,14 @@ $this->wechat_apis = ['getLocation'];
 </dt><span class="inverted-triangle"></span>
         <dd> 
           <ul>
-          <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>''])?>">全城</a></li>
+            <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>''])?>">全城</a></li>
+            <li>
+                <?php if($location['id']){ ?>
+                    <a href="/task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a>
+                <?php }else{ ?>
+                    <a href="/task/nearest?service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a>
+                <?php } ?>
+            </li>
 <?php foreach($districts as $district) { ?>
     <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>$district->id])?>"><?=$district->name?></a></li>
 <?php } ?>
@@ -64,13 +71,6 @@ $this->wechat_apis = ['getLocation'];
           <ul>
             
             <li><a href="<?=Url::current(['sort'=>'default'])?>">综合排序</a></li>
-            <li>
-                <?php if($location['id']){ ?>
-                    <a href="/task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">按距离由近到远</a>
-                <?php }else{ ?>
-                    <a href="/task/nearest?service_type=<?= Yii::$app->request->get('service_type') ?>">按距离由近到远</a>
-                <?php } ?>
-            </li>
             <li><a href="<?=Url::current(['sort'=>'fromdate'])?>">按开工时间由近到远</a></li>
             
           </ul>
