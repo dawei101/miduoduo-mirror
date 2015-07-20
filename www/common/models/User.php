@@ -7,6 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
 use common\BaseActiveRecord;
+use common\models\WeichatUserInfo;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -262,6 +263,10 @@ class User extends BaseActiveRecord implements IdentityInterface
     public function getResume(){
         
         return $this->hasOne(Resume::className(), ['user_id' => 'id']);
+    }
+
+    public function getWeichat(){
+        return $this->hasOne(WeichatUserInfo::className(),['userid' => 'id']);
     }
 
 
