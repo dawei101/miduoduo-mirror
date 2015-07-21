@@ -54,7 +54,7 @@ $this->title = '米多多兼职平台';
                 <?php foreach ($task_apps as $task_app) {?>
                 <dd>
                     <div class="pull-left tab1 borser-tab-right">
-                        <div class="names" aid="<?=$task_app->resume->id?>"><span style="float: left; display: block; line-height: 20px; padding: 0 10px;"><?=$task_app->resume->name?></span></div>
+                        <div class="names" aid="<?=$task_app->resume->id?>"><span style="float: left; display: block; line-height: 20px; padding: 0 10px;"><a href="<?=Yii::$app->params['baseurl.m']?>/resume-<?=$task_app->resume->id?>" target="blank"><?=$task_app->resume->name?></a></span></div>
                         <div class="jiben"><span><?=$task_app->resume->age?>岁</span><span><?=$task_app->resume->gender_label?></span><span><?=$task_app->resume->college?></span></div>
                     </div>
                     <div class="pull-left tab2 text-center borser-tab-right"><a href="<?=Yii::$app->params['baseurl.m']?>/task/view?gid=<?=$task_app->task->gid?>" target="blank"><?=$task_app->task->title?></a></div>
