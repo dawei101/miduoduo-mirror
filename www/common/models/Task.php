@@ -178,8 +178,6 @@ class Task extends \common\BaseActiveRecord
             [['title', 'address'], 'string', 'max' => 500],
             ['created_time', 'default', 'value'=>time(), 'on'=>'insert'],
             ['updated_time', 'default', 'value'=>time(), 'on'=>'update'],
-            [['from_date', 'to_date'], 'date', 'format' => 'yyyy-M-d'],
-            [['from_time', 'to_time'], 'date', 'format' => 'H:i'],
             ['got_quantity', 'default', 'value'=>0],
             ['status', 'default', 'value'=>0],
             [['contact', 'contact_phonenum'], 'required'],

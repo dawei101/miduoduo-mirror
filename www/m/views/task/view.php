@@ -35,9 +35,9 @@ $this->nav_right_title = '首页';
     <dl>
        <dt>工作周期</dt>
        <dd>
-         <?=\Yii::$app->formatter->asDate($task->from_date);?>
+         <?=substr($task->from_date, 5);?>
             至
-         <?=\Yii::$app->formatter->asDate($task->to_date)?>
+         <?=substr($task->to_date, 5)?>
        </dd>
     </dl>
     <dl>
