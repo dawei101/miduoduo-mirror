@@ -259,12 +259,12 @@ class UserController extends CBaseController
         }
 
         if(Yii::$app->request->isPost){
-            $filename = Utils::saveUploadFile('person_idcard_pic');
+            $filename = Utils::saveUploadFile($_FILES['person_idcard_pic']);
             if(!$filename) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
             $company->person_idcard_pic = $filename;
-
+            $company->exam_status = Company::EXAM_PROCESSING;
             $company->setAttributes(Yii::$app->request->post(), false);
             if (!$company->validate() || !$company->save()) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
@@ -281,18 +281,19 @@ class UserController extends CBaseController
             return $this->redirect('/user/add-contact-info');
         }
         if(Yii::$app->request->isPost){
-            $filename = Utils::saveUploadFile('person_idcard_pic');
+            $filename = Utils::saveUploadFile($_FILES['person_idcard_pic']);
             if(!$filename) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
             $company->person_idcard_pic = $filename;
 
-            $filename = Utils::saveUploadFile('corp_idcard_pic');
+            $filename = Utils::saveUploadFile($_FILES['corp_idcard_pic']);
             if(!$filename) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
             $company->corp_idcard_pic = $filename;
 
+            $company->exam_status = Company::EXAM_PROCESSING;
             $company->setAttributes(Yii::$app->request->post(), false);
             if (!$company->validate() || !$company->save()) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);

@@ -16,9 +16,9 @@ use common\models\Company;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->dropdownList(Company::STATUSES) ?>
+    <?= $form->field($model, 'status')->dropdownList(Company::$STATUSES) ?>
 
-    <?= $form->field($model, 'introduction')->textArea() ?>
+    <?= $form->field($model, 'intro')->textArea() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

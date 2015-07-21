@@ -20,8 +20,8 @@ class CompanySearch extends Company
         return [
             [['id', 'status', 'examined_by', 'user_id'], 'integer'],
             [['contact_name', 'contact_phone', 
-            'contact_email', 'name',
-            'license_id', 'license_img', 'examined_time'], 'safe'],
+            'contact_email', 'name', 'examined_time'], 'safe'],
+            [['exam_status', 'exam_result'], 'integer'],
         ];
     }
 
@@ -66,12 +66,13 @@ class CompanySearch extends Company
             'contact_phone' => $this->contact_phone,
             'contact_name' => $this->contact_name,
             'contact_email' => $this->contact_email,
+            'exam_status' => $this->exam_status,
             'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'license_id', $this->license_id])
-            ->andFilterWhere(['like', 'license_img', $this->license_img]);
+        // 'exam_result & ' . $this->exam_result => true, // 未测试 
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

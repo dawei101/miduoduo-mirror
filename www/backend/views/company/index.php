@@ -24,8 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'name',
             'contact_phone',
@@ -37,6 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->status_label;
                 },
                 'filter' => Company::$STATUSES,
+            ],
+            [
+                'attribute' => 'exam_status',
+                'value' => function($model){
+                    return $model->exam_status_label;
+                },
+                'filter' => Company::$EXAM_STATUSES,
             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],

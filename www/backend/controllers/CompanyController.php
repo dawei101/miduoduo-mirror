@@ -3,10 +3,11 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Company;
-use common\models\CompanySearch;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\Company;
+use common\models\CompanySearch;
 use backend\BBaseController;
 
 /**
@@ -14,6 +15,21 @@ use backend\BBaseController;
  */
 class CompanyController extends BBaseController
 {
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+           'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'change-status' => ['post'],
+                    'delete' => ['post'],
+                    'examine' => ['post'],
+                ],
+            ],
+        ]);
+    }
+
+
     /**
      * Lists all Company models.
      * @return mixed
@@ -90,16 +106,16 @@ class CompanyController extends BBaseController
         }
     }
 
-    public function changeStatus($id, $status)
+    public function actionChangeStatus($id, $status)
     {
         Company::updateAll(['status'=> $status], 'id=:id',
             $params=[':id'=>$id]);
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionDelete($id)
     {
-        return $this->changeStatus($id, $status=Company::STATUS_DELETED);
+        return $this->actionChangeStatus($id, $status=Company::STATUS_DELETED);
     }
 
     public function actionBlacklist($id)
@@ -107,42 +123,25 @@ class CompanyController extends BBaseController
         return $this->changeStatus($id, $status=Company::STATUS_BLACKLISTED);
     }
 
-
-    public function actionExamine($id, $value, $passed=false)
+    public function actionExamine($id, $passed)
     {
         $company = $this->findModel($id);
-        if ($company){
-            if ($passed){
-                $company->status = $company->status 
-                    | $value | Company::EXAM_STARTED;
-            } else {
-                $company->status = ($company->status
-                    & ~$value) | Company::EXAM_STARTED;
-            }
-            $company->save();
+        $note = Yii::$app->request->post('note');
+        if ($note){
+            $company->exam_note = $exam_note;
         }
-        return $this->redirect(['index']);
- 
-    }
-
-    public function actionRejectLicenseId($id)
-    {
-        return $this->actionExamine($id, Company::EXAM_GOVID_PASSED, false);
-    }
-
-    public function actionAdoptLicenseId($id)
-    {
-        return $this->actionExamine($id, Company::EXAM_GOVID_PASSED, true);
-    }
-
-    public function actionRejectGovId($id)
-    {
-        return $this->actionExamine($id, Company::LICENSE_PASS_EXAM, false);
-    }
-
-    public function actionAdoptGovId($id)
-    {
-        return $this->actionExamine($id, Company::LICENSE_PASS_EXAM, true);
+        if ($passed){
+            $company->exam_status = Company::EXAM_DONE;
+            $company->exam_result = Company::EXAM_GOVID_PASSED;
+            if ($company->corp_idcard_pic){
+                $company->exam_result = $company->exam_result | Company::EXAM_LICENSE_PASSED;
+            }
+        } else {
+            $company->exam_result = 0;
+            $company->exam_status = Company::EXAM_NOT_PASSED;
+        }
+        $company->save();
+        return $this->redirect('view?id=' . $id);
     }
 
     protected function findModel($id)
