@@ -66,15 +66,15 @@ $this->title = '米多多兼职平台';
                   </div>
                 </li>
                 <li>
-                  <div class="pull-left title-left text-center">企业性质</div>
+                  <div class="pull-left title-left text-center">招聘性质</div>
                   <div class="pull-left right-box zhiweileibie">
                     <div class="nice-select" name="nice-select">
                       <input name="corp_type" type="text" placeholder="选择公司性质" value="<?=$company->corp_type?>">
                       <i class="iconfont">&#xe60d;</i>
                       <ul>
-                        <li data-value="1">国企</li>
-                        <li data-value="2">私企</li>
-                        <li data-value="3">股份制</li>
+                        <li data-value="1">企业直聘</li>
+                        <li data-value="2">人力资源</li>
+                        <li data-value="3">领队</li>
                       </ul>
                     </div>
                   </div>
