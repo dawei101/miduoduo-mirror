@@ -73,18 +73,15 @@ class TaskApplicantSearch extends TaskApplicant
             $task_m = Task::find()->where("`title` LIKE '%".$this->task_title."%'")->asArray()->all();
             $_ids   = array();
             foreach( $task_m as $k => $v ){
-                $_ids[]   = $v['id'].',';
+                $_ids[]   = $v['id'];
             }
             $query->andFilterWhere(['in', 'task_id', $_ids]);
-        }else{
-            $query->andFilterWhere([
-                'id' => $this->id,
-                'user_id' => $this->user_id,
-                'task_id' => $this->task_id,
-            ]);
         }
-
-        
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'task_id' => $this->task_id,
+        ]);
 
         return $dataProvider;
     }
