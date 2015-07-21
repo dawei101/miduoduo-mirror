@@ -13,7 +13,7 @@ $this->title = '米多多兼职平台';
     <div class="container">
         <div class="row">
             <div class="fabu-box padding-0">
-                <div class="col-sm-12 col-md-2 col-lg-2 padding-0" style="background:#f00">
+                <div class="col-sm-2 padding-0">
                     <div class="qiye-left">
                         <dl>
                             <dt class="pitch-on"><i class="iconfont">&#xe609;</i>我要发布</dt>
@@ -44,7 +44,7 @@ $this->title = '米多多兼职平台';
 
 
 
-                <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
+                <div class="col-sm-10 padding-0 ">
                     <div class="right-center">
                         <div class="conter-title">发布兼职职位</div>
                         <!--<div class="tishi-cs">您今天的发布次数已经用完，请明天再来哟 ~ 立即认证可增加发布条数，<a href="#">去认证</a></div>-->
