@@ -13,12 +13,11 @@ use frontend\FBaseController;
 class ResumeController extends FBaseController
 {
 
-    public function actionDetail($user_id){
-        $resume   = User::find()->where(['id'=>$user_id])
-            ->with('resume')
+    public function actionDetail($user_id, $name){
+        $resume   = Resume::find()->where(['user_id'=>$user_id])
             ->with('applicantDone')
             ->one();
-        if (!$resume){
+        if (!$resume || $resume->name != $name){
             throw new HttpException(404, 'Resume not found');
         }
         $this->layout   = false;

@@ -27,7 +27,7 @@ foreach( $service_types as $k => $v ){
 </div>
 <div class="name-bg">
     <div class="name-nav">
-        <div class="name-center"><a href="<?= Yii::$app->params['baseurl.frontend'] ?>">进入米多多兼职平台查看&nbsp;&gt;</a><?= $resume['resume']['name'] ?></div>
+        <div class="name-center"><a href="<?= Yii::$app->params['baseurl.frontend'] ?>">进入米多多兼职平台查看&nbsp;&gt;</a><?= $resume['name'] ?></div>
     </div>
 </div>
 <div class="center">
@@ -35,21 +35,21 @@ foreach( $service_types as $k => $v ){
          <div class="tag">基本信息</div>
          <ul class="jiben">
             <!--li><span>年龄：</span>无字段</li-->
-            <li><span>性别：</span><?= Resume::$GENDERS[$resume['resume']['gender']] ?></li>
-            <!--li><span>身高：</span><?= $resume['resume']['height'] ?></li-->
+            <li><span>性别：</span><?= Resume::$GENDERS[$resume['gender']] ?></li>
+            <!--li><span>身高：</span><?= $resume['height'] ?></li-->
             <!--li class="shenfen"><span>身份证已认证</span></li-->
          </ul>
          <div class="tag">联系方式</div>
          <ul class="xinxi">
-            <li><span>电话：</span><?= $resume['resume']['phonenum'] ?></li>
+            <li><span>电话：</span><?= $resume['phonenum'] ?></li>
             <!--li><span>微信：</span>你好米多多</li-->
-            <!--li><span>地址：</span><?= $resume['resume']['workplace'] ?></li-->
-            <li><span>学校：</span><?= $resume['resume']['college'] ?></li>
+            <!--li><span>地址：</span><?= $resume['workplace'] ?></li-->
+            <li><span>学校：</span><?= $resume['college'] ?></li>
          </ul>
          <div class="tag">兼职信息</div>
          <ul class="xinxi">
-            <!--li><span>做过的兼职：</span><?= $resume['resume']['job_wishes'] ?></li-->
-            <li><span>兼职意愿：</span><?= $resume['resume']['job_wishes'] ?></li>
+            <!--li><span>做过的兼职：</span><?= $resume['job_wishes'] ?></li-->
+            <li><span>兼职意愿：</span><?= $resume['job_wishes'] ?></li>
          </ul>
          <div class="tag">米多多兼职</div>
          <ul class="jingyan">

@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use common\models\User;
 use common\models\Address;
+use common\models\TaskApplicant;
 
 /**
  * This is the model class for table "{{%resume}}".
@@ -161,6 +162,14 @@ class Resume extends \common\BaseActiveRecord
     public function getWorkplace_address()
     {
         return $this->hasOne(Address::className(), ['id' => 'workplace']);
+    }
+
+    public function getApplicantDone(){
+        return $this->hasMany(TaskApplicant::className(),['user_id' => 'user_id'])
+            ->where(['status'=>10])
+            ->orderBy(['id'=>SORT_DESC])
+            ->limit(20)
+            ->with('task');
     }
 
     public function getGender_label()
