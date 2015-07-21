@@ -163,7 +163,7 @@ class Task extends \common\BaseActiveRecord
         return [
             [['salary', 'salary_unit', 'from_date', 'to_date',
                 'need_quantity', 'detail',
-                'title'], 'required'],
+                'title', 'service_type_id'], 'required'],
             ['company_id', 'required', 'message'=>'请选择一个已存在的公司'],
             [['id', 'clearance_period', 'salary_unit', 'need_quantity',
                 'got_quantity', 'user_id', 'service_type_id',
