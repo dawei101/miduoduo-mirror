@@ -109,16 +109,10 @@ class TaskController extends CBaseController
 
             if ($model->validate() && $model->save()) {
                 $task_id = $model->id;
-                TaskAddress::deleteAll(['task_id' => $task_id]);
-                $addressStr = str_replace('，', ',', $data['address']);
-                $addressList = explode(',', $addressStr);
+                $addressList = explode(' ', Yii::$app->request->post('address_list'));
                 foreach($addressList as $item){
-                    $address = new TaskAddress;
-                    $address->title = $item;
-                    $address->lat = 0;
-                    $address->lng = 0;
+                    $address = TaskAddress::findOne(['id' => $item]);
                     $address->task_id = $task_id;
-                    $address->user_id = Yii::$app->user->id;
                     $address->save();
                 }
                 return $this->redirect('/task/');
@@ -127,7 +121,7 @@ class TaskController extends CBaseController
 
         $services = ServiceType::find()->all();
         return $this -> render('publish',
-        ['services'=>$services, 'task'=>$model, 'company'=>$company, 'address'=>false]);
+        ['services'=>$services, 'task'=>$model, 'company'=>$company, 'address'=>[]]);
     }
 
     public function actionEdit($gid)
@@ -181,16 +175,10 @@ class TaskController extends CBaseController
             $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             if ($task->validate() && $task->save()) {
                 $task_id = $task->id;
-                TaskAddress::deleteAll(['task_id' => $task_id]);
-                $addressStr = str_replace('，', ',', Yii::$app->request->post('address'));
-                $addressList = explode(',', $addressStr);
+                $addressList = explode(' ', Yii::$app->request->post('address_list'));
                 foreach($addressList as $item){
-                    $address = new TaskAddress;
-                    $address->title = $item;
-                    $address->lat = 0;
-                    $address->lng = 0;
+                    $address = TaskAddress::findOne(['id' => $item]);
                     $address->task_id = $task_id;
-                    $address->user_id = Yii::$app->user->id;
                     $address->save();
                 }
                 return $this->redirect('/task/');
@@ -200,6 +188,7 @@ class TaskController extends CBaseController
         $services = ServiceType::find()->all();
         $task->from_time = substr($task->from_time, 0, -3);
         $task->to_time = substr($task->to_time, 0, -3);
+        Yii::$app->session->set('current_task_id', $task->id);
         return $this->render('publish',
         ['task' => $task, 'services'=>$services, 'company'=>$company, 'address'=>$addresses]);
     }
@@ -245,6 +234,44 @@ class TaskController extends CBaseController
     public function actionSuccess()
     {
         return $this->render('success');
+    }
+
+    public function actionAddAddress()
+    {
+        $model = new TaskAddress();
+        $model->setAttributes(Yii::$app->request->post(),false);
+        $model->user_id = Yii::$app->user->id;
+        $model->task_id = Yii::$app->session->get('current_task_id', 0);
+        if($model->validate() && $model->save()){
+            return $this->renderJson([
+                'success'=> true,
+                'msg'=> '创建成功',
+                'result'=> $model->toArray()
+            ]);
+        }
+        return $this->renderJson([
+            'success'=> false,
+            'msg'=> '创建失败',
+            'errors'=> $model->getErrors(),
+        ]);
+    }
+
+    protected function findModel($id)
+    {
+        if (($model = TaskAddress::findOne($id)) !== null){
+            return $model;
+        }else{
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionDeleteAddress($id)
+    {
+        $this->findModel($id)->delete();
+        return $this->renderJson([
+            'success'=> true,
+            'msg'=> '删除成功',
+        ]);
     }
 
 }

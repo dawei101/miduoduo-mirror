@@ -15,19 +15,31 @@ $('form').on('submit', function(){
     }else {
         form.is_longterm.value = 0;
     }
+    var address = '';
+    $('#selected-address .p-box').each(function(){
+        var addr = $(this).attr('id');
+        if(address.length > 0) address = address + ' ';
+        address = address + addr;
+    });
+    form.address_list.value = address;
+
     var valid = true;
     if (form.title.value.length == 0) {
         $('.title-error').html('请输入兼职标题');
         $('.title-error').show();
         valid = false;
     }
-/*
     if (form.service_type_id.value.length == 0) {
         $('.service_type_id-error').html('请选择兼职类别');
         $('.service_type_id-error').show();
         valid = false;
-    }*/
-    if (form.address.value.length == 0) {
+    }
+    if (form.from_time.value.length == 0 || form.to_time.value.length == 0){
+        $('.to_time-error').html('请选择上班时间和下班时间');
+        $('.to_time-error').show();
+        valid = false;
+    }
+    if (form.address_list.value.length == 0) {
         $('.address_error').html('请输入工作地点');
         $('.address_error').show();
         valid = false;
@@ -129,47 +141,48 @@ $(function(){
     var pois={};
     var current_poi = false;
     var added_pois = new Array();
-    function remove_address(btn, id){
+    function remove_address(id){
         $.ajax({
-            url: '/task-address/delete?id=' + id,
-            method: 'post',
+            url: '/task/delete-address?id=' + id,
+            method: 'get',
         }).done(function(dstr){
             var data = $.parseJSON(dstr);
-            if (data.success){
-                $(btn).closest('li').remove();
-            }
+            console.log(data);
         })
     }
     window.remove_address = remove_address;
-    function pick_poi(btn, i){
-        var poi = pois[i];
+    function pick_poi(poi){
         var address = {
-            'TaskAddress[lat]': poi.point.lat,
-            'TaskAddress[lng]': poi.point.lng,
-            'TaskAddress[address]': poi.address,
-            'TaskAddress[city]': poi.city,
-            'TaskAddress[province]': poi.province,
-            'TaskAddress[title]': poi.title
+            'lat': poi.point.lat,
+            'lng': poi.point.lng,
+            'address': poi.address,
+            'city': poi.city,
+            'province': poi.province,
+            'title': poi.title
         };
-        $.ajax({
-            url: '/task-address/create?task_id=' + '<?=$task->id?>',
-            method: 'post',
-            data: address,
-        }).done(function(dstr){
-            var data = $.parseJSON(dstr);
-            if (data.success){
-                $(btn).closest('li').remove();
-                var nli = '<li class="list-group-item"> '
-                + '<h5>'
-                +data.result.city + ',' + data.result.title + ',' + data.result.address
-                +'<a href="#" onclick="remove_address(this, ' + data.result.id + ');" class="pull-right">'
-                +'    <span class="glyphicon glyphicon-remove"></span>'
-                +'</a>'
-                +'</h5>'
-                +'</li>';
-                $("#address-list").append(nli);
+        $.post('/task/add-address', {
+            lat: poi.point.lat,
+            lng: poi.point.lng,
+            address: poi.address,
+            city: poi.city,
+            province: poi.province,
+            title: poi.title
+        }, function(str){
+            var data = JSON.parse(str);
+            if(data.success === true){
+                var content = '<div class="p-box" id="' + data.result.id + '"><span>&times;</span><div class="dz-v">' + current_poi.title +'</div></div>';
+                $('#selected-address').html($('#selected-address').html() + content);
+                added_pois.push(current_poi);
+                current_poi = false;
+                $('#jquery-tagbox-text1').val('');
+                $('#selected-address div.p-box span').click(function(){
+                    var aid = $(this).parent().attr('id');
+                    remove_address(aid);
+                    var index = $(this).parent().index();
+                    $(this).parent().remove();
+                });
             }
-        })
+        });
     }
     window.pick_poi = pick_poi;
     var map = new BMap.Map("map");
@@ -213,18 +226,23 @@ $(function(){
         }
     });
     $('.tianj').click(function(){
-        if(current_poi === false) return;
-        var content = '<div class="p-box"><span>&times;</span><div class="dz-v">' + current_poi.title +'</div></div>';
-        $('#selected-address').html($('#selected-address').html() + content);
-        added_pois.push(current_poi);
-        current_poi = false;
-        $('#jquery-tagbox-text1').val('');
-        $('#selected-address div.p-box span').click(function(){
-            var index = $(this).parent().index();
-            $(this).parent().remove();
-        });
+        if($('#jquery-tagbox-text1').val().length == 0) return;
+        if(current_poi === false){
+            current_poi = {};
+            current_poi.address = '';
+            current_poi.city = '北京';
+            current_poi.province = '';
+            current_poi.point = {lat:0, lng:0};
+        }
+        current_poi.title = $('#jquery-tagbox-text1').val();
+        pick_poi(current_poi);
     });
-
+    $('#selected-address div.p-box span').click(function(){
+        var aid = $(this).parent().attr('id');
+        remove_address(aid);
+        var index = $(this).parent().index();
+        $(this).parent().remove();
+    });
 
 });
 

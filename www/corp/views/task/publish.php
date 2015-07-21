@@ -57,7 +57,6 @@ $this->title = '米多多兼职平台';
                                     <p class="cuowu title-error">内容不能为空!</p>
                                 </div>
                             </li>
-<!--  
                           <li>
                                 <div class="pull-left title-left text-center"><em>*</em>兼职类别</div>
                                 <div class="pull-left right-box zhiweileibie">
@@ -73,7 +72,6 @@ $this->title = '米多多兼职平台';
                                     </div>
                                 </div>
                             </li>
--->
                             <li>
                               <div class="pull-left title-left text-center"><em>*</em>工作时间</div>
                               <div class="pull-left right-box div">
@@ -133,7 +131,7 @@ $this->title = '米多多兼职平台';
                                     </ul>
                                   </div>
                               </div>
-                              <p class="cuowu to_time">内容不能为空!</p>
+                              <p class="cuowu to_time-error">内容不能为空!</p>
                             </li>
                             <!--
                             <li>
@@ -162,12 +160,15 @@ $this->title = '米多多兼职平台';
                                             <input type="text" readonly value="北京" >
                                         </div> -->
                                         <span class="tianj">+添加</span>
-                                        <input type="text" name="address" id="jquery-tagbox-text1"
-                                        value="<?=$task?$task->getAddress_label():''?>" class="add-v"/>
+                                        <input type="text" placeholder="输入回车可选择位置信息 用于添加坐标 提升投递量" name="address" id="jquery-tagbox-text1" class="add-v"/>
+                                        <input type="hidden" name="address_list"/>
                                         <ul class="dizhi" id="search-result" style="display:none"></ul>
                                         <p class="cuowu address_error">内容不能为空!</p>
                                     </div>
                                     <div class="zhi" id="selected-address">
+                                    <?php foreach($address as $item){?>
+                                        <div class="p-box" id="<?=$item->id?>"><span>&times;</span><div class="dz-v"><?=$item->title?></div></div>
+                                    <?php }?>
                                     </div>
                                 </li>
                                 <li>
