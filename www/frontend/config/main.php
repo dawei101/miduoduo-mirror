@@ -47,6 +47,7 @@ return [
             'enablePrettyUrl' => true,
             'rules' => [
                 'download-app' => 'site/download-app',
+                'resume-<user_id:\d+>'=>'resume/detail',
             ],
         ],
     ],

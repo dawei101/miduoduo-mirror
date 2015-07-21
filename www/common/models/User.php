@@ -265,6 +265,14 @@ class User extends BaseActiveRecord implements IdentityInterface
         return $this->hasOne(Resume::className(), ['user_id' => 'id']);
     }
 
+    public function getApplicantDone(){
+        return $this->hasMany(TaskApplicant::className(),['user_id' => 'id'])
+            ->where(['status'=>10])
+            ->limit(20)
+            ->with('task')
+            ;
+    }
+
     public function getWeichat(){
         return $this->hasOne(WeichatUserInfo::className(),['userid' => 'id']);
     }

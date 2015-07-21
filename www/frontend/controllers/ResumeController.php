@@ -6,6 +6,7 @@ use yii\filters\AccessControl;
 
 use common\models\Resume;
 use common\models\Freetime;
+use common\models\User;
 
 use frontend\FBaseController;
 use frontend\models\EditResumeForm;
@@ -22,7 +23,7 @@ class ResumeController extends FBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['edit', 'freetimes'],
+                        'actions' => ['edit', 'freetimes','detail'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -113,5 +114,17 @@ class ResumeController extends FBaseController
             return true;
         }
         return false;
+    }
+
+    public function actionDetail($user_id){
+        $resume   = User::find()->where(['id'=>$user_id])
+            ->with('resume')
+            ->with('applicantDone')
+            ->asArray()->one();
+        $this->layout   = false;
+
+        return $this->render(
+            'detail',['resume'=> $resume]  
+        );
     }
 }
