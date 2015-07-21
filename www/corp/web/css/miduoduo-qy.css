@@ -133,7 +133,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .tianxie-box{height:100%;position:relative; background:#fff; border-bottom:1px #eee dashed; padding:0px 30px 30px; overflow:hidden}
 .tishi-cs{color:#999; text-align:center; border:#f00 solid 1px; width:90%;  margin:30px auto 20px; padding:10px 0; font-size:18px;}
 .tishi-cs a{text-decoration:underline; font-weight:bold}
-.tianxie-box li{width:760px; margin:20px 0; clear:both; }
+.tianxie-box li{width:760px; margin:20px 0; clear:both; min-height: 40px; }
 .title-left{width:98px; height:40px; line-height:40px; font-size:14px; color:#333; margin-right:20px; text-align:right;font-weight: bold;}
 .title-left em{color:#f00; float:left; margin-top:5px;}
 .right-box{width:640px;}
@@ -142,7 +142,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .riqi label{line-height:30px;color:#666 !important; margin-left:10px; margin-top:5px}
 .riqi input.changqi{width:30px; height:auto !important;}
 .time-xz{margin-top:15px;}
-.time-xz .times{margin-left:0;width:150px;}
+.time-xz .times{margin-left:0;width:150px; margin-bottom: 15px;}
 .time-xz .times input{width:147px;}
 .time-xz .times ul{width:150px;}
 .time-xz span{margin-left:10px; margin-top:10px; color:#a5abb2; margin-right:10px;}
@@ -151,14 +151,14 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .nice-select input{color:#999; cursor:pointer }
 .nice-select .iconfont{font-size:0.5em; margin-left:-25px; color:#a5abb2; position:absolute; top:15px; right:10px; }
 .nice-select ul{display:none; width:328px; border:1px #ccc solid;overflow-y:auto;overflow-x:hidden; overflow-style:marquee-line; height:150px; position:absolute; z-index:9; background:#fff; margin-top:-1px}
-.nice-select ul li{width:328px; margin:5px ; cursor:pointer; border-bottom:1px #f3f3f3 solid; position:relative }
+.nice-select ul li{width:328px; margin:5px ; cursor:pointer; border-bottom:1px #f3f3f3 solid; position:relative;min-height: 20px !important; }
 .times{width:80px;float:left; margin-left:15px; }
 .times input{width:80px; padding-left:10px;}
 .times ul{width:80px;}
 .reservation{float:left;}
 .riqi {width:100%; height:40px; margin-bottom:0px;}
 
-.quyu{width:100px;float:left; margin:10px 10px 10px 0; }
+.quyu{width:100px;float:left; margin:0 10px 0 0; }
 .tagBox-container{margin: 10px 10px 10px 0; display: block}
 .quyu input{width:100px; padding-left:10px; color:#666}
 .quyu ul,.quyu ul li{width:100px; color:#666;}
@@ -173,7 +173,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .edit p{line-height:30px; font-size:14px; color:#606c77;}
 .input-z input{width:98px;}
 .input-z  .iconfont {margin-left:-35px;}
-.ma-right{margin-right:20px; margin-top: 10px;}
+.ma-right{margin-right:20px; /*margin-top: 10px;*/}
 .ma-right ul,.ma-right ul li{width:150px; color:#777}
 .ma-right input{color:#777;}
 .add-xs{width:100px; line-height:40px; color:#606c77; font-size:16px; border:none; background:#fff; margin-left:10px; cursor:pointer}
@@ -241,7 +241,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .shangchuan{width:100px; height:40px; border:#00b966 solid 2px; text-align:center; line-height:35px; cursor:pointer; color:#606c77;}
 .em-rad{color:#f00;font-size:16px; padding: 10px 10px 0;}
 .tishi{border:1px #eee dashed; padding:10px; color:#606c77; margin:10px 0 20px;}
-.id-img{width:100%;}
+.id-img { height: auto;margin-bottom: 15px; overflow: hidden;width: 100%;}
 .id-img img{width:300px; height:195px; float:left; margin-right:15px;}
 /*======消息======*/
 .xiaoxi{width:1005px; margin:0 auto;  font-size:16px; overflow:hidden; border:1px solid #eee}
