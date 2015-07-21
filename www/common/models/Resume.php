@@ -195,6 +195,11 @@ class Resume extends \common\BaseActiveRecord
         return 0;
     }
 
+    public function getCommon_url()
+    {
+        return Yii::$app->params['baseurl.frontend'] . '/resume-' . $this->user_id . '-' . $this->name;
+    }
+
     public function fields()
     {
         return array_merge(parent::fields(), ['gender_label', 'age']);
