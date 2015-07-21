@@ -22,7 +22,7 @@ return [
             'timeZone' => 'Asia/Shanghai',
             'dateFormat' => 'php:Y-m-d',
             'datetimeFormat' => 'php:Y-m-d H:i',
-            'timeFormat' => 'php:H:i',
+            'timeFormat' => 'php:H:i:s',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
