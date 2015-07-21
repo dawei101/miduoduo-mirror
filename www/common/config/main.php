@@ -80,6 +80,8 @@ return [
         'api' => $root_path . '/api',
         'm' => $root_path . '/m',
         'corp' => $root_path . '/corp',
+        'data' => '/service/data',
+        'media' => '/service/data/media',
         'html5_src' => $project_root . '/frontend/dist/webapp',
         'html5_dest' => $root_path . '/html5_dest',
     ],

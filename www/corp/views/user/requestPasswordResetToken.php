@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <input name="username" type="text" class="pull-left"  placeholder="请输入手机号">
           <span class="yz-btn pull-left text-center">获取验证码</span> </div>
         <div class="midd-input-group">
-          <input name="password" type="text" class="input-q"  placeholder="请输入短信验证码">
+          <input name="vcode" type="text" class="input-q"  placeholder="请输入短信验证码">
         </div>
         <a href="#" class="zc-btn">下一步</a>
         </div>
@@ -34,4 +34,39 @@ $this->params['breadcrumbs'][] = $this->title;
     $('.zc-btn').on('click', function(){
         $(this).closest('form').submit();
     });
+    $('.yz-btn').on('click', function(){
+        var phone = $(this).closest('form').find('[name="username"]').val();
+        if (phone.length == 0) {
+            alert("请输入手机号");
+            return;
+        }
+        $.get('/user/vcode', $(this).closest('form').serialize())
+            .done(function(str){
+                var data = JSON.parse(str);
+                if(data.result == false){
+                   alert(data.msg);
+                   return;
+                }
+                $(this).removeClass('yz-btn');
+                $(this).addClass('yz-btn-jx');
+                counter($(this), 60);
+        });
+    });
+    function counter($el, n) {
+        (function loop() {
+           $el.html("重新发送(" + n + ")");
+           if (n--) {
+               setTimeout(loop, 1000);
+           }else {
+               $el.addClass('yz-btn');
+           	   $el.removeClass('yz-btn-jx');
+                  $el.html('发送验证码');
+           }
+        })();
+    }
+<?php
+if($model->errors){
+    echo 'alert("'.array_shift(array_values($model->errors))[0].'");';
+} ?>
+
 </script>

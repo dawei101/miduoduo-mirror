@@ -13,16 +13,16 @@ $this->title = '米多多兼职平台';
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-6 col-lg-7 banner-left">
-        <h2>通过米多多发布兼职／实习招聘</h2>
+        <h2>米多多最快兼职招聘神器</h2>
         <h1>招人更快 更优秀</h1>
         <div class="h4"> <span class="h4-l pull-left"></span>
-          <h4>让兼职不仅仅是兼职</h4>
+          <h4>让兼职招聘管理变的轻松</h4>
           <span class="h4-r pull-left"></span> </div>
-        <h3 class="fixde">让4000 万在校大学生助力您的发展</h3>
+        <h3 class="fixde">超大兼职库，算法匹配，系统推送，人工触达，快速响应</h3>
       </div>
       <div class="col-sm-12 col-md-6 col-lg-5">
         <div class="tab">
-          <div class="menusWrapper"> <a class="active" href="javascript:;">企业HR注册</a> <a href="javascript:;">登录</a> </div>
+          <div class="menusWrapper"> <a class="active top_switcher" href="javascript:;">企业HR注册</a> <a href="javascript:;" class="top_switcher">登录</a> </div>
           <div class="ctnerWrapper">
             <div class="ctnerBox">
               <div id="cbox-1" class="cbox">
@@ -30,6 +30,7 @@ $this->title = '米多多兼职平台';
                   <?php $form = ActiveForm::begin();?>
                     <div class="midd-input-group">
                   <input name="username" type="text" class="pull-left" placeholder="请输入手机号">
+                  <input name="check_existed" type="hidden" value="1"/>
                   <span class="yz-btn pull-left text-center">发送验证码</span> </div>
                 <div class="midd-input-group">
                   <input name="vcode" type="text" class="input-q"  placeholder="请输入短信验证码">

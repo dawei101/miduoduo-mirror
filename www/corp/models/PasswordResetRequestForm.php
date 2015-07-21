@@ -23,13 +23,13 @@ class PasswordResetRequestForm extends Model
             ['username', 'required'],
             ['username', 'exist',
                 'targetClass' => '\common\models\User',
-                'filter' => ['status' => User::$STATUSES['ACTIVE']],
+                'filter' => ['status' => User::STATUS_OK],
                 'message' => 'There is no user with such phone.'
             ],
 
             ['vcode', 'filter', 'filter' => 'trim'],
             ['vcode', 'required'],
-            ['vcode', 'match', 'pattern'=>'/^\d{6}$/', 'message'=>'验证码不正确.'],
+            ['vcode', 'match', 'pattern'=>'/^\d{4}$/', 'message'=>'验证码不正确.'],
             ['vcode', function ($attribute, $params) {
                 if (!$this->hasErrors()) {
                     if(!Utils::validateVerifyCode($this->username, $this->vcode)){
@@ -37,6 +37,14 @@ class PasswordResetRequestForm extends Model
                     }
                 }
             }],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => '手机号',
+            'vcode' => '验证码',
         ];
     }
 
@@ -49,7 +57,7 @@ class PasswordResetRequestForm extends Model
     {
         /* @var $user User */
         $user = User::findOne([
-            'status' => User::$STATUSES['ACTIVE'],
+            'status' => User::STATUS_OK,
             'username' => $this->username,
         ]);
 

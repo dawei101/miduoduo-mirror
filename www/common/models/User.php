@@ -28,11 +28,12 @@ class User extends BaseActiveRecord implements IdentityInterface
 {
 
     public static $STATUSES = [
-        'ACTIVE' => 0,
-        'DELETE' => 10,
+        0=>'正常',
+        10=>'已删除'
     ];
-    public static $STATUS_LABELS = [0=>'正常',
-        10=>'已删除'];
+
+    const STATUS_OK = 0;
+    const STATUS_DELETE = 0;
 
 
     /**
@@ -56,8 +57,7 @@ class User extends BaseActiveRecord implements IdentityInterface
             [['password_hash', 'password_reset_token', 'email', 'access_token'], 'string', 'max' => 500],
             [['auth_key'], 'string', 'max' => 1000],
             [['username'], 'unique'],
-            ['status', 'default', 'value' => static::$STATUSES['ACTIVE']],
-            ['status', 'in', 'range' => array_values(static::$STATUSES)],
+            ['status', 'default', 'value' => static::STATUS_OK],
             ['username', 'match', 'pattern'=>'/^1[345789]\d{9}$/',
                 'message'=>'手机号不正确，目前仅支持中国大陆手机号.'],
             ['is_staff', 'default', 'value'=>false],
@@ -115,7 +115,7 @@ class User extends BaseActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => static::$STATUSES['ACTIVE']]);
+        return static::findOne(['id' => $id, 'status' => static::STATUS_OK]);
     }
 
     /**
@@ -142,7 +142,7 @@ class User extends BaseActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => static::$STATUSES['ACTIVE']]);
+        return static::findOne(['username' => $username, 'status' => static::STATUS_OK]);
     }
 
     /**
@@ -159,7 +159,7 @@ class User extends BaseActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => static::$STATUSES['ACTIVE'],
+            'status' => static::STATUS_OK,
         ]);
     }
 

@@ -2,6 +2,7 @@
 return [
     'adminEmail' => 'webmaster@miduoduo.com',
     'supportEmail' => 'contact@miduoduo.cn',
+    'supportTel' => '010-84991662',
     'bugEmail' => '1bbd853df30a46a695cd7d350bee6caa+lukps3jjzxxxx3gr1rzd@boards.trello.com',
 
     'baidu.map.server_key' => 'oUVOlwx2f8Ok7iGt30CcB2aQ',
@@ -14,6 +15,7 @@ return [
     'baseurl.backend' => 'http://dashboard.miduoduo.cn',
     'baseurl.frontend' => 'http://www.miduoduo.cn',
     'baseurl.h5_origin' => 'http://origin.miduoduo.cn',
+    'baseurl.media' => 'http://media.miduoduo.cn',
 
     'nearby_search.max_distance' => 5000, // 单位米
 

@@ -18,6 +18,7 @@ $('[name="nice-select"] li').click(function(e){
 	var val = $(this).text();
 	var dataVal = $(this).attr("data-value");
 	$(this).parents('[name="nice-select"]').find('input').val(val);
+    $(this).parents('[name="nice-select"]').find('input').trigger('change');
 	$('[name="nice-select"] ul').hide();
 	e.stopPropagation();
 	//alert("中文值是："+val);
@@ -32,15 +33,17 @@ $(document).click(function(){
 
 //日期选择
  $(document).ready(function() {
-      $('.reservation').daterangepicker({ singleDatePicker: true }, function(start, end, label) {
-                    console.log(start.toISOString(), end.toISOString(), label);
-          });
+    $('.reservation').daterangepicker(null, function(start, end, label) {
+        var form = document.forms[0];
+        form.from_date.value = start.format('YYYY-MM-DD');
+        form.to_date.value = end.format('YYYY-MM-DD');
+    });
  });
   $(document).ready(function() {
-                  $('#birthday').daterangepicker({ singleDatePicker: true }, function(start, end, label) {
-                    console.log(start.toISOString(), end.toISOString(), label);
-                  });
-               });
+    $('#birthday').daterangepicker({ singleDatePicker: true }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+    });
+  });
 
 
 

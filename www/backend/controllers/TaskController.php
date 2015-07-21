@@ -3,12 +3,13 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 use common\models\Task;
 use common\models\Company;
 use common\models\TaskSearch;
 use backend\BBaseController;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * TaskController implements the CRUD actions for Task model.
@@ -18,7 +19,7 @@ class TaskController extends BBaseController
 
     public function behaviors()
     {
-        return array_merge(parent::behaviors(), [
+        return ArrayHelper::merge(parent::behaviors(), [
            'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

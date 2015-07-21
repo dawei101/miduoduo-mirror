@@ -14,6 +14,8 @@ class m150715_154747_corp extends BaseMigration
         alter table jz_company drop column address_id;
         alter table jz_company add column service varchar(256) default null;
         alter table jz_company add column corp_type varchar(256) default null;
+        alter table jz_task add column is_longterm smallint default 0;
+
             ";
         $this->execSqls($sqls);
 

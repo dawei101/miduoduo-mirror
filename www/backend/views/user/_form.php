@@ -19,7 +19,7 @@ use common\models\User;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->dropDownList(User::$STATUS_LABELS) ?>
+    <?= $form->field($model, 'status')->dropDownList(User::$STATUSES) ?>
 
 
     <div class="form-group">
