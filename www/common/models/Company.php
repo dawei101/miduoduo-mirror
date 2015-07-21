@@ -94,7 +94,7 @@ class Company extends \common\BaseActiveRecord
             [['exam_status', 'exam_result'], 'integer'],
             ['exam_note', 'string'],
             [['person_idcard_pic', 'corp_idcard_pic'], 'string'],
-            [['person_idcard'], 'pattern', '/^\d{15-18}[xX]?$/'],
+            ['person_idcard', 'match', 'pattern'=>'/^\d{15-18}[xX]?$/', 'message'=> '身份证号有误'],
         ];
     }
 
