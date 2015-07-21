@@ -305,7 +305,7 @@ $this->title = '米多多兼职平台';
                                 </li>
                             </ul>
                             <div class="agree">
-                                <input name="protocol" type="checkbox" checked>我已阅读并同意<a href="#">米多多发布兼职协议</a>
+                                <input name="protocol" type="checkbox" checked>我已阅读并同意<a href="/static/release_agreement.html">米多多发布兼职协议</a>
                                 <p class="cuowu protocol-error">内容不能为空!</p>
                             </div>
                             <button class="fabu-bt">发布职位</button>
