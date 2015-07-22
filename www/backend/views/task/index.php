@@ -69,30 +69,42 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                 },
                 'filter' => Task::$STATUSES,
             ],
+            'is_overflow_label',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '<div style="min-width:120px">{view} {update} {delete} | {adopt} {reject}</div>',
+                'template' => '<div style="min-width:120px">{view_applicant} | {view} {update} {delete} | {adopt} {reject}</div>',
                 'buttons' => [
                     'adopt' => function ($url, $model, $key) {
-                        $options = [
-                            'title' => '审核通过',
-                            'aria-label' => '审核通过',
-                            'data-pjax' => '0',
-                            'data-method' => 'post',
-                        ];
-                        return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url, $options);
+                        if ($model->status==Task::STATUS_IS_CHECK){
+                            $options = [
+                                'title' => '审核通过',
+                                'aria-label' => '审核通过',
+                                'data-pjax' => '0',
+                                'data-method' => 'post',
+                            ];
+                            return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url, $options);
+                        }
                     },
                     'reject' => function ($url, $model, $key) {
+                        if ($model->status==Task::STATUS_IS_CHECK){
+                            $options = [
+                                'title' => '审核不通过',
+                                'aria-label' => '审核不通过',
+                                'data-pjax' => '0',
+                                'data-method' => 'post',
+                            ];
+                            return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url, $options);
+                        }
+                    },
+                    'view_applicant' => function ($url, $model, $key) {
+                        $url = '/task-applicant?TaskApplicantSearch[task_id]=' . $model->id;
                         $options = [
-                            'title' => '审核不通过',
-                            'aria-label' => '审核不通过',
-                            'data-pjax' => '0',
-                            'data-method' => 'post',
+                            'title' => '查看报名详情',
+                            'aria-label' => '查看报名详情',
                         ];
-                        return Html::a('<span class="glyphicon glyphicon-remove"></span>', $url, $options);
+                        return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', $url, $options);
                     }
                 ],
-            
             ],
         ],
     ]); ?>
