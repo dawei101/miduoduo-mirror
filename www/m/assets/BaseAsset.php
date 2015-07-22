@@ -7,19 +7,19 @@
 
 namespace m\assets;
 
+use Yii;
+
 /**
  * @author dawei
  */
-class AppAsset extends BaseAsset
+class BaseAsset extends \yii\web\AssetBundle
 {
+
     public $basePath = '@webroot';
 
-    public $css = [
-        'static/css/m-midd.css',
-        'static/fonts/iconfont.css',
-    ];
-    public $js = [
-        'static/js/fastclick.js',
-        'static/js/jquery.min.js',
-    ];
+    public function init()
+    {
+        $this->baseUrl = Yii::$app->params['baseurl.static.m'];
+        parent::init();
+    }
 }

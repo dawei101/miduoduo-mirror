@@ -30,7 +30,7 @@ BootstrapAsset::register($this);
 <body>
 <!-- 添加隐藏的logo图片300*300用于微信分享图标 - start -->
 <div style="display:none;">
-    <img src="/static/img/weichat_icon.jpg" /> 
+    <img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/weichat_icon.jpg" /> 
 </div>
 <!-- 添加隐藏的logo图片300*300用于微信分享图标 - end -->
 <?php $this->beginBody() ?>

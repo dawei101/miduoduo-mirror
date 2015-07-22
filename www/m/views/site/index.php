@@ -23,8 +23,8 @@ $this->nav_right_title = '个人中心';
 
 
 <ul class="bxslider">
-      <li><a href="/task/view?gid=14367640572382369"><img src="/static/img/banner1.png" ></a></li>
-      <li><a href="/hongbao.html"><img src="/static/img/hongbao.png" ></a></li>
+      <li><a href="/task/view?gid=14367640572382369"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/banner1.png" ></a></li>
+      <li><a href="/hongbao.html"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/hongbao.png" ></a></li>
 </ul>
 
 <div id="content"> 
@@ -71,7 +71,7 @@ $this->nav_right_title = '个人中心';
 </div>
 
 <?php $this->beginBlock('js') ?>
-<script src="/static/js/bxslider.js"></script>
+<script src="<?=Yii::$app->params["baseurl.static.m"]?>/static/js/bxslider.js"></script>
 <script>
   $(document).ready(function(){
     $('.bxslider').bxSlider({
