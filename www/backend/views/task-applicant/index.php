@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\jui\DatePicker;
+use common\models\TaskApplicant;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\TaskApplicantSearch */
@@ -23,15 +24,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute'=> 'id',
                  'label'=>'投递流水ID'
             ],
-            ['attribute'=> 'resume',
+            [
+                 'attribute'=> 'resume_name',
                  'format'=>'raw',
                  'value'=>function($model){
- //var_dump($model->resume->name);die();
-                    // return $model->user->username . "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>查看简历</a>";
-                     return "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>". ($model->resume?($model->resume->name):'') ."</a>";
-
+                     if ($model->resume){
+                         return "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>". ($model->resume?($model->resume->name):'') ."</a>";
+                     }
                  },
                  'label'=>'简历',
+            ],
+            [
+                'attribute'=> 'resume_phonenum',
+                 'format'=>'raw',
+                 'value'=>function($model){
+                     if ($model->resume){
+                        return $model->resume->phonenum;
+                     }
+                 },
+                 'label'=>'报名人电话',
             ],
             ['attribute'=> 'task_title',
                  'format'=>'raw',
@@ -44,13 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>'应聘岗位'
             ],
             [
-             'attribute' => 'contact',
-             'label' => '联系方式',
-             'value' => function($model){
-                return $model->user->username;
-             },
-            ],
-            [
                 'label' => '申请日期',
                 'attribute' => 'created_time',
                 'value' => function($model){
@@ -61,9 +65,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     'dateFormat' => 'yyyy-MM-dd',
                 ]),
             ],
-            'company_alerted:boolean',
-            'applicant_alerted:boolean',
-            'status_label',
+            [
+                'attribute' => 'company_alerted',
+                'format' => 'boolean',
+                'filter' => [0=>'否', 1=>'是']
+            ],
+            [
+                'attribute' => 'applicant_alerted',
+                'format' => 'boolean',
+                'filter' => [0=>'否', 1=>'是']
+            ],
+            [
+                'attribute' => 'status',
+                'value' => function($model){ return $model->status_label;},
+                'filter' => TaskApplicant::$STATUSES,
+            ],
             ['class' => 'yii\grid\ActionColumn', 'template' => '{update}'],
         ],
     ]); ?>
