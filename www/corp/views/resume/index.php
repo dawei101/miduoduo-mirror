@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-usasdse yii\widgets\LinkPager;
+use yii\widgets\LinkPager;
 
 /* @var $this yii\web\View */
 $this->title = '米多多兼职平台';
