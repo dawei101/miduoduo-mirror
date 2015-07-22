@@ -30,7 +30,7 @@ class DataUserController extends BDataBaseController
     {
         // 默认时间范围
         $defaultDateStart   = date("Y-m-d",time()-7*24*60*60);
-        $defaultDateEnd     = date("Y-m-d",time()-1*24*60*60);
+        $defaultDateEnd     = date("Y-m-d",time());
 
         // 快速筛选连接,昨天，七天，三十天
         $ztDateStart        = date("Y-m-d",time()-1*24*60*60);
