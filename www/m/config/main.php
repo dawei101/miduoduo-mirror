@@ -53,10 +53,6 @@ return [
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
             'enablePrettyUrl' => true,
-            'rules' => [
-                'origin/h5v<version:[\d]+>/?' => 'origin/handle',
-                'origin/h5v<version:[\d]+>/<file:[\-\.\_\w\d\/]+>' => 'origin/handle',
-            ],
         ],
         'view' => [
             'class' => 'm\MView',
