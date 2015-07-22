@@ -9,6 +9,7 @@ use api\modules\BaseActiveController;
 use common\Utils;
 use common\models\User;
 use common\models\Resume;
+use common\models\WeichatUserInfo;
 
 /**
  * User Controller API
@@ -22,6 +23,37 @@ class UserController extends BaseActiveController
     public function actions()
     {
         return ['set-password'];
+    }
+
+    public function actionBindThirdPartyAccount()
+    {
+        $params = Yii::$app->request->post('params');
+        $platform = Yii::$app->request->post('platform');
+        $result = false;
+        $function =  'bind'. ucfirst($platform);
+        if (method_exists($this, $function)){
+            $result = $this->$function($params);
+        }
+        return $this->renderJson([
+            'success'=> $result,
+            'message'=> $result?"绑定成功":"绑定失败",
+        ]);
+    }
+
+    public function bindWechat($params)
+    {
+        $user_id = Yii::$app->user->id;
+        $winfo = WeichatUserInfo::find()
+            ->where(['openid'=>$params['openid']])->one();
+        if (!$winfo){
+            $winfo = new WeichatUserInfo;
+        }
+        $winfo->openid = $params['openid'];
+        $winfo->userid = $user_id;
+        $winfo->weichat_name = $params['nickname'];
+        $winfo->weichat_head_pic = $params['headimgurl'];
+        $winfo->status = WeichatUserInfo::STATUS_OK;
+        return $winfo->save();
     }
 
     public function actionSetPassword()

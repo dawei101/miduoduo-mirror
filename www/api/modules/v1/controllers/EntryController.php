@@ -10,6 +10,7 @@ use common\Utils;
 use common\models\User;
 use common\models\AppReleaseVersion;
 use common\models\Device;
+use common\models\WeichatUserInfo;
 
 /**
  * Entry Controller API
@@ -29,7 +30,7 @@ class EntryController extends BaseActiveController
                     [
                         'actions' => ['login', 'signup', 'vlogin',
                         'vcode', 'vcode-for-signup', 'report-device',
-                        'report-push-id', 'check-update',
+                        'report-push-id', 'check-update', 't-login',
                     ],
                         'allow' => true,
                     ],
@@ -151,17 +152,7 @@ class EntryController extends BaseActiveController
                     $user->generateAccessToken();
                     $user->save();
                     $this->activeDevice($user);
-                    return $this->renderJson([
-                        'success'=> true,
-                        'message'=> '登录成功',
-                        'result'=> [
-                            'id'=> $user->id,
-                            'username'=> $username,
-                            'password'=> $password,
-                            'access_token'=> $user->access_token,
-                            'resume' => $user->resume?$user->resume->toArray():null,
-                        ]
-                    ]);
+                    return $this->loginSucceed($user, $password);
                 }
             }
         }
@@ -219,17 +210,7 @@ class EntryController extends BaseActiveController
             $user->generateAccessToken();
             $this->activeDevice($user);
             $user->save();
-            return $this->renderJson([
-                'success'=> true,
-                'message'=> '登录成功',
-                'result'=> [
-                    'id'=> $user->id,
-                    'username'=> $phonenum,
-                    'password'=> '',
-                    'access_token'=> $user->access_token,
-                    'resume' => $user->resume?$user->resume->toArray():null,
-                ]
-            ]);
+            return $this->loginSucceed($user);
         }
         return $this->renderJson([
             'success'=> false,
@@ -248,5 +229,48 @@ class EntryController extends BaseActiveController
             ]);
         }
         return $this->actionVlogin();
+    }
+
+    public function actionTLogin()
+    {
+        $params = Yii::$app->request->post('params');
+        $platform = Yii::$app->request->post('platform');
+        $result = false;
+        $function =  'loginWith'. ucfirst($platform);
+        if (method_exists($this, $function)){
+            $result = $this->$function($params);
+        }
+        return $this->renderJson([
+            'success'=> $result,
+            'message'=> $result?"绑定成功":"绑定失败",
+        ]);
+    }
+
+    public function loginWithWechat($params)
+    {
+        $info = WeichatUserInfo::find()->with('user')
+            ->where(['openid'=>$params['openid']])->one();
+        if ($info){
+            return $this->loginSucceed($info->user);
+        }
+        return $this->renderJson([
+            'success'=> false,
+            'message'=> "该微信号未绑定过",
+        ]);
+    }
+
+    public function loginSucceed($user, $raw_password='')
+    {
+        return $this->renderJson([
+            'success'=> true,
+            'message'=> '登录成功',
+            'result'=> [
+                'id'=> $user->id,
+                'username'=> $user->username,
+                'password'=> $raw_password,
+                'access_token'=> $user->access_token,
+                'resume' => $user->resume?$user->resume->toArray():null,
+            ]
+        ]);
     }
 }
