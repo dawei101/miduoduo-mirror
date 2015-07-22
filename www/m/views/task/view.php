@@ -10,7 +10,7 @@ $this->nav_right_link = '/';
 $this->nav_right_title = '首页';
 ?>
 <?php $this->beginBlock('css') ?>
-<link href="/static/css/tankuang.css" rel="stylesheet"> 
+<link href="<?=Yii::$app->params["baseurl.static.m"]?>/static/css/tankuang.css" rel="stylesheet"> 
 <style>
    .gs-bb{border-bottom:#f3f3f3 solid 1px; border-bottom: 1px solid #f3f3f3;margin-bottom: 0.6em;padding-bottom: 0.6em;}
     .detail ul, .detail ol, .detail dl {
@@ -173,6 +173,6 @@ $(function(){
     });
 });
 </script>
-<script src="/static/js/tankuang.js"> </script>
+<script src="<?=Yii::$app->params["baseurl.static.m"]?>/static/js/tankuang.js"> </script>
 
 <?php $this->endBlock('js') ?>

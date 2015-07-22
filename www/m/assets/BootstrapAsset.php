@@ -1,22 +1,15 @@
 <?php
 /**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
  */
 
 namespace m\assets;
 
-use yii\web\AssetBundle;
 
 /**
  * @author dawei
  */
-class BootstrapAsset extends AssetBundle
+class BootstrapAsset extends BaseAsset
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
-
     public $css = [
         'static/css/bootstrap.min.css',
         'static/css/bootstrap-theme.min.css',

@@ -7,18 +7,10 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-/**
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
-class AppAsset extends AssetBundle
+class AppAsset extends BaseAsset
 {
     public $basePath = '@webroot';
-    // public $basePath = '@webroot/frontend/web/assets';
-    public $baseUrl = '@web';
-    // public $baseUrl = '@web/frontend/web/assets';
+
     public $css = [
         'css/site.css',
         // 'frontend/web/css/site.css',

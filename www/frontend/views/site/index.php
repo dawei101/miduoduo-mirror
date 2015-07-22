@@ -11,14 +11,14 @@ $this->title = '米多多兼职平台';
 <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <meta name="description" content="米多多兼职网，是中国最大的正规网上兼职平台。所有兼职招聘信息全部经过人工审核，不收任何押金和费用，安全有保障。免费找兼职，就上米多多兼职网。 miduoduo.cn" />
 <meta name="keywords" content="兼职网,大学生兼职网,正规网上兼职平台" />
-<link rel="shortcut icon"  href="/static/img/miduoduo.ico" />
+<link rel="shortcut icon"  href="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/miduoduo.ico" />
 <title>米多多/兼职平台</title>
-<link href="/static/css/miduoduo.css" type="text/css" rel="stylesheet" >
+<link href="<?=Yii::$app->params["baseurl.static.www"]?>/static/css/miduoduo.css" type="text/css" rel="stylesheet" >
 </head>
 <body>
 <div class="nav-top">
     <div class="nav">
-        <div class="qiuzhi-logo"><img src="/static/img/qiuzhi-logo.png" width="244" height="80"></div>
+        <div class="qiuzhi-logo"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/qiuzhi-logo.png" width="244" height="80"></div>
         <ul>
             <li><a href="/">首页</a></li>
             <li><a href="<?=Yii::$app->params['baseurl.m'] . '/task'?>">最新兼职</a></li>
@@ -28,13 +28,13 @@ $this->title = '米多多兼职平台';
 </div>
 <div class="qiuzhi-banner">
   <div class="cent">
-      <div class="pic-top"><img src="/static/img/jianzhi-pic.png" width="805" height="170"></div>
+      <div class="pic-top"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/jianzhi-pic.png" width="805" height="170"></div>
       <div class="erwei-box">
            <div class="erweibox">
-                <img src="/static/img/ban-erwei.jpg" width="140" height="140"><P>扫码关注微信号</P> 
+                <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei.jpg" width="140" height="140"><P>扫码关注微信号</P> 
            </div>
            <div class="erweibox">
-                <img src="/static/img/android-app.jpg" width="140" height="140"><P>下载安卓版APP</P> 
+                <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/android-app.jpg" width="140" height="140"><P>下载安卓版APP</P> 
            </div>
       </div>
   </div>
@@ -42,13 +42,13 @@ $this->title = '米多多兼职平台';
 
 <div class="miduoduo-one">
   <div class="miduoduo-ms">
-    <div class="y-ability"><img src="/static/img/ablility-icon.png" width="75" height="80"><span>我的能力</span></div>
+    <div class="y-ability"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ablility-icon.png" width="75" height="80"><span>我的能力</span></div>
     <div class="jia1">+</div>
-    <div class="y-Interest"><img src="/static/img/Interest-icon.png" width="75" height="80"><span>我的兴趣</span></div>
+    <div class="y-Interest"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/Interest-icon.png" width="75" height="80"><span>我的兴趣</span></div>
     <div class="jia2">+</div>
-    <div class="y-time"><img src="/static/img/time-icon.png" width="75" height="80"><span>我的时间</span></div>
+    <div class="y-time"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/time-icon.png" width="75" height="80"><span>我的时间</span></div>
     <div class="deng">=</div>
-    <div class="y-miduoduo"><img src="/static/img/logo1.png" width="150" height="60"><span>我的兼职工作</span></div>
+    <div class="y-miduoduo"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/logo1.png" width="150" height="60"><span>我的兼职工作</span></div>
   </div>
 </div>
 <div class="position-type-box">
@@ -79,28 +79,28 @@ $this->title = '米多多兼职平台';
 <div class="function-display" >
   <ul id="suc1">
     <li>
-      <img src="/static/img/function-pic.jpg" width="330" height="330">
-      <div class="text"><img src="/static/img/free-icon.png" width="71" height="32"><p>完全免费</p></div>
+      <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/function-pic.jpg" width="330" height="330">
+      <div class="text"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/free-icon.png" width="71" height="32"><p>完全免费</p></div>
     </li>
      <li>
-     <img src="/static/img/function-pic1.jpg" width="330" height="330">
-<div class="text"><img src="/static/img/xing.png" width="96" height="29"><p>一流合作企业</p></div>
+     <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/function-pic1.jpg" width="330" height="330">
+<div class="text"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/xing.png" width="96" height="29"><p>一流合作企业</p></div>
     </li>
      <li>
-     <img src="/static/img/function-pic2.jpg" width="330" height="330">
-<div class="text"><img src="/static/img/gaoxin.png" width="39" height="42"><p>众多高薪职位</p></div>
+     <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/function-pic2.jpg" width="330" height="330">
+<div class="text"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/gaoxin.png" width="39" height="42"><p>众多高薪职位</p></div>
     </li>
      <li>
-      <img src="/static/img/function-pic3.jpg" width="330" height="330">
-<div class="text"><img src="/static/img/anquan.png" width="41" height="46"><p>安全担保</p></div>
+      <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/function-pic3.jpg" width="330" height="330">
+<div class="text"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/anquan.png" width="41" height="46"><p>安全担保</p></div>
     </li>
      <li>
-     <img src="/static/img/function-pic4.jpg" width="330" height="330">
-<div class="text"><img src="/static/img/lignhuo.png" width="38" height="38"><p>时间灵活</p></div>
+     <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/function-pic4.jpg" width="330" height="330">
+<div class="text"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/lignhuo.png" width="38" height="38"><p>时间灵活</p></div>
     </li>
      <li>
-     <img src="/static/img/function-pic5.jpg" width="330" height="330">
-<div class="text"><img src="/static/img/jiujin.png" width="43" height="41"><p>就近择业</p></div>
+     <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/function-pic5.jpg" width="330" height="330">
+<div class="text"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/jiujin.png" width="43" height="41"><p>就近择业</p></div>
     </li>
   </ul>
 </div>
@@ -125,13 +125,13 @@ $this->title = '米多多兼职平台';
         <li class="xian"></li>
         <li class="attention-us">
             <h2>关注我们</h2>
-            <div class="erwei"><img src="/static/img/android-app.jpg" width="70" height="70"><div class="er-text">扫码下载安卓App</div></div>
-            <div class="erwei"><img src="/static/img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>
+            <div class="erwei"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/android-app.jpg" width="70" height="70"><div class="er-text">扫码下载安卓App</div></div>
+            <div class="erwei"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>
        </li>
      </ul>
 </footer>
 
-<script src="/static/js/jquery.min.js"></script> 
+<script src="<?=Yii::$app->params["baseurl.static.www"]?>/static/js/jquery.min.js"></script> 
 <script>
     $(function(){
         $(function(){
