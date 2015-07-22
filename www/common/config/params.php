@@ -13,6 +13,7 @@ return [
     'baseurl.api' => 'http://api.miduoduo.cn',
     'baseurl.m' => 'http://m.miduoduo.cn',
     'baseurl.backend' => 'http://dashboard.miduoduo.cn',
+    'baseurl.corp' => 'http://corp.miduoduo.cn',
     'baseurl.frontend' => 'http://www.miduoduo.cn',
     'baseurl.h5_origin' => 'http://origin.miduoduo.cn',
     'baseurl.media' => 'http://media.miduoduo.cn',
