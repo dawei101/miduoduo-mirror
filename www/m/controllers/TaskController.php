@@ -87,10 +87,9 @@ class TaskController extends \m\MBaseController
             $tasks[] = ['task'=>$task, 'distance'=>$distance];
         }
 
-        uasort($tasks, function($a, $b){
+        usort($tasks, function($a, $b){
             return $a['distance'] < $b['distance'] ? -1:1;
         });
-
 
         return $this->render('nearest', 
             ['tasks'=>array_slice($tasks, $pages->offset, $pages->limit),

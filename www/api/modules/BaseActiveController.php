@@ -172,6 +172,7 @@ class BaseActiveController extends ActiveController
             if (!in_array($operate, static::$QUERY_OPERATIONS)){
                 continue;
             }
+
             if(preg_match('/^[\w\d\_\.]+$/i', $filter[1])===0){
                 continue;
             }
@@ -182,9 +183,35 @@ class BaseActiveController extends ActiveController
             } else {
                 $filter[1] = $this->getColumn($filter[1]);
             }
-            $query->andWhere($filter);
-            continue;
+            if (!empty($filter[2])){
+                $query->andWhere($filter);
+            }
         }
+        return $this->_buildOrderQuery($query);
+    }
+
+    public function _buildOrderQuery($query)
+    {
+        $o_str = Yii::$app->request->get('orders');
+        $o_arr = $o_str?json_decode($o_str):[];
+        $orders = [];
+        foreach ($o_arr as $o){
+            if (substr($o, 0, 1)=='-'){
+                $sort = SORT_DESC;
+                $key = substr($o, 1);
+            } else {
+                $sort = SORT_ASC;
+                $key = $o;
+            }
+            $fs = explode('.', $key);
+            if (2==count($fs)){
+                $column = $this->getColumn($fs[1], $fs[0]);
+            } else {
+                $column = $this->getColumn($filter[1]);
+            }
+            $orders[$column] = $sort;
+        }
+        $query->orderBy($orders);
         return $query;
     }
 

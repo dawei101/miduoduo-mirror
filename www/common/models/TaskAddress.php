@@ -120,7 +120,28 @@ class TaskAddress extends \common\BaseActiveRecord
         $s = (2 * asin(sqrt(pow(sin($rt/2), 2))) +
             cos($rlat1)*cos($rlat2) * pow(sin($rg/2),2)) * 6372.797 * 1000;
         return $s;
+    }
 
+    public static $base_lat;
+    public static $base_lng;
+
+    public function getDistance()
+    {
+        if (static::$base_lat && static::$base_lng)
+        {
+            return $this->distance(static::$base_lat, static::$base_lng);
+        }
+        return 0;
+    }
+
+    public function getDistance_label()
+    {
+        return Yii::$app->formatter->asDistance($this->distance);
+    }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['distance', 'distance_label']);
     }
 
     public static function cacheUserLocation($user_id,$lat,$lng){
