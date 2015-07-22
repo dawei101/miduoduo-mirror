@@ -1,6 +1,6 @@
 <?php
 
-namespace m\assets;
+namespace frontend\assets;
 
 use Yii;
 
@@ -14,7 +14,7 @@ class BaseAsset extends \yii\web\AssetBundle
 
     public function init()
     {
-        $this->baseUrl = Yii::$app->params['baseurl.static.m'];
+        $this->baseUrl = Yii::$app->params['baseurl.static.www'];
         parent::init();
     }
 }
