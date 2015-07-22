@@ -32,7 +32,7 @@ $this->wechat_apis = ['getLocation'];
         <dd> 
           <ul>
             <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>''])?>">全城</a></li>
-            <li>
+            <li style="display: none;">
                 <?php if($location['id']){ ?>
                     <a href="/task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a>
                 <?php }else{ ?>
