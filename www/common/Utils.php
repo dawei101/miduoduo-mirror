@@ -5,6 +5,12 @@ use Yii;
 
 class Utils
 {
+
+    public static function getApp()
+    {
+        return Yii::$app;
+    }
+
     public static function isPhonenum($phonenum)
     {
         return preg_match("/^1[345789]\d{9}$/",$phonenum);
@@ -75,6 +81,24 @@ class Utils
     {
         $vcode = Yii::$app->cache->get(Utils::getVcodeCachekey($phonenum));
         return $vcode==$code;
+    }
+
+    public static function saveUploadFile($uploadFile)
+    {
+        $hash = Yii::$app->getSecurity()->generateRandomString() . '-' . intval(microtime(true)*10000);
+        $ext = pathinfo($uploadFile['name'], PATHINFO_EXTENSION);
+        $filename = $hash . '.' . $ext;
+        $uploadfile = Yii::getAlias('@media/' . $filename);
+        if(move_uploaded_file($uploadFile['tmp_name'], $uploadfile)) {
+            return $filename;
+        }
+        return false;
+    }
+
+    public static function urlOfFile($filename)
+    {
+        return (substr($filename, 0, 4 ) === "http")?$filename:(
+            Yii::$app->params['baseurl.media'] . '/' . $filename);
     }
 
 }

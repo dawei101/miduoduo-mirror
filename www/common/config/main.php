@@ -1,6 +1,8 @@
 <?php
 $root_path = dirname(dirname(__DIR__));
 
+$project_root = dirname($root_path);
+
 $params = [];
 
 return [
@@ -13,6 +15,14 @@ return [
             'username' => 'root',
             'password' => '123123',
             'charset' => 'utf8',
+        ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'defaultTimeZone' => 'Asia/Shanghai',
+            'timeZone' => 'Asia/Shanghai',
+            'dateFormat' => 'php:Y-m-d',
+            'datetimeFormat' => 'php:Y-m-d H:i',
+            'timeFormat' => 'php:H:i:s',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -70,7 +80,9 @@ return [
         'api' => $root_path . '/api',
         'm' => $root_path . '/m',
         'corp' => $root_path . '/corp',
-        'html5_src' => $root_path . '/html5_src',
+        'data' => '/service/data',
+        'media' => '/service/data/media',
+        'html5_src' => $project_root . '/frontend/dist/webapp',
         'html5_dest' => $root_path . '/html5_dest',
     ],
     'language'=>'zh-CN',

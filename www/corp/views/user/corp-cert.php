@@ -12,10 +12,10 @@ $this->title = '米多多兼职平台';
 <div class="container">
   <div class="row">
     <div class="fabu-box padding-0">
-      <div class="col-sm-12 col-md-2 col-lg-2 padding-0" style="background:#f00">
+      <div class="col-sm-2 padding-0">
         <div class="qiye-left">
           <dl>
-            <dt class="default-title"><i class="iconfont">&#xe609;</i>我要发布</dt>
+            <dt class="default-title"><i class="iconfont">&#xe609;</i><a href="/task/publish">我要发布</a></dt>
           </dl>
           <dl>
             <dt class="default-title"><i class="iconfont">&#xe612;</i>职位管理</dt>
@@ -39,10 +39,10 @@ $this->title = '米多多兼职平台';
           </dl>
         </div>
       </div>
-      <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
+      <div class="col-sm-10 padding-0 ">
         <div class="right-center">
             <div class="conter-title">企业认证</div>
-        <form>
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
           <ul class="tianxie-box" style="border:none">
               <li>
                 <div class="pull-left title-left text-center">企业名称</div>
@@ -67,7 +67,7 @@ $this->title = '米多多兼职平台';
                 <div class="pull-left right-box">
                   <div class="form-group">
                       <label class="shangchuan" for="file0">上传图片</label>
-                      <input name="corp_idcard_pic" type="file" id="file0" style="display:none;"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
+                      <input name="person_idcard_pic" type="file" id="file0" style="display:none;"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
                    </div>
                   <div class="tishi">
                         <p>1、在拍摄证件时，确保图片清晰（证件底纹、字体、人物照片、头像清晰），无模糊，无白光点等。</p>
@@ -81,11 +81,11 @@ $this->title = '米多多兼职平台';
                 </div>
               </li>
               <li>
-                <div class="pull-left title-left text-center">上传身份证照片</div>
+                <div class="pull-left title-left text-center">上传营业执照照片</div>
                 <div class="pull-left right-box">
                   <div class="form-group">
                       <label class="shangchuan" for="file1">上传图片</label>
-                      <input type="file" id="file1" style="display:none;"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
+                      <input type="file" id="file1" style="display:none;" name="corp_idcard_pic"><span class="pull-rigth"><em class="em-rad">*</em>提交照片需要注意以下几点</span>
                    </div>
                   <div class="tishi">
                         <p>1、加盖公章的企业营业执照副本扫描件</p>
@@ -97,7 +97,7 @@ $this->title = '米多多兼职平台';
               </li>
                 <button class="queding-bt">确定</button>
            </ul>
-        </form>
+        <?php ActiveForm::end(); ?>
         </div>
       </div>
     </div>
@@ -107,39 +107,28 @@ $this->title = '米多多兼职平台';
 
 <script>
 $("#file0").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-            console.log("objUrl = "+objUrl) ;
-            if (objUrl) {
-                        $("#img0").attr("src", objUrl) ;
-                            }
+    var objUrl = getObjectURL(this.files[0]) ;
+    console.log("objUrl = "+objUrl) ;
+    if (objUrl) {
+        $("#img0").attr("src", objUrl) ;
+    }
 }) ;
 $("#file1").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-            console.log("objUrl = "+objUrl) ;
-            if (objUrl) {
-                        $("#img1").attr("src", objUrl) ;
-                            }
+    var objUrl = getObjectURL(this.files[0]) ;
+    console.log("objUrl = "+objUrl) ;
+    if (objUrl) {
+        $("#img1").attr("src", objUrl) ;
+    }
 }) ;
 function getObjectURL(file) {
-        var url = null ;
-            if (window.createObjectURL!=undefined) { // basic
-                        url = window.createObjectURL(file) ;
-                            } else if (window.URL!=undefined) { // mozilla(firefox)
-                                        url = window.URL.createObjectURL(file) ;
-                                            } else if (window.webkitURL!=undefined) { // webkit or chrome
-                                                        url = window.webkitURL.createObjectURL(file) ;
-                                                            }
-            return url ;
-}
-function getObjectURL(file1) {
-        var url = null ;
-            if (window.createObjectURL!=undefined) { // basic
-                        url = window.createObjectURL(file1) ;
-                            } else if (window.URL!=undefined) { // mozilla(firefox)
-                                        url = window.URL.createObjectURL(file1) ;
-                                            } else if (window.webkitURL!=undefined) { // webkit or chrome
-                                                        url = window.webkitURL.createObjectURL(file1) ;
-                                                            }
-            return url ;
+    var url = null ;
+    if (window.createObjectURL!=undefined) { // basic
+        url = window.createObjectURL(file) ;
+    } else if (window.URL!=undefined) { // mozilla(firefox)
+        url = window.URL.createObjectURL(file) ;
+    } else if (window.webkitURL!=undefined) { // webkit or chrome
+        url = window.webkitURL.createObjectURL(file) ;
+    }
+    return url ;
 }
 </script>

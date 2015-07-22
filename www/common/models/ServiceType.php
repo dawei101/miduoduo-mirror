@@ -16,17 +16,20 @@ use Yii;
  */
 class ServiceType extends \common\BaseActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+
+    public static $STATUSES = [
+        0=>'正常',
+        10=>'已删除'
+    ];
+
+    const STATUS_OK = 0;
+    const STATUS_DELETED = 0;
+
     public static function tableName()
     {
         return '{{%service_type}}';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -63,7 +66,7 @@ class ServiceType extends \common\BaseActiveRecord
 
     public function getStatus_label()
     {
-        return static::$STATUS_LABELS[$this->status];
+        return static::$STATUSES[$this->status];
     }
 
     public function fields()

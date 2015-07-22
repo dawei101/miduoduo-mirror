@@ -318,7 +318,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <input type='hidden' id='jrtdrs-title' value='当日投递人数'>
                     </th>
                     <th class="show-highcharts" id="jrxyhtd">
-                        当日新用户投递
+                        当日新投递用户
                         <?php $jrxyhtd='';foreach($dataRowsH as $k => $v){ ?>    
                             <?php $jrxyhtd .= isset($v['jrxyhtd']) ? $v['jrxyhtd']."," : 0 ?>
                         <?php } echo "<input type='hidden' id='jrxyhtd-data' value='".trim($jrxyhtd,',')."'>"; ?>

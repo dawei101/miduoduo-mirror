@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'status')->dropdownList(
-        $model::$STATUS_LABELS
+        $model::$STATUSES
     ) ?>
 
     <div class="form-group">

@@ -1,3 +1,3 @@
 [submodule "frontend"]
 	path = frontend
-	url = git@github.com:chongdd/miudoudo_fronted.git
+	url = git@github.com:chongdd/m_frontend.git

@@ -71,30 +71,31 @@ class Task extends \common\BaseActiveRecord
     ];
 
     public static $HEIGHT_REQUIREMENT = [
-    	0=>'不限',
-    	1=>'150cm以下',
-    	2=>'150cm',
-    	3=>'155cm',
+    	0=>'身高无要求',
+    	1=>'155cm以上',
+    	2=>'165cm以上',
+    	3=>'170cm以上',
+    	3=>'175cm以上',
     ];
 
     public static $FACE_REQUIREMENT = [
-    	0=>'一般',
-    	1=>'好',
-    	2=>'非常好',
+    	0=>'形象无要求',
+    	1=>'形象好',
+    	2=>'形象非常好',
     ];
 
     public static $TALK_REQUIREMENT = [
-    	0=>'一般',
-    	1=>'强',
+    	0=>'沟通能力无要求',
+    	1=>'沟通能力强',
     ];
 
     public static $HEALTH_CERTIFICATED = [
-    	0=>'无',
-    	1=>'有',
+    	0=>'健康证无要求',
+    	1=>'有健康证',
     ];
 
     public static $DEGREE_REQUIREMENT = [
-    	0=>'无',
+    	0=>'学历无要求',
     	1=>'高中',
     	2=>'大专',
     	3=>'本科',
@@ -102,7 +103,7 @@ class Task extends \common\BaseActiveRecord
     ];
 
     public static $WEIGHT_REQUIREMENT = [
-    	0=>'不限',
+    	0=>'体重无要求',
     	1=>'60kg以下',
     	2=>'60-65kg',
     	3=>'65-70kg',
@@ -162,7 +163,7 @@ class Task extends \common\BaseActiveRecord
         return [
             [['salary', 'salary_unit', 'from_date', 'to_date',
                 'need_quantity', 'detail',
-                'service_type_id', 'title'], 'required'],
+                'title', 'service_type_id'], 'required'],
             ['company_id', 'required', 'message'=>'请选择一个已存在的公司'],
             [['id', 'clearance_period', 'salary_unit', 'need_quantity',
                 'got_quantity', 'user_id', 'service_type_id',
@@ -177,8 +178,6 @@ class Task extends \common\BaseActiveRecord
             [['title', 'address'], 'string', 'max' => 500],
             ['created_time', 'default', 'value'=>time(), 'on'=>'insert'],
             ['updated_time', 'default', 'value'=>time(), 'on'=>'update'],
-            [['from_date', 'to_date'], 'date', 'format' => 'yyyy-M-d'],
-            [['from_time', 'to_time'], 'date', 'format' => 'H:i'],
             ['got_quantity', 'default', 'value'=>0],
             ['status', 'default', 'value'=>0],
             [['contact', 'contact_phonenum'], 'required'],
@@ -286,6 +285,18 @@ class Task extends \common\BaseActiveRecord
         return $this->hasMany(TaskAddress::className(), ['task_id' => 'id']);
     }
 
+    public function getAddress_label()
+    {
+        $addresses = $this->getAddresses()->all();
+        $result = '';
+        if($addresses){
+            for($i=0,$len=count($addresses);$i<$len;$i++){
+                if($i > 0) $result = $result.',';
+                $result = $result.$addresses[$i]->title;
+            }
+        }
+        return $result;
+    }
 
     public function getDistrict()
     {

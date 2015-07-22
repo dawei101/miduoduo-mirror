@@ -19,7 +19,7 @@ use yii\widgets\LinkPager;
     <div class="border-bt">
       <div class="panel-body lnk">
         <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-            <?=\Yii::$app->formatter->asDate($task->from_date);?>至<?=\Yii::$app->formatter->asDate($task->to_date)?>
+            <?=substr($task->from_date, 5);?>至<?=substr($task->to_date, 5)?>
         </p>
         <div class="te-x">
           <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>

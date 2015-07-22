@@ -55,7 +55,7 @@ class OriginController extends Controller
 
     public function actionImportSource()
     {
-        $path = Yii::getAlias('@html5_src/dest');
+        $path = Yii::getAlias('@html5_src');
         if (!is_dir($path)) {
             echo "Source need to be a path \n";
             exit(1);

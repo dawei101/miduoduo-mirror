@@ -13,10 +13,10 @@ $this->title = '米多多兼职平台';
 <div class="container">
   <div class="row">
     <div class="fabu-box padding-0">
-      <div class="col-sm-12 col-md-2 col-lg-2 padding-0" style="background:#f00">
+      <div class="col-sm-2 padding-0">
         <div class="qiye-left">
           <dl>
-            <dt class="default-title"><i class="iconfont">&#xe609;</i>我要发布</dt>
+            <dt class="default-title"><i class="iconfont">&#xe609;</i><a href="/task/publish">我要发布</a></dt>
           </dl>
           <dl>
             <dt  class="default-title" class=""><i class="iconfont">&#xe612;</i>职位管理</dt>
@@ -40,7 +40,7 @@ $this->title = '米多多兼职平台';
           </dl>
         </div>
       </div>
-      <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
+      <div class="col-sm-10 padding-0 ">
         <div class="right-center">
           <div class="conter-title">简历管理</div>
             <dl class="jianli-lis">
@@ -51,19 +51,19 @@ $this->title = '米多多兼职平台';
                     <div class="pull-left tab4">投递时间</div>
                     <div class="pull-left tab5">操作</div>
                 </dt>
-                <?php foreach ($resumes as $resume) {?>
+                <?php foreach ($task_apps as $task_app) {?>
                 <dd>
                     <div class="pull-left tab1 borser-tab-right">
-                        <div class="names" aid="<?=$resume['id']?>"><span style="float: left; display: block; line-height: 20px; padding: 0 10px;"><?=$resume['name']?></span></div>
-                        <div class="jiben"><span><?=$resume['age']?>岁</span><span><?=($resume['gender']==0)?'男':'女'?></span><span><?=$resume['college']?></span></div>
+                        <div class="names" aid="<?=$task_app->resume->id?>"><span style="float: left; display: block; line-height: 20px; padding: 0 10px;"><a href="<?=$task_app->resume->common_url?>" target="blank"><?=$task_app->resume->name?></a></span></div>
+                        <div class="jiben"><span><?=$task_app->resume->age?>岁</span><span><?=$task_app->resume->gender_label?></span><span><?=$task_app->resume->college?></span></div>
                     </div>
-                    <div class="pull-left tab2 text-center borser-tab-right"><a href="<?=Yii::$app->params['baseurl.m']?>/task/view?gid=<?=$resume['gid']?>" target="blank"><?=$resume['title']?></a></div>
-                    <div class="pull-left tab3 text-center borser-tab-right"><?=$resume['phonenum']?$resume['phonenum']:'&nbsp;'?></div>
-                    <div class="pull-left tab4 text-center borser-tab-right"><?=$resume['created_time']?></div>
-                    <?php if($resume['status'] == 0) {?>
-                    <div class="pull-left tab5"><button class="pull-left jishou" aid="<?=$resume['id']?>">接受报名</button><button class="pull-left jujue" aid="<?=$resume['id']?>">不合适</button></div>
+                    <div class="pull-left tab2 text-center borser-tab-right"><a href="<?=Yii::$app->params['baseurl.m']?>/task/view?gid=<?=$task_app->task->gid?>" target="blank"><?=$task_app->task->title?></a></div>
+                    <div class="pull-left tab3 text-center borser-tab-right"><?=$task_app->resume->phonenum?></div>
+                    <div class="pull-left tab4 text-center borser-tab-right"><?=$task_app->created_time?></div>
+                    <?php if($task_app->status == $task_app::STATUS_WAIT_EXAMINE) {?>
+                    <div class="pull-left tab5"><button class="pull-left jishou" aid="<?=$task_app->id?>">接受报名</button><button class="pull-left jujue" aid="<?=$task_app->id?>">不合适</button></div>
                     <?php  }else{?>
-                    <div class="pull-left tab5"><div class="yijishou">已接受</div></div>
+                    <div class="pull-left tab5"><div class="yijishou"><?=$task_app->status_label?></div></div>
                     <?php }?>
                 </dd>
                 <?php }?>

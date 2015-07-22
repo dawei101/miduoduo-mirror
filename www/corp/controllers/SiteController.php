@@ -4,36 +4,23 @@ namespace corp\controllers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use corp\FBaseController;
+use corp\CBaseController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use common\models\Company;
 
 
 /**
  * Site controller
  */
-class SiteController extends FBaseController
+class SiteController extends CBaseController
 {
-    /**
-     * @inheritdoc
-     */
+
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                    'login' => ['post'],
-                    'register' => ['post'],
-                ],
-            ],
-        ];
+        return [];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -49,10 +36,10 @@ class SiteController extends FBaseController
 
     public function actionIndex()
     {
-        if (!\Yii::$app->user->isGuest) {
-            return $this->redirect('/task/');
+        if (\Yii::$app->user->isGuest) {
+            return $this -> render('index');
         }
-        return $this -> render('index');
+        return $this->redirect('/task/');
     }
 
 

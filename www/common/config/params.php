@@ -2,6 +2,7 @@
 return [
     'adminEmail' => 'webmaster@miduoduo.com',
     'supportEmail' => 'contact@miduoduo.cn',
+    'supportTel' => '010-84991662',
     'bugEmail' => '1bbd853df30a46a695cd7d350bee6caa+lukps3jjzxxxx3gr1rzd@boards.trello.com',
 
     'baidu.map.server_key' => 'oUVOlwx2f8Ok7iGt30CcB2aQ',
@@ -12,8 +13,10 @@ return [
     'baseurl.api' => 'http://api.miduoduo.cn',
     'baseurl.m' => 'http://m.miduoduo.cn',
     'baseurl.backend' => 'http://dashboard.miduoduo.cn',
+    'baseurl.corp' => 'http://corp.miduoduo.cn',
     'baseurl.frontend' => 'http://www.miduoduo.cn',
     'baseurl.h5_origin' => 'http://origin.miduoduo.cn',
+    'baseurl.media' => 'http://media.miduoduo.cn',
 
     'nearby_search.max_distance' => 5000, // 单位米
 
@@ -35,6 +38,7 @@ return [
             'nearby'    => 'qwENcjpEuIBn53LHyFh4-PmmpVaSmL04WpylDX1JkaE',     // 附近模板
             'applicant' => 'srIf6HPINf-I-BmlPJSqxfJ_E-ZUFlrp_D4MUUvQFOc',     // 报名成功
         ],
+        'preview_user'  => '13699273824,18611299991,18210135925,13240055520',// 定时推送预览人员
     ],
 
     'config'=>[

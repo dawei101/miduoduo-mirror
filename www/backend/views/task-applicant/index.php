@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  },
                  'label'=>'简历',
             ],
-            ['attribute'=> 'task',
+            ['attribute'=> 'task_title',
                  'format'=>'raw',
                  'value'=>function($model){
                     if ($model->task){

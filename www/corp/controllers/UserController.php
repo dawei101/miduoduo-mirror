@@ -7,6 +7,7 @@ use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
+use yii\helpers\ArrayHelper;
 
 use common\Utils;
 use common\models\LoginWithDynamicCodeForm;
@@ -15,7 +16,7 @@ use common\sms\SmsSenderFactory;
 use common\models\Company;
 use common\models\ServiceType;
 
-use corp\FBaseController;
+use corp\CBaseController;
 use corp\models\PasswordResetRequestForm;
 use corp\models\ResetPasswordForm;
 use corp\models\SignupForm;
@@ -26,14 +27,14 @@ use corp\models\PersonalCertForm;
 /**
  * Site controller
  */
-class UserController extends FBaseController
+class UserController extends CBaseController
 {
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
-        return [
+        return ArrayHelper::merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
@@ -42,7 +43,7 @@ class UserController extends FBaseController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['add-contact-info','logout', 'info', 'account', 'personal-cert', 'corp-cert'],
+                        'actions' => ['add-contact-info','logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -55,7 +56,7 @@ class UserController extends FBaseController
                     'vlogin' => ['post'],
                 ],
             ],
-        ];
+        ]);
     }
 
     /**
@@ -80,7 +81,6 @@ class UserController extends FBaseController
         if ($loginModel->load(Yii::$app->request->post(), '') && $loginModel->login()) {
             return $this->renderJson(['result' => true ]);
         }
-
         return $this->renderJson(['result' => false, 'error' => $loginModel->errors]);
     }
 
@@ -107,12 +107,23 @@ class UserController extends FBaseController
             ]);
         }
 
+        if (Yii::$app->request->get('check_existed') == 1) {
+            $user = User::findByUsername($username);
+            if ($user) {
+                return $this->renderJson([
+                        'result'=> false,
+                        'msg'=> "手机号已注册"
+                ]);
+            }
+        }
+
         if (Utils::sendVerifyCode($username)){
             return $this->renderJson([
                     'result'=> true,
                     'msg'=> "验证码已发送"
             ]);
         }
+
         return $this->renderJson([
                 'result'=> false,
                 'msg'=> "验证码发送失败, 请稍后重试。"
@@ -179,10 +190,21 @@ class UserController extends FBaseController
 
     public function actionAddContactInfo()
     {
-        $model = new Company;
-        $model->setAttributes(Yii::$app->request->post(), false);
-        if ($model->validate() && $model->save()) {
-            return $this->goHome();
+        $model = Company::findByCurrentUser();
+        if (!$model) {
+            $model = new Company;
+        }
+        if(Yii::$app->request->isPost){
+            $model->setAttributes(Yii::$app->request->post(), false);
+            $model->user_id = Yii::$app->user->id;
+            if ($model->validate() && $model->save()) {
+                if (!Yii::$app->user->can('corp')){
+                    $auth = Yii::$app->authManager;
+                    $role = $auth->getRole('corp');
+                    $auth->assign($role, Yii::$app->user->id);
+                }
+                return $this->redirect('/task/publish');
+            }
         }
         return $this->render('addContactInfo', ['model' => $model]);
     }
@@ -219,8 +241,8 @@ class UserController extends FBaseController
                 return $this->render('account', ['errmsg'=>'原密码错误']);
             }
 
-			$user->setPassword($new_password);
-        	$user->removePasswordResetToken();
+            $user->setPassword($new_password);
+            $user->removePasswordResetToken();
             if ($user->validate() && $user->save()) {
                 return $this->goHome();
             }
@@ -231,42 +253,53 @@ class UserController extends FBaseController
 
     public function actionPersonalCert()
     {
-    	$company = Company::findByCurrentUser();
+        $company = Company::findByCurrentUser();
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
 
-    	if(Yii::$app->request->isPost){
-            $hash = Yii::$app->getSecurity()->generateRandomString();
-    		$uploaddir = '/service/data/media/';
-			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
-			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
+        if(Yii::$app->request->isPost){
+            $filename = Utils::saveUploadFile($_FILES['person_idcard_pic']);
+            if(!$filename) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
+            $company->person_idcard_pic = $filename;
+            $company->exam_status = Company::EXAM_PROCESSING;
             $company->setAttributes(Yii::$app->request->post(), false);
-            $company->person_idcard_pic = $hash;
             if (!$company->validate() || !$company->save()) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
             }
             return $this->goHome();
-    	}
+        }
         return $this->render('personal-cert',['company' => $company, 'error'=>false]);
     }
 
     public function actionCorpCert()
     {
         $company = Company::findByCurrentUser();
-    	if(Yii::$app->request->isPost){
-            $hash = Yii::$app->getSecurity()->generateRandomString();
-    		$uploaddir = '/service/data/media';
-			$uploadfile = $uploaddir . $hash;//basename($_FILES['person_idcard_pic']['name']);
-			if(!move_uploaded_file($_FILES['person_idcard_pic']['tmp_name'], $uploadfile)) {
+        if (!$company) {
+            return $this->redirect('/user/add-contact-info');
+        }
+        if(Yii::$app->request->isPost){
+            $filename = Utils::saveUploadFile($_FILES['person_idcard_pic']);
+            if(!$filename) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
+            $company->person_idcard_pic = $filename;
+
+            $filename = Utils::saveUploadFile($_FILES['corp_idcard_pic']);
+            if(!$filename) {
+                return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
+            }
+            $company->corp_idcard_pic = $filename;
+
+            $company->exam_status = Company::EXAM_PROCESSING;
             $company->setAttributes(Yii::$app->request->post(), false);
-            $company->person_idcard_pic = $hash;
             if (!$company->validate() || !$company->save()) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
             }
             return $this->goHome();
-    	}
+        }
         return $this->render('corp-cert',['company'=>$company, 'error'=>false]);
     }
 }

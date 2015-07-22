@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use common\models\User;
 use common\models\Address;
+use common\models\TaskApplicant;
 
 /**
  * This is the model class for table "{{%resume}}".
@@ -35,9 +36,14 @@ use common\models\Address;
 class Resume extends \common\BaseActiveRecord
 {
 
-    /**
-     * @inheritdoc
-     */
+    public static $STATUSES = [
+        0 => '正常',
+        10 => '已删除',
+    ];
+
+    const STATUS_OK = 0;
+    const STATUS_DELETED = 10;
+
     public static function tableName()
     {
         return '{{%resume}}';
@@ -158,6 +164,14 @@ class Resume extends \common\BaseActiveRecord
         return $this->hasOne(Address::className(), ['id' => 'workplace']);
     }
 
+    public function getApplicantDone(){
+        return $this->hasMany(TaskApplicant::className(),['user_id' => 'user_id'])
+            ->where(['status'=>10])
+            ->orderBy(['id'=>SORT_DESC])
+            ->limit(20)
+            ->with('task');
+    }
+
     public function getGender_label()
     {
         return static::$GENDERS[$this->gender];
@@ -168,9 +182,27 @@ class Resume extends \common\BaseActiveRecord
         return static::$GRADES[$this->grade];
     }
 
+    public function getStatus_label()
+    {
+        return static::$STATUSES[$this->status];
+    }
+
+    public function getAge()
+    {
+        if ($this->birthdate){
+            return intval(date('Y', time())) - intval(explode(',', strval($this->birthdate))[0]);
+        }
+        return 0;
+    }
+
+    public function getCommon_url()
+    {
+        return Yii::$app->params['baseurl.frontend'] . '/resume-' . $this->user_id . '-' . $this->name;
+    }
+
     public function fields()
     {
-        return array_merge(parent::fields(), ['gender_label']);
+        return array_merge(parent::fields(), ['gender_label', 'age']);
     }
 
     public function extraFields()

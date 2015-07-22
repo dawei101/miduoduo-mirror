@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'home',
             'workplace',
             [   'attribute' => 'status',
-                'value'=>$model::$STATUS_LABELS[$model->status]
+                'value'=>$model::$STATUSES[$model->status]
             ],
         ],
     ]) ?>
