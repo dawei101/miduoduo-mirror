@@ -20,7 +20,7 @@ class TaskApplicant extends \common\BaseActiveRecord
     public static $STATUSES = [
         0 => '已报名',
         10 => '报名成功',
-        20 => '不合适',
+        20 => '报名失败',
     ];
 
     public static $HAVE_READS = [
