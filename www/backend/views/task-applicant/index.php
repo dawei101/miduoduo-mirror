@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  'format'=>'raw',
                  'value'=>function($model){
                      if ($model->resume){
-                     return "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>". ($model->resume?($model->resume->name):'') ."</a>";
+                         return "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>". ($model->resume?($model->resume->name):'') ."</a>";
                      }
                  },
                  'label'=>'简历',
@@ -38,7 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=> 'resume_phonenum',
                  'format'=>'raw',
                  'value'=>function($model){
-                     return $model->resume->phonenum;
+                     if ($model->resume){
+                        return $model->resume->phonenum;
+                     }
                  },
                  'label'=>'报名人电话',
             ],
