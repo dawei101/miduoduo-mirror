@@ -120,11 +120,6 @@ class BDataBaseController extends BBaseController
             $dataRows[]  = $data2;
         }
 
-        // 完毕后，吧今天的数据干掉
-        // 偷懒，先统一查出全部的存入库里，然后再删掉今天的，因为今天的数据要实时查询
-        $DataDaily  = new DataDaily();
-        $DataDaily->deleteAll("`date`='".$currentDate."'");
-
         return $dataRows;
     }
 
@@ -151,11 +146,22 @@ class BDataBaseController extends BBaseController
             ->all();
         
         // 找到不存在的
-        $notExistArr    = array();
+        $DataDaily  = new DataDaily();
         foreach( $isExistArr as $k2 => $v2 ){
+            // 当天数据，保存1小时
+            if( $v2['date'] == date("Y-m-d") ){
+                if( time() - strtotime($v2['create_time']) > 60*60 ){
+                    $DataDaily->deleteAll("`date`='".date("Y-m-d")."'");
+                    continue;
+                }
+            }elseif( $v2['date'] == substr($v2['create_time'],0,10) ){
+                // 数据创建日期=数据展示日期，则需要重新更新
+                $DataDaily->deleteAll("`date`='".$v2['date']."'");
+                continue;
+            }
+
             if( in_array($v2['date'],$dataArr)  ){
                 // 已经有啦，跳过
-                $notExistArr[]  = $v2['date'];
                 foreach( $dataArr as $k1 => $v1 ){
                     if( $v1 == $v2['date'] ){
                         unset($dataArr[$k1]);
