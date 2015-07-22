@@ -185,6 +185,6 @@ class Company extends \common\BaseActiveRecord
 
     public function fields()
     {
-        return array_merge(parent::fields, ['status_label', 'exam_status_label', 'exam_result_label']);
+        return array_merge(parent::fields(), ['status_label', 'exam_status_label', 'exam_result_label']);
     }
 }

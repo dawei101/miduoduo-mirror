@@ -60,11 +60,13 @@ class CompanyController extends BBaseController
 
     public function actionSearch($keyword)
     {
-        $query = Company::find()->where(['like', 'name', $keyword]);
-        $cs = $query->all();
         $cs_arr = [];
-        foreach($cs as $c){
-            $cs_arr[] = $c->toArray();
+        if ($keyword){
+            $query = Company::find()->where(['like', 'name', $keyword]);
+            $cs = $query->all();
+            foreach($cs as $c){
+                $cs_arr[] = $c->toArray();
+            }
         }
         return $this->renderJson($cs_arr);
     }
