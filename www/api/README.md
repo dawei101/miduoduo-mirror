@@ -266,7 +266,7 @@ BASE_URL = 'http://api.miduoduo.cn'
     *GET /version//task-address/nearby?lat=39.995723&lng=116.423313&distance=5000&service_id&expand=task
     *根据任务所有id获取任务详情(参见[filters的使用](#api遵循rest-api协议))
 ```
-GET /version/task?expand=service_type,company&filters=[['id', 'in', [task_id1, task_id2, ...]]]
+GET /version/task?expand=service_type,company&filters=[["in", "id", [task_id1, task_id2, ...]]]
 ```
 
 
