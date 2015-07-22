@@ -94,9 +94,20 @@ class TaskController extends BBaseController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model      = $this->findModel($id);
+        $loadpost   = $model->load(Yii::$app->request->post());
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+        // 如果为优单，排序更新时间order_time +4小时
+        $date   = date("Y-m-d H:i:s");
+        if( $model->recommend == 1 ){
+            $model->order_time  = date("Y-m-d H:i:s",time()+4*60*60);
+        }else{
+            $model->order_time  = $date;
+        }
+        $model->updated_time    = $date;
+
+        if ( $loadpost && $model->save()) {
             return $this->redirect(['edit-address', 'id' => $model->id]);
         } else {
             return $this->render('update', [

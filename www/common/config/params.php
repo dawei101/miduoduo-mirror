@@ -1,6 +1,6 @@
 <?php
 return [
-    'adminEmail' => 'webmaster@miduoduo.com',
+    'adminEmail' => 'webmaster@miduoduo.cn',
     'supportEmail' => 'contact@miduoduo.cn',
     'supportTel' => '010-84991662',
     'bugEmail' => '1bbd853df30a46a695cd7d350bee6caa+lukps3jjzxxxx3gr1rzd@boards.trello.com',
@@ -52,7 +52,13 @@ return [
         ],
     ],
 
+    'file_log' =>[
+        'max_size'      => 20000,
+        'log_base_url'  => '/var/miduoduo/miduoduo/www/user_logs/',
+    ],
+
     /*
+    开发账号 settings ，如果使用，请copy注释的部分到 params-local.php
         'weichat'=>[
             'appid'     => 'wxf18755b4d95797ac',                // 微信公众号ID
             'secret'    => '42e2440d817f1c4d2889790e2a3369e4',  // 微信secret

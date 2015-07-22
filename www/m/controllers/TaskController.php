@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\helpers\Url;
 use common\Utils;
 use common\models\Task;
+use common\models\TaskAddress;
 use common\models\TaskCollection;
 use common\models\Complaint;
 use common\models\TaskApplicant;
@@ -18,7 +19,7 @@ use common\models\ServiceType;
 use yii\data\Pagination;
 use common\models\WeichatPushSetTemplatePushItem;
 use common\models\ConfigRecommend;
-
+use common\models\UserLocation;
 
 class TaskController extends \m\MBaseController
 {
@@ -30,7 +31,7 @@ class TaskController extends \m\MBaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view','nearby'],
+                        'actions' => ['index', 'view','nearby', 'nearest'],
                         'allow' => true,
                     ],
                     [
@@ -47,6 +48,58 @@ class TaskController extends \m\MBaseController
                 ],
             ],
         ]);
+    }
+
+    public function actionNearest($lat=0, $lng=0, $distance=2000, $service_type=null)
+    {
+        //只有北京
+        $city_id = 3;
+        $district = Yii::$app->request->get('district');
+        $service_type = Yii::$app->request->get('service_type');
+        if (empty($city_id)){
+            $this->render404('未知的城市');
+        }
+        $city = District::findOne($city_id);
+
+        $user_id    = Yii::$app->user->id;
+
+        // 记录用户位置数据，保存地理位置到session,下次直接用
+        TaskAddress::cacheUserLocation($user_id,$lat,$lng);
+
+        $query = TaskAddress::find();
+        $query = TaskAddress::buildNearbyQuery($query, $lat, $lng, $distance);
+        $query->innerJoin('jz_task', $on='jz_task.id=jz_task_address.task_id');
+        if ($service_type){
+            $query->andWhere('jz_task.service_type_id=' . $service_type);
+        }
+        $query->andWhere(['jz_task.status'=>Task::STATUS_OK]);
+        //$query->andWhere(['>', 'jz_task.to_date', date("Y-m-d")]);
+        $query->addOrderBy(['jz_task.id'=>SORT_DESC]);
+        $tas = $query->with('task')->all();
+
+        $pages =  new Pagination(['pageSize'=>Yii::$app->params['pageSize'],
+            'totalCount' => count($tas)]);
+
+        $tasks = [];
+        foreach ($tas as $ta){
+            $task = $ta->task;
+            $distance = $ta->distance($lat=$lat, $lng=$lng);
+            $tasks[] = ['task'=>$task, 'distance'=>$distance];
+        }
+
+        uasort($tasks, function($a, $b){
+            return $a['distance'] < $b['distance'] ? -1:1;
+        });
+
+
+        return $this->render('nearest', 
+            ['tasks'=>array_slice($tasks, $pages->offset, $pages->limit),
+             'pages'=> $pages,
+             'city'=>$city,
+             'current_district' => 
+             empty($district)?$city:District::findOne($district),
+             'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
+            ]);
     }
 
     public function actionIndex()
@@ -71,7 +124,22 @@ class TaskController extends \m\MBaseController
         if (!empty($service_type)){
             $query->andWhere(['service_type_id'=>$service_type]);
         }
-        $query->addOrderBy(['id'=>SORT_DESC]);
+        
+        // 排序
+        $sort   = Yii::$app->request->get('sort');
+        if( $sort == 'fromdate' ){
+            // 今天之前的，按照`order_time`排序，今天之后的，按照`from_date`排序
+            $query->addOrderBy("
+                (CASE
+                    WHEN `from_date`<='".date("Y-m-d")."' THEN `order_time`
+                    ELSE 0
+                END) DESC,`from_date` ASC,`order_time` DESC,`id` DESC
+            ");
+        }else{
+            // 默认按照`order_time`排序
+            $query->addOrderBy(['order_time'=>SORT_DESC,'id'=>SORT_DESC]);
+        }
+
         $countQuery = clone $query;
         $pages =  new Pagination(['pageSize'=>Yii::$app->params['pageSize'],
             'totalCount' => $countQuery->count()]);
@@ -79,14 +147,20 @@ class TaskController extends \m\MBaseController
             ->limit($pages->limit)->all();
 
         $city = District::findOne($city_id);
+        
+        // 查询当前用户的已有最新位置信
+        $user_id    = Yii::$app->user->id;
+        $location   = Yii::$app->session->get('location');
+
         return $this->render('index', 
-            ['tasks'=>$tasks,
-             'city'=>$city,
-             'pages'=> $pages,
-             'current_district' => 
-                empty($district)?$city:District::findOne($district),
-             'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
-            ]);
+                ['tasks'=>$tasks,
+                 'city'=>$city,
+                 'pages'=> $pages,
+                 'current_district' => 
+                    empty($district)?$city:District::findOne($district),
+                 'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
+                 'location' => $location,    
+        ]);
     }
 
     public function actionView()

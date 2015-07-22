@@ -74,6 +74,14 @@ return [
        'message' => [
             'class' => 'common\message\Message',
        ],
+       'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'class' => 'yii\log\FileTarget',
+                ],
+            ],
+        ],
 
     ],
     'aliases' => [
