@@ -335,7 +335,7 @@ $this->title = '米多多兼职平台';
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=GB9AZpYwfhnkMysnlzwSdRqq"> </script>
 <!-- InstanceEndEditable -->
 <?php
-$this->registerJsFile('<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/publish.js');
+$this->registerJsFile(Yii::$app->params["baseurl.static.corp"] . '/static/js/publish.js');
 ?>
 
     <!--

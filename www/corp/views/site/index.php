@@ -128,5 +128,5 @@ $this->title = '米多多兼职平台';
 </script>
 <!-- InstanceEndEditable -->
 <?php
-$this->registerJsFile('<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/index.js');
+$this->registerJsFile(Yii::$app->params["baseurl.static.corp"] . '/static/js/index.js');
 ?>
