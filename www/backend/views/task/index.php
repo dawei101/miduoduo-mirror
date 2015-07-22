@@ -41,7 +41,14 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                 }
             ] ,
             [
-                'attribute' => 'clearance_period',
+                'attribute' => 'recommend',
+                'value' => function($model){
+                    return $model->recommend_label;
+                },
+                'filter' => Task::$RECOMMEND,
+            ],
+            [
+		'attribute' => 'clearance_period',
                 'value' => function ($model){
                     return $model->clearance_period_label;
                 },

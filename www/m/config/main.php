@@ -23,6 +23,9 @@ return [
             'enableAutoLogin' => true,
             'loginUrl' => '/user/login'
         ],
+        'request' => [
+            'class' => 'm\MRequest',
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -31,6 +34,12 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'formatter' => [
+            'class' => 'common\Formatter',
+            'dateFormat' => 'php:m-d',
+            'datetimeFormat' => 'php:m-d H:i',
+            'timeFormat' => 'php:H:i',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

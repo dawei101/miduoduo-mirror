@@ -184,7 +184,13 @@ BASE_URL = 'http://api.miduoduo.cn'
                     * "IN",
                     * "NOT IN",
             * orders 为排序条件, 语法如下:
-                * 待编写
+                * [order_rule1, order_rule2, ...]
+                * order 规则如下：
+                ```
+                    -id:        按id降序排列
+                    id:         按id升序排列
+                    -task.id:   按task的id 降序排序
+                ```
             * http://api.test.chongdd.cn/v1/task?expand=service_type&filters=[['service_type_id', '=', '10']]
         * 返回格式:
         ```
