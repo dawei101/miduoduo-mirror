@@ -21,9 +21,12 @@ use Yii;
  */
 class WeichatUserInfo extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+    public static $STATUSES = [
+        0=>'正常',
+    ];
+
+    const STATUS_OK = 0;
+
     public static function tableName()
     {
         return '{{%weichat_user_info}}';
@@ -37,7 +40,8 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
         return [
             [['userid', 'status', 'is_receive_nearby_msg', 'origin_type'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['openid', 'weichat_name', 'weichat_head_pic', 'origin_detail'], 'string', 'max' => 200]
+            [['openid', 'weichat_name', 'weichat_head_pic', 'origin_detail'], 'string', 'max' => 200],
+            ['status', 'default', 'value'=>0],
         ];
     }
 
@@ -59,5 +63,10 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
             'origin_type' => '渠道来源-分类',
             'origin_detail' => '渠道来源-详情',
         ];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'userid']);
     }
 }

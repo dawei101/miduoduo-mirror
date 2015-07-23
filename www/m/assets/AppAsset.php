@@ -7,15 +7,12 @@
 
 namespace m\assets;
 
-use yii\web\AssetBundle;
-
 /**
  * @author dawei
  */
-class AppAsset extends AssetBundle
+class AppAsset extends BaseAsset
 {
     public $basePath = '@webroot';
-    public $baseUrl = '@web';
 
     public $css = [
         'static/css/m-midd.css',

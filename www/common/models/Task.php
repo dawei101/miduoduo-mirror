@@ -233,6 +233,9 @@ class Task extends \common\BaseActiveRecord
             'labels_str'=>'标签',
 
             'origin'=>'来源',
+
+            'is_overflow'=>'招人进展',
+            'is_overflow_label'=>'招人进展',
         ];
     }
 
@@ -342,6 +345,16 @@ class Task extends \common\BaseActiveRecord
         return [];
     }
 
+    public function getIs_overflow()
+    {
+        return $this->need_quantity <= $this->got_quantity;
+    }
+
+    public function getIs_overflow_label()
+    {
+        return $this->is_overflow?'已招满':'未招满';
+    }
+
     /*
      *  TODO 临时方法，为了迁移company数据到独立表
      */
@@ -374,6 +387,7 @@ class Task extends \common\BaseActiveRecord
             'gender_requirement', 'degree_requirement',
             'clearance_period_label', 'salary_unit_label',
             'labels', 'label_options', 'status_label',
+            'is_overflow',
         ];
     }
 }

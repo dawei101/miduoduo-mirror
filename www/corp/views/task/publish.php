@@ -325,17 +325,17 @@ $this->title = '米多多兼职平台';
         </div>
     </div>
 <div id="map" style="display:none"></div>
-	<script src="/js/miduoduo.js"></script>
-	<script src="/js/data/moment.js"></script>
-	<script src="/js/data/daterangepicker.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/miduoduo.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/moment.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/daterangepicker.js"></script>
 
-	<script src="/js/fuwenben/bootstrap-wysiwyg.js"></script>
-	<script src="/js/fuwenben/external/jquery.hotkeys.js"></script>
-	<script src="/js/jquery.tagbox.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/fuwenben/bootstrap-wysiwyg.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/fuwenben/external/jquery.hotkeys.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/jquery.tagbox.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=GB9AZpYwfhnkMysnlzwSdRqq"> </script>
 <!-- InstanceEndEditable -->
 <?php
-$this->registerJsFile('/js/publish.js');
+$this->registerJsFile(Yii::$app->params["baseurl.static.corp"] . '/static/js/publish.js');
 ?>
 
     <!--

@@ -15,15 +15,19 @@ use common\models\Task;
 class TaskApplicantSearch extends TaskApplicant
 {
     public $task_title;
+    public $resume_phonenum;
+    public $resume_name;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'user_id', 'task_id'], 'integer'],
+            [['id', 'user_id', 'task_id', 'status'], 'integer'],
             [['created_time'], 'date'],
-            [['created_time','task_title'], 'safe'],
+            [['created_time', 'task_title'], 'safe'],
+            [['company_alerted', 'applicant_alerted'], 'boolean'],
+            [['resume_phonenum', 'resume_name'], 'safe'],
         ];
     }
 
@@ -75,11 +79,45 @@ class TaskApplicantSearch extends TaskApplicant
             foreach( $task_m as $k => $v ){
                 $_ids[]   = $v['id'];
             }
-            $query->andFilterWhere(['in', 'task_id', $_ids]);
+            if (count($_ids)>0){
+                $query->andFilterWhere(['in', 'task_id', $_ids]);
+            } else {
+                $query->andWhere('1=2');
+            }
         }
+        if ($this->resume_name){
+            $resumes = Resume::find()->where(
+                ['name'=> $this->resume_name])->all();
+            $_ids   = [];
+            foreach( $resumes as $k => $v ){
+                $_ids[]   = $v->user_id;
+            }
+            if (count($_ids)>0){
+                $query->andFilterWhere(['in', 'user_id', $_ids]);
+            } else {
+                $query->andWhere('1=2');
+            }
+        }
+        if ($this->resume_phonenum){
+            $resumes = Resume::find()->where(
+                ['phonenum'=>$this->resume_phonenum])->all();
+            $_ids   = [];
+            foreach( $resumes as $k => $v ){
+                $_ids[]   = $v->user_id;
+            }
+            if (count($_ids)>0){
+                $query->andFilterWhere(['in', 'user_id', $_ids]);
+            } else {
+                $query->andWhere('1=2');
+            }
+        }
+ 
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'status' => $this->status,
+            'company_alerted'=> $this->company_alerted,
+            'applicant_alerted' => $this->applicant_alerted,
             'task_id' => $this->task_id,
         ]);
 

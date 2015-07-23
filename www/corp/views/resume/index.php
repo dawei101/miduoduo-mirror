@@ -10,7 +10,7 @@ $this->title = '米多多兼职平台';
 <!-- InstanceBeginEditable name="EditRegion3" -->
 <div class="body-box">
 <div class="midd-kong"></div>
-<div class="container">
+<sdasd][pkj2idiv class="container">
   <div class="row">
     <div class="fabu-box padding-0">
       <div class="col-sm-2 padding-0">
@@ -87,5 +87,5 @@ $this->title = '米多多兼职平台';
 </div>
 <!-- InstanceEndEditable -->
 <?php
-$this->registerJsFile('/js/resume.js');
+$this->registerJsFile(Yii::$app->params["baseurl.static.corp"] . '/static/js/resume.js');
 ?>

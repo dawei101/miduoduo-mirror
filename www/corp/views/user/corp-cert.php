@@ -77,7 +77,7 @@ $this->title = '米多多兼职平台';
                         <P>5、申请人所填写的真实姓名、身份证号码必须与提交的证件信息一致。</P>
                    </div>
                    <div class="id-img">
-                   <img src="/img/yulan.jpg" id="img0"><img src="/img/shenfenzheng.jpg"></div>
+                   <img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/yulan.jpg" id="img0"><img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/shenfenzheng.jpg"></div>
                 </div>
               </li>
               <li>
@@ -92,7 +92,7 @@ $this->title = '米多多兼职平台';
                         <p>2、图片格式为bmp、jpg、jpeg、png，大小必须在3MB以内。建议使用500W像素以上相机拍摄。</p>
                    </div>
                    <div class="id-img">
-                   <img src="/img/yulan.jpg" id="img1"><img src="/img/zhizhao.jpg"></div>
+                   <img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/yulan.jpg" id="img1"><img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/zhizhao.jpg"></div>
                 </div>
               </li>
                 <button class="queding-bt">确定</button>

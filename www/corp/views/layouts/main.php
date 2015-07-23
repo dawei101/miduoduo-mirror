@@ -23,12 +23,12 @@ AppAsset::register($this);
     <meta http-equiv="pragma" content="no-cache">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link href="/font/iconfont.css" type="text/css" rel="stylesheet">
-    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <link href="/css/miduoduo-qy.css" type="text/css" rel="stylesheet" />
-    <link href="/js/data/daterangepicker-bs3.css" type="text/css" rel="stylesheet" />
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/font/iconfont.css" type="text/css" rel="stylesheet">
+    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/miduoduo-qy.css" type="text/css" rel="stylesheet" />
+    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/daterangepicker-bs3.css" type="text/css" rel="stylesheet" />
+    <script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/jquery.min.js"></script>
+    <script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/bootstrap.min.js"></script>
 </head>
 <body>
     <?php $this->beginBody() ?>
@@ -38,7 +38,7 @@ AppAsset::register($this);
             <div class="midd-nav-head navbar-left">
                 <button type="button" class="navbar-toggle" data-toggle="collapse"
                 data-target="#example-navbar-collapse"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                <a class="navbar-brand" href="/"><img src="/img/qiye-logo.png"></a> </div>
+                <a class="navbar-brand" href="/"><img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/qiye-logo.png"></a> </div>
                 <div class="collapse navbar-collapse" id="example-navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <?php if (!Yii::$app->user->isGuest){ ?>
@@ -80,13 +80,30 @@ AppAsset::register($this);
                     </div>
                     <div class="col-sm-12 col-md-4 col-lg-4">
                         <h2>关注我们</h2>
-                        <div class="erwei"><img src="/img/mzhan.png" width="70" height="70"><div class="er-text">扫码进入m站</div></div>
-                        <div class="erwei"><img src="/img/weixin.png" width="70" height="70"><div class="er-text">关注微信公众号</div></div>
+                        <div class="erwei"><img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/mzhan.png" width="70" height="70"><div class="er-text">扫码进入m站</div></div>
+                        <div class="erwei"><img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/weixin.png" width="70" height="70"><div class="er-text">关注微信公众号</div></div>
                     </div>
                 </div>
             </div>
         </div>
         <?php $this->endBody() ?>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-64201170-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?71fce0b5ae66cac6b8ba9fc072998791";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
     </body>
     </html>
     <?php $this->endPage() ?>

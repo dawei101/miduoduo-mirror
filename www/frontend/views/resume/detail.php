@@ -15,15 +15,15 @@ foreach( $service_types as $k => $v ){
 <head>
 <meta charset="utf-8">
 <title>简历详情</title>
-    <link href="/static/css/jianli.css" type="text/css" rel="stylesheet" />
+    <link href="<?=Yii::$app->params["baseurl.static.www"]?>/static/css/jianli.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
 <div class="top">
   <div class="top-logo">
-    <div class="logo-box"><div class="logo"><img src="/static/img/logo.jpg" width="96" height="50"></div></div>
+    <div class="logo-box"><div class="logo"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/logo.jpg" width="96" height="50"></div></div>
   </div>
-    <div class="head-img"><img src="/static/img/head-img.png"></div>
+    <div class="head-img"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/head-img.png"></div>
 </div>
 <div class="name-bg">
     <div class="name-nav">

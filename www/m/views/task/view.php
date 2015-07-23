@@ -10,7 +10,7 @@ $this->nav_right_link = '/';
 $this->nav_right_title = '首页';
 ?>
 <?php $this->beginBlock('css') ?>
-<link href="/static/css/tankuang.css" rel="stylesheet"> 
+<link href="<?=Yii::$app->params["baseurl.static.m"]?>/static/css/tankuang.css" rel="stylesheet"> 
 <style>
    .gs-bb{border-bottom:#f3f3f3 solid 1px; border-bottom: 1px solid #f3f3f3;margin-bottom: 0.6em;padding-bottom: 0.6em;}
     .detail ul, .detail ol, .detail dl {
@@ -97,10 +97,10 @@ $this->nav_right_title = '首页';
             <?php if ($task->status > 0){ ?>
                 <div style="background: #a5abb2;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$task->status_label?></div>
             <?php }else{ ?>
-                <?php if(strtotime($task->to_date.' 00:00:01') > time()){ ?>
-                    <div id="apply" class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
+                <?php if($task->is_overflow){ ?>
+                    <div style="background: #a5abb2;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$task->is_overflow_label?></div>
                 <?php }else{ ?>
-                    <div style="background: #a5abb2;" class="midd-l bottom-bnt bottom-bnt-bm">已过期</div>
+                    <div id="apply" class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
                 <?php } ?>
             <?php } ?>
         <?php } ?>
@@ -173,6 +173,6 @@ $(function(){
     });
 });
 </script>
-<script src="/static/js/tankuang.js"> </script>
+<script src="<?=Yii::$app->params["baseurl.static.m"]?>/static/js/tankuang.js"> </script>
 
 <?php $this->endBlock('js') ?>

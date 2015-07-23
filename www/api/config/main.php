@@ -113,6 +113,7 @@ return [
                     'pluralize' => '',
                     'patterns' => [
                         'POST set-password' => 'set-password',
+                        'POST bind-third-party-account' => 'bind-third-party-account',
                     ],
                 ],
                 [
@@ -128,6 +129,7 @@ return [
                         'GET,POST report-device' => 'report-device',
                         'POST report-push-id' => 'report-push-id',
                         'GET,POST check-update' => 'check-update',
+                        'POST t-login'=>'t-login',
                     ],
                 ],
             ],

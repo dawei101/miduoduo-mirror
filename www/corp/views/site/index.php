@@ -90,21 +90,21 @@ $this->title = '米多多兼职平台';
   <div class="row">
     <div class="col-sm-12 col-md-4 col-lg-4">
       <div class="zt-box">
-        <div class="img"><img src="img/youhua.png" class="img-responsive" alt="优化成本"> </div>
+      <div class="img"><img src="<?=Yii::$app->params['baseurl.static.corp']?>/static/img/youhua.png" class="img-responsive" alt="优化成本"> </div>
         <h2 class="yh-title">优化成本</h2>
         <div class="yh-tag"> <span><em>■</em>弹性工作</span><span><em>■</em>共享人力</span><span><em>■</em>组合工时</span><span><em>■</em>节约人工</span> </div>
       </div>
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
       <div class="zt-box">
-        <div class="img"><img src="img/zhineng.png" class="img-responsive" alt="优化成本"> </div>
+        <div class="img"><img src="<?=Yii::$app->params['baseurl.static.corp']?>/static/img/zhineng.png" class="img-responsive" alt="优化成本"> </div>
         <h2 class="yh-title">智能匹配</h2>
         <div class="yh-tag"> <span><em>■</em>经验标签</span><span><em>■</em>工作记录</span><span><em>■</em>雇主评价</span><span><em>■</em>算法推理</span> </div>
       </div>
     </div>
     <div class="col-sm-12 col-md-4 col-lg-4">
       <div class="zt-box">
-        <div class="img"><img src="img/guanli.png" class="img-responsive" alt="优化成本"> </div>
+        <div class="img"><img src="<?=Yii::$app->params['baseurl.static.corp']?>/static/img/guanli.png" class="img-responsive" alt="优化成本"> </div>
         <h2 class="yh-title">优化成本</h2>
         <div class="yh-tag"> <span><em>■</em>灵活排班</span><span><em>■</em>智能签到</span><span><em>■</em>工时优化</span><span><em>■</em>节约人工</span> </div>
       </div>
@@ -128,5 +128,5 @@ $this->title = '米多多兼职平台';
 </script>
 <!-- InstanceEndEditable -->
 <?php
-$this->registerJsFile('/js/index.js');
+$this->registerJsFile(Yii::$app->params["baseurl.static.corp"] . '/static/js/index.js');
 ?>

@@ -7,7 +7,7 @@ $this->nav_right_link = '/';
 $this->nav_right_title = '首页';
 ?>
    <div class="tops">
-        <div class="head-sculpture"><img src="/static/img/avatar.jpg" class="img-responsive img-circle"></div>
+        <div class="head-sculpture"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/avatar.jpg" class="img-responsive img-circle"></div>
         <h4 class="text-center"><?=$resume?$resume->name:'你是谁？'?></h4>
    </div>
   <div class="list-lis">
