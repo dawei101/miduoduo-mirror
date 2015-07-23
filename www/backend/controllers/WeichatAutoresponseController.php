@@ -8,22 +8,17 @@ use common\models\WeichatAutoresponseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\BBaseController;
+
 
 /**
  * WeichatAutoresponseController implements the CRUD actions for WeichatAutoresponse model.
  */
-class WeichatAutoresponseController extends Controller
+class WeichatAutoresponseController extends BBaseController
 {
-    public function behaviors()
+    public function getViewPath()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
+        return Yii::getAlias('@backend/views/wechat/weichat-autoresponse');
     }
 
     /**
