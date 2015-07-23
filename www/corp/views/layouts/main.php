@@ -23,10 +23,10 @@ AppAsset::register($this);
     <meta http-equiv="pragma" content="no-cache">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/font/iconfont.css" type="text<?=Yii::$app->params["baseurl.static.corp"]?>/static/css" rel="stylesheet">
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/bootstrap.min.css" type="text<?=Yii::$app->params["baseurl.static.corp"]?>/static/css" rel="stylesheet" />
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/miduoduo-qy.css" type="text<?=Yii::$app->params["baseurl.static.corp"]?>/static/css" rel="stylesheet" />
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/daterangepicker-bs3.css" type="text<?=Yii::$app->params["baseurl.static.corp"]?>/static/css" rel="stylesheet" />
+    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/font/iconfont.css" type="text/css" rel="stylesheet">
+    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/miduoduo-qy.css" type="text/css" rel="stylesheet" />
+    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/daterangepicker-bs3.css" type="text/css" rel="stylesheet" />
     <script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/jquery.min.js"></script>
     <script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/bootstrap.min.js"></script>
 </head>
