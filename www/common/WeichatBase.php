@@ -187,9 +187,9 @@ class WeichatBase{
         $msg_body   = '<ArticleCount>'.count($task_model).'</ArticleCount><Articles>';
         foreach( $task_model as $k => $v ){
             if( $k == 0 ){
-                $img         = Yii::$app->params['baseurl.m'].'/static/img/wx_list1.jpg';
+                $img         = Yii::$app->params['baseurl.static.m'].'/static/img/wx_list1.jpg';
             }else{
-                $img         = Yii::$app->params['baseurl.m'].'/static/img/wx_list2.jpg';
+                $img         = Yii::$app->params['baseurl.static.m'].'/static/img/wx_list2.jpg';
             }
             $url         = Yii::$app->params['baseurl.m']."/task/view?gid=".$v->gid;
             $msg_body   .= '
