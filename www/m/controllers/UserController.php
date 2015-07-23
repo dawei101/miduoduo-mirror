@@ -75,6 +75,8 @@ class UserController extends MBaseController
     {
         return $this->render('index', [
             'resume' => Resume::find()->where(['user_id'=>Yii::$app->user->id])->one(),
+                'invited_count' => User::find()->where(
+                    ['invited_by'=>Yii::$app->user->id])->count(),
         ]);
     }
 
