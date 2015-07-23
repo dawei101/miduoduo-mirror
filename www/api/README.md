@@ -87,6 +87,50 @@ BASE_URL = 'http://api.miduoduo.cn'
                 }
         }
 ```
+###绑定第三方账号
+```
+    POST /v1/user/bind-third-party-account
+        参数:
+            platform=, //wechat等
+            params={
+                openid: ,
+                ....
+            }, //  转化为post参数 即: &params[openid]=openid&params[nickname]=nickname&...
+    return:
+        { "success": false,
+            "message": 错误提示 }
+        OR
+        { "success": true,
+            "message": 绑定结果,
+        }
+```
+
+###第三方账号登陆
+```
+    POST /v1/entry/t-login
+        参数:
+            platform=, //wechat等
+            params={
+                openid: ,
+                ....
+            }, //  转化为post参数 即: &params[openid]=openid&params[nickname]=nickname&...
+    return:
+        { "success": false,
+            "message": 错误提示 }
+        OR
+        { "success": true,
+            "message": "登陆成功",
+            "result": {
+                "username": "18661775819",
+                "password": 密码(直接返回登陆的密码),
+                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288"
+                "resume": {
+                    ...
+                },
+                }
+        }
+```
+
 ###修改密码
 ```
     POST /v1/user/set-password
