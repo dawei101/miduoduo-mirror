@@ -174,6 +174,9 @@ class TaskPool extends \common\BaseActiveRecord
                 $com->contact_phone = $ds['phonenum']?$ds['phonenum']:'00000000000';
                 $com->contact_email = $ds['email'];
                 $com->save();
+                if ($com->getErrors()){
+                    return false;
+                }
             }
             $task->company_id = $com->id;
         }
@@ -184,6 +187,9 @@ class TaskPool extends \common\BaseActiveRecord
         $task->service_type_id = $this->getServiceTypeId($ds['origin'], $ds['category_name']);
         $task->city_id = $this->getCityId($this->city);
         $task->save();
+        if ($task->getErrors()){
+            return false;
+        }
 
         if ($this->has_poi&&$this->lat && isset($ds['address'])){
 

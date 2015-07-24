@@ -23,6 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <a class="btn btn-danger" target="_blank" href="/index.php/task-pool/transfer?id=<?=$model->id?>" title="添加到米多多" data-method="post">
+            导出任务
+        </a>
     </p>
 <?php 
 $details = $model->list_detail(); 
