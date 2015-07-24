@@ -49,8 +49,8 @@ return [
         ],
         'app_pusher' => [
             'class' => 'common\pusher\AppPusher',
-            'app_key' => '2ca0b9dfc8faa0381d1deb06',
-            'master_secret' => '387ed21511f595ee278d29d1',
+            'app_key' => 'fcdc25a74fa9d95484276160',
+            'master_secret' => 'f9c837cfb26bd97dc8ed2201',
         ],
         'wechat_pusher' => [
             'class' => 'common\pusher\WechatPusher',

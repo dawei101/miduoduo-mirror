@@ -5,6 +5,8 @@ use Yii;
 use common\models\WeichatAccesstoken;
 use common\models\WeichatUserLog;
 use common\models\WeichatUserInfo;
+use common\models\WeichatAutoresponse;
+use common\models\Task;
 
 class WeichatBase{
 
@@ -145,5 +147,62 @@ class WeichatBase{
         }else{
             return false;
         }
+    }
+
+    // 自动回复消息-关注
+    public function autoResponseByFollowaction(){
+        $model  = WeichatAutoresponse::find()->where(['type'=>1,'status'=>1])->One();
+        return $model->response_msg;
+    } 
+
+    // 自动回复消息-未知关键词
+    public function autoResponseByUnknownMsg(){
+        $model  = WeichatAutoresponse::find()->where(['type'=>3,'status'=>1])->One();
+        return $model->response_msg;
+    } 
+
+    // 自动回复消息-关键字
+    public function autoResponseByKeyword($openid,$keyword=''){
+        $model  = WeichatAutoresponse::find()
+            ->where(['status'=>1])
+            ->andWhere(['like','keywords',"%".$keyword."%",false])
+            ->One();
+        if( !empty($model->response_msg) ){
+            return $model->response_msg;
+        }else{
+            // 未命中关键字，改为搜索任务名称
+            $task_model = Task::find()
+                ->where(['status'=>0])
+                ->andWhere(['like','title',"%".$keyword."%",false])
+                ->limit(10)->All();
+            if( count($task_model)>0 ){
+                return $this->renderTaskLink($task_model);
+            }else{
+                return false;
+            }
+        }
+    }
+
+    public function renderTaskLink($task_model){
+        $msg_body   = '<ArticleCount>'.count($task_model).'</ArticleCount><Articles>';
+        foreach( $task_model as $k => $v ){
+            if( $k == 0 ){
+                $img         = Yii::$app->params['baseurl.static.m'].'/static/img/wx_list1.jpg';
+            }else{
+                $img         = Yii::$app->params['baseurl.static.m'].'/static/img/wx_list2.jpg';
+            }
+            $url         = Yii::$app->params['baseurl.m']."/task/view?gid=".$v->gid;
+            $msg_body   .= '
+                <item>
+                <Title><![CDATA['.$v->title.']]></Title> 
+                <Description><![CDATA['.$v->title.']]></Description>
+                <PicUrl><![CDATA['.$img.']]></PicUrl>
+                <Url><![CDATA['.$url.']]></Url>
+                </item>
+            ';
+            
+        }
+        $msg_body .= '</Articles>';
+        return $msg_body;
     }
 }

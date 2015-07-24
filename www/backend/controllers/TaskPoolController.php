@@ -83,6 +83,9 @@ class TaskPoolController extends BBaseController
                 $this->redirectHtml(Yii::$app->request->referrer, '该任务已经处理过，无法继续处理!');
             }
             $task = $t->exportTask();
+            if (!$task){
+                return $this->redirectHtml(Yii::$app->request->referrer, '导出出现问题，无法继续处理, 联系技术!');
+            }
             $t->status = 10;
             $t->save();
             return $this->redirect('/task/update?id='.$task->id);

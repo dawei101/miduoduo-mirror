@@ -90,7 +90,7 @@ class Company extends \common\BaseActiveRecord
             ['status', 'default', 'value'=>0],
             ['contact_phone', 'match', 'pattern'=>'/^(1[345789]\d{9})|(0\d{2,3}\-?\d{7,8})$/',
                 'message'=>'电话号码格式不正确.'],
-            [['name', 'contact_name', 'contact_phone', 'contact_email'], 'required'],
+            [['name', 'contact_name', 'contact_phone'], 'required'],
             [['exam_status', 'exam_result'], 'integer'],
             ['exam_note', 'string'],
             [['person_idcard_pic', 'corp_idcard_pic'], 'string'],

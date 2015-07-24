@@ -16,7 +16,9 @@ $this->nav_right_title = '首页';
   </div>
   <div class="list-lis">
         <a href="mailto:<?=\Yii::$app->params['supportEmail']?>" class="list-group-item">联系我们： <?= \Yii::$app->params['supportEmail']?> </a>
-        <a class="list-group-item">我的邀请码：<?=\Yii::$app->user->id?></a>
+        <a class="list-group-item">我的邀请码：<?=\Yii::$app->user->id?>
+            <span class="label label-danger pull-right" style="margin-right: 20px;">已邀请<?=$invited_count?>人</span>
+        </a>
   </div>
 
   <div class="list-lis">
