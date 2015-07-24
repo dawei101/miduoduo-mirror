@@ -55,7 +55,7 @@ $this->title = '米多多兼职平台';
   <ul>
     <li class="orange">派单员</li>
     <li class="blue">会展</li>
-    <li class="light-green">模特</li>
+    <li class="light-green"><a href="model.miduoduo.cn">模特</a></li>
     <li class="dark-red">舞蹈教练</li>
     <li class="orange">翻译</li>
     <li class="blue">视频</li>
