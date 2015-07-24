@@ -52,10 +52,27 @@ class WeichatController extends MBaseController{
 
                 // 如果是消息类型
                 if( $msgtype == 'text' ){
-                    if(!empty( $keyword )){
-                        $re_contentStr = "直接查看北京最新兼职，点击http://m.miduoduo.cn/task \n其他问题在输入框直接填写，米小多会即时回复您。找不到想找的兼职，也回复给我们吧！";
+                    $re_contentStr  = $WeichatErweimaLog->autoResponseByKeyword($fromUsername,$keyword);
+                    // 1.任务搜索结果 返回图文消息
+                    if( strpos($re_contentStr,'>') ){
+                        $re_msgType     = 'news';
+                        $re_textTpl     = "
+                            <xml>
+                            <ToUserName><![CDATA[%s]]></ToUserName>
+                            <FromUserName><![CDATA[%s]]></FromUserName>
+                            <CreateTime>%s</CreateTime>
+                            <MsgType><![CDATA[%s]]></MsgType>
+                            
+                                %s
+                            
+                            </xml>        
+                        ";
+                    // 2.无结果
+                    }elseif(!$re_contentStr){
+                        $re_contentStr  = $WeichatErweimaLog->autoResponseByUnknownMsg();
+                    // 3.命中关键字
                     }else{
-                        $re_contentStr = "Input something...";
+                        $re_contentStr;
                     }
                 // 如果是事件类型
                 }else{
@@ -72,7 +89,7 @@ class WeichatController extends MBaseController{
                             $re_contentStr  = $this->getReturnMsgByTicket($Ticket,$fromUsername,1);
                         }else{
                            // 单纯的关注事件
-                           $re_contentStr  = "感谢您关注米多多！ \n点击下面的链接即可快速进行注册：http://m.miduoduo.cn/user/vsignup"; 
+                           $re_contentStr  = $WeichatErweimaLog->autoResponseByFollowaction(); 
                             // 保存数据
                             if($fromUsername){
                                 $WeichatErweimaLog->saveEventLog($fromUsername,1);  // 1表示关注事件
@@ -85,7 +102,7 @@ class WeichatController extends MBaseController{
                             $WeichatErweimaLog->saveEventLog($fromUsername,2);  // 2表示取消关注事件
                         }
                     }else{
-                        $re_contentStr  = "感谢您关注米多多！ \n点击下面的链接即可快速进行注册：http://m.miduoduo.cn/user/vsignup";
+                        $re_contentStr  = $WeichatErweimaLog->autoResponseByKeyword($fromUsername,$keyword);
                     }
                 }
                 $resultStr = sprintf($re_textTpl, $fromUsername, $toUsername, $re_time, $re_msgType, $re_contentStr);
