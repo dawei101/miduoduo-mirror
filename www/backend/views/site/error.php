@@ -24,5 +24,4 @@ $this->title = $name;
     <p>
         如果需要帮助，请联系<a style="color:red;" href="mailto:<?=Utils::getApp()->params['adminEmail']?>"> 我们的开发同学</a>
     </p>
-
 </div>

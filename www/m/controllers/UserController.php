@@ -240,12 +240,5 @@ class UserController extends MBaseController
         ]);
     }
 
-    
-    public function actionDelete()
-    {
-        $user_id = Yii::$app->user->id;
-        TaskApplicant::deleteAll(['user_id'=>$user_id]);
-        User::deleteAll(['id'=>$user_id]);
-        return $this->redirect('/');
-    }
+
 }

@@ -62,6 +62,7 @@ AppAsset::register($this);
 <?php if (Yii::$app->user->isGuest) { ?>
                 <li><a href="/site/login">登陆</a></li>
 <?php } else { ?>
+                <li><a href="/user/delete-myself" data-method="post">自杀</a></li>
                 <li><a href="/site/logout" data-method="post">退出</a></li>
 <?php } ?>
 

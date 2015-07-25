@@ -43,9 +43,17 @@ class SiteController extends BBaseController
         ]);
     }
 
-    /**
-     * @inheritdoc
-     */
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            if ($action->id=='error')
+                 $this->layout = 'error_layout';
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function actions()
     {
         return [

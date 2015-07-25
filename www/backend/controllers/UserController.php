@@ -79,17 +79,30 @@ class UserController extends BBaseController
         }
     }
 
-    /**
-     * Deletes an existing User model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
+    public function actionDeleteMyself()
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $user_id = Yii::$app->user->id;
+        $path = Yii::getAlias('@common/models/');
+        $models = [];
+        $user_id = Yii::$app->user->id;
+        foreach (scandir($path) as $file) {
+            if (substr($file, -4)=='.php' 
+                    && substr($file, -9, -4)!='Query'
+                    && substr($file, -10, -4)!='Search'){
+                $model = "\\common\\models\\" . substr($file, 0, -4);
+                if (is_subclass_of($model, '\yii\db\ActiveRecord')){
+                    $models[] = $model;
+                }
+            }
+        }
+        foreach ($models as $model){
+            if (isset($model::getTableSchema()->columns['user_id'])){
+                Yii::info("delete Data in $model where user_id= $user_id\n");
+                $model::deleteAll(['user_id'=>$user_id]);
+            }
+        }
+        User::deleteAll(['id'=>$user_id]);
+        return $this->redirect('/');
     }
 
     /**
