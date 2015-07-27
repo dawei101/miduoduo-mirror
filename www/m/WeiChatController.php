@@ -5,6 +5,7 @@ use Yii;
 use common\BaseController;
 use yii\web\HttpException;
 use common\models\WeichatUserInfo;
+use common\models\User;
 
 // 如果已经尝试获取过用户微信信息，则不执行任何操作，否则尝试获取用户微信信息
 class WeiChatController extends BaseController{
@@ -71,7 +72,7 @@ class WeiChatController extends BaseController{
         $scope          = $this->scope;
         
         // 构建跳回到到的地址
-        $redirect_uri_real  = Yii::$app->params['baseurl.m'].$_SERVER['REQUEST_URI'];
+        $redirect_uri_real  = Yii::$app->params['baseurl.m'].str_ireplace(Yii::$app->params['baseurl.m'],'',$_SERVER['REQUEST_URI']);
         $redirect_uri       = urlencode($redirect_uri_real);
         $getCodeUrl         = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid.'&redirect_uri='.$redirect_uri.'&response_type=code&scope='.$scope.'&state=fromweichatrequest#wechat_redirect';
 
@@ -132,11 +133,17 @@ class WeiChatController extends BaseController{
         // 查询用户绑定信息，如果有，则自动登录
         $weichat_result = WeichatUserInfo::find()->where(['openid'=>$openid])->one();
         if( $weichat_result ){
-            Yii::$app->session->set('__id',$weichat_result->userid);
-            // 更新登录时间
-            $datetime       = date("Y-m-d H:i:s",time());
-            $weichat_result->updated_time = $datetime;
-            $weichat_result->save();
+            // 用户“自杀”，删除绑定关系
+            $user_result    = User::find()->where(['id'=>$weichat_result->userid])->one();
+            if( !$user_result ){
+                $weichat_result->delete();
+            }else{
+                Yii::$app->session->set('__id',$weichat_result->userid);
+                // 更新登录时间
+                $datetime       = date("Y-m-d H:i:s",time());
+                $weichat_result->updated_time = $datetime;
+                $weichat_result->save();
+            }
         }
         // 将微信id保存到session,用户登陆后自动绑定
         $weichatInfo['openid']    = $openid;
