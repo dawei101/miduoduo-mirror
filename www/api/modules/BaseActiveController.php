@@ -162,7 +162,7 @@ class BaseActiveController extends ActiveController
             return $query;
         }
         $conditions = json_decode($p_str);
-        if (!$conditions){
+        if (null===$conditions){
             throw new HttpException(406, 'filters is not json format, please doublecheck it.');
         }
         $p_dict = [];
