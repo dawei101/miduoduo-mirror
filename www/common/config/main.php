@@ -17,7 +17,7 @@ return [
             'charset' => 'utf8',
         ],
         'formatter' => [
-            'class' => 'yii\i18n\Formatter',
+            'class' => 'common\Formatter',
             'defaultTimeZone' => 'Asia/Shanghai',
             'timeZone' => 'Asia/Shanghai',
             'dateFormat' => 'php:Y-m-d',
@@ -74,6 +74,14 @@ return [
        'message' => [
             'class' => 'common\message\Message',
        ],
+       'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'class' => 'yii\log\FileTarget',
+                ],
+            ],
+        ],
 
     ],
     'aliases' => [

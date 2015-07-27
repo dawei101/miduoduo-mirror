@@ -101,4 +101,13 @@ class Utils
             Yii::$app->params['baseurl.media'] . '/' . $filename);
     }
 
+
+    /**
+     * 微信跑龙套
+     *
+     */
+    public static function isInWechat()
+    {
+        return stripos(Yii::$app->request->getUserAgent(), 'MicroMessenger') !== false;
+    }
 }

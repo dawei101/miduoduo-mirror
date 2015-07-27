@@ -23,6 +23,9 @@ return [
             'enableAutoLogin' => true,
             'loginUrl' => '/user/login'
         ],
+        'request' => [
+            'class' => 'm\MRequest',
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -31,6 +34,12 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'formatter' => [
+            'class' => 'common\Formatter',
+            'dateFormat' => 'php:m-d',
+            'datetimeFormat' => 'php:m-d H:i',
+            'timeFormat' => 'php:H:i',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -44,10 +53,6 @@ return [
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
             'enablePrettyUrl' => true,
-            'rules' => [
-                'origin/h5v<version:[\d]+>/?' => 'origin/handle',
-                'origin/h5v<version:[\d]+>/<file:[\-\.\_\w\d\/]+>' => 'origin/handle',
-            ],
         ],
         'view' => [
             'class' => 'm\MView',

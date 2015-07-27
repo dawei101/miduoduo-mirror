@@ -123,6 +123,11 @@ class Task extends \common\BaseActiveRecord
         100=>'爬取需编辑',
     ];
 
+    public static $RECOMMEND=[
+       0=>'否',
+       1=>'是',
+    ];
+
     const STATUS_OK = 0;
     const STATUS_IS_CHECK = 30;
     const STATUS_UN_PASSED = 40;
@@ -140,6 +145,10 @@ class Task extends \common\BaseActiveRecord
     public function getClearance_period_label()
     {
         return static::$CLEARANCE_PERIODS[$this->clearance_period];
+    }
+
+    public function getRecommend_label(){
+        return static::$RECOMMEND[$this->recommend];
     }
 
     public function getSalary_unit_label()
@@ -169,7 +178,7 @@ class Task extends \common\BaseActiveRecord
                 'got_quantity', 'user_id', 'service_type_id',
                 'gender_requirement', 'degree_requirement', 'age_requirement',
                 'height_requirement', 'status', 'city_id', 'district_id',
-                'company_id'], 'integer'],
+                'company_id','recommend'], 'integer'],
             [['salary'], 'number'],
             [['salary_note', 'detail', 'requirement', 'origin'], 'string'],
             [['from_date', 'to_date', 'from_time', 'to_time',
@@ -236,6 +245,8 @@ class Task extends \common\BaseActiveRecord
 
             'is_overflow'=>'招人进展',
             'is_overflow_label'=>'招人进展',
+            'recommend' => '是否为优单',
+            'recommend_label' => '是否为优单',
         ];
     }
 
@@ -307,8 +318,8 @@ class Task extends \common\BaseActiveRecord
     }
 
     public function getService_type()
-    {
-        return $this->hasOne(ServiceType::className(), ['id' => 'service_type_id']);
+    { 
+        return $this->hasOne(ServiceType::className(), ['id' => 'service_type_id']);//返回一个service query
     }
 
     public function getRecommend(){

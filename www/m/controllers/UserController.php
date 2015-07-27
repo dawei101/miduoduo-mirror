@@ -205,6 +205,10 @@ class UserController extends MBaseController
     {
         Yii::$app->user->logout();
 
+        // 微信-标记已退出，本次会话，不在自动登录
+        $weichatInfo['hasLogout']	= 1;
+        Yii::$app->session->set('weichat',$weichatInfo);
+
         return $this->goHome();
     }
 

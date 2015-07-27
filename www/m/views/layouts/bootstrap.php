@@ -1,15 +1,19 @@
 <?php
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
+
+use common\Utils;
+use common\WeichatBase;
 use m\assets\BootstrapAsset;
-use m\widgets\Alert;
+use m\assets\WechatAsset;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 BootstrapAsset::register($this);
+
+if (Utils::isInWechat()){
+    WechatAsset::register($this);
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -57,9 +61,22 @@ BootstrapAsset::register($this);
     <?= $content ?>
 </div>
 <?php $this->endBody() ?>
-
-
-
+<?php
+if (Utils::isInWechat()){ ?>
+    <div style="display:none;">
+        <img src="/static/img/weichat_icon.jpg" /> 
+    </div>
+    <?php if (count($this->wechat_apis)>0){ 
+        $wc_session = WeichatBase::getSession();
+        $params = $wc_session->generateConfigParams();
+        $params['jsApiList'] = $this->wechat_apis;
+        $params_json = json_encode($params);
+    ?>
+    <script>
+        wx.config(<?=$params_json?>);
+    </script>
+    <?php } ?>
+<?php } ?>
 <script>
     GB={};
     GB.is_mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));

@@ -21,8 +21,9 @@ www                          服务端代码
 * 协议wiki
     * [api 使用文档](./www/api/)
     * [app 开发协议](./app.md)
-    * [app与Html5通讯协议(jsbridge)](./JSBridge.md)
-    * [关于html5 for app?](./www/m/views/origin/README.md)
+    * [webapp运行在app中，app与Html5通讯协议(jsbridge)](./JSBridge.md)
+    * [webapp运行在微信中](webapp-n-wechat.md)
+    * [关于webapp?](./frontend/README.md)
 Test one
 
 数据结构图

@@ -184,8 +184,14 @@ BASE_URL = 'http://api.miduoduo.cn'
                     * "IN",
                     * "NOT IN",
             * orders 为排序条件, 语法如下:
-                * 待编写
-            * http://api.test.chongdd.cn/v1/task?expand=service_type&filters=['service_type_id', '=', '10']
+                * [order_rule1, order_rule2, ...]
+                * order 规则如下：
+                ```
+                    -id:        按id降序排列
+                    id:         按id升序排列
+                    -task.id:   按task的id 降序排序
+                ```
+            * http://api.test.chongdd.cn/v1/task?expand=service_type&filters=[['service_type_id', '=', '10']]
         * 返回格式:
         ```
     {
@@ -257,15 +263,18 @@ BASE_URL = 'http://api.miduoduo.cn'
     * GET /version/task/id
 
 ### 任务（职位）
-考虑某任务可设置多个地址，addresses为预留
 * 任务列表
     * GET /version/task?expand=company,service_type,city,district,user,addresses
-* 附近任务列表
-    * 任务列表基础上加入lng=123.121313&lat=45.1231414&distance=1000
-        * 如：
-            GET /version/task?expand=company,service_type,city,district,user&lng=123.121313&lat=45.1231414&distance=1000
 * 任务详情
     * GET /version/task/gid
+
+### 附近任务
+    *GET /version//task-address/nearby?lat=39.995723&lng=116.423313&distance=5000&service_id&expand=task
+    *根据任务所有id获取任务详情(参见[filters的使用](#api遵循rest-api协议))
+```
+GET /version/task?expand=service_type,company&filters=[["in", "id", [task_id1, task_id2, ...]]]
+```
+
 
 ###任务报名
 * 获取已报名的任务列表 

@@ -1,9 +1,13 @@
 <?php
-use common\models\District;
-use common\models\ServiceType;
-use yii\widgets\LinkPager;
 
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
+
+use common\Utils;
+use common\WeichatBase;
+use common\models\District;
+use common\models\ServiceType;
+use m\assets\WechatAsset;
 
 $this->title = ($current_service_type?$current_service_type->name:'') . '兼职列表';
 
@@ -16,6 +20,9 @@ $this->nav_left_link = 'javascript:window.history.back()';
 $this->nav_right_link = '/';
 $this->nav_right_title = '首页';
 /* @var $this yii\web\View */
+
+$this->wechat_apis = ['getLocation'];
+
 ?>
 
   <nav class="navbar-fixed-top top-nav" style="top: 50px;" role="navigation">
@@ -24,7 +31,14 @@ $this->nav_right_title = '首页';
 </dt><span class="inverted-triangle"></span>
         <dd> 
           <ul>
-          <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>''])?>">全城</a></li>
+            <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>''])?>">全城</a></li>
+            <li style="display: none;">
+                <?php if($location['id']){ ?>
+                    <a href="/task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a>
+                <?php }else{ ?>
+                    <a href="/task/nearest?service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a>
+                <?php } ?>
+            </li>
 <?php foreach($districts as $district) { ?>
     <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>$district->id])?>"><?=$district->name?></a></li>
 <?php } ?>
@@ -32,7 +46,7 @@ $this->nav_right_title = '首页';
         </dd>
      </dl>
     <dl class="select">
-        <dt><?=$current_service_type?$current_service_type->name:'全部'?><span class="caret"></span> </dt>
+        <dt><?=$current_service_type?$current_service_type->name:'分类 '?><span class="caret"></span> </dt>
         <dd> 
           <ul>
     <li><a href="<?=Url::current(['service_type'=>''])?>">全部</a></li>
@@ -43,10 +57,22 @@ $this->nav_right_title = '首页';
         </dd>
      </dl>
      <dl class="select">
-        <dt>排序 <span class="caret"></span> </dt>
+        <dt>
+            <?php if( Yii::$app->request->get('sort')=='fromdate' ){ ?>
+                按开工
+            <?php }elseif( Yii::$app->request->get('sort')=='default' ){ ?>
+                排序
+            <?php }else{ ?>
+                排序
+            <?php } ?>
+            <span class="caret"></span> 
+        </dt>
         <dd> 
           <ul>
-            <li><a href="#">默认</a></li>
+            
+            <li><a href="<?=Url::current(['sort'=>'default'])?>">综合排序</a></li>
+            <li><a href="<?=Url::current(['sort'=>'fromdate'])?>">按开工时间由近到远</a></li>
+            
           </ul>
         </dd>
      </dl>
@@ -58,12 +84,10 @@ $this->nav_right_title = '首页';
         'pages' => $pages
     ]);
 ?>
-
-
   <!--===========以上是固定在顶部的==============--> 
 <?php $this->beginBlock('js') ?>
 <script type="text/javascript">
-  $(function(){
+$(function(){
     $(".select").each(function(){
       var s=$(this);
       var z=parseInt(s.css("z-index"));
@@ -75,7 +99,7 @@ $this->nav_right_title = '首页';
       dd.find("a").click(function(){dt.html($(this).html());_hide();});     //选择效果（如需要传值，可自定义参数，在此处返回对应的“value”值 ）
       $("body").click(function(i){ !$(i.target).parents(".select").first().is(s) ? _hide():"";});
     });
-  });
+});
 </script>
 <?php $this->endBlock('js') ?>
 

@@ -6,6 +6,7 @@ use Yii;
 
 use common\models\User;
 use common\models\Task;
+use common\BaseFileLog;
 
 /**
  * This is the model class for table "{{%task_address}}".
@@ -106,6 +107,59 @@ class TaskAddress extends \common\BaseActiveRecord
         return $query;
     }
 
+    function rad($v){
+        return $v * pi()/180.0;
+    }
 
+    public function distance($lat, $lng)
+    {
+       $rlat1 = $this->rad($this->lat);
+        $rlat2 = $this->rad($lat);
+        $rt = $rlat1 - $rlat2;
+        $rg = $this->rad($this->lng) - $this->rad($lng);
+        $s = (2 * asin(sqrt(pow(sin($rt/2), 2))) +
+            cos($rlat1)*cos($rlat2) * pow(sin($rg/2),2)) * 6372.797 * 1000;
+        return $s;
+    }
 
+    public static $base_lat;
+    public static $base_lng;
+
+    public function getDistance()
+    {
+        if (static::$base_lat && static::$base_lng)
+        {
+            return $this->distance(static::$base_lat, static::$base_lng);
+        }
+        return 0;
+    }
+
+    public function getDistance_label()
+    {
+        return Yii::$app->formatter->asDistance($this->distance);
+    }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['distance', 'distance_label']);
+    }
+
+    public static function cacheUserLocation($user_id,$lat,$lng){
+        if(!$user_id){
+            $user_id = 0;
+        }
+
+        $datetime   = date("Y-m-d H:i:s",time());
+
+        if( $lat ){
+            $content_arr= ['user_id'=>$user_id,'lat'=>$lat,'lng'=>$lng,'datetime'=>$datetime];
+            $log_type   = 'location';
+            $log_obj    = new BaseFileLog();
+            $log_obj->saveLog($content_arr,$log_type);
+        }
+        
+        // 将数据保存到session，稍后的点击直接用
+        $location   = ['id'=>1,'latitude'=>$lat,'longitude'=>$lng];
+        Yii::$app->session->set('location',$location);
+    }
 }
