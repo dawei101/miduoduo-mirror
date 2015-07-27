@@ -72,7 +72,7 @@ class WeiChatController extends BaseController{
         $scope          = $this->scope;
         
         // 构建跳回到到的地址
-        $redirect_uri_real  = Yii::$app->params['baseurl.m'].$_SERVER['REQUEST_URI'];
+        $redirect_uri_real  = Yii::$app->params['baseurl.m'].str_ireplace(Yii::$app->params['baseurl.m'],'',$_SERVER['REQUEST_URI']);
         $redirect_uri       = urlencode($redirect_uri_real);
         $getCodeUrl         = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid.'&redirect_uri='.$redirect_uri.'&response_type=code&scope='.$scope.'&state=fromweichatrequest#wechat_redirect';
 
