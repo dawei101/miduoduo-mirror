@@ -46,16 +46,6 @@ class TaskController extends BBaseController
         ]);
     }
 
-    public function actionIndex2()
-    {
-        $searchModel = new TaskSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);//我想要改这个查询条件一个查询条件 默认参数是空的
-        return $this->render('index2', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
     /**
      * Displays a single Task model.
      * @param integer $id
@@ -163,12 +153,5 @@ class TaskController extends BBaseController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function actionPassed($id,$status){
-        $model = $this->findModel($id);
-        $model->status = $status;
-        $model->save();   
-        return $this->redirect(['task/index2']);
     }
 }

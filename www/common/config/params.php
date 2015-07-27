@@ -17,6 +17,7 @@ return [
     'baseurl.frontend' => 'http://www.miduoduo.cn',
     'baseurl.h5_origin' => 'http://origin.miduoduo.cn',
     'baseurl.media' => 'http://media.miduoduo.cn',
+    'baseurl.model' => 'http://model.miduoduo.cn',
 
     'baseurl.static.m' => 'http://static.miduoduo.cn/m',
     'baseurl.static.www' => 'http://static.miduoduo.cn/www',
