@@ -35,11 +35,13 @@ class TaskController extends BaseActiveController
     public function buildFilterQuery()
     {
         $query = parent::buildFilterQuery();
-        if (Yii::$app->request->get('weekend_only')){
+        $date_range = Yii::$app->request->get('date_range');
+        if ($date_range == 'weekend_only'){
             $query = static::filterWeekendOnly($query);
-        }
-        if (Yii::$app->request->get('next_week')){
+        } elseif ($date_range == 'next_week'){
             $query = static::filterNextWeek($query);
+        } elseif ($date_range == 'current_week'){
+            $query = static::filterCurrentWeek($query);
         }
         return $query;
     }
@@ -53,6 +55,18 @@ class TaskController extends BaseActiveController
             $f_date = strtotime('+2 monday');
         }
         $t_date = strtotime('sunday', $f_date);
+        $query->andWhere(['and', 
+                ['>=', $to_date, date('Y-m-d', $f_date)],
+                ['<=', $from_date, date('Y-m-d', $t_date)]]);
+        return $query;
+    }
+
+    public static function filterCurrentWeek($query)
+    {
+        $from_date = Task::tableName() . '.from_date';
+        $to_date = Task::tableName() . '.to_date';
+        $t_date = strtotime('sunday');
+        $f_date = strtotime('monday', $t_date);
         $query->andWhere(['and', 
                 ['>=', $to_date, date('Y-m-d', $f_date)],
                 ['<=', $from_date, date('Y-m-d', $t_date)]]);

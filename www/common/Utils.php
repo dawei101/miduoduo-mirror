@@ -79,8 +79,11 @@ class Utils
 
     public static function validateVerifyCode($phonenum, $code)
     {
-        $vcode = Yii::$app->cache->get(Utils::getVcodeCachekey($phonenum));
-        return $vcode==$code;
+        if ($code){
+            $vcode = Yii::$app->cache->get(Utils::getVcodeCachekey($phonenum));
+            return $vcode==$code;
+        }
+        return false;
     }
 
     public static function saveUploadFile($uploadFile)

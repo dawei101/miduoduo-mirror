@@ -32,15 +32,17 @@ class TaskAddressController extends BaseActiveController
     public function buildFilterQuery()
     {
         $query = parent::buildFilterQuery();
-        if (Yii::$app->request->get('weekend_only')){
+        $date_range = Yii::$app->request->get('date_range');
+        if ($date_range){
             $query->joinWith('task');
-            $query = TaskController::filterWeekendOnly($query);
+            if ($date_range == 'weekend_only'){
+                $query = static::filterWeekendOnly($query);
+            } elseif ($date_range == 'next_week'){
+                $query = static::filterNextWeek($query);
+            } elseif ($date_range == 'current_week'){
+                $query = static::filterCurrentWeek($query);
+            }
         }
-        if (Yii::$app->request->get('next_week')){
-            $query->joinWith('task');
-            $query = TaskController::filterNextWeek($query);
-        }
-
         return $query;
     }
 
