@@ -8,11 +8,6 @@ class m150728_112229_add_global_cache extends BaseMigration
     public function up()
     {
 
-        $this->dropTable('jz_cache_for_api');
-        $this->dropTable('jz_cache_for_backend');
-        $this->dropTable('jz_cache_for_frontend');
-        $this->dropTable('jz_cache_for_m');
-        $this->dropTable('jz_cache_for_corp');
         $sqls = "
 CREATE TABLE jz_cache (
     id char(128) NOT NULL PRIMARY KEY,
