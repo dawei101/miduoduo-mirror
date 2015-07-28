@@ -6,7 +6,6 @@ use Yii;
 
 use common\models\User;
 use common\models\Task;
-use common\BaseFileLog;
 
 /**
  * This is the model class for table "{{%task_address}}".
@@ -154,8 +153,7 @@ class TaskAddress extends \common\BaseActiveRecord
         if( $lat ){
             $content_arr= ['user_id'=>$user_id,'lat'=>$lat,'lng'=>$lng,'datetime'=>$datetime];
             $log_type   = 'location';
-            $log_obj    = new BaseFileLog();
-            $log_obj->saveLog($content_arr,$log_type);
+            Yii::info($content_arr,'user_location');
         }
         
         // 将数据保存到session，稍后的点击直接用

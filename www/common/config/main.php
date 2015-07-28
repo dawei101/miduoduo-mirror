@@ -80,6 +80,19 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                 ],
+                [
+
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['user_location'],
+                    'logFile' => '/service/data/logs/user-location/location.log',
+                    'logVars'   => [],
+                    'exportInterval'  => 0,
+                    'maxFileSize' => 1024 * 10,
+                    'maxLogFiles' => 20,
+                    'enableRotation' => true,
+
+               ],
             ],
         ],
 
