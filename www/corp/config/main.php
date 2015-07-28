@@ -39,7 +39,8 @@ return [
         'cache' => [
             'class' => 'yii\caching\DbCache',
             'db' => 'db',
-            'cacheTable' => 'jz_cache_for_corp',
+            'cacheTable' => 'jz_cache',
+            'keyPrefix' => 'corp@',
         ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',

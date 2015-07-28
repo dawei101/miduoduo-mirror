@@ -52,6 +52,12 @@ return [
             'app_key' => 'fcdc25a74fa9d95484276160',
             'master_secret' => 'f9c837cfb26bd97dc8ed2201',
         ],
+        'global_cache' => [
+            'class' => 'yii\caching\DbCache',
+            'db' => 'db',
+            'cacheTable' => 'jz_cache',
+            'keyPrefix' => 'corp@',
+        ],
         'wechat_pusher' => [
             'class' => 'common\pusher\WechatPusher',
         ],
