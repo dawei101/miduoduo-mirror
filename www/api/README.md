@@ -276,9 +276,7 @@ BASE_URL = 'http://api.miduoduo.cn'
     * GET /version/task/gid
 
 ### 附近任务
-    *GET /version//task-address/nearby?lat=39.995723&lng=116.423313&distance=5000&service_id&expand=task,company,service_type
-    * 查询周末（周六、周日）任务（一个月内的周末任务）>>> 参数同任务列表
-    * 查询下周任务 >>> 参数同任务列表
+    *GET /version/task-address/nearby?lat=39.995723&lng=116.423313&distance=5000&service_id&expand=task,company,service_type&date_range=
 
 
 ###任务报名
