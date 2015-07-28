@@ -385,20 +385,10 @@ class Task extends \common\BaseActiveRecord
 
     public function fields()
     {
-        return [
-            'id', 'gid', 'title', 'clearance_period', 'salary', 'salary_unit',
-            'salary_note', 'from_date',
-            'contact', 'contact_phonenum',
-            'to_date', 'from_time', 'to_time', 'need_quantity',
-            'got_quantity', 'created_time', 'updated_time', 'detail',
-            'requirement', 'address',
-            'age_requirement', 'height_requirement', 'status',
-            'user_id', 'service_type_id',
-            'city_id', 'district_id', 'company_id',
-            'gender_requirement', 'degree_requirement',
+        return array_merge(parent::fields(), [
             'clearance_period_label', 'salary_unit_label',
             'labels', 'label_options', 'status_label',
             'is_overflow',
-        ];
+        ]);
     }
 }

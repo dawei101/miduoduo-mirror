@@ -4,7 +4,6 @@ namespace api\modules\v1\controllers;
 
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\data\ArrayDataProvider;
 use api\modules\BaseActiveController;
 use yii\web\ForbiddenHttpException;
  
@@ -21,6 +20,29 @@ class TaskAddressController extends BaseActiveController
     public $id_column = 'id';
     public $auto_filter_user = false;
 
+    public function beforeAction($action)
+    {
+        if ($action->id == 'nearby'){
+            $_GET['expand'] = 
+                isset($_GET['expand'])?($_GET['expand'] . ',task'):'task';
+        }
+        return parent::beforeAction($action);
+    }
+
+    public function buildFilterQuery()
+    {
+        $query = parent::buildFilterQuery();
+        if (Yii::$app->request->get('weekend_only')){
+            $query->joinWith('task');
+            $query = TaskController::filterWeekendOnly($query);
+        }
+        if (Yii::$app->request->get('next_week')){
+            $query->joinWith('task');
+            $query = TaskController::filterNextWeek($query);
+        }
+        return $query;
+    }
+
     public function actionNearby($lat, $lng, $distance=1000, $service_type_id=null)
     {
         $model = $this->modelClass;
@@ -31,13 +53,11 @@ class TaskAddressController extends BaseActiveController
         $model = $this->modelClass;
         $query = $model::buildNearbyQuery($query, $lat, $lng, $distance);
 
-        $tasks = $query->all();
-        usort($tasks, function($a, $b){
-            return ($a->distance < $b->distance)?-1:1;
-        });
-        return new ArrayDataProvider([
-            'allModels' => $tasks,
-            ]
-        );
+        return new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'attributes'=> ['distance', 'id']
+            ],
+        ]);
     }
 }

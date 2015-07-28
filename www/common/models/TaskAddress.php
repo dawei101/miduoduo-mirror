@@ -6,6 +6,7 @@ use Yii;
 
 use common\models\User;
 use common\models\Task;
+use common\models\Company;
 use common\BaseFileLog;
 
 /**
@@ -76,6 +77,12 @@ class TaskAddress extends \common\BaseActiveRecord
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['id' => 'company_id'])
+            ->via('task');
+    }
+
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
@@ -83,7 +90,7 @@ class TaskAddress extends \common\BaseActiveRecord
 
     public function extraFields()
     {
-        return ['task', 'user'];
+        return ['task', 'user', 'company'];
     }
 
     public static function buildNearbyQuery($query, $lat, $lng, $distance)
