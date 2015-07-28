@@ -183,6 +183,37 @@ class WeichatBase
         return $params;
     }
 
+    // 获取当前登录用户的微信ID，如果用户未关注、取消关注 则返回false
+    public function getLoggedUserWeichatID(){
+        $user_id    = Yii::$app->user->id;
+        $openid_obj = WeichatUserInfo::find()->where(['userid'=>$user_id])->one();
+        $openid     = isset($openid_obj->openid) ? $openid_obj->openid : 0;
+        // 是否取消关注
+        if( $openid ){
+            // 最近一次取消关注
+            $tdweichat_obj  = WeichatUserLog::find()
+                ->where(['openid'=>$openid,'event_type'=>2])
+                ->addOrderBy(['id'=>SORT_DESC])
+                ->one();
+            $tdweichat_id   = isset($tdweichat_obj->id) ? $tdweichat_obj->id : 0;
+            if( $tdweichat_id ){
+                // 最近一次关注
+                $gzweichat_obj  = WeichatUserLog::find()
+                    ->where(['openid'=>$openid,'event_type'=>1])
+                    ->addOrderBy(['id'=>SORT_DESC])
+                    ->one();
+                $gzweichat_id   = isset($gzweichat_obj->id) ? $gzweichat_obj->id : 0;
+                // 如果当前已经取消关注，返回false
+                if( $tdweichat_id > $gzweichat_id ){
+                    return false;
+                }
+            }
+            return $openid;
+        }else{
+            return false;
+        }
+    }
+
     // 自动回复消息-关注
     public function autoResponseByFollowaction(){
         $model  = WeichatAutoresponse::find()->where(['type'=>1,'status'=>1])->One();
