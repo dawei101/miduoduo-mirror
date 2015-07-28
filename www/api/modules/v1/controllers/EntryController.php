@@ -201,6 +201,7 @@ class EntryController extends BaseActiveController
     {
         $phonenum = Yii::$app->request->post('phonenum');
         $code = Yii::$app->request->post('code');
+        $password = Yii::$app->request->post('password');
 
         if(Utils::validateVerifyCode($phonenum, $code)){
             $user = User::findByUsername($phonenum);
@@ -209,6 +210,9 @@ class EntryController extends BaseActiveController
             }
             $user->generateAccessToken();
             $this->activeDevice($user);
+            if ($password){
+                $user->setPassword($password);
+            }
             $user->save();
             return $this->loginSucceed($user);
         }

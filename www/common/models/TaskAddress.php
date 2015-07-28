@@ -7,6 +7,7 @@ use Yii;
 use common\models\User;
 use common\models\Task;
 use common\models\Company;
+use common\models\ServiceType;
 
 /**
  * This is the model class for table "{{%task_address}}".
@@ -82,6 +83,12 @@ class TaskAddress extends \common\BaseActiveRecord
             ->via('task');
     }
 
+    public function getService_type()
+    {
+        return $this->hasOne(ServiceType::className(), ['id' => 'service_type_id'])
+            ->via('task');
+    }
+
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
@@ -89,7 +96,7 @@ class TaskAddress extends \common\BaseActiveRecord
 
     public function extraFields()
     {
-        return ['task', 'user', 'company'];
+        return ['task', 'user', 'company', 'service_type', 'city'];
     }
 
     public static function buildNearbyQuery($query, $lat, $lng, $distance)

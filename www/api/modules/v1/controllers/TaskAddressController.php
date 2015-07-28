@@ -40,6 +40,7 @@ class TaskAddressController extends BaseActiveController
             $query->joinWith('task');
             $query = TaskController::filterNextWeek($query);
         }
+
         return $query;
     }
 

@@ -73,6 +73,7 @@ BASE_URL = 'http://api.miduoduo.cn'
 
         参数:   phonenum=手机号
                 code=验证码
+                password=选填
 
     return:
         { "success": false,
@@ -165,6 +166,7 @@ BASE_URL = 'http://api.miduoduo.cn'
 * Path构成
     * /version/model(/:id)
 * 请求
+    * 分页 见列表内 "_link"
     * 列表 
         * GET /version/model?page=1&per-page=2&expand=company,service_type (*注，不用复数格式)
             * expand 为连表查询的关系字段
@@ -260,20 +262,23 @@ BASE_URL = 'http://api.miduoduo.cn'
 * 任务类型列表
     * GET /version/service-type
 * 类型详情(几乎无用)
-    * GET /version/task/id
+    * GET /version/service-type/id
 
 ### 任务（职位）
 * 任务列表
-    * GET /version/task?expand=company,service_type,city,district,user,addresses
+    * GET /version/task?expand=company,service_type,city,district,user,addresses&date_range=(weekend_only|current_week|next_week)
+    * date_range
+        * weekend_only = 查询周末（周六、周日）任务（一个月内的周末任务）
+        * current_week = 查询本周任务
+        * next_week = 下周任务
+
 * 任务详情
     * GET /version/task/gid
 
 ### 附近任务
-    *GET /version//task-address/nearby?lat=39.995723&lng=116.423313&distance=5000&service_id&expand=task
-    *根据任务所有id获取任务详情(参见[filters的使用](#api遵循rest-api协议))
-```
-GET /version/task?expand=service_type,company&filters=[["in", "id", [task_id1, task_id2, ...]]]
-```
+    *GET /version//task-address/nearby?lat=39.995723&lng=116.423313&distance=5000&service_id&expand=task,company,service_type
+    * 查询周末（周六、周日）任务（一个月内的周末任务）>>> 参数同任务列表
+    * 查询下周任务 >>> 参数同任务列表
 
 
 ###任务报名
@@ -384,6 +389,9 @@ GET /version/task?expand=service_type,company&filters=[["in", "id", [task_id1, t
     * POST /version/contact-us
       params = {title: optional,content: required, phonenum: required, }
 
+## 关于性能上的优化
+    * TODO
+
 ## 关于跨域
 [Http access control - CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 原理：
@@ -391,5 +399,3 @@ GET /version/task?expand=service_type,company&filters=[["in", "id", [task_id1, t
 * 服务器http response 带着 Access-Control-Allow-Origin
     * 例 Access-Control-Allow-Origin: http://m.miduoduo.cn
 欲知详情请深挖[Wiki](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
-
-
