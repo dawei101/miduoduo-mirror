@@ -49,7 +49,8 @@ return [
         'cache' => [
             'class' => 'yii\caching\DbCache',
             'db' => 'db',
-            'cacheTable' => 'jz_cache_for_backend',
+            'cacheTable' => 'jz_cache',
+            'keyPrefix' => 'backend@',
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,

@@ -42,7 +42,8 @@ return [
         'cache' => [
             'class' => 'yii\caching\DbCache',
             'db' => 'db',
-            'cacheTable' => 'jz_cache_for_api',
+            'cacheTable' => 'jz_cache',
+            'keyPrefix' => 'api@',
         ],
         // 这里定义url
         'urlManager' => [

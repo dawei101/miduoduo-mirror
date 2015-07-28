@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\H5Utils;
+use common\Constants;
 
 /**
  * This is the model class for table "{{%app_release_version}}".
@@ -67,6 +68,17 @@ class AppReleaseVersion extends \common\BaseActiveRecord
     public static function find()
     {
         return new AppReleaseVersionQuery(get_called_class());
+    }
+
+    public function getDevice_type_label()
+    {
+        if ($this->device_type==Constants::DEVICE_ANDROID){
+            return "安卓";
+        }
+        if ($this->device_type==Constants::DEVICE_IOS){
+            return "苹果";
+        }
+        return null;
     }
 
     public function beforeSave($insert)
