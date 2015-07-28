@@ -168,10 +168,10 @@ class WeichatBase
         return sha1($s);
     }
 
-    public function generateConfigParams()
+    public function generateConfigParams($url=null)
     {
         $params = [
-            'url'=> Url::current([], $scheme=true),
+            'url'=> $url?$url:(Url::current([], $scheme=true)),
             'nonceStr'=> ''. rand(100000, 999999),
             'jsapi_ticket'=> $this->getJsapiTicket(),
             'timestamp'=> time(),
