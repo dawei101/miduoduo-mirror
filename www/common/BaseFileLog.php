@@ -14,6 +14,7 @@ class BaseFileLog
      *
      */
     function saveLog($content_arr='',$log_type='location'){
+        return ;
         $content         = $this->arrayToStr($content_arr);
 
         $max_size        = Yii::$app->params['file_log']['max_size'];
