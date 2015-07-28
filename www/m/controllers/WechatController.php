@@ -13,7 +13,8 @@ class WechatController extends \m\MBaseController
         $w = new WeichatBase;
         $config = $w->generateConfigParams();
         $env = [
-            'wx_config'=> $w->generateConfigParams(),
+            'wx_config'=> $w->generateConfigParams(
+		Yii::$app->request->referrer),
             'baidu_map_key'=> Yii::$app->params['baidu.map.web_key'],
             ];
         $str = json_encode($env);
