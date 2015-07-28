@@ -26,7 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'device_type',
+            [
+                'attribute' => 'device_type',
+                'value' => function($model){
+                    return $model->device_type_label;
+                }
+            ] ,
             'app_version',
             'api_version',
             'html_version',
