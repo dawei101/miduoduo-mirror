@@ -171,7 +171,7 @@ class WeichatBase
     public function generateConfigParams($url=null)
     {
         $params = [
-            'url'=> url?url:(Url::current([], $scheme=true)),
+            'url'=> $url?$url:(Url::current([], $scheme=true)),
             'nonceStr'=> ''. rand(100000, 999999),
             'jsapi_ticket'=> $this->getJsapiTicket(),
             'timestamp'=> time(),
