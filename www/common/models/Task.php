@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use ReflectionClass;
 use common\models\TaskAddress;
 use common\models\Company;
 use common\models\District;
@@ -176,8 +177,8 @@ class Task extends \common\BaseActiveRecord
             ['company_id', 'required', 'message'=>'请选择一个已存在的公司'],
             [['id', 'clearance_period', 'salary_unit', 'need_quantity',
                 'got_quantity', 'user_id', 'service_type_id',
-                'gender_requirement', 'degree_requirement', 'age_requirement',
-                'height_requirement', 'status', 'city_id', 'district_id',
+                'city_id', 'district_id',
+                'status',
                 'company_id','recommend'], 'integer'],
             [['salary'], 'number'],
             [['salary_note', 'detail', 'requirement', 'origin'], 'string'],
@@ -194,6 +195,10 @@ class Task extends \common\BaseActiveRecord
                 'message'=>'请输入正确的电话'],
             ['clearance_period', 'default', 'value'=>0],
             ['origin', 'default', 'value'=>'internal'],
+            [['gender_requirement', 'degree_requirement', 'age_requirement',
+                'face_requirement', 'talk_requirement', 'health_certificated',
+                'weight_requirement', 'height_requirement',
+                ], 'integer'],
         ];
     }
 
@@ -366,6 +371,38 @@ class Task extends \common\BaseActiveRecord
         return $this->is_overflow?'已招满':'未招满';
     }
 
+    public function getRequirements()
+    {
+        $columns = ['gender_requirement', 'degree_requirement',
+                'face_requirement', 'talk_requirement', 'health_certificated',
+                'weight_requirement', 'height_requirement',
+            ];
+        $ref = new ReflectionClass($this->className());
+        $rs = [];
+        foreach ($columns as $col){
+            if($this->$col !=0 ){
+                $options = $ref->getStaticPropertyValue(strtoupper($col));
+                $rs[] = $options[$this->$col];
+            }
+        }
+        return implode(', ', $rs);
+    }
+
+    public function getGender_requirement_label(){ 
+        return $this::$GENDER_REQUIREMENT[$this->gender_requirement];}  
+    public function getDegree_requirement_label(){
+        return $this::$DEGREE_REQUIREMENT[$this->degree_requirement];}  
+    public function getHeight_requirement_label(){
+        return $this::$HEIGHT_REQUIREMENT[$this->height_requirement];}  
+    public function getFace_requirement_label(){
+        return $this::$FACE_REQUIREMENT[$this->face_requirement];}  
+    public function getTalk_requirement_label(){
+        return $this::$TALK_REQUIREMENT[$this->talk_requirement];}  
+    public function getHealth_certificated_label(){
+        return $this::$HEALTH_CERTIFICATED[$this->health_certificated];}  
+    public function getWeight_requirement_label(){
+        return $this::$WEIGHT_REQUIREMENT[$this->weight_requirement];}  
+
     /*
      *  TODO 临时方法，为了迁移company数据到独立表
      */
@@ -388,6 +425,7 @@ class Task extends \common\BaseActiveRecord
         return array_merge(parent::fields(), [
             'clearance_period_label', 'salary_unit_label',
             'labels', 'label_options', 'status_label',
+            'requirements',
             'is_overflow',
         ]);
     }
