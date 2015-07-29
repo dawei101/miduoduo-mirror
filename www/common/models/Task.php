@@ -382,7 +382,9 @@ class Task extends \common\BaseActiveRecord
         foreach ($columns as $col){
             if($this->$col !=0 ){
                 $options = $ref->getStaticPropertyValue(strtoupper($col));
-                $rs[] = $options[$this->$col];
+                if (isset($options[$this->$col])){
+                    $rs[] = $options[$this->$col];
+                }
             }
         }
         return implode(', ', $rs);
