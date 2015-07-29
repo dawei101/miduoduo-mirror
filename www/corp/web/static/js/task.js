@@ -1,7 +1,13 @@
 $('.task-refresh').on('click', function(){
     $.get('/task/refresh', {gid : $(this).attr('gid')})
     .done(function(data){
-        location.reload();
+	var data_obj  = eval('('+data+')');
+        if(data_obj.result==false){
+		alert(data_obj.error)
+		return false;
+	}else{
+		location.reload();
+	}
     });
 });
 

@@ -79,6 +79,13 @@ class UserController extends CBaseController
     {
         $loginModel = new LoginForm();
         if ($loginModel->load(Yii::$app->request->post(), '') && $loginModel->login()) {
+            $user_id    = Yii::$app->user->id;
+            $company    = Company::find()->where(['user_id'=>$user_id])->one();
+            if( $company && $company->status == 20 ){
+                Yii::$app->user->logout();
+                return $this->renderJson(['result' => false,'error' => ['password'=>['您的账户已经被加入黑名单']] ]);
+            }
+
             return $this->renderJson(['result' => true ]);
         }
         return $this->renderJson(['result' => false, 'error' => $loginModel->errors]);

@@ -49,6 +49,11 @@ class Company extends \common\BaseActiveRecord
     const EXAM_GOVID_PASSED = 16;
     const EXAM_LICENSE_PASSED = 32;
 
+    static $USE_TASK_LIMIT = [
+        16 => 3,
+        32 => 5,
+    ];
+
     public function getExam_status_label()
     {
         return static::$EXAM_STATUSES[$this->exam_status];
@@ -186,5 +191,21 @@ class Company extends \common\BaseActiveRecord
     public function fields()
     {
         return array_merge(parent::fields(), ['status_label', 'exam_status_label', 'exam_result_label']);
+    }
+
+    public function getUseTaskLimit($exam_status){
+        if( isset(static::$USE_TASK_LIMIT[$exam_status]) ){
+            return static::$USE_TASK_LIMIT[$exam_status];
+        }else{
+            return 1;
+        }
+    }
+
+    public function getConpanyStatusLabel($status){
+        if( isset(static::$STATUSES[$status]) ){
+            return static::$STATUSES[$status];
+        }else{
+            return 0;
+        }
     }
 }

@@ -42,7 +42,7 @@ $this->title = '米多多兼职平台';
       </div>
       <div class="col-sm-10 padding-0 ">
         <div class="right-center">
-          <div class="conter-title">职位管理</div>
+          <div class="conter-title">职位管理<span style="font-size:12px;padding-left:20px;"><?= $user_task_promission['msg'] ?></span></div>
             <ul class="zhiwei-lis">
             <?php foreach ($tasks as $task) {?>
                 <li>
@@ -50,13 +50,18 @@ $this->title = '米多多兼职平台';
                         <h2 class="pull-left"><a href="<?=Yii::$app->params['baseurl.m']?>/task/view?gid=<?=$task->gid?>" target="blank"><?=$task->title?></a></h2>
                         <div class="pull-left bt-span">
                             <?php if($task->status == 0){?>
-                            <span class="task-refresh" gid="<?=$task->gid?>">刷新</span>
-                            <span class="task-edit" gid="<?=$task->gid?>">编辑</span>
+                                <?php if($user_task_promission['result'] !== false){ ?>
+                                    <span class="task-refresh" gid="<?=$task->gid?>">刷新</span>
+                                    <span class="task-edit" gid="<?=$task->gid?>">编辑</span>
+                                <?php }?>
                             <span class="task-down" gid="<?=$task->gid?>">下线</span>
                             <span class="task-delete" gid="<?=$task->gid?>">删除</span>
-                            <?php }else if($task->status == 50){?>
-                            <span class="task-edit" gid="<?=$task->gid?>">编辑</span>
+                            <?php }else if($task->status == 50 || $task->status == 10){?>
+                                <?php if($user_task_promission['result'] !== false){ ?>
+                                    <span class="task-edit" gid="<?=$task->gid?>">编辑</span>
+                                <?php }?>
                             <?php }?>
+                        
                         </div>
                    </div>
                    <div>
