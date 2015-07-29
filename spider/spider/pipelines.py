@@ -33,7 +33,7 @@ class SpiderPipeline(object):
                         (spider.origin, cid))
                 rows = cursor.fetchall()
                 for _id, origin_id in rows:
-                    spider.exists_ids.add(int(origin_id))
+                    spider.exists_ids.add(origin_id)
                 if rows:
                     cid = _id
                     logger.log(logging.DEBUG, "got %s exists tasks", len(rows))

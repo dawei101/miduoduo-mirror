@@ -66,7 +66,7 @@ class TaskController extends BaseActiveController
         $from_date = Task::tableName() . '.from_date';
         $to_date = Task::tableName() . '.to_date';
         $t_date = strtotime('sunday');
-        $f_date = strtotime('monday', $t_date);
+        $f_date = strtotime('-1 monday', $t_date);
         $query->andWhere(['and', 
                 ['>=', $to_date, date('Y-m-d', $f_date)],
                 ['<=', $from_date, date('Y-m-d', $t_date)]]);

@@ -36,11 +36,11 @@ class TaskAddressController extends BaseActiveController
         if ($date_range){
             $query->joinWith('task');
             if ($date_range == 'weekend_only'){
-                $query = static::filterWeekendOnly($query);
+                $query = TaskController::filterWeekendOnly($query);
             } elseif ($date_range == 'next_week'){
-                $query = static::filterNextWeek($query);
+                $query = TaskController::filterNextWeek($query);
             } elseif ($date_range == 'current_week'){
-                $query = static::filterCurrentWeek($query);
+                $query = TaskController::filterCurrentWeek($query);
             }
         }
         return $query;

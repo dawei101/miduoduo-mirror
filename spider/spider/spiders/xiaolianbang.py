@@ -83,7 +83,7 @@ class XlbSpider(scrapy.Spider):
             if _id and re.match(r'\d{2}-\d{2}', release_date):
                 release_date = self.this_year + '-' + str(release_date)
 
-                if (int(_id) not in self.exists_ids):
+                if _id not in self.exists_ids:
                     yield self.build_detail_request(_id, meta['city'], release_date)
 
     def build_detail_request(self, _id, city, release_date=None):
