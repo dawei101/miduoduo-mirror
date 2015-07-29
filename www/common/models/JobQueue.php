@@ -28,7 +28,7 @@ class JobQueue extends \common\BaseActiveRecord
     static $STATUSES = [
         0 => "队列中",
         1 => "执行中",
-        2 => "执行完毕"
+        2 => "执行完毕",
         10 => "执行失败",
     ];
 
@@ -55,6 +55,7 @@ class JobQueue extends \common\BaseActiveRecord
             [['start_time'], 'safe'],
             [['task_name'], 'string', 'max' => 100],
             ['status', 'default', 'value'=>static::$STATUS_IN_QUEUE],
+            ['message', 'string'],
         ];
     }
 

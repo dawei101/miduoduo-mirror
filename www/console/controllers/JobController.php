@@ -14,6 +14,8 @@ class JobController extends Controller
             return false;
         }
         $path = Yii::getAlias('@media/' . $obj->$column);
-
+        //upload to aliyun
+        $obj->$column = $http_path;
+        $obj->save();
     }
 }

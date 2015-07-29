@@ -18,6 +18,7 @@ class m150729_102627_job_queue_table extends BaseMigration
                 `start_time` timestamp not null default CURRENT_TIMESTAMP,
                 `priority` smallint not null default 2,
                 `status` smallint not null default 0,
+                `message` text,
                 PRIMARY KEY (`id`),
                 INDEX `idx_hot_job` (`status`)
             );
@@ -27,9 +28,7 @@ class m150729_102627_job_queue_table extends BaseMigration
 
     public function down()
     {
-        echo "m150729_102627_job_queue_table cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('jz_job_queue');
     }
     
     /*

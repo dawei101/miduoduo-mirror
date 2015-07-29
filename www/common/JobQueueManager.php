@@ -1,5 +1,5 @@
 <?php
-namespace common\tasks;
+namespace common;
 
 use common\models\JobQueue;
 
@@ -8,34 +8,49 @@ class JobQueueManager
 {
     public $batch_size = 100;
 
+    /*
+     * TODO 这里如果并发，会有重复取job的可能。
+     *
+     */
     public function get($count=null)
     {
         $count = $count?$count:$this->batch_size;
 
-        $tasks = JobQueue::find()
+        $jobs = JobQueue::find()
             ->where(['status'=>JobQueue::STATUS_IN_QUEUE])
             ->andWhere(['<', 'start_time', time()])
             ->orderBy(['priority'=>SORT_DESC, 'id'=>SORT_DESC])
             ->limit($count)->all();
-        return $tasks;
+        $ids = [];
+        foreach($jobs as $job){
+            $ids[] = $job->id;
+        }
+        JobQueue::updateAll(
+            ['status'=>JobQueue::STATUS_PROCESSING],
+            ['id'=> $ids]);
+
+        return $jobs;
     }
 
-    public function add(
-        $task_name, $params, $start_time=time(), 
-        $priority=JobQueue::PRIORITY_MEDIUM, $retry_times = 3)
+    public function add($task_name, $params, 
+        $start_time=null, $priority=null, $retry_times = 3)
     {
-        $task = new JobQueue;
-        $task->task_name = $task_name;
-        $task->setParams($params);
-        $task->start_time = $start_time;
-        $task->priority = $priority;
-        $task->retry_times = $retry_times;
-        $task->save();
+
+        $start_time = $start_time?$start_time:time();
+        $priority = $priority?$priority:JobQueue::PRIORITY_MEDIUM;
+
+        $job = new JobQueue;
+        $job->task_name = $task_name;
+        $job->setParams($params);
+        $job->start_time = $start_time;
+        $job->priority = $priority;
+        $job->retry_times = $retry_times;
+        $job->save();
     }
 
-    public function retry($task)
+    public function retry($job)
     {
-        return $task->retryIfCan();
+        return $job->retryIfCan();
     }
 
 }
