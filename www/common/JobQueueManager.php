@@ -1,16 +1,19 @@
 <?php
 namespace common\tasks;
 
-use common\models\TaskQueue;
+use common\models\JobQueue;
 
 
-class TaskManager
+class JobQueueManager
 {
+    public $batch_size = 100;
 
-    public function get($count=100)
+    public function get($count=null)
     {
-        $tasks = TaskQueue::find()
-            ->where(['status'=>TaskQueue::STATUS_IN_QUEUE])
+        $count = $count?$count:$this->batch_size;
+
+        $tasks = JobQueue::find()
+            ->where(['status'=>JobQueue::STATUS_IN_QUEUE])
             ->andWhere(['<', 'start_time', time()])
             ->orderBy(['priority'=>SORT_DESC, 'id'=>SORT_DESC])
             ->limit($count)->all();
@@ -19,9 +22,9 @@ class TaskManager
 
     public function add(
         $task_name, $params, $start_time=time(), 
-        $priority=TaskQueue::PRIORITY_MEDIUM, $retry_times = 3)
+        $priority=JobQueue::PRIORITY_MEDIUM, $retry_times = 3)
     {
-        $task = new TaskQueue;
+        $task = new JobQueue;
         $task->task_name = $task_name;
         $task->setParams($params);
         $task->start_time = $start_time;

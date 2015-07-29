@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%task_queue}}".
+ * This is the model class for table "{{%job_queue}}".
  *
  * @property integer $id
  * @property string $task_name
@@ -15,14 +15,14 @@ use Yii;
  * @property integer $priority
  * @property integer $status
  */
-class TaskQueue extends \common\BaseActiveRecord
+class JobQueue extends \common\BaseActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%task_queue}}';
+        return '{{%job_queue}}';
     }
 
     static $STATUSES = [
@@ -76,11 +76,11 @@ class TaskQueue extends \common\BaseActiveRecord
 
     /**
      * @inheritdoc
-     * @return TaskQueueQuery the active query used by this AR class.
+     * @return JobQueueQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new TaskQueueQuery(get_called_class());
+        return new JobQueueQuery(get_called_class());
     }
 
     public function setParams($params)

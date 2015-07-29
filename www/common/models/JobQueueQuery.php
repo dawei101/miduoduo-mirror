@@ -3,11 +3,11 @@
 namespace common\models;
 
 /**
- * This is the ActiveQuery class for [[TaskQueue]].
+ * This is the ActiveQuery class for [[JobQueue]].
  *
- * @see TaskQueue
+ * @see JobQueue
  */
-class TaskQueueQuery extends \yii\db\ActiveQuery
+class JobQueueQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -17,7 +17,7 @@ class TaskQueueQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return TaskQueue[]|array
+     * @return JobQueue[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class TaskQueueQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return TaskQueue|array|null
+     * @return JobQueue|array|null
      */
     public function one($db = null)
     {

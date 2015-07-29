@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\TaskQueue;
+use common\models\JobQueue;
 
 /**
- * TaskQueueSearch represents the model behind the search form about `common\models\TaskQueue`.
+ * JobQueueSearch represents the model behind the search form about `common\models\JobQueue`.
  */
-class TaskQueueSearch extends TaskQueue
+class JobQueueSearch extends JobQueue
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class TaskQueueSearch extends TaskQueue
      */
     public function search($params)
     {
-        $query = TaskQueue::find();
+        $query = JobQueue::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

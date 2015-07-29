@@ -3,13 +3,13 @@
 use yii\db\Schema;
 use console\BaseMigration;
 
-class m150730_112020_task_queue extends BaseMigration
+class m150729_102627_job_queue_table extends BaseMigration
 {
     public function up()
     {
 
         $sqls = "
-            create table jz_task_queue 
+            create table jz_job_queue 
             (
                 `id` INT NOT NULL AUTO_INCREMENT,
                 `task_name` varchar(100) not null,
@@ -19,7 +19,7 @@ class m150730_112020_task_queue extends BaseMigration
                 `priority` smallint not null default 2,
                 `status` smallint not null default 0,
                 PRIMARY KEY (`id`),
-                INDEX `idx_hot_task` (`status`)
+                INDEX `idx_hot_job` (`status`)
             );
             ";
         return $this->execSqls($sqls);
@@ -27,7 +27,7 @@ class m150730_112020_task_queue extends BaseMigration
 
     public function down()
     {
-        echo "m150730_112020_task_queue cannot be reverted.\n";
+        echo "m150729_102627_job_queue_table cannot be reverted.\n";
 
         return false;
     }

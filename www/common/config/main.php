@@ -64,6 +64,9 @@ return [
         'sms_pusher' => [
             'class' => 'common\pusher\SmsPusher',
         ],
+        'job_queue_manager' => [
+            'class' => 'common\JobQueueManager',
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
@@ -101,7 +104,6 @@ return [
                ],
             ],
         ],
-
     ],
     'aliases' => [
         'api' => $root_path . '/api',
