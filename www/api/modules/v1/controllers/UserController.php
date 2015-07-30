@@ -50,8 +50,12 @@ class UserController extends BaseActiveController
         }
         $winfo->openid = $params['openid'];
         $winfo->userid = $user_id;
-        $winfo->weichat_name = $params['nickname'];
-        $winfo->weichat_head_pic = $params['headimgurl'];
+        if (isset($params['nickname'])){
+            $winfo->weichat_name = $params['nickname'];
+        }
+        if (isset($params['headimgurl'])){
+            $winfo->weichat_head_pic = $params['headimgurl'];
+        }
         $winfo->status = WeichatUserInfo::STATUS_OK;
         return $winfo->save();
     }

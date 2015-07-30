@@ -73,9 +73,9 @@ class WechatController extends \common\BaseController
                 'access_token'=> $user->access_token,
                 'resume' => $user->resume?$user->resume->toArray():null,
             ];
-            $to .= 'user=' . urlencode(json_encode($userinfo));
+            $to .= '&user=' . urlencode(json_encode($userinfo));
         }
-        $to .= 'wechat=' . urlencode(json_encode($record->toArray()));
+        $to .= '&wechat=' . urlencode(json_encode($record->toArray()));
         return $this->redirect($to);
     }
 
