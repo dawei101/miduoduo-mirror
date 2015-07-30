@@ -113,7 +113,7 @@ class TaskController extends \m\MBaseController
 
 
         $query = Task::find();
-        $query->where(['status'=>Task::STATUS_OK]);
+        // $query->where(['status'=>Task::STATUS_OK]);
         $query->andWhere(['>', 'to_date', date("Y-m-d")]);
 
         $query = $query->andWhere(['city_id'=>$city_id]);
