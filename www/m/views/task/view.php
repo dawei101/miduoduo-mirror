@@ -84,10 +84,6 @@ $this->nav_right_title = '首页';
         <i class="iconfont">&#xe60f;</i><span style="display:block">已举报</span>
         </a>
     <?php } ?>
-
-    <?php if (Yii::$app->user->isGuest){ ?>
-         <div class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
-    <?php } else { ?>
         <?php if ($app && $app->status==0){ ?>
             <div style="background: #a5abb2;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$app->status_label?></div>
         <?php } else if ($app && $app->status==10) { ?>
@@ -100,11 +96,13 @@ $this->nav_right_title = '首页';
                 <?php if($task->is_overflow){ ?>
                     <div style="background: #a5abb2;" class="midd-l bottom-bnt bottom-bnt-bm"><?=$task->is_overflow_label?></div>
                 <?php }else{ ?>
+                  <?php if(Yii::$app->user->id){?>
                     <div id="apply" class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div>
+                    <?php }else{?>
+                    <div class="midd-l bottom-bnt bottom-bnt-bm cd-popup-trigger">我要报名</div><?php }?>
                 <?php } ?>
             <?php } ?>
-        <?php } ?>
-    <?php } ?>
+        <?php } ?>   
 </div>
 
 <!--=======以藏的弹出层======-->
