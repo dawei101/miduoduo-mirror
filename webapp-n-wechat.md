@@ -23,14 +23,15 @@ function_name('{"wx_config":{"nonceStr":"475044","jsapi_ticket":"sM4AOVdWfPE4Dxk
  
 ```
 
-## 通过微信获取认证
-获取微信信息是典型的auth2登陆方式。
-    * webapp端不需要关心具体的操作,只需要在打开页面的时候判断cookie中是否设置过openid。
+通过微信获取认证
+------------------------
+
+### webapp端不需要关心具体的操作,只需要在打开页面的时候判断cookie中是否设置过openid。
         如果未设置就跳转到http://m.miduoduo.cn/wechat/auth?return_url=设置cookie的页面
-    * 在return_page会接受到get形式的参数，参数格式如下:
-        * origin_url: 请求认证传入的参数(一般为请求时页面的链接，在设置完成cookie后，location.href=origin_url便可跳回到请求认证的页面)。
-        * user: json format, 用户的相关信息结构同api登陆的返回格式
-        ```
+###在return_page会接受到get形式的参数，参数格式如下:
+    * origin_url: 请求认证传入的参数(一般为请求时页面的链接，在设置完成cookie后，location.href=origin_url便可跳回到请求认证的页面)。
+    * user: json format, 用户的相关信息结构同api登陆的返回格式
+```
         {
             "id": 4,
             "username": "18661775819",
@@ -62,15 +63,15 @@ function_name('{"wx_config":{"nonceStr":"475044","jsapi_ticket":"sM4AOVdWfPE4Dxk
                 "gender_label": "女",
                 "age": 0
             }
-        }
-        ```
-        * wechat: json format ,用户的相关资料
-        ```
+          }
+```
+    * wechat: json format ,用户的相关资料
+```
         {
             "openid": "",
             ...
         }
-        ```
+```
 
 ## 绑定
 在通过微信获取认证后，如果用户未绑定账号，则需要用户绑定账号，绑定的流程如下：
