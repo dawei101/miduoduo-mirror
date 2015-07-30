@@ -32,6 +32,7 @@ class TaskApplicant extends \common\BaseActiveRecord
     const STATUS_APPLIED = 0;
     const STATUS_APPLY_SUCCEED = 10;
     const STATUS_APPLY_FAILED = 20;
+    const STATUS_APPLY_OVERTIME = 30;
 
 
     /**

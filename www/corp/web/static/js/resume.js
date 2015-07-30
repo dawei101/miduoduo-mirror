@@ -47,6 +47,13 @@ $('.jujue').on('click', function(){
     });
 });
 
+$('.fabu-bt').on('click',function(){
+    if( $('#meet_time').val() == '' || $('#place').val() == '' || $('#linkman').val() == '' || $('#phone').val() == '' ){
+        $('.notice_error_msg').html('请将内容填写完整');
+        return false;
+    }
+});
+
 jQuery(document).ready(function($){
 	//open popup
 	$('.cd-popup-trigger').on('click', function(event){

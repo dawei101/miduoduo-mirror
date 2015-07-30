@@ -62,7 +62,7 @@ $this->title = '米多多兼职平台';
                 <dd>
                     <div class="pull-left tab1 borser-tab-right">
                         <div class="names" aid="<?=$task_app->resume->id?>"><span style="float: left; display: block; line-height: 20px; padding: 0 10px 0 0;">
-                            <?php if($task_app->status == $task_app::STATUS_WAIT_EXAMINE) {?>
+                            <?php if($task_app->status == $task_app::STATUS_WAIT_EXAMINE || $task_app->status == $task_app::STATUS_APPLY_SUCCEED) {?>
                                 <a href="<?=$task_app->resume->common_url?>" target="blank"><?=$task_app->resume->name?></a>
                             <?php }else{ ?>
                                 <?=$task_app->resume->name?>
@@ -72,7 +72,7 @@ $this->title = '米多多兼职平台';
                     </div>
                     <div class="pull-left tab2 text-center borser-tab-right"><a href="<?=Yii::$app->params['baseurl.m']?>/task/view?gid=<?=$task_app->task->gid?>" target="blank"><?=$task_app->task->title?></a></div>
                     <div class="pull-left tab3 text-center borser-tab-right">
-                        <?php if($task_app->status == $task_app::STATUS_WAIT_EXAMINE) {?>
+                        <?php if($task_app->status == $task_app::STATUS_WAIT_EXAMINE || $task_app->status == $task_app::STATUS_APPLY_SUCCEED) {?>
                             <?=$task_app->resume->phonenum?>
                         <?php }else{ ?>
                             <?=substr($task_app->resume->phonenum,0,3)?>********
@@ -142,7 +142,8 @@ $this->registerJsFile(Yii::$app->params["baseurl.static.corp"] . '/static/js/res
 			<li><a href="#">否</a></li>
 		</ul-->
 		<a href="#" class="cd-popup-close img-replace">关闭</a>
-        <button class="fabu-bt" style="margin: 20px 0 30px;">发送通知</button>
+        <div class="notice_error_msg"></div>
+        <button class="fabu-bt" style="margin: 10px 0 30px;">发送通知</button>
         <?php ActiveForm::end(); ?>
 	</div>
 </div>

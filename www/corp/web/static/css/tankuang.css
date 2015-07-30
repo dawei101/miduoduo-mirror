@@ -142,5 +142,14 @@
 .dx-1{text-align:left; margin-bottom: 0.5em;overflow: hidden;}
 .dx-1 label{padding:0.5em 2em; color:#666}
 .dx-1 label input{margin-right:1em;}
-.input-tj{margin-bottom:20px;}
-.input-tj input{width:90%; margin:0.5em auto; line-height:30px; border:#ccc solid 1px;}
+.input-tj{margin-bottom:10px;}
+.input-tj input{width:90%; margin:0.5em auto; line-height:30px; border:#ccc solid 1px;padding: 0 10px;}
+
+.notice_error_msg{
+	color: red;
+    margin-left: 20px;
+    text-align: left;
+    width: 400px;
+	height: 22px;
+	line-height:22px;
+}
