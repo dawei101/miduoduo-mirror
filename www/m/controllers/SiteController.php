@@ -71,13 +71,11 @@ class SiteController extends MBaseController
             $gids   .= $value['task_id'].',';
         }
         $gids   = trim($gids,',');
-
-
         if($gids){
-
             // 查询数据显示
             $tasks      = Task::find()->where(['status'=>Task::STATUS_OK])
             ->where('`gid` in('.$gids.')')
+            ->andWhere(['>', 'to_date', date("Y-m-d")])
             ->addOrderBy(['display_order'=>SORT_DESC])
             ->joinWith('recommend')->all();
 
@@ -95,6 +93,7 @@ class SiteController extends MBaseController
             $query = Task::find()->where(['status'=>Task::STATUS_OK])
                 ->with('city')->with('district');
             $query = $query->andWhere(['city_id'=>$city_id])
+                ->andWhere(['>', 'to_date', date("Y-m-d")])
                 ->addOrderBy(['id'=>SORT_DESC])
                 ->limit(5);
                 ;
