@@ -89,6 +89,17 @@ class WeichatBase
         return $returnstr;
     }
 
+    public function makeAuthUrl($callback)
+    {
+        $appid   = Yii::$app->params['weichat']['appid'];
+        $secret  = Yii::$app->params['weichat']['secret'];
+        $scope   = Yii::$app->params['weichat']['scope1'];
+        return 'https://open.weixin.qq.com/connect/oauth2/authorize?'
+            . 'appid=' . $appid . '&redirect_uri=' . urlencode($callback)
+            . '&response_type=code&scope=' . $scope
+            . '&state=fromweichatrequest#wechat_redirect';
+    }
+
     /**
      * 
      * getWeichatAPIdata 使用post方法，向微信接口发送请求
@@ -113,7 +124,7 @@ class WeichatBase
             $returnstr  = 'haserror';
         }
         curl_close($curlobj);
-        
+
         return $returnstr;
     }
 
