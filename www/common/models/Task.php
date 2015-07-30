@@ -9,6 +9,7 @@ use common\models\District;
 use common\models\ServiceType;
 use common\models\ConfigRecommend;
 use common\models\WeichatPushSetTemplatePushItem;
+use common\models\TaskNotice;
 
 /**
  * This is the model class for table "{{%task}}".
@@ -400,5 +401,10 @@ class Task extends \common\BaseActiveRecord
             'labels', 'label_options', 'status_label',
             'is_overflow',
         ];
+    }
+
+    public function getNotice()
+    {
+        return $this->hasOne(TaskNotice::className(), ['task_id' => 'id']);
     }
 }
