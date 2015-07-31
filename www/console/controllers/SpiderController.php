@@ -24,7 +24,7 @@ class SpiderController extends Controller
         $lastest = TaskPool::find()->orderBy(
             'id desc')->where(['origin'=>'internal'])->one();
 
-        $max_id = $lastest?$intval($lastest->origin_id):0;
+        $max_id = $lastest?intval($lastest->origin_id):0;
 
         $tasks = Task::find()->where(['>', 'id', $max_id])
             ->andWhere(['origin'=>'internal'])
