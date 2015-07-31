@@ -79,6 +79,13 @@ class UserController extends CBaseController
     {
         $loginModel = new LoginForm();
         if ($loginModel->load(Yii::$app->request->post(), '') && $loginModel->login()) {
+            $user_id    = Yii::$app->user->id;
+            $company    = Company::find()->where(['user_id'=>$user_id])->one();
+            if( $company && $company->status == 20 ){
+                Yii::$app->user->logout();
+                return $this->renderJson(['result' => false,'error' => ['password'=>['您的账户已经被加入黑名单']] ]);
+            }
+
             return $this->renderJson(['result' => true ]);
         }
         return $this->renderJson(['result' => false, 'error' => $loginModel->errors]);
@@ -216,14 +223,17 @@ class UserController extends CBaseController
             return $this->redirect('/user/add-contact-info');
         }
 
+        $services = ServiceType::find()->all();
+
         if (Yii::$app->request->isPost) {
             $company->setAttributes(Yii::$app->request->post(), false);
             if ($company->validate() && $company->save()) {
-                return $this->goHome();
+                return $this->render('info', ['company' => $company, 'services' => $services]);
+            }else{
+                return $this->render('info', ['company' => $company, 'services' => $services,'error'=>'保存失败，请核对您填写的信息！']);
             }
         }
 
-        $services = ServiceType::find()->all();
         return $this->render('info', ['company' => $company, 'services' => $services]);
     }
 
@@ -233,12 +243,15 @@ class UserController extends CBaseController
             $old_password = Yii::$app->request->post('old_password');
             $new_password = Yii::$app->request->post('new_password');
             $confirm = Yii::$app->request->post('confirm');
+            if( strlen($old_password)<1 || strlen($new_password)<1 || strlen($confirm)<1 ){
+                return $this->render('account', ['error'=>'密码不能为空']);
+            }
             if (strcmp($new_password, $confirm) != 0) {
-                return $this->render('account', ['errmsg'=>'新密码不一致']);
+                return $this->render('account', ['error'=>'新密码不一致']);
             }
             $user = User::findIdentity(Yii::$app->user->id);
             if (!$user->validatePassword($old_password)) {
-                return $this->render('account', ['errmsg'=>'原密码错误']);
+                return $this->render('account', ['error'=>'原密码错误']);
             }
 
             $user->setPassword($new_password);
@@ -248,7 +261,7 @@ class UserController extends CBaseController
             }
         }
 
-        return $this->render('account', ['errmsg'=>'']);
+        return $this->render('account', ['error'=>'']);
     }
 
     public function actionPersonalCert()
@@ -259,17 +272,27 @@ class UserController extends CBaseController
         }
 
         if(Yii::$app->request->isPost){
-            $filename = Utils::saveUploadFile($_FILES['person_idcard_pic']);
+            if( $_FILES['person_idcard_pic']['size'] > 0 ){
+                $filename = Utils::saveUploadFile($_FILES['person_idcard_pic']);
+            }else{
+                $filename = $company->person_idcard_pic;
+            }
             if(!$filename) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
             }
             $company->person_idcard_pic = $filename;
             $company->exam_status = Company::EXAM_PROCESSING;
+            if( $company->exam_result == Company::EXAM_ALL_PASSED ){
+                $company->exam_result = Company::EXAM_LICENSE_PASSED;
+            }else{
+                $company->exam_result = Company::EXAM_GOVID_UNCHECK;
+            }
+            $company->exam_note   = '';
             $company->setAttributes(Yii::$app->request->post(), false);
             if (!$company->validate() || !$company->save()) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
             }
-            return $this->goHome();
+            return $this->render('personal-cert',['company' => $company, 'error'=>false]);
         }
         return $this->render('personal-cert',['company' => $company, 'error'=>false]);
     }
@@ -281,24 +304,34 @@ class UserController extends CBaseController
             return $this->redirect('/user/add-contact-info');
         }
         if(Yii::$app->request->isPost){
-            $filename = Utils::saveUploadFile($_FILES['person_idcard_pic']);
+            if( $_FILES['person_idcard_pic']['size'] > 0 ){
+                $filename = Utils::saveUploadFile($_FILES['person_idcard_pic']);
+            }else{
+                $filename = $company->person_idcard_pic;
+            }
             if(!$filename) {
-                return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
+                return $this->render('corp-cert',['company' => $company, 'error'=>'请上传您的身份证照片']);
             }
             $company->person_idcard_pic = $filename;
-
-            $filename = Utils::saveUploadFile($_FILES['corp_idcard_pic']);
+            
+            if( $_FILES['corp_idcard_pic']['size'] > 0 ){
+                $filename = Utils::saveUploadFile($_FILES['corp_idcard_pic']);
+            }else{
+                $filename = $company->corp_idcard_pic;
+            }
             if(!$filename) {
-                return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
+                return $this->render('corp-cert',['company' => $company, 'error'=>'请上传您的企业营业照']);
             }
             $company->corp_idcard_pic = $filename;
 
             $company->exam_status = Company::EXAM_PROCESSING;
+            $company->exam_result = Company::EXAM_GOVID_UNCHECK;
+            $company->exam_note   = '';
             $company->setAttributes(Yii::$app->request->post(), false);
             if (!$company->validate() || !$company->save()) {
-                return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
+                return $this->render('corp-cert',['company' => $company, 'error'=>$company->errors]);
             }
-            return $this->goHome();
+            return $this->render('corp-cert',['company'=>$company, 'error'=>false]);
         }
         return $this->render('corp-cert',['company'=>$company, 'error'=>false]);
     }

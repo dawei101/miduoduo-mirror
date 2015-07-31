@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use common\Utils;
 
 /* @var $this yii\web\View */
 $this->title = '米多多兼职平台';
@@ -42,6 +43,15 @@ $this->title = '米多多兼职平台';
       <div class="col-sm-10 padding-0 ">
         <div class="right-center">
             <div class="conter-title">个人认证</div>
+            <div class="tishi-cs">
+                <?php if($error){ ?>
+                    <?=$error?>
+                <?php }else{ ?>
+                    <?=$company::$EXAM_STATUSES_MSG[$company->exam_status]?>
+                    <?=$company->exam_note?>
+                    （当前审核状态为：<?=$company::$EXAM_RESULTS[$company->exam_result]?>）
+                <?php } ?>
+            </div>
         <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
           <ul class="tianxie-box" style="border:none">
               <li>
@@ -71,10 +81,12 @@ $this->title = '米多多兼职平台';
                         <P>4、身份证需要在有效期内。</P>
                         <P>5、申请人所填写的真实姓名、身份证号码必须与提交的证件信息一致。</P>
                    </div>
-                    <div class="id-img"><img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/yulan.jpg" id="img0"><img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/shenfenzheng.jpg"></div>
+                    <div class="id-img"><img src="<?php if($company->person_idcard_pic){ ?><?=Utils::urlOfFile($company->person_idcard_pic)?><?php }else{ ?><?=Yii::$app->params["baseurl.static.corp"]?>/static/img/yulan.jpg<?php } ?>" id="img0"><img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/shenfenzheng.jpg"></div>
                 </div>
               </li>
+              <?php if($company->exam_result!=$company::EXAM_GOVID_PASSED && $company->exam_result!=$company::EXAM_ALL_PASSED ){ ?>
                 <button class="queding-bt">确定</button>
+              <?php } ?>
            </ul>
         <?php ActiveForm::end(); ?>
         </div>

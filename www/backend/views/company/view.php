@@ -99,7 +99,8 @@ if ($model->status!=Company::STATUS_DELETED) {
                 <input type="hidden" name="id" value="<?=$model->id?>">
                 <input type="hidden" name="passed" value="0">
                 <button class="btn btn-danger" type="submit">审核不通过</button>
-                <textarea name="note" placeholder="备注" class="form-control custom-control" rows="3" style="resize:none"></textarea>
+                <br />
+                <textarea name="note" placeholder="不通过备注，用于提示企业" class="form-control custom-control" rows="3" style="resize:none"></textarea>
               </form>
             </div>
           </div>

@@ -41,6 +41,7 @@ class TaskController extends CBaseController
         if (!$company) {
             return $this->redirect('/user/add-contact-info');
         }
+        $user_task_promission   = $this->checkUserTaskPromission();
         $condition = ['user_id'=>Yii::$app->user->id];
         $status = Yii::$app->request->get('status');
         if (array_key_exists('status', $_GET)) {
@@ -48,20 +49,27 @@ class TaskController extends CBaseController
         }
         $query = Task::find()
                         ->where($condition)
-                        ->addOrderBy(['updated_time'=>SORT_DESC]);;
+                        ->addOrderBy(['status'=>SORT_ASC,'updated_time'=>SORT_DESC]);;
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $tasks = $query->offset($pagination->offset)
                         ->limit($pagination->limit)
                         ->all();
-        return $this -> render('index', ['tasks' => $tasks, 'pagination' => $pagination]);
+        return $this -> render('index', ['tasks' => $tasks, 'pagination' => $pagination,'user_task_promission'=>$user_task_promission]);
     }
 
     public function actionPublish()
     {
+        $user_task_promission   = $this->checkUserTaskPromission();
+
         $model = new Task();
         $company = Company::findByCurrentUser();
         if (Yii::$app->request->isPost) {
+            if( $user_task_promission['result'] == false ){
+                return $this->render('none_user_task_promission',['user_task_promission'=>$user_task_promission]);
+                exit;
+            }
+
             $company_id = $company->id;
             $data = Yii::$app->request->post();
             $data['company_id'] = $company_id;
@@ -105,7 +113,12 @@ class TaskController extends CBaseController
                 $model->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
             $model->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
-            $model->status = 30;
+            
+            if( $company->status == $company::STATUS_WHITEISTED ){
+                $model->status = 0;
+            }else{
+                $model->status = 30;
+            }
 
             if ($model->validate() && $model->save()) {
                 $task_id = $model->id;
@@ -115,17 +128,20 @@ class TaskController extends CBaseController
                     $address->task_id = $task_id;
                     $address->save();
                 }
+                $this->updateUseTaskNum();
                 return $this->redirect('/task/');
             }
         }
 
         $services = ServiceType::find()->all();
         return $this -> render('publish',
-        ['services'=>$services, 'task'=>$model, 'company'=>$company, 'address'=>[]]);
+        ['services'=>$services, 'task'=>$model, 'company'=>$company, 'address'=>[],'user_task_promission'=>$user_task_promission]);
     }
 
     public function actionEdit($gid)
     {
+        $user_task_promission   = $this->checkUserTaskPromission();
+
         $company = Company::findByCurrentUser();
 
         $task = Task::findOne(['gid' => $gid]);
@@ -133,6 +149,10 @@ class TaskController extends CBaseController
             return $this->goHome();
         }
         if (Yii::$app->request->isPost) {
+            if( $user_task_promission['result'] == false ){
+                return $this->render('none_user_task_promission',['user_task_promission'=>$user_task_promission]);
+                exit;
+            }
             $task->setAttributes(Yii::$app->request->post(), false);
 
             $clearance_period = Yii::$app->request->post('clearance_period');
@@ -171,8 +191,16 @@ class TaskController extends CBaseController
             if ($weight_requirement) {
                 $task->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
-            $task->status = 30;
+            
+            if( $company->status == $company::STATUS_WHITEISTED ){
+                
+            }else{
+                $model->status = 30;
+            }
+
             $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
+            $task->updated_time = date("Y-m-d H:i:s");
+            
             if ($task->validate() && $task->save()) {
                 $task_id = $task->id;
                 $addressList = explode(' ', Yii::$app->request->post('address_list'));
@@ -181,6 +209,7 @@ class TaskController extends CBaseController
                     $address->task_id = $task_id;
                     $address->save();
                 }
+                $this->updateUseTaskNum();
                 return $this->redirect('/task/');
             }
         }
@@ -190,16 +219,23 @@ class TaskController extends CBaseController
         $task->to_time = substr($task->to_time, 0, -3);
         Yii::$app->session->set('current_task_id', $task->id);
         return $this->render('publish',
-        ['task' => $task, 'services'=>$services, 'company'=>$company, 'address'=>$addresses]);
+        ['task' => $task, 'services'=>$services, 'company'=>$company, 'address'=>$addresses,'user_task_promission'=>$user_task_promission]);
     }
 
     public function actionRefresh($gid)
     {
+        $user_task_promission   = $this->checkUserTaskPromission();
+        if( $user_task_promission['result'] == false ){
+            return $this->renderJson(['result' => false, 'error' => $user_task_promission['msg']]);
+            exit;
+        }
+
         $task = Task::findOne(['gid' => $gid]);
         $task->updated_time = date("Y-m-d H:i:s");
         $task->from_time = substr($task->from_time, 0, -3);
         $task->to_time = substr($task->to_time, 0, -3);
         if($task->save()){
+            $this->updateUseTaskNum();
             return $this->renderJson(['result' => true]);
         }
         return $this->renderJson(['result' => false, 'error' => $task->errors]);
@@ -272,6 +308,74 @@ class TaskController extends CBaseController
             'success'=> true,
             'msg'=> '删除成功',
         ]);
+    }
+
+    protected function updateUseTaskNum(){
+        $user_id    = Yii::$app->user->id;
+        $company    = Company::find()->where(['user_id'=>$user_id])->one();
+        $today      = date("Y-m-d");
+        if( $company->use_task_date != $today ){
+            $company->use_task_num  = 1;
+            $company->use_task_date = $today;
+            $company->save();
+            var_dump($company);exit;
+        }elseif( $company ){
+            $company->use_task_num  = $company->use_task_num + 1;
+            $company->save();
+        }
+    }
+
+    protected function checkUseTaskNum($company){
+        $today          = date("Y-m-d");
+        $use_task_limie = $company->getUseTaskLimit($company->exam_result);
+        if( $company->use_task_date != $today ){
+            $company->use_task_num  = 0;
+            $company->use_task_date = $today;
+            $company->save();
+            $use_task_num = 0;
+            $result       = true;
+        }elseif( $company ){
+            $use_task_num   = $company->use_task_num;
+            if( $company->use_task_num < $use_task_limie ){
+                $result = true;
+            }else{
+                $result = false;
+            }
+        }else{
+            $result = false;
+        }
+        return [
+            'result'=>$result,
+            'use_task_num'=>$use_task_num,
+            'use_task_limie'=>$use_task_limie,
+            'exam_result'=>$company->exam_result,
+            'msg'=>'今日可操作'.$use_task_limie.'条，已操作'.$use_task_num.'条（操作是指：发布、编辑、刷新职位。申请个人/企业认证后，最多可操作'.$company->getUseTaskLimit(32).'条）',
+        ];
+    }
+
+    protected function checkCompanyStatus($company){
+        $status = $company->status;
+        if( $status == 0 || $status == 21 ){
+            $result = true;
+        }else{
+            $result = false;
+        }
+        return [
+            'result'=>$result,
+            'msg'=>'您的账户'.$company->getConpanyStatusLabel($status).'，请联系客服：010-84991662',
+        ];
+    }
+
+    protected function checkUserTaskPromission(){
+        $user_id    = Yii::$app->user->id;
+        $company    = Company::find()->where(['user_id'=>$user_id])->one();
+        $status_info= $this->checkCompanyStatus($company);
+        if( !$status_info['result'] ){
+            $return       = $status_info;
+        }else{
+            $return       = $this->checkUseTaskNum($company);
+        }
+        return $return;
     }
 
 }
