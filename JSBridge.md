@@ -48,7 +48,7 @@ function CallBack(str) {
     message: 要显示的内容
     callback：提示选择后的回调，回调为 JS 函数名，用字符串方式传递
     */
-    window.MDD.comfirm(message,callback)
+    window.MDD.confirm(message,callback)
 
     附：
         callback：回调函数
