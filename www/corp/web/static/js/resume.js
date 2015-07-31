@@ -26,6 +26,7 @@ $('.need-notice').on('click', function(){
         }else{
             $('#type1').attr('checked','checked');
         }
+        /* 插件不好用，稍后更改
         $('#meet_time').daterangepicker({
             "singleDatePicker": true,
             "timePicker": true,
@@ -39,7 +40,7 @@ $('.need-notice').on('click', function(){
             "cancelClass": "btn-default",
         }, function(start, end, label) {
             $('#meet_time').val(start.format('YYYY-MM-DD HH:mm'));
-        });
+        });*/
        
     });
 
