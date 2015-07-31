@@ -18,7 +18,7 @@ class JobQueueManager
 
         $jobs = JobQueue::find()
             ->where(['status'=>JobQueue::STATUS_IN_QUEUE])
-            ->andWhere(['<', 'start_time', time()])
+            ->andWhere(['<', 'start_time', date(DATE_ATOM)])
             ->orderBy(['priority'=>SORT_DESC, 'id'=>SORT_DESC])
             ->limit($count)->all();
         $ids = [];
@@ -28,7 +28,6 @@ class JobQueueManager
         JobQueue::updateAll(
             ['status'=>JobQueue::STATUS_PROCESSING],
             ['id'=> $ids]);
-
         return $jobs;
     }
 

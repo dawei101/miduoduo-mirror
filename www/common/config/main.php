@@ -109,6 +109,7 @@ return [
         'api' => $root_path . '/api',
         'm' => $root_path . '/m',
         'corp' => $root_path . '/corp',
+        'jobs' => $root_path . '/console/jobs',
         'data' => '/service/data',
         'media' => '/service/data/media',
         'html5_src' => $project_root . '/frontend/dist/webapp',

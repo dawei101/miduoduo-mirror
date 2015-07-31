@@ -19,7 +19,7 @@ class JobQueueSearch extends JobQueue
     {
         return [
             [['id', 'retry_times', 'priority', 'status'], 'integer'],
-            [['task_name', 'params', 'start_time'], 'safe'],
+            [['task_name', 'params', 'start_time', 'message'], 'safe'],
         ];
     }
 
@@ -64,7 +64,8 @@ class JobQueueSearch extends JobQueue
         ]);
 
         $query->andFilterWhere(['like', 'task_name', $this->task_name])
-            ->andFilterWhere(['like', 'params', $this->params]);
+            ->andFilterWhere(['like', 'params', $this->params])
+            ->andFilterWhere(['like', 'message', $this->message]);
 
         return $dataProvider;
     }

@@ -37,7 +37,7 @@ class JobQueue extends \common\BaseActiveRecord
     const STATUS_DONE = 2;
     const STATUS_FAILED = 10;
 
-    const PRIORITY__HIGHEST = 4;
+    const PRIORITY_HIGHEST = 4;
     const PRIORITY_HIGH = 3;
     const PRIORITY_MEDIUM = 2;
     const PRIORITY_LOW = 1;
@@ -54,8 +54,9 @@ class JobQueue extends \common\BaseActiveRecord
             [['retry_times', 'priority', 'status'], 'integer'],
             [['start_time'], 'safe'],
             [['task_name'], 'string', 'max' => 100],
-            ['status', 'default', 'value'=>static::$STATUS_IN_QUEUE],
+            ['status', 'default', 'value'=>static::STATUS_IN_QUEUE],
             ['message', 'string'],
+            ['priority', 'default', 'value'=>static::PRIORITY_MEDIUM],
         ];
     }
 
@@ -66,12 +67,13 @@ class JobQueue extends \common\BaseActiveRecord
     {
         return [
             'id' => 'ID',
-            'task_name' => 'Task Name',
-            'params' => 'Params',
-            'retry_times' => 'Retry Times',
-            'start_time' => 'Start Time',
-            'priority' => 'Priority',
-            'status' => 'Status',
+            'task_name' => '任务名(Console Router)',
+            'params' => '参数',
+            'retry_times' => '重试次数',
+            'start_time' => '开始时间',
+            'priority' => '优先级',
+            'status' => '状态',
+            'message' => '消息',
         ];
     }
 

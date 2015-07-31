@@ -1,13 +1,13 @@
 <?php
 
-namespace console\controllers;
+namespace console\jobs;
 
-use yii\console\Controller;
+use console\BaseJob;
 
-class JobController extends Controller
+class CouldStorageJob extends BaseJob
 {
 
-    public function actionSyncFileToCloudStorage($model, $column, $pk)
+    public function actionSyncFile($model, $column, $pk)
     {
         $obj = $mdoel::findOne($pk);
         if (!$obj){
