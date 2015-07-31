@@ -49,7 +49,7 @@ class TaskController extends CBaseController
         }
         $query = Task::find()
                         ->where($condition)
-                        ->addOrderBy(['updated_time'=>SORT_DESC]);;
+                        ->addOrderBy(['status'=>SORT_ASC,'updated_time'=>SORT_DESC]);;
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $tasks = $query->offset($pagination->offset)
@@ -113,7 +113,12 @@ class TaskController extends CBaseController
                 $model->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
             $model->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
-            $model->status = 30;
+            
+            if( $company->status == $company::STATUS_WHITEISTED ){
+                $model->status = 0;
+            }else{
+                $model->status = 30;
+            }
 
             if ($model->validate() && $model->save()) {
                 $task_id = $model->id;
@@ -186,7 +191,13 @@ class TaskController extends CBaseController
             if ($weight_requirement) {
                 $task->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
-            $task->status = 30;
+            
+            if( $company->status == $company::STATUS_WHITEISTED ){
+                
+            }else{
+                $model->status = 30;
+            }
+
             $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
             $task->updated_time = date("Y-m-d H:i:s");
             
@@ -344,7 +355,7 @@ class TaskController extends CBaseController
 
     protected function checkCompanyStatus($company){
         $status = $company->status;
-        if( $status == 0 ){
+        if( $status == 0 || $status == 21 ){
             $result = true;
         }else{
             $result = false;

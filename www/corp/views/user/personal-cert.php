@@ -84,7 +84,9 @@ $this->title = '米多多兼职平台';
                     <div class="id-img"><img src="<?php if($company->person_idcard_pic){ ?><?=Utils::urlOfFile($company->person_idcard_pic)?><?php }else{ ?><?=Yii::$app->params["baseurl.static.corp"]?>/static/img/yulan.jpg<?php } ?>" id="img0"><img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/shenfenzheng.jpg"></div>
                 </div>
               </li>
+              <?php if($company->exam_result!=$company::EXAM_GOVID_PASSED && $company->exam_result!=$company::EXAM_ALL_PASSED ){ ?>
                 <button class="queding-bt">确定</button>
+              <?php } ?>
            </ul>
         <?php ActiveForm::end(); ?>
         </div>

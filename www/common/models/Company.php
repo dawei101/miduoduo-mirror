@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Task;
 
 /**
  * This is the model class for table "{{%company}}".
@@ -22,12 +23,14 @@ class Company extends \common\BaseActiveRecord
         5 => '已冻结',
         10 => '已删除',
         20 => '黑名单',
+        21 => '白名单',
     ];
 
     const STATUS_OK = 0;
     const STATUS_FREEZED = 5;
     const STATUS_DELETED = 10;
     const STATUS_BLACKLISTED =20;
+    const STATUS_WHITEISTED =21;
 
     static $EXAM_STATUSES = [
         0 => '未验证',
@@ -39,7 +42,7 @@ class Company extends \common\BaseActiveRecord
     static $EXAM_STATUSES_MSG = [
         0 => '您还未提交企业资料，快快提交认证吧~',
         1 => '您的资料正在审核中，请耐心等待！',
-        2 => '恭喜，您的资料审核通过，修改资料将重新审核您的信息！',
+        2 => '恭喜，您的资料审核已通过！',
         10 => '抱歉，您的资料审核未通过！',
     ];
 
@@ -226,5 +229,9 @@ class Company extends \common\BaseActiveRecord
         }else{
             return 0;
         }
+    }
+
+    public function updateNeedcheckToPass($company_id){
+        Task::updateAll(['status' => Task::STATUS_OK],"status='".Task::STATUS_IS_CHECK."' AND company_id='".$company_id."'");
     }
 }

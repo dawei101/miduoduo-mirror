@@ -135,6 +135,8 @@ class CompanyController extends BBaseController
         if ($passed){
             $company->exam_status = Company::EXAM_DONE;
             $company->exam_result = Company::EXAM_GOVID_PASSED;
+            $company->status      = Company::STATUS_WHITEISTED; 
+            $company->updateNeedcheckToPass($id);
             if ($company->corp_idcard_pic){
                 $company->exam_result = $company->exam_result | Company::EXAM_LICENSE_PASSED;
             }
