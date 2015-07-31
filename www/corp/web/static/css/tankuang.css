@@ -50,7 +50,7 @@
   -moz-transition-duration: 0.3s;
   transition-duration: 0.3s;
   overflow:hidden;
-  z-index: 10002;
+  z-index: 2;
 }
 
 .cd-popup-container p {

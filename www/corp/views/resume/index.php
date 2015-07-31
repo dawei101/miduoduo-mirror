@@ -61,7 +61,7 @@ $this->title = '米多多兼职平台';
                 ?>
                 <dd>
                     <div class="pull-left tab1 borser-tab-right">
-                        <div class="names" aid="<?=$task_app->resume->id?>"><span style="float: left; display: block; line-height: 20px; padding: 0 10px 0 0;">
+                        <div class="names" aid="<?=$task_app->resume->id?>"><span style="float: left; display: block; line-height: 20px; padding: 0 10px 0 0;color: #666;">
                             <?php if($task_app->status == $task_app::STATUS_WAIT_EXAMINE || $task_app->status == $task_app::STATUS_APPLY_SUCCEED) {?>
                                 <a href="<?=$task_app->resume->common_url?>" target="blank"><?=$task_app->resume->name?></a>
                             <?php }else{ ?>
@@ -105,10 +105,12 @@ $this->title = '米多多兼职平台';
   </div>
 </div>
 <!-- InstanceEndEditable -->
+<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/moment.js"></script>
+<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/daterangepicker.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=GB9AZpYwfhnkMysnlzwSdRqq"> </script>
 <?php
 $this->registerJsFile(Yii::$app->params["baseurl.static.corp"] . '/static/js/resume.js');
 ?>
-
 <!--=======以藏的弹出层======-->
 <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/tankuang.css" type="text/css" rel="stylesheet" />
 <div class="cd-popup" role="alert" id="tongzhi-1">
@@ -130,7 +132,7 @@ $this->registerJsFile(Yii::$app->params["baseurl.static.corp"] . '/static/js/res
             <label><input name="type" type="radio" value="2" id="type2">培训</label>
         </div>
         <div class="input-tj">
-            <input type="text" name="meet_time" id="meet_time" value="" placeholder="约定时间">
+            <input type="text" name="meet_time" readonly id="meet_time" value="" placeholder="约定时间">
             <input type="text" name="place" id="place" value="" placeholder="约定地点">
             <input type="text" name="linkman" id="linkman" value="" placeholder="联系人姓名">
             <input type="text" name="phone" id="phone" value="" placeholder="联系人电话">

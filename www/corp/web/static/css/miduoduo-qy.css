@@ -119,12 +119,12 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .fabu-box{ margin: 40px auto; min-height: 670px;overflow: hidden;width: 100%; height:100%; background:#2a3141}
 .qiye-left{width:195px; background:#2a3141; min-height:940px; padding:0}
 .qiye-left dl{margin:0; padding-bottom:10px;}
-.qiye-left dl dt{line-height:45px; font-size:16px;}
+.qiye-left dl dt{line-height:45px; font-size:16px;color:#999}
 .qiye-left dl dd a{line-height:30px;font-size:14px; display:block; widows:100%; padding-left:50px;}
 .qiye-left dl a:hover{color:#fed732;}
 .pitch-on{background:#fff; border-left: 10px solid #00b966;box-sizing: border-box; color:#2a3141;}
 .pitch-on .iconfont{margin:0 10px 0 10px; font-size:20px;color:#00b966;}
-.default-title .iconfont{margin:0 10px 0 20px; font-size:18px; color:#fed732;}
+.default-title .iconfont{margin:0 10px 0 10px; font-size:18px; color:#fed732;}
 .default-title{ color:#a5abb2;}
 .default-title a{color:#a5abb2;}
 .default-lis a{ color:#606c77;}
@@ -195,7 +195,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 
 
 
-.pitch-current{background:#f3f5f8; border-left: 10px solid #00b966;box-sizing: border-box; color:#2a3141;}
+.pitch-current{box-sizing: border-box; color:#2a3141;}
 .pitch-current .iconfont{margin:0 10px 0 10px; font-size:20px;color:#00b966;}
 .current a{ }
 .current a{color:#00b966; display:block; width:100%;background:#fff;}

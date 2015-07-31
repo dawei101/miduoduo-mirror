@@ -43,6 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => Company::$EXAM_STATUSES,
             ],
+            [
+                'attribute' => 'exam_result',
+                'value' => function($model){
+                    return $model->exam_result_label;
+                },
+                'filter' => Company::$EXAM_RESULTS,
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

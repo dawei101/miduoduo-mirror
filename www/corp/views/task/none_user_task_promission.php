@@ -43,7 +43,13 @@ $this->title = '米多多兼职平台';
       <div class="col-sm-10 padding-0 ">
         <div class="right-center">
           <div class="conter-title">职位管理</div>
-            <div class="tishi-cs">您今天的发布次数已经用完，请明天再来哟 ~ <?php if($user_task_promission['exam_status'] != 32){ ?>立即认证可增加发布条数，<a href="/user/corp-cert">去认证<?php } ?></a>
+            <div class="tishi-cs">
+                您今天的发布次数已经用完，请明天再来哟 ~ 
+                <?php if($user_task_promission['exam_result'] != 32){ ?>
+                    立即认证可增加发布条数，<a href="/user/corp-cert">去认证</a>
+                <?php } ?>
+            </div>
+          </div>
         </div>
       </div>
     </div>

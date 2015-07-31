@@ -41,13 +41,17 @@ $this->title = '米多多兼职平台';
                     </div>
                 </div>
 
-
-
-
                 <div class="col-sm-10 padding-0 ">
                     <div class="right-center">
-                        <div class="conter-title">发布兼职职位</div>
-                        <!--<div class="tishi-cs">您今天的发布次数已经用完，请明天再来哟 ~ 立即认证可增加发布条数，<a href="#">去认证</a></div>-->
+                        <div class="conter-title">发布兼职职位<span style="font-size:12px;padding-left:20px;"><?= $user_task_promission['msg'] ?></span></div>
+                        <?php if($user_task_promission['result']==false){ ?>
+                            <div class="tishi-cs">
+                                您今天的发布次数已经用完，请明天再来哟 ~ 
+                                <?php if($user_task_promission['exam_result'] < 32){ ?>
+                                    立即认证可增加发布条数，<a href="/user/corp-cert">去认证</a>
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
                         <?php $form = ActiveForm::begin();?>
                         <ul class="tianxie-box">
                             <li>
@@ -316,7 +320,11 @@ $this->title = '米多多兼职平台';
                                 <input name="protocol" type="checkbox" checked>我已阅读并同意<a href="/static/release_agreement.html">米多多发布兼职协议</a>
                                 <p class="cuowu protocol-error">内容不能为空!</p>
                             </div>
-                            <button class="fabu-bt">发布职位</button>
+                            <?php if($user_task_promission['result']==false){ ?>
+                                <button class="fabu-bt" disabled="disabled">今天发布次数已经用完</button>
+                            <?php }else{ ?>
+                                <button class="fabu-bt">发布职位</button>
+                            <?php } ?>
                             <?php ActiveForm::end(); ?>
                         </div>
                     </div>

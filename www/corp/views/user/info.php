@@ -43,6 +43,11 @@ $this->title = '米多多兼职平台';
       <div class="col-sm-10 padding-0 ">
         <div class="right-center">
             <div class="conter-title">我的资料</div>
+            <?php if(isset($error)){ ?>
+                <div class="tishi-cs">
+                        <?=$error?>
+                </div>
+            <?php } ?>
         <?php $form = ActiveForm::begin();?>
           <ul class="tianxie-box" style="border:none">
               <li>

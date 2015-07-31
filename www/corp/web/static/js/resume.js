@@ -26,6 +26,21 @@ $('.need-notice').on('click', function(){
         }else{
             $('#type1').attr('checked','checked');
         }
+        $('#meet_time').daterangepicker({
+            "singleDatePicker": true,
+            "timePicker": true,
+            "timePicker24Hour": true,
+            "timePickerIncrement": 30,
+            "opens": "left",
+            "timePickerIncrement": 1,
+            "drops": "down",
+            "buttonClasses": "btn btn-sm",
+            "applyClass": "btn-success",
+            "cancelClass": "btn-default",
+        }, function(start, end, label) {
+            $('#meet_time').val(start.format('YYYY-MM-DD HH:mm'));
+        });
+       
     });
 
     $('#tongzhi-1').removeClass('is-visible');

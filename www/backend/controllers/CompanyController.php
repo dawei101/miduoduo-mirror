@@ -130,7 +130,7 @@ class CompanyController extends BBaseController
         $company = $this->findModel($id);
         $note = Yii::$app->request->post('note');
         if ($note){
-            $company->exam_note = $exam_note;
+            $company->exam_note = $note;
         }
         if ($passed){
             $company->exam_status = Company::EXAM_DONE;
