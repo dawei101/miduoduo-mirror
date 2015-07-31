@@ -44,7 +44,11 @@ AppAsset::register($this);
                         <?php if (!Yii::$app->user->isGuest){ ?>
                             <li class="active"><a href="/task/">我的职位</a></li>
                             <li><a href="/task/publish">我要发布</a></li>
-                            <li><a href="/resume/">简历管理<em style="background:#fed732  ; border-radius:20px; padding:0 7px;  color:#fff; z-index:40"><?=Yii::$app->session->get('untreated_resume');?></em></a></li>
+                            <li><a href="/resume/">简历管理
+                                <?php if(Yii::$app->session->get('untreated_resume')){ ?>
+                                    <em style="background:#fed732  ; border-radius:20px; padding:0 7px;  color:#fff; z-index:40"><?=Yii::$app->session->get('untreated_resume');?></em>
+                                <?php } ?>
+                            </a></li>
                             <!--
                             <li><a href="/site/message">消息<em style="background:#fed732  ; border-radius:20px; padding:0 10px;  color:#fff; z-index:40">1</em>
                             </a></li>-->

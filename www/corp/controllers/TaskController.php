@@ -37,12 +37,11 @@ class TaskController extends CBaseController
 
     public function actionIndex()
     {
-        $user_task_promission   = $this->checkUserTaskPromission();
-
         $company = Company::findByCurrentUser();
         if (!$company) {
             return $this->redirect('/user/add-contact-info');
         }
+        $user_task_promission   = $this->checkUserTaskPromission();
         $condition = ['user_id'=>Yii::$app->user->id];
         $status = Yii::$app->request->get('status');
         if (array_key_exists('status', $_GET)) {
