@@ -24,7 +24,7 @@ return [
             'class' => 'yii\web\User',
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => 'site/login',
+            'loginUrl' => '/site/login',
         ],
        'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
