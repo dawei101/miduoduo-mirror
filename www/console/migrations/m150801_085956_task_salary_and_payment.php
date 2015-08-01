@@ -56,7 +56,7 @@ class m150801_085956_task_salary_and_payment extends BaseMigration
         ) ENGINE = InnoDB;
             ";
 
-//        $this->execSqls($sqls);
+        $this->execSqls($sqls);
     }
 
     public function down()
