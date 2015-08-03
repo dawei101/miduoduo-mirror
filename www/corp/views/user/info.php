@@ -61,7 +61,7 @@ $this->title = '米多多兼职平台';
                   <div class="pull-left right-box zhiweileibie">
                     <div class="nice-select" name="nice-select">
                       <input name="service" type="text" placeholder="选择行业" value="<?=$company->service?>" >
-                      <i class="iconfont">&#xe60d;</i>
+                      
                       <ul>
                         <?php foreach($services as $service) {?>
                         <li><?=$service->name?></li>
@@ -75,7 +75,7 @@ $this->title = '米多多兼职平台';
                   <div class="pull-left right-box zhiweileibie">
                     <div class="nice-select" name="nice-select">
                       <input name="corp_type" type="text" placeholder="选择公司性质" value="<?=$company->corp_type?>">
-                      <i class="iconfont">&#xe60d;</i>
+                      
                       <ul>
                         <li data-value="1">企业直聘</li>
                         <li data-value="2">人力资源</li>
@@ -89,7 +89,7 @@ $this->title = '米多多兼职平台';
                   <div class="pull-left right-box zhiweileibie">
                     <div class="nice-select" name="nice-select">
                       <input name="corp_size" type="text" placeholder="选择公司规模" value="<?=$company->corp_size?>">
-                      <i class="iconfont">&#xe60d;</i>
+                      
                       <ul>
                         <li>0-20人</li>
                         <li>20-100人</li>
