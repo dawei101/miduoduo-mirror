@@ -3,11 +3,12 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\helpers\Url;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 use common\models\User;
 use common\models\UserSearch;
 use backend\BBaseController;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -103,6 +104,38 @@ class UserController extends BBaseController
         }
         User::deleteAll(['id'=>$user_id]);
         return $this->redirect('/');
+    }
+
+    public function actionSetRole()
+    {
+        $phonenum = Yii::$app->request->post('phonenum');
+        $role_name = Yii::$app->request->post('role');
+        $message = '';
+        if ($phonenum && $role_name){
+            $user = User::find()->where(
+                ['username'=>$phonenum])->one();
+            if ($user) {
+                $auth = Yii::$app->authManager;
+                $role = $auth->getRole($role_name);
+                if ($role){
+                    if (!$auth->checkAccess($user->getId(), $role_name)) {
+                        $auth->assign($role, $user->getId());
+                        return $this->redirectHtml(
+                            Url::current(), "为 $phonenum 设置权限为 $role_name 成功!");
+                    }
+                    $message = "$phonenum 已经拥有 $role_name !";
+                } else {
+                    $message = "角色 $role_name 不存在";
+                }
+            } else {
+                $message = "用户 $phonenum 不存在";
+            }
+        }
+        return $this->render('set-role', [
+            'message' => $message,
+            'phonenum' => $phonenum,
+            'role' => $role_name,
+        ]);
     }
 
     /**

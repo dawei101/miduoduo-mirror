@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('创建用户', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('为用户添加角色', ['set-role'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
