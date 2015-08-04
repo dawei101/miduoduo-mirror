@@ -48,7 +48,7 @@ class TaskAddressController extends BaseActiveController
         return $query;
     }
 
-    public function actionNearby($lat, $lng, $distance=1000, $service_type_id=null)
+    public function actionNearby($lat, $lng, $distance=5000, $service_type_id=null)
     {
         $model = $this->modelClass;
         $model::$base_lat = $lat;

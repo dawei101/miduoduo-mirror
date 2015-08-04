@@ -17,6 +17,7 @@ return [
     'baseurl.frontend' => 'http://www.miduoduo.cn',
     'baseurl.h5_origin' => 'http://origin.miduoduo.cn',
     'baseurl.media' => 'http://media.miduoduo.cn',
+    'baseurl.wechat' => 'http://mm.miduoduo.cn',
     'baseurl.model' => 'http://model.miduoduo.cn',
 
     'baseurl.static.m' => 'http://static.miduoduo.cn/m',
@@ -24,7 +25,7 @@ return [
     'baseurl.static.corp' => 'http://static.miduoduo.cn/corp',
     'baseurl.static.dashboard' => 'http://static.miduoduo.cn/dashboard',
 
-    'nearby_search.max_distance' => 5000, // 单位米
+    'nearby_search.max_distance' => 10000, // 单位米
 
     'downloadApp.android' => 'http://dd.myapp.com/16891/BFBA839C0F4B194CE8F700FAACBA1E89.apk',
 
