@@ -386,6 +386,9 @@ BASE_URL = 'http://api.miduoduo.cn'
 ### 联系我们
     * POST /version/contact-us
       params = {title: optional,content: required, phonenum: required, }
+      
+### 微信推荐任务分组
+    *GET /version/recommend-task-group/9?expand=tasks
 
 ## 关于性能上的优化
     * TODO
