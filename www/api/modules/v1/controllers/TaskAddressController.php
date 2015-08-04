@@ -3,7 +3,7 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
-use yii\data\ArrayProvider;
+use yii\data\ArrayDataProvider;
 use api\modules\BaseActiveController;
 use yii\web\ForbiddenHttpException;
 use common\models\Task;
