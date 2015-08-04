@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  'format'=>'raw',
                  'value'=>function($model){
                     if ($model->task){
-                        return "<a target='_blank' class='pull-right' href='/task/view?id=". $model->task_id ."'>".$model->task->title ."</a>";
+                        return "<a target='_blank' class='pull-right' href='".Yii::$app->params['baseurl.m']."/task/view?gid=". $model->task->gid ."'>".$model->task->title ."</a>";
                     }
                     return '<span class="pull-right">已删除</span>';
                 },

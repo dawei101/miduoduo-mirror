@@ -240,6 +240,9 @@ $(function(){
        }
      }
     };
+    $("body").on("click", function(){
+        $("#search-result").hide();
+    });
     var local = new BMap.LocalSearch(map, options);
     $('#jquery-tagbox-text1').keypress(function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
