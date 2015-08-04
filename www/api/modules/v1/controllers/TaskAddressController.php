@@ -3,7 +3,7 @@
 namespace api\modules\v1\controllers;
 
 use Yii;
-use yii\data\ActiveDataProvider;
+use yii\data\ArrayProvider;
 use api\modules\BaseActiveController;
 use yii\web\ForbiddenHttpException;
 use common\models\Task;
@@ -58,11 +58,13 @@ class TaskAddressController extends BaseActiveController
         $model = $this->modelClass;
         $query = $model::buildNearbyQuery($query, $lat, $lng, $distance);
 
-        return new ActiveDataProvider([
-            'query' => $query,
-            'sort' => [
-                'attributes'=> ['distance', 'id']
-            ],
-        ]);
+        $tasks = $query->all();
+        usort($tasks, function($a, $b){
+            return ($a->distance < $b->distance)?-1:1;
+        });
+        return new ArrayDataProvider([
+            'allModels' => $tasks,
+            ]
+        );
     }
 }
