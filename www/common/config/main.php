@@ -101,6 +101,9 @@ return [
                ],
             ],
         ],
+        'office_phpexcel' => [
+            'class' => 'common\phpoffice\PhpExcel',
+        ],
 
     ],
     'aliases' => [

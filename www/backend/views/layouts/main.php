@@ -49,6 +49,8 @@ AppAsset::register($this);
                 <li>&nbsp;</li>
                 <li><a href="/data-user">数据统计</a></li>
                 <li>&nbsp;</li>
+                <li><a href="/account-event">工资流水管理</a></li>
+                <li>&nbsp;</li>
 
                 <li><a href="/task-pool">爬虫-任务列表</a></li>
                 <li><a href="/task-pool-white-list">爬虫-白名单(黑名单)</a></li>
