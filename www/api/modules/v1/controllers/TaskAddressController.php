@@ -6,6 +6,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use api\modules\BaseActiveController;
 use yii\web\ForbiddenHttpException;
+use common\models\Task;
  
 /**
  * Address Controller API
@@ -32,9 +33,10 @@ class TaskAddressController extends BaseActiveController
     public function buildFilterQuery()
     {
         $query = parent::buildFilterQuery();
+        $query->joinWith('task')->andWhere(
+            [$this->getColumn('status', 'task')=>Task::STATUS_OK]);
         $date_range = Yii::$app->request->get('date_range');
         if ($date_range){
-            $query->joinWith('task');
             if ($date_range == 'weekend_only'){
                 $query = TaskController::filterWeekendOnly($query);
             } elseif ($date_range == 'next_week'){
