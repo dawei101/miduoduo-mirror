@@ -54,11 +54,13 @@ AppAsset::register($this);
                 <li><a href="/task-pool-white-list">爬虫-白名单(黑名单)</a></li>
                 <li>&nbsp;</li>
                 <li><a href="/app-release-version">应用发布管理</a></li>
-                <li>
+                <li><a href="/job-queue">异步任务</a></li>
+                <li class="hidden">
                     <a href="/support/report-bug">
                     <span class="glyphicon glyphicon-flag" style="color:red;"></span> 提交bug
                     </a>
                 </li>
+                <li>&nbsp;</li>
 <?php if (Yii::$app->user->isGuest) { ?>
                 <li><a href="/site/login">登陆</a></li>
 <?php } else { ?>

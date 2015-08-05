@@ -4,7 +4,7 @@ namespace common\sms_sender;
 use Yii;
 use yii\base\Component;
 
-class BaifentongSender extends 
+class BaifentongSender extends Component
 {
     public $account = 'dlcsyj00';
     public $password = 'gUp48QVj';
