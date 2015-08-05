@@ -141,9 +141,9 @@ class TaskPool extends \common\BaseActiveRecord
         $task->title = $ds['title'];
 
         $cp = 3;
-        foreach (Task::$CLEARANCE_PERIODS as $k=>$v)
-        {
-            $cp = $v==$ds['clearance_period']?$k:$cp;
+        $dcp = isset($ds['clearance_period'])?$ds['clearance_period']:'';
+        foreach (Task::$CLEARANCE_PERIODS as $k=>$v) {
+            $cp = $v==$dcp?$k:$cp;
         }
         $task->clearance_period = $cp;
 
@@ -218,6 +218,8 @@ class TaskPool extends \common\BaseActiveRecord
             $n = '天';
         } elseif (strpos($name, '次') !== false){
             $n = '次';
+        } elseif (strpos($name, '单') !== false){
+            $n = '单';
         }
         foreach(Task::$SALARY_UNITS as $k=>$v){
             if ($v==$n){

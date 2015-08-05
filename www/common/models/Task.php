@@ -64,6 +64,7 @@ class Task extends \common\BaseActiveRecord
         2=>'周',
         3=>'月',
         4=>'次',
+        5=>'单',
     ];
 
     public static $GENDER_REQUIREMENT = [
