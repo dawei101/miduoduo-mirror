@@ -4,6 +4,7 @@ namespace api\modules\v1\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use yii\web\HttpException;
 use api\modules\BaseActiveController;
  
 use common\Utils;
@@ -242,12 +243,13 @@ class EntryController extends BaseActiveController
         $result = false;
         $function =  'loginWith'. ucfirst($platform);
         if (method_exists($this, $function)){
-            $result = $this->$function($params);
+            return $this->$function($params);
+        } else {
+            return $this->renderJson([
+                'success'=> false,
+                'message'=> "未知的平台类型",
+            ]);
         }
-        return $this->renderJson([
-            'success'=> $result,
-            'message'=> $result?"绑定成功":"绑定失败",
-        ]);
     }
 
     public function loginWithWechat($params)
