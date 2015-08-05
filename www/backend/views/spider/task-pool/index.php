@@ -70,7 +70,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' =>[
                     'xiaolianbang'=>'校联邦',
+                    'jianzhimao'=>'兼职猫',
                     'internal'=>'内部',
+                    '58',
                 ],
             ] ,
 

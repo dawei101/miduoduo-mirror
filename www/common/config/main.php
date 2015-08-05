@@ -100,7 +100,17 @@ return [
                     'maxFileSize' => 1024 * 10,
                     'maxLogFiles' => 20,
                     'enableRotation' => true,
-
+               ],
+               [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['payment'],
+                    'logFile' => '/service/data/logs/payment.log',
+                    'logVars'   => [],
+                    'exportInterval'  => 0,
+                    'maxFileSize' => 1024 * 10,
+                    'maxLogFiles' => 20,
+                    'enableRotation' => true,
                ],
             ],
         ],

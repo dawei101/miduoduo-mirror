@@ -26,8 +26,12 @@ return [
     'baseurl.static.dashboard' => 'http://static.miduoduo.cn/dashboard',
 
     'nearby_search.max_distance' => 10000, // 单位米
+    'host_ip' => '',
 
     'downloadApp.android' => 'http://dd.myapp.com/16891/BFBA839C0F4B194CE8F700FAACBA1E89.apk',
+
+    'wechat_payment.id' => '',
+    'wechat_payment.key' => '',
 
     'weichat'=>[
         'appid'     => 'wxc940e677d43db45d',                // 微信公众号ID
