@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '处理结果',
                 'value' => function($model){
-                    return $model->payout->status;
+                    return $model->payout->status_label;
                 }
             ],
             [

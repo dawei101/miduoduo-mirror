@@ -24,17 +24,13 @@ class Payout extends \yii\db\ActiveRecord
 {
     public static $STATUS   = [
         0   => '未知',
-        1   => '申请',
-        2   => '结算中',
-        3   => '提现完成',
-        4   => '提现失败'
+        10  => '转账成功',
+        20  => '转账失败',
     ];
 
     const STATUS_UNKNOW = 0;
-    const STATUS_APPLY  = 1;
-    const STATUS_DOING  = 2;
-    const STATUS_SUCCESS= 3;
-    const STATUS_FAULT  = 4;
+    const STATUS_SUCCESS= 10;
+    const STATUS_FAULT  = 20;
 
     /**
      * @inheritdoc
@@ -80,5 +76,9 @@ class Payout extends \yii\db\ActiveRecord
             'created_time' => '录入时间',
             'note' => 'Note',
         ];
+    }
+    
+    public function getStatus_label(){
+        return static::$STATUS[$this->status];
     }
 }
