@@ -336,13 +336,9 @@ class UserController extends CBaseController
             if (!$company->validate() || !$company->save()) {
                 return $this->render('corp-cert',['company' => $company, 'error'=>$company->errors]);
             }
-<<<<<<< HEAD
-            return $this->render('corp-cert',['company'=>$company, 'error'=>false]);
-=======
             JobUtils::addSyncFileJob($company, 'person_idcard_pic');
             JobUtils::addSyncFileJob($company, 'corp_idcard_pic');
-            return $this->goHome();
->>>>>>> origin/dawei/task_queue
+            return $this->render('corp-cert',['company'=>$company, 'error'=>false]);
         }
         return $this->render('corp-cert',['company'=>$company, 'error'=>false]);
     }
