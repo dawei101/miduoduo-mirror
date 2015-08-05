@@ -32,6 +32,14 @@ class SiteController extends FBaseController
                     'logout' => ['post'],
                 ],
             ],
+            [
+                'class' => 'yii\filters\HttpCache',
+                'only' => ['index'],
+                'lastModified' => function ($action, $params) {
+                    $file = Yii::getAlias("@frontend/views/site/index.php");
+                    return filemtime($file);
+                },
+            ]
         ];
     }
 
