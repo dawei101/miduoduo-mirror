@@ -131,8 +131,9 @@ class Task extends \common\BaseActiveRecord
     ];
 
     public static $ORIGIN=[
-        'internal'=>'爬虫',
-        'dashboard'=>'后台',
+        'xiaolianbang' => '校联邦',
+        'jianzhimao' => '兼职猫',
+        'internal'=>'站内添加',
         'corp'=>'企业',
     ];
 
