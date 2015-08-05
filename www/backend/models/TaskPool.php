@@ -250,6 +250,20 @@ class TaskPool extends \common\BaseActiveRecord
                 "小时工" => "小时工", 
                 "志愿者" => "志愿者",
             ];
+        } elseif ($origin=='jianzhimao'){
+            $arr = [
+                "客服" => "客服",
+                "促销" => "促销",
+                "礼仪" => "礼仪模特",
+                "模特" => "礼仪模特",
+                "派单" => "传单",
+                "翻译" => "翻译",
+                "服务员" => "服务员",
+                "临时工" => "临时工",
+                "设计" => "美工平面",
+                "实习" => "实习生",
+                "家教" => "家教",
+            ];
         }
         $category_name = isset($arr[$category_name])?$arr[$category_name]:$category_name;
         if (isset($this->_stype_dict[$category_name])){
@@ -258,9 +272,9 @@ class TaskPool extends \common\BaseActiveRecord
         return $this->_stype_dict['其他'];
     }
 
-
     public function getCityId($name)
     {
+        $name = mb_substr($name, 0, 2, 'utf-8');
         $city = District::find()->where(['level'=>'city'])->andWhere(
             ['like', 'name', $name . '%', false])->one();
         return $city->id;
