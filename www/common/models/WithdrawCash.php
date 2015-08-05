@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use common\models\Payout;
 use common\models\Resume;
+use common\models\AccountEvent;
 
 /**
  * This is the model class for table "{{%withdraw_cash}}".
@@ -97,6 +98,10 @@ class WithdrawCash extends \yii\db\ActiveRecord
     public function getOperatorinfo(){
         return $this->hasOne(Resume::className(),['user_id'=>'operator_id'])
             ->from(['operator'=>Resume::tableName()]);
+    }
+
+    public function getAccountEvent(){
+        return $this->hasOne(AccountEvent::className(),['related_id'=>'id']);
     }
 
     public function makeExcelArr($data){

@@ -136,4 +136,12 @@ class AccountEvent extends \yii\db\ActiveRecord
         return ['result'=>true,'data'=>$data];
     }
 
+    public function getAccounts(){
+        return $this->hasMany($this::className(), ['user_id' => 'user_id']);
+    }
+
+    public function extraFields(){
+        return ['accounts'];
+    }
+
 }
