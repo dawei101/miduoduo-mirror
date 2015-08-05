@@ -130,6 +130,12 @@ class Task extends \common\BaseActiveRecord
        1=>'是',
     ];
 
+    public static $ORIGIN=[
+        'internal'=>'爬虫',
+        'dashboard'=>'后台',
+        'corp'=>'企业',
+    ];
+
     const STATUS_OK = 0;
     const STATUS_IS_CHECK = 30;
     const STATUS_UN_PASSED = 40;
@@ -141,6 +147,10 @@ class Task extends \common\BaseActiveRecord
     public function getStatus_label()
     {
         return static::$STATUSES[$this->status];
+    }
+    public function getOrigin_label()
+    {
+        return static::$ORIGIN[$this->origin];
     }
 
 

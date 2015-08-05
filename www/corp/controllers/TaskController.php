@@ -119,6 +119,7 @@ class TaskController extends CBaseController
             }else{
                 $model->status = 30;
             }
+            $model->origin = 'corp';
 
             if ($model->validate() && $model->save()) {
                 $task_id = $model->id;
