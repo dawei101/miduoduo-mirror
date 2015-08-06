@@ -31,7 +31,7 @@ class UserController extends BaseActiveController
         $user = Yii::$app->user->identity;
         return $this->renderJson([
             'success'=> true,
-            'message'=> "修改成功",
+            'message'=> "获取成功",
             'result' => AUtils::formatProfile($user),
         ]);
     }
