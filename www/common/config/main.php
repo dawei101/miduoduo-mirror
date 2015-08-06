@@ -114,13 +114,9 @@ return [
                ],
             ],
         ],
-<<<<<<< HEAD
         'office_phpexcel' => [
             'class' => 'common\phpoffice\PhpExcel',
         ],
-
-=======
->>>>>>> master
     ],
     'aliases' => [
         'api' => $root_path . '/api',

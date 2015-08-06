@@ -111,7 +111,7 @@ class WithdrawCash extends \yii\db\ActiveRecord
     }
 
     public function getAccountEvent(){
-        return $this->hasOne(AccountEvent::className(),['related_id'=>'id']);
+        return $this->hasMany(AccountEvent::className(),['related_id'=>'id']);
     }
 
     public function makeExcelArr($data){

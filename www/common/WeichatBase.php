@@ -195,8 +195,8 @@ class WeichatBase
     }
 
     // 获取当前登录用户的微信ID，如果用户未关注、取消关注 则返回false
-    public function getLoggedUserWeichatID(){
-        $user_id    = Yii::$app->user->id;
+    public function getLoggedUserWeichatID($user_id=''){
+        $user_id    = $user_id ? $user_id : Yii::$app->user->id;
         $openid_obj = WeichatUserInfo::find()->where(['userid'=>$user_id])->one();
         $openid     = isset($openid_obj->openid) ? $openid_obj->openid : 0;
         // 是否取消关注

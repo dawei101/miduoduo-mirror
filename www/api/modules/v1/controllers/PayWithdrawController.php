@@ -7,6 +7,7 @@ use api\modules\BaseActiveController;
 use common\Utils;
 use common\models\AccountEvent;
 use common\models\WithdrawCash;
+use common\payment\Pay;
  
 /**
  * Address Controller API
@@ -35,8 +36,8 @@ class PayWithdrawController extends BaseActiveController
         $type       = Yii::$app->request->get('type');
 
         if( $user_id ){
-            $account_event = new AccountEvent();
-            $result     = $account_event->payWithdrawAll($user_id,$type);            
+            $pay        = new Pay();
+            $result     = $pay->withdrawAllBalance($user_id,$type);            
         }else{
             $result    = '{ "success": false, "message": 发生错误 }';
         }

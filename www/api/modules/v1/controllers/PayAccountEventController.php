@@ -46,10 +46,40 @@ class PayAccountEventController extends BaseActiveController
 
             $new_records    = '';
             foreach( $records as $k => $v ){
-                $new_records[]  = $v->accountEvent;
+                foreach( $v->accountEvent as $k2 => $v2 ){
+                    $new_records[]  = $v2;
+                }
             }
             $records    = $new_records;
         }
-        return $records;
+
+        $money_all      = $this->getMoneyAll($user_id);
+        $money_balance  = $this->getMoneyBalance($user_id);
+        $money_success  = $this->getMoneySuccess($user_id);
+        $money_doing    = $this->getMoneyDoing($user_id);
+        $money  = [
+            'money_all'       => $money_all,
+            'money_balance'   => $money_balance,
+            'money_success'   => $money_success,
+            'money_doing'     => $money_doing, 
+        ];
+
+        return ['data' => $records, 'money' => $money];
+    }
+
+    public function getMoneyAll( $user_id ){
+        return 6;
+    }
+
+    public function getMoneyBalance( $user_id ){
+        return 3;
+    }
+
+    public function getMoneySuccess( $user_id ){
+        return 2;
+    }
+
+    public function getMoneyDoing( $user_id ){
+        return 1;
     }
 }
