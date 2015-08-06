@@ -66,6 +66,7 @@ return [
                         'v1/service-type',
                         'v1/contact-us',
                         'v1/pay-account-event',
+                        'v1/pay-withdraw',
                     ],
                     'pluralize' => '',
                 ],

@@ -33,6 +33,7 @@ class PayAccountEventController extends BaseActiveController
     {
         $user_id    = Yii::$app->request->get('user_id');
         $status     = Yii::$app->request->get('status');
+        
         if( $status == WithdrawCash::STATUS_UNKNOW ){
             $records   = AccountEvent::find()
                 ->where(['user_id'=>$user_id , 'related_id'=>''])

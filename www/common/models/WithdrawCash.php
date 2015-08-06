@@ -36,6 +36,16 @@ class WithdrawCash extends \yii\db\ActiveRecord
     const STATUS_SUCCESS= 3;
     const STATUS_FAULT  = 4;
 
+    public static $TYPES    = [
+        10  => '微信',
+        20  => '支付宝',
+        30  => '银行卡',
+    ];
+
+    const TYPES_WECAHT  = 10;
+    const TYPES_ALIPAY  = 20;
+    const TYPES_BANK    = 30;
+
     /**
      * @inheritdoc
      */
