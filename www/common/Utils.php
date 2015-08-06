@@ -118,4 +118,11 @@ class Utils
     {
         return stripos(Yii::$app->request->getUserAgent(), 'MicroMessenger') !== false;
     }
+
+
+    public static function rawsql($query)
+    {
+        $sql = $query->prepare(Yii::$app->db->queryBuilder)->createCommand()->rawSql;
+        return $sql;
+    }
 }

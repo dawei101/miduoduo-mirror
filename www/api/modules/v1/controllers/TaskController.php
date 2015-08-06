@@ -18,10 +18,30 @@ class TaskController extends BaseActiveController
 
     public $id_column = 'id';
 
+    public $defaultOrder = ['order_time'=>SORT_DESC, 'id'=>SORT_DESC];
+
     public function actions()
     {
         $actions = parent::actions();
         return ['index'=> $actions['index'], 'view'=> $actions['view']];
+    }
+
+    public function getQueryShortcuts()
+    {
+        return [
+            'qorder' => ['start_date' => function($query, $name, $value){
+                $order_time = $this->getColumn('order_time');
+                $query->addOrderBy("
+                    (CASE
+                        WHEN " . $order_time . "<='".date("Y-m-d")."' 
+                        THEN ". $order_time ."
+                        ELSE 0 
+                    END) DESC ,
+                    " . $from_time = $this->getColumn('from_date') . " ASC,
+                    " . $order_time . " DESC,
+                    " . $this->getColumn('id') . " DESC ");
+            }],
+        ];
     }
 
     public function buildBaseQuery()
