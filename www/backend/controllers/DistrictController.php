@@ -36,6 +36,7 @@ class DistrictController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new DistrictSearch();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -68,12 +69,16 @@ class DistrictController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $searchModel = new DistrictSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider->query->andWhere(['parent_id'=> $id]);
             return $this->render('update', [
                 'model' => $model,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
             ]);
         }
     }

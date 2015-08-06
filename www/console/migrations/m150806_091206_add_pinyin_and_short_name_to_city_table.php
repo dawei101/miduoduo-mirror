@@ -11,7 +11,8 @@ class m150806_091206_add_pinyin_and_short_name_to_city_table extends BaseMigrati
             alter table jz_district add short_name varchar(500);
             alter table jz_district add pinyin varchar(500);
             alter table jz_district add short_pinyin varchar(500);
-            alter table jz_district add is_hot boolean not null default true;
+            alter table jz_district add is_hot boolean not null default false;
+            alter table jz_district add is_alive boolean not null default false;
             ";
         $this->execSqls($sqls);
     }

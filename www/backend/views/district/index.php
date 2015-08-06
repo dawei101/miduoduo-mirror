@@ -23,17 +23,33 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
-            'parent_id',
-            'name:ntext',
-            'level:ntext',
-            'citycode',
-            // 'postcode',
-            // 'center:ntext',
-            // 'full_name:ntext',
-
+            'short_name:ntext',
+            [
+                'attribute' => 'level',
+                'filter' => [
+                    'province'=> '省',
+                    'city'=> '市',
+                    'district'=> '县/区',
+                ],
+            ],
+            'pinyin:ntext',
+            [
+                'attribute' => 'is_hot',
+                'format' => 'boolean',
+                'filter' => [
+                    1 => '是',
+                    0 => '否',
+                ],
+            ],
+            [
+                'attribute' => 'is_alive',
+                'format' => 'boolean',
+                'filter' => [
+                    1 => '是',
+                    0 => '否',
+                ],
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
