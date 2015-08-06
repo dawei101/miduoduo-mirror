@@ -10,9 +10,9 @@ use common\models\WithdrawCash;
 use common\payment\Pay;
  
 /**
- * Address Controller API
+ * PayWithdrawController API
  *
- * @author dawei
+ * @author suibber
  */
 class PayWithdrawController extends BaseActiveController
 {
@@ -32,12 +32,12 @@ class PayWithdrawController extends BaseActiveController
 
     public function prepareDataProvider()
     {
-        $user_id    = Yii::$app->request->get('user_id');
-        $type       = Yii::$app->request->get('type');
+        $user_id    = \Yii::$app->user->id;
+        $pay_type   = Yii::$app->request->get('type');
 
         if( $user_id ){
             $pay        = new Pay();
-            $result     = $pay->withdrawAllBalance($user_id,$type);            
+            $result     = $pay->withdrawAllBalance($user_id,$pay_type);            
         }else{
             $result    = '{ "success": false, "message": 发生错误 }';
         }

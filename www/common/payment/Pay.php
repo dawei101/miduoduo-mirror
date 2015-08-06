@@ -122,4 +122,36 @@ class Pay extends Component
     public function withdrawByBank($account_data,$user_id){}
     public function payOutByBank(){}
 
+    public function getMoneyAll( $user_id ){
+        $money  = AccountEvent::find()
+            ->where(['user_id'=>$user_id])
+            ->sum('value');
+        $money  = $money ? $money : 0;
+        return $money;
+    }
+
+    public function getMoneyBalance( $user_id ){
+        $money  = AccountEvent::find()
+            ->where(['user_id'=>$user_id,'related_id'=>''])
+            ->sum('value');
+        $money  = $money ? $money : 0;
+        return $money;
+    }
+
+    public function getMoneySuccess( $user_id ){
+        $money  = WithdrawCash::find()
+            ->where(['user_id'=>$user_id,'status'=>WithdrawCash::STATUS_SUCCESS])
+            ->sum('value');
+        $money  = $money ? $money : 0;
+        return $money;
+    }
+
+    public function getMoneyDoing( $user_id ){
+        $money  = WithdrawCash::find()
+            ->where(['user_id'=>$user_id,'status'=>WithdrawCash::STATUS_DOING])
+            ->sum('value');
+        $money  = $money ? $money : 0;
+        return $money;
+    }
+
 }
