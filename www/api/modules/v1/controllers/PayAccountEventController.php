@@ -52,6 +52,8 @@ class PayAccountEventController extends BaseActiveController
                 }
             }
             $records    = $new_records;
+        }elseif( $status == WithdrawCash::STATUS_DOING ){
+            $records    = '';
         }
 
         $pay    = new Pay();
