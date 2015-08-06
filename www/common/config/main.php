@@ -64,6 +64,9 @@ return [
         'sms_pusher' => [
             'class' => 'common\pusher\SmsPusher',
         ],
+        'job_queue_manager' => [
+            'class' => 'common\JobQueueManager',
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
@@ -97,19 +100,33 @@ return [
                     'maxFileSize' => 1024 * 10,
                     'maxLogFiles' => 20,
                     'enableRotation' => true,
-
+               ],
+               [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['payment'],
+                    'logFile' => '/service/data/logs/payment.log',
+                    'logVars'   => [],
+                    'exportInterval'  => 0,
+                    'maxFileSize' => 1024 * 10,
+                    'maxLogFiles' => 20,
+                    'enableRotation' => true,
                ],
             ],
         ],
+<<<<<<< HEAD
         'office_phpexcel' => [
             'class' => 'common\phpoffice\PhpExcel',
         ],
 
+=======
+>>>>>>> master
     ],
     'aliases' => [
         'api' => $root_path . '/api',
         'm' => $root_path . '/m',
         'corp' => $root_path . '/corp',
+        'jobs' => $root_path . '/console/jobs',
         'data' => '/service/data',
         'media' => '/service/data/media',
         'html5_src' => $project_root . '/frontend/dist/webapp',

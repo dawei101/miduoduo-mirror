@@ -38,16 +38,16 @@ class WechatController extends \common\BaseController
             'origin_url' => Yii::$app->request->referrer,
             'callback_url' => $return_page,
         ];
-        
+        Yii::$app->session['wechat_state'] = $params;
         $callback = Url::to(['auth-end'], $scheme=true);
-        $url = WechatUtils::makeAuthUrl($callback, $state=json_encode($params));
+        $url = WechatUtils::makeAuthUrl($callback, $state='');
         return $this->redirect($url);
     }
 
     public function actionAuthEnd()
     {
         $code = Yii::$app->request->get('code');
-        $params = json_decode(Yii::$app->request->get('state'), true);
+        $params = Yii::$app->session['wechat_state'];
 
         $winfo = WechatUtils::getUserTokenByCode($code);
         $openid = $winfo['openid'];

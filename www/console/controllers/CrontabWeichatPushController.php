@@ -54,9 +54,8 @@ class CrontabWeichatPushController extends Controller
                 array('name'=>'keyword2','value'=>'实时通知','color'=>'#222'), 
             );
 
-            $gotoUrl        = Yii::$app->params['baseurl.m'].'/task/nearby?id='.$pushtemp_arr['id'];
-
-            
+            $gotoUrl = Yii::$app->params['baseurl.wechat'] 
+                . '/view/job/recommend-job.html?id=' . $pushtemp_arr['id'];
 
             // 预览人员
             if( $preview ){

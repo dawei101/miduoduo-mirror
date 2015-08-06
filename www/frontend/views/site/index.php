@@ -12,7 +12,7 @@ $this->title = '米多多兼职平台';
 <meta name="description" content="米多多兼职网，是中国最大的正规网上兼职平台。所有兼职招聘信息全部经过人工审核，不收任何押金和费用，安全有保障。免费找兼职，就上米多多兼职网。 miduoduo.cn" />
 <meta name="keywords" content="兼职网,大学生兼职网,正规网上兼职平台" />
 <link rel="shortcut icon"  href="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/miduoduo.ico" />
-<title>米多多/兼职平台</title>
+<title>【米多多兼职】最靠谱有保障的兼职平台</title>
 <link href="<?=Yii::$app->params["baseurl.static.www"]?>/static/css/miduoduo.css" type="text/css" rel="stylesheet" >
 </head>
 <body>

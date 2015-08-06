@@ -179,11 +179,11 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .add-xs{width:100px; line-height:40px; color:#606c77; font-size:16px; border:none; background:#fff; margin-left:10px; cursor:pointer}
 .add-ons{clear:both; padding: 0 0 0 118px; height:40px; display:none}
 .add-ons-input{margin-right:5px; margin-top:10px; width:120px;}
-.add-ons-input input{width:120px; height:40px; text-indent:0.3em; color:#777;}
+.add-ons-input input{width:120px; height:40px; text-indent:0.3em; color:#999;border: 1px solid #999;}
 .add-ons-input ul{width:100px;}
 .add-ons  .iconfont {margin-left:-25px;}
 .yuji{color:#ff7b5d; line-height:40px;}
-.baoming input{width:240px;margin-right:10px;}
+.baoming input{width:240px;margin-right:10px;border: 1px solid #999;color:#999;}
 .baoming span {display:block; float:left; line-height:40px; margin-right:10px; color:#606c77;}
 .baoming span input{width:20px; float:left; margin-top:1px; }
 .bm-text{line-height:40px; color:#ccc; font-size:16px; margin-bottom:10px;}
@@ -337,3 +337,5 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .container, body, .body-box{
     min-width:970px;
 }
+.nice-select input{background:url(../img/sjd.png) right no-repeat; }
+.wsj input{background:none; }

@@ -50,4 +50,15 @@ class WeichatPushSetTemplatePushList extends \yii\db\ActiveRecord
             'create_user' => '创建人',
         ];
     }
+
+    public function getTasks()
+    {
+        return $this->hasMany(Task::className(), ['gid' => 'task_id'])
+            ->viaTable(WeichatPushSetTemplatePushItem::tableName(), ['template_push_id'=>'id']);
+    }
+
+    public function extraFields()
+    {
+        return ['tasks'];
+    }
 }

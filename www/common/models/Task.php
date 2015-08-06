@@ -64,6 +64,7 @@ class Task extends \common\BaseActiveRecord
         2=>'周',
         3=>'月',
         4=>'次',
+        5=>'单',
     ];
 
     public static $GENDER_REQUIREMENT = [
@@ -130,6 +131,13 @@ class Task extends \common\BaseActiveRecord
        1=>'是',
     ];
 
+    public static $ORIGIN=[
+        'xiaolianbang' => '校联邦',
+        'jianzhimao' => '兼职猫',
+        'internal'=>'站内添加',
+        'corp'=>'企业',
+    ];
+
     const STATUS_OK = 0;
     const STATUS_IS_CHECK = 30;
     const STATUS_UN_PASSED = 40;
@@ -141,6 +149,10 @@ class Task extends \common\BaseActiveRecord
     public function getStatus_label()
     {
         return static::$STATUSES[$this->status];
+    }
+    public function getOrigin_label()
+    {
+        return static::$ORIGIN[$this->origin];
     }
 
 

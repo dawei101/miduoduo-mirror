@@ -47,7 +47,7 @@ class SpiderController extends Controller
     public function generateRow($task)
     {
         $row = [];
-        $row['company_name'] = $task->company->name;
+        $row['company_name'] = $task->company?$task->company->name:'';
         $row['origin_id'] = $task->id;
         $row['origin'] = 'internal';
         $row['details'] = json_encode($task->toArray());

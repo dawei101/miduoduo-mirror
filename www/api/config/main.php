@@ -67,6 +67,7 @@ return [
                         'v1/contact-us',
                         'v1/pay-account-event',
                         'v1/pay-withdraw',
+                        'v1/recommend-task-group'
                     ],
                     'pluralize' => '',
                 ],

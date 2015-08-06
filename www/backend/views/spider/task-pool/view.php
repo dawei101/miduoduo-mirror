@@ -52,7 +52,7 @@ $details = $model->list_detail();
             'release_date',
             [
                 'label'=> '任务开始日期',
-                'value' => $details['need_quantity'],
+                'value' => $details['from_date'],
             ],
             'to_date',
             'city',
@@ -68,7 +68,7 @@ $details = $model->list_detail();
             ],
             [
                 'label'=> '结算方式',
-                'value' => $details['clearance_period'],
+                'value' => isset($details['clearance_period'])?$details['clearance_period']:'无',
             ],
             [
                 'label'=> '地址',

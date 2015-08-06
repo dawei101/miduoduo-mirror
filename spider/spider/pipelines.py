@@ -97,8 +97,8 @@ class SpiderPipeline(object):
                     except Exception, e:
                         self.db.rollback()
                         logger.log(logging.ERROR, "task updated failed with error:%s", e)
-                logger.log(logging.DEBUG, "task exists: %s, %s , %s , %s" % (
-                    item['id'], spider.name, item['title'], item['city']))
+                logger.log(logging.DEBUG, "task exists: %s, %s , %s" % (
+                    item['id'], spider.name, item['origin']))
             except Exception, e:
                 self.db.rollback()
                 logger.log(logging.ERROR, "insert task failed with error: %s " % e)

@@ -126,6 +126,7 @@ use common\models\District;
     <br />
 
     <?= $form->field($model, 'status')->dropdownList($model::$STATUSES) ?>
+    <?= $form->field($model, 'origin')->dropdownList($model::$ORIGIN) ?>
     <div class="form-group">
         <?= Html::submitButton('下一步', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

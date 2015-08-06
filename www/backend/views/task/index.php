@@ -70,6 +70,13 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                 'filter' => Task::$SALARY_UNITS,
             ],
             [
+                'attribute' => 'origin',
+                'value' => function ($model){
+                    return $model->origin_label;
+                },
+                'filter' => Task::$ORIGIN,
+            ],
+            [
                 'attribute' => 'status',
                 'value' => function ($model){
                     return $model->status_label;

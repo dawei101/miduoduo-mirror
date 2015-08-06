@@ -31,17 +31,6 @@ MYSQL_CONFIG = {
         }
 BAIDU_MAP_KEY = 'oUVOlwx2f8Ok7iGt30CcB2aQ'
 
-MYSQL_CONFIG = {
-        "host":"localhost", 
-        "user":"miduoduo",
-        "passwd":"123123",
-        "db":"miduoduo",
-        "use_unicode": True,
-        "charset": "utf8",
-        }
-BAIDU_MAP_KEY = 'oUVOlwx2f8Ok7iGt30CcB2aQ'
-
-
 USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.94 Safari/537.36'
 
 CONCURRENT_REQUESTS=32

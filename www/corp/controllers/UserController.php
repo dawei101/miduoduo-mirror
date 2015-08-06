@@ -10,6 +10,7 @@ use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
 
 use common\Utils;
+use common\JobUtils;
 use common\models\LoginWithDynamicCodeForm;
 use common\models\User;
 use common\sms\SmsSenderFactory;
@@ -278,7 +279,10 @@ class UserController extends CBaseController
                 $filename = $company->person_idcard_pic;
             }
             if(!$filename) {
-                return $this->render('personal-cert',['company' => $company, 'error'=>'上传文件错误']);
+                return $this->render('personal-cert',[
+                    'company' => $company,
+                    'error'=>[
+                        'person_idcard_pic'=>'上传文件错误']]);
             }
             $company->person_idcard_pic = $filename;
             $company->exam_status = Company::EXAM_PROCESSING;
@@ -292,6 +296,7 @@ class UserController extends CBaseController
             if (!$company->validate() || !$company->save()) {
                 return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
             }
+            JobUtils::addSyncFileJob($company, 'person_idcard_pic');
             return $this->render('personal-cert',['company' => $company, 'error'=>false]);
         }
         return $this->render('personal-cert',['company' => $company, 'error'=>false]);
@@ -331,6 +336,8 @@ class UserController extends CBaseController
             if (!$company->validate() || !$company->save()) {
                 return $this->render('corp-cert',['company' => $company, 'error'=>$company->errors]);
             }
+            JobUtils::addSyncFileJob($company, 'person_idcard_pic');
+            JobUtils::addSyncFileJob($company, 'corp_idcard_pic');
             return $this->render('corp-cert',['company'=>$company, 'error'=>false]);
         }
         return $this->render('corp-cert',['company'=>$company, 'error'=>false]);

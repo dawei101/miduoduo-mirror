@@ -104,6 +104,11 @@ class Utils
             Yii::$app->params['baseurl.media'] . '/' . $filename);
     }
 
+    public static function absolutePathOfFile($filename)
+    {
+        return (substr($filename, 0, 4 ) === "http")?
+            null:Yii::getAlias('@media/' . $filename);
+    }
 
     /**
      * 微信跑龙套
