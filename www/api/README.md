@@ -74,6 +74,7 @@ BASE_URL = 'http://api.miduoduo.cn'
         参数:   phonenum=手机号
                 code=验证码
                 password=选填
+                invited_by＝(int)选填
 
     return:
         { "success": false,
