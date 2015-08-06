@@ -21,10 +21,10 @@ class Pay extends Component
             if( $pay_type == WithdrawCash::TYPES_WECAHT ){
                 $withdraw_result  = $this->withdrawByWechat($account_data,$user_id);
             }else{
-                $error_message = "'提款失败，目前只支持微信提款'";
+                $error_message = "提款失败，目前只支持微信提款";
             }
         }else{
-            $error_message = "'提款失败，您的账户余额为空'";
+            $error_message = "提款失败，您的账户余额为空";
         }
 
         if( isset($withdraw_result['withdraw_id']) ){
@@ -34,10 +34,18 @@ class Pay extends Component
                 ['related_id'=>$withdraw_result['withdraw_id']],
                 '`id` in ('.$withdraw_result['count_ids'].')'
             );
-            $result   = "{ 'success': true , 'value': ".$withdraw_result['count_value']." , 'message': 提现成功 }";
+            $result   = [
+                'success'   => true, 
+                'value'     => $withdraw_result['count_value'], 
+                'message'   => '提现成功' 
+            ];
         }else{
             $error_message  = isset($withdraw_result['error_message']) ? $withdraw_result['error_message'] : $error_message;
-            $result   = "{ 'success': false , 'value': 0 , 'message': ".$error_message." }";
+            $result   = [
+                'success'   => false, 
+                'value'     => 0, 
+                'message'   => $error_message
+            ];
         }
         return $result;
     }
@@ -71,7 +79,7 @@ class Pay extends Component
                 'count_ids' => $count_ids,
             ];
         }else{
-            $error_message  = "'提款失败，请联系我们'";
+            $error_message  = "提款失败，请联系我们";
             return ['error_message' => $error_message];
         }
     }
