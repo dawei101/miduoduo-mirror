@@ -10,9 +10,9 @@ use common\models\WithdrawCash;
 use common\payment\Pay;
  
 /**
- * Address Controller API
+ * PayWithdrawController API
  *
- * @author dawei
+ * @author suibber
  */
 class PayWithdrawController extends BaseActiveController
 {

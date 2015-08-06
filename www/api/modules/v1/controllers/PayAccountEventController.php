@@ -7,11 +7,12 @@ use api\modules\BaseActiveController;
 use common\Utils;
 use common\models\AccountEvent;
 use common\models\WithdrawCash;
+use common\payment\Pay;
  
 /**
- * Address Controller API
+ * PayAccountEvent Controller API
  *
- * @author dawei
+ * @author suibber
  */
 class PayAccountEventController extends BaseActiveController
 {
@@ -31,7 +32,7 @@ class PayAccountEventController extends BaseActiveController
 
     public function prepareDataProvider()
     {
-        $user_id    = Yii::$app->request->get('user_id');
+        $user_id    = \Yii::$app->user->id;
         $status     = Yii::$app->request->get('status');
         
         if( $status == WithdrawCash::STATUS_UNKNOW ){
@@ -53,10 +54,11 @@ class PayAccountEventController extends BaseActiveController
             $records    = $new_records;
         }
 
-        $money_all      = $this->getMoneyAll($user_id);
-        $money_balance  = $this->getMoneyBalance($user_id);
-        $money_success  = $this->getMoneySuccess($user_id);
-        $money_doing    = $this->getMoneyDoing($user_id);
+        $pay    = new Pay();
+        $money_all      = $pay->getMoneyAll($user_id);
+        $money_balance  = $pay->getMoneyBalance($user_id);
+        $money_success  = $pay->getMoneySuccess($user_id);
+        $money_doing    = $pay->getMoneyDoing($user_id);
         $money  = [
             'money_all'       => $money_all,
             'money_balance'   => $money_balance,
@@ -67,19 +69,4 @@ class PayAccountEventController extends BaseActiveController
         return ['data' => $records, 'money' => $money];
     }
 
-    public function getMoneyAll( $user_id ){
-        return 6;
-    }
-
-    public function getMoneyBalance( $user_id ){
-        return 3;
-    }
-
-    public function getMoneySuccess( $user_id ){
-        return 2;
-    }
-
-    public function getMoneyDoing( $user_id ){
-        return 1;
-    }
 }
