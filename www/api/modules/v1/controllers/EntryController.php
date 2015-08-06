@@ -12,6 +12,7 @@ use common\models\User;
 use common\models\AppReleaseVersion;
 use common\models\Device;
 use common\models\WeichatUserInfo;
+use api\common\Utils as AUtils;
 
 /**
  * Entry Controller API
@@ -228,6 +229,11 @@ class EntryController extends BaseActiveController
         $phonenum = Yii::$app->request->post('phonenum');
         $user = User::findByUsername($phonenum);
         if ($user){
+            $invited_by = Yii::$app->request->post('invited_by');
+            if (!empty($invited_by)){
+                $user->invited_by = intval($invited_by);
+                $user->save();
+            }
             return $this->renderJson([
                 'success'=> false,
                 'message'=> "手机号码已被注册，请直接登陆"
@@ -270,13 +276,7 @@ class EntryController extends BaseActiveController
         return $this->renderJson([
             'success'=> true,
             'message'=> '登录成功',
-            'result'=> [
-                'id'=> $user->id,
-                'username'=> $user->username,
-                'password'=> $raw_password,
-                'access_token'=> $user->access_token,
-                'resume' => $user->resume?$user->resume->toArray():null,
-            ]
+            'result'=> AUtils::formatProfile($user, $raw_password),
         ]);
     }
 }

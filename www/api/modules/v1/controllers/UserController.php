@@ -10,6 +10,7 @@ use common\Utils;
 use common\models\User;
 use common\models\Resume;
 use common\models\WeichatUserInfo;
+use api\common\Utils as AUtils;
 
 /**
  * User Controller API
@@ -23,6 +24,16 @@ class UserController extends BaseActiveController
     public function actions()
     {
         return ['set-password'];
+    }
+
+    public function actionProfile()
+    {
+        $user = Yii::$app->user->identity;
+        return $this->renderJson([
+            'success'=> true,
+            'message'=> "修改成功",
+            'result' => AUtils::formatProfile($user),
+        ]);
     }
 
     public function actionBindThirdPartyAccount()
@@ -43,6 +54,7 @@ class UserController extends BaseActiveController
     public function bindWechat($params)
     {
         $user_id = Yii::$app->user->id;
+        WeichatUserInfo::updateAll(['userid'=>0], ['userid'=>$user_id]);
         $winfo = WeichatUserInfo::find()
             ->where(['openid'=>$params['openid']])->one();
         if (!$winfo){
@@ -94,5 +106,4 @@ class UserController extends BaseActiveController
             ],
         ]);
     }
-
 }
