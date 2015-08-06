@@ -10,6 +10,7 @@ use yii\web\Response;
 use yii\web\HttpException;
 
 use common\BaseActiveRecord;
+use common\Utils;
 
 
 class BaseActiveController extends ActiveController
@@ -30,7 +31,43 @@ class BaseActiveController extends ActiveController
     public $user_identifier_column = null;
 
     // null = 使用默认
-    public $page_size = null;
+    public $page_size = 20;
+
+
+    /*
+     *  getQueryShortcuts() 是对query 的快捷处理
+     *  在POST 或GET参数中 如果有 name=value的情况下，对query进行处理, 则对应的shortcuts可以写为：
+     *  ```
+     *      [name => [value => function($query, name, value){}] ]
+     *  ```
+     */
+    public function getQueryShortcuts()
+    {
+        return [];
+    }
+
+    public function shortcutQuery($query)
+    {
+        foreach ($this->getQueryShortcuts() as $name=> $map){
+            foreach ($map as $value=>$function){
+                if (isset($_REQUEST[$name]) && $_REQUEST[$name]==$value) {
+                    $function($query, $name, $value);
+                }
+            }
+        }
+        return $query;
+    }
+
+    public function init()
+    {
+        parent::init();
+        if (isset(Yii::$app->params['page_size'])){
+            $this->page_size = Yii::$app->params['page_size'];
+        }
+    }
+
+    // 默认排序
+    public $defaultOrder = ['id'=>SORT_DESC];
 
     public function beforeAction($action)
     {
@@ -139,18 +176,11 @@ class BaseActiveController extends ActiveController
 
     public function prepareDataProvider()
     {
-        if ($this->page_size){
-            return new ActiveDataProvider([
-                'query' => $this->buildFilterQuery(),
-                'sort' => ['defaultOrder'=>['id'=>SORT_DESC]],
-                'pagination' => ['pageSize' => $this->page_size ],
-            ]);
-        }
         return new ActiveDataProvider([
             'query' => $this->buildFilterQuery(),
-             'sort' => ['defaultOrder'=>['id'=>SORT_DESC]],
+            'sort' => ['defaultOrder'=>$this->defaultOrder],
+            'pagination' => ['pageSize' => $this->page_size],
         ]);
-
     }
 
     public function buildFilterQuery(){
@@ -158,36 +188,37 @@ class BaseActiveController extends ActiveController
 
         $p_str = Yii::$app->request->get('filters');
 
-        if (!$p_str || strlen($p_str)==0){
-            return $query;
-        }
-        $conditions = json_decode($p_str);
-        if (null===$conditions){
-            throw new HttpException(406, 'filters is not json format, please doublecheck it.');
-        }
-        $p_dict = [];
-        $where = '1 ';
-        foreach ($conditions as $filter){
-            $operate = strtoupper($filter[0]);
-            if (!in_array($operate, static::$QUERY_OPERATIONS)){
-                continue;
+        if ($p_str && strlen($p_str)>0){
+            $conditions = json_decode($p_str);
+            if (null===$conditions){
+                throw new HttpException(406, 'filters is not json format, please doublecheck it.');
             }
+            $p_dict = [];
+            $where = '1 ';
+            foreach ($conditions as $filter){
+                $operate = strtoupper($filter[0]);
+                if (!in_array($operate, static::$QUERY_OPERATIONS)){
+                    continue;
+                }
 
-            if(preg_match('/^[\w\d\_\.]+$/i', $filter[1])===0){
-                continue;
-            }
-            $fs = explode('.', $filter[1]);
-            if (2==count($fs)){
-                $query->joinWith($fs[0]);
-                $filter[1] = $this->getColumn($fs[1], $fs[0]);
-            } else {
-                $filter[1] = $this->getColumn($filter[1]);
-            }
-            if (!empty($filter[2])){
-                $query->andWhere($filter);
+                if(preg_match('/^[\w\d\_\.]+$/i', $filter[1])===0){
+                    continue;
+                }
+                $fs = explode('.', $filter[1]);
+                if (2==count($fs)){
+                    $query->joinWith($fs[0]);
+                    $filter[1] = $this->getColumn($fs[1], $fs[0]);
+                } else {
+                    $filter[1] = $this->getColumn($filter[1]);
+                }
+                if (!empty($filter[2])){
+                    $query->andWhere($filter);
+                }
             }
         }
-        return $this->_buildOrderQuery($query);
+        $query = $this->_buildOrderQuery($query);
+        $query = $this->shortcutQuery($query);
+        return $query;
     }
 
     public function _buildOrderQuery($query)

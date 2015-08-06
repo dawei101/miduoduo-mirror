@@ -18,10 +18,43 @@ class TaskController extends BaseActiveController
 
     public $id_column = 'id';
 
+    public $defaultOrder = ['order_time'=>SORT_DESC, 'id'=>SORT_DESC];
+
     public function actions()
     {
         $actions = parent::actions();
         return ['index'=> $actions['index'], 'view'=> $actions['view']];
+    }
+
+    public function getQueryShortcuts()
+    {
+        return [
+            'qorder' => [
+                'start_date' => function($query, $name, $value){
+                    $order_time = $this->getColumn('order_time');
+                    $query->addOrderBy("
+                        (CASE
+                            WHEN " . $order_time . "<='".date("Y-m-d")."' 
+                            THEN ". $order_time ."
+                            ELSE 0 
+                        END) DESC ,
+                        " . $from_time = $this->getColumn('from_date') . " ASC,
+                        " . $order_time . " DESC,
+                        " . $this->getColumn('id') . " DESC ");
+                    }
+            ],
+             'date_range' => [
+                 'weekend_only' => function($query, $name, $value){
+                    static::filterWeekendOnly($query);
+                 },
+                 'next_week' => function($query, $name, $value){
+                    static::filterNextWeek($query);
+                 },
+                 'current_week' => function($query, $name, $value){
+                    static::filterCurrentWeek($query);
+                 },
+            ],
+        ];
     }
 
     public function buildBaseQuery()
@@ -29,20 +62,6 @@ class TaskController extends BaseActiveController
         $model = $this->modelClass;
         $query = parent::buildBaseQuery();
         $query->andWhere(['status'=>$model::STATUS_OK]);
-        return $query;
-    }
-
-    public function buildFilterQuery()
-    {
-        $query = parent::buildFilterQuery();
-        $date_range = Yii::$app->request->get('date_range');
-        if ($date_range == 'weekend_only'){
-            $query = static::filterWeekendOnly($query);
-        } elseif ($date_range == 'next_week'){
-            $query = static::filterNextWeek($query);
-        } elseif ($date_range == 'current_week'){
-            $query = static::filterCurrentWeek($query);
-        }
         return $query;
     }
 

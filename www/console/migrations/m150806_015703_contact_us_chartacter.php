@@ -10,7 +10,7 @@ class m150806_015703_contact_us_chartacter extends BaseMigration
         $sqls = "
             alter table jz_contact_us         convert to character set utf8 collate utf8_unicode_ci;
             ";
-
+        $this->execSqls($sqls);
     }
 
     public function down()
