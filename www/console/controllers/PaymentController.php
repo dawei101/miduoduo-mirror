@@ -21,7 +21,13 @@ class PaymentController extends Controller
 
     public function actionTestPay($openid){
         $payment = new WechatPayment;
-        echo $payment->payout($openid, 1, $openid . time(), '测试送钱');
+        $r = $payment->payout($openid, 1, $openid . time(), '测试送钱');
+        if ($r){
+            echo "打钱成功!";
+        } else {
+            echo "打钱失败!";
+        }
         echo "\n";
+
     }
 }

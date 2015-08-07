@@ -31,7 +31,9 @@ BASE_URL = 'http://api.miduoduo.cn'
             "result": {
                 "username": "18661775819",
                 "password": 密码(验证码登陆会返回空),
-                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288"
+                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288",
+                "resume": {},
+                "invited_count": 9,
                 }
         }
 ```
@@ -51,7 +53,9 @@ BASE_URL = 'http://api.miduoduo.cn'
             "result": {
                 "username": "18661775819",
                 "password": 密码(直接返回登陆的密码),
-                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288"
+                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288",
+                "resume": {},
+                "invited_count": 9,
                 }
         }
 ```
@@ -74,6 +78,7 @@ BASE_URL = 'http://api.miduoduo.cn'
         参数:   phonenum=手机号
                 code=验证码
                 password=选填
+                invited_by＝(int)选填
 
     return:
         { "success": false,
@@ -84,7 +89,9 @@ BASE_URL = 'http://api.miduoduo.cn'
             "result": {
                 "username": "18661775819",
                 "password": 密码(直接返回登陆的密码),
-                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288"
+                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288",
+                "resume": {},
+                "invited_count": 9,
                 }
         }
 ```
@@ -128,6 +135,7 @@ BASE_URL = 'http://api.miduoduo.cn'
                 "resume": {
                     ...
                 },
+                "invited_count": 9,
                 }
         }
 ```
@@ -147,10 +155,29 @@ BASE_URL = 'http://api.miduoduo.cn'
             "result": {
                 "username": "18661775819",
                 "password": 密码(直接返回登陆的密码),
-                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288"
+                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288",
+                "resume": {},
+                "invited_count": 9,
                 }
         }
     备注：* 重新设置密码后，之前的access_token将失效
+```
+### 获取账户信息（查看登陆状态）
+```
+    GET /v1/user/profile
+    return:
+        CODE 401, 
+        OR
+        { "success": true,
+            "message": 修改成功,
+            "result": {
+                "username": "18661775819",
+                "password": 密码(直接返回登陆的密码),
+                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288",
+                "resume": {},
+                "invited_count": 9,
+                }
+        }
 ```
 
 ##request请求 标识认证信息

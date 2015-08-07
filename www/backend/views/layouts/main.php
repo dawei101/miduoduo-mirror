@@ -33,6 +33,7 @@ AppAsset::register($this);
                 <li><a href="/user">账号管理</a></li>
                 <li><a href="/resume">人才库</a></li>
                 <li><a href="/company">企业库</a></li>
+                <li><a href="/district">城市</a></li>
                 <li><a href="/service-type">任务类型</a></li>
                 <li><a href="/task">任务</a></li>
                 <li><a href="/task-applicant">任务报名单</a></li>

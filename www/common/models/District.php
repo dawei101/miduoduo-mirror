@@ -33,8 +33,8 @@ class District extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'name', 'level', 'postcode', 'center'], 'required'],
-            [['id', 'parent_id'], 'integer'],
-            [['name', 'level', 'center', 'full_name'], 'string'],
+            [['id', 'parent_id', 'is_hot', 'is_alive'], 'integer'],
+            [['name', 'level', 'center', 'full_name', 'pinyin', 'short_pinyin', 'short_name'], 'string'],
             [['citycode'], 'string', 'max' => 10],
             [['postcode'], 'string', 'max' => 20]
         ];
@@ -73,6 +73,11 @@ class District extends \yii\db\ActiveRecord
     public static function getDistricts($city_id)
     {
         return District::find()->where(['parent_id'=>$city_id, 'disabled'=>false])->all();
+    }
+
+    public function fields()
+    {
+        return ['id', 'short_name', 'pinyin', 'short_pinyin'];
     }
 
 }

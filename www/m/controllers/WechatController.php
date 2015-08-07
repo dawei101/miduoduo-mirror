@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use common\WeichatBase;
 use common\WechatUtils;
 use common\models\WeichatUserInfo;
+use api\common\Utils as AUtils;
 
 
 class WechatController extends \common\BaseController
@@ -66,13 +67,7 @@ class WechatController extends \common\BaseController
         $to .= '?origin_url=' . $params['origin_url'];
         if ($record->user){
             $user = $record->user;
-            $userinfo = [
-                'id'=> $user->id,
-                'username'=> $user->username,
-                'password'=> '',
-                'access_token'=> $user->access_token,
-                'resume' => $user->resume?$user->resume->toArray():null,
-            ];
+            $userinfo = AUtils::formatProfile($user);
             $to .= '&user=' . urlencode(json_encode($userinfo));
         }
         $to .= '&wechat=' . urlencode(json_encode($record->toArray()));

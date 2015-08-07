@@ -18,8 +18,8 @@ class DistrictSearch extends District
     public function rules()
     {
         return [
-            [['id', 'parent_id'], 'integer'],
-            [['name', 'level', 'citycode', 'postcode', 'center', 'full_name'], 'safe'],
+            [['id', 'parent_id', 'is_hot', 'is_alive'], 'integer'],
+            [['name', 'level', 'citycode', 'postcode', 'center', 'full_name', 'pinyin', 'short_pinyin', 'short_name'], 'safe'],
         ];
     }
 
@@ -59,11 +59,16 @@ class DistrictSearch extends District
         $query->andFilterWhere([
             'id' => $this->id,
             'parent_id' => $this->parent_id,
+            'is_hot' => $this->is_hot,
+            'is_alive' => $this->is_alive,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'level', $this->level])
             ->andFilterWhere(['like', 'citycode', $this->citycode])
+            ->andFilterWhere(['like', 'short_name', $this->short_name])
+            ->andFilterWhere(['like', 'pinyin', $this->pinyin])
+            ->andFilterWhere(['like', 'short_pinyin', $this->short_pinyin])
             ->andFilterWhere(['like', 'postcode', $this->postcode])
             ->andFilterWhere(['like', 'center', $this->center])
             ->andFilterWhere(['like', 'full_name', $this->full_name]);

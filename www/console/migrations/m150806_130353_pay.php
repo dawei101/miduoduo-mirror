@@ -8,6 +8,7 @@ class m150806_130353_pay extends BaseMigration
    public function up()
     {
         $sqls = "
+drop table if exists jz_account_event;
 CREATE TABLE `jz_account_event` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `date` date DEFAULT NULL COMMENT 'excel标记日期',
@@ -23,6 +24,7 @@ CREATE TABLE `jz_account_event` (
   KEY `fk_jz_account_event_jz_user1_idx` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
+drop table if exists jz_withdraw_cash;
 CREATE TABLE `jz_withdraw_cash` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
@@ -38,6 +40,7 @@ CREATE TABLE `jz_withdraw_cash` (
   KEY `fk_jz_withdraw_cach_jz_user1_idx` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
+drop table if exists jz_payout;
 CREATE TABLE `jz_payout` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `gid` varchar(200) NOT NULL COMMENT '第三方流水号',
