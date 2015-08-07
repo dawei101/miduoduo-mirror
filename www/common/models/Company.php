@@ -212,7 +212,9 @@ class Company extends \common\BaseActiveRecord
 
     public function fields()
     {
-        return array_merge(parent::fields(), ['status_label', 'exam_status_label', 'exam_result_label']);
+        $fs = parent::fields();
+        unset($fs['contact_phone']);
+        return array_merge($fs, ['status_label', 'exam_status_label', 'exam_result_label']);
     }
 
     public function getUseTaskLimit($exam_result){
