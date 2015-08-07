@@ -75,4 +75,9 @@ class District extends \yii\db\ActiveRecord
         return District::find()->where(['parent_id'=>$city_id, 'disabled'=>false])->all();
     }
 
+    public function fields()
+    {
+        return ['id', 'short_name', 'pinyin', 'short_pinyin'];
+    }
+
 }

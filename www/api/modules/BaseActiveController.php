@@ -61,9 +61,6 @@ class BaseActiveController extends ActiveController
     public function init()
     {
         parent::init();
-        if (isset(Yii::$app->params['page_size'])){
-            $this->page_size = Yii::$app->params['page_size'];
-        }
     }
 
     // 默认排序
