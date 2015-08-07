@@ -32,6 +32,7 @@ AppAsset::register($this);
                 </li>
                 <li class="mtitle" data-group="admin"><a>账号，简历，任务分类</a></li>
                 <li class="mmenu" data-group="admin"><a href="/user">账号管理</a></li>
+                <li class="mmenu" data-group="admin"><a href="/user/set-role">角色管理</a></li>
                 <li class="mmenu" data-group="admin"><a href="/resume">人才库</a></li>
                 <li class="mmenu" data-group="admin"><a href="/district">城市</a></li>
                 <li class="mmenu" data-group="admin"><a href="/service-type">任务类型</a></li>

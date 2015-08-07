@@ -130,6 +130,8 @@ class UserController extends BBaseController
             } else {
                 $message = "用户 $phonenum 不存在";
             }
+        } elseif (!$phonenum && $role_name) {
+            $message = "手机号不能为空";
         }
         return $this->render('set-role', [
             'message' => $message,

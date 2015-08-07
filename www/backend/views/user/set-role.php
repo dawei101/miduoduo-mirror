@@ -28,7 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="form-group required">
         <label class="control-label col-md-2" for="role">角色</label>
         <div class="col-md-10">
-            <input type="text" id="role" class="form-control" name="role" value="<?=$role?$role:'admin'?>" maxlength="500">
+<select id="role" class="form-control" name="role">
+<?php 
+foreach (Yii::$app->authManager->getRoles() as $role) { ?>
+    <option value="<?=$role->name?>"><?=$role->name?></option>
+<?php } ?>
+</select>
         </div>
     </div>
     <div class="form-group">
