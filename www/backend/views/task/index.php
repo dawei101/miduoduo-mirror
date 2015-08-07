@@ -24,7 +24,7 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('创建任务订单', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('创建任务订单', ['publish'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
