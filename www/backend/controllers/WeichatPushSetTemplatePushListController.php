@@ -6,6 +6,8 @@ use Yii;
 use common\models\WeichatPushSetTemplatePushList;
 use yii\data\ActiveDataProvider;
 use backend\BBaseController;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -15,6 +17,20 @@ use yii\filters\VerbFilter;
 class WeichatPushSetTemplatePushListController extends BBaseController
 {
 
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['finance_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
     public function getViewPath()
     {
         return Yii::getAlias('@backend/views/wechat/weichat-push-set-template-push-list');

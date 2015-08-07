@@ -6,14 +6,30 @@ use Yii;
 use backend\models\TaskPoolWhiteList;
 use backend\models\TaskPoolWhiteListSearch;
 use backend\BBaseController;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * TaskPoolWhiteListController implements the CRUD actions for TaskPoolWhiteList model.
  */
 class TaskPoolWhiteListController extends BBaseController
 {
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['operation_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
     public function getViewPath()
     {
         return Yii::getAlias('@backend/views/spider/task-pool-white-list');

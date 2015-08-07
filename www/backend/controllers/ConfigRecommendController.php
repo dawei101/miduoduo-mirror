@@ -8,12 +8,29 @@ use common\models\ConfigRecommendSearch;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 /**
  * ConfigRecommendController implements the CRUD actions for ConfigRecommend model.
  */
 class ConfigRecommendController extends BBaseController
 {
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['operation_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
     /**
      * Lists all ConfigRecommend models.
      * @return mixed

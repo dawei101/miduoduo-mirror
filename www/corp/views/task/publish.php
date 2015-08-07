@@ -134,6 +134,7 @@ $this->title = '米多多兼职平台';
                                         <li>23:00</li>
                                     </ul>
                                   </div>
+                                  <label><input name="is_allday" type="checkbox" class="changqi" <?=$task&&$task->is_allday?'checked':''?>>不限工作时间</label>
                               </div>
                               <p class="cuowu to_time-error">内容不能为空!</p>
                             </li>

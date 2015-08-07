@@ -5,6 +5,8 @@ namespace backend\controllers;
 use Yii;
 use common\models\WeichatPushSetTemplatePushItem;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,6 +16,20 @@ use yii\filters\VerbFilter;
  */
 class WeichatPushSetTemplatePushItemController extends BBaseController
 {
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['finance_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
 
     public function getViewPath()
     {

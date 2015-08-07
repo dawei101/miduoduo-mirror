@@ -38,6 +38,14 @@ class JobQueue extends \common\BaseActiveRecord
     const STATUS_DONE = 2;
     const STATUS_FAILED = 10;
 
+    static $PRIORITIES = [
+        4 => "最高",
+        3 => "高",
+        2 => "普通",
+        1 => "低",
+        0 => "最低",
+    ];
+
     const PRIORITY_HIGHEST = 4;
     const PRIORITY_HIGH = 3;
     const PRIORITY_MEDIUM = 2;
@@ -70,7 +78,7 @@ class JobQueue extends \common\BaseActiveRecord
             'id' => 'ID',
             'task_name' => '任务名(Console Router)',
             'params' => '参数',
-            'retry_times' => '重试次数',
+            'retry_times' => '剩余重试机会',
             'start_time' => '开始时间',
             'priority' => '优先级',
             'status' => '状态',
@@ -100,6 +108,16 @@ class JobQueue extends \common\BaseActiveRecord
             $this->_params = json_decode($this->params, true);
         }
         return $this->_params;
+    }
+
+    public function getStatus_label()
+    {
+        return $this::$STATUSES[$this->status];
+    }
+
+    public function getPriority_label()
+    {
+        return $this::$PRIORITIES[$this->priority];
     }
 
     public function retryIfCan()

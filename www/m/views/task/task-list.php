@@ -4,7 +4,7 @@ use yii\widgets\LinkPager;
 ?>
 
 <?php foreach ($tasks as $task){ if(isset($task->id)){ ?>
-<a href="/task/view?gid=<?=$task->gid?>" class="list-group-item">
+<a href="/<?=$seo_params['city_pinyin']?>/<?=$task->service_type->pinyin?>/<?=$task->gid?>" class="list-group-item">
   <div class="panel panel-default zhiwei-list"> 
     <div class="border-bt">
         <div class="panel-heading">

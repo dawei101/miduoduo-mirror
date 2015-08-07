@@ -7,6 +7,8 @@ use common\models\AccountEventCache;
 use common\models\AccountEventCacheSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use backend\BBaseController;
 
@@ -17,8 +19,19 @@ class AccountEventCacheController extends BBaseController
 {
     public function behaviors()
     {
-        $bhvs = parent::behaviors();
-        return $bhvs;
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['finance_manager'],
+                    ],
+
+                ],
+            ],
+        ]);
+ 
     }
 
     /**

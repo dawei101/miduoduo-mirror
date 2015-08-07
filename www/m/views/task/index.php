@@ -1,20 +1,39 @@
 <?php
 
 use yii\helpers\Url;
-use yii\widgets\LinkPager;
 
-use common\Utils;
-use common\WeichatBase;
 use common\models\District;
 use common\models\ServiceType;
-use m\assets\WechatAsset;
-
-$this->title = ($current_service_type?$current_service_type->name:'') . '兼职列表';
-
+use common\Seo;
 
 $districts = District::find()->where(['parent_id'=>$city->id])->all();
 $service_types = ServiceType::find()->where(['status'=>0])->all();
 
+/********* seo start ***********/
+$seocity    = isset($city->name)?$city->name:'';
+if( $current_district->id != $city->id ){
+    $block      = $current_district->name;
+    $page_type  = 'block';
+}else{
+    $block      = '';
+    $page_type  = 'city';
+}
+$type       = $current_service_type?$current_service_type->name:'';
+if( $type ){
+    $seocity    = $current_district->name;
+    $page_type  = 'type';
+}
+$clearance_type = '';
+$conpany    = '';
+$task_title = '';
+
+$seo_code   = Seo::makeSeoCode($seocity,$block,$type,$clearance_type,$conpany,$task_title,$page_type);
+/********* seo end ***********/
+
+$this->title = ($current_service_type?$current_service_type->name:'') . '兼职列表';
+$this->page_title = $seo_code['title'];
+$this->page_keywords = $seo_code['keywords'];
+$this->page_description = $seo_code['description'];
 
 $this->nav_left_link = 'javascript:window.history.back()';
 $this->nav_right_link = '/';
@@ -31,7 +50,7 @@ $this->wechat_apis = ['getLocation'];
 </dt><span class="inverted-triangle"></span>
         <dd> 
           <ul>
-            <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>''])?>">全城</a></li>
+            <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$seo_params['type_pinyin']?>">全城</a></li>
             <li style="display: none;">
                 <?php if($location['id']){ ?>
                     <a href="/task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a>
@@ -40,7 +59,7 @@ $this->wechat_apis = ['getLocation'];
                 <?php } ?>
             </li>
 <?php foreach($districts as $district) { ?>
-    <li><a href="<?=Url::current(['city'=>$city->id, 'district'=>$district->id])?>"><?=$district->name?></a></li>
+    <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$district->short_pinyin?>/<?=$seo_params['type_pinyin']?>"><?=$district->name?></a></li>
 <?php } ?>
           </ul>
         </dd>
@@ -49,9 +68,9 @@ $this->wechat_apis = ['getLocation'];
         <dt><?=$current_service_type?$current_service_type->name:'分类 '?><span class="caret"></span> </dt>
         <dd> 
           <ul>
-    <li><a href="<?=Url::current(['service_type'=>''])?>">全部</a></li>
+    <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$seo_params['block_pinyin']?>">全部</a></li>
 <?php foreach($service_types as $st) { ?>
-    <li><a href="<?=Url::current(['service_type'=>$st->id])?>"><?=$st->name?></a></li>
+    <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$seo_params['block_pinyin']?><?=$seo_params['block_pinyin']?'/':''?><?=$st['pinyin']?>"><?=$st->name?></a></li>
 <?php } ?>
           </ul>
         </dd>
@@ -70,8 +89,8 @@ $this->wechat_apis = ['getLocation'];
         <dd> 
           <ul>
             
-            <li><a href="<?=Url::current(['sort'=>'default'])?>">综合排序</a></li>
-            <li><a href="<?=Url::current(['sort'=>'fromdate'])?>">按开工时间由近到远</a></li>
+            <li><a href="?sort=default">综合排序</a></li>
+            <li><a href="?sort=fromdate">按开工时间由近到远</a></li>
             
           </ul>
         </dd>
@@ -81,7 +100,8 @@ $this->wechat_apis = ['getLocation'];
 <?=
   $this->render('@m/views/task/task-list.php', [
         'tasks' => $tasks,
-        'pages' => $pages
+        'pages' => $pages,
+        'seo_params' => $seo_params,
     ]);
 ?>
   <!--===========以上是固定在顶部的==============--> 

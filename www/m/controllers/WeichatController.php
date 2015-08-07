@@ -89,6 +89,13 @@ class WeichatController extends MBaseController{
                         $Ticket   = $postObj->Ticket ? $postObj->Ticket : '';
                         if( $Ticket ){
                             $re_contentStr  = $this->getReturnMsgByTicket($Ticket,$fromUsername,1);
+                            // 扫描关注
+                            $has_followed   = $WeichatErweimaLog->hasFollowed($fromUsername);
+                            if( !$has_followed ){
+                                if($fromUsername){
+                                    $WeichatErweimaLog->saveEventLog($fromUsername,1);  // 1表示关注事件
+                                }
+                            }
                         }else{
                            // 单纯的关注事件
                            $re_contentStr  = $WeichatErweimaLog->autoResponseByFollowaction(); 

@@ -1,9 +1,33 @@
 <?php
 use common\models\TaskCollection;
+use common\Seo;
 
+/********* seo start ***********/
+$city       = isset($task->city->name)?$task->city->name:'';
+$block      = '';
+$type       = '';
+$clearance_type = '';
+$conpany    = $task->company_name;
+$task_title = $task->title;
+$page_type  = 'detail';
+
+$need_quantity  = $task->need_quantity;
+$address        = '';
+if(isset($task->addresses)){
+    foreach($task->addresses as $k => $v){ 
+        $address    .= $v->title.','.$v->address.';';
+    }
+}
+$salary         = floor($task->salary);
+$detail         = $task->detail;
+
+$seo_code   = Seo::makeSeoCode($city,$block,$type,$clearance_type,$conpany,$task_title,$page_type,$need_quantity,$address,$salary,$detail);
+/********* seo end ***********/
 
 $this->title = '兼职详情';
-$this->page_title = $task->title . '-';
+$this->page_title = $seo_code['title'];
+$this->page_keywords = $seo_code['keywords'];
+$this->page_description = $seo_code['description'];
 
 $this->nav_left_link = 'javascript:window.history.back()';
 $this->nav_right_link = '/';
@@ -29,20 +53,40 @@ $this->nav_right_title = '首页';
      foreach($task->labels as $label) {?>
         <span><?=$label?></span>
     <?php }}?>
+    <span style="border:0px;">
+    |&nbsp;&nbsp;<?=$task->clearance_period_label?>
+    &nbsp;&nbsp;|&nbsp;&nbsp;已报名：<?=$task->got_quantity?>/<?=$task->need_quantity?>人
+    </span>
   </div>
 </div>
 <div class="list-subsection">
     <dl>
        <dt>工作周期</dt>
        <dd>
-         <?=substr($task->from_date, 5);?>
-            至
-         <?=substr($task->to_date, 5)?>
+           <?php if($task->is_longterm){ ?>
+             长期兼职
+           <?php }else{ ?>
+             <?=substr($task->from_date, 5);?>
+                至
+             <?=substr($task->to_date, 5)?>
+           <?php } ?>
+       </dd>
+    </dl>
+    <dl>
+       <dt>工作时间</dt>
+       <dd>
+           <?php if($task->is_allday){ ?>
+             不限工作时间
+           <?php }else{ ?>
+             <?=substr($task->from_time, 0,5);?>
+                至
+             <?=substr($task->to_time, 0,5)?>
+           <?php } ?>
        </dd>
     </dl>
     <dl>
       <dt>工作地点</dt>
-      <dd><?=$task->address ?></dd>
+      <dd><?php if(isset($task->addresses)){foreach($task->addresses as $k => $v){ ?><?=$v->title?><?=$v->address?'，':''?><?=$v->address?>；<?php }} ?></dd>
     </dl>
 </div>
 <div class="list-subsection">
@@ -55,7 +99,7 @@ $this->nav_right_title = '首页';
     <dl>
        <dt>公司信息</dt>
        <dd><?=$task->company_name?></dd>
-       <dd><a href="tel:<?=$task->contact_phonenum?>"><i class="iconfont">&#xe611;</i>电话咨询</a>
+       <dd>
             <div>
                 <p>联系人：<?=$task->contact?></p>
                 <p>联系电话:<?=$task->contact_phonenum?></p>

@@ -8,12 +8,28 @@ use common\models\TaskCollectionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 
 /**
  * TaskCollectionController implements the CRUD actions for TaskCollection model.
  */
 class TaskCollectionController extends Controller
 {
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['operation_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
     /**
      * Lists all TaskCollection models.
      * @return mixed

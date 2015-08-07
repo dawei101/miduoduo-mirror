@@ -6,11 +6,13 @@ use Yii;
 use common\models\WeichatErweimaLog;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\BBaseController;
 use common\models\WeichatUserInfo;
 use common\models\WeichatErweima;
+use yii\helpers\ArrayHelper;
 
 /**
  * WeichatErweimaLogController implements the CRUD actions for WeichatErweimaLog model.
@@ -18,6 +20,20 @@ use common\models\WeichatErweima;
 class WeichatErweimaLogController extends BBaseController
 {
 
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['finance_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
 
     public function getViewPath()
     {
@@ -39,7 +55,7 @@ class WeichatErweimaLogController extends BBaseController
         WeichatErweima::updateAll(['scan_num'=>$scan_count],['id'=>$erweimaid]);
 
         $user_count = WeichatUserInfo::findBySql("
-            SELECT COUNT(w.id) user_count
+            SELECT COUNT(distinct(w.id)) user_count
             FROM jz_weichat_user_info w
             LEFT JOIN jz_weichat_erweima_log l ON w.openid=l.openid
             WHERE l.follow_by_scan=1
@@ -48,7 +64,7 @@ class WeichatErweimaLogController extends BBaseController
         $user_count = count($user_count) ? $user_count[0]['user_count'] : 0;
 
         $resume_count = WeichatUserInfo::findBySql("
-            SELECT COUNT(w.id) user_count
+            SELECT COUNT(distinct(r.id)) user_count
             FROM jz_resume r
             LEFT JOIN jz_weichat_user_info w ON r.user_id=w.userid
             LEFT JOIN jz_weichat_erweima_log l ON w.openid=l.openid

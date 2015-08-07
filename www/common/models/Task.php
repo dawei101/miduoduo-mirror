@@ -363,7 +363,11 @@ class Task extends \common\BaseActiveRecord
             $arr = explode(',', $this->labels_str);
         }
         $arr[] = $this->clearance_period_label;
-        $arr[] = substr($this->from_date, 5) . '至' . substr($this->to_date, 5);
+        if( $this->is_longterm ){
+            $arr[] = '长期兼职';
+        }else{
+            $arr[] = substr($this->from_date, 5) . '至' . substr($this->to_date, 5);
+        }
         return $arr;
     }
 

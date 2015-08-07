@@ -6,8 +6,10 @@ use Yii;
 use common\models\UserAccount;
 use common\models\UserAccountSearch;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use backend\BBaseController;
 
 /**
@@ -15,10 +17,20 @@ use backend\BBaseController;
  */
 class UserAccountController extends BBaseController
 {
+
     public function behaviors()
     {
-        $bhvs = parent::behaviors();
-        return $bhvs;
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['finance_manager'],
+                    ],
+                ],
+            ],
+        ]);
     }
 
     /**
