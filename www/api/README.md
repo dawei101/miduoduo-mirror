@@ -417,6 +417,18 @@ BASE_URL = 'http://api.miduoduo.cn'
 ### 微信推荐任务分组
     *GET /version/recommend-task-group/9?expand=tasks
 
+### 可提现接口
+    *GET /version/pay-account-event?status=0
+
+### 待提现接口
+    *GET /version/pay-account-event?status=2
+
+### 已提现接口
+    *GET /version/pay-account-event?status=3
+
+### 提现接口
+    *GET /version/pay-withdraw?type=10
+
 ## 关于性能上的优化
     * TODO
 

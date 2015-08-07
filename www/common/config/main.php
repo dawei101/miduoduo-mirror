@@ -114,6 +114,9 @@ return [
                ],
             ],
         ],
+        'office_phpexcel' => [
+            'class' => 'common\phpoffice\PhpExcel',
+        ],
     ],
     'aliases' => [
         'api' => $root_path . '/api',

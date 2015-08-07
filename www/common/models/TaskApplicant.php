@@ -21,6 +21,7 @@ class TaskApplicant extends \common\BaseActiveRecord
         0 => '已报名',
         10 => '报名成功',
         20 => '报名失败',
+        30 => '已结算',
     ];
 
     public static $HAVE_READS = [
