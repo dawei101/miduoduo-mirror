@@ -25,8 +25,14 @@ class AccountEvent extends \yii\db\ActiveRecord
 {
     public static $TYPES = [
         0 => '导入',
-        1 => '微信推荐红包',
+        10 => '微信推广红包',
+        20 => '提现',
     ];
+
+    const TYPES_UPLOAD      = 0;
+    const TYPES_WEICHAT_RECOMMEND  = 10;
+    const TYPES_WITHDRAW    = 20;
+
 
     /**
      * @inheritdoc
@@ -57,14 +63,15 @@ class AccountEvent extends \yii\db\ActiveRecord
     {
         return [
             'id' => '流水id',
-            'date' => 'excel标记日期',
+            'date' => '日期',
             'user_id' => '用户id',
-            'value' => '变更金额',
-            'created_time' => '变更时间',
+            'value' => '金额',
+            'created_time' => '上传时间',
             'balance' => '余额',
             'type' => '变更原因类型',
             'note' => '备注',
-            'related_id' => '关联id（提现id 或 任务id）',
+            'related_id' => '提现id',
+            'task_gid' => '任务id',
         ];
     }
 
@@ -90,47 +97,60 @@ class AccountEvent extends \yii\db\ActiveRecord
     }
 
     public function saveUploadDataByRow($data,$key){
-        // 验证任务和用户是否对应正确
-        $task_applicant_obj = new TaskApplicant();
-        $is_user_apply      = $task_applicant_obj->findBySql("
-            SELECT t.title
-            FROM jz_task_applicant a
-            LEFT JOIN jz_task t ON a.task_id=t.id
-            WHERE a.user_id=".$data['D']." AND t.gid='".$data['B']."'")
-            ->asArray()->one();
-        if( $is_user_apply['title'] ){
-            // 验证用户信息是否正确
-            $user_info  = Resume::find()
-                ->where([
-                    'user_id'=>$data['D'],
-                    'name'=>$data['C'],
-                    'phonenum'=>$data['E'],
-                    'person_idcard'=>$data['F']
-                ])
-                ->one();
-            if( $user_info ){
-                return $this->saveUploadDataByRowSaveIt($data,$is_user_apply['title'],$user_info);
+        // 验证用户信息是否正确
+        $user_info  = Resume::find()
+            ->where([
+                'name'=>$data['C'],
+                'phonenum'=>$data['D'],
+            ])
+            ->one();
+        if( $user_info ){
+            // 验证任务和用户是否对应正确
+            $task_applicant_obj = new TaskApplicant();
+            $is_user_apply      = $task_applicant_obj->findBySql("
+                SELECT t.title
+                FROM jz_task_applicant a
+                LEFT JOIN jz_task t ON a.task_id=t.id
+                WHERE a.user_id=".$user_info->user_id." AND t.gid='".$data['B']."'")
+                ->asArray()->one();
+            if( $is_user_apply['title'] ){
+                // 验证是否重复录入
+                $account_chongfu    = AccountEvent::find()->where([
+                    'date'      => $data['A'], 
+                    'user_id'   => $user_info->user_id,
+                    'value'     => $data['E'],
+                    'task_gid'  => $data['B'],
+                    'note'      => $data['F'],
+                ])->one();
+                if( $account_chongfu ){
+                    $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，重复录入<br />";
+                }else{
+                    return $this->saveUploadDataByRowSaveIt($data,$is_user_apply['title'],$user_info);
+                }
             }else{
-                $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，用户信息不匹配<br />"; 
+                $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，报名信息不匹配<br />";
             }
         }else{
-            $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，报名信息不匹配<br />";
+            $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，用户信息不匹配<br />"; 
         }
+
         return ['result'=>false,'errmsg'=>$errmsg];
     }
 
     public function saveUploadDataByRowSaveIt($data,$task_title,$user_info){
-        $this->date     = Yii::$app->office_phpexcel->dateExceltoPHP($data['A']);
-        $this->user_id  = $data['D'];
-        $this->value    = $data['G'];
-        $this->note     = $data['H'];
-        $this->operator_id  = Yii::$app->user->id;
-        $this->created_time = date("Y-m-d H:i:s");
-        $this->related_id   = $data['B'];
-        $this->balance  = 0;
-        $this->type     = 0;
-        $this->save();
-        $data           = $this->toArray();
+        $model          = new AccountEvent();
+        $model->date     = Yii::$app->office_phpexcel->dateExceltoPHP($data['A']);
+        $model->user_id  = $user_info->user_id;
+        $model->value    = $data['E'];
+        $model->note     = $data['F'];
+        $model->operator_id  = Yii::$app->user->id;
+        $model->created_time = date("Y-m-d H:i:s");
+        $model->task_gid     = $data['B'];
+        $model->related_id   = '';
+        $model->balance  = 0;
+        $model->type     = 0;
+        $model->save();
+        $data           = $model->toArray();
         $data['task_title'] = $task_title;
         $data['user_name']  = $user_info->name;
         $data['user_pbone'] = $user_info->phonenum;
@@ -140,6 +160,10 @@ class AccountEvent extends \yii\db\ActiveRecord
 
     public function getAccounts(){
         return $this->hasMany($this::className(), ['user_id' => 'user_id']);
+    }
+
+    public function getUserinfo(){
+        return $this->hasOne(Resume::className(),['user_id' => 'user_id']);
     }
 
     public function extraFields(){

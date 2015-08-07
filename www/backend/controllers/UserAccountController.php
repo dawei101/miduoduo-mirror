@@ -3,32 +3,36 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\AccountEvent;
-use common\models\AccountEventSearch;
+use common\models\UserAccount;
+use common\models\UserAccountSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use backend\BBaseController;
 
 /**
- * AccountEventController implements the CRUD actions for AccountEvent model.
+ * UserAccountController implements the CRUD actions for UserAccount model.
  */
-class AccountEventController extends BBaseController
+class UserAccountController extends Controller
 {
-
     public function behaviors()
     {
-        $bhvs = parent::behaviors();
-        return $bhvs;
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
     }
 
     /**
-     * Lists all AccountEvent models.
+     * Lists all UserAccount models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AccountEventSearch();
+        $searchModel = new UserAccountSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -37,50 +41,8 @@ class AccountEventController extends BBaseController
         ]);
     }
 
-    public function actionUpload(){
-        if( Yii::$app->request->isPost && $_FILES['excelfile']['error'] == 0 && $_FILES['excelfile']['size'] > 0 ){
-            $excel_path  = $_FILES['excelfile']['tmp_name'];
-            $excel_data  = Yii::$app->office_phpexcel->excelToArray($excel_path);
-            
-            $accountevent      = new AccountEvent();
-            $import_data       = $accountevent->saveUploadData($excel_data);
-            if( $import_data ){
-                $this->layout=false;
-                return $this->render('upload', [
-                    'import_data' => $import_data,
-                ]);
-            }else{
-                echo '{"result"="false","errmsg"="上传错误"}';
-            }
-        }else{
-            $excel_data = '';
-            $this->layout=false;
-            return $this->render('upload', [
-                'excel_data' => $excel_data,
-            ]);
-        }
-    }
-
-    public function actionDownloaddemo(){
-        $row_array  = [
-            'A1'=>'日期',
-            'B1'=>'职位id',
-            'C1'=>'姓名',
-            'D1'=>'手机号',
-            'E1'=>'金额',
-            'F1'=>'金额说明',
-            'A2'=>'2015-06-23',
-            'B2'=>"'14374778022702043",
-            'C2'=>'张三',
-            'D2'=>'18611299991',
-            'E2'=>'5000',
-            'F2'=>'日结工资',
-        ];
-        Yii::$app->office_phpexcel->arrayToExcel($row_array);
-    }
-
     /**
-     * Displays a single AccountEvent model.
+     * Displays a single UserAccount model.
      * @param integer $id
      * @return mixed
      */
@@ -92,13 +54,13 @@ class AccountEventController extends BBaseController
     }
 
     /**
-     * Creates a new AccountEvent model.
+     * Creates a new UserAccount model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new AccountEvent();
+        $model = new UserAccount();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -110,7 +72,7 @@ class AccountEventController extends BBaseController
     }
 
     /**
-     * Updates an existing AccountEvent model.
+     * Updates an existing UserAccount model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -129,7 +91,7 @@ class AccountEventController extends BBaseController
     }
 
     /**
-     * Deletes an existing AccountEvent model.
+     * Deletes an existing UserAccount model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -142,15 +104,15 @@ class AccountEventController extends BBaseController
     }
 
     /**
-     * Finds the AccountEvent model based on its primary key value.
+     * Finds the UserAccount model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return AccountEvent the loaded model
+     * @return UserAccount the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = AccountEvent::findOne($id)) !== null) {
+        if (($model = UserAccount::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

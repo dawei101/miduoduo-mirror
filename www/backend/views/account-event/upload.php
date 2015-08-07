@@ -31,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <th>姓名</th>
             <th>用户id</th>
             <th>手机号</th>
-            <th>身份证号</th>
             <th>金额</th>
             <th>金额说明</th>
         </tr>
@@ -40,12 +39,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?=$v['id']?></td>
                 <td><?=$v['date']?></td>
                 <td><?=$v['created_time']?></td>
-                <td><?=$v['related_id']?></td>
+                <td><?=$v['task_gid']?></td>
                 <td><?=$v['task_title']?></td>
                 <td><?=$v['user_name']?></td>
                 <td><?=$v['user_id']?></td>
                 <td><?=$v['user_pbone']?></td>
-                <td><?=$v['user_idcard']?></td>
                 <td><?=$v['value']?></td>
                 <td><?=$v['note']?></td>
             </tr>
