@@ -69,6 +69,7 @@ class TaskPool extends \common\BaseActiveRecord
             ['status', 'default', 'value'=>0],
             ['release_date', 'safe'],
             ['to_date', 'safe'],
+            ['task_id', 'integer'],
         ];
     }
 
@@ -131,13 +132,20 @@ class TaskPool extends \common\BaseActiveRecord
         return $s;
     }
 
-    public function exportTask()
+    public function exportTask($task_id=null, $self_update=false)
     {
-        if ($this->status!=0){
+        if ($this->status!=static::STATUS_UNSETTLED){
             return false;
         }
         $ds = $this->list_detail();
-        $task = new Task;
+        $task = null;
+        if ($task_id){
+            $task = Task::findOne($task_id);
+        }
+        if (!$task){
+            $task = new Task;
+            $task->salary_unit = 0;
+        }
         $task->title = $ds['title'];
 
         $cp = 3;
@@ -148,7 +156,6 @@ class TaskPool extends \common\BaseActiveRecord
         $task->clearance_period = $cp;
 
         $task->salary = intval($ds['salary']);
-        $task->salary_unit = 0;
         if ($task->salary!=0){
             $task->salary_unit = $this->getSalaryUnit($ds['salary_unit']);
         }
@@ -201,6 +208,11 @@ class TaskPool extends \common\BaseActiveRecord
             $ta->city = $this->city;
             $ta->task_id = $task->id;
             $ta->save();
+        }
+        if ($self_update){
+            $this->task_id = $task->id;
+            $this->status = static::STATUS_EXPORTED;
+            $this->save();
         }
         return $task;
     }

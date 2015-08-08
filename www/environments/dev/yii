@@ -8,6 +8,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
+define('YII_ENABLE_ERROR_HANDLER', false);
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_ENV') or define('YII_ENV', 'dev');
 
@@ -27,6 +28,6 @@ $config = yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/console/config/main-local.php')
 );
 
-$application = new yii\console\Application($config);
+$application = new \console\Application($config);
 $exitCode = $application->run();
 exit($exitCode);

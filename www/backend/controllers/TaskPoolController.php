@@ -86,8 +86,6 @@ class TaskPoolController extends BBaseController
             if (!$task){
                 return $this->redirectHtml(Yii::$app->request->referrer, '导出出现问题，无法继续处理, 联系技术!');
             }
-            $t->status = 10;
-            $t->save();
             return $this->redirect('/task/update?id='.$task->id);
         }
     }

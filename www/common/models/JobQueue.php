@@ -20,6 +20,7 @@ class JobQueue extends \common\BaseActiveRecord
     /**
      * @inheritdoc
      */
+
     public static function tableName()
     {
         return '{{%job_queue}}';
@@ -88,7 +89,7 @@ class JobQueue extends \common\BaseActiveRecord
 
     public function setParams($params)
     {
-        $this->params = serialize($params);
+        $this->params = json_encode($params);
     }
 
     private $_params = false;
@@ -96,7 +97,7 @@ class JobQueue extends \common\BaseActiveRecord
     public function getUnserializeParmas()
     {
         if (false===$this->_params){
-            $this->_params = unserialize($this->params);
+            $this->_params = json_decode($this->params, true);
         }
         return $this->_params;
     }
