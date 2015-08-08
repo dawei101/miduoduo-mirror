@@ -22,6 +22,10 @@ return [
         'v1' => [
             'basePath' => '@app/miduoduo/v1',
             'class' => 'api\miduoduo\v1\Module'
+        ],
+        'time-book' => [
+            'basePath' => '@app/extensions/time_book',
+            'class' => 'api\extensions\time_book\Module'
         ]
     ],
     'components' => [
@@ -135,6 +139,14 @@ return [
                         'GET,POST check-update' => 'check-update',
                         'POST t-login'=>'t-login',
                     ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'time-book/schedule',
+                        'time-book/record',
+                    ],
+                    'pluralize' => '',
                 ],
             ],
         ],

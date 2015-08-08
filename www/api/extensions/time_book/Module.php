@@ -1,5 +1,5 @@
 <?php
-namespace api\miduoduo\v1;
+namespace api\extensions\time_book;
 
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
@@ -15,8 +15,6 @@ use common\models\User;
  */
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'api\miduoduo\v1\controllers';
-
     public $publicActions = [
         // 'controller' => actions
         'entry' => ['*'],
