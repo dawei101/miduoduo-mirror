@@ -24,13 +24,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'date',
             'created_time',
-            'related_id',
+            'task_gid',
+            [
+                'label' => '姓名',
+                'value' => function($model){
+                    return $model->userinfo->name;
+                }
+            ],
             'user_id',
+            [
+                'label' => '手机号',
+                'value' => function($model){
+                    return $model->userinfo->phonenum;
+                }
+            ],
             'value',
             'note',
             [
@@ -42,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'type',
                 'filter'    => AccountEvent::$TYPES
             ],
-            
+            'related_id',
             // 'balance',
             ['class' => 'yii\grid\ActionColumn'],
         ],

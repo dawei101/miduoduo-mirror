@@ -8,6 +8,7 @@ use common\Utils;
 use common\models\AccountEvent;
 use common\models\WithdrawCash;
 use common\payment\Pay;
+use common\models\UserAccount;
  
 /**
  * PayWithdrawController API
@@ -33,11 +34,14 @@ class PayWithdrawController extends BaseActiveController
     public function prepareDataProvider()
     {
         $user_id    = \Yii::$app->user->id;
-        $pay_type   = Yii::$app->request->get('type');
+        $user_account_obj = new UserAccount();
+        $user_account     = $user_account_obj->getUserAccount($user_id);
+        $pay_type   = $user_account->defalut_withdraw_type;
 
         if( $user_id ){
             $pay        = new Pay();
-            $result     = $pay->withdrawAllBalance($user_id,$pay_type);            
+            $result     = $pay->withdrawAllBalance($user_id,$pay_type);  
+            $user_account_obj->updateUserAccount($user_id);
         }else{
             $result    = '{ "success": false, "message": 发生错误 }';
         }

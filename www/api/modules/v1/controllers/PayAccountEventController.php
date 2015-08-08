@@ -8,6 +8,7 @@ use common\Utils;
 use common\models\AccountEvent;
 use common\models\WithdrawCash;
 use common\payment\Pay;
+use common\models\UserAccount;
  
 /**
  * PayAccountEvent Controller API
@@ -56,16 +57,14 @@ class PayAccountEventController extends BaseActiveController
             $records    = '';
         }
 
-        $pay    = new Pay();
-        $money_all      = $pay->getMoneyAll($user_id);
-        $money_balance  = $pay->getMoneyBalance($user_id);
-        $money_success  = $pay->getMoneySuccess($user_id);
-        $money_doing    = $pay->getMoneyDoing($user_id);
+        $user_account_obj = new UserAccount();
+        $user_account     = $user_account_obj->getUserAccount($user_id);
+
         $money  = [
-            'money_all'       => $money_all,
-            'money_balance'   => $money_balance,
-            'money_success'   => $money_success,
-            'money_doing'     => $money_doing, 
+            'money_all'       => $user_account->money_all,
+            'money_balance'   => $user_account->money_balance,
+            'money_success'   => $user_account->money_success,
+            'money_doing'     => $user_account->money_doing, 
         ];
 
         return ['data' => $records, 'money' => $money];

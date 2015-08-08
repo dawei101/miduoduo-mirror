@@ -33,6 +33,7 @@ AppAsset::register($this);
                 <li><a href="/user">账号管理</a></li>
                 <li><a href="/resume">人才库</a></li>
                 <li><a href="/company">企业库</a></li>
+                <li><a href="/district">城市</a></li>
                 <li><a href="/service-type">任务类型</a></li>
                 <li><a href="/task">任务</a></li>
                 <li><a href="/task-applicant">任务报名单</a></li>
@@ -51,6 +52,7 @@ AppAsset::register($this);
                 <li>&nbsp;</li>
                 <li><a href="/account-event">工资流水管理</a></li>
                 <li><a href="/withdraw-cash">工资提现管理</a></li>
+                <li><a href="/user-account">用户资金</a></li>
                 <li>&nbsp;</li>
 
                 <li><a href="/task-pool">爬虫-任务列表</a></li>

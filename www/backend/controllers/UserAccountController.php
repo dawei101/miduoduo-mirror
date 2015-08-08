@@ -3,24 +3,36 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\District;
-use common\models\DistrictSearch;
+use common\models\UserAccount;
+use common\models\UserAccountSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DistrictController implements the CRUD actions for District model.
+ * UserAccountController implements the CRUD actions for UserAccount model.
  */
-class DistrictController extends Controller
+class UserAccountController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     /**
-     * Lists all District models.
+     * Lists all UserAccount models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DistrictSearch();
+        $searchModel = new UserAccountSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -30,26 +42,25 @@ class DistrictController extends Controller
     }
 
     /**
-     * Displays a single District model.
+     * Displays a single UserAccount model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
-        $searchModel = new DistrictSearch();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new District model.
+     * Creates a new UserAccount model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new District();
+        $model = new UserAccount();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -61,7 +72,7 @@ class DistrictController extends Controller
     }
 
     /**
-     * Updates an existing District model.
+     * Updates an existing UserAccount model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -69,22 +80,18 @@ class DistrictController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $searchModel = new DistrictSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            $dataProvider->query->andWhere(['parent_id'=> $id]);
             return $this->render('update', [
                 'model' => $model,
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
             ]);
         }
     }
 
     /**
-     * Deletes an existing District model.
+     * Deletes an existing UserAccount model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -97,15 +104,15 @@ class DistrictController extends Controller
     }
 
     /**
-     * Finds the District model based on its primary key value.
+     * Finds the UserAccount model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return District the loaded model
+     * @return UserAccount the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = District::findOne($id)) !== null) {
+        if (($model = UserAccount::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
