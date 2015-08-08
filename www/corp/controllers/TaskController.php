@@ -387,6 +387,9 @@ class TaskController extends CBaseController
         }
         return [
             'result'=>$result,
+            'use_task_num'=>0,
+            'use_task_limie'=>0,
+            'exam_result'=>false,
             'msg'=>'您的账户'.$company->getConpanyStatusLabel($status).'，请联系客服：010-84991662',
         ];
     }
