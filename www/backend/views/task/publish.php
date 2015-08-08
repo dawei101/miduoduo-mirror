@@ -270,7 +270,7 @@ $this->title = '米多多兼职平台';
 	                                <div class="pull-left title-left text-center"><em>*</em>公司</div>
 	                                <div class="pull-left right-box">
 	                                    <input name="company_name" type="text" placeholder="输入公司名" value="<?=$task->company_name?>">
-	                                    <p class="cuowu title-error">内容不能为空!</p>
+	                                    <p class="cuowu company-error">内容不能为空!</p>
 	                                </div>
 	                            </li>
                                 <!-- 联系人 -->
@@ -278,7 +278,7 @@ $this->title = '米多多兼职平台';
 	                                <div class="pull-left title-left text-center"><em>*</em>联系人</div>
 	                                <div class="pull-left right-box">
 	                                    <input name="contact" type="text" placeholder="输入联系人" value="<?=$task->contact?>">
-	                                    <p class="cuowu title-error">内容不能为空!</p>
+	                                    <p class="cuowu contact-error">内容不能为空!</p>
 	                                </div>
 	                            </li>
                                 <!-- 联系电话 -->
@@ -286,7 +286,7 @@ $this->title = '米多多兼职平台';
 	                                <div class="pull-left title-left text-center"><em>*</em>联系电话</div>
 	                                <div class="pull-left right-box">
 	                                    <input name="contact_phonenum" type="text" placeholder="输入联系电话" value="<?=$task->contact_phonenum?>">
-	                                    <p class="cuowu title-error">内容不能为空!</p>
+	                                    <p class="cuowu contact_phonenum-error">内容不能为空!</p>
 	                                </div>
 	                            </li>
                                 <!-- 运营 -->
@@ -295,13 +295,13 @@ $this->title = '米多多兼职平台';
 	                                <div class="pull-left title-left text-center"><em>*</em>优单</div>
 	                                <div class="pull-left right-box zhiweileibie">
 	                                    <div class="nice-select tl" name="nice-select">
-	                                        <input type="text" readonly placeholder=" ===是否为优单===" value="<?= ($task->recommend)!==null ? Task::$RECOMMEND[$task->recommend] : ''?> ">
+	                                        <input type="text" readonly placeholder=" ===是否为优单===" value="<?= ($task->recommend)!==null ? Task::$RECOMMEND[$task->recommend] : ''?>">
 	                                        <ul>
 	                                        	<li>是</li>
 	                                        	<li>否</li>
 	                                        </ul>
-	                                        <input type="hidden" name="recommend" value=""/>
-	                                        <p class="cuowu service_type_id-error">内容不能为空!</p>
+	                                        <input type="hidden" name="recommend" value="<?= ($task->recommend)!==null ? Task::$RECOMMEND[$task->recommend] : ''?>"/>
+	                                        <p class="cuowu recommend-error">内容不能为空!</p>
 	                                    </div>
 	                                </div>
 	                            </li>
@@ -311,14 +311,14 @@ $this->title = '米多多兼职平台';
 	                                <div class="pull-left title-left text-center"><em>*</em>状态</div>
 	                                <div class="pull-left right-box zhiweileibie">
 	                                    <div class="nice-select tl" name="nice-select">
-	                                        <input type="text" readonly placeholder=" ===状态===" value="<?= ($task->status) !==null ? Task::$STATUSES[$task->status] : ''?> ">
+	                                        <input type="text" readonly placeholder=" ===状态===" value="<?= ($task->status) !==null ? Task::$STATUSES[$task->status] : ''?>">
 	                                         <ul>
 	                                        	<?php foreach(Task::$STATUSES as $st) {?>
 	                        					<li><?=$st?></li>
 	                        					<?php }?>
 	                                        </ul>
-	                                        <input type="hidden" name="status" value=""/>
-	                                        <p class="cuowu service_type_id-error">内容不能为空!</p>
+	                                        <input type="hidden" name="status" value="<?= ($task->status) !==null ? Task::$STATUSES[$task->status] : ''?>"/>
+	                                        <p class="cuowu status-error">内容不能为空!</p>
 	                                    </div>
 	                                </div>
 	                            </li>
@@ -330,7 +330,7 @@ $this->title = '米多多兼职平台';
                             </ul>
                             
                           
-                                <button class="fabu-bt">发布职位</button>
+                                <button class="fabu-bt">提交</button>
                           
                             <?php ActiveForm::end(); ?>
     </div>
@@ -449,6 +449,44 @@ function getNowFormatDate() {
         $('.salary-error').show();
         valid = false;
     }
+    // 公司
+    if (form.company_name.value.length == 0) {
+        $('.company-error').html('请输入公司名');
+        $('.company-error').show();
+        valid = false;
+    }
+    // 联系人
+    if (form.contact.value.length == 0) {
+        $('.contact-error').html('请输入联系人');
+        $('.contact-error').show();
+        valid = false;
+    }
+    // 联系电话
+    if (form.contact_phonenum.value.length == 0) {
+        $('.contact_phonenum-error').html('请输入联系电话');
+        $('.contact_phonenum-error').show();
+        valid = false;
+    }else{
+        var value = form.contact_phonenum.value;
+        if(!value.match(/^1[3|4|5|8][0-9]\d{4,8}$/)){
+            $('.contact_phonenum-error').html("请输入正确的手机号");
+            $('.contact_phonenum-error').show();
+            valid = false;
+        }
+    }
+    // 优单
+    if (form.recommend.value.length == 0) {
+        $('.recommend-error').html('请选择是否为优单');
+        $('.recommend-error').show();
+        valid = false;
+    }
+    // 状态
+    if (form.status.value.length == 0) {
+        $('.status-error').html('请选择任务状态');
+        $('.status-error').show();
+        valid = false;
+    }
+
    
 
     if(valid === false){

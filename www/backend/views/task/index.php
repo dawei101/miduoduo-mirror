@@ -117,6 +117,14 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                             'aria-label' => '查看报名详情',
                         ];
                         return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', $url, $options);
+                    },
+                    'view' => function ($url, $model, $key) {
+                        $url = Yii::$app->params['baseurl.m'].'/task/view?gid=' . $model->gid;
+                        $options = [
+                            'title' => '查看任务详情',
+                            'aria-label' => '查看任务详情',
+                        ];
+                        return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', $url, $options);
                     }
                 ],
             ],
