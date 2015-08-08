@@ -18,8 +18,9 @@ class AccountEventSearch extends AccountEvent
     public function rules()
     {
         return [
-            [['id', 'user_id', 'type', 'related_id','task_gid'], 'integer'],
+            [['id', 'user_id', 'type', 'related_id'], 'integer'],
             [['date', 'created_time', 'note'], 'safe'],
+            [['task_gid'], 'string'],
             [['value', 'balance'], 'number'],
         ];
     }

@@ -7,6 +7,7 @@ use common\models\TaskApplicant;
 use common\models\Resume;
 use common\models\WithdrawCash;
 use common\models\Payout;
+use common\BaseActiveRecord;
 
 /**
  * This is the model class for table "{{%account_event}}".
@@ -21,7 +22,7 @@ use common\models\Payout;
  * @property string $note
  * @property integer $related_id
  */
-class AccountEvent extends \yii\db\ActiveRecord
+class AccountEvent extends BaseActiveRecord
 {
     public static $TYPES = [
         0 => '导入',
@@ -52,6 +53,7 @@ class AccountEvent extends \yii\db\ActiveRecord
             [['user_id', 'type', 'related_id'], 'integer'],
             [['value', 'balance', 'type'], 'required'],
             [['value', 'balance'], 'number'],
+            [['task_gid'], 'string'],
             [['note'], 'string', 'max' => 400]
         ];
     }
