@@ -53,10 +53,13 @@
         if ($key==$active_menu){
             $dl .= '<dt class="pitch-on"><i class="iconfont">'
                 .$v['iconfont'].'</i><a href="'
-                .(isset($v['url'])?$v['url']:'')
+                .(isset($v['url'])?$v['url']:'#')
                 .'">' . $v['title'].'</a></dt>';
         } else {
-            $dl .= '<dt class="default-title"><i class="iconfont">'.$v['iconfont'].'</i>'.$v['title'].'</dt>';
+            $dl .= '<dt class="default-title"><i class="iconfont">'
+                .$v['iconfont'].'</i><a href="'
+                .(isset($v['url'])?$v['url']:'#')
+                .'">' . $v['title'].'</a></dt>';
         }
         foreach ($v['children'] as $ckey=>$cv){
             if ($ckey==$active_menu){
