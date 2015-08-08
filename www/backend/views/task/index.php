@@ -24,7 +24,7 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('创建任务订单', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('创建任务订单', ['publish'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -115,6 +115,14 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                         $options = [
                             'title' => '查看报名详情',
                             'aria-label' => '查看报名详情',
+                        ];
+                        return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', $url, $options);
+                    },
+                    'view' => function ($url, $model, $key) {
+                        $url = Yii::$app->params['baseurl.m'].'/task/view?gid=' . $model->gid;
+                        $options = [
+                            'title' => '查看任务详情',
+                            'aria-label' => '查看任务详情',
                         ];
                         return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', $url, $options);
                     }
