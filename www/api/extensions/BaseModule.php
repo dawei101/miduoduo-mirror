@@ -2,9 +2,11 @@
 namespace api\extensions;
 
 use Yii;
+use yii\base\Exception;
 use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\QueryParamAuth;
+use common\models\User;
 
 /**
  * Base extension Module
@@ -14,17 +16,6 @@ use yii\filters\auth\QueryParamAuth;
  */
 class BaseModule extends \yii\base\Module
 {
-
-    public function __construct($id, $parent = null, $config = [])
-    {
-        parent::__construct($id, $parent, $config);
-        if (empty($this->extension_name)){
-            throw Exception("No extension name set for this Module");
-        }
-        $this->controllerNamespace = "api\\extensions\\" . $this->extension_name . "\\controllers";
-    }
-
-    public $extension_name;
 
     public $publicActions = [
         // 'controller' => actions

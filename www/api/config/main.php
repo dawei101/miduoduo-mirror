@@ -26,7 +26,12 @@ return [
         'time-book' => [
             'basePath' => '@app/extensions/time_book',
             'class' => 'api\extensions\time_book\Module'
+        ],
+        'time-book-management' => [
+            'basePath' => '@app/extensions/time_book',
+            'class' => 'api\extensions\time_book\ManagementModule'
         ]
+ 
     ],
     'components' => [
         'user' => [
@@ -148,6 +153,15 @@ return [
                     ],
                     'pluralize' => '',
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'time-book-management/schedule',
+                        'time-book-management/record',
+                    ],
+                    'pluralize' => '',
+                ],
+
             ],
         ],
     ],
