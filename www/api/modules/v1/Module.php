@@ -23,7 +23,8 @@ class Module extends \yii\base\Module
         'task' => ['*'],
         'district' => ['*'],
         'service-type' => ['*'],
-        'task-address' => ['nearby']
+        'task-address' => ['nearby'],
+        'recommend-task-group' => ['*']
     ];
 
     public function behaviors()
