@@ -51,7 +51,7 @@ class Pay extends Component
                 $result   = [
                     'success'   => true, 
                     'value'     => $withdraw_result['count_value'], 
-                    'message'   => '提现成功' 
+                    'message'   => '提现成功，请到微信钱包查看' 
                 ];
             }else{
                 $error_message  = isset($withdraw_result['error_message']) ? $withdraw_result['error_message'] : $error_message;
