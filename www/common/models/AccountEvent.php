@@ -156,7 +156,6 @@ class AccountEvent extends BaseActiveRecord
         $data['task_title'] = $task_title;
         $data['user_name']  = $user_info->name;
         $data['user_pbone'] = $user_info->phonenum;
-        $data['user_idcard']= $user_info->person_idcard;
         return ['result'=>true,'data'=>$data];
     }
 
