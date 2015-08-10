@@ -71,7 +71,11 @@ class CrontabWeichatPushController extends Controller
             }else{
                 // 得到待推送的用户列表
                 // 这里只给 is_receive_nearby_msg=1 的用户发送推送
-                $userlist       = WeichatUserInfo::find()->where(['is_receive_nearby_msg'=>1])->asArray()->all();
+                $userlist       = WeichatUserInfo::find()
+                    ->where(['is_receive_nearby_msg'=>1])
+                    ->andWhere(['!=', 'userid',0])
+                    ->asArray()
+                    ->all();
             }
 
             // 本次推送的分组标识
