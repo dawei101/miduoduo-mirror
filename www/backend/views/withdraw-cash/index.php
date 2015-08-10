@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '处理结果',
                 'value' => function($model){
-                    return isset($model->payout->status_label) ? $model->payout->status_label : '';
+                    return isset($model->payout->status_label)  ? $model->payout->status_label : '';
                 }
             ],
             [
