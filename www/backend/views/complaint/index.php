@@ -24,10 +24,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'id',
-//            'title',
             'content:ntext',
             'phonenum',
-            'task.title',
+            [
+                'label' => '标题',
+                'format' => 'raw',
+                // 'attribute' => 'title',
+                'value' => function($model){
+                    return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->task->gid ."'>" . $model->task->title . "</a>";
+                }
+            ] ,
             'resume.name',
             // 'created_time',
             // 'status',
