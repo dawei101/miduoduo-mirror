@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\TaskApplicant;
+use common\models\User;
 use common\models\Resume;
 use common\models\WithdrawCash;
 use common\models\Payout;
@@ -105,10 +106,12 @@ class AccountEvent extends BaseActiveRecord
 
     public function saveUploadDataByRow($data,$key){
         // 验证用户信息是否正确
+        $user_id_obj= User::find()->where(['username'=>$data['D']])->one();
+        $user_id    = isset($user_id_obj->id) ? $user_id_obj->id : 0;
         $user_info  = Resume::find()
             ->where([
                 'name'=>$data['C'],
-                'phonenum'=>$data['D'],
+                'user_id'=>$user_id,
             ])
             ->one();
         if( $user_info ){

@@ -44,13 +44,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '绑定银行卡/微信账号',
                 'value' => function($model){
-                    return $model->payout->account_id;
+                    return isset($model->payout->account_id) ? $model->payout->account_id : '';
                 }
             ],
             [
                 'label' => '开户行',
                 'value' => function($model){
-                    return $model->payout->account_info;
+                    return isset($model->payout->account_info) ? $model->payout->account_info : '';
                 }
             ],
             'value',
