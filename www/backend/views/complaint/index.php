@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'id',
+            'task.gid',
             'content:ntext',
             'phonenum',
             [
