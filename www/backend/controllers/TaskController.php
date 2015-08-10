@@ -4,7 +4,6 @@ namespace backend\controllers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use corp\CBaseController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\Pagination;
@@ -14,13 +13,12 @@ use common\models\Task;
 use common\models\ServiceType;
 use common\models\TaskAddress;
 
-// use corp\models\TaskPublishModel;
-
+use backend\BBaseController;
 use common\models\TaskSearch;
 /**
  * Site controller
  */
-class TaskController extends CBaseController
+class TaskController extends BBaseController
 {
 
     public function actions()
