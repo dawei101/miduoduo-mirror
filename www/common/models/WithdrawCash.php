@@ -134,13 +134,13 @@ class WithdrawCash extends \yii\db\ActiveRecord
             $row_num    = $k+2;
             $excel_arr['A'.$row_num]  = $v->id;
             $excel_arr['B'.$row_num]  = $v->user_id;
-            $excel_arr['C'.$row_num]  = $v->userinfo->name;
-            $excel_arr['D'.$row_num]  = $v->userinfo->phonenum;
+            $excel_arr['C'.$row_num]  = isset($v->userinfo->name) ? $v->userinfo->name : '';
+            $excel_arr['D'.$row_num]  = isset($v->userinfo->phonenum) ? $v->userinfo->phonenum : '';
             $excel_arr['E'.$row_num]  = $v->payout->account_id;
             $excel_arr['F'.$row_num]  = $v->payout->account_info;
             $excel_arr['G'.$row_num]  = $v->value;
             $excel_arr['H'.$row_num]  = $v->withdraw_time;
-            $excel_arr['K'.$row_num]  = $v->operatorinfo->name;
+            $excel_arr['K'.$row_num]  = isset($v->operatorinfo->name) ? $v->operatorinfo->name : '';
             if( $v->status == $this::STATUS_APPLY ){
                 $need_change_updated_time_id_arr[]  = $v->id;
                 $excel_arr['I'.$row_num]  = $date_time;

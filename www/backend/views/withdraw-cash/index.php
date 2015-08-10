@@ -32,13 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '姓名',
                 'value' => function($model){
-                    return $model->userinfo->name;
+                    return isset($model->userinfo->name) ? $model->userinfo->name : '';
                 }
             ],
             [
                 'label' => '手机号',
                 'value' => function($model){
-                    return $model->userinfo->phonenum;
+                    return isset($model->userinfo->phonenum) ? $model->userinfo->phonenum : '';
                 }
             ],
             [
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '操作人',
                 'value' => function($model){
-                    return $model->operatorinfo->name;
+                    return isset($model->operatorinfo->name) ? $model->operatorinfo->name : '';
                 }
             ],
             // 'updated_time',
