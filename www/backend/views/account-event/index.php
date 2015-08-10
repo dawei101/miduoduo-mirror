@@ -33,14 +33,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '姓名',
                 'value' => function($model){
-                    return $model->userinfo->name;
+                    return isset($model->userinfo->name) ? $model->userinfo->name : '';
                 }
             ],
             'user_id',
             [
                 'label' => '手机号',
                 'value' => function($model){
-                    return $model->userinfo->phonenum;
+                    return isset($model->userinfo->phonenum) ? $model->userinfo->name : '';
                 }
             ],
             'value',
@@ -55,6 +55,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'    => AccountEvent::$TYPES
             ],
             'related_id',
+            [
+                'label' => '锁住',
+                'attribute' => 'locked',
+                'value' => function($model){
+                    return AccountEvent::$LOCKEDS[$model->locked];
+                },
+                'filter'    => AccountEvent::$LOCKEDS
+            ],
             // 'balance',
             ['class' => 'yii\grid\ActionColumn'],
         ],

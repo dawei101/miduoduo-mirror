@@ -34,6 +34,10 @@ class AccountEvent extends BaseActiveRecord
     const TYPES_WEICHAT_RECOMMEND  = 10;
     const TYPES_WITHDRAW    = 20;
 
+    public static $LOCKEDS = [
+        0 => '否',
+        1 => '是',
+    ];
 
     /**
      * @inheritdoc
@@ -50,7 +54,7 @@ class AccountEvent extends BaseActiveRecord
     {
         return [
             [['date', 'created_time'], 'safe'],
-            [['user_id', 'type', 'related_id'], 'integer'],
+            [['user_id', 'type', 'related_id','locked'], 'integer'],
             [['value', 'balance', 'type'], 'required'],
             [['value', 'balance'], 'number'],
             [['task_gid'], 'string'],
@@ -74,6 +78,7 @@ class AccountEvent extends BaseActiveRecord
             'note' => '备注',
             'related_id' => '提现id',
             'task_gid' => '任务id',
+            'locked'    => '锁住',
         ];
     }
 
@@ -156,6 +161,11 @@ class AccountEvent extends BaseActiveRecord
         $data['task_title'] = $task_title;
         $data['user_name']  = $user_info->name;
         $data['user_pbone'] = $user_info->phonenum;
+        
+        // update user_account
+        $user_account_obj = new UserAccount();
+        $user_account_obj->updateUserAccount($user_info->user_id);
+        
         return ['result'=>true,'data'=>$data];
     }
 
