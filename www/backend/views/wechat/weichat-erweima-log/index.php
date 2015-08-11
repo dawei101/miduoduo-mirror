@@ -7,7 +7,7 @@ use common\models\Resume;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Weichat Erweima Logs';
+$this->title = '扫描次数:'.$scan_count.' 扫描注册:'.$user_count.' 注册简历:'.$resume_count;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="weichat-erweima-log-index">
