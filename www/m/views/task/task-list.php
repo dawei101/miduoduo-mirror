@@ -3,7 +3,7 @@ use yii\widgets\LinkPager;
 
 ?>
 
-<?php foreach ($tasks as $task){ ?>
+<?php foreach ($tasks as $task){ if(isset($task->id)){ ?>
 <a href="/task/view?gid=<?=$task->gid?>" class="list-group-item">
   <div class="panel panel-default zhiwei-list"> 
     <div class="border-bt">
@@ -37,7 +37,7 @@ use yii\widgets\LinkPager;
     </div>
   </div>
 </a>
-<?php } ?>
+<?php }} ?>
 <div class="text-center" style="width: 100%;" >
 <?=LinkPager::widget(['pagination' => $pages,
     'maxButtonCount'=>0,
