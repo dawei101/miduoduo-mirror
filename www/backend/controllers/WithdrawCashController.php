@@ -8,22 +8,17 @@ use common\models\WithdrawCashSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\BBaseController;
 
 /**
  * WithdrawCashController implements the CRUD actions for WithdrawCash model.
  */
-class WithdrawCashController extends Controller
+class WithdrawCashController extends BBaseController
 {
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
+        $bhvs = parent::behaviors();
+        return $bhvs;
     }
 
     /**
@@ -127,19 +122,27 @@ class WithdrawCashController extends Controller
         $name       = '提现导出（'.date("Y-m-d H-i-s").'）';
         $excel_arr  = ['A1'=>'hh'];
 
-        $data   = WithdrawCash::find()
-            ->andFilterWhere([
-                '`jz_withdraw_cash`.id' => $param['WithdrawCashSearch']['id'],
-                '`jz_withdraw_cash`.user_id' => $param['WithdrawCashSearch']['user_id'],
-                '`jz_withdraw_cash`.value' => $param['WithdrawCashSearch']['value'],
-                '`jz_withdraw_cash`.withdraw_time' => $param['WithdrawCashSearch']['withdraw_time'],
-                '`jz_withdraw_cash`.`status`' => $param['WithdrawCashSearch']['status'],
-                '`jz_withdraw_cash`.updated_time' => $param['WithdrawCashSearch']['updated_time'],
-            ])
-            ->joinWith('payout')
-            ->joinWith('userinfo')
-            ->joinWith('operatorinfo') 
-            ->all();
+        if( isset($param['WithdrawCashSearch']['id']) ){
+            $data   = WithdrawCash::find()
+                ->andFilterWhere([
+                    '`jz_withdraw_cash`.id' => $param['WithdrawCashSearch']['id'],
+                    '`jz_withdraw_cash`.user_id' => $param['WithdrawCashSearch']['user_id'],
+                    '`jz_withdraw_cash`.value' => $param['WithdrawCashSearch']['value'],
+                    '`jz_withdraw_cash`.withdraw_time' => $param['WithdrawCashSearch']['withdraw_time'],
+                    '`jz_withdraw_cash`.`status`' => $param['WithdrawCashSearch']['status'],
+                    '`jz_withdraw_cash`.updated_time' => $param['WithdrawCashSearch']['updated_time'],
+                ])
+                ->joinWith('payout')
+                ->joinWith('userinfo')
+                ->joinWith('operatorinfo') 
+                ->all();
+        }else{
+           $data   = WithdrawCash::find()
+                ->joinWith('payout')
+                ->joinWith('userinfo')
+                ->joinWith('operatorinfo') 
+                ->all(); 
+        }
 
         $withdraw_cash  = new WithdrawCash();
         $excel_arr = $withdraw_cash->makeExcelArr($data);

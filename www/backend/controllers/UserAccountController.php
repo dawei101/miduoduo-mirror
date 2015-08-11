@@ -8,22 +8,17 @@ use common\models\UserAccountSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\BBaseController;
 
 /**
  * UserAccountController implements the CRUD actions for UserAccount model.
  */
-class UserAccountController extends Controller
+class UserAccountController extends BBaseController
 {
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
+        $bhvs = parent::behaviors();
+        return $bhvs;
     }
 
     /**

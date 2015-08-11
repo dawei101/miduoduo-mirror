@@ -204,6 +204,7 @@ class EntryController extends BaseActiveController
         $phonenum = Yii::$app->request->post('phonenum');
         $code = Yii::$app->request->post('code');
         $password = Yii::$app->request->post('password');
+        $invited_by = Yii::$app->request->post('invited_by');
 
         if(Utils::validateVerifyCode($phonenum, $code)){
             $user = User::findByUsername($phonenum);
@@ -215,6 +216,7 @@ class EntryController extends BaseActiveController
             if ($password){
                 $user->setPassword($password);
             }
+            $user->invited_by   = $invited_by;
             $user->save();
             return $this->loginSucceed($user);
         }

@@ -44,10 +44,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '操作',
                 'format'=> 'raw',
                 'value' => function($model){
-                    $count  = WeichatErweimaLog::findBySql("SELECT COUNT(1) logcount FROM `".Yii::$app->db->tablePrefix."weichat_erweima_log` WHERE `erweima_id`=".$model->id)->asArray()->all();
-                    $count  = $count[0]['logcount'];
-                    return '<a href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$model->ticket.'" target="_blank" >看二维码</a> | <a href="/weichat-erweima-log?id='.$model->id.'" target="_blank" >查看数据（'.$count.'）</a>';
+                    return '<a href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$model->ticket.'" target="_blank" >看二维码</a> | <a href="/weichat-erweima-log?id='.$model->id.'" target="_blank" >查看数据</a>';
                 }
+            ],
+            [
+                'label' => '扫描次数',
+                'format'=> 'raw',
+                'value' => function($model){
+                    return $model->scan_num;
+                },
+                'attribute'=>'scan_num',
             ],
             // 'ticket',
             // 'after_msg',

@@ -32,25 +32,25 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '姓名',
                 'value' => function($model){
-                    return $model->userinfo->name;
+                    return isset($model->userinfo->name) ? $model->userinfo->name : '';
                 }
             ],
             [
                 'label' => '手机号',
                 'value' => function($model){
-                    return $model->userinfo->phonenum;
+                    return isset($model->userinfo->phonenum) ? $model->userinfo->phonenum : '';
                 }
             ],
             [
                 'label' => '绑定银行卡/微信账号',
                 'value' => function($model){
-                    return $model->payout->account_id;
+                    return isset($model->payout->account_id) ? $model->payout->account_id : '';
                 }
             ],
             [
                 'label' => '开户行',
                 'value' => function($model){
-                    return $model->payout->account_info;
+                    return isset($model->payout->account_info) ? $model->payout->account_info : '';
                 }
             ],
             'value',
@@ -69,13 +69,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '处理结果',
                 'value' => function($model){
-                    return $model->payout->status_label;
+
+                    return isset($model->payout->status_label) ? $model->payout->status_label : '';
                 }
             ],
             [
                 'label' => '操作人',
                 'value' => function($model){
-                    return $model->operatorinfo->name;
+                    return isset($model->operatorinfo->name) ? $model->operatorinfo->name : '';
                 }
             ],
             // 'updated_time',

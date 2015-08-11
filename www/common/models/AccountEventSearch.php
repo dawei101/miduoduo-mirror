@@ -18,7 +18,7 @@ class AccountEventSearch extends AccountEvent
     public function rules()
     {
         return [
-            [['id', 'user_id', 'type', 'related_id'], 'integer'],
+            [['id', 'user_id', 'type', 'related_id','locked'], 'integer'],
             [['date', 'created_time', 'note'], 'safe'],
             [['task_gid'], 'string'],
             [['value', 'balance'], 'number'],
@@ -67,6 +67,7 @@ class AccountEventSearch extends AccountEvent
             'type' => $this->type,
             'related_id' => $this->related_id,
             'task_gid' => $this->task_gid,
+            'locked'    => $this->locked,
         ]);
 
         $query->andFilterWhere(['like', 'note', $this->note]);

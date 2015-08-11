@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\TaskApplicant;
+use common\models\User;
 use common\models\Resume;
 use common\models\WithdrawCash;
 use common\models\Payout;
@@ -34,6 +35,10 @@ class AccountEvent extends BaseActiveRecord
     const TYPES_WEICHAT_RECOMMEND  = 10;
     const TYPES_WITHDRAW    = 20;
 
+    public static $LOCKEDS = [
+        0 => '否',
+        1 => '是',
+    ];
 
     /**
      * @inheritdoc
@@ -50,7 +55,7 @@ class AccountEvent extends BaseActiveRecord
     {
         return [
             [['date', 'created_time'], 'safe'],
-            [['user_id', 'type', 'related_id'], 'integer'],
+            [['user_id', 'type', 'related_id','locked'], 'integer'],
             [['value', 'balance', 'type'], 'required'],
             [['value', 'balance'], 'number'],
             [['task_gid'], 'string'],
@@ -74,6 +79,7 @@ class AccountEvent extends BaseActiveRecord
             'note' => '备注',
             'related_id' => '提现id',
             'task_gid' => '任务id',
+            'locked'    => '锁住',
         ];
     }
 
@@ -100,10 +106,12 @@ class AccountEvent extends BaseActiveRecord
 
     public function saveUploadDataByRow($data,$key){
         // 验证用户信息是否正确
+        $user_id_obj= User::find()->where(['username'=>$data['D']])->one();
+        $user_id    = isset($user_id_obj->id) ? $user_id_obj->id : 0;
         $user_info  = Resume::find()
             ->where([
                 'name'=>$data['C'],
-                'phonenum'=>$data['D'],
+                'user_id'=>$user_id,
             ])
             ->one();
         if( $user_info ){
@@ -156,6 +164,11 @@ class AccountEvent extends BaseActiveRecord
         $data['task_title'] = $task_title;
         $data['user_name']  = $user_info->name;
         $data['user_pbone'] = $user_info->phonenum;
+        
+        // update user_account
+        $user_account_obj = new UserAccount();
+        $user_account_obj->updateUserAccount($user_info->user_id);
+        
         return ['result'=>true,'data'=>$data];
     }
 
