@@ -48,6 +48,7 @@ return [
             'quality'   => 'NoEWsq5BpBRdEymm3-W6YrYoBBkyWCFNUkfJhpCbYcc',     // 优单模板
             'nearby'    => 'qwENcjpEuIBn53LHyFh4-PmmpVaSmL04WpylDX1JkaE',     // 附近模板
             'applicant' => 'srIf6HPINf-I-BmlPJSqxfJ_E-ZUFlrp_D4MUUvQFOc',     // 报名成功
+            'accountin' => 'Bo7ZbPipKywJ2kBdwCcJnF75fbhpRW4cvGoYHdLW8CY',     // 收入提醒
         ],
         'preview_user'  => '13699273824,18611299991,18210135925,13240055520',// 定时推送预览人员
     ],
