@@ -34,6 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     if(isset($model->task->gid)){
                         return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->task->gid ."'>" . $model->task->title . "</a>";
+                    }else{
+                        return '无';
                     }
                 }
             ] ,
