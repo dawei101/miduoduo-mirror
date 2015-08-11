@@ -127,7 +127,7 @@ class AccountEvent extends BaseActiveRecord
             if( $is_user_apply['title'] ){
                 // 验证是否重复录入
                 $account_chongfu    = AccountEvent::find()->where([
-                    'date'      => $data['A'], 
+                    //'date'      => $data['A'], 
                     'user_id'   => $user_info->user_id,
                     'value'     => $data['E'],
                     'task_gid'  => $data['B'],
