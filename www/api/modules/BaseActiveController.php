@@ -68,6 +68,7 @@ class BaseActiveController extends ActiveController
 
     public function beforeAction($action)
     {
+        $this->page_size   = Yii::$app->request->get('per-page') ? Yii::$app->request->get('per-page') : $this->page_size;
         if ($action->id == 'create'){
             if ($this->auto_filter_user && $this->user_identifier_column){
                 $params = Yii::$app->getRequest()->getBodyParams();
