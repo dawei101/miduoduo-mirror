@@ -120,8 +120,8 @@ class WeichatController extends MBaseController{
     // 通过扫描二维码返回的ticket，找到需要返回的内容，并记录扫描日志
     public function getReturnMsgByTicket($ticket,$openid,$isNew=0){
         // 通过ticket查找返回信息
-        $erweima    = WeichatErweima::find()->where(['ticket'=>$ticket])->asArray()->one();
-        $reMsg      = $erweima['after_msg'] ? $erweima['after_msg'] : '直接查看北京最新兼职，点击http://m.miduoduo.cn/task \n其他问题在输入框直接填写，米小多会即时回复您。找不到想找的兼职，也回复给我们吧';
+        $erweima    = WeichatErweima::find()->where(['ticket'=>$ticket])->one();
+        $reMsg      = $erweima->after_msg ? $erweima->after_msg : '直接查看北京最新兼职，点击http://m.miduoduo.cn/task \n其他问题在输入框直接填写，米小多会即时回复您。找不到想找的兼职，也回复给我们吧';
 
         // 保存用户扫描记录
         if( isset($erweima['id']) ){
@@ -132,6 +132,9 @@ class WeichatController extends MBaseController{
             $erweilog->has_bind         = 0;
             $erweilog->follow_by_scan   = $isNew;
             $erweilogsave               = $erweilog->save();
+            // 更新总扫描数量
+            $erweima->scan_num  = $erweima->scan_num+1;
+            $erweima->update();
         }
 
         return $reMsg;

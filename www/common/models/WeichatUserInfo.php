@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use common\models\User;
+use common\models\Resume;
 
 /**
  * This is the model class for table "{{%weichat_user_info}}".
@@ -68,5 +70,9 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'userid']);
+    }
+
+    public function getResume(){
+        return $this->hasOne(Resume::className(),['user_id'=>'userid']);
     }
 }

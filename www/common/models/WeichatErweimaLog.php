@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\WeichatUserInfo;
 
 /**
  * This is the model class for table "{{%weichat_erweima_log}}".
@@ -16,6 +17,11 @@ use Yii;
  */
 class WeichatErweimaLog extends \yii\db\ActiveRecord
 {
+    public static $FOLLOW_BY_SCANS = [
+        0 => '否',
+        1 => '是',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -49,5 +55,10 @@ class WeichatErweimaLog extends \yii\db\ActiveRecord
             'has_bind' => '扫描之前是否已经绑定过',
             'follow_by_scan' => '是否通过扫描关注公众号',
         ];
+    }
+
+    public function getUser(){
+        return $this->hasOne(WeichatUserInfo::className(),['openid'=>'openid'])
+            ->with('user');
     }
 }
