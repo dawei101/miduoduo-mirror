@@ -9,6 +9,7 @@ use common\models\Resume;
 use common\models\WithdrawCash;
 use common\models\Payout;
 use common\BaseActiveRecord;
+use common\WeichatBase;
 
 /**
  * This is the model class for table "{{%account_event}}".
@@ -168,6 +169,17 @@ class AccountEvent extends BaseActiveRecord
         // update user_account
         $user_account_obj = new UserAccount();
         $user_account_obj->updateUserAccount($user_info->user_id);
+
+        // send weichat notice
+        $weichat_base   = new WeichatBase();
+        $pusher_weichat_id       = $weichat_base::getLoggedUserWeichatID($user_info->user_id);
+        $pusher_date['first']    = '您好，您有一笔兼职收入到账';
+        $pusher_date['keyword1'] = $task_title;
+        $pusher_date['keyword2'] = $model->value.'元';
+        $pusher_date['keyword3'] = $model->created_time;
+        $pusher_date['remark']   = '您可以点击通知查看收入详情。';
+        $pusher_task_gid         = $model->task_gid;
+        Yii::$app->wechat_pusher->accountEventIn($pusher_date,$pusher_task_gid,$pusher_weichat_id);
         
         return ['result'=>true,'data'=>$data];
     }
