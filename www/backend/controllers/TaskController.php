@@ -18,6 +18,7 @@ use common\models\TaskSearch;
 /**
  * Site controller
  */
+header("content-type:text/html;charset=utf-8");
 class TaskController extends BBaseController
 {
 
@@ -47,20 +48,17 @@ class TaskController extends BBaseController
     public function actionPublish()
     {
         $model = new Task();
-        $company = Company::findByCurrentUser();
+
         if (Yii::$app->request->isPost) {
             
-            $company_id = $company->id;
             $data = Yii::$app->request->post();
-            $data['company_id'] = $company_id;
-            $data['user_id'] = Yii::$app->user->id;
+            
             $model->setAttributes($data, false);
-
 
             $clearance_period = Yii::$app->request->post('clearance_period');
             if ($clearance_period) {
                 $model->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);
-            }
+            } 
             $salary_unit = Yii::$app->request->post('salary_unit');
             if ($salary_unit) {
                 $model->salary_unit = array_search($salary_unit, Task::$SALARY_UNITS);
@@ -109,14 +107,9 @@ class TaskController extends BBaseController
                 $model->status = array_search($status, Task::$STATUSES);
             }
             
-            if( $company->status == $company::STATUS_WHITEISTED ){
-                $model->status = 0;
-            }else{
-                $model->status = 30;
-            }
 
             if ($model->validate() && $model->save()) {
-               
+              
                 $task_id = $model->id;
                 $addressList = explode(' ', Yii::$app->request->post('address_list'));
                 if(!in_array("", $addressList)){
@@ -134,7 +127,7 @@ class TaskController extends BBaseController
 
         $services = ServiceType::find()->all();
         return $this -> render('publish',
-        ['services'=>$services, 'task'=>$model, 'company'=>$company, 'address'=>[],]);
+        ['services'=>$services, 'task'=>$model,  'address'=>[],]);
     }
 
     public function actionUpdate($id)
@@ -222,7 +215,7 @@ class TaskController extends BBaseController
         $task->to_time = substr($task->to_time, 0, -3);
         Yii::$app->session->set('current_task_id', $task->id);
         return $this->render('publish',
-        ['task' => $task, 'services'=>$services, 'company'=>$company, 'address'=>$addresses,]);
+        ['task' => $task, 'services'=>$services, 'address'=>$addresses,]);
     }
 
     public function actionDown($gid)

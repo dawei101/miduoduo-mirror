@@ -468,7 +468,7 @@ function getNowFormatDate() {
         valid = false;
     }else{
         var value = form.contact_phonenum.value;
-        if(!value.match(/^1[3|4|5|8][0-9]\d{4,8}$/)){
+        if(!value.match(/^1[0-9][0-9]\d{4,8}$/)){
             $('.contact_phonenum-error').html("请输入正确的手机号");
             $('.contact_phonenum-error').show();
             valid = false;

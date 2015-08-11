@@ -32,7 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 // 'attribute' => 'title',
                 'value' => function($model){
-                    return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->task->gid ."'>" . $model->task->title . "</a>";
+                    if(isset($model->task->gid)){
+                        return "<a target='_blank' href='" . \Yii::$app->params['baseurl.m'] . "/task/view/?gid=" . $model->task->gid ."'>" . $model->task->title . "</a>";
                 }
             ] ,
             'resume.name',
