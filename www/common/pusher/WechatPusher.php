@@ -128,11 +128,11 @@ class WechatPusher extends WeichatBase
         $weichatTempID  = Yii::$app->params['weichat']['tmp_weichat']['accountin'];
         $gotoUrl        = Yii::$app->params['baseurl.wechat'].'/view/pay/cash-account.html?from=singlemessage&isappinstalled=0';
         $params         = array(
-            array('name'=>'first','value'=>$date['first'],'color'=>'#444'), 
-            array('name'=>'keyword1','value'=>$date['keyword1'],'color'=>'#444'),
-            array('name'=>'keyword2','value'=>$date['keyword2'],'color'=>'#0000FE'),
-            array('name'=>'keyword3','value'=>$date['keyword3'],'color'=>'#444'),
-            array('name'=>'remark','value'=>$date['remark'],'color'=>'#999')
+            array('name'=>'first','value'=>$date['first'],'color'=>'#303259'), 
+            array('name'=>'keyword1','value'=>$date['keyword1'],'color'=>'#303259'),
+            array('name'=>'keyword2','value'=>$date['keyword2'],'color'=>'#303259'),
+            array('name'=>'keyword3','value'=>$date['keyword3'],'color'=>'#303259'),
+            array('name'=>'remark','value'=>$date['remark'],'color'=>'#303259')
         );
         $this->pushWeichatMsg($touser,$weichatTempID,$params,$gotoUrl);
     }
