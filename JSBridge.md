@@ -91,6 +91,12 @@ function CallBack(str) {
 
     callback：回调函数名
 ```
+* 获取照片
+```
+    window.MDD.photo(callback)
+
+    callback：回调函数名
+```
 
 * 加载中
 ```
