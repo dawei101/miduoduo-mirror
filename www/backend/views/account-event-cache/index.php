@@ -55,7 +55,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'value',
             'note',
             // 'balance',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'label' => '导入人',
+                'value' => function($model){
+                    return isset($model->operator->name) ? $model->operator->name : '';
+                }
+            ],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{delete}'],
         ],
     ]); ?>
 

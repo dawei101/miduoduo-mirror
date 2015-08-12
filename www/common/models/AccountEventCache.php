@@ -97,6 +97,10 @@ class AccountEventCache extends \yii\db\ActiveRecord
         return $this->hasOne(Resume::className(),['user_id' => 'user_id']);
     }
 
+    public function getOperator(){
+        return $this->hasOne(Resume::className(),['user_id' => 'operator_id']);
+    }
+
     /**************上传流水 begin*******************/
     public function saveUploadData($excel_data){
         $import_data    = array();

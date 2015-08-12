@@ -6,12 +6,14 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\AccountEvent;
+use common\models\Resume;
 
 /**
  * AccountEventSearch represents the model behind the search form about `common\models\AccountEvent`.
  */
 class AccountEventSearch extends AccountEvent
 {
+    public $user_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class AccountEventSearch extends AccountEvent
     {
         return [
             [['id', 'user_id', 'type', 'related_id','locked'], 'integer'],
-            [['date', 'created_time', 'note'], 'safe'],
+            [['date', 'created_time', 'note','user_name'], 'safe'],
             [['task_gid'], 'string'],
             [['value', 'balance'], 'number'],
         ];
@@ -43,7 +45,7 @@ class AccountEventSearch extends AccountEvent
      */
     public function search($params)
     {
-        $query = AccountEvent::find()->with('userinfo');
+        $query = AccountEvent::find()->with('userinfo')->with('operator');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,6 +57,20 @@ class AccountEventSearch extends AccountEvent
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
+        }
+
+        if ($this->user_name){
+            $resumes = Resume::find()->where(
+                ['name'=> $this->user_name])->all();
+            $_ids   = [];
+            foreach( $resumes as $k => $v ){
+                $_ids[]   = $v->user_id;
+            }
+            if (count($_ids)>0){
+                $query->andFilterWhere(['in', 'operator_id', $_ids]);
+            } else {
+                $query->andWhere('1=2');
+            }
         }
 
         $query->andFilterWhere([
