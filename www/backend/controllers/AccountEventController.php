@@ -31,9 +31,12 @@ class AccountEventController extends BBaseController
         $searchModel = new AccountEventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $money_all  = AccountEvent::find()->sum('value');
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'money_all' => $money_all,
         ]);
     }
 

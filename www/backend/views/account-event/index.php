@@ -8,7 +8,7 @@ use common\models\AccountEvent;
 /* @var $searchModel common\models\AccountEventSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', '工资流水-已发工资');
+$this->title = Yii::t('app', '工资流水-已发工资（'.$money_all.' 元）');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="account-event-index">
