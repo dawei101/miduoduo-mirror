@@ -92,6 +92,10 @@ class AccountEvent extends BaseActiveRecord
         return $this->hasOne(Resume::className(),['user_id' => 'user_id']);
     }
 
+    public function getOperator(){
+        return $this->hasOne(Resume::className(),['user_id' => 'operator_id']);
+    }
+
     public function extraFields(){
         return ['accounts'];
     }

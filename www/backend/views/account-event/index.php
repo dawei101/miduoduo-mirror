@@ -32,6 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'task_gid',
             [
                 'label' => '姓名',
+                'attribute' => 'user_name',
+                'format'=>'raw',
                 'value' => function($model){
                     return isset($model->userinfo->name) ? $model->userinfo->name : '';
                 }
@@ -62,6 +64,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return AccountEvent::$LOCKEDS[$model->locked];
                 },
                 'filter'    => AccountEvent::$LOCKEDS
+            ],
+            [
+                'label' => '导入人',
+                'value' => function($model){
+                    return isset($model->operator->name) ? $model->operator->name : '';
+                }
             ],
             // 'balance',
             //['class' => 'yii\grid\ActionColumn'],

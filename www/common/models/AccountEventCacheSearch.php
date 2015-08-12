@@ -42,7 +42,8 @@ class AccountEventCacheSearch extends AccountEventCache
      */
     public function search($params)
     {
-        $query = AccountEventCache::find();
+        $query = AccountEventCache::find()
+            ->with('operator');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
