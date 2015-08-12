@@ -121,50 +121,56 @@ class AccountEventCache extends \yii\db\ActiveRecord
     }
 
     public function saveUploadDataByRow($data,$key,$date_time){
-        // 验证用户信息是否正确
-        $user_id_obj= User::find()->where(['username'=>$data['D']])->one();
-        $user_id    = isset($user_id_obj->id) ? $user_id_obj->id : 0;
-        $user_info  = Resume::find()
-            ->where([
-                'name'=>$data['C'],
-                'user_id'=>$user_id,
-            ])
-            ->one();
-        if( $user_info ){
-            // 验证任务和用户是否对应正确
-            $task_applicant_obj = new TaskApplicant();
-            $is_user_apply      = $task_applicant_obj->findBySql("
-                SELECT t.title
-                FROM jz_task_applicant a
-                LEFT JOIN jz_task t ON a.task_id=t.id
-                WHERE a.user_id=".$user_info->user_id." AND t.gid='".$data['B']."'")
-                ->asArray()->one();
-            if( $is_user_apply['title'] ){
-                // 验证是否重复录入
-                $account_chongfu    = AccountEvent::find()->where([
-                    //'date'      => $data['A'], 
-                    'user_id'   => $user_info->user_id,
-                    'value'     => $data['E'],
-                    'task_gid'  => $data['B'],
-                    'note'      => $data['F'],
-                ])->one();
-                $account_chongfu2    = AccountEventCache::find()->where([
-                    //'date'      => $data['A'], 
-                    'user_id'   => $user_info->user_id,
-                    'value'     => $data['E'],
-                    'task_gid'  => $data['B'],
-                    'note'      => $data['F'],
-                ])->one();
-                if( $account_chongfu || $account_chongfu2 ){
-                    $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，重复录入<br />";
+        $data['A']  = substr(trim($data['A']),-10);
+        $check_date = preg_match("/\d{4}-\d{2}-\d{2}/is",$data['A']);
+        if( $check_date ){
+            // 验证用户信息是否正确
+            $user_id_obj= User::find()->where(['username'=>$data['D']])->one();
+            $user_id    = isset($user_id_obj->id) ? $user_id_obj->id : 0;
+            $user_info  = Resume::find()
+                ->where([
+                    'name'=>$data['C'],
+                    'user_id'=>$user_id,
+                ])
+                ->one();
+            if( $user_info ){
+                // 验证任务和用户是否对应正确
+                $task_applicant_obj = new TaskApplicant();
+                $is_user_apply      = $task_applicant_obj->findBySql("
+                    SELECT t.title
+                    FROM jz_task_applicant a
+                    LEFT JOIN jz_task t ON a.task_id=t.id
+                    WHERE a.user_id=".$user_info->user_id." AND t.gid='".$data['B']."'")
+                    ->asArray()->one();
+                if( $is_user_apply['title'] ){
+                    // 验证是否重复录入
+                    $account_chongfu    = AccountEvent::find()->where([
+                        //'date'      => $data['A'], 
+                        'user_id'   => $user_info->user_id,
+                        'value'     => $data['E'],
+                        'task_gid'  => $data['B'],
+                        'note'      => $data['F'],
+                    ])->one();
+                    $account_chongfu2    = AccountEventCache::find()->where([
+                        //'date'      => $data['A'], 
+                        'user_id'   => $user_info->user_id,
+                        'value'     => $data['E'],
+                        'task_gid'  => $data['B'],
+                        'note'      => $data['F'],
+                    ])->one();
+                    if( $account_chongfu || $account_chongfu2 ){
+                        $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，重复录入<br />";
+                    }else{
+                        return $this->saveUploadDataByRowSaveIt($data,$is_user_apply['title'],$user_info,$date_time);
+                    }
                 }else{
-                    return $this->saveUploadDataByRowSaveIt($data,$is_user_apply['title'],$user_info,$date_time);
+                    $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，报名信息不匹配<br />";
                 }
             }else{
-                $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，报名信息不匹配<br />";
+                $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，用户信息不匹配<br />"; 
             }
         }else{
-            $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，用户信息不匹配<br />"; 
+            $errmsg    = "第[".$key."]行：用户ID[".$data['D']."]，日期格式有误<br />";
         }
 
         return ['result'=>false,'errmsg'=>$errmsg];
