@@ -9,7 +9,7 @@ use common\models\WithdrawCash;
 /* @var $searchModel common\models\WithdrawCashSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', '提现管理');
+$this->title = Yii::t('app', '提现管理（提现成功 '.$money_all_success.' 元）');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="withdraw-cash-index">

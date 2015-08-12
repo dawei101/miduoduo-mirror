@@ -30,12 +30,15 @@ class WithdrawCashController extends BBaseController
         $searchModel = new WithdrawCashSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $money_all_success  = WithdrawCash::find()->where(['status'=>3])->sum('value');
+
         if( $action == 'download' ){
             $this->downloadExcel(Yii::$app->request->queryParams);
         }else{
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'money_all_success' => $money_all_success,
             ]);
         }
     }
