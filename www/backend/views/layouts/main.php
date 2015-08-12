@@ -50,8 +50,9 @@ AppAsset::register($this);
                 <li>&nbsp;</li>
                 <li><a href="/data-user">数据统计</a></li>
                 <li>&nbsp;</li>
-                <li><a href="/account-event">工资流水管理</a></li>
-                <li><a href="/withdraw-cash">工资提现管理</a></li>
+                <li><a href="/account-event-cache">工资流水-待发工资</a></li>
+                <li><a href="/account-event">工资流水-已发工资</a></li>
+                <li><a href="/withdraw-cash">提现流水</a></li>
                 <li><a href="/user-account">用户资金</a></li>
                 <li>&nbsp;</li>
 

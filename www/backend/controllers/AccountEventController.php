@@ -37,48 +37,6 @@ class AccountEventController extends BBaseController
         ]);
     }
 
-    public function actionUpload(){
-        if( Yii::$app->request->isPost && $_FILES['excelfile']['error'] == 0 && $_FILES['excelfile']['size'] > 0 ){
-            $excel_path  = $_FILES['excelfile']['tmp_name'];
-            $excel_data  = Yii::$app->office_phpexcel->excelToArray($excel_path);
-            
-            $accountevent      = new AccountEvent();
-            $import_data       = $accountevent->saveUploadData($excel_data);
-            if( $import_data ){
-                $this->layout=false;
-                return $this->render('upload', [
-                    'import_data' => $import_data,
-                ]);
-            }else{
-                echo '{"result"="false","errmsg"="上传错误"}';
-            }
-        }else{
-            $excel_data = '';
-            $this->layout=false;
-            return $this->render('upload', [
-                'excel_data' => $excel_data,
-            ]);
-        }
-    }
-
-    public function actionDownloaddemo(){
-        $row_array  = [
-            'A1'=>'日期',
-            'B1'=>'职位id',
-            'C1'=>'姓名',
-            'D1'=>'手机号',
-            'E1'=>'金额',
-            'F1'=>'金额说明',
-            'A2'=>'2015-06-23',
-            'B2'=>"'14374778022702043",
-            'C2'=>'张三',
-            'D2'=>'18611299991',
-            'E2'=>'5000',
-            'F2'=>'日结工资',
-        ];
-        Yii::$app->office_phpexcel->arrayToExcel($row_array);
-    }
-
     /**
      * Displays a single AccountEvent model.
      * @param integer $id
