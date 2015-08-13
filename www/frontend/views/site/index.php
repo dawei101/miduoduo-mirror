@@ -27,7 +27,7 @@
         <div class="erweibox"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei.jpg" width="140" height="140">
         <P>扫码关注微信号</P>
       </div>
-      <div class="erweibox"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei.jpg" width="140" height="140">
+      <div class="erweibox"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei-download-app.jpg" width="140" height="140">
         <P>下载安卓版APP</P>
       </div>
     </div>
