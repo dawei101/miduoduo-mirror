@@ -53,6 +53,17 @@ class TaskController extends BBaseController
             
             $data = Yii::$app->request->post();
             
+            $data['is_allday']   = isset($data['is_allday']) ? $data['is_allday'] : 0;
+            $data['is_longterm'] = isset($data['is_longterm']) ? $data['is_longterm'] : 0;
+
+            if( $data['is_longterm'] ){
+                $data['to_date']    = '2115-01-01';
+            }
+            if( $data['is_longterm'] ){
+                $data['from_time']  = '00:00:01';
+                $data['to_time']    = '23:59:59';
+            }
+
             $model->setAttributes($data, false);
 
             $clearance_period = Yii::$app->request->post('clearance_period');
@@ -141,57 +152,68 @@ class TaskController extends BBaseController
             return $this->goHome();
         }
         if (Yii::$app->request->isPost) {
-           
-            $task->setAttributes(Yii::$app->request->post(), false);
+            $data   = Yii::$app->request->post();
+            $data['is_allday']   = isset($data['is_allday']) ? $data['is_allday'] : 0;
+            $data['is_longterm'] = isset($data['is_longterm']) ? $data['is_longterm'] : 0;
 
-            $clearance_period = Yii::$app->request->post('clearance_period');
+            if( $data['is_longterm'] ){
+                $data['to_date']    = '2115-01-01';
+            }
+            if( $data['is_longterm'] ){
+                $data['from_time']  = '00:00:01';
+                $data['to_time']    = '23:59:59';
+            }
+          
+            $task->setAttributes($data, false);
+
+            $clearance_period = $data['clearance_period'];
             if ($clearance_period) {
                 $task->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);
             }
-            $salary_unit = Yii::$app->request->post('salary_unit');
+            $salary_unit = $data['salary_unit'];
             if ($salary_unit) {
                 $task->salary_unit = array_search($salary_unit, Task::$SALARY_UNITS);
             }
-            $gender_requirement = Yii::$app->request->post('gender_requirement');
+            $gender_requirement = $data['gender_requirement'];
             if ($gender_requirement) {
                 $task->gender_requirement = array_search($gender_requirement, Task::$GENDER_REQUIREMENT);
             }
-            $height_requirement = Yii::$app->request->post('height_requirement');
+            $height_requirement = $data['height_requirement'];
             if ($height_requirement) {
                 $task->height_requirement = array_search($height_requirement,Task::$HEIGHT_REQUIREMENT);
             }
-            $face_requirement = Yii::$app->request->post('face_requirement');
+            $face_requirement = $data['face_requirement'];
             if ($face_requirement) {
                 $task->face_requirement = array_search($face_requirement,Task::$FACE_REQUIREMENT);
             }
-            $talk_requirement = Yii::$app->request->post('talk_requirement');
+            $talk_requirement = $data['talk_requirement'];
             if ($talk_requirement) {
                 $task->talk_requirement = array_search($talk_requirement,Task::$TALK_REQUIREMENT);
             }
-            $health_certificated = Yii::$app->request->post('health_certificated');
+            $health_certificated = $data['health_certificated'];
             if ($health_certificated) {
                 $task->health_certificated = array_search($health_certificated,Task::$HEALTH_CERTIFICATED);
             }
-            $degree_requirement = Yii::$app->request->post('degree_requirement');
+            $degree_requirement = $data['degree_requirement'];
             if ($degree_requirement) {
                 $task->degree_requirement = array_search($degree_requirement,Task::$DEGREE_REQUIREMENT);
             }
-            $weight_requirement = Yii::$app->request->post('weight_requirement');
+            $weight_requirement = $data['weight_requirement'];
             if ($weight_requirement) {
                 $task->weight_requirement = array_search($weight_requirement,Task::$WEIGHT_REQUIREMENT);
             }
             
-            $service_type_id = Yii::$app->request->post('service_type_id');
+            $service_type_id = $data['service_type_id'];
             if( $service_type_id){
-                $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;
+                $task->service_type_id = ServiceType::findOne(['name' => $data['service_type_id']])->id;
             }
             
-            $recommend = Yii::$app->request->post('recommend');
+            $recommend = $data['recommend'];
             if($recommend){
                 $task->recommend = array_search($recommend, Task::$RECOMMEND);
             } 
 
-            $status = Yii::$app->request->post('status');
+            $status = $data['status'];
             if($status){
                 $task->status = array_search($status, Task::$STATUSES);
             }
@@ -200,7 +222,7 @@ class TaskController extends BBaseController
             
             if ($task->validate() && $task->save()) {
                 $task_id = $task->id;
-                $addressList = explode(' ', Yii::$app->request->post('address_list'));
+                $addressList = explode(' ', $data['address_list']);
                 foreach($addressList as $item){
                     $address = TaskAddress::findOne(['id' => $item]);
                     $address->task_id = $task_id;
