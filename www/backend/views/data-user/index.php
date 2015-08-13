@@ -41,6 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <option value="1" <?php if( Yii::$app->request->get('type_id') ==1 ){echo 'selected';} ?>>用户端</option>
                     <option value="2" <?php if( Yii::$app->request->get('type_id') ==2 ){echo 'selected';} ?> >职位</option>
                     <option value="3" <?php if( Yii::$app->request->get('type_id') ==3 ){echo 'selected';} ?>>微信</option>
+                    <option value="4" <?php if( Yii::$app->request->get('type_id') ==4 ){echo 'selected';} ?>>工资-流水</option>
+                    <option value="5" <?php if( Yii::$app->request->get('type_id') ==5 ){echo 'selected';} ?>>工资-提现</option>
                     </select>
                     <div class="help-block"></div>
                 </div> 
@@ -256,7 +258,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php } ?>
             </tbody>
         </table>
-        <?php }else{ ?>
+        <?php }elseif($data_type==1){ ?>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -339,6 +341,108 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= isset($v['jrtdzl']) ? $v['jrtdzl'] : 0 ?></td>
                     <td><?= isset($v['jrtdrs']) ? $v['jrtdrs'] : 0 ?></td>
                     <td><?= isset($v['jrxyhtd']) ? $v['jrxyhtd'] : 0 ?></td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+        <?php }elseif($data_type==4){ ?>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th class="show-highcharts" id="bs">
+                        交易笔数
+                        <?php $bs='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $bs .= isset($v['bs']) ? $v['bs']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='bs-data' value='".trim($bs,',')."'>"; ?>
+                        <input type='hidden' id='bs-title' value='交易笔数'>
+                    </th>
+                    <th class="show-highcharts" id="rs">
+                        交易人数
+                        <?php $rs='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $rs .= isset($v['rs']) ? $v['rs']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='rs-data' value='".trim($rs,',')."'>"; ?>
+                        <input type='hidden' id='rs-title' value='交易人数'>
+                    </th>
+                    <th class="show-highcharts" id="dds">
+                        订单数
+                        <?php $dds='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $dds .= isset($v['dds']) ? $v['dds']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='dds-data' value='".trim($dds,',')."'>"; ?>
+                        <input type='hidden' id='dds-title' value='投递总量'>
+                    </th>
+                    <th class="show-highcharts" id="jrqs">
+                        当日金额
+                        <?php $jrqs='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrqs .= isset($v['jrqs']) ? intval($v['jrqs'])."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrqs-data' value='".trim($jrqs,',')."'>"; ?>
+                        <input type='hidden' id='jrqs-title' value='当日金额'>
+                    </th>
+                    <th class="show-highcharts" id="zqs">
+                        总金额
+                        <?php $zqs='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $zqs .= isset($v['zqs']) ? intval($v['zqs'])."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='zqs-data' value='".trim($zqs,',')."'>"; ?>
+                        <input type='hidden' id='zqs-title' value='总金额'>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dataRows as $k => $v){ ?>
+                <tr data-key="2">
+                    <td><?= isset($v['date']) ? $v['date'] : 0 ?></td>
+                    <td><?= isset($v['bs']) ? $v['bs'] : 0 ?></td>
+                    <td><?= isset($v['rs']) ? $v['rs'] : 0 ?></td>
+                    <td><?= isset($v['dds']) ? $v['dds'] : 0 ?></td>
+                    <td><?= isset($v['jrqs']) ? $v['jrqs'] : 0 ?></td>
+                    <td><?= isset($v['zqs']) ? $v['zqs'] : 0 ?></td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+        <?php }elseif($data_type==5){ ?>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th class="show-highcharts" id="bs">
+                        成功提现笔数
+                        <?php $bs='';$dataRowsH=array_reverse($dataRows);foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $bs .= isset($v['bs']) ? $v['bs']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='bs-data' value='".trim($bs,',')."'>"; ?>
+                        <input type='hidden' id='bs-title' value='交易笔数'>
+                    </th>
+                    <th class="show-highcharts" id="rs">
+                        成功提现人数
+                        <?php $rs='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $rs .= isset($v['rs']) ? $v['rs']."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='rs-data' value='".trim($rs,',')."'>"; ?>
+                        <input type='hidden' id='rs-title' value='交易人数'>
+                    </th>
+                    <th class="show-highcharts" id="jrqs">
+                        成功提现当日金额
+                        <?php $jrqs='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $jrqs .= isset($v['jrqs']) ? intval($v['jrqs'])."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='jrqs-data' value='".trim($jrqs,',')."'>"; ?>
+                        <input type='hidden' id='jrqs-title' value='当日金额'>
+                    </th>
+                    <th class="show-highcharts" id="zqs">
+                        成功提现总金额
+                        <?php $zqs='';foreach($dataRowsH as $k => $v){ ?>    
+                            <?php $zqs .= isset($v['zqs']) ? intval($v['zqs'])."," : 0 ?>
+                        <?php } echo "<input type='hidden' id='zqs-data' value='".trim($zqs,',')."'>"; ?>
+                        <input type='hidden' id='zqs-title' value='总金额'>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($dataRows as $k => $v){ ?>
+                <tr data-key="2">
+                    <td><?= isset($v['date']) ? $v['date'] : 0 ?></td>
+                    <td><?= isset($v['bs']) ? $v['bs'] : 0 ?></td>
+                    <td><?= isset($v['rs']) ? $v['rs'] : 0 ?></td>
+                    <td><?= isset($v['jrqs']) ? $v['jrqs'] : 0 ?></td>
+                    <td><?= isset($v['zqs']) ? $v['zqs'] : 0 ?></td>
                 </tr>
                 <?php } ?>
             </tbody>

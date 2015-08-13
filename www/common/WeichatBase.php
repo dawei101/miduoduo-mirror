@@ -274,7 +274,7 @@ class WeichatBase
             }else{
                 $img         = Yii::$app->params['baseurl.static.m'].'/static/img/wx_list2.jpg';
             }
-            $url         = Yii::$app->params['baseurl.m']."/task/view?gid=".$v->gid;
+            $url         = Yii::$app->params['baseurl.wechat']."/view/job/job-detail.html?task=".$v->id;
             $msg_body   .= '
                 <item>
                 <Title><![CDATA['.$v->title.']]></Title> 

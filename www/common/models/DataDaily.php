@@ -32,8 +32,8 @@ class DataDaily extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'value', 'city_id'], 'integer'],
-            [['date', 'create_time', 'update_time'], 'safe'],
+            [['type', 'city_id'], 'integer'],
+            [['date', 'value', 'create_time', 'update_time'], 'safe'],
             [['key'], 'string', 'max' => 255]
         ];
     }
