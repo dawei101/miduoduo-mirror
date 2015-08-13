@@ -239,6 +239,13 @@ class WeichatBase
 
     // 自动回复消息-关键字
     public function autoResponseByKeyword($openid,$keyword=''){
+        if( strtolower(trim($keyword)) == 'tdd' ){
+            WeichatUserInfo::SwitchSubscribeDailyPush($openid,0);
+            return '你已经成功退订每日兼职推送，如需重新订阅，请回复dyd。';
+        }elseif( strtolower(trim($keyword)) == 'dyd' ){
+            WeichatUserInfo::SwitchSubscribeDailyPush($openid,1);
+            return '订阅每日兼职成功！每日兼职将每天为您推送最新最热的兼职信息。';
+        }
         $model  = WeichatAutoresponse::find()
             ->where(['status'=>1])
             ->andWhere(['like','keywords',"%".$keyword."%",false])

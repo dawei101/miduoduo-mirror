@@ -75,4 +75,8 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
     public function getResume(){
         return $this->hasOne(Resume::className(),['user_id'=>'userid']);
     }
+
+    public static function SwitchSubscribeDailyPush($openid=1,$switchto=1){
+        WeichatUserInfo::updateAll(['is_receive_nearby_msg'=>$switchto],['openid'=>$openid]);
+    }
 }
