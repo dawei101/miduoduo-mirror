@@ -60,8 +60,14 @@ class DataUserController extends BDataBaseController
         }elseif( $data_type == 2 ){
             $labels     = array('ztl','zzxtl','htxz','zqxz','yhxz','zdsh','zgq','jrgq');
             $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
-        }else{
+        }elseif( $data_type == 1 ){
             $labels     = array('zczl','jlzl','tdzl','tdrs','jrzczl','jrjlzl','jrtdzl','jrtdrs','jrxyhtd');
+            $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
+        }elseif( $data_type == 4 ){
+            $labels     = array('bs','rs','dds','jrqs','zqs');
+            $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
+        }elseif( $data_type == 5 ){
+            $labels     = array('bs','rs','jrqs','zqs');
             $dataRows   = $this->getDataRows($data_type,$city_id,$dateStart,$dateEnd,$labels);
         }
 
