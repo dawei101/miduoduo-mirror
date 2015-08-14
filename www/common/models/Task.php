@@ -138,6 +138,9 @@ class Task extends \common\BaseActiveRecord
         'corp'=>'企业',
     ];
 
+    const ORIGIN_INTERNAL = 'internal';
+    const ORIGIN_CORP = 'corp';
+
     const STATUS_OK = 0;
     const STATUS_IS_CHECK = 30;
     const STATUS_UN_PASSED = 40;
@@ -199,8 +202,6 @@ class Task extends \common\BaseActiveRecord
                 'created_time', 'updated_time'], 'safe'],
             [['gid'], 'string', 'max' => 1000],
             [['title', 'address'], 'string', 'max' => 500],
-            ['created_time', 'default', 'value'=>time(), 'on'=>'insert'],
-            ['updated_time', 'default', 'value'=>time(), 'on'=>'update'],
             ['got_quantity', 'default', 'value'=>0],
             ['status', 'default', 'value'=>0],
             [['contact', 'contact_phonenum'], 'required'],
@@ -279,6 +280,13 @@ class Task extends \common\BaseActiveRecord
             $user_id = Yii::$app->user->id;
             $this->user_id = $user_id;
             $this->gid = time() . mt_rand(100, 999) . $user_id;
+        }
+        if ($this->origin==$this::ORIGIN_INTERNAL){
+            $this->order_time = date('Y-m-d H:i:s', strtotime('+1 day'));
+        } elseif ($this->origin==$this::ORIGIN_CORP){
+            $this->order_time = date('Y-m-d H:i:s', strtotime('+12 hour'));
+        } else {
+            $this->order_time = date('Y-m-d H:i:s', time());
         }
         return parent::beforeSave($insert);
     }
