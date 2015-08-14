@@ -137,7 +137,7 @@ class Resume extends \common\BaseActiveRecord
             $this->user_id = $user->id;
         }
         if (!$this->phonenum){
-            $this->phonenum = Yii::$app->user->identity->phonenum;
+            $this->phonenum = Yii::$app->user->identity->username;
         }
         return parent::beforeSave($insert);
     }
