@@ -17,5 +17,6 @@ class CouldStorageJob extends BaseJob
         //upload to aliyun
         $obj->$column = $http_path;
         $obj->save();
+        return true;
     }
 }
