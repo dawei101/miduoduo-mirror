@@ -47,4 +47,9 @@ class ConfigRecommend extends \yii\db\ActiveRecord
             'display_order' => '排序，越大越靠前',
         ];
     }
+
+    public function getTask()
+    {
+        return $this->hasOne(Task::className(), ['gid' => 'task_id']);
+    }
 }
