@@ -4,7 +4,7 @@ namespace api\modules\v1\controllers;
 
 use Yii;
 use yii\data\ArrayDataProvider;
-use api\modules\BaseActiveController;
+use api\common\BaseActiveController;
 use yii\web\ForbiddenHttpException;
 use common\models\Task;
  

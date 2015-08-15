@@ -3,7 +3,7 @@
 namespace api\modules\v1\controllers;
  
 
-use api\modules\BaseActiveController;
+use api\common\BaseActiveController;
  
 /**
  *  Controller API
