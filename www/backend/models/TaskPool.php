@@ -118,6 +118,9 @@ class TaskPool extends \common\BaseActiveRecord
         if ($this->origin=='xiaolianbang'){
             return 'http://m.xiaolianbang.com/pt/' . $this->origin_id . '/detail';
         }
+        if ($this->origin=='jianzhimao'){
+            return 'http://m.jianzhimao.com/job/getJob?id=' . $this->origin_id;
+        }
         if ($this->origin=='internal'){
             return "http://m.miduoduo.cn/task/view?gid=" . $this->origin_id;
         }
