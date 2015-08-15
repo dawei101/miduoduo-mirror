@@ -55,8 +55,10 @@ return [
             'showScriptName' => false,
             'enablePrettyUrl' => true,
             'rules' => [
-                '<param_one:(?!user)(?!resume)[a-z]+>/<param_two:[a-z]+>/<gid:[0-9]+?>' =>'task/view',            // 详情
-                '<param_one:(?!user)(?!resume)[a-z]*>/<param_two:[a-z]*>/?<param_three:[a-z]*?>'=>'task/index', // 列表
+                // 详情
+                '<param_one:(?!user)(?!resume)[a-z]+>/<param_two:(?!view)[a-z]+>/<gid:[0-9]+?>' =>'task/view',
+                // 列表
+                '<param_one:(?!user)(?!resume)[a-z]*>/<param_two:(?!view)[a-z]*>/?<param_three:[a-z]*?>'=>'task/index', 
             ],
         ],
         'view' => [
