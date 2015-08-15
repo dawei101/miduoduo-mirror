@@ -15,7 +15,7 @@ use common\models\User;
  */
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'api\modules\v1\controllers';
+    public $controllerNamespace = 'api\miduoduo\v1\controllers';
 
     public $publicActions = [
         // 'controller' => actions

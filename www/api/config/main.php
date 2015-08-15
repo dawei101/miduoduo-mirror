@@ -20,7 +20,7 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'v1' => [
-            'basePath' => '@app/miduoduo/v0',
+            'basePath' => '@app/miduoduo/v1',
             'class' => 'api\miduoduo\v1\Module'
         ]
     ],

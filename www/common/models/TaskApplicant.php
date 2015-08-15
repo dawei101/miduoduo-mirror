@@ -93,6 +93,11 @@ class TaskApplicant extends \common\BaseActiveRecord
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 
+    public function getContact_phonenum()
+    {
+        return $this->task->contact_phonenum;
+    }
+
     public function getResume()
     {
         return $this->hasOne(Resume::className(), ['user_id' => 'user_id']);
@@ -127,7 +132,9 @@ class TaskApplicant extends \common\BaseActiveRecord
 
     public function fields()
     {
-        return array_merge(parent::fields(), ['status_label', 'status_options']);
+        return array_merge(
+            parent::fields(),
+            ['status_label', 'status_options', 'contact_phonenum']);
     }
 
     public function extraFields()

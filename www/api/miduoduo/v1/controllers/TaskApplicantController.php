@@ -22,7 +22,7 @@ class TaskApplicantController extends BaseActiveController
     {
         $as = parent::actions();
         $as['create'] = [
-            'class' => 'api\modules\v1\models\ApplyTaskAction',
+            'class' => 'api\miduoduo\v1\models\ApplyTaskAction',
             'modelClass' => $this->modelClass,
             'checkAccess' => [$this, 'checkAccess'],
             'scenario' => $this->createScenario,

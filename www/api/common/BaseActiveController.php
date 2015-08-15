@@ -1,5 +1,5 @@
 <?php
-namespace api\modules;
+namespace api\common;
 
 use Yii;
 use yii\helpers\ArrayHelper;

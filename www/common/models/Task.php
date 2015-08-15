@@ -445,12 +445,14 @@ class Task extends \common\BaseActiveRecord
 
     public function fields()
     {
-        return array_merge(parent::fields(), [
+        $fileds = array_merge(parent::fields(), [
             'clearance_period_label', 'salary_unit_label',
             'labels', 'label_options', 'status_label',
             'requirements',
             'is_overflow',
         ]);
+        unset($fields['contact_phonenum']);
+        return $fields;
     }
 
     public function getNotice()
