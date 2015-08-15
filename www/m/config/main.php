@@ -54,6 +54,10 @@ return [
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
             'enablePrettyUrl' => true,
+            'rules' => [
+                '<param_one:(?!user)(?!resume)[a-z]+>/<param_two:[a-z]+>/<gid:[0-9]+?>' =>'task/view',            // 详情
+                '<param_one:(?!user)(?!resume)[a-z]*>/<param_two:[a-z]*>/?<param_three:[a-z]*?>'=>'task/index', // 列表
+            ],
         ],
         'view' => [
             'class' => 'm\MView',

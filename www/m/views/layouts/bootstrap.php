@@ -27,7 +27,9 @@ if (Utils::isInWechat()){
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
 
     <?= Html::csrfMetaTags() ?>
-    <title><?=$this->page_title?>米多多兼职</title>
+    <title><?=$this->page_title?><?=$this->title?> - 米多多兼职</title>
+    <meta name="keywords"  content="<?=isset($this->page_keywords)?$this->page_keywords:''?>"/>
+    <meta name="description"  content="<?=isset($this->page_description)?$this->page_description:''?>"/>
     <?php $this->head() ?>
     <?php echo isset($this->blocks['css'])?$this->blocks['css']:''; ?>
 </head>
