@@ -5,7 +5,7 @@ namespace api\modules\v1\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\HttpException;
-use api\modules\BaseActiveController;
+use api\common\BaseActiveController;
  
 use common\Utils;
 use common\models\User;
