@@ -57,7 +57,7 @@ $user = Yii::$app->user;
                 <li class="mmenu" data-group="wechat"><a href="/weichat-push-set-template-push-list">微信推送-附近-模板</a></li>
                 <li class="mmenu" data-group="wechat"><a href="/weichat-push-quality-task">微信推送-优单</a></li>
                 <li class="mmenu" data-group="wechat"><a href="/weichat-user-info">微信推送-绑定用户</a></li>
-                <li class="mmenu" data-group="wechat"><a href="/weichat-erweima/index?sort=-id">微信二维码</a></li>
+                <li class="mmenu" data-group="wechat"><a href="/weichat-erweima?sort=-id">微信二维码</a></li>
                 <li class="mmenu" data-group="wechat"><a href="/weichat-autoresponse">微信自动回复</a></li>
 <?php } ?>
 
