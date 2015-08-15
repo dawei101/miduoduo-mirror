@@ -5,6 +5,8 @@ namespace backend\controllers;
 use Yii;
 use common\models\WithdrawCash;
 use common\models\WithdrawCashSearch;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -17,8 +19,18 @@ class WithdrawCashController extends BBaseController
 {
     public function behaviors()
     {
-        $bhvs = parent::behaviors();
-        return $bhvs;
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['finance_manager'],
+                    ],
+
+                ],
+            ],
+        ]);
     }
 
     /**

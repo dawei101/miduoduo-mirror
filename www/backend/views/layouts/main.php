@@ -9,6 +9,8 @@ use yii\widgets\Breadcrumbs;
 /* @var $content string */
 
 AppAsset::register($this);
+
+$user = Yii::$app->user;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -30,13 +32,16 @@ AppAsset::register($this);
                 <li class="sidebar-brand">
                     <a href="/"> 米多多 </a>
                 </li>
+<?php if ($user->can('admin')) { ?>
                 <li class="mtitle" data-group="admin"><a>账号，简历，任务分类</a></li>
                 <li class="mmenu" data-group="admin"><a href="/user">账号管理</a></li>
                 <li class="mmenu" data-group="admin"><a href="/user/set-role">角色管理</a></li>
                 <li class="mmenu" data-group="admin"><a href="/resume">人才库</a></li>
                 <li class="mmenu" data-group="admin"><a href="/district">城市</a></li>
                 <li class="mmenu" data-group="admin"><a href="/service-type">任务类型</a></li>
+<?php } ?>
 
+<?php if ($user->can('operation_manager')) { ?>
                 <li class="mtitle" data-group="operation"><a>信息运营</a></li>
                 <li class="mmenu" data-group="operation"><a href="/task">任务</a></li>
                 <li class="mmenu" data-group="operation"><a href="/task-applicant">任务报名单</a></li>
@@ -44,7 +49,9 @@ AppAsset::register($this);
                 <li class="mmenu" data-group="operation"><a href="/task-pool-white-list">爬虫-白名单(黑名单)</a></li>
                 <li class="mmenu" data-group="operation"><a href="/company">企业库</a></li>
                 <li class="mmenu" data-group="operation"><a href="/config-recommend">推荐兼职-配置</a></li>
+<?php } ?>
 
+<?php if ($user->can('operation_manager')) { ?>
                 <li class="mtitle" data-group="wechat"><a>微信</a></li>
                 <li class="mmenu" data-group="wechat"><a href="/weichat-push-set-pushset">微信推送-附近</a></li>
                 <li class="mmenu" data-group="wechat"><a href="/weichat-push-set-template-push-list">微信推送-附近-模板</a></li>
@@ -52,24 +59,33 @@ AppAsset::register($this);
                 <li class="mmenu" data-group="wechat"><a href="/weichat-user-info">微信推送-绑定用户</a></li>
                 <li class="mmenu" data-group="wechat"><a href="/weichat-erweima/index?sort=-id">微信二维码</a></li>
                 <li class="mmenu" data-group="wechat"><a href="/weichat-autoresponse">微信自动回复</a></li>
+<?php } ?>
 
+<?php if ($user->can('finance_manager')) { ?>
                 <li class="mtitle" data-group="finance"><a>资金账户管理</a></li>
                 <li class="mmenu" data-group="finance"><a href="/account-event-cache">工资流水-待发工资</a></li>
                 <li class="mmenu" data-group="finance"><a href="/account-event">工资流水-已发工资</a></li>
                 <li class="mmenu" data-group="finance"><a href="/withdraw-cash">提现流水</a></li>
                 <li class="mmenu" data-group="finance"><a href="/user-account">用户资金</a></li>
+<?php } ?>
 
+<?php if ($user->can('operation_manager')) { ?>
                 <li class="mtitle" data-group="feedback"><a>用户反馈</a></li>
                 <li class="mmenu"  data-group="feedback"><a href="/complaint">投诉列表</a></li>
                 <li class="mmenu"  data-group="feedback"><a href="/contact-us">联系我们的客户</a></li>
+<?php } ?>
 
+<?php if ($user->can('admin')) { ?>
                 <li class="mtitle" data-group="analytics"><a>统计</a></li>
-                <li class="mmenu" data-group="analytics"><a href="/data-user">数据统计</a></li>
+                <li class="operation_managermmenu" data-group="analytics"><a href="/data-user">数据统计</a></li>
+<?php } ?>
 
+<?php if ($user->can('developer')) { ?>
                 <li class="mtitle" data-group="dev"><a>产品研发</a></li>
                 <li class="mmenu" data-group="dev"><a href="/app-release-version">应用发布管理</a></li>
                 <li class="mmenu" data-group="dev"><a href="/job-queue">异步任务</a></li>
                 <li class="mmenu" data-group="dev"><a href="/user/delete-myself" data-method="post" data-confirm="删除后所有的数据将被清掉，确定删除?">自杀</a></li>
+<?php } ?>
 
                 <li class="hidden">
                     <a href="/support/report-bug">
@@ -103,13 +119,13 @@ AppAsset::register($this);
     <?php echo isset($this->blocks['js'])?$this->blocks['js']:''; ?>
     <script>
         $(function(){
-            var uri=location.pathname;
+            var uri=location.pathname.split('?')[0];
             console.info(uri);
 
             $.each($('#sidebar a'), function(i, v){
                 var a =$(v);
                 var muri = a.attr('href');
-                if (uri==muri){
+                if (muri && uri==muri.split('?')[0]){
                     var li = a.closest('li');
                     li.addClass('active');
                     $(".mmenu").hide();

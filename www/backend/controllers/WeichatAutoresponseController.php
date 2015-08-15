@@ -6,8 +6,10 @@ use Yii;
 use common\models\WeichatAutoresponse;
 use common\models\WeichatAutoresponseSearch;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use backend\BBaseController;
 
 
@@ -16,6 +18,21 @@ use backend\BBaseController;
  */
 class WeichatAutoresponseController extends BBaseController
 {
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['finance_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
     public function getViewPath()
     {
         return Yii::getAlias('@backend/views/wechat/weichat-autoresponse');

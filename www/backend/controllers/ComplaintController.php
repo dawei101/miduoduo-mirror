@@ -8,12 +8,29 @@ use common\models\ComplaintSearch;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 /**
  * ComplaintController implements the CRUD actions for Complaint model.
  */
 class ComplaintController extends BBaseController
 {
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['operation_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
     /**
      * Lists all Complaint models.
      * @return mixed

@@ -7,6 +7,7 @@ use yii\web\BadRequestHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\Pagination;
+use yii\helpers\ArrayHelper;
 
 use common\models\Company;
 use common\models\Task;
@@ -21,6 +22,20 @@ use common\models\TaskSearch;
 header("content-type:text/html;charset=utf-8");
 class TaskController extends BBaseController
 {
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['operation_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
 
     public function actions()
     {

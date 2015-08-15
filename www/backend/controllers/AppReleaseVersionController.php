@@ -8,12 +8,31 @@ use common\models\AppReleaseVersionSearch;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 /**
  * AppReleaseVersionController implements the CRUD actions for AppReleaseVersion model.
  */
 class AppReleaseVersionController extends BBaseController
 {
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['developer'],
+                    ],
+
+                ],
+            ],
+        ]);
+    }
+
     /**
      * Lists all AppReleaseVersion models.
      * @return mixed

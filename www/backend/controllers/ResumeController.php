@@ -9,12 +9,31 @@ use common\models\ResumeSearch;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 /**
  * ResumeController implements the CRUD actions for Resume model.
  */
 class ResumeController extends BBaseController
 {
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['operation_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+
     /**
      * Lists all Resume models.
      * @return mixed

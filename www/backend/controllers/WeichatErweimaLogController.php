@@ -6,11 +6,13 @@ use Yii;
 use common\models\WeichatErweimaLog;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\BBaseController;
 use common\models\WeichatUserInfo;
 use common\models\WeichatErweima;
+use yii\helpers\ArrayHelper;
 
 /**
  * WeichatErweimaLogController implements the CRUD actions for WeichatErweimaLog model.
@@ -18,6 +20,20 @@ use common\models\WeichatErweima;
 class WeichatErweimaLogController extends BBaseController
 {
 
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['finance_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
 
     public function getViewPath()
     {

@@ -16,6 +16,7 @@ use common\models\DataDaily;
  */
 class DataUserController extends BDataBaseController
 {
+
     public function behaviors()
     {
         $bhvs = parent::behaviors();
