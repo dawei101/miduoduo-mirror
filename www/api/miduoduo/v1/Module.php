@@ -1,5 +1,5 @@
 <?php
-namespace api\modules\v1;
+namespace api\miduoduo\v1;
 
 use Yii;
 use yii\filters\auth\HttpBasicAuth;

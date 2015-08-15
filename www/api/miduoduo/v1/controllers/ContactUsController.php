@@ -1,6 +1,6 @@
 <?php
  
-namespace api\modules\v1\controllers;
+namespace api\miduoduo\v1\controllers;
 
 use api\common\BaseActiveController;
 
