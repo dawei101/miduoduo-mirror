@@ -8,6 +8,8 @@ use backend\models\TaskPoolWhiteList;
 
 class SpiderJob extends BaseJob
 {
+
+
     public function actionImportTasks($ids)
     {
         $brs = TaskPoolWhiteList::find()->where(['is_white'=>0])->all();

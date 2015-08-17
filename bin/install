@@ -32,3 +32,4 @@ pip install scrapy==1.0.1
 pip install mysql-python==1.2.5
 pip install simplejson==3.7.3
 pip install service_identity==14.0.0
+pip install supervisor==3.1.3

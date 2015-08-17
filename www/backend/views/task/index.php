@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 use common\models\Task;
+use common\models\District;
 use common\models\ServiceType;
 
 /* @var $this yii\web\View */
@@ -16,6 +17,11 @@ $service_type_maps = [];
 
 foreach(ServiceType::findAll(['status'=>0]) as $s){
     $service_type_maps[$s->id] = $s->name;
+}
+$city_maps = [];
+foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
+{
+    $city_maps[$c->id] = $c->short_name;
 }
 ?>
 <div class="task-index">
@@ -61,13 +67,20 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                 },
                 'filter' => $service_type_maps,
             ],
-            'salary',
             [
                 'attribute' => 'salary_unit',
+                'label' => '薪资与单位',
                 'value' => function ($model){
-                    return $model->salary_unit_label;
+                    return $model->salary . "/" . $model->salary_unit_label;
                 },
                 'filter' => Task::$SALARY_UNITS,
+            ],
+            [
+                'attribute' => 'city_id',
+                'value' => function ($model){
+                    return $model->city->short_name;
+                },
+                'filter' => $city_maps,
             ],
             [
                 'attribute' => 'origin',

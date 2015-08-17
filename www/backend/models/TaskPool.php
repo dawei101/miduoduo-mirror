@@ -162,7 +162,10 @@ class TaskPool extends \common\BaseActiveRecord
         if ($task->salary!=0){
             $task->salary_unit = $this->getSalaryUnit($ds['salary_unit']);
         }
-        $task->from_date = isset($ds['from_date'])?$ds['from_date']:'1999-09-09';
+        if (!isset($ds['from_date']) || empty($ds['from_date'])){
+            $task->is_longterm = true;
+        }
+        $task->from_date = isset($ds['to_date'])?$ds['from_date']:'1999-09-09';
         $task->to_date = isset($ds['to_date'])?$ds['to_date']:'1999-09-09';
         $task->need_quantity = intval($ds['need_quantity']);
         $task->detail = $ds['content'];
@@ -174,6 +177,7 @@ class TaskPool extends \common\BaseActiveRecord
         $task->company_id = 0;
 
         if ($this->company_name){
+            $task->company_name = $this->company_name;
             $com = Company::find()->where([
                 'name'=>$this->company_name,
             ])->one();
