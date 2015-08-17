@@ -24,10 +24,20 @@ use common\models\Resume;
 class WeichatUserInfo extends \yii\db\ActiveRecord
 {
     public static $STATUSES = [
-        0=>'正常',
+        0   => '正常',
+        10  => '取消关注',
     ];
 
     const STATUS_OK = 0;
+    const STATUS_CANCEL = 10;
+
+    public static $IS_RECEIVE_NEARBY_MSG = [
+        1   => '是',
+        0   => '否',
+    ];
+
+    const IS_RECEIVE_NEARBY_MSG_YES = 1;
+    const IS_RECEIVE_NEARBY_MSG_NO  = 0;
 
     public static function tableName()
     {
