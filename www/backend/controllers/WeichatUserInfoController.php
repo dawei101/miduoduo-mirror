@@ -24,7 +24,7 @@ class WeichatUserInfoController extends BBaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['finance_manager'],
+                        'roles' => ['operation_manager'],
                     ],
                 ],
             ],
