@@ -53,6 +53,9 @@ class TaskController extends BaseActiveController
                  'current_week' => function($query, $name, $value){
                     static::filterCurrentWeek($query);
                  },
+                 'is_longterm' => function($query, $name, $value){
+                    static::filterIsLongterm($query);
+                 },
             ],
         ];
     }
@@ -120,6 +123,11 @@ class TaskController extends BaseActiveController
                 " or ( $to_date >= '$day_range[0]' and $from_date <= '$day_range[1]')";
         }
         $query->andWhere($where);
+        return $query;
+    }
+
+    public static function filterIsLongterm($query){
+        $query->andWhere(["is_longterm"=>1]);
         return $query;
     }
 

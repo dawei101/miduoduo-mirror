@@ -43,6 +43,9 @@ class TaskAddressController extends BaseActiveController
                  'current_week' => function($query, $name, $value){
                     TaskController::filterCurrentWeek($query);
                  },
+                 'is_longterm' => function($query, $name, $value){
+                    TaskController::filterIsLongterm($query);
+                 },
             ],
         ];
     }
