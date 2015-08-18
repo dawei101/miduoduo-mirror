@@ -104,6 +104,7 @@ $this->title = '米多多兼职平台';
                                         <li>23:00</li>
                                     </ul>
                                   </div>
+                                  <label><input name="is_allday" type="checkbox" class="changqi" <?=$task&&$task->is_allday?'checked':''?>>不限工作时间</label>
                               </div>
                               <p class="cuowu to_time-error">内容不能为空!</p>
                             </li>
@@ -400,6 +401,11 @@ $('form').on('submit', function(){
     }else {
         form.is_longterm.value = 0;
     }
+    if (form.is_allday.checked) {
+        form.is_allday.value = 1;
+    }else {
+        form.is_allday.value = 0;
+    }
     var address = '';
     $('#selected-address .p-box').each(function(){
         var addr = $(this).attr('id');
@@ -443,7 +449,7 @@ function getNowFormatDate() {
         $('.to_time-error').show();
         valid = false;
     }
-    if (form.from_time.value.length == 0 || form.to_time.value.length == 0){
+    if ( form.is_allday.checked ==false && (form.from_time.value.length == 0 || form.to_time.value.length == 0)){
         $('.to_time-error').html('请选择上班时间和下班时间');
         $('.to_time-error').show();
         valid = false;

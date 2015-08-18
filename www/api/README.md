@@ -293,11 +293,12 @@ BASE_URL = 'http://api.miduoduo.cn'
 
 ### 任务（职位）
 * 任务列表
-    * GET /version/task?expand=company,service_type,city,district,user,addresses&date_range=(weekend_only|current_week|next_week)
+    * GET /version/task?expand=company,service_type,city,district,user,addresses&date_range=(weekend_only|current_week|next_week|is_longterm)
     * date_range
         * weekend_only = 查询周末（周六、周日）任务（一个月内的周末任务）
         * current_week = 查询本周任务
         * next_week = 下周任务
+	* is_longterm = 长期兼职
 
 * 任务详情
     * GET /version/task/gid

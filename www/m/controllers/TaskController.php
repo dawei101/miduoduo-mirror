@@ -20,6 +20,7 @@ use yii\data\Pagination;
 use common\models\WeichatPushSetTemplatePushItem;
 use common\models\ConfigRecommend;
 use common\models\UserLocation;
+use common\Seo;
 
 class TaskController extends \m\MBaseController
 {
@@ -103,16 +104,18 @@ class TaskController extends \m\MBaseController
 
     public function actionIndex()
     {
+        $seo_params = Seo::parseTaskListParam();
+        
         //只有北京
-        $city_id = 3;
-        $district = Yii::$app->request->get('district');
-        $service_type = Yii::$app->request->get('service_type');
+        $city_id        = $seo_params['city_id'] ? $seo_params['city_id'] : 3;
+        $district       = $seo_params['block_id'] ? $seo_params['block_id'] : Yii::$app->request->get('district');
+        $service_type   = $seo_params['type_id'] ? $seo_params['type_id'] : Yii::$app->request->get('service_type');
         if (empty($city_id)){
             $this->render404('未知的城市');
         }
 
 
-        $query = Task::find();
+        $query = Task::find()->with('service_type');
         $query->where(['status'=>Task::STATUS_OK]);
         $query->andWhere(['>', 'to_date', date("Y-m-d")]);
 
@@ -158,7 +161,8 @@ class TaskController extends \m\MBaseController
                  'current_district' => 
                     empty($district)?$city:District::findOne($district),
                  'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
-                 'location' => $location,    
+                 'location' => $location,   
+                 'seo_params'=> $seo_params,
         ]);
     }
 
@@ -171,7 +175,7 @@ class TaskController extends \m\MBaseController
         $task = null;
         if ($gid){
             $task = Task::find()->where(['gid'=>$gid])
-                ->with('city')->with('district')->one();
+                ->with('city')->with('district')->with('addresses')->one();
         }
         if ($task){
             $collected = false;

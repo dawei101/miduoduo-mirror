@@ -139,10 +139,10 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .right-box{width:717px;position: relative;}
 .right-box input{width:328px; height:40px; border:#999 solid 1px; padding:0 5px;color:#999;}
 .riqi input{color:#777}
-.riqi label{line-height:30px;color:#666 !important; margin-left:10px; margin-top:5px}
-.riqi input.changqi{width:30px; height:auto !important;}
+.riqi label,.time-xz label{line-height:30px;color:#666 !important; margin-left:10px; margin-top:5px}
+.riqi input.changqi,.time-xz input.changqi{width:30px; height:auto !important;}
 .time-xz{margin-top:15px;}
-.time-xz .times{margin-left:0;width:150px; margin-bottom: 15px;}
+.time-xz .times{margin-left:0;width:148px; margin-bottom: 15px;}
 .time-xz .times input{width:147px;}
 .time-xz .times ul{width:150px;}
 .time-xz span{margin-left:10px; margin-top:10px; color:#a5abb2; margin-right:10px;}

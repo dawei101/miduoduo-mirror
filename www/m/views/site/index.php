@@ -1,9 +1,28 @@
 <?php
+use common\Seo;
+
 /* @var $this yii\web\View */
 $this->title = '首页';
 $this->nav_left_link = 'javascript:window.history.back()';
 $this->nav_right_link = '/user';
 $this->nav_right_title = '个人中心';
+
+/********* seo start ***********/
+$seocity    = isset($city->name)?$city->name:'';
+$block      = '';
+$type       = '';
+$clearance_type = '';
+$conpany    = '';
+$task_title = '';
+$page_type  = 'index';
+
+$seo_code   = Seo::makeSeoCode($seocity,$block,$type,$clearance_type,$conpany,$task_title,$page_type);
+/********* seo end ***********/
+
+$this->page_title = $seo_code['title'];
+$this->page_keywords = $seo_code['keywords'];
+$this->page_description = $seo_code['description'];
+
 ?>
 
 

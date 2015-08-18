@@ -78,7 +78,10 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
             [
                 'attribute' => 'city_id',
                 'value' => function ($model){
-                    return $model->city->short_name;
+                    if ($model->city){
+                        return $model->city->short_name;
+                    }
+                    return '--';
                 },
                 'filter' => $city_maps,
             ],
