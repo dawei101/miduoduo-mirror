@@ -70,6 +70,10 @@ class TaskController extends BBaseController
             
             $model->setAttributes($data, false);
 
+            $city_id = Yii::$app->request->post('city_id');
+            if ($city_id) {
+                $model->city_id = $city_id;
+            }
             $clearance_period = Yii::$app->request->post('clearance_period');
             if ($clearance_period) {
                 $model->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);

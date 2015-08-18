@@ -133,11 +133,11 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .tianxie-box{height:100%;position:relative; background:#fff; border-bottom:1px #eee dashed; padding:0px 30px 30px; overflow:hidden}
 .tishi-cs{color:#999; text-align:center; border:#f00 solid 1px; width:90%;  margin:30px auto 20px; padding:10px 0; font-size:18px;}
 .tishi-cs a{text-decoration:underline; font-weight:bold}
-.tianxie-box li{width:760px; margin:20px 0; clear:both; min-height: 40px; }
+.tianxie-box li{width:916px; margin:20px 0; clear:both; min-height: 40px; }
 .title-left{width:98px; height:40px; line-height:40px; font-size:14px; color:#333; margin-right:20px; text-align:right;font-weight: bold;}
 .title-left em{color:#f00; float:left; margin-top:5px;}
-.right-box{width:640px;position: relative;}
-.right-box input{width:328px; height:40px; border:#999 solid 1px; padding:0 5px;}
+.right-box{width:717px;position: relative;}
+.right-box input{width:328px; height:40px; border:#999 solid 1px; padding:0 5px;color:#999;}
 .riqi input{color:#777}
 .riqi label{line-height:30px;color:#666 !important; margin-left:10px; margin-top:5px}
 .riqi input.changqi{width:30px; height:auto !important;}
@@ -272,18 +272,19 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .btnn .fabu-btn1{width:200px; height:40px;  color:#fff; background:#25b860; border:none; margin-left:20px; float:left}
 .btnn span{width:200px; height:40px;  color:#999; background:#eee; border:none; margin-left:20px; float:left; display:block; line-height:40px;}
 
-.dizhi {background:#fff; left:0px; position: absolute;top: 41px; width: 530px; z-index: 1000; border:1px #d2d5d8 solid; padding-left:10px; max-height:300px;overflow-x: hidden; overflow-y: auto;}
+.dizhi {background:#fff; left:0px; position: absolute;top: 41px; width: 663px; z-index: 1000; border:1px #d2d5d8 solid; padding-left:10px; max-height:300px;overflow-x: hidden; overflow-y: auto;}
 .dizhi li {border-bottom: 1px solid #f3f3f3;border-radius: 0; margin: 0;width: 100%; padding-left:10px;cursor: pointer;}
 .dizhi li h2{font-size:14px; line-height:25px; color:#333;margin-top: 10px;}
 .dizhi li p{line-height:25px; font-size:12px; color: #999;}
 
 .zhi {clear: both; margin-left: 118px;  width: 550px;}
-.zhi .p-box {border-bottom: 1px dashed #ccc;clear: both;line-height: 30px;overflow: hidden;padding: 5px 0;width: 530px;}
+.zhi .p-box {border-bottom: 1px dashed #ccc;clear: both;line-height: 30px;overflow: hidden;padding: 5px 0;width: 635px;}
 .zhi span {background: #ccc;border-radius:100px;color: #666;margin-top: 6px;cursor:pointer; width:20px; height:20px; float:right; line-height:20px; line-height:20px; margin-right:10px; font-size:18px;text-align: center;}
 .dz-v {float: left;color: #666;}
-.add-v {width: 530px !important;}
+.add-v {width: 297px !important;}
+.address select{height:40px; border:#999 solid 1px;border-right:0;color:#999;width: 108px; padding:0 5px;}
 
-.tianj { border: 2px solid #00b966  !important;float: right;margin-right: 30px;padding: 8px 15px; border-radius:4px; border:2px #ccc solid; color:#00b966; cursor:pointer;}
+.tianj { border: 2px solid #00b966  !important;float: right;margin-right: 9px;padding: 8px 15px; border-radius:4px; border:2px #ccc solid; color:#00b966; cursor:pointer;}
 
 .foots{width:100%; background:#2a3141; padding:20px 0;}
 .foot{color:#999;}
