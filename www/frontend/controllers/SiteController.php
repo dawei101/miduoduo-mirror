@@ -15,6 +15,9 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 
+use common\Utils;
+use common\Constants;
+
 /**
  * Site controller
  */
@@ -61,7 +64,13 @@ class SiteController extends FBaseController
 
     public function actionDownloadApp()
     {
-        return $this->redirect(Yii::$app->params['downloadApp.android']);
+        $device_type = Utils::getDeviceType(Yii::$app->request->getUserAgent());
+        if ($device_type==Constants::DEVICE_IOS){
+            return $this->redirect(Yii::$app->params['downloadApp.ios']);
+        } else if($device_type==Constants::DEVICE_ANDROID) {
+            return $this->redirect(Yii::$app->params['downloadApp.android']);
+        }
+        return $this->renderPartial('download-app');
     }
 
     public function actionIndex()
