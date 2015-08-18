@@ -6,7 +6,9 @@ use Yii;
 use common\models\TaskApplicant;
 use common\models\TaskApplicantSearch;
 use backend\BBaseController;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
@@ -14,6 +16,22 @@ use yii\filters\VerbFilter;
  */
 class TaskApplicantController extends BBaseController
 {
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['operation_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
     /**
      * Lists all TaskApplicant models.
      * @return mixed

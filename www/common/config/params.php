@@ -48,8 +48,36 @@ return [
             'quality'   => 'NoEWsq5BpBRdEymm3-W6YrYoBBkyWCFNUkfJhpCbYcc',     // 优单模板
             'nearby'    => 'qwENcjpEuIBn53LHyFh4-PmmpVaSmL04WpylDX1JkaE',     // 附近模板
             'applicant' => 'srIf6HPINf-I-BmlPJSqxfJ_E-ZUFlrp_D4MUUvQFOc',     // 报名成功
+            'accountin' => 'Bo7ZbPipKywJ2kBdwCcJnF75fbhpRW4cvGoYHdLW8CY',     // 收入提醒
         ],
         'preview_user'  => '13699273824,18611299991,18210135925,13240055520',// 定时推送预览人员
+    ],
+
+    'seo'   => [
+        'title' => [
+            'index' => '【米多多兼职 miduoduo.cn】网上兼职_兼职网_学生兼职',
+            'city'  => '【[city]兼职|[city]兼职网|[city]兼职招聘】——[city]',
+            'block' => '【[block]兼职|[block]兼职网|[block]兼职招聘】——[block]米多多兼职',
+            'type'  => '【[city][type]兼职|[city][type]招聘|[city][type]日结】——[city]米多多兼职',
+            'clearance_type'    => '【[city][clearance_type]兼职|[city][clearance_type]招聘|[city]日结】——[city]米多多兼职',
+            'detail'=> '【[task_title]_[company]】-[city]米多多兼职',
+        ],
+        'keywords'  => [
+            'index' => '【米多多兼职 miduoduo.cn】网上兼职_兼职网_学生兼职',
+            'city'  => '【[city]兼职|[city]兼职网|[city]兼职招聘】——[city]米多多兼职',
+            'block' => '【[block]兼职|[block]兼职网|[block]兼职招聘】——[block]米多多兼职',
+            'type'  => '【[city][type]兼职|[city][type]招聘|[city][type]日结】——[city]米多多兼职',
+            'clearance_type'    => '【[city][clearance_type]兼职|[city][clearance_type]招聘|[city]日结】——[city]米多多兼职',
+            'detail'=> '[city][type]，[city][block]兼职，[company]最新兼职',
+        ],
+        'description'  => [
+            'index' => '米多多[city]兼职招聘是[city]最专业的兼职网站，为用户提供最全面的兼职信息，包括发传单、家教、服务员、促销、礼仪等热门[city]兼职招聘信息，免费为企业提供招聘服务，[city]找兼职首选米多多[city]兼职招聘',
+            'city'  => '米多多[city]兼职招聘是[city]最专业的兼职网站，为用户提供最全面的兼职信息，包括发传单、家教、服务员、促销、礼仪等热门[city]兼职招聘信息，免费为企业提供招聘服务，[city]找兼职首选米多多[city]兼职招聘',
+            'block' => '米多多[block]兼职招聘是最专业的[block]兼职网站，为用户提供最全面的兼职信息，包括发传单、家教、服务员、促销、礼仪、日结兼职等热门[block]兼职招聘信息，免费为企业提供招聘服务，[block]找兼职首选米多多[block]兼职招聘',
+            'type'  => '米多多[city][type]招聘频道是[city]最专业的[type]兼职网站，每天免费为[city]找[type]高薪兼职工作、临时工、暑期工的求职者提供最新最全的招聘兼职信息，免费为企业提供[type]人才招聘服务，[city]找[type]兼职首选米多多[city][type]兼职招聘',
+            'clearance_type'    => '米多多[city][clearance_type]招聘频道是[city]最专业的[clearance_type]兼职网站，每天免费为[city]找[clearance_type]高薪兼职工作、临时工、暑期工的求职者提供最新最全的招聘兼职信息，免费为企业提供[clearance_type]人才招聘服务，[city]找[clearance_type]兼职首选米多多[city][clearance_type]兼职招聘',
+            'detail'=> '[company]最新招聘信息,诚聘[task_title][need_quantity]人，工作地点位于[address]，薪资待遇[salary]，[detail]',
+        ],
     ],
 
     'config'=>[

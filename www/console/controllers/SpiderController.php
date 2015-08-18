@@ -71,5 +71,33 @@ class SpiderController extends Controller
             $rows
         )->execute();
     }
-}
 
+    public function actionLaunchImportTasks()
+    {
+        $cursor_id = null;
+        $batch_count = 100;
+        while(1){
+            $query = TaskPool::find()
+                ->where(['status'=>TaskPool::STATUS_UNSETTLED])
+                ->orderBy(['id'=>SORT_DESC])
+                ->limit($batch_count);
+            if ($cursor_id){
+                $query->andWhere(['<', 'id', $cursor_id]);
+            }
+            $ts = $query->all();
+            $ids = [];
+            foreach ($ts as $t){
+                $ids[] = $t->id;
+            }
+            if (count($ids)>0){
+                Yii::$app->job_queue_manager->add(
+                    'spider/import-tasks', $params=['ids'=>$ids]
+                );
+            }
+            $cursor_id = $t->id;
+            if (count($ids)<$batch_count){
+                break;
+            }
+        }
+    }
+}

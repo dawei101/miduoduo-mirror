@@ -19,6 +19,10 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
     'components' => [
+        'user'=>[
+            'class' => 'yii\web\User',
+            'identityClass' => 'common\models\User',
+        ],
         'log' => [
             'targets' => [
                 [

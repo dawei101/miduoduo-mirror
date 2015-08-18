@@ -5,7 +5,7 @@ miduoduo 协议
 ```
 miduoduo 协议：
 1、跳转： mdd:// 跳转协议
-2、window.MDD 获取交互对象，采用 JS 直接通过MDD 对象调用 native 方法
+2、window.MDDNative 获取交互对象，采用 JS 直接通过MDD 对象调用 native 方法
 ```
 
 
@@ -24,22 +24,37 @@ function CallBack(str) {
 
 * log 调试信息打印
 ```
-    window.MDD.log(message)
+    window.MDDNative.log(message)
 
 ```
 
 * 请求认证
 ```
-    window.MDD.auth()
+    window.MDDNative.auth(json)
+    json: 字符串
+    {
+        register：1- 注册，0 － 登录
+        url:// 登录成功后，跳转页面
+    }
+    
+    注：json ＝ null
+    默认 登录页面，成功后，不跳转
 
+
+    业务：
+    详情页 －》 登录／注册 (window.MDDNative.auth(...)) 
+
+    if (url) -> 简历填写页 －> 填写完成（window.MDDNative.popWithRefreshAll()）
+    else native 逐个 webView 调用 window.MDDWeb.reload()，html 可以自己去刷新页面
 ```
 
 * 刷新页面
 ```
-    window.MDD.refreshAll()
+    window.MDDNative.refreshAll()
         
     附：
-        接收到事件，会调用 js MDD.reload() 函数，html 在该接口自己刷新 
+        native 会调用 html 的js：
+        window.MDDWeb.reload(), 由 html 自己选择是否正在刷新，减少用户 流量
 ```
 
 * 确认框
@@ -48,7 +63,7 @@ function CallBack(str) {
     message: 要显示的内容
     callback：提示选择后的回调，回调为 JS 函数名，用字符串方式传递
     */
-    window.MDD.confirm(message,callback)
+    window.MDDNative.confirm(message,callback)
 
     附：
         callback：回调函数
@@ -57,7 +72,7 @@ function CallBack(str) {
 
 * 提示框
 ```
-    window.MDD.alert(message)
+    window.MDDNative.alert(message)
 
 ```
 
@@ -68,48 +83,82 @@ function CallBack(str) {
 
 * pop页面
 ```
-    window.MDD.pop()
+    window.MDDNative.pop()
+```
+
+* popWithRefreshForward
+```
+    // 刷新上一个页面，即 返回后的那个页面
+    window.MDDNative.popWithRefreshForward()
+
+    注： 刷新有 webView 重新加载
+```
+
+* pop页面,同时刷新所有 webView
+```
+    window.MDDNative.popWithRefreshAll()
+
+    注：
+        native 会调用 html 的js：
+        window.MDDWeb.reload(), 由 html 自己选择是否正在刷新，减少用户 流量
+
 ```
 
 * 获取地址
 ```
-    window.MDD.address(callback)
+    window.MDDNative.address(callback)
 
     callback(address)  address: json 字符串
 ```
 
-* 获取access_token
+* 获取 UserInfo
 ```
-    var token = window.MDD.accessToken()
+    var user = window.MDDNative.user()
 
-    token: 字符串
+    user: json 字符串
+    {
+        id/username/access_token ....
+    }
 ```
 
 * 获取Location
 ```
-    window.MDD.location(callback)
+    window.MDDNative.location(callback)
+
+    callback：回调函数名
+```
+* 获取照片
+```
+    window.MDDNative.photo(callback)
 
     callback：回调函数名
 ```
 
+
+* 获取 baseUrl
+```
+    var url = window.MDDNative.baseUrl()
+
+    url:  字符串
+```
 * 加载中
 ```
-    window.MDD.startLoading(message)
+    window.MDDNative.startLoading(message)
     
     message: '加载中' 提示内容
 ```
 
 * 加载完毕
 ```
-    window.MDD.stopLoading()
+    window.MDDNative.stopLoading()
 
 ```
 
 * 返回事件
 ```
-    javascript:back()
+    javascript:window.MDDWeb.back()
 
-    html: 收到返回事件，可以自行处理，如果需要返回，调用 window.MDD.pop()
+    html: 收到返回事件，可以自行处理，如果需要返回，调用 window.MDDNative.pop()
 ```
 
 

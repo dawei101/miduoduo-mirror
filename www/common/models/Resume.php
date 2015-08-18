@@ -52,6 +52,7 @@ class Resume extends \common\BaseActiveRecord
     public static $GENDERS = [0=>'男', 1=>'女'];
     public static $GRADES= [0=>'无', 1=>'一年级', 2=>'二年级',
         3=>'三年级', 4=>'四年级', 5=>'五年级'];
+    public static $STUDENTS=[0=>'否', 1=>'是'];
 
     /**
      * @inheritdoc
@@ -134,6 +135,9 @@ class Resume extends \common\BaseActiveRecord
         if (!$this->user_id){
             $user = User::createUserWithPhonenum($this->phonenum);
             $this->user_id = $user->id;
+        }
+        if (!$this->phonenum){
+            $this->phonenum = Yii::$app->user->identity->username;
         }
         return parent::beforeSave($insert);
     }

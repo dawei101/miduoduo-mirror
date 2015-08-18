@@ -21,8 +21,13 @@ class PhpExcel extends Component
     
     public function dateExceltoPHP($date){
         if( strlen($date) < 10 ){
-            list($m,$d,$y)  = explode('-',$date);
-            $return         = '20'.$y.'-'.$m.'-'.$d;
+			$explode		= explode('-',$date);
+			if(count($explode) == 3){
+				list($m,$d,$y)  = $explode;
+				$return         = '20'.$y.'-'.$m.'-'.$d;
+			}else{
+				$return         = $date;
+			}
         }else{
             $return         = $date;
         }

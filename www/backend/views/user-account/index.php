@@ -31,13 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '姓名',
                 'value' => function($model){
-                    return $model->userinfo->name;
+                    return isset($model->userinfo->name) ? $model->userinfo->name : '';
                 }
             ],
             [
                 'label' => '手机',
                 'value' => function($model){
-                    return $model->userinfo->phonenum;
+                    return isset($model->userinfo->phonenum) ? $model->userinfo->phonenum : '';
                 }
             ],
             //'defalut_withdraw_type',

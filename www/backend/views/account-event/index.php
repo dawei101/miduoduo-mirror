@@ -8,7 +8,7 @@ use common\models\AccountEvent;
 /* @var $searchModel common\models\AccountEventSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', '工资流水管理');
+$this->title = Yii::t('app', '工资流水-已发工资（'.$money_all.' 元）');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="account-event-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', '上传工资流水'), ['upload'], ['class' => 'btn btn-success','target'=>'_blank']) ?>
+        
     </p>
 
     <?= GridView::widget([
@@ -32,15 +32,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'task_gid',
             [
                 'label' => '姓名',
+                'attribute' => 'user_name',
+                'format'=>'raw',
                 'value' => function($model){
-                    return $model->userinfo->name;
+                    return isset($model->userinfo->name) ? $model->userinfo->name : '';
                 }
             ],
             'user_id',
             [
                 'label' => '手机号',
                 'value' => function($model){
-                    return $model->userinfo->phonenum;
+                    return isset($model->userinfo->phonenum) ? $model->userinfo->phonenum : '';
                 }
             ],
             'value',
@@ -55,8 +57,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'    => AccountEvent::$TYPES
             ],
             'related_id',
+            [
+                'label' => '锁住',
+                'attribute' => 'locked',
+                'value' => function($model){
+                    return AccountEvent::$LOCKEDS[$model->locked];
+                },
+                'filter'    => AccountEvent::$LOCKEDS
+            ],
+            [
+                'label' => '导入人',
+                'value' => function($model){
+                    return isset($model->operator->name) ? $model->operator->name : '';
+                }
+            ],
             // 'balance',
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 

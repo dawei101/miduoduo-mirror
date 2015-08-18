@@ -33,7 +33,11 @@ $(document).click(function(){
 
 //日期选择
  $(document).ready(function() {
-    $('.reservation').daterangepicker(null, function(start, end, label) {
+    $('.reservation').daterangepicker( 
+        {
+            showDropdowns: true,
+        },
+        function(start, end, label) {
         var form = document.forms[0];
         form.from_date.value = start.format('YYYY-MM-DD');
         form.to_date.value = end.format('YYYY-MM-DD');

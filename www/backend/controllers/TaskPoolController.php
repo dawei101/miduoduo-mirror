@@ -5,6 +5,8 @@ namespace backend\controllers;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 use common\models\Company;
 use common\models\Task;
@@ -18,7 +20,20 @@ use backend\BBaseController;
  */
 class TaskPoolController extends BBaseController
 {
-
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['operation_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
     public function getViewPath()
     {
         return Yii::getAlias('@backend/views/spider/task-pool');
@@ -82,12 +97,10 @@ class TaskPoolController extends BBaseController
             if ($t->status!=0){
                 $this->redirectHtml(Yii::$app->request->referrer, '该任务已经处理过，无法继续处理!');
             }
-            $task = $t->exportTask();
+            $task = $t->exportTask($self_update=true);
             if (!$task){
                 return $this->redirectHtml(Yii::$app->request->referrer, '导出出现问题，无法继续处理, 联系技术!');
             }
-            $t->status = 10;
-            $t->save();
             return $this->redirect('/task/update?id='.$task->id);
         }
     }

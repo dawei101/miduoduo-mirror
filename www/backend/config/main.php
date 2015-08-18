@@ -53,6 +53,8 @@ return [
             'keyPrefix' => 'backend@',
         ],
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'showScriptName' => false,
             'enablePrettyUrl' => true,
             'rules' => [
                 // your rules go here

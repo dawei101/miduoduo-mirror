@@ -69,6 +69,7 @@ class TaskPool extends \common\BaseActiveRecord
             ['status', 'default', 'value'=>0],
             ['release_date', 'safe'],
             ['to_date', 'safe'],
+            ['task_id', 'integer'],
         ];
     }
 
@@ -117,6 +118,9 @@ class TaskPool extends \common\BaseActiveRecord
         if ($this->origin=='xiaolianbang'){
             return 'http://m.xiaolianbang.com/pt/' . $this->origin_id . '/detail';
         }
+        if ($this->origin=='jianzhimao'){
+            return 'http://m.jianzhimao.com/job/getJob?id=' . $this->origin_id;
+        }
         if ($this->origin=='internal'){
             return "http://m.miduoduo.cn/task/view?gid=" . $this->origin_id;
         }
@@ -131,13 +135,20 @@ class TaskPool extends \common\BaseActiveRecord
         return $s;
     }
 
-    public function exportTask()
+    public function exportTask($task_id=null, $self_update=false)
     {
-        if ($this->status!=0){
+        if ($this->status!=static::STATUS_UNSETTLED){
             return false;
         }
         $ds = $this->list_detail();
-        $task = new Task;
+        $task = null;
+        if ($task_id){
+            $task = Task::findOne($task_id);
+        }
+        if (!$task){
+            $task = new Task;
+            $task->salary_unit = 0;
+        }
         $task->title = $ds['title'];
 
         $cp = 3;
@@ -148,11 +159,13 @@ class TaskPool extends \common\BaseActiveRecord
         $task->clearance_period = $cp;
 
         $task->salary = intval($ds['salary']);
-        $task->salary_unit = 0;
         if ($task->salary!=0){
             $task->salary_unit = $this->getSalaryUnit($ds['salary_unit']);
         }
-        $task->from_date = isset($ds['from_date'])?$ds['from_date']:'1999-09-09';
+        if (!isset($ds['from_date']) || empty($ds['from_date'])){
+            $task->is_longterm = true;
+        }
+        $task->from_date = isset($ds['to_date'])?$ds['from_date']:'1999-09-09';
         $task->to_date = isset($ds['to_date'])?$ds['to_date']:'1999-09-09';
         $task->need_quantity = intval($ds['need_quantity']);
         $task->detail = $ds['content'];
@@ -164,6 +177,7 @@ class TaskPool extends \common\BaseActiveRecord
         $task->company_id = 0;
 
         if ($this->company_name){
+            $task->company_name = $this->company_name;
             $com = Company::find()->where([
                 'name'=>$this->company_name,
             ])->one();
@@ -201,6 +215,11 @@ class TaskPool extends \common\BaseActiveRecord
             $ta->city = $this->city;
             $ta->task_id = $task->id;
             $ta->save();
+        }
+        if ($self_update){
+            $this->task_id = $task->id;
+            $this->status = static::STATUS_EXPORTED;
+            $this->save();
         }
         return $task;
     }

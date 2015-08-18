@@ -6,6 +6,7 @@ use Yii;
 use common\models\JobQueue;
 use common\models\JobQueueSearch;
 use backend\BBaseController;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 

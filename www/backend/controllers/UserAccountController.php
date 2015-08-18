@@ -6,24 +6,31 @@ use Yii;
 use common\models\UserAccount;
 use common\models\UserAccountSearch;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use backend\BBaseController;
 
 /**
  * UserAccountController implements the CRUD actions for UserAccount model.
  */
-class UserAccountController extends Controller
+class UserAccountController extends BBaseController
 {
+
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['finance_manager'],
+                    ],
                 ],
             ],
-        ];
+        ]);
     }
 
     /**

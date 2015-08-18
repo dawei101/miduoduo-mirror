@@ -77,7 +77,7 @@ class District extends \yii\db\ActiveRecord
 
     public function fields()
     {
-        return ['id', 'short_name', 'pinyin', 'short_pinyin'];
+        return ['id', 'short_name', 'pinyin', 'short_pinyin', 'is_hot', 'is_alive', 'name'];
     }
 
 }

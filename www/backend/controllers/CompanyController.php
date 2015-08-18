@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use common\models\Company;
 use common\models\CompanySearch;
 use backend\BBaseController;
@@ -24,6 +25,16 @@ class CompanyController extends BBaseController
                     'change-status' => ['post'],
                     'delete' => ['post'],
                     'examine' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['operation_manager'],
+                    ],
+
                 ],
             ],
         ]);

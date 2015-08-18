@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 use common\models\Task;
+use common\models\District;
 use common\models\ServiceType;
 
 /* @var $this yii\web\View */
@@ -17,6 +18,11 @@ $service_type_maps = [];
 foreach(ServiceType::findAll(['status'=>0]) as $s){
     $service_type_maps[$s->id] = $s->name;
 }
+$city_maps = [];
+foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
+{
+    $city_maps[$c->id] = $c->short_name;
+}
 ?>
 <div class="task-index">
 
@@ -24,7 +30,7 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('创建任务订单', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('创建任务订单', ['publish'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -61,13 +67,23 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                 },
                 'filter' => $service_type_maps,
             ],
-            'salary',
             [
                 'attribute' => 'salary_unit',
+                'label' => '薪资与单位',
                 'value' => function ($model){
-                    return $model->salary_unit_label;
+                    return $model->salary . "/" . $model->salary_unit_label;
                 },
                 'filter' => Task::$SALARY_UNITS,
+            ],
+            [
+                'attribute' => 'city_id',
+                'value' => function ($model){
+                    if ($model->city){
+                        return $model->city->short_name;
+                    }
+                    return '--';
+                },
+                'filter' => $city_maps,
             ],
             [
                 'attribute' => 'origin',
@@ -115,6 +131,14 @@ foreach(ServiceType::findAll(['status'=>0]) as $s){
                         $options = [
                             'title' => '查看报名详情',
                             'aria-label' => '查看报名详情',
+                        ];
+                        return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', $url, $options);
+                    },
+                    'view' => function ($url, $model, $key) {
+                        $url = Yii::$app->params['baseurl.m'].'/task/view?gid=' . $model->gid;
+                        $options = [
+                            'title' => '查看任务详情',
+                            'aria-label' => '查看任务详情',
                         ];
                         return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', $url, $options);
                     }

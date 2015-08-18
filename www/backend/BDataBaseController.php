@@ -7,6 +7,8 @@ use backend\BBaseController;
 use common\models\User;
 use common\models\Resume;
 use common\models\TaskApplicant;
+use common\models\AccountEvent;
+use common\models\WithdrawCash;
 
 /**
  * WeichatErweimaController implements the CRUD actions for WeichatErweima model.
@@ -423,6 +425,100 @@ class BDataBaseController extends BBaseController
                 $model_jrwxtdzl->key    = 'jrwxtdzl';
                 $model_jrwxtdzl->value  = $jrwxtdzl;
                 $model_jrwxtdzl->save();
+                
+            }
+        }
+
+        // 4 工资-流水
+        // 城市的问题暂时不考虑
+        if( $type == 4 ){
+            foreach( $notExistArr as $k3 => $v3 ){
+                $model  = new DataDaily();
+                $model->date    = $v3;
+                $model->type    = $type;
+
+                // 总笔数
+                $bs    = AccountEvent::findBySql("SELECT count(2) 'bs' FROM ".$tablePrefix."account_event WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $bs    = $bs['bs'];    
+                $model_bs  = clone $model;
+                $model_bs->key    = 'bs';
+                $model_bs->value  = $bs;
+                $model_bs->save();
+                
+                // 总人数
+                $rs    = AccountEvent::findBySql("SELECT count(distinct(`user_id`)) 'rs' FROM ".$tablePrefix."account_event WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $rs    = $rs['rs'];    
+                $model_rs  = clone $model;
+                $model_rs->key    = 'rs';
+                $model_rs->value  = $rs;
+                $model_rs->save();
+
+                // 订单数
+                $dds    = AccountEvent::findBySql("SELECT count(distinct(`task_gid`)) 'dds' FROM ".$tablePrefix."account_event WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $dds    = $dds['dds'];    
+                $model_dds  = clone $model;
+                $model_dds->key    = 'dds';
+                $model_dds->value  = $dds;
+                $model_dds->save();
+
+                // 今日钱数
+                $jrqs    = AccountEvent::findBySql("SELECT sum(`value`) 'jrqs' FROM ".$tablePrefix."account_event WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrqs    = $jrqs['jrqs'];  
+                $model_jrqs  = clone $model;
+                $model_jrqs->key    = 'jrqs';
+                $model_jrqs->value  = $jrqs;
+                $model_jrqs->save();
+
+                // 总钱数
+                $zqs    = AccountEvent::findBySql("SELECT sum(`value`) 'zqs' FROM ".$tablePrefix."account_event WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $zqs    = $zqs['zqs'];    
+                $model_zqs  = clone $model;
+                $model_zqs->key    = 'zqs';
+                $model_zqs->value  = $zqs;
+                $model_zqs->save();
+                
+            }
+        }
+
+        // 4 工资-提现
+        // 城市的问题暂时不考虑
+        if( $type == 5 ){
+            foreach( $notExistArr as $k3 => $v3 ){
+                $model  = new DataDaily();
+                $model->date    = $v3;
+                $model->type    = $type;
+
+                // 总笔数
+                $bs    = WithdrawCash::findBySql("SELECT count(2) 'bs' FROM ".$tablePrefix."withdraw_cash WHERE `status`=3 AND  LEFT(`withdraw_time`,10)='".$v3."'")->asArray()->one(); 
+                $bs    = $bs['bs'];    
+                $model_bs  = clone $model;
+                $model_bs->key    = 'bs';
+                $model_bs->value  = $bs;
+                $model_bs->save();
+                
+                // 总人数
+                $rs    = WithdrawCash::findBySql("SELECT count(distinct(`user_id`)) 'rs' FROM ".$tablePrefix."withdraw_cash WHERE `status`=3 AND  LEFT(`withdraw_time`,10)='".$v3."'")->asArray()->one(); 
+                $rs    = $rs['rs'];    
+                $model_rs  = clone $model;
+                $model_rs->key    = 'rs';
+                $model_rs->value  = $rs;
+                $model_rs->save();
+
+                // 今日钱数
+                $jrqs    = WithdrawCash::findBySql("SELECT sum(`value`) 'jrqs' FROM ".$tablePrefix."withdraw_cash WHERE `status`=3 AND LEFT(`withdraw_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrqs    = $jrqs['jrqs'];  
+                $model_jrqs  = clone $model;
+                $model_jrqs->key    = 'jrqs';
+                $model_jrqs->value  = $jrqs;
+                $model_jrqs->save();
+
+                // 总钱数
+                $zqs    = WithdrawCash::findBySql("SELECT sum(`value`) 'zqs' FROM ".$tablePrefix."withdraw_cash WHERE `status`=3 AND  LEFT(`withdraw_time`,10)<='".$v3."'")->asArray()->one(); 
+                $zqs    = $zqs['zqs'];    
+                $model_zqs  = clone $model;
+                $model_zqs->key    = 'zqs';
+                $model_zqs->value  = $zqs;
+                $model_zqs->save();
                 
             }
         }

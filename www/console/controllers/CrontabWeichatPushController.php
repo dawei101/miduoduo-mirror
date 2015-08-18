@@ -50,8 +50,9 @@ class CrontabWeichatPushController extends Controller
         
         if(isset($pushtemp_arr['title'])){
             $params         = array(
-                array('name'=>'keyword1','value'=>$pushtemp_arr['title'],'color'=>'#0000FE'), 
-                array('name'=>'keyword2','value'=>'实时通知','color'=>'#222'), 
+                array('name'=>'keyword1','value'=>$pushtemp_arr['title'],'color'=>'#000080'), 
+                array('name'=>'keyword2','value'=>'每日兼职推送','color'=>'#000080'), 
+                array('name'=>'remark','value'=>'\r\n如需退订，回复tdd退订每日热门兼职推送','color'=>'#999'), 
             );
 
             $gotoUrl = Yii::$app->params['baseurl.wechat'] 
@@ -71,7 +72,11 @@ class CrontabWeichatPushController extends Controller
             }else{
                 // 得到待推送的用户列表
                 // 这里只给 is_receive_nearby_msg=1 的用户发送推送
-                $userlist       = WeichatUserInfo::find()->where(['is_receive_nearby_msg'=>1])->asArray()->all();
+                $userlist       = WeichatUserInfo::find()
+                    ->where(['is_receive_nearby_msg'=>1])
+                    ->andWhere(['!=', 'userid',0])
+                    ->asArray()
+                    ->all();
             }
 
             // 本次推送的分组标识

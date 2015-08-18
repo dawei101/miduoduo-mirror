@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\JobQueue;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\JobQueueSearch */
@@ -23,17 +24,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'task_name',
-            'params',
-            'retry_times:datetime',
+            'retry_times',
             'start_time',
-            // 'priority',
-            // 'status',
-            // 'message:ntext',
-
+            [
+                'attribute' => 'priority',
+                'filter' => JobQueue::$PRIORITIES,
+                'value' => function($model){
+                    return $model->priority_label;
+                }
+            ],
+            [
+                'attribute' => 'status',
+                'filter' => JobQueue::$STATUSES,
+                'value' => function($model){
+                    return $model->status_label;
+                }
+            ],
+            'message:ntext',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

@@ -1,8 +1,10 @@
 <?php
 namespace console\controllers;
 
+use Exception;
+
 use Yii;
-use yii\base\ErrorException;
+
 use yii\console\Controller;
 use yii\console\Application;
 use yii\helpers\ArrayHelper;
@@ -58,8 +60,8 @@ class JobWorkerController extends Controller
             if (method_exists($jober, $action_name)){
                 try {
                     $r = call_user_func_array([$jober, $action_name], $params);
-                } catch (ErrorException $e){
-                    $job->message = $e->getMessage();
+                } catch (Exception $e){
+                    $job->message = $e->getFile() . "\n" . $e->getLine() . "\n" . $e->getMessage() ;
                 }
             } else {
                 $job->message = "Job 找不到对应的action";

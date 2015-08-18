@@ -6,20 +6,23 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\AccountEvent;
+use common\models\Resume;
 
 /**
  * AccountEventSearch represents the model behind the search form about `common\models\AccountEvent`.
  */
 class AccountEventSearch extends AccountEvent
 {
+    public $user_name;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'user_id', 'type', 'related_id','task_gid'], 'integer'],
-            [['date', 'created_time', 'note'], 'safe'],
+            [['id', 'user_id', 'type', 'related_id','locked'], 'integer'],
+            [['date', 'created_time', 'note','user_name'], 'safe'],
+            [['task_gid'], 'string'],
             [['value', 'balance'], 'number'],
         ];
     }
@@ -42,7 +45,7 @@ class AccountEventSearch extends AccountEvent
      */
     public function search($params)
     {
-        $query = AccountEvent::find()->with('userinfo');
+        $query = AccountEvent::find()->with('userinfo')->with('operator');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,6 +59,20 @@ class AccountEventSearch extends AccountEvent
             return $dataProvider;
         }
 
+        if ($this->user_name){
+            $resumes = Resume::find()->where(
+                ['name'=> $this->user_name])->all();
+            $_ids   = [];
+            foreach( $resumes as $k => $v ){
+                $_ids[]   = $v->user_id;
+            }
+            if (count($_ids)>0){
+                $query->andFilterWhere(['in', 'operator_id', $_ids]);
+            } else {
+                $query->andWhere('1=2');
+            }
+        }
+
         $query->andFilterWhere([
             'id' => $this->id,
             'date' => $this->date,
@@ -66,6 +83,7 @@ class AccountEventSearch extends AccountEvent
             'type' => $this->type,
             'related_id' => $this->related_id,
             'task_gid' => $this->task_gid,
+            'locked'    => $this->locked,
         ]);
 
         $query->andFilterWhere(['like', 'note', $this->note]);

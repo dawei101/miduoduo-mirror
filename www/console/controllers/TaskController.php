@@ -9,6 +9,7 @@ use yii\console\Controller;
 use yii\console\Exception;
 use common\models\Task;
 use common\models\TaskApplicant;
+use common\models\ConfigRecommend;
 
 /**
  */
@@ -41,6 +42,20 @@ class TaskController extends Controller
         } else {
             echo "No task offlined today\n";
             Yii::info("No task offlined today\n");
+        }
+    }
+
+    public function actionRefreshRecommendTask()
+    {
+        $cons = ConfigRecommend::find()->with('task')
+            ->orderBy(['display_order'=>SORT_DESC])->all();
+        foreach ($cons as $con){
+            $task = $con->task;
+            $task->updated_time = date('Y-m-d H:i:s', time());
+            if ($task->update()){
+                echo $task->gid . ':' . $task->title . "  is updated\n";
+                sleep(1);
+            }
         }
     }
 }

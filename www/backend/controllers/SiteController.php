@@ -68,10 +68,7 @@ class SiteController extends BBaseController
         if (Yii::$app->user->isGuest){
             return $this->redirect('site/login');
         }
-        if (Yii::$app->user->can('admin')){
-            return $this->render('index');
-        }
-        return $this->redirect(Yii::$app->params['baseurl.m']);
+        return $this->render('index');
     }
 
     public function actionLogin()

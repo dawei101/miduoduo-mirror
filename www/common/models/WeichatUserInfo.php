@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use common\models\User;
+use common\models\Resume;
 
 /**
  * This is the model class for table "{{%weichat_user_info}}".
@@ -22,10 +24,20 @@ use Yii;
 class WeichatUserInfo extends \yii\db\ActiveRecord
 {
     public static $STATUSES = [
-        0=>'正常',
+        0   => '正常',
+        10  => '取消关注',
     ];
 
     const STATUS_OK = 0;
+    const STATUS_CANCEL = 10;
+
+    public static $IS_RECEIVE_NEARBY_MSG = [
+        1   => '是',
+        0   => '否',
+    ];
+
+    const IS_RECEIVE_NEARBY_MSG_YES = 1;
+    const IS_RECEIVE_NEARBY_MSG_NO  = 0;
 
     public static function tableName()
     {
@@ -68,5 +80,13 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'userid']);
+    }
+
+    public function getResume(){
+        return $this->hasOne(Resume::className(),['user_id'=>'userid']);
+    }
+
+    public static function SwitchSubscribeDailyPush($openid=1,$switchto=1){
+        WeichatUserInfo::updateAll(['is_receive_nearby_msg'=>$switchto],['openid'=>$openid]);
     }
 }

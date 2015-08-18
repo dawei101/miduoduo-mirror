@@ -217,6 +217,15 @@ class Company extends \common\BaseActiveRecord
         return array_merge($fs, ['status_label', 'exam_status_label', 'exam_result_label']);
     }
 
+    public function asArray()
+    {
+        $arr = [];
+        foreach ($this->fields as $fname ){
+            $arr[] = $this->$fname;
+        }
+        return $arr;
+    }
+
     public function getUseTaskLimit($exam_result){
         if( isset(static::$USE_TASK_LIMIT[$exam_result]) ){
             return static::$USE_TASK_LIMIT[$exam_result];

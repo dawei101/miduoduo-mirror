@@ -7,6 +7,8 @@ use yii\data\ActiveDataProvider;
 use backend\BBaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use common\models\WeichatUserInfo;
 use common\pusher\WechatPusher;
 use common\models\WeichatPushQualityTask;
@@ -16,6 +18,21 @@ use common\models\WeichatPushQualityTask;
  */
 class WeichatPushQualityTaskController extends BBaseController
 {
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['operation_manager'],
+                    ],
+                ],
+            ],
+        ]);
+    }
     public function getViewPath()
     {
         return Yii::getAlias('@backend/views/wechat/weichat-push-quality-task');

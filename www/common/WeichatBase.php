@@ -130,11 +130,17 @@ class WeichatBase
 
     // 保存用户微信行为数据
     public function saveEventLog($openid,$event_type){
+        $openid     = (string)$openid;
+
         $userModel  = new WeichatUserLog();
-        $userModel->openid          = (string)$openid;
+        $userModel->openid          = $openid;
         $userModel->created_time    = date("Y-m-d H:i:s",time());
         $userModel->event_type      = $event_type;
         $userModel->save();
+
+        $status                 = $event_type==1 ? WeichatUserInfo::STATUS_OK : WeichatUserInfo::STATUS_CANCEL;
+        $is_receive_nearby_msg  = $event_type==1 ? WeichatUserInfo::IS_RECEIVE_NEARBY_MSG_YES : WeichatUserInfo::IS_RECEIVE_NEARBY_MSG_NO;
+        $this->updateWeichatStatus($openid,$status,$is_receive_nearby_msg);
     }
 
     private $_ticket_key = '_wechat_jsapi_ticket';
@@ -197,32 +203,30 @@ class WeichatBase
     // 获取当前登录用户的微信ID，如果用户未关注、取消关注 则返回false
     public function getLoggedUserWeichatID($user_id=''){
         $user_id    = $user_id ? $user_id : Yii::$app->user->id;
-        $openid_obj = WeichatUserInfo::find()->where(['userid'=>$user_id])->one();
+        $openid_obj = WeichatUserInfo::find()
+            ->where(['userid'=>$user_id,'status'=>WeichatUserInfo::STATUS_OK])
+            ->one();
         $openid     = isset($openid_obj->openid) ? $openid_obj->openid : 0;
-        // 是否取消关注
         if( $openid ){
-            // 最近一次取消关注
-            $tdweichat_obj  = WeichatUserLog::find()
-                ->where(['openid'=>$openid,'event_type'=>2])
-                ->addOrderBy(['id'=>SORT_DESC])
-                ->one();
-            $tdweichat_id   = isset($tdweichat_obj->id) ? $tdweichat_obj->id : 0;
-            if( $tdweichat_id ){
-                // 最近一次关注
-                $gzweichat_obj  = WeichatUserLog::find()
-                    ->where(['openid'=>$openid,'event_type'=>1])
-                    ->addOrderBy(['id'=>SORT_DESC])
-                    ->one();
-                $gzweichat_id   = isset($gzweichat_obj->id) ? $gzweichat_obj->id : 0;
-                // 如果当前已经取消关注，返回false
-                if( $tdweichat_id > $gzweichat_id ){
-                    return false;
-                }
-            }
             return $openid;
         }else{
             return false;
         }
+    }
+
+    public function hasFollowed($openid){
+        $openid_obj   = WeichatUserInfo::find()
+            ->where(['openid'=>$openid,'status'=>WeichatUserInfo::STATUS_OK])
+            ->one();
+        $has_followed = isset($openid_obj->id) ? true : false;
+        return $has_followed;
+    }
+
+    public function updateWeichatStatus($openid,$status,$is_receive_nearby_msg){
+        WeichatUserInfo::updateAll(
+            ['status'=>$status,'is_receive_nearby_msg'=>$is_receive_nearby_msg],
+            ['openid'=>$openid]
+        );
     }
 
     // 自动回复消息-关注
@@ -239,6 +243,13 @@ class WeichatBase
 
     // 自动回复消息-关键字
     public function autoResponseByKeyword($openid,$keyword=''){
+        if( strtolower(trim($keyword)) == 'tdd' ){
+            WeichatUserInfo::SwitchSubscribeDailyPush($openid,0);
+            return '你已经成功退订每日兼职推送，如需重新订阅，请回复dyd。';
+        }elseif( strtolower(trim($keyword)) == 'dyd' ){
+            WeichatUserInfo::SwitchSubscribeDailyPush($openid,1);
+            return '订阅每日兼职成功！每日兼职将每天为您推送最新最热的兼职信息。';
+        }
         $model  = WeichatAutoresponse::find()
             ->where(['status'=>1])
             ->andWhere(['like','keywords',"%".$keyword."%",false])
@@ -267,7 +278,7 @@ class WeichatBase
             }else{
                 $img         = Yii::$app->params['baseurl.static.m'].'/static/img/wx_list2.jpg';
             }
-            $url         = Yii::$app->params['baseurl.m']."/task/view?gid=".$v->gid;
+            $url         = Yii::$app->params['baseurl.wechat']."/view/job/job-detail.html?task=".$v->id;
             $msg_body   .= '
                 <item>
                 <Title><![CDATA['.$v->title.']]></Title> 

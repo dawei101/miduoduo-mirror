@@ -16,7 +16,7 @@ class BBaseController extends BaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['admin', 'product_manager'],
+                        'roles' => ['admin'],
                     ],
 
                 ],

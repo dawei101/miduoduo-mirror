@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <link rel="shortcut icon"  href="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/miduoduo.ico" />
-<title>米多多/兼职平台</title>
+<title>【米多多兼职】最靠谱有保障的兼职平台</title>
+<meta name="description" content="米多多兼职网，是中国最大的正规网上兼职平台。所有兼职招聘信息全部经过人工审核，不收任何押金和费用，安全有保障。免费找兼职，就上米多多兼职网。 miduoduo.cn" />
+<meta name="keywords" content="兼职网,大学生兼职网,正规网上兼职平台" />
 <link href="<?=Yii::$app->params["baseurl.static.www"]?>/static/css/miduoduo.css" type="text/css" rel="stylesheet" >
 </head>
 <body>
@@ -25,7 +27,7 @@
         <div class="erweibox"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei.jpg" width="140" height="140">
         <P>扫码关注微信号</P>
       </div>
-      <div class="erweibox"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei.jpg" width="140" height="140">
+      <div class="erweibox"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei-download-app.jpg" width="140" height="140">
         <P>下载安卓版APP</P>
       </div>
     </div>
@@ -81,7 +83,7 @@
   <ul>
     <li class="orange">派单员</li>
     <li class="blue">会展</li>
-    <li class="light-green">模特</li>
+    <li class="light-green"><a href="<?=Yii::$app->params['baseurl.model']?>">模特</a></li>
     <li class="dark-red">舞蹈教练</li>
     <li class="orange">翻译</li>
     <li class="blue">视频</li>

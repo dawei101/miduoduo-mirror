@@ -138,6 +138,9 @@ class Task extends \common\BaseActiveRecord
         'corp'=>'企业',
     ];
 
+    const ORIGIN_INTERNAL = 'internal';
+    const ORIGIN_CORP = 'corp';
+
     const STATUS_OK = 0;
     const STATUS_IS_CHECK = 30;
     const STATUS_UN_PASSED = 40;
@@ -187,7 +190,7 @@ class Task extends \common\BaseActiveRecord
             [['salary', 'salary_unit', 'from_date', 'to_date',
                 'need_quantity', 'detail',
                 'title', 'service_type_id'], 'required'],
-            ['company_id', 'required', 'message'=>'请选择一个已存在的公司'],
+            // ['company_id', 'required', 'message'=>'请选择一个已存在的公司'],
             [['id', 'clearance_period', 'salary_unit', 'need_quantity',
                 'got_quantity', 'user_id', 'service_type_id',
                 'city_id', 'district_id',
@@ -199,8 +202,6 @@ class Task extends \common\BaseActiveRecord
                 'created_time', 'updated_time'], 'safe'],
             [['gid'], 'string', 'max' => 1000],
             [['title', 'address'], 'string', 'max' => 500],
-            ['created_time', 'default', 'value'=>time(), 'on'=>'insert'],
-            ['updated_time', 'default', 'value'=>time(), 'on'=>'update'],
             ['got_quantity', 'default', 'value'=>0],
             ['status', 'default', 'value'=>0],
             [['contact', 'contact_phonenum'], 'required'],
@@ -280,6 +281,13 @@ class Task extends \common\BaseActiveRecord
             $this->user_id = $user_id;
             $this->gid = time() . mt_rand(100, 999) . $user_id;
         }
+        if ($this->origin==$this::ORIGIN_INTERNAL){
+            $this->order_time = date('Y-m-d H:i:s', strtotime('+1 day'));
+        } elseif ($this->origin==$this::ORIGIN_CORP){
+            $this->order_time = date('Y-m-d H:i:s', strtotime('+12 hour'));
+        } else {
+            $this->order_time = date('Y-m-d H:i:s', time());
+        }
         return parent::beforeSave($insert);
     }
 
@@ -355,7 +363,11 @@ class Task extends \common\BaseActiveRecord
             $arr = explode(',', $this->labels_str);
         }
         $arr[] = $this->clearance_period_label;
-        $arr[] = substr($this->from_date, 5) . '至' . substr($this->to_date, 5);
+        if( $this->is_longterm ){
+            $arr[] = '长期兼职';
+        }else{
+            $arr[] = substr($this->from_date, 5) . '至' . substr($this->to_date, 5);
+        }
         return $arr;
     }
 

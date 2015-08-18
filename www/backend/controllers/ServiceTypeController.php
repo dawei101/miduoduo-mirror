@@ -6,6 +6,8 @@ use Yii;
 use common\models\ServiceType;
 use common\models\ServiceTypeSearch;
 use backend\BBaseController;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -14,6 +16,22 @@ use yii\filters\VerbFilter;
  */
 class ServiceTypeController extends BBaseController
 {
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
+
 
     /**
      * Lists all ServiceType models.
