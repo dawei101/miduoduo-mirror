@@ -55,9 +55,9 @@ return [
             'showScriptName' => false,
             'enablePrettyUrl' => true,
             'rules' => [
-                // 详情
+                // 详情 =城市/服务类别/gid
                 '<param_one:(?!user)(?!resume)[a-z]+>/<param_two:(?!view)[a-z]+>/<gid:[0-9]+?>' =>'task/view',
-                // 列表
+                // 列表 =城市/(((index)?|task/)|((区域/)?服务类别/))
                 '<param_one:(?!user)(?!resume)[a-z]*>/<param_two:(?!view)[a-z]*>/?<param_three:[a-z]*?>'=>'task/index', 
             ],
         ],
