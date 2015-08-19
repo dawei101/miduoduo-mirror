@@ -37,7 +37,7 @@
         ],
         'manpower' => [
             'children' => [
-                'time_book' => ['/time_book', '考勤管理']
+                'time_book' => ['/time-book', '考勤管理']
             ],
             'iconfont' => '&#xe60b;',
             'title' => '人员管理',

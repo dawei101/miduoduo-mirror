@@ -11,7 +11,7 @@ use api\common\BaseActiveController;
  */
 class ScheduleController extends BaseActiveController
 {
-    public $modelClass = 'api\extensions\time_book\models\Schedule';
+    public $modelClass = 'common\models\extensions\time_book\Schedule';
 
     public $id_column = 'id';
     public $auto_filter_user = true;

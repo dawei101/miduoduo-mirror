@@ -10,9 +10,11 @@ use Yii;
  * @property string $created_time
  * @property integer $user_id
  * @property integer $task_id
+ * @property integer $address_id
  *
  * @property User $user
  * @property Task $task
+ * @property TaskAddress $address
  */
 class TaskApplicant extends \common\BaseActiveRecord
 {
@@ -101,6 +103,11 @@ class TaskApplicant extends \common\BaseActiveRecord
     public function getResume()
     {
         return $this->hasOne(Resume::className(), ['user_id' => 'user_id']);
+    }
+
+    public function getAddress()
+    {
+        return $this->hasOne(TaskAddress::className(), ['id' => 'address_id']);
     }
 
     /**

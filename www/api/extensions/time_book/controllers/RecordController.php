@@ -11,7 +11,7 @@ use api\common\BaseActiveController;
  */
 class RecordController extends BaseActiveController
 {
-    public $modelClass = 'api\extensions\time_book\models\Record';
+    public $modelClass = 'common\models\extensions\time_book\Record';
 
     public $id_column = 'id';
     public $auto_filter_user = true;

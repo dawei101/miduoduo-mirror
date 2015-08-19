@@ -5,6 +5,8 @@ namespace common\models;
 use Yii;
 use ReflectionClass;
 use common\models\TaskAddress;
+use common\models\TaskApplicant;
+use common\models\Resume;
 use common\models\Company;
 use common\models\District;
 use common\models\ServiceType;
@@ -445,6 +447,23 @@ class Task extends \common\BaseActiveRecord
         if ($this->company_id){
             return $this->company->introduction;
         }
+    }
+
+    public function getApplicants()
+    {
+        return $this->hasMany(TaskApplicant::className(), ['task_id'=>'id']);
+    }
+
+    public function getOkApplicants()
+    {
+        return $this->hasMany(TaskApplicant::className(),
+            ['task_id'=>'id', 'status'=>TaskApplicant::STATUS_APPLY_SUCCEED]);
+    }
+
+    public function getResumes()
+    {
+        return $this->hasMany(Resume::className(), ['user_id'=>'user_id'])
+            ->via('applicants');
     }
 
     public function fields()

@@ -1,10 +1,10 @@
 <?php
-namespace corp\models;
+namespace corp\forms;
 
-use common\models\User;
 use Yii;
 use yii\base\Model;
 
+use common\models\User;
 /**
  * Login form
  */

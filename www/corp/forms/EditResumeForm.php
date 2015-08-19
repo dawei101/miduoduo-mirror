@@ -1,10 +1,10 @@
 <?php
-namespace corp\models;
+namespace corp\forms;
+
+use Yii;
+use yii\base\Model;
 
 use common\models\Resume;
-use yii\base\Model;
-use Yii;
-
 /**
  * Signup form
  */

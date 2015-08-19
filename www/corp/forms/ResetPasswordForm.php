@@ -1,10 +1,11 @@
 <?php
-namespace corp\models;
+namespace corp\forms;
 
-use common\models\User;
+use Yii;
 use yii\base\InvalidParamException;
 use yii\base\Model;
-use Yii;
+
+use common\models\User;
 
 /**
  * Password reset form
