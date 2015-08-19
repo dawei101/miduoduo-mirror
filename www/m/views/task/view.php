@@ -27,7 +27,7 @@ $seo_code   = Seo::makeSeoCode($city,$block,$type,$clearance_type,$conpany,$task
 $this->title = '兼职详情';
 $this->page_title = $seo_code['title'];
 $this->page_keywords = $seo_code['keywords'];
-$this->page_description = $seo_code['description'];
+$this->page_description = strip_tags($seo_code['description']);
 
 $this->nav_left_link = 'javascript:window.history.back()';
 $this->nav_right_link = '/';
