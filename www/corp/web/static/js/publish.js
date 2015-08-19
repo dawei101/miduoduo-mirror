@@ -306,7 +306,9 @@ $(function(){
         current_poi.city = shi;
         current_poi.province = sheng;
         current_poi.title = address_info+$('#jquery-tagbox-text1').val();
-        pick_poi(current_poi);
+        if( current_poi.title.length > 0 ){
+            pick_poi(current_poi);
+        }
     });
 
     $("body").on("click", function(){
@@ -331,7 +333,7 @@ $(function(){
         //var code = (e.keyCode ? e.keyCode : e.which);
         //if( code == 13 ) {
         var has_space   = $(this).val().search(' ');
-        if( keywordlen > 2 && has_space < 0 ) {
+        if( keywordlen >= 2 && has_space < 0 ) {
             local.search(address_info+$(this).val());
             sr.html();
             return false;
@@ -353,9 +355,14 @@ $(function(){
         var parent_id  = $(this).val();
         $.ajax({ url: $("#api_url").text()+'/v1/district?filters=[["=","parent_id",'+parent_id+']]', context: document.body, success: function(data){
             var option_obj  = data;
-            var option_str  = '<option value="0">市</option>';
+            var option_str  = '';
             for( var i=0;i < option_obj.items.length;i++){
-                option_str  += '<option value="'+option_obj.items[i].id+'">'+option_obj.items[i].short_name+'</option>';
+                var shi_selected = '';
+                if( parent_id == 20 || parent_id == 2 || parent_id == 795 || parent_id == 2259 ){
+                    shi_selected = 'selected="selected"';
+                }
+                changeShi(option_obj.items[i].id);
+                option_str  += '<option '+shi_selected+' value="'+option_obj.items[i].id+'">'+option_obj.items[i].short_name+'</option>';
             }
             option_str  += '';
             $("#address_shi").html(option_str);
@@ -363,9 +370,16 @@ $(function(){
     });
     // 选择市
     $('#address_shi').on('change',function(){
+        changeShi();
+    });
+    function changeShi(parent_id=0){
         $('#jquery-tagbox-text1').removeAttr('readonly');
+        $("#address_qu").html('<option value="0">区/县</option');
 
-        var parent_id  = $(this).val();
+        var parent_id  = parent_id ? parent_id : $('#address_shi').val();
+        if( parent_id == 0 ){
+            return false;
+        }
         $.ajax({ url: $("#api_url").text()+'/v1/district?filters=[["=","parent_id",'+parent_id+']]', context: document.body, success: function(data){
             var option_obj  = data;
             var option_str  = '<option value="0">区/县</option><option value="-1">不限工作地点</option>';
@@ -375,7 +389,7 @@ $(function(){
             option_str  += '';
             $("#address_qu").html(option_str);
         }});
-    });
+    }
     // 不限工作地点（区县）
     $('#address_qu').on('change',function(){
         var parent_id  = $(this).val();
