@@ -55,10 +55,13 @@ return [
             'showScriptName' => false,
             'enablePrettyUrl' => true,
             'rules' => [
-                // 详情
-                '<param_one:(?!user)(?!resume)[a-z]+>/<param_two:(?!view)[a-z]+>/<gid:[0-9]+?>' =>'task/view',
-                // 列表
-                '<param_one:(?!user)(?!resume)[a-z]*>/<param_two:(?!view)[a-z]*>/?<param_three:[a-z]*?>'=>'task/index', 
+                // 详情 =城市/服务类别/gid
+                '<param_one:[a-z]+>/<param_two:[a-z]+>/<gid:\d{10,40}?>'=>'task/view',
+                [
+                    'class' => 'm\SeoUrlRule',
+                    'pattern'=> '',
+                    'route'=>'',
+                ]
             ],
         ],
         'view' => [

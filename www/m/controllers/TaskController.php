@@ -102,17 +102,31 @@ class TaskController extends \m\MBaseController
             ]);
     }
 
-    public function actionIndex()
+    public function actionIndex($city_pinyin='beijing', $type_pinyin='', $district_pinyin='')
     {
-        $seo_params = Seo::parseTaskListParam();
-        
+        $district = null;
+        $city = District::findOne(
+            ['seo_pinyin'=> $city_pinyin, 'level'=>'city', 'is_alive'=> 1]);
+        $stype = ServiceType::findOne(['pinyin'=> $type_pinyin]);
+        if ($city && $district_pinyin){
+            $district = District::findOne(
+                ['seo_pinyin'=>$district_pinyin, 'parent_id'=> $city->id]);
+        }
+
         //只有北京
-        $city_id        = $seo_params['city_id'] ? $seo_params['city_id'] : 3;
-        $district       = $seo_params['block_id'] ? $seo_params['block_id'] : Yii::$app->request->get('district');
-        $service_type   = $seo_params['type_id'] ? $seo_params['type_id'] : Yii::$app->request->get('service_type');
+        $city_id = $city?$city->id:'';
+        $district = $district?$district->id:'';
+        $service_type = $stype?$stype->id:'';
         if (empty($city_id)){
             $this->render404('未知的城市');
         }
+
+        $seo_params = [
+            'city_pinyin'=>$city_pinyin,
+            'district_pinyin' => $district_pinyin,
+            'block_pinyin' => $district_pinyin,
+            'type_pinyin' => $type_pinyin,
+        ];
 
 
         $query = Task::find()->with('service_type');
