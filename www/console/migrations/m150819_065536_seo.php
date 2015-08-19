@@ -9,7 +9,7 @@ class m150819_065536_seo extends BaseMigration
     {
         $sqls = "
 ALTER TABLE `jz_district` ADD `seo_pinyin` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL;
-UPDATE `jz_district` SET `seo_pinyin`=REPLACE(`pinyin`," ","");
+UPDATE `jz_district` SET `seo_pinyin`=REPLACE(`pinyin`,' ','');
         ";
         $this->execSqls($sqls);
     }
