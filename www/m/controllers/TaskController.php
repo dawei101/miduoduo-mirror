@@ -20,6 +20,7 @@ use yii\data\Pagination;
 use common\models\WeichatPushSetTemplatePushItem;
 use common\models\ConfigRecommend;
 use common\models\UserLocation;
+use common\Seo;
 
 class TaskController extends \m\MBaseController
 {
@@ -101,18 +102,34 @@ class TaskController extends \m\MBaseController
             ]);
     }
 
-    public function actionIndex()
+    public function actionIndex($city_pinyin='beijing', $type_pinyin='', $district_pinyin='')
     {
+        $district = null;
+        $city = District::findOne(
+            ['seo_pinyin'=> $city_pinyin, 'level'=>'city', 'is_alive'=> 1]);
+        $stype = ServiceType::findOne(['pinyin'=> $type_pinyin]);
+        if ($city && $district_pinyin){
+            $district = District::findOne(
+                ['seo_pinyin'=>$district_pinyin, 'parent_id'=> $city->id]);
+        }
+
         //只有北京
-        $city_id = 3;
-        $district = Yii::$app->request->get('district');
-        $service_type = Yii::$app->request->get('service_type');
+        $city_id = $city?$city->id:'';
+        $district = $district?$district->id:'';
+        $service_type = $stype?$stype->id:'';
         if (empty($city_id)){
             $this->render404('未知的城市');
         }
 
+        $seo_params = [
+            'city_pinyin'=>$city_pinyin,
+            'district_pinyin' => $district_pinyin,
+            'block_pinyin' => $district_pinyin,
+            'type_pinyin' => $type_pinyin,
+        ];
 
-        $query = Task::find();
+
+        $query = Task::find()->with('service_type');
         $query->where(['status'=>Task::STATUS_OK]);
         $query->andWhere(['>', 'to_date', date("Y-m-d")]);
 
@@ -158,7 +175,8 @@ class TaskController extends \m\MBaseController
                  'current_district' => 
                     empty($district)?$city:District::findOne($district),
                  'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
-                 'location' => $location,    
+                 'location' => $location,   
+                 'seo_params'=> $seo_params,
         ]);
     }
 
@@ -171,7 +189,7 @@ class TaskController extends \m\MBaseController
         $task = null;
         if ($gid){
             $task = Task::find()->where(['gid'=>$gid])
-                ->with('city')->with('district')->one();
+                ->with('city')->with('district')->with('addresses')->one();
         }
         if ($task){
             $collected = false;

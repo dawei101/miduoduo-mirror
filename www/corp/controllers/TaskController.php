@@ -72,6 +72,18 @@ class TaskController extends CBaseController
 
             $company_id = $company->id;
             $data = Yii::$app->request->post();
+
+            $data['is_allday']   = isset($data['is_allday']) ? $data['is_allday'] : 0;
+            $data['is_longterm'] = isset($data['is_longterm']) ? $data['is_longterm'] : 0;
+
+            if( $data['is_longterm'] ){
+                $data['to_date']    = '2115-01-01';
+            }
+            if( $data['is_longterm'] ){
+                $data['from_time']  = '00:00:01';
+                $data['to_time']    = '23:59:59';
+            }
+
             $data['company_id'] = $company_id;
             $data['user_id'] = Yii::$app->user->id;
             $model->setAttributes($data, false);
@@ -154,7 +166,19 @@ class TaskController extends CBaseController
                 return $this->render('none_user_task_promission',['user_task_promission'=>$user_task_promission]);
                 exit;
             }
-            $task->setAttributes(Yii::$app->request->post(), false);
+
+            $data   = Yii::$app->request->post();
+            $data['is_allday']   = isset($data['is_allday']) ? $data['is_allday'] : 0;
+            $data['is_longterm'] = isset($data['is_longterm']) ? $data['is_longterm'] : 0;
+            if( $data['is_longterm'] ){
+                $data['to_date']    = '2115-01-01';
+            }
+            if( $data['is_longterm'] ){
+                $data['from_time']  = '00:00:01';
+                $data['to_time']    = '23:59:59';
+            }
+
+            $task->setAttributes($data, false);
 
             $clearance_period = Yii::$app->request->post('clearance_period');
             if ($clearance_period) {

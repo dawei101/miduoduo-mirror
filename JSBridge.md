@@ -106,7 +106,7 @@ function CallBack(str) {
 
 * 获取地址
 ```
-    window.MDDNative.address(callback)
+    window.MDDNative.address(message,callback)
 
     callback(address)  address: json 字符串
 ```

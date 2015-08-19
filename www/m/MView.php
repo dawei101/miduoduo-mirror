@@ -12,6 +12,8 @@ class MView extends \yii\web\View
     public $nav_right_link = null;
     public $nav_right_title = '';
     public $page_title = '';
+    public $page_keywords;
+    public $page_description;
 
     public $wechat_apis = [];
 }

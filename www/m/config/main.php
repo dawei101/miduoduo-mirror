@@ -54,6 +54,15 @@ return [
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
             'enablePrettyUrl' => true,
+            'rules' => [
+                // 详情 =城市/服务类别/gid
+                '<param_one:[a-z]+>/<param_two:[a-z]+>/<gid:\d{10,40}?>'=>'task/view',
+                [
+                    'class' => 'm\SeoUrlRule',
+                    'pattern'=> '',
+                    'route'=>'',
+                ]
+            ],
         ],
         'view' => [
             'class' => 'm\MView',
