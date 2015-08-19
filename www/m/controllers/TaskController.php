@@ -104,7 +104,7 @@ class TaskController extends \m\MBaseController
 
     public function actionIndex()
     {
-        $seo_params = Seo::parseTaskListParam();
+        $seo_params = Seo::mParseTaskListParam();
         
         //只有北京
         $city_id        = $seo_params['city_id'] ? $seo_params['city_id'] : 3;

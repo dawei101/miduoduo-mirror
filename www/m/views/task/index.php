@@ -59,7 +59,7 @@ $this->wechat_apis = ['getLocation'];
                 <?php } ?>
             </li>
 <?php foreach($districts as $district) { ?>
-    <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$district->short_pinyin?>/<?=$seo_params['type_pinyin']?>"><?=$district->name?></a></li>
+    <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$district->seo_pinyin?>/<?=$seo_params['type_pinyin']?>"><?=$district->name?></a></li>
 <?php } ?>
           </ul>
         </dd>
