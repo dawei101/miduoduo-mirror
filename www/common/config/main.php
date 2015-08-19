@@ -88,6 +88,7 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
+                    'levels' => ['error'],
                 ],
                 [
 

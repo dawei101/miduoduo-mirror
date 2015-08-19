@@ -29,6 +29,7 @@ return [
     'host_ip' => '',
 
     'downloadApp.android' => 'http://dd.myapp.com/16891/BFBA839C0F4B194CE8F700FAACBA1E89.apk',
+    'downloadApp.ios' => 'https://itunes.apple.com/us/app/mi-duo-duo-jian-zhi/id1016364056?mt=8&uo=4',
 
     'wechat_payment.id' => '',
     'wechat_payment.key' => '',
