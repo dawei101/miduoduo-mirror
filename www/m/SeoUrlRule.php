@@ -22,12 +22,14 @@ class SeoUrlRule extends UrlRule
         if (!$re){
             $cities = District::findAll(['level'=>'city', 'is_alive'=>1]);
             $cs_pinyins= [];
+            $cids = [];
             foreach($cities as $city){
                 $cs_pinyins[] = $city->seo_pinyin;
+                $cids[] = $city->id;
             }
             $city_re = implode('|', $cs_pinyins);
             $districts  = District::findAll(
-                ['level'=>'district', 'is_alive'=>1]);
+                ['level'=>'district', 'parent_id'=> $cids]);
 
             $districts_pinyins = [];
             foreach($districts as $district){
