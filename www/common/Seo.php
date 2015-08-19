@@ -47,64 +47,20 @@ class Seo
         return $seo_code;
     }
 
-    public static function parseTaskListParam(){
-        $param_one      = Yii::$app->request->get('param_one');
-        $param_two      = Yii::$app->request->get('param_two');
-        $param_three    = Yii::$app->request->get('param_three');
-
-        if( $param_one ){
-            $city_model = District::find()->where(['short_pinyin'=>$param_one,'level'=>'city'])->one();
-            $city_id    = isset($city_model->id) ? $city_model->id : '';
-            $city_pinyin= $param_one;
-        }else{
-            $city_id    = 3;
-            $city_pinyin= 'bj';
-        }
-        
-        if( $param_two != 'task' ){
-            if( $param_two && $param_three ){
-                $type_model = ServiceType::find()->where(['pinyin'=>$param_three])->one();
-                $type_id    = isset($type_model->id) ? $type_model->id : '';
-                $type_pinyin= $param_three;
-                
-                $block_model = District::find()
-                    ->where(['short_pinyin'=>$param_two,'level'=>'district','parent_id'=>$city_id])
-                    ->one();
-                $block_id    = isset($block_model->id) ? $block_model->id : '';
-                $block_pinyin= $param_two;
-            }elseif( $param_two ){
-                $type_model = ServiceType::find()->where(['pinyin'=>$param_two])->one();
-                $type_id    = isset($type_model->id) ? $type_model->id : '';
-
-                if( !$type_id ){
-                    $block_model = District::find()->where(['short_pinyin'=>$param_two,'level'=>'district','parent_id'=>$city_id])->one();
-                    $block_id    = isset($block_model->id) ? $block_model->id : '';
-                    $block_pinyin= $param_two;
-                    $type_pinyin = '';
-                }else{
-                    $block_id    = '';
-                    $block_pinyin= '';
-                    $type_pinyin = $param_two;
-                }
-            }else{
-                $type_id     = '';
-                $block_id    = '';
-                $type_pinyin = '';
-                $block_pinyin= '';
-            }
-        }else{
-            $block_id    = '';
-            $type_id     = '';
-            $type_pinyin = '';
-            $block_pinyin= '';
-        }
+    public static function mParseTaskListParam(){
+        $city_id        = Yii::$app->request->get('city_id');
+        $districts_id   = Yii::$app->request->get('districts_id');
+        $type_id        = Yii::$app->request->get('type_id');
+        $city_pinyin        = Yii::$app->request->get('city_pinyin');
+        $districts_pinyin   = Yii::$app->request->get('districts_pinyin');
+        $type_pinyin        = Yii::$app->request->get('type_pinyin');        
         
         $seo_params = [
             'city_id'   => $city_id,
-            'block_id'  => $block_id,
+            'block_id'  => $districts_id,
             'type_id'   => $type_id,
             'city_pinyin'   => $city_pinyin,
-            'block_pinyin'  => $block_pinyin,
+            'block_pinyin'  => $districts_pinyin,
             'type_pinyin'   => $type_pinyin,
         ];
         //print_r($seo_params);exit;

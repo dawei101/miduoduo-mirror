@@ -9,6 +9,7 @@ use common\Seo;
 $districts = District::find()->where(['parent_id'=>$city->id])->all();
 $service_types = ServiceType::find()->where(['status'=>0])->all();
 
+
 /********* seo start ***********/
 $seocity    = isset($city->name)?$city->name:'';
 if( $current_district->id != $city->id ){
@@ -50,7 +51,11 @@ $this->wechat_apis = ['getLocation'];
 </dt><span class="inverted-triangle"></span>
         <dd> 
           <ul>
-            <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$seo_params['type_pinyin']?>">全城</a></li>
+    <?php 
+        $url = '/' . $seo_params['city_pinyin'] . '/'
+            . ($seo_params['type_pinyin']?($seo_params['type_pinyin'].'/'):'');
+    ?>
+        <li><a href="<?=$url?>">全城</a></li>
             <li style="display: none;">
                 <?php if($location['id']){ ?>
                     <a href="/task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a>
@@ -59,7 +64,12 @@ $this->wechat_apis = ['getLocation'];
                 <?php } ?>
             </li>
 <?php foreach($districts as $district) { ?>
-    <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$district->short_pinyin?>/<?=$seo_params['type_pinyin']?>"><?=$district->name?></a></li>
+    <?php 
+        $url = '/' . $seo_params['city_pinyin'] . '/'
+            . $district->seo_pinyin . '/'
+            . ($seo_params['type_pinyin']?($seo_params['type_pinyin'].'/'):'');
+    ?>
+    <li><a href="<?=$url?>"><?=$district->name?></a></li>
 <?php } ?>
           </ul>
         </dd>
@@ -68,9 +78,18 @@ $this->wechat_apis = ['getLocation'];
         <dt><?=$current_service_type?$current_service_type->name:'分类 '?><span class="caret"></span> </dt>
         <dd> 
           <ul>
-    <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$seo_params['block_pinyin']?>">全部</a></li>
+    <?php 
+        $url = '/' . $seo_params['city_pinyin'] . '/'
+            . ($seo_params['block_pinyin']?($seo_params['block_pinyin'].'/'):'');
+    ?>
+    <li><a href="<?=$url?>">全部</a></li>
 <?php foreach($service_types as $st) { ?>
-    <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$seo_params['block_pinyin']?><?=$seo_params['block_pinyin']?'/':''?><?=$st['pinyin']?>"><?=$st->name?></a></li>
+    <?php 
+        $url = '/' . $seo_params['city_pinyin'] . '/'
+            . ($seo_params['block_pinyin']?($seo_params['block_pinyin'].'/'):'')
+            . $st['pinyin'] . '/';
+    ?>
+    <li><a href="<?=$url?>"><?=$st->name?></a></li>
 <?php } ?>
           </ul>
         </dd>
