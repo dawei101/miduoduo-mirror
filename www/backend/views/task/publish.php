@@ -14,10 +14,7 @@ $api_url= Yii::$app->params['baseurl.api'];
 $this->title = '米多多兼职平台';
 ?>
 <!-- InstanceBeginEditable name="EditRegion3" -->
-<div class="body-box">
-
-               
-
+<div class="body-box" style="min-width: 1100px;">
                 <div class="col-sm-10 padding-0 ">
                     <div class="right-center">
                         <div class="conter-title">发布兼职职位</div>
@@ -148,7 +145,6 @@ $this->title = '米多多兼职平台';
                                             <?php } ?>
                                         </select>
                                         <select id="address_shi" name="city_id">
-                                            <option value="0">市</option>
                                             <?php foreach($shi as $k=>$v){ ?>
                                                 <option value="<?=$v->id;?>"
                                                 <?=($v->id==3)?'selected=selected':''?>
@@ -758,9 +754,9 @@ $(function(){
     });
     // 选择市
     $('#address_shi').on('change',function(){
-        changeShi();
+        changeShi(0);
     });
-    function changeShi(parent_id=0){
+    function changeShi(parent_id){
         $('#jquery-tagbox-text1').removeAttr('readonly');
         $("#address_qu").html('<option value="0">区/县</option');
 

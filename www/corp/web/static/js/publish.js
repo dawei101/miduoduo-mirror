@@ -370,9 +370,9 @@ $(function(){
     });
     // 选择市
     $('#address_shi').on('change',function(){
-        changeShi();
+        changeShi(0);
     });
-    function changeShi(parent_id=0){
+    function changeShi(parent_id){
         $('#jquery-tagbox-text1').removeAttr('readonly');
         $("#address_qu").html('<option value="0">区/县</option');
 
