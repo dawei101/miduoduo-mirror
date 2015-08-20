@@ -54,8 +54,15 @@ class WeichatErweimaLogController extends BBaseController
         $scan_count = WeichatErweimaLog::find()->where(['erweima_id'=>$erweimaid])->count();
         WeichatErweima::updateAll(['scan_num'=>$scan_count],['id'=>$erweimaid]);
 
-        $user_count = WeichatUserInfo::findBySql("
-            SELECT COUNT(distinct(w.id)) user_count
+	$scanuser_count = WeichatErweimaLog::findBySql("
+		SELECT COUNT(DISTINCT(openid)) scanuser_count
+		FROM jz_weichat_erweima_log 
+		WHERE erweima_id=".$erweimaid."
+	")->asArray()->all();
+	$scanuser_count = $scanuser_count[0]['scanuser_count'] ? $scanuser_count[0]['scanuser_count'] : 0;
+        
+	$user_count = WeichatUserInfo::findBySql("
+            SELECT COUNT(distinct(l.openid)) user_count
             FROM jz_weichat_user_info w
             LEFT JOIN jz_weichat_erweima_log l ON w.openid=l.openid
             WHERE l.follow_by_scan=1
@@ -64,7 +71,7 @@ class WeichatErweimaLogController extends BBaseController
         $user_count = count($user_count) ? $user_count[0]['user_count'] : 0;
 
         $resume_count = WeichatUserInfo::findBySql("
-            SELECT COUNT(distinct(r.id)) user_count
+            SELECT COUNT(distinct(l.openid)) user_count
             FROM jz_resume r
             LEFT JOIN jz_weichat_user_info w ON r.user_id=w.userid
             LEFT JOIN jz_weichat_erweima_log l ON w.openid=l.openid
@@ -78,6 +85,7 @@ class WeichatErweimaLogController extends BBaseController
             'user_count'    => $user_count,
             'resume_count'    => $resume_count,
             'scan_count'    => $scan_count,
+	    'scanuser_count' => $scanuser_count,
         ]);
     }
 
