@@ -1,17 +1,16 @@
 <?php
 
 use yii\db\Schema;
-use yii\db\Migration;
+use console\BaseMigration;
 
-class m150817_071751_support_extensions extends Migration
+class m150817_071751_support_extensions extends BaseMigration
 {
     public function up()
     {
-
         $sqls = "
-            
+            alter table jz_task add time_book_opened bool not null default false;
             ";
-
+        return $this->execSqls($sqls);
 
     }
 

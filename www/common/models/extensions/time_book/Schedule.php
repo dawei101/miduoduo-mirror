@@ -20,6 +20,7 @@ use Yii;
  */
 class Schedule extends \common\BaseActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -37,6 +38,7 @@ class Schedule extends \common\BaseActiveRecord
             [['from_datetime', 'to_datetime'], 'safe'],
             [['allowable_distance_offset'], 'integer'],
             [['lat', 'lng'], 'number'],
+            [['date'], 'safe'],
             [['user_id', 'task_id'], 'string', 'max' => 200]
         ];
     }

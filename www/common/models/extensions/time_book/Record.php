@@ -19,9 +19,10 @@ use Yii;
  */
 class Record extends \common\BaseActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+
+    const EVENT_ON = 1;
+    const EVENT_OFF = 2;
+
     public static function tableName()
     {
         return 'ext_time_book_record';

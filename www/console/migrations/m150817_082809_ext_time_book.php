@@ -36,6 +36,11 @@ CREATE TABLE IF NOT EXISTS `ext_time_book_record` (
 ) ENGINE = InnoDB ;
 alter table ext_time_book_record add owner_id varchar(200) not null;
 alter table ext_time_book_schedule add owner_id varchar(200) not null;
+
+alter table ext_time_book_schedule add on_late smallint not null default 0;
+alter table ext_time_book_schedule add off_early smallint not null default 0;
+alter table ext_time_book_schedule add out_work smallint not null default 0;
+alter table ext_time_book_schedule add note varchar(2000) default null;
             ";
         $this->execSqls($sqls);
     }

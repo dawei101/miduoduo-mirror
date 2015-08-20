@@ -34,7 +34,11 @@ $this->title = '米多多兼职平台';
                     </div>
                     <div class="tab_2">
                     <div class="tab_text">状态：<?=$task->status_label?></div>
-                        <a href="/time-book/worker-summary?gid=<?=$task->gid?>">管理</a>
+                        <?php if ($task->time_book_opened) { ?>
+                            <a href="/time-book/worker-summary?gid=<?=$task->gid?>">管理</a>
+                        <?php } else {?>
+                            <a href="/time-book/worker-summary?gid=<?=$task->gid?>">打开考勤</a>
+                        <?php }?>
                     </div>
                 </dd>
                 <?php } ?>

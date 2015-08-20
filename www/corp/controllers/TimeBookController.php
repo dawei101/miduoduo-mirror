@@ -2,13 +2,17 @@
 namespace corp\controllers;
 
 use Yii;
-use corp\CBaseController;
 use yii\web\HttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\Pagination;
+use corp\CBaseController;
+
+use common\Utils;
 use common\models\Task;
 use common\models\TaskApplicant;
+use corp\models\time_book\Record;
+use corp\models\time_book\Schedule;
 
 
 /**
@@ -29,10 +33,19 @@ class TimeBookController extends CBaseController
 
         $tasks = $query->offset($pages->offset)
             ->limit($pages->limit)->all();
+
         return $this->render('index', [
             'tasks' => $tasks,
             'pages' => $pages,
         ]);
+    }
+
+    public function openTimeBook($task)
+    {
+        if (!$task->time_book_opened){
+            $task->time_book_opened = true;
+            $task->save();
+        }
     }
 
     public function actionWorkerSummary($gid)
@@ -42,6 +55,7 @@ class TimeBookController extends CBaseController
         if (!$task){
             throw new HttpException(404, '未知的任务');
         }
+        $this->openTimeBook($task);
 
         $query = $task->getApplicants()->with('resume')->with('address');
 
@@ -52,10 +66,32 @@ class TimeBookController extends CBaseController
         $applicants = $query->offset($pages->offset)
             ->limit($pages->limit)->all();
 
+        $user_ids = [];
+
+        foreach ($applicants as $a){
+            $user_ids[] = $a->user_id;
+        }
+
+        $ss = Schedule::find()
+            ->select("
+                count(1) as count,
+                sum('on_late') as on_late_count,
+                sum('off_early') as off_late_count,
+                sum('out_work') as out_work_count,
+                sum(CASE WHEN note is null OR note = '' THEN 0 ELSE 1 END) as noted_count
+            ")
+            ->groupBy('user_id')
+            ->where(['task_id'=>$task->id, 'user_id'=>$user_ids])->all();
+        $summaries = [];
+        foreach ($ss as $s){
+            $summaries[$s->user_id] = $s;
+        }
+
         return $this->render('summary', [
             'task' => $task,
             'subject' => 'worker',
             'models' => $applicants,
+            'summaries' => $summaries,
             'pages' => $pages,
         ]);
     }
@@ -102,6 +138,19 @@ class TimeBookController extends CBaseController
     public function actionDetail($task_id, $user_id=null, $date=null, $address_id=null)
     {
         return $this->render('detail', [
+        ]);
+    }
+
+    public function actionAdd($gid)
+    {
+
+        $task = Task::find()->with('resumes')->with('addresses')
+            ->where(['gid'=> $gid, 'user_id'=>Yii::$app->user->id])->one();
+        if (!$task){
+            throw new HttpException(404, '未知的任务');
+        }
+        return $this->render('add', [
+            'task' => $task,
         ]);
     }
 }

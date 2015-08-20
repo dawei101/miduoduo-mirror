@@ -215,6 +215,7 @@ class Task extends \common\BaseActiveRecord
                 'face_requirement', 'talk_requirement', 'health_certificated',
                 'weight_requirement', 'height_requirement',
                 ], 'integer'],
+            ['time_book_opened', 'boolean'],
         ];
     }
 
@@ -452,12 +453,6 @@ class Task extends \common\BaseActiveRecord
     public function getApplicants()
     {
         return $this->hasMany(TaskApplicant::className(), ['task_id'=>'id']);
-    }
-
-    public function getOkApplicants()
-    {
-        return $this->hasMany(TaskApplicant::className(),
-            ['task_id'=>'id', 'status'=>TaskApplicant::STATUS_APPLY_SUCCEED]);
     }
 
     public function getResumes()
