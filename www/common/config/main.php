@@ -105,7 +105,7 @@ return [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['info'],
                     'categories' => ['payment'],
-                    'logFile' => '/service/data/logs/payment.log',
+                    'logFile' => '/service/data/logs/payment/payment.log',
                     'logVars'   => [],
                     'exportInterval'  => 0,
                     'maxFileSize' => 1024 * 10,
