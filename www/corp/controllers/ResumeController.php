@@ -77,6 +77,7 @@ class ResumeController extends CBaseController
         $resume = TaskApplicant::findOne(['id' => $aid]);
         $resume->status = 10;
         if ($resume->save()) {
+            $this->pushResultMsg($resume->task_id,Yii::$app->user->id,TaskApplicant::STATUS_APPLY_SUCCEED);
             return $this->renderJson(['result' => true]);
         }
         return $this->renderJson(['result' => false, 'error' => $resume->errors]);
@@ -140,6 +141,7 @@ class ResumeController extends CBaseController
         $resume = TaskApplicant::findOne(['id' => $aid]);
         $resume->status = 20;
         if ($resume->save()) {
+            $this->pushResultMsg($resume->task_id,Yii::$app->user->id,TaskApplicant::STATUS_APPLY_FAILED);
             return $this->renderJson(['result' => true]);
         }
         return $this->renderJson(['result' => false, 'error' => $resume->errors]);
@@ -148,7 +150,7 @@ class ResumeController extends CBaseController
     protected function pushPassNoticeMsg($task_id,$user_id){
         $weichat_base   = new WeichatBase();
         $weichat_id     = $weichat_base::getLoggedUserWeichatID($user_id);
-        $task   = Task::find()->where(['id'=>$task_id,'user_id'=>$user_id])->with('notice')->one();
+        $task   = Task::find()->where(['id'=>$task_id])->with('notice')->one();
         if( $weichat_id ){ 
             Yii::$app->wechat_pusher->toApplicantTaskAppliedPass($task,$weichat_id);
         }else{
@@ -158,6 +160,35 @@ class ResumeController extends CBaseController
                 ['task'=>$task, 'resume'=>$resume],
                 'to-applicant-task-applied-pass'
             );
+        }
+    }
+
+    public function pushResultMsg($task_id,$user_id,$status){
+        $weichat_base   = new WeichatBase();
+        $weichat_id     = $weichat_base::getLoggedUserWeichatID($user_id);
+        $task   = Task::find()->where(['id'=>$task_id])->one();
+        if( $status == TaskApplicant::STATUS_APPLY_SUCCEED ){
+            if( $weichat_id ){
+                Yii::$app->wechat_pusher->toApplicantTaskAppliedDonePassYes($task,$weichat_id);
+            }else{
+                $resume = Resume::find()->where(['user_id'=>$user_id])->one();
+                Yii::$app->sms_pusher->push(
+                    $resume->phonenum,
+                    ['task'=>$task,'resume'=>$resume],
+                    'to-applicant-task-applied-pass-yes'
+                );
+            }
+        }else{
+            if( $weichat_id ){
+                Yii::$app->wechat_pusher->toApplicantTaskAppliedDonePassNo($task,$weichat_id);
+            }else{
+                $resume = Resume::find()->where(['user_id'=>$user_id])->one();
+                Yii::$app->sms_pusher->push(
+                    $resume->phonenum,
+                    ['task'=>$task,'resume'=>$resume],
+                    'to-applicant-task-applied-pass-no'
+                );
+            }
         }
     }
 }
