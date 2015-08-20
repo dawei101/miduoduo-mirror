@@ -1,4 +1,3 @@
-
 $(function() {
       $(".tagBox-add-tag").hide();
 });
@@ -233,42 +232,114 @@ $(function(){
          sr.html(lis);
          sr.find('li').each(function(){
             $(this).click(function(){
-
                 var title = $(this).find('h2').html();
-                $('#jquery-tagbox-text1').val(title);
+                $('#jquery-tagbox-text1').val(title+' ');
+                $('#jquery-tagbox-text1').focus();
                 sr.hide();
                 var index = $(this).attr('idx');
                 current_poi = pois[index];
             });
          })
-         sr.show();
+         
+
+            var qu_id  = $("#address_qu").val();
+            if( qu_id == -1 ){
+                // 不限工作地点（区县）
+                var index = $(this).attr('idx');
+                current_poi = pois[0];
+
+                var sheng       = '';
+                var sheng_show  = '';
+                var shi     = '北京';
+                if( $("#address_sheng").val() > 0 ){
+                    sheng      = $("#address_sheng").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+                    sheng_show = sheng;
+                    if( sheng == '北京 ' || sheng == '天津 ' || sheng == '上海 ' || sheng == '重庆 ' ){
+                        sheng_show = '';
+                    }
+                }
+                if( $("#address_shi").val() > 0 ){
+                    shi  = $("#address_shi").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+                }
+                var address_info = sheng_show+shi;
+                if(address_info.length == 0) return;
+                current_poi.city = shi;
+                current_poi.province = sheng;
+                current_poi.title = address_info;
+                pick_poi(current_poi);
+            }else{
+                sr.show();
+            }
+
        }
      }
     };
-    $("body").on("click", function(){
-        $("#search-result").hide();
-    });
-    var local = new BMap.LocalSearch(map, options);
-    $('#jquery-tagbox-text1').keypress(function(e){
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if(code == 13) {
-            local.search($(this).val());
-            sr.html();
-            return false;
-        }
-    });
+
     $('.tianj').click(function(){
+        var sheng   = '';
+        var sheng_show = '';
+        var shi     = '北京';
+        var qu      = '';
+        if( $("#address_sheng").val() > 0 ){
+            sheng     = $("#address_sheng").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+            sheng_show= sheng;
+            if( sheng == '北京 ' || sheng == '天津 ' || sheng == '上海 ' || sheng == '重庆 ' ){
+                sheng_show = '';
+            }
+        }
+        if( $("#address_shi").val() > 0 ){
+            shi  = $("#address_shi").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+        }
+        if( $("#address_qu").val() > 0 ){
+            qu   = $("#address_qu").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+        }
+        var address_info = sheng_show+shi+qu;
+
         if($('#jquery-tagbox-text1').val().length == 0) return;
         if(current_poi === false){
             current_poi = {};
             current_poi.address = '';
-            current_poi.city = '北京';
+            current_poi.city = shi;
             current_poi.province = '';
             current_poi.point = {lat:0, lng:0};
         }
-        current_poi.title = $('#jquery-tagbox-text1').val();
-        pick_poi(current_poi);
+        current_poi.city = shi;
+        current_poi.province = sheng;
+        current_poi.title = address_info+$('#jquery-tagbox-text1').val();
+        if( current_poi.title.length > 0 ){
+            pick_poi(current_poi);
+        }
     });
+
+    $("body").on("click", function(){
+        $("#search-result").hide();
+    });
+    var local = new BMap.LocalSearch(map, options);
+    $('#jquery-tagbox-text1').keyup(function(e){
+        var sheng   = '';
+        var shi     = '';
+        var qu      = '';
+        if( $("#address_sheng").val() > 0 ){
+            sheng= $("#address_sheng").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+        }
+        if( $("#address_shi").val() > 0 ){
+            shi  = $("#address_shi").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+        }
+        if( $("#address_qu").val() > 0 ){
+            qu   = $("#address_qu").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+        }
+        var address_info = sheng+shi+qu;
+        var keywordlen = $(this).val().length;
+        //var code = (e.keyCode ? e.keyCode : e.which);
+        //if( code == 13 ) {
+        var has_space   = $(this).val().search(' ');
+        if( keywordlen >= 2 && has_space < 0 ) {
+            local.search(address_info+$(this).val());
+            sr.html();
+            return false;
+        }
+    });
+
     $('#selected-address div.p-box span').click(function(){
         var aid = $(this).parent().attr('id');
         remove_address(aid);
@@ -276,5 +347,69 @@ $(function(){
         $(this).parent().remove();
     });
 
-});
+    // 选择省份
+    $('#address_sheng').on('change',function(){
+        $('#jquery-tagbox-text1').removeAttr('readonly');
+        $("#address_qu").html('<option value="0">区/县</option><option value="-1">不限工作地点</option>');
 
+        var parent_id  = $(this).val();
+        $.ajax({ url: $("#api_url").text()+'/v1/district?filters=[["=","parent_id",'+parent_id+']]', context: document.body, success: function(data){
+            var option_obj  = data;
+            var option_str  = '';
+            for( var i=0;i < option_obj.items.length;i++){
+                var shi_selected = '';
+                if( parent_id == 20 || parent_id == 2 || parent_id == 795 || parent_id == 2259 ){
+                    shi_selected = 'selected="selected"';
+                }
+                changeShi(option_obj.items[i].id);
+                option_str  += '<option '+shi_selected+' value="'+option_obj.items[i].id+'">'+option_obj.items[i].short_name+'</option>';
+            }
+            option_str  += '';
+            $("#address_shi").html(option_str);
+        }});
+    });
+    // 选择市
+    $('#address_shi').on('change',function(){
+        changeShi();
+    });
+    function changeShi(parent_id=0){
+        $('#jquery-tagbox-text1').removeAttr('readonly');
+        $("#address_qu").html('<option value="0">区/县</option');
+
+        var parent_id  = parent_id ? parent_id : $('#address_shi').val();
+        if( parent_id == 0 ){
+            return false;
+        }
+        $.ajax({ url: $("#api_url").text()+'/v1/district?filters=[["=","parent_id",'+parent_id+']]', context: document.body, success: function(data){
+            var option_obj  = data;
+            var option_str  = '<option value="0">区/县</option><option value="-1">不限工作地点</option>';
+            for( var i=0;i < option_obj.items.length;i++){
+                option_str  += '<option value="'+option_obj.items[i].id+'">'+option_obj.items[i].short_name+'</option>';
+            }
+            option_str  += '';
+            $("#address_qu").html(option_str);
+        }});
+    }
+    // 不限工作地点（区县）
+    $('#address_qu').on('change',function(){
+        var parent_id  = $(this).val();
+        if( parent_id == -1 ){
+            $('#jquery-tagbox-text1').attr('readonly','readonly');
+            var sheng   = '';
+            var shi     = '';
+            if( $("#address_sheng").val() > 0 ){
+                sheng= $("#address_sheng").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+            }
+            if( $("#address_shi").val() > 0 ){
+                shi  = $("#address_shi").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+            }
+            var address_info = sheng+shi;
+            local.search(address_info);
+            sr.html();
+            
+            return false;
+        }else{
+            $('#jquery-tagbox-text1').removeAttr('readonly');
+        }
+    });
+});
