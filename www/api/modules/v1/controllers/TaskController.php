@@ -68,6 +68,12 @@ class TaskController extends BaseActiveController
         return $query;
     }
 
+    public function buildFilterQuery(){
+        $query = parent::buildFilterQuery();
+        $query->andWhere(['status'=>$model::STATUS_OK]);
+        return $query;
+    }
+
     public static function filterNextWeek($query)
     {
         $from_date = Task::tableName() . '.from_date';
