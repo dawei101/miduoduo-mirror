@@ -29,6 +29,7 @@ class Resume extends \common\models\Resume
             ['job_wishes', 'string', 'max'=>500],
             ['major', 'string', 'max'=>200],
             ['gender', 'default', 'value'=>0],
+            ['intro', 'string'],
         ];
     }
 }

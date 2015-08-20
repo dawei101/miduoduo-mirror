@@ -32,6 +32,7 @@ use common\models\TaskApplicant;
  * @property varchar(200) $origin
  * @property varchar(200) $major
  * @property varchar(1000) job_willes
+ * @property text intro;
  */
 class Resume extends \common\BaseActiveRecord
 {
@@ -92,6 +93,7 @@ class Resume extends \common\BaseActiveRecord
             ['major', 'string', 'max'=>200],
             ['gender', 'default', 'value'=>0],
             ['grade', 'default', 'value'=>0],
+            ['intro', 'string'],
         ];
     }
 
