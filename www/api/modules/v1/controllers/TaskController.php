@@ -62,13 +62,12 @@ class TaskController extends BaseActiveController
 
     public function buildBaseQuery()
     {
-        $model = $this->modelClass;
         $query = parent::buildBaseQuery();
-        $query->andWhere(['status'=>$model::STATUS_OK]);
         return $query;
     }
 
     public function buildFilterQuery(){
+        $model = $this->modelClass;
         $query = parent::buildFilterQuery();
         $query->andWhere(['status'=>$model::STATUS_OK]);
         return $query;
