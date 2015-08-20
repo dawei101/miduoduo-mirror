@@ -185,7 +185,6 @@ $this->title = '米多多兼职平台';
                                             <?php } ?>
                                         </select>
                                         <select id="address_shi" name="city_id">
-                                            <option value="0">市</option>
                                             <?php foreach($shi as $k=>$v){ ?>
                                                 <option value="<?=$v->id;?>"
                                                 <?=($v->id==3)?'selected=selected':''?>
