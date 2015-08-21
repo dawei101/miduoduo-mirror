@@ -93,7 +93,7 @@ class Resume extends \common\BaseActiveRecord
             ['major', 'string', 'max'=>200],
             ['gender', 'default', 'value'=>0],
             ['grade', 'default', 'value'=>0],
-            ['intro', 'string'],
+            [['intro'], 'string', 'max'=>5000],
         ];
     }
 
@@ -131,6 +131,7 @@ class Resume extends \common\BaseActiveRecord
             'home' => '住址',
             'workplace' => '工作地址',
             'job_wishes' => '工作意愿',
+            'intro' => '自我介绍',
         ];
     }
 
