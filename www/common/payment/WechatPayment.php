@@ -83,6 +83,7 @@ class WechatPayment extends Component
         $info = curl_getinfo($ch);
         curl_close($ch);
         if($data){
+            Yii::info($data,'payment');
             return $data;
         }
         $error = curl_errno($ch);
