@@ -59,7 +59,7 @@ class ConfigRecommend extends \yii\db\ActiveRecord
             ->where(['level'=>'city','is_alive'=>1])
             ->addOrderBy(['id'=>SORT_ASC])
             ->all();
-        $citys = [0=>'全国'];
+        $citys = [];
         foreach( $citys_obj as $city ){
             $citys[$city->id] = $city->name;
         }

@@ -4,9 +4,10 @@ use common\Utils;
 
 /* @var $this yii\web\View */
 $this->title = '首页';
-$this->nav_left_link = 'javascript:window.history.back()';
+$this->nav_left_link = '/site/citys';
 $this->nav_right_link = '/user';
 $this->nav_right_title = '个人中心';
+$this->nav_left_title = isset($city->name)?$city->name.' &#9660;':'';
 
 /********* seo start ***********/
 $seocity    = isset($city->name)?$city->name:'';

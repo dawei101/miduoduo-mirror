@@ -20,6 +20,7 @@ use common\models\Task;
 use common\models\Resume;
 use common\models\District;
 use common\models\ConfigRecommend;
+use yii\helpers\Json;
 
 /**
  * Site controller
@@ -120,6 +121,30 @@ class SiteController extends MBaseController
                  'city_pinyin'=>$city_pinyin,
                 ]);
         }
+    }
+
+    public function actionCitys(){
+        // 城市
+        $citys  = District::find()
+            ->where(['is_alive'=>1,'level'=>'city'])
+            ->orderBy(['seo_pinyin'=>SORT_ASC])
+            ->all();
+        $citys_json = Json::encode($citys);
+        
+        // 拼音
+        $pinyins = [];
+        foreach( $citys as $city ){
+            $city_first_word = strtoupper(substr($city->seo_pinyin,0,1));
+            if( !in_array($city_first_word,$pinyins) ){
+                $pinyins[] = $city_first_word;
+            }
+        }
+
+        return $this->render('citys', [
+            'citys' => $citys,
+            'pinyins' => $pinyins,
+            'citys_json' => $citys_json,
+        ]);
     }
 
     public function actionContact()
