@@ -92,7 +92,7 @@ return [
                 [
 
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['info'],
+                    'levels' => ['info', 'warning', 'error'],
                     'categories' => ['user_location'],
                     'logFile' => '/service/data/logs/user-location/location.log',
                     'logVars'   => [],
@@ -103,7 +103,7 @@ return [
                ],
                [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['info'],
+                    'levels' => ['info', 'warning', 'error'],
                     'categories' => ['payment'],
                     'logFile' => '/service/data/logs/payment/payment.log',
                     'logVars'   => [],
