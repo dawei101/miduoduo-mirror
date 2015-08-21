@@ -1,5 +1,6 @@
 <?php
 use common\Seo;
+use common\Utils;
 
 /* @var $this yii\web\View */
 $this->title = '首页';
@@ -42,8 +43,9 @@ $this->page_description = $seo_code['description'];
 
 
 <ul class="bxslider">
-      <li><a href="/task/view?gid=14367640572382369"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/banner1.png" ></a></li>
-      <li><a href="/hongbao.html"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/hongbao.png" ></a></li>
+    <?php foreach($banners_city as $banner){ ?>
+      <li><a href="<?=$banner->url?>"><img src="<?=Utils::urlOfFile($banner->pic)?>" ></a></li>
+    <?php } ?>
 </ul>
 
 <div id="content"> 
@@ -84,7 +86,7 @@ $this->page_description = $seo_code['description'];
   </div>
 </a>
 <?php } ?>
-<a href="/task" style="color:#ffa005; display:block; padding:10px 0 15px; text-align:center; margin:0 auto;font-size:1.3em;">更多职位&nbsp;>></a>
+<a href="/<?=$city_pinyin?>/task/" style="color:#ffa005; display:block; padding:10px 0 15px; text-align:center; margin:0 auto;font-size:1.3em;">更多职位&nbsp;>></a>
 
   </div>
 </div>

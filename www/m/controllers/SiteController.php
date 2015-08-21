@@ -7,6 +7,7 @@ use yii\web\BadRequestHttpException;
 use m\MBaseController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use common\models\ConfigBanner;
 
 use common\models\LoginWithDynamicCodeForm;
 
@@ -56,10 +57,12 @@ class SiteController extends MBaseController
         ];
     }
 
-    public function actionIndex()
+    public function actionIndex($city_pinyin='beijing')
     {
-        //只有北京
-        $city_id    = 3;
+        $city = District::findOne(
+            ['seo_pinyin'=> $city_pinyin, 'level'=>'city', 'is_alive'=> 1]);
+        $city_id = $city ? $city->id : '';
+
         // 查询出需要展示的 gids
         // type=1 标示查询的是M端的推荐信息
         $gid        = ConfigRecommend::find()->where(['type'=>1,'city_id'=>$city_id])
@@ -71,6 +74,18 @@ class SiteController extends MBaseController
             $gids   .= $value['task_id'].',';
         }
         $gids   = trim($gids,',');
+
+        // 广告位
+        $banners_city = ConfigBanner::find()
+            ->where([
+                'city_id' => [0,$city_id],
+                'status' => ConfigBanner::STATUS_OK,
+            ])
+            ->andWhere("`offline_date` >= '".date("Y-m-d")."'")
+            ->addOrderBy(['display_order'=>SORT_ASC])
+            ->limit(5)
+            ->all();
+
         if($gids){
             // 查询数据显示
             $tasks      = Task::find()->where(['status'=>Task::STATUS_OK])
@@ -84,12 +99,12 @@ class SiteController extends MBaseController
             return $this->render('index', 
                 ['tasks'=>$tasks,
                  'city'=>$city,
+                 'banners_city' => $banners_city,
+                 'city_pinyin'=>$city_pinyin,
                 ]);
 
             return $this->render('index');
         }else{
-            //只有北京
-            $city_id = 3;
             $query = Task::find()->where(['status'=>Task::STATUS_OK])
                 ->with('city')->with('district');
             $query = $query->andWhere(['city_id'=>$city_id])
@@ -101,9 +116,9 @@ class SiteController extends MBaseController
             return $this->render('index', 
                 ['tasks'=>$query->all(),
                  'city'=>$city,
+                 'banners_city' => $banners_city,
+                 'city_pinyin'=>$city_pinyin,
                 ]);
-
-            return $this->render('index');
         }
     }
 

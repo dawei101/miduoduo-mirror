@@ -36,6 +36,7 @@ class SeoUrlRule extends UrlRule
                 $districts_pinyins[] = $district->seo_pinyin;
             }
             $district_re = implode('|', array_unique($districts_pinyins));
+            $district_re = 'task|'.$district_re;
 
             $stypes     = ServiceType::findAll(['status'=>0]);
             $ts_pinyin  = [];
@@ -60,14 +61,25 @@ class SeoUrlRule extends UrlRule
             if (count($matches)>6){
                 $type_pinyin = $matches[6];
             }
-            return [
-                0   => 'task/index',
-                1   => [
-                    'city_pinyin' => $city_pinyin,
-                    'district_pinyin'=> $district_pinyin,
-                    'type_pinyin' => $type_pinyin,
-                ],
-            ];
+            if( $city_pinyin && !$district_pinyin && !$type_pinyin ){
+                return [
+                    0   => 'site/index',
+                    1   => [
+                        'city_pinyin' => $city_pinyin,
+                        'district_pinyin'=> $district_pinyin,
+                        'type_pinyin' => $type_pinyin,
+                    ],
+                ];
+            }else{
+                return [
+                    0   => 'task/index',
+                    1   => [
+                        'city_pinyin' => $city_pinyin,
+                        'district_pinyin'=> $district_pinyin,
+                        'type_pinyin' => $type_pinyin,
+                    ],
+                ];
+            }
         }
         return false;
     }
