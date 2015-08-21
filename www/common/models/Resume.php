@@ -15,7 +15,7 @@ use common\models\TaskApplicant;
  * @property string $phonenum
  * @property integer $gender
  * @property string $birthdate
- * @property string $degree
+ * @property int $degree
  * @property string $nation
  * @property integer $height
  * @property integer $is_student
@@ -32,6 +32,7 @@ use common\models\TaskApplicant;
  * @property varchar(200) $origin
  * @property varchar(200) $major
  * @property varchar(1000) job_willes
+ * @property text intro;
  */
 class Resume extends \common\BaseActiveRecord
 {
@@ -54,6 +55,15 @@ class Resume extends \common\BaseActiveRecord
         3=>'三年级', 4=>'四年级', 5=>'五年级'];
     public static $STUDENTS=[0=>'否', 1=>'是'];
 
+    public static $DEGREES = [
+        1 => '初中',
+        2 => '高中/中专',
+        3 => '大专',
+        4 => '本科',
+        5 => '研究生',
+        6 => '博士生',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -61,10 +71,12 @@ class Resume extends \common\BaseActiveRecord
     {
         return [
             [['name', 'phonenum'], 'required'],
-            [['gender', 'height', 'is_student', 'grade', 'status', 'user_id', 'home', 'workplace'], 'integer'],
+            [['gender', 'height', 'is_student', 'grade', 'degree',
+                'has_emdical_cert', 'status',
+                'user_id', 'home', 'workplace'], 'integer'],
             [['birthdate', 'created_time', 'updated_time'], 'safe'],
             [['birthdate'], 'date', 'format' => 'yyyy-M-d'],
-            [['name', 'degree', 'college'], 'string', 'max' => 500],
+            [['name', 'college'], 'string', 'max' => 500],
             [['nation'], 'string', 'max' => 255],
             [['avatar'], 'string', 'max' => 2048],
             [['gov_id'], 'string', 'max' => 50],
@@ -81,6 +93,7 @@ class Resume extends \common\BaseActiveRecord
             ['major', 'string', 'max'=>200],
             ['gender', 'default', 'value'=>0],
             ['grade', 'default', 'value'=>0],
+            ['intro', 'string'],
         ];
     }
 
@@ -186,6 +199,19 @@ class Resume extends \common\BaseActiveRecord
         return static::$GRADES[$this->grade];
     }
 
+    public function getDegree_label()
+    {
+        if ($this->degree){
+            return static::$DEGREES[$this->degree];
+        }
+        return '未知';
+    }
+
+    public function getDegree_options()
+    {
+        return static::$DEGREES;
+    }
+
     public function getStatus_label()
     {
         return static::$STATUSES[$this->status];
@@ -206,7 +232,7 @@ class Resume extends \common\BaseActiveRecord
 
     public function fields()
     {
-        return array_merge(parent::fields(), ['gender_label', 'age']);
+        return array_merge(parent::fields(), ['gender_label', 'age', 'degree_label', 'degree_options']);
     }
 
     public function extraFields()

@@ -3,13 +3,18 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\models\Task;
+use common\models\District;
+
+$sheng  = District::find()->where(['level'=>'province','is_alive'=>1])->addOrderBy(['id'=>SORT_ASC])->all();
+$shi    = District::find()->where(['parent_id'=>2])->addOrderBy(['id'=>SORT_ASC])->all();
+$qu     = District::find()->where(['parent_id'=>3])->addOrderBy(['id'=>SORT_ASC])->all();
+$api_url= Yii::$app->params['baseurl.api'];
 
 /* @var $this yii\web\View */
 $this->title = '米多多兼职平台';
 ?>
 <!-- InstanceBeginEditable name="EditRegion3" -->
-<div class="body-box">
-
+<div class="body-box" style="min-width: 1100px;">
                 <div class="col-sm-10 padding-0 ">
                     <div class="right-center">
                         <div class="conter-title">发布兼职职位</div>
@@ -112,7 +117,7 @@ $this->title = '米多多兼职平台';
                                 -->
                                 <li>
                                     <div class="pull-left title-left text-center"><em>*</em>工作地址</div>
-                                    <div class="pull-left right-box">
+                                    <div class="pull-left right-box address">
 <!--
                                     <div class="nice-select quyu" name="nice-select">
                                         <input id="address_count" type="text" placeholder="地址" value="一个">
@@ -126,8 +131,39 @@ $this->title = '米多多兼职平台';
                                         <div class="nice-select quyu" name="nice-select">
                                             <input type="text" readonly value="北京" >
                                         </div> -->
+                                        <span id="api_url" style="display:none;"><?=$api_url?></span>
+                                        <select id="address_sheng">
+                                            <option value="0">
+                                                省份/直辖市
+                                            </option>
+                                            <?php foreach($sheng as $k=>$v){ ?>
+                                                <option value="<?=$v->id;?>"
+                                                <?=($v->id==2)?'selected=selected':''?>
+                                                >
+                                                    <?=$v->short_name;?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                        <select id="address_shi" name="city_id">
+                                            <?php foreach($shi as $k=>$v){ ?>
+                                                <option value="<?=$v->id;?>"
+                                                <?=($v->id==3)?'selected=selected':''?>
+                                                >
+                                                    <?=$v->short_name;?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                        <select id="address_qu">
+                                            <option value="0">区/县</option>
+                                            <option value="-1">不限工作地点</option>
+                                            <?php foreach($qu as $k=>$v){ ?>
+                                                <option value="<?=$v->id;?>">
+                                                    <?=$v->short_name;?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                        <input type="text" autocomplete="off" placeholder="详细位置" name="address" id="jquery-tagbox-text1" class="add-v"/>
                                         <span class="tianj">+添加</span>
-                                        <input type="text" placeholder="输入回车可选择位置信息 用于添加坐标 提升投递量" name="address" id="jquery-tagbox-text1" class="add-v"/>
                                         <input type="hidden" name="address_list"/>
                                         <ul class="dizhi" id="search-result" style="display:none"></ul>
                                         <p class="cuowu address_error">内容不能为空!</p>
@@ -586,13 +622,42 @@ $(function(){
             $(this).click(function(){
 
                 var title = $(this).find('h2').html();
-                $('#jquery-tagbox-text1').val(title);
+                $('#jquery-tagbox-text1').val(title+' ');
+                $('#jquery-tagbox-text1').focus();
                 sr.hide();
                 var index = $(this).attr('idx');
                 current_poi = pois[index];
             });
          })
-         sr.show();
+         
+            var qu_id  = $("#address_qu").val();
+            if( qu_id == -1 ){
+                // 不限工作地点（区县）
+                var index = $(this).attr('idx');
+                current_poi = pois[0];
+
+                var sheng       = '';
+                var sheng_show  = '';
+                var shi     = '北京';
+                if( $("#address_sheng").val() > 0 ){
+                    sheng      = $("#address_sheng").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+                    sheng_show = sheng;
+                    if( sheng == '北京 ' || sheng == '天津 ' || sheng == '上海 ' || sheng == '重庆 ' ){
+                        sheng_show = '';
+                    }
+                }
+                if( $("#address_shi").val() > 0 ){
+                    shi  = $("#address_shi").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+                }
+                var address_info = sheng_show+shi;
+                if(address_info.length == 0) return;
+                current_poi.city = shi;
+                current_poi.province = sheng;
+                current_poi.title = address_info;
+                pick_poi(current_poi);
+            }else{
+                sr.show();
+            }
        }
      }
     };
@@ -600,25 +665,64 @@ $(function(){
         $("#search-result").hide();
     });
     var local = new BMap.LocalSearch(map, options);
-    $('#jquery-tagbox-text1').keypress(function(e){
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if(code == 13) {
-            local.search($(this).val());
+    $('#jquery-tagbox-text1').keyup(function(e){
+        var sheng   = '';
+        var shi     = '';
+        var qu      = '';
+        if( $("#address_sheng").val() > 0 ){
+            sheng= $("#address_sheng").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+        }
+        if( $("#address_shi").val() > 0 ){
+            shi  = $("#address_shi").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+        }
+        if( $("#address_qu").val() > 0 ){
+            qu   = $("#address_qu").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+        }
+        var address_info = sheng+shi+qu;
+        var keywordlen = $(this).val().length;
+        //var code = (e.keyCode ? e.keyCode : e.which);
+        //if( code == 13 ) {
+        var has_space   = $(this).val().search(' ');
+        if( keywordlen >= 2 && has_space < 0 ) {
+            local.search(address_info+$(this).val());
             sr.html();
             return false;
         }
     });
     $('.tianj').click(function(){
+        var sheng   = '';
+        var sheng_show = '';
+        var shi     = '北京';
+        var qu      = '';
+        if( $("#address_sheng").val() > 0 ){
+            sheng     = $("#address_sheng").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+            sheng_show= sheng;
+            if( sheng == '北京 ' || sheng == '天津 ' || sheng == '上海 ' || sheng == '重庆 ' ){
+                sheng_show = '';
+            }
+        }
+        if( $("#address_shi").val() > 0 ){
+            shi  = $("#address_shi").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+        }
+        if( $("#address_qu").val() > 0 ){
+            qu   = $("#address_qu").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+        }
+        var address_info = sheng_show+shi+qu;
+
         if($('#jquery-tagbox-text1').val().length == 0) return;
         if(current_poi === false){
             current_poi = {};
             current_poi.address = '';
-            current_poi.city = '北京';
+            current_poi.city = shi;
             current_poi.province = '';
             current_poi.point = {lat:0, lng:0};
         }
-        current_poi.title = $('#jquery-tagbox-text1').val();
-        pick_poi(current_poi);
+        current_poi.city = shi;
+        current_poi.province = sheng;
+        current_poi.title = address_info+$('#jquery-tagbox-text1').val();
+        if( current_poi.title.length > 0 ){
+            pick_poi(current_poi);
+        }
     });
     $('#selected-address div.p-box span').click(function(){
         var aid = $(this).parent().attr('id');
@@ -627,6 +731,71 @@ $(function(){
         $(this).parent().remove();
     });
 
+    // 选择省份
+    $('#address_sheng').on('change',function(){
+        $('#jquery-tagbox-text1').removeAttr('readonly');
+        $("#address_qu").html('<option value="0">区/县</option><option value="-1">不限工作地点</option>');
+
+        var parent_id  = $(this).val();
+        $.ajax({ url: $("#api_url").text()+'/v1/district?filters=[["=","parent_id",'+parent_id+']]', context: document.body, success: function(data){
+            var option_obj  = data;
+            var option_str  = '';
+            for( var i=0;i < option_obj.items.length;i++){
+                var shi_selected = '';
+                if( parent_id == 20 || parent_id == 2 || parent_id == 795 || parent_id == 2259 ){
+                    shi_selected = 'selected="selected"';
+                }
+                changeShi(option_obj.items[i].id);
+                option_str  += '<option '+shi_selected+' value="'+option_obj.items[i].id+'">'+option_obj.items[i].short_name+'</option>';
+            }
+            option_str  += '';
+            $("#address_shi").html(option_str);
+        }});
+    });
+    // 选择市
+    $('#address_shi').on('change',function(){
+        changeShi(0);
+    });
+    function changeShi(parent_id){
+        $('#jquery-tagbox-text1').removeAttr('readonly');
+        $("#address_qu").html('<option value="0">区/县</option');
+
+        var parent_id  = parent_id ? parent_id : $('#address_shi').val();
+        if( parent_id == 0 ){
+            return false;
+        }
+        $.ajax({ url: $("#api_url").text()+'/v1/district?filters=[["=","parent_id",'+parent_id+']]', context: document.body, success: function(data){
+            var option_obj  = data;
+            var option_str  = '<option value="0">区/县</option><option value="-1">不限工作地点</option>';
+            for( var i=0;i < option_obj.items.length;i++){
+                option_str  += '<option value="'+option_obj.items[i].id+'">'+option_obj.items[i].short_name+'</option>';
+            }
+            option_str  += '';
+            $("#address_qu").html(option_str);
+        }});
+    }
+    // 不限工作地点（区县）
+    $('#address_qu').on('change',function(){
+        var parent_id  = $(this).val();
+        if( parent_id == -1 ){
+            $('#jquery-tagbox-text1').attr('readonly','readonly');
+            var sheng   = '';
+            var shi     = '';
+            if( $("#address_sheng").val() > 0 ){
+                sheng= $("#address_sheng").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+            }
+            if( $("#address_shi").val() > 0 ){
+                shi  = $("#address_shi").find("option:selected").text().replace(/(^\s*)|(\s*$)/g, "")+' ';
+            }
+            var address_info = sheng+shi;
+            local.search(address_info);
+            sr.html();
+            
+            return false;
+        }else{
+            $('#jquery-tagbox-text1').removeAttr('readonly');
+        }
+    });
 });
 
 

@@ -3,6 +3,12 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use common\models\Task;
+use common\models\District;
+
+$sheng  = District::find()->where(['level'=>'province','is_alive'=>1])->addOrderBy(['id'=>SORT_ASC])->all();
+$shi    = District::find()->where(['parent_id'=>2])->addOrderBy(['id'=>SORT_ASC])->all();
+$qu     = District::find()->where(['parent_id'=>3])->addOrderBy(['id'=>SORT_ASC])->all();
+$api_url= Yii::$app->params['baseurl.api'];
 
 /* @var $this yii\web\View */
 $this->title = '米多多兼职平台';
@@ -132,7 +138,7 @@ $this->title = '米多多兼职平台';
                                 -->
                                 <li>
                                     <div class="pull-left title-left text-center"><em>*</em>工作地址</div>
-                                    <div class="pull-left right-box">
+                                    <div class="pull-left right-box address">
 <!--
                                     <div class="nice-select quyu" name="nice-select">
                                         <input id="address_count" type="text" placeholder="地址" value="一个">
@@ -146,8 +152,40 @@ $this->title = '米多多兼职平台';
                                         <div class="nice-select quyu" name="nice-select">
                                             <input type="text" readonly value="北京" >
                                         </div> -->
+                                        <!--span class="tianj">+添加</span-->
+                                        <span id="api_url" style="display:none;"><?=$api_url?></span>
+                                        <select id="address_sheng">
+                                            <option value="0">
+                                                省份/直辖市
+                                            </option>
+                                            <?php foreach($sheng as $k=>$v){ ?>
+                                                <option value="<?=$v->id;?>"
+                                                <?=($v->id==2)?'selected=selected':''?>
+                                                >
+                                                    <?=$v->short_name;?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                        <select id="address_shi" name="city_id">
+                                            <?php foreach($shi as $k=>$v){ ?>
+                                                <option value="<?=$v->id;?>"
+                                                <?=($v->id==3)?'selected=selected':''?>
+                                                >
+                                                    <?=$v->short_name;?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                        <select id="address_qu">
+                                            <option value="0">区/县</option>
+                                            <option value="-1">不限工作地点</option>
+                                            <?php foreach($qu as $k=>$v){ ?>
+                                                <option value="<?=$v->id;?>">
+                                                    <?=$v->short_name;?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                        <input type="text" autocomplete="off" placeholder="详细位置" name="address" id="jquery-tagbox-text1" class="add-v"/>
                                         <span class="tianj">+添加</span>
-                                        <input type="text" placeholder="输入回车可选择位置信息 用于添加坐标 提升投递量" name="address" id="jquery-tagbox-text1" class="add-v"/>
                                         <input type="hidden" name="address_list"/>
                                         <ul class="dizhi" id="search-result" style="display:none"></ul>
                                         <p class="cuowu address_error">内容不能为空!</p>

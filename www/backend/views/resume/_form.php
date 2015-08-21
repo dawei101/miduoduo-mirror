@@ -35,7 +35,9 @@ use yii\jui\DatePicker;
             'language' => 'Zh_cn'
         ]) ?>
 
-    <?= $form->field($model, 'degree')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'degree')->dropDownList(Resume::$DEGREES) ?>
+
+    <?= $form->field($model, 'has_emdical_cert')->checkBox() ?>
 
     <?= $form->field($model, 'nation')->textInput(['maxlength' => true]) ?>
 
