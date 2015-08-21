@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '操作',
                 'format'=> 'raw',
                 'value' => function($model){
-                    return '<a href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$model->ticket.'" target="_blank" >看二维码</a> | <a href="/weichat-erweima-log?id='.$model->id.'" target="_blank" >查看数据</a>';
+                    return '<a href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.$model->ticket.'" target="_blank" >看二维码</a> | <a href="/weichat-erweima-log?id='.$model->id.'" target="_blank" >查看数据</a> | <a href="'.Yii::$app->params['baseurl.m'].'/weichat-erweima-log?id='.$model->id.'&sc='.$model->scene_id.'&sort=-create_time" target="_blank" >数据链接</a>';
                 }
             ],
             [
