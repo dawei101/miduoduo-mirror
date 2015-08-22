@@ -118,6 +118,7 @@ class Resume extends \common\BaseActiveRecord
             'degree' => '学历',
             'nation' => '民族',
             'height' => '身高(cm)',
+            'weight' => '体重',
             'is_student' => '是学生',
             'college' => '学校',
             'major' => '专业',
