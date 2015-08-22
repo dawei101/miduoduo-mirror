@@ -40,7 +40,9 @@ class CBaseController extends BaseController
                 'denyCallback' => function($rule, $action){
                     if (!Yii::$app->user->isGuest){
                         return $this->redirect('/user/add-contact-info');
-                    }
+                    }else{
+		        return $this->redirect('/');
+		    }
                 },
             ],
        ];
