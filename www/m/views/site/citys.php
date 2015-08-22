@@ -37,13 +37,13 @@ $this->page_description = $seo_code['description'];
 .city .sech input{width:90%; padding:3% 0; margin:0 auto; display:block; border:1px #eee solid; border-radius:40px; text-indent:3em; color:#999; font-size:1em; background:url(img/sech.png) 3% no-repeat #fff; }
 .current_city{width:100%; padding:3% 0; background:#fff; text-align:left; line-height:30px; margin:2% 0; font-size:1em; color:#666;}
 .current_city div{width:90%; margin:0 auto;}
-.current_city span{color:#00b966;}
+.current_city span,.current_city span a{color:#00b966;}
 .city_title{width:90%; margin:0 auto 2%; color:#a5abb2; font-weight:600;}
 .city_title1{width:95%; margin:3% auto 2%; color:#a5abb2; font-weight:600;}
 .tag_re,.tag_more,.tag_list{width:100%; margin:0 auto; overflow:hidden;}
 .tag_re a{display:block; width:31%; padding:2% 0; text-align:center; color:#2a3141; float:left; margin-left:2%; background:#fff; border-radius:4px; margin-bottom:2%}
 .tag_more a{display:block; width:18%; padding:2% 0; text-align:center; color:#2a3141; float:left; margin-left:2%; background:#fff; border-radius:4px; margin-bottom:2%}
-.tag_re a:hover,.tag_more a:hover,.tag_list a:hover{background:#00b966; color:#fff;}
+/*.tag_re a:hover,.tag_more a:hover,.tag_list a:hover{background:#00b966; color:#fff;}*/
 .tag_list a{padding:2% 0 2% 8%; width:92%; display:block; border-bottom:1px #d0d0d0 solid;color:#2a3141;}
 .pinyin:target{
     padding-top:48px;
@@ -64,7 +64,7 @@ $this->page_description = $seo_code['description'];
 <dl class="city">
    <dt class="sech"><input name="" id="search-city" type="text" placeholder="输入城市名或首字母查询"></dt>
    <dd class="search_city" style="display:none;"></dd>
-   <dd class="current_city"><div>当前定位城市：<span>北京</span></div></dd>
+   <dd class="current_city"><div>当前定位城市：<span id="current_city">正在定位...</span></div></dd>
    <dd>
        <div class="city_title">热门城市</div>
        <div class="tag_re">
@@ -132,4 +132,75 @@ $this->page_description = $seo_code['description'];
         });
     });
 </script>
+
+
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=<?=Yii::$app->params['baidu.map.web_key']?>"></script>
+<script type="text/javascript">
+
+function getLocation(callback) {
+    getH5Location(callback);
+}
+
+function getH5Location(callback) {
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position){
+        var c= position.coords;
+        tranLocation({lat: c.latitude, lng: c.longitude}, function(loc){
+            callback(loc);
+        });
+      });
+  } else {
+      callback();
+  }
+}
+
+function tranLocation(poi, callback) {
+  var url = 'http://api.map.baidu.com/geoconv/v1/?coords='
+      + poi.lng + ',' + poi.lat + '&from=1&to=5&ak='
+      + "<?=Yii::$app->params['baidu.map.web_key']?>";
+  $.ajax({
+    'dataType': 'jsonp',
+    'url': url,
+    success: function(json){
+        console.log(json);
+        if(json['status']==0){
+            callback({lng: json.result[0].x, lat: json.result[0].y})
+        }
+    },
+    error: function(e){
+        console.log(e);
+    }
+  });
+}
+
+function pointToStreet(lng,lat,type){
+    // 百度地图API功能
+	var map = new BMap.Map("allmap");
+    
+	var point = new BMap.Point(lng,lat);
+       
+	var geoc = new BMap.Geocoder();   
+    geoc.getLocation(point, function(rs){
+        var addComp = rs.addressComponents;
+        console.log(rs);
+
+        var citys_json = <?=$citys_json?>;
+        var keyword = addComp.city;
+        if(keyword.length > 0){
+            $.each(citys_json, function(i, v) {
+                if (v.name.search(keyword) > -1) {
+                    document.getElementById('current_city').innerHTML = '<a href="/'+v.seo_pinyin+'/">'+v.name+'</a>';
+                    return false;
+                }
+            });
+        }
+    });  
+}
+
+getLocation(function(loc){
+    pointToStreet(loc.lng,loc.lat,1);
+});
+</script>
+
 <?php $this->endBlock('js') ?>
