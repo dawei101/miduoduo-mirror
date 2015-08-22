@@ -42,7 +42,6 @@ $this->page_description = $seo_code['description'];
 
 
 <ul class="bxslider">
-      <li><a href="/task/view?gid=14367640572382369"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/banner1.png" ></a></li>
       <li><a href="/hongbao.html"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/hongbao.png" ></a></li>
 </ul>
 
