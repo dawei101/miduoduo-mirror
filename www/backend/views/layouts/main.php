@@ -48,8 +48,8 @@ $user = Yii::$app->user;
                 <li class="mmenu" data-group="operation"><a href="/task-pool">爬虫-任务列表</a></li>
                 <li class="mmenu" data-group="operation"><a href="/task-pool-white-list">爬虫-白名单(黑名单)</a></li>
                 <li class="mmenu" data-group="operation"><a href="/company">企业库</a></li>
-                <li class="mmenu" data-group="operation"><a href="/config-recommend">配置-推荐兼职</a></li>
-                <li class="mmenu" data-group="operation"><a href="/config-banner">配置-首页广告</a></li>
+                <li class="mmenu" data-group="operation"><a href="/config-recommend/index?sort=-id">配置-推荐兼职</a></li>
+                <li class="mmenu" data-group="operation"><a href="/config-banner/index?sort=-id">配置-首页广告</a></li>
 <?php } ?>
 
 <?php if ($user->can('operation_manager')) { ?>

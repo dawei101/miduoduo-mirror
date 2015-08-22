@@ -37,7 +37,7 @@ $this->page_keywords = $seo_code['keywords'];
 $this->page_description = $seo_code['description'];
 
 $this->nav_left_link = 'javascript:window.history.back()';
-$this->nav_right_link = '/';
+$this->nav_right_link = $seo_params['city_pinyin'] ? '/'.$seo_params['city_pinyin'].'/' : '/';
 $this->nav_right_title = '首页';
 /* @var $this yii\web\View */
 

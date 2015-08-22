@@ -182,6 +182,13 @@ class TaskController extends \m\MBaseController
 
     public function actionView()
     {
+        $pathInfo = explode('/',Yii::$app->request->pathInfo);
+        if( count($pathInfo) == 3 ){
+            $seo_pinyin = $pathInfo[0];
+        }else{
+            $seo_pinyin = '';
+        }
+
         $this->layout = 'main';
         $user_id = Yii::$app->user->id;
         $resume =(bool) Resume::find()->where(['user_id'=>$user_id])->one();
@@ -210,6 +217,7 @@ class TaskController extends \m\MBaseController
                     'complainted'=>$complainted,
                     'app'=> $app,
                     'resume'=> $resume,
+                    'seo_pinyin' => $seo_pinyin,
                 ]
             );
         } else {

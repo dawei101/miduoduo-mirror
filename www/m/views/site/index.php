@@ -16,7 +16,7 @@ $type       = '';
 $clearance_type = '';
 $conpany    = '';
 $task_title = '';
-$page_type  = 'index';
+$page_type  = 'city';
 
 $seo_code   = Seo::makeSeoCode($seocity,$block,$type,$clearance_type,$conpany,$task_title,$page_type);
 /********* seo end ***********/
@@ -53,7 +53,7 @@ $this->page_description = $seo_code['description'];
   <div class="recommend"><caption>热门推荐</caption></div>
 
 <?php foreach ($tasks as $task){ ?>
-<a href="/task/view?gid=<?=$task->gid?>" class="list-group-item">
+<a href="/<?=$city_pinyin?>/<?=$task->service_type->pinyin?>/<?=$task->gid?>" class="list-group-item">
   <div class="panel panel-default zhiwei-list"> 
     <div class="border-bt">
         <div class="panel-heading">

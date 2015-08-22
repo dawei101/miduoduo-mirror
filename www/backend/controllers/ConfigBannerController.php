@@ -77,7 +77,7 @@ class ConfigBannerController extends Controller
         }
 
         if ($model->load($data) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index?sort=-id']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -110,7 +110,7 @@ class ConfigBannerController extends Controller
         }
 
         if ($model->load($data) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index?sort=-id']);
         } else {
             return $this->render('update', [
                 'model' => $model,

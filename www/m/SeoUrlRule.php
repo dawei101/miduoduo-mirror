@@ -16,6 +16,19 @@ class SeoUrlRule extends UrlRule
     {
         $path = $request->pathInfo;
 
+        if( $path == '' || $path == '/' ){
+            $city_pinyin = Yii::$app->session->get('city_pinyin');
+            if( $city_pinyin ){
+                header("Location:/$city_pinyin/");
+                exit;
+            }else{
+                return [
+                    0   => 'site/citys',
+                    1   => [],
+                ];
+            }
+        }
+
         $key = 'task_list_url_match_rules';
         $re = Yii::$app->cache->get($key);
 
@@ -61,6 +74,7 @@ class SeoUrlRule extends UrlRule
             if (count($matches)>6){
                 $type_pinyin = $matches[6];
             }
+            Yii::$app->session->set('city_pinyin',$city_pinyin);
             if( $city_pinyin && !$district_pinyin && !$type_pinyin ){
                 return [
                     0   => 'site/index',

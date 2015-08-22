@@ -19,7 +19,7 @@ $this->nav_right_title = '首页';
 <!--===========以上是固定在顶部的==============-->
 
 <?=
-    $this->render('@m/views/task/task-list.php', [
+    $this->render('@m/views/task/task-apply-list.php', [
         'tasks' => $tasks,
         'pages' => $pages
     ])

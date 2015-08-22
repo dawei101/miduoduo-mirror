@@ -27,14 +27,13 @@ $this->page_description = $seo_code['description'];
 
 ?>
 
-
-
 <?php $this->beginBlock('css') ?>
 
 <style>
-.city .sech{width:100%; padding:10px 0; background:#fff;}
+.city .sech{width:100%; padding:10px 0; background:#fff;position:relative;}
 .city dd{clear:both;}
 .city .sech input{width:90%; padding:3% 0; margin:0 auto; display:block; border:1px #eee solid; border-radius:40px; text-indent:3em; color:#999; font-size:1em; background:url(img/sech.png) 3% no-repeat #fff; }
+.search_city{position:absolute; left:0; top:65px; width:100%; }
 .current_city{width:100%; padding:3% 0; background:#fff; text-align:left; line-height:30px; margin:2% 0; font-size:1em; color:#666;}
 .current_city div{width:90%; margin:0 auto;}
 .current_city span,.current_city span a{color:#00b966;}
@@ -62,8 +61,10 @@ $this->page_description = $seo_code['description'];
 <!--======固定顶部======-->
 
 <dl class="city">
-   <dt class="sech"><input name="" id="search-city" type="text" placeholder="输入城市名或首字母查询"></dt>
-   <dd class="search_city" style="display:none;"></dd>
+   <dt class="sech"><input name="" id="search-city" type="text" placeholder="输入城市名或首字母查询">
+   <div class="search_city" style="display:none;"></div>
+   </dt>
+   
    <dd class="current_city"><div>当前定位城市：<span id="current_city">正在定位...</span></div></dd>
    <dd>
        <div class="city_title">热门城市</div>
@@ -138,8 +139,36 @@ $this->page_description = $seo_code['description'];
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=<?=Yii::$app->params['baidu.map.web_key']?>"></script>
 <script type="text/javascript">
 
+function setCookie(cname, cvalue, seconds) {
+    var d = new Date();
+    d.setTime(d.getTime() + (seconds*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(c_name){
+    if (document.cookie.length>0)
+      {
+      c_start=document.cookie.indexOf(c_name + "=")
+      if (c_start!=-1)
+        { 
+        c_start=c_start + c_name.length+1 
+        c_end=document.cookie.indexOf(";",c_start)
+        if (c_end==-1) c_end=document.cookie.length
+        return unescape(document.cookie.substring(c_start,c_end))
+        } 
+      }
+    return ""
+}
+
 function getLocation(callback) {
-    getH5Location(callback);
+    var current_city_pinyin = getCookie('current_city_pinyin');
+    var current_city_name = getCookie('current_city_name');
+    if( current_city_pinyin ){
+        document.getElementById('current_city').innerHTML = "<a href='/"+current_city_pinyin+"/'>"+unescape(current_city_name)+"</a>";
+    }else{
+        getH5Location(callback);
+    }
 }
 
 function getH5Location(callback) {
@@ -190,7 +219,11 @@ function pointToStreet(lng,lat,type){
         if(keyword.length > 0){
             $.each(citys_json, function(i, v) {
                 if (v.name.search(keyword) > -1) {
-                    document.getElementById('current_city').innerHTML = '<a href="/'+v.seo_pinyin+'/">'+v.name+'</a>';
+                    var current_city_a = '<a href="/'+v.seo_pinyin+'/">'+v.name+'</a>';
+                    document.getElementById('current_city').innerHTML = current_city_a;
+                    setCookie('current_city_pinyin', v.seo_pinyin, 60 * 60 * 60);
+                    setCookie('current_city_name', escape(v.name), 60 * 60 * 60);
+                    window.location.href = '/'+v.seo_pinyin+'/';
                     return false;
                 }
             });
