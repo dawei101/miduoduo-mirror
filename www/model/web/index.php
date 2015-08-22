@@ -29,7 +29,7 @@
    <li><a href="/static/xiangqing2.html"><img src="/static/img/pic/b.jpg" width="227" height="295"><div class="zzc"><span>吴金霞</span><span>中国传媒大学</span></div></a></li>
    <li><a href="/static/xiangqing3.html"><img src="/static/img/pic/c.jpg" width="227" height="295"><div class="zzc"><span>章童童</span><span>北京工商大学</span></div></a></li>
    <li><a href="/static/xiangqing4.html"><img src="/static/img/pic/f.jpg" width="227" height="295"><div class="zzc"><span>周若乔</span><span>北京现代音乐学院</span></div></a></li>
-   <li><a href="/static/xiangqing5.html"><img src="/static/img/pic/g.jpg" width="227" height="295"><div class="zzc"><span>周若乔</span><span>中国劳动关系学院</span></div></a></li>
+   <li><a href="/static/xiangqing5.html"><img src="/static/img/pic/g.jpg" width="227" height="295"><div class="zzc"><span>子萱</span><span>中国劳动关系学院</span></div></a></li>
    <li><a href="/static/xiangqing6.html"><img src="/static/img/pic/e.jpg" width="227" height="295"><div class="zzc"><span>刘元慧</span><span>北京人民大学</span></div></a></li>
    <li><a href="/static/xiangqing7.html"><img src="/static/img/pic/d.jpg" width="227" height="295"><div class="zzc"><span>孙千淇</span><span>北京航空航天大学</span></div></a></li>
    <li><a href="/static/xiangqing8.html"><img src="/static/img/pic/h.jpg" width="227" height="295"><div class="zzc"><span>崔钰昕</span><span>北京科技大学</span></div></a></li>
