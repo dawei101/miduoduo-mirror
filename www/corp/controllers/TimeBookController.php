@@ -232,6 +232,7 @@ class TimeBookController extends CBaseController
                         $schedule->owner_id = $task->user_id;
                         $schedule->lat = $lat;
                         $schedule->lng = $lng;
+                        $schedule->task_title = $task->title;
                         $schedule->loadDefaultValues();
                         $rows[] = $schedule->attributes;
                     }

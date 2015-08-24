@@ -25,7 +25,7 @@ class Schedule extends \common\models\extensions\time_book\Schedule
             [['date'], 'safe'],
             [['user_id', 'task_id'], 'integer'],
             ['allowable_distance_offset', 'default', 'value'=> 1000],
-            ['address', 'string', 'max'=>200],
+            [['address', 'task_title'], 'string', 'max'=>200],
         ];
     }
 

@@ -1,6 +1,6 @@
 <?php
  
-namespace api\miduoduo\v1\controllers;
+namespace api\extensions\time_book\controllers;
  
 use api\common\BaseActiveController;
  

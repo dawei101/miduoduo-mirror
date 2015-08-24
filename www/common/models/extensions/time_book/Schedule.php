@@ -16,6 +16,7 @@ use Yii;
  * @property string $lat
  * @property string $lng
  * @property string $address
+ * @property string $task_title
  *
  * @property Record[] $records
  */
@@ -42,7 +43,7 @@ class Schedule extends \common\BaseActiveRecord
             [['date'], 'safe'],
             [['user_id', 'task_id'], 'string', 'max' => 200],
             ['allowable_distance_offset', 'default', 'value'=> 1000],
-            ['address', 'string', 'max'=>200],
+            [['address', 'task_title'], 'string', 'max'=>200],
         ];
     }
 
