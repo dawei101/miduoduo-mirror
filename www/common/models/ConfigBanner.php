@@ -47,6 +47,11 @@ class ConfigBanner extends \yii\db\ActiveRecord
         return '{{%config_banner}}';
     }
 
+    public function getPic_url()
+    {
+        return Utils::urlOfFile($this->pic);
+    }
+
     /**
      * @inheritdoc
      */

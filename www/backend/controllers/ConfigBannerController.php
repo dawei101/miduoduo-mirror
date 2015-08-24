@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\ConfigBanner;
 use common\models\ConfigBannerSearch;
+use common\JobUtils;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -77,6 +78,7 @@ class ConfigBannerController extends Controller
         }
 
         if ($model->load($data) && $model->save()) {
+            JobUtils::addSyncFileJob($model, 'pic');
             return $this->redirect(['index?sort=-id']);
         } else {
             return $this->render('create', [
