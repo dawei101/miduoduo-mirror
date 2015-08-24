@@ -106,7 +106,7 @@ class Pay extends Component
     public function payOutByWechat($user_id,$count_value,$date_time,$count_ids){
         $weichatbase= new WeichatBase();
         $wechat_id  = $weichatbase->getLoggedUserWeichatID($user_id);
-        $gid        = $wechat_id . str_ireplace(',','&',$count_ids);
+        $gid        = $wechat_id . str_ireplace(',','-',$count_ids);
 
         $payment    = new WechatPayment;
         $pay_result = $payment->payout($wechat_id, $count_value, $gid, '米多多提现');
