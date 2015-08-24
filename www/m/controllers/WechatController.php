@@ -67,6 +67,10 @@ class WechatController extends \common\BaseController
         $to .= '?origin_url=' . $params['origin_url'];
         if ($record->user){
             $user = $record->user;
+            if (empty($user->access_token)) {
+                $user->generateAccessToken();
+                $user->save();
+            }
             $userinfo = AUtils::formatProfile($user);
             $to .= '&user=' . urlencode(json_encode($userinfo));
         }
