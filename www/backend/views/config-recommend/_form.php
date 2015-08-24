@@ -12,6 +12,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'city_id')->dropDownList(
+        $model->getCityList()
+    ) ?>
+
     <?= $form->field($model, 'task_id')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'type')->dropDownList(
@@ -21,7 +25,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'display_order')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? '创建' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\models\Task;
+use common\models\ConfigRecommend;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ConfigRecommendSearch */
@@ -24,9 +25,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             //'id',
+            [
+                'attribute' => 'city_id',
+                'label' => '城市',
+                'filter' => ConfigRecommend::getCityList(),
+                'value' => function($model){
+                    $city_list = $model::getCityList();
+                    return $city_list[$model->city_id];
+                }
+            ],
             'task_id',
             //'type',
             [

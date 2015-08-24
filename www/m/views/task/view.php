@@ -30,7 +30,7 @@ $this->page_keywords = $seo_code['keywords'];
 $this->page_description = strip_tags($seo_code['description']);
 
 $this->nav_left_link = 'javascript:window.history.back()';
-$this->nav_right_link = '/';
+$this->nav_right_link = $seo_pinyin ? '/'.$seo_pinyin.'/' : '/';
 $this->nav_right_title = '首页';
 ?>
 <?php $this->beginBlock('css') ?>
