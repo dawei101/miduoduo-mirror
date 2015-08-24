@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\models\District;
+use common\Utils;
 
 /**
  * This is the model class for table "{{%config_banner}}".
