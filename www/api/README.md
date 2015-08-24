@@ -332,8 +332,8 @@ BASE_URL = 'http://api.miduoduo.cn'
 
 ###图片上传 UploadImage
 
-* 上传一张图片，返回图像地址，如果是更新简历需要传递图片对应字段，和is_resume=true
-    * POST /version/upload-image/upload?access-token
+* 上传一张图片，返回图像地址
+    * POST /version/upload-image/upload?access-token params={is_resume:true|false,图片name和数据库字段对应（如：gov_id_pic_front）}
 
 ###时间表 Freetime(获取简历时可直接获取)
 
