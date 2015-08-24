@@ -39,9 +39,9 @@ class UploadImageController extends BaseActiveController
                     JobUtils::addSyncFileJob($resume_model, $image_key);
                 }
 
-                return ['success' => true, 'filename' => $filename, 'msg' => '图片上传成功'];
+                return ['success' => true, 'filename' => $filename, 'name' => $image_key, 'msg' => '图片上传成功'];
             }else{
-                return ['success' => false, 'filename' => '', 'msg' => '文件格式错误'];
+                return ['success' => false, 'filename' => '', 'name' => $image_key, 'msg' => '文件格式错误'];
             }
         }
     }
