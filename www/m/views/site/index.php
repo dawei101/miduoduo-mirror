@@ -1,11 +1,13 @@
 <?php
 use common\Seo;
+use common\Utils;
 
 /* @var $this yii\web\View */
 $this->title = '首页';
-$this->nav_left_link = 'javascript:window.history.back()';
+$this->nav_left_link = '/site/citys';
 $this->nav_right_link = '/user';
 $this->nav_right_title = '个人中心';
+$this->nav_left_title = isset($city->name)?$city->name.' &#9660;':'';
 
 /********* seo start ***********/
 $seocity    = isset($city->name)?$city->name:'';
@@ -14,7 +16,7 @@ $type       = '';
 $clearance_type = '';
 $conpany    = '';
 $task_title = '';
-$page_type  = 'index';
+$page_type  = 'city';
 
 $seo_code   = Seo::makeSeoCode($seocity,$block,$type,$clearance_type,$conpany,$task_title,$page_type);
 /********* seo end ***********/
@@ -42,14 +44,16 @@ $this->page_description = $seo_code['description'];
 
 
 <ul class="bxslider">
-      <li><a href="/hongbao.html"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/hongbao.png" ></a></li>
+    <?php foreach($banners_city as $banner){ ?>
+      <li><a href="<?=$banner->url?>"><img src="<?=$banner->pic_url?>" ></a></li>
+    <?php } ?>
 </ul>
 
 <div id="content"> 
   <div class="recommend"><caption>热门推荐</caption></div>
 
 <?php foreach ($tasks as $task){ ?>
-<a href="/task/view?gid=<?=$task->gid?>" class="list-group-item">
+<a href="/<?=$city_pinyin?>/<?=$task->service_type->pinyin?>/<?=$task->gid?>" class="list-group-item">
   <div class="panel panel-default zhiwei-list"> 
     <div class="border-bt">
         <div class="panel-heading">
@@ -83,7 +87,7 @@ $this->page_description = $seo_code['description'];
   </div>
 </a>
 <?php } ?>
-<a href="/task" style="color:#ffa005; display:block; padding:10px 0 15px; text-align:center; margin:0 auto;font-size:1.3em;">更多职位&nbsp;>></a>
+<a href="/<?=$city_pinyin?>/task/" style="color:#ffa005; display:block; padding:10px 0 15px; text-align:center; margin:0 auto;font-size:1.3em;">更多职位&nbsp;>></a>
 
   </div>
 </div>
