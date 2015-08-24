@@ -10,6 +10,8 @@ use corp\CBaseController;
 
 use common\Utils;
 use common\models\Task;
+use common\models\Resume;
+use common\models\TaskAddress;
 use common\models\TaskApplicant;
 use corp\models\time_book\Record;
 use corp\models\time_book\Schedule;
@@ -20,6 +22,11 @@ use corp\models\time_book\Schedule;
  */
 class TimeBookController extends CBaseController
 {
+
+    public function beforeAction($action){
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
 
     public function actionIndex()
     {
@@ -48,20 +55,24 @@ class TimeBookController extends CBaseController
         }
     }
 
-    public function actionWorkerSummary($gid)
+    public function actionWorkerSummary($gid, $resume_name=null, $address=null)
     {
         $task = Task::find()
             ->where(['gid'=> $gid, 'user_id'=>Yii::$app->user->id])->one();
         if (!$task){
-            throw new HttpException(404, '未知的任务');
+            throw new HttpException(403, '未知的任务');
         }
         $this->openTimeBook($task);
 
-        $query = $task->getApplicants()->with('resume')->with('address');
+        $today = date('Y-m-d');
+
+        $query = $task->getApplicants()->joinWith('resume', 'address');
+        $query->filterWhere([Resume::tableName() . '.name'=> $resume_name]);
 
         $countQuery = clone $query;
+        $worker_count = $countQuery->count();
         $pages =  new Pagination(['pageSize'=>Yii::$app->params['pageSize'],
-            'totalCount' => $countQuery->count()]);
+            'totalCount' => $worker_count]);
 
         $applicants = $query->offset($pages->offset)
             ->limit($pages->limit)->all();
@@ -75,34 +86,53 @@ class TimeBookController extends CBaseController
         $ss = Schedule::find()
             ->select("
                 count(1) as count,
-                sum('on_late') as on_late_count,
-                sum('off_early') as off_late_count,
-                sum('out_work') as out_work_count,
-                sum(CASE WHEN note is null OR note = '' THEN 0 ELSE 1 END) as noted_count
+                sum(case WHEN date<=CURDATE() THEN 1 ELSE 0 END) as past_count,
+                sum(on_late) as on_late_count,
+                sum(off_early) as off_early_count,
+                sum(out_work) as out_work_count,
+                sum(CASE WHEN note is null OR note = '' THEN 0 ELSE 1 END) as noted_count,
+                user_id,
+                sum(case WHEN date=CURDATE() THEN 1 ELSE 0 END) as is_today_on
             ")
             ->groupBy('user_id')
-            ->where(['task_id'=>$task->id, 'user_id'=>$user_ids])->all();
+            ->filterWhere(['like', 'address', $address])
+            ->andWhere(['task_id'=>$task->id, 'user_id'=>$user_ids])
+            ->all();
+
         $summaries = [];
+        $today_worker_count = 0;
         foreach ($ss as $s){
             $summaries[$s->user_id] = $s;
+            $today_worker_count += $s->is_today_on;
+        }
+
+        $ss = Schedule::find()
+            ->select('address')
+            ->distinct()
+            ->where(['task_id'=>$task->id])->all();
+        $addresses = [];
+        foreach ($ss as $add){
+            $addresses[] = $add->address;
         }
 
         return $this->render('summary', [
             'task' => $task,
             'subject' => 'worker',
+            'addresses' => $addresses,
             'models' => $applicants,
             'summaries' => $summaries,
             'pages' => $pages,
+            'worker_count' => $worker_count,
+            'today_worker_count' => $today_worker_count,
         ]);
     }
-
 
     public function actionAddressSummary($gid)
     {
         $task = Task::find()->with('resumes')
             ->where(['gid'=> $gid, 'user_id'=>Yii::$app->user->id])->one();
         if (!$task){
-            throw new HttpException(404, '未知的任务');
+            throw new HttpException(403, '未知的任务');
         }
         return $this->render('summary', [
             'task' => $task,
@@ -115,7 +145,7 @@ class TimeBookController extends CBaseController
         $task = Task::find()->with('resumes')
             ->where(['gid'=> $gid, 'user_id'=>Yii::$app->user->id])->one();
         if (!$task){
-            throw new HttpException(404, '未知的任务');
+            throw new HttpException(403, '未知的任务');
         }
         return $this->render('summary', [
             'task' => $task,
@@ -123,34 +153,158 @@ class TimeBookController extends CBaseController
         ]);
     }
 
-    public function actionSettings($user_id, $task_id)
+    public function actionAdd($gid, $user_id=null, $date=null, $address_id=null)
     {
-        $applicant = TaskApplicant::find()
-            ->where(['user_id'=>$user_id, 'task_id'=> $task_id])->one();
-        if (!$applicant){
-            throw new HttpException(404, '未知的请求');
-        }
-        return $this->render('settings',
-            ['applicant'=>$applicant]
-        );
-    }
-
-    public function actionDetail($task_id, $user_id=null, $date=null, $address_id=null)
-    {
-        return $this->render('detail', [
-        ]);
-    }
-
-    public function actionAdd($gid)
-    {
-
         $task = Task::find()->with('resumes')->with('addresses')
             ->where(['gid'=> $gid, 'user_id'=>Yii::$app->user->id])->one();
         if (!$task){
-            throw new HttpException(404, '未知的任务');
+            throw new HttpException(403, '未知的任务');
+        }
+        $req = Yii::$app->request;
+        $errors = [];
+        if (Yii::$app->request->isPost){
+            $user_ids = explode(',', $req->post('user_ids'));
+            $address_id = $req->post('address_id');
+            $lat = $req->post('lat');
+            $lng = $req->post('lng');
+            $from_time = $req->post('from_time');
+            $to_time = $req->post('to_time');
+            $address = null;
+            $today = date('Y-m-d');
+            foreach($user_ids as $k=>$user_id){
+                if (empty($user_id)){
+                    unset($user_ids[$k]);
+                }
+            }
+            $dates = explode(',', $req->post('dates'));
+            foreach($dates as $k=>$date){
+                if (empty($date)){
+                    unset($dates[$k]);
+                }
+                if ($date<$today){
+                    unset($dates[$k]);
+                }
+            }
+            if (empty($dates)){
+                $errors['dates'] = '请选择日期';
+            }
+            if (empty($user_ids)){
+                $errors['user_ids'] = '用户不可为空';
+            }
+            if ($address_id){
+                $address = TaskAddress::find()
+                    ->where(['id'=>$address_id, 'task_id'=>$task->id])
+                    ->one();
+            }
+            if (!$address){
+                $errors['address_id'] = '请选择地址';
+            }
+            if (!$lat || !$lng){
+                $errors['lat'] = '请设置精准坐标';
+            }
+            if (!$req->post('from_time') || !$req->post('to_time')){
+                $errors['from_time'] = '请设置工作时间';
+            }
+            if (count($errors)==0){
+                TaskApplicant::updateAll(
+                    ['address_id'=>$address->id],
+                    ['user_id'=>$user_ids, 'task_id'=> $task->id]);
+
+                Schedule::deleteAll(
+                    ['task_id'=>$task->id, 'date'=>$dates, 'user_id'=>$user_ids]);
+
+                if (strval($address->lat) != $lat || strval($address->lng) != $lng) {
+                    $address->lat = $lat;
+                    $address->lng = $lng;
+                    $address->save();
+                }
+
+                $rows = [];
+                foreach ($dates as $date){
+                    foreach($user_ids as $user_id){
+                        $schedule = new Schedule;
+                        $schedule->user_id = $user_id;
+                        $schedule->task_id = $task->id;
+                        $schedule->date = $date;
+                        $schedule->address = $address->title;
+                        $schedule->from_datetime = $date . ' ' . $from_time . ':00'; // 0000-00-00 00:00:00
+                        $schedule->to_datetime = $date . ' ' . $to_time . ':00'; // 0000-00-00 00:00:00
+                        $schedule->owner_id = $task->user_id;
+                        $schedule->lat = $lat;
+                        $schedule->lng = $lng;
+                        $schedule->loadDefaultValues();
+                        $rows[] = $schedule->attributes;
+                    }
+                }
+                Yii::$app->db->createCommand()
+                    ->batchInsert(Schedule::tableName(), $schedule->attributes(), $rows)
+                    ->execute();
+                return $this->redirect('/time-book/worker-summary?gid=' . $gid);
+            }
         }
         return $this->render('add', [
             'task' => $task,
+            'users' => [],
+            'address' => null,
+            'dates' => [],
+            'errors' => $errors,
         ]);
+    }
+
+    public function actionDetail($task_id, $user_id, $on_late='', $off_early='', $out_work='')
+    {
+        $task = Task::findOne(
+            ['user_id' => Yii::$app->user->id, 'id'=>$task_id]);
+        if(!$task){
+            throw new HttpException(403, '未知的任务');
+        }
+        $resume = Resume::findOne(['user_id'=> $user_id]);
+        $query = Schedule::find()
+            ->where(['owner_id'=>$user_id, 'task_id'=>$task_id])
+            ->with('on_record')->with('off_record')
+            ->orderBy(['date'=> SORT_DESC]);
+        if ($on_late!=''){
+            $query->andWhere(['on_late'=> $on_late]);
+        }
+        if ($off_early!=''){
+            $query->andWhere(['off_early'=> $off_early]);
+        }
+        if ($out_work!=''){
+            $query->andWhere(['out_work'=> $out_work]);
+        }
+        $schedules = $query->all();
+        return $this->render('detail', [
+            'schedules' => $schedules,
+            'task' => $task,
+            'resume' => $resume,
+        ]);
+    }
+
+    public function actionChangeSchedule()
+    {
+        $req = Yii::$app->request;
+        $schedule_id = $req->post('schedule_id');
+        $action = $req->post('action');
+        $note = $req->post('note');
+        $schedule = Schedule::findOne(
+            ['owner_id'=> Yii::$app->user->id, 'id'=>$schedule_id]);
+        if (!$schedule){
+            throw new HttpException(403, '未知的任务');
+        }
+        if ($action=='delete' && !$schedule->is_past){
+            $r = $schedule->delete();
+        } else {
+            if ($action=='record_note') {
+                $schedule->note = $note;
+            } else if ($action=='delete'){
+                $schedule->{$action} = 1;
+            }
+            $r = $schedule->save();
+        }
+        if ($r){
+            return $this->renderJson(['success'=> true, 'msg'=>'修改成功']);
+        } else {
+            return $this->renderJson(['success'=> false, 'msg'=>'修改失败']);
+        }
     }
 }

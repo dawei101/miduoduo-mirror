@@ -3,6 +3,7 @@
 namespace common\models\extensions\time_book;
 
 use Yii;
+use common\Utils;
 
 /**
  * This is the model class for table "ext_time_book_record".
@@ -66,4 +67,26 @@ class Record extends \common\BaseActiveRecord
         return $this->hasOne(Schedule::className(), ['id' => 'schedule_id']);
     }
 
+    private $_distance;
+
+    public function getDistance()
+    {
+        if (!$this->_distance){
+            $this->_distance = Utils::distance(
+                ['lat'=>$this->lat, 'lng'=> $this->lng],
+                ['lat'=> $this->schedule->lat, 'lng'=> $this->schedule->lng]
+            );
+        }
+        return $this->_distance;
+    }
+
+    public function getTime()
+    {
+        return substr($this->created_time, 11);
+    }
+
+    public function getDate()
+    {
+        return substr($this->created_time, 0, 11);
+    }
 }

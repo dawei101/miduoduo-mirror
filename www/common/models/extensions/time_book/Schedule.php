@@ -15,6 +15,7 @@ use Yii;
  * @property integer $allowable_distance_offset
  * @property string $lat
  * @property string $lng
+ * @property string $address
  *
  * @property Record[] $records
  */
@@ -39,7 +40,9 @@ class Schedule extends \common\BaseActiveRecord
             [['allowable_distance_offset'], 'integer'],
             [['lat', 'lng'], 'number'],
             [['date'], 'safe'],
-            [['user_id', 'task_id'], 'string', 'max' => 200]
+            [['user_id', 'task_id'], 'string', 'max' => 200],
+            ['allowable_distance_offset', 'default', 'value'=> 1000],
+            ['address', 'string', 'max'=>200],
         ];
     }
 
@@ -66,5 +69,20 @@ class Schedule extends \common\BaseActiveRecord
     public function getRecords()
     {
         return $this->hasMany(Record::className(), ['schedule_id' => 'id']);
+    }
+
+    public function getFrom_time()
+    {
+        return substr($this->from_datetime, 11);
+    }
+
+    public function getTo_time()
+    {
+        return substr($this->to_datetime, 11);
+    }
+
+    public function getIs_past()
+    {
+        return $this->date <= date('Y-m-d');
     }
 }

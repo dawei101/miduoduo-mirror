@@ -7,7 +7,7 @@ $this->title = '设置兼职内容';
 <div class="container">
   <div class="row">
     <div class="fabu-box padding-0">
-      <div class="col-sm-12 col-md-2 col-lg-2 padding-0" style="background:#f00">
+      <div class="col-sm-12 col-md-2 col-lg-2 padding-0">
         <?= $this->render('../layouts/sidebar', ['active_menu'=> 'time_book'])?>
       </div>
       <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">

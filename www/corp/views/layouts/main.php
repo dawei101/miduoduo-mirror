@@ -23,6 +23,7 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <?=isset($this->blocks['css'])?$this->blocks['css']:''?>
 </head>
 <body>
     <?php $this->beginBody() ?>

@@ -17,16 +17,16 @@ CREATE TABLE IF NOT EXISTS `ext_time_book_schedule` (
   `from_datetime` TIMESTAMP NOT NULL,
   `to_datetime` TIMESTAMP NOT NULL,
   `allowable_distance_offset` INT NOT NULL DEFAULT 500,
-  `lat` DECIMAL(10,8) NULL,
-  `lng` DECIMAL(10,8) NULL,
+  `lat` double,
+  `lng` double,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
 
 CREATE TABLE IF NOT EXISTS `ext_time_book_record` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `lng` DECIMAL(10,8) NOT NULL,
-  `lat` DECIMAL(10,8) NOT NULL,
+  `lat` double not null,
+  `lng` double not null,
   `event_type` SMALLINT NULL,
   `created_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` VARCHAR(200) NULL,
@@ -41,6 +41,7 @@ alter table ext_time_book_schedule add on_late smallint not null default 0;
 alter table ext_time_book_schedule add off_early smallint not null default 0;
 alter table ext_time_book_schedule add out_work smallint not null default 0;
 alter table ext_time_book_schedule add note varchar(2000) default null;
+alter table ext_time_book_schedule address varchar(500);
             ";
         $this->execSqls($sqls);
     }

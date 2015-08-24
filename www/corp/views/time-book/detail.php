@@ -1,207 +1,148 @@
 <?php
 
+
 ?>
-<div class="body-box">
 <div class="midd-kong"></div>
 <div class="container">
   <div class="row">
     <div class="fabu-box padding-0">
-      <div class="col-sm-12 col-md-2 col-lg-2 padding-0" style="background:#f00">
+      <div class="col-sm-12 col-md-2 col-lg-2 padding-0">
         <?= $this->render('../layouts/sidebar', ['active_menu'=> 'time_book'])?>
       </div>
       <div class="col-sm-12 col-md-10 col-lg-10 padding-0 ">
         <div class="right-center">
-          <div class="conter-title1">考勤管理 &gt;  汽车之家APP推广 </div>
-          <div class="gl_title_top">
-            <div class="yuangong"><span>员工总数</span><span class="span_t">288</span></div>
-            <div class="zaigang"><span>目前在职</span><span class="span_t">288</span></div>
-            <div class="lizhi"><span>已经离职</span><span class="span_t">288</span></div>
+          <div class="conter-title1">
+            <a href="/time-book/">考勤管理 </a>&gt; 
+            <a href="/time-book/worker-summary?gid=<?=$task->gid?>"><?=$task->title?>考勤</a> &gt; 
+            <?=$resume->name?>的考勤
           </div>
-          <ul class="tianxie-box1" style="border:none">
-            <li>
-              <input type="text"  class="in_put" placeholder="兼职人姓名" >
-              <div class="time-xz">
-                <div class="nice-select times" name="nice-select">
-                  <input type="text" value="工作地点" >
-                  <ul>
-                    <li>00:00</li>
-                    <li>00:30</li>
-                    <li>01:00</li>
-                    <li>01:30</li>
-                    <li>02:00</li>
-                    <li>02:30</li>
-                    <li>03:00</li>
-                    <li>03:30</li>
-                  </ul>
-                </div>
-                <div class="nice-select times" name="nice-select">
-                  <input type="text" value="时间段" >
-                  <ul>
-                    <li>00:00</li>
-                    <li>00:30</li>
-                    <li>01:00</li>
-                    <li>01:30</li>
-                    <li>02:00</li>
-                    <li>02:30</li>
-                    <li>03:00</li>
-                    <li>03:30</li>
-                  </ul>
-                </div>
-                <div class="nice-select times" name="nice-select">
-                  <input type="text" value="在岗">
-                  <ul>
-                    <li>在岗</li>
-                    <li>离职</li>
-                  </ul>
-                </div>
-              </div>
-              <input type="text" value="搜索" class="sech_1" >
-            </li>
-          </ul>
+ <ul class="tianxie-box1" style="border:none">
+    <li>
+      <form action="#" method="GET">
+          <input type="hidden" name="user_id" value="<?=$task->user_id?>">
+          <input type="hidden" name="task_id" value="<?=$task->id?>">
+          <input type="hidden" id="on_late"  name="on_late" value="<?=Yii::$app->request->get('on_late')?>">
+          <input type="hidden" id="off_early" name="off_early" value="<?=Yii::$app->request->get('off_early')?>">
+          <input type="hidden" id="out_work" name="out_work" value="<?=Yii::$app->request->get('out_work')?>">
+          <div class="time-xz">
+            <div class="nice-select times" name="nice-select">
+              <input type="text" placeholder="是否迟到" name="n1" value="<?=Yii::$app->request->get('n1')?>">
+              <ul style="display: none;">
+                <li onclick="javascript:$('#on_late').val('');"></li>
+                <li onclick="javascript:$('#on_late').val('1');">迟到</li>
+                <li onclick="javascript:$('#on_late').val('0');">没迟到</li>
+              </ul>
+            </div>
+          </div>
+          <div class="time-xz">
+            <div class="nice-select times" name="nice-select">
+              <input type="text" name="n2" placeholder="是否早退" value="<?=Yii::$app->request->get('n2')?>">
+              <ul style="display: none;">
+                <li onclick="javascript:$('#off_early').val('');"></li>
+                <li onclick="javascript:$('#off_early').val('1');">早退</li>
+                <li onclick="javascript:$('#off_early').val('0');">没早退</li>
+              </ul>
+            </div>
+          </div>
+          <div class="time-xz">
+            <div class="nice-select times" name="nice-select">
+              <input type="text" name="n3" placeholder="是否旷工" value="<?=Yii::$app->request->get('n3')?>">
+              <ul style="display: none;">
+                 <li onclick="javascript:$('#out_work').val('');" ></li>
+                 <li onclick="javascript:$('#out_work').val('1');">旷工</li>
+                 <li onclick="javascript:$('#out_work').val('0');">没旷工</li>
+              </ul>
+            </div>
+          </div>
+          <button class="sech_1" style="background: #fff; ">搜索</button>
+      </form>
+    </li>
+  </ul>
           <dl class="jz_tab1">
             <dt>
               <div class="jzqb_tab_1">工作日期</div>
               <div class="jzqb_tab_2" style="border:none">上下班情况</div>
               <div class="jzqb_tab_3">操作</div>
             </dt>
-           <dd>
-              <div class="jzqb_tab_1">2015-08-20</div>
-              <div class="jzqb_tab_2">
-                   <div><span>上班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>下班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>工作记录：</span>今天表现不错</div>
-              </div>
-              <div class="jzqb_tab_3">
-                   <div class="box_t"> <span>代打卡</span>
-                   <div class="kq_box1">
-                  <div class="jl_jt3"><img src="img/jl_jt.png" width="34" height="18"></div>
-                  <div class="form_b">
-                    <label><input name="jilu" type="radio" value=""> 迟到</label>
-                    <label><input name="jilu" type="radio" value="">早退</label>
-                    <label><input name="jilu" type="radio" value="">矿工</label>
-                    <label class="jl"><input name="jilu" type="radio" value="">记录</label>
-                  </div>
-                  <span>确定</span><span>取消</span>
-                  <input type="text" name="" class="ji_nr" placeholder="请输入要记录的内容">
-                </div>
-              </div>
-            </dd>
+<?php foreach ($schedules as $schedule) {?>
             <dd>
-              <div class="jzqb_tab_1">2015-08-20</div>
+            <div class="jzqb_tab_1"><?=$schedule->date?></div>
               <div class="jzqb_tab_2">
-                   <div><span>上班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>下班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>工作记录：</span>今天表现不错</div>
+                <div><span>工作地点：</span><?=$schedule->address?></div>
+              <?php if (!$schedule->is_past){ ?>
+                <div> <span>上班时间：</span><?=$schedule->from_time?> </div>
+                <div> <span>下班时间：</span><?=$schedule->to_time?> </div>
+                <div> <span>工作状态：</span>未开始 </div>
+              <?php } else { ?>
+                <?php if ($schedule->out_work){ ?>
+                <div>
+                    <span></span>旷工
+                </div>
+                <?php } else { ?>
+                <div>
+                    <span>上班情况：</span>
+                        <?=$schedule->on_late?'迟到':'正常'?>
+                     <?php if ($schedule->on_record) { 
+                        $record=$schedule->on_record;
+                     ?>
+                        |
+                        <?=$record->time?>
+                        |  [<?=$record->distance?>m]
+                            <a target="_blank" href="http://api.map.baidu.com/marker?location=<?=$record->lat?>,<?=$record->lng?>&title=<?=$schedule->date.'-'.$resume->name.'-'.'上班打卡地点'?>&output=html">查看地图</a>
+                     <?php } else {?>
+                        |  无记录
+                     <?php }?>
+                </div>
+                <div>
+                    <span>下班情况：</span>
+                        <?=$schedule->on_late?'早退':'正常'?>
+                     <?php if ($schedule->off_record) { 
+                        $record=$schedule->off_record;
+                     ?>
+                        |
+                        <?=$record->time?>
+                        |  [<?=$record->distance?>m]
+                            <a target="_blank" href="http://api.map.baidu.com/marker?location=<?=$record->lat?>,<?=$record->lng?>&title=<?=$schedule->date.'-'.$resume->name.'-'.'上班打卡地点'?>&output=html">查看地图</a>
+                     <?php } else {?>
+                        |  无记录
+                     <?php }?>
+                </div>
+                <?php } ?>
+                <div>
+                    <span>工作记录：</span><?=$schedule->note?>
+                </div>
+              <?php } ?>
               </div>
+              <?php if ($schedule->is_past){ ?>
+              <form action="/time-book/change-schedule" method="post">
               <div class="jzqb_tab_3">
-                   <div class="box_t"> <span>代打卡</span>
-                   <div class="kq_box1">
-                  <div class="jl_jt3"><img src="img/jl_jt.png" width="34" height="18"></div>
+                  <div class="box_t"> <span>修改</span>
+                  <div class="kq_box1">
+                  <div class="jl_jt3"><img src="<?=Yii::$app->params['baseurl.static.corp']?>/static/img/jl_jt.png" width="34" height="18"></div>
+                  <input type="hidden" name="schedule_id" value="<?=$schedule->id?>" >
                   <div class="form_b">
-                    <label><input name="jilu" type="radio" value=""> 迟到</label>
-                    <label><input name="jilu" type="radio" value="">早退</label>
-                    <label><input name="jilu" type="radio" value="">矿工</label>
-                    <label class="jl"><input name="jilu" type="radio" value="">记录</label>
+                    <label><input name="action" value="on_late" type="radio"> 迟到</label>
+                    <label><input name="action" value="off_early" type="radio">早退</label>
+                    <label><input name="action" value="out_work" type="radio">矿工</label>
+                    <label class="jl"><input name="action" value="record_note" type="radio">记录</label>
                   </div>
-                  <span>确定</span><span>取消</span>
-                  <input type="text" name="" class="ji_nr" placeholder="请输入要记录的内容">
+                  <span class="change-schedule">确定</span><span>取消</span>
+                  <input type="text" name="note" class="ji_nr" placeholder="请输入要记录的内容">
                 </div>
               </div>
-            </dd>
-            <dd>
-              <div class="jzqb_tab_1">2015-08-20</div>
-              <div class="jzqb_tab_2">
-                   <div><span>上班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>下班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>工作记录：</span>今天表现不错</div>
-              </div>
-              <div class="jzqb_tab_3">
-                   <div class="box_t"> <span>代打卡</span>
-                   <div class="kq_box1">
-                  <div class="jl_jt3"><img src="img/jl_jt.png" width="34" height="18"></div>
-                  <div class="form_b">
-                    <label><input name="jilu" type="radio" value=""> 迟到</label>
-                    <label><input name="jilu" type="radio" value="">早退</label>
-                    <label><input name="jilu" type="radio" value="">矿工</label>
-                    <label class="jl"><input name="jilu" type="radio" value="">记录</label>
-                  </div>
-                  <span>确定</span><span>取消</span>
-                  <input type="text" name="" class="ji_nr" placeholder="请输入要记录的内容">
+              </form>
+              <?php } else { ?>
+               <form action="change-schedule" method="post">
+               <input type="hidden" name="schedule_id" value="<?=$schedule->id?>" >
+               <input type="hidden" name="action" value="delete" >
+               <div class="jzqb_tab_3">
+                  <div class="box_t"> <span class="change-schedule">删除</span></div>
                 </div>
-              </div>
+                </form>
+              <?php }?>
             </dd>
-            <dd>
-              <div class="jzqb_tab_1">2015-08-20</div>
-              <div class="jzqb_tab_2">
-                   <div><span>上班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>下班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>工作记录：</span>今天表现不错</div>
-              </div>
-              <div class="jzqb_tab_3">
-                   <div class="box_t"> <span>代打卡</span>
-                   <div class="kq_box1">
-                  <div class="jl_jt3"><img src="img/jl_jt.png" width="34" height="18"></div>
-                  <div class="form_b">
-                    <label><input name="jilu" type="radio" value=""> 迟到</label>
-                    <label><input name="jilu" type="radio" value="">早退</label>
-                    <label><input name="jilu" type="radio" value="">矿工</label>
-                    <label class="jl"><input name="jilu" type="radio" value="">记录</label>
-                  </div>
-                  <span>确定</span><span>取消</span>
-                  <input type="text" name="" class="ji_nr" placeholder="请输入要记录的内容">
-                </div>
-              </div>
-            </dd>
-            <dd>
-              <div class="jzqb_tab_1">2015-08-20</div>
-              <div class="jzqb_tab_2">
-                   <div><span>上班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>下班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>工作记录：</span>今天表现不错</div>
-              </div>
-              <div class="jzqb_tab_3">
-                   <div class="box_t"> <span>代打卡</span>
-                   <div class="kq_box1">
-                  <div class="jl_jt3"><img src="img/jl_jt.png" width="34" height="18"></div>
-                  <div class="form_b">
-                    <label><input name="jilu" type="radio" value=""> 迟到</label>
-                    <label><input name="jilu" type="radio" value="">早退</label>
-                    <label><input name="jilu" type="radio" value="">矿工</label>
-                    <label class="jl"><input name="jilu" type="radio" value="">记录</label>
-                  </div>
-                  <span>确定</span><span>取消</span>
-                  <input type="text" name="" class="ji_nr" placeholder="请输入要记录的内容">
-                </div>
-              </div>
-            </dd>
-            <dd>
-              <div class="jzqb_tab_1">2015-08-20</div>
-              <div class="jzqb_tab_2">
-                   <div><span>上班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>下班情况：</span>08:56  |  迟到  |  [500m]北京市朝阳区北苑路198号</div>
-                   <div><span>工作记录：</span>今天表现不错</div>
-              </div>
-              <div class="jzqb_tab_3">
-                   <div class="box_t"> <span>代打卡</span>
-                   <div class="kq_box1">
-                  <div class="jl_jt3"><img src="img/jl_jt.png" width="34" height="18"></div>
-                  <div class="form_b">
-                    <label><input name="jilu" type="radio" value=""> 迟到</label>
-                    <label><input name="jilu" type="radio" value="">早退</label>
-                    <label><input name="jilu" type="radio" value="">矿工</label>
-                    <label class="jl"><input name="jilu" type="radio" value="">记录</label>
-                  </div>
-                  <span>确定</span><span>取消</span>
-                  <input type="text" name="" class="ji_nr" placeholder="请输入要记录的内容">
-                </div>
-              </div>
-            </dd>
+<?php } ?>
           </dl>
-          <div class="daka_foot1">
-                  <div class="daka_page">
-                      <a href="#">上一页</a><a href="#" class="on">1</a><a href="#">2</a><a href="#">...</a><a href="#">6</a><a href="#">下一页</a>
-                  </div>
-            </div>
         </div>
       </div>
     </div>
@@ -209,6 +150,25 @@
 </div>
 <?php $this->beginBlock('js') ?>
 <script type="text/javascript">
+    $(function(){
+        $(".change-schedule").click(function(){
+            var form = $(this).closest('form');
+            var url = form.attr('action');
+            var posts = {};
+            $.each(form.serializeArray(), function(_, kv){
+                posts[kv.name] = kv.value;
+            });
+            posts['_csrf'] = $('meta[name="csrf-token"]').attr("content");;
+            $.post(url, posts, function(data, status){
+                var r = $.parseJSON(data);
+                if (r.success){
+                    location.reload();
+                } else {
+                    alert(r.msg);
+                }
+            });
+        });
+    });
     $(".box_t").on("click","span",function(){
         $(this).parent().parent().find(".kq_box1").hide().eq($(this).index()).show()
     });
@@ -223,6 +183,7 @@
               $(this).parent().parent().find(".ji_nr").show();  
         }
     });
+    
 </script> 
 <?php $this->endBlock('js') ?>
 

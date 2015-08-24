@@ -1,8 +1,4 @@
-<div class="gl_title_top">
-    <div class="yuangong"><span>员工总数</span><span class="span_t">288</span></div>
-    <div class="zaigang"><span>目前在职</span><span class="span_t">288</span></div>
-    <div class="lizhi"><span>已经离职</span><span class="span_t">288</span></div>
-</div>
+
 <div class="container" style="clear: both;">
     <ul class="nav nav-tabs">
         <li class="<?=$subject=='worker'?'active':''?>" role="presentation">

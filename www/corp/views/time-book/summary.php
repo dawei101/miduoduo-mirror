@@ -18,7 +18,9 @@ $this->title = '米多多兼职平台';
       </div>
       <div class="col-sm-10 padding-0 ">
 <div class="right-center">
-          <div class="conter-title1">考勤管理 &gt; <?=$task->title?> </div>
+        <div class="conter-title1">
+            <a href="/time-book/">考勤管理 </a>&gt; <?=$task->title?>考勤
+        </div>
 <?=$this->render('summary_nav', [
     'subject' => $subject,
     'task' => $task,
@@ -27,6 +29,10 @@ $this->title = '米多多兼职平台';
     'task' => $task,
     'models' => $models,
     'pages' => $pages,
+    'summaries' => $summaries,
+    'addresses' => $addresses,
+    'worker_count' => $worker_count,
+    'today_worker_count' => $today_worker_count,
 ]) ?>
         </div>
       </div>

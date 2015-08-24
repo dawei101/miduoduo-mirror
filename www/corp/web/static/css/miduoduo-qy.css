@@ -152,7 +152,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .nice-select input{color:#999; cursor:pointer }
 .nice-select .iconfont{font-size:0.5em; margin-left:-25px; color:#a5abb2; position:absolute; top:15px; right:10px; max-height:225px;  margin-top:3px;}
 .nice-select ul{display:none; width:328px; border:1px #ccc solid;overflow-y:auto;overflow-x:hidden; overflow-style:marquee-line; max-height:150px; position:absolute; z-index:9; background:#fff; margin-top:-1px}
-.nice-select ul li{width:328px; margin:5px ; cursor:pointer; border-bottom:1px #f3f3f3 solid; position:relative;min-height: 20px !important; }
+.nice-select ul li{ margin:5px ; cursor:pointer; border-bottom:1px #f3f3f3 solid; position:relative;min-height: 20px !important; }
 .times{width:80px;float:left; margin-left:15px; }
 .times input{width:80px; padding-left:10px;}
 .times ul{width:80px;}
@@ -408,7 +408,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .jzqb_tab_3{width:12.5%; cursor:pointer;}
 .jz_tab1{width:936px; margin-left:20px;border:1px solid #ccc; clear:both}
 .jz_tab1 dt div{height:40px; background:#eee; float:left; line-height:40px; text-align:center; color:#333;}
-.jz_tab1 dd{border-bottom:1px #eee solid; clear:both; min-height:106px;width: 935px;}
+.jz_tab1 dd{border-bottom:1px #eee solid; clear:both; min-height:140px;width: 935px;}
 .jz_tab1 dd div{float:left; text-align:center; color:#333}
 .jz_tab1 .jzqb_tab_2{line-height:35px !important; border-left:1px solid #ccc; border-right:1px #ccc solid; }
 .jz_tab1 .jzqb_tab_2 div{width:100%;text-align:left !important; text-indent:3em; color:#666;}

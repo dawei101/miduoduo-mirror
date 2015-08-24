@@ -1,3 +1,4 @@
+body{font-family: "微软雅黑","Helvetica Neue", Helvetica, Arial, sans-serif;}
 *{margin:0; padding:0;}
 ul li{list-style:none;}
 a{text-decoration:none;}
@@ -128,16 +129,16 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .default-title{ color:#a5abb2;}
 .default-title a{color:#a5abb2;}
 .default-lis a{ color:#606c77;}
-.right-center{background:#fff; overflow:hidden; height:100% !important; min-height:940px;}
+.right-center{background:#fff; overflow:hidden; height:100% !important; min-height:940px;font-weight:bold;}
 .conter-title{height:48px; border-bottom:1px #00b966 solid; width:100%; color:#2a3141; font-size:18px; line-height:48px; padding-left:40px; background:#FFF;}
-.tianxie-box{height:100%;position:relative; background:#fff; border-bottom:1px #eee dashed; padding:0px 30px 30px; overflow:hidden}
+.tianxie-box{height:100%;position:relative; background:#fff; border-bottom:1px #eee dashed; padding:0px 30px 30px; overflow:hidden;color:#999;   border:1px solid #fed732;}
 .tishi-cs{color:#999; text-align:center; border:#f00 solid 1px; width:90%;  margin:30px auto 20px; padding:10px 0; font-size:18px;}
-.tishi-cs a{text-decoration:underline; font-weight:bold}
-.tianxie-box li{width:760px; margin:20px 0; clear:both; min-height: 40px; }
-.title-left{width:98px; height:40px; line-height:40px; font-size:14px; color:#333; margin-right:20px; text-align:right;font-weight: bold;}
+.tishi-cs a{text-decoration:underline; font-weight:bold;width:810px;}
+.tianxie-box li{width:916px; margin:20px 0; clear:both; min-height: 40px;}
+.title-left{width:120px; height:40px; line-height:40px; font-size:14px; color:#333; margin-right:20px; text-align:right;font-weight: bold;}
 .title-left em{color:#f00; float:left; margin-top:5px;}
-.right-box{width:640px;position: relative;}
-.right-box input{width:328px; height:40px; border:#999 solid 1px; padding:0 5px;}
+.right-box{width:717px;position: relative;}
+.right-box input{width:328px; height:40px; border:#999 solid 1px; padding:0 5px;color:#999;}
 .riqi input{color:#777}
 .riqi label,.time-xz label{line-height:30px;color:#666 !important; margin-left:10px; margin-top:5px}
 .riqi input.changqi,.time-xz input.changqi{width:30px; height:auto !important;}
@@ -149,7 +150,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 
 .nice-select{position:relative; max-width:328px;}
 .nice-select input{color:#999; cursor:pointer }
-.nice-select .iconfont{font-size:0.5em; margin-left:-25px; color:#a5abb2; position:absolute; top:15px; right:10px; }
+.nice-select .iconfont{font-size:0.5em; margin-left:-25px; color:#a5abb2; position:absolute; top:15px; right:10px; max-height:225px;  margin-top:3px;}
 .nice-select ul{display:none; width:328px; border:1px #ccc solid;overflow-y:auto;overflow-x:hidden; overflow-style:marquee-line; max-height:150px; position:absolute; z-index:9; background:#fff; margin-top:-1px}
 .nice-select ul li{width:328px; margin:5px ; cursor:pointer; border-bottom:1px #f3f3f3 solid; position:relative;min-height: 20px !important; }
 .times{width:80px;float:left; margin-left:15px; }
@@ -198,14 +199,14 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .pitch-current{box-sizing: border-box; color:#2a3141;}
 .pitch-current .iconfont{margin:0 10px 0 10px; font-size:20px;color:#00b966;}
 .current a{ }
-.current a{color:#00b966; display:block; width:100%;background:#fff;}
-.zhiwei-lis{width:790px; padding:30px; overflow:hidden;}
-.zhiwei-lis li{width:750px; border:1px #d2d5d8 solid; overflow:hidden; margin-bottom:20px;}
-.zhiwei-lis-title{width:750px; border-bottom:1px #eee dashed; overflow:hidden; height:40px; border-bottom:1px #ccc dashed; margin-bottom:5px;}
-.zhiwei-lis-title h2{width:500px; line-height:40px; color:#3388ff; font-size:16px;padding-left:20px;}
+.current a{color:#00b966; display:block; width:100%;background:#fff;width:100%;}
+.zhiwei-lis{width:790px; padding:30px; overflow:hidden;width:900px;}
+.zhiwei-lis li{width:750px; border:1px #d2d5d8 solid; overflow:hidden; margin-bottom:20px;width:100%}
+.zhiwei-lis-title{width:100%; border-bottom:1px #eee dashed; overflow:hidden; height:40px; border-bottom:1px #ccc dashed; margin-bottom:5px;}
+.zhiwei-lis-title h2{width:70%; line-height:40px; color:#3388ff; font-size:16px;padding-left:20px;}
 .bt-span{height:30px; padding-top:10px;}
-.zhiwei-lis-title span{border:1px #00b966 solid; border-radius:4px; padding:2px 4px; margin-top:10px; margin-right:20px; cursor:pointer;}
-.zhiwei-lis-left{width:510px; height:90px; line-height:30px; padding-left:20px; color:#606c77}
+.zhiwei-lis-title span{border:1px #00b966 solid; border-radius:4px; padding:2px 4px; margin-top:10px; margin-right:20px; cursor:pointer;width:73%;}
+.zhiwei-lis-left{width:70%; height:90px; line-height:30px; padding-left:20px; color:#606c77}
 .zhiwei-lis-left span{margin-right:20px;}
 .zhiwei-lis-right{width:230px; height:90px; line-height:30px;color:#606c77}
 .fb-sj{color:#a5abb2;}
@@ -272,18 +273,19 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .btnn .fabu-btn1{width:200px; height:40px;  color:#fff; background:#25b860; border:none; margin-left:20px; float:left}
 .btnn span{width:200px; height:40px;  color:#999; background:#eee; border:none; margin-left:20px; float:left; display:block; line-height:40px;}
 
-.dizhi {background:#fff; left:0px; position: absolute;top: 41px; width: 530px; z-index: 1000; border:1px #d2d5d8 solid; padding-left:10px; max-height:300px;overflow-x: hidden; overflow-y: auto;}
+.dizhi {background:#fff; left:0px; position: absolute;top: 41px; width: 663px; z-index: 1000; border:1px #d2d5d8 solid; padding-left:10px; max-height:300px;overflow-x: hidden; overflow-y: auto;}
 .dizhi li {border-bottom: 1px solid #f3f3f3;border-radius: 0; margin: 0;width: 100%; padding-left:10px;cursor: pointer;}
 .dizhi li h2{font-size:14px; line-height:25px; color:#333;margin-top: 10px;}
 .dizhi li p{line-height:25px; font-size:12px; color: #999;}
 
-.zhi {clear: both; margin-left: 118px;  width: 550px;}
-.zhi .p-box {border-bottom: 1px dashed #ccc;clear: both;line-height: 30px;overflow: hidden;padding: 5px 0;width: 530px;}
+.zhi {clear: both; margin-left: 139px;  width: 550px;}
+.zhi .p-box {border-bottom: 1px dashed #ccc;clear: both;line-height: 30px;overflow: hidden;padding: 5px 0;width: 635px;}
 .zhi span {background: #ccc;border-radius:100px;color: #666;margin-top: 6px;cursor:pointer; width:20px; height:20px; float:right; line-height:20px; line-height:20px; margin-right:10px; font-size:18px;text-align: center;}
 .dz-v {float: left;color: #666;}
-.add-v {width: 530px !important;}
+.add-v {width: 297px !important;}
+.address select{height:40px; border:#999 solid 1px;border-right:0;color:#999;width: 108px; padding:0 5px;}
 
-.tianj { border: 2px solid #00b966  !important;float: right;margin-right: 30px;padding: 8px 15px; border-radius:4px; border:2px #ccc solid; color:#00b966; cursor:pointer;}
+.tianj { border: 2px solid #00b966  !important;float: right;margin-right: 9px;padding: 8px 15px; border-radius:4px; border:2px #ccc solid; color:#00b966; cursor:pointer;}
 
 .foots{width:100%; background:#2a3141; padding:20px 0;}
 .foot{color:#999;}

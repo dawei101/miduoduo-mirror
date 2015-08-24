@@ -29,19 +29,22 @@ $(document).click(function(){
 });
 })
 
-
 //日期选择
  $(document).ready(function() {
-      $('.reservation').daterangepicker(null, function(start, end, label) {
-                    console.log(start.toISOString(), end.toISOString(), label);
-          });            
+     var dom=$('.reservation');
+     if (dom.length>0){
+        dom.daterangepicker(null, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+     }
  });
-  $(document).ready(function() {
-                  $('#birthday').daterangepicker({ singleDatePicker: true }, function(start, end, label) {
-                    console.log(start.toISOString(), end.toISOString(), label);
-                  });
-               });
-
+$(document).ready(function() {
+    var dom=$('birthday');
+    if (dom.length>0){ dom.daterangepicker({ singleDatePicker: true }, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+    }
+});
 
 
 //富文本编辑器
