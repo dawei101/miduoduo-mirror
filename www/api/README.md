@@ -330,6 +330,11 @@ BASE_URL = 'http://api.miduoduo.cn'
 * 创建自己简历
     * POST /vesion/resume
 
+###图片上传 UploadImage
+
+* 上传一张图片，返回图像地址
+    * POST /version/upload-image/upload?access-token
+
 ###时间表 Freetime(获取简历时可直接获取)
 
 * 获取自己一周的时间表
