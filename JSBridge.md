@@ -133,7 +133,12 @@ function CallBack(str) {
 
     callback：回调函数名
 ```
+* 打卡
+```
+    window.MDDNative.clock(callback)
 
+    callback：回调函数名
+```
 
 * 获取 baseUrl
 ```
