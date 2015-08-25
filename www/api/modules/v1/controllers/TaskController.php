@@ -125,7 +125,11 @@ class TaskController extends BaseActiveController
 
         foreach ($day_batch as $day_range){
             $where .= 
-                " or ( $to_date >= '$day_range[0]' and $from_date <= '$day_range[1]')";
+                " or ( $to_date >= '$day_range[0]' 
+                       and $to_date <= '$day_range[1]'
+                       and $from_date <= '$day_range[1]' 
+                       and $from_date >= '$day_range[0]'
+                )";
         }
         $query->andWhere($where);
         return $query;
