@@ -15,7 +15,8 @@ class Utils
                 ['invited_by'=>$user->id])->count(),
             'access_token'=> $user->access_token,
             'resume' => $user->resume?$user->resume->toArray():null,
-            ];
+            'wechat' => $user->weichat?$user->weichat->toArray():null,
+        ];
     }
 
 }
