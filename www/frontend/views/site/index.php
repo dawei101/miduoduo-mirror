@@ -15,7 +15,7 @@
     <div class="qiuzhi-logo"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/qiuzhi-logo.png" width="244" height="80"></div>
     <ul>
        <li><a href="/">首页</a></li>
-       <li><a href="<?=Yii::$app->params['baseurl.m'] . '/task'?>">最新兼职</a></li>
+       <li><a href="<?=Yii::$app->params['baseurl.m'] . '/'?>">最新兼职</a></li>
        <li><a href="<?=Yii::$app->params['baseurl.corp']?>">企业版</a></li>       
     </ul>
   </div>

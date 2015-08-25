@@ -1,9 +1,10 @@
 <?php
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 $this->title = '已报名兼职';
 
 $this->nav_left_link = 'javascript:window.history.back()';
-$this->nav_right_link = '/';
+$this->nav_right_link = Url::to(['site/index']);
 $this->nav_right_title = '首页';
 ?>
 
@@ -19,7 +20,7 @@ $this->nav_right_title = '首页';
 <!--===========以上是固定在顶部的==============-->
 
 <?=
-    $this->render('@m/views/task/task-list.php', [
+    $this->render('@m/views/task/task-apply-list.php', [
         'tasks' => $tasks,
         'pages' => $pages
     ])

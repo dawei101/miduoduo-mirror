@@ -61,6 +61,7 @@ class WechatUtils
             curl_setopt($curlobj, CURLOPT_POSTFIELDS, $getData);
             curl_setopt($curlobj, CURLOPT_SSL_VERIFYPEER, FALSE);
             curl_setopt($curlobj, CURLOPT_SSL_VERIFYHOST, FALSE);
+            curl_setopt($curlobj, CURLOPT_TIMEOUT, 1000);
             $returnstr  = curl_exec($curlobj);
             if(!curl_error($curlobj) ){
                 $data = json_decode($returnstr, true);

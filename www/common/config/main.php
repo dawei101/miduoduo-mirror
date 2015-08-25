@@ -56,7 +56,7 @@ return [
             'class' => 'yii\caching\DbCache',
             'db' => 'db',
             'cacheTable' => 'jz_cache',
-            'keyPrefix' => 'corp@',
+            'keyPrefix' => 'miduoduo@',
         ],
         'wechat_pusher' => [
             'class' => 'common\pusher\WechatPusher',
@@ -130,6 +130,7 @@ return [
         'html5_dest' => $root_path . '/html5_dest',
     ],
     'language'=>'zh-CN',
+    'sourceLanguage'=>'zh-CN',
     'timeZone' => 'Asia/Shanghai',
     'params' => $params,
 ];

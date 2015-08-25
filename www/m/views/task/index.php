@@ -37,7 +37,7 @@ $this->page_keywords = $seo_code['keywords'];
 $this->page_description = $seo_code['description'];
 
 $this->nav_left_link = 'javascript:window.history.back()';
-$this->nav_right_link = '/';
+$this->nav_right_link = $seo_params['city_pinyin'] ? '/'.$seo_params['city_pinyin'].'/' : '/';
 $this->nav_right_title = '首页';
 /* @var $this yii\web\View */
 
@@ -51,11 +51,7 @@ $this->wechat_apis = ['getLocation'];
 </dt><span class="inverted-triangle"></span>
         <dd> 
           <ul>
-    <?php 
-        $url = '/' . $seo_params['city_pinyin'] . '/'
-            . ($seo_params['type_pinyin']?($seo_params['type_pinyin'].'/'):'');
-    ?>
-        <li><a href="<?=$url?>">全城</a></li>
+        <li><a href="<?=Url::current(['district_pinyin'=>''])?>">全城</a></li>
             <li style="display: none;">
                 <?php if($location['id']){ ?>
                     <a href="/task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a>
@@ -64,12 +60,7 @@ $this->wechat_apis = ['getLocation'];
                 <?php } ?>
             </li>
 <?php foreach($districts as $district) { ?>
-    <?php 
-        $url = '/' . $seo_params['city_pinyin'] . '/'
-            . $district->seo_pinyin . '/'
-            . ($seo_params['type_pinyin']?($seo_params['type_pinyin'].'/'):'');
-    ?>
-    <li><a href="<?=$url?>"><?=$district->name?></a></li>
+    <li><a href="<?=Url::current(['district_pinyin'=>$district->seo_pinyin])?>"><?=$district->name?></a></li>
 <?php } ?>
           </ul>
         </dd>
@@ -78,18 +69,9 @@ $this->wechat_apis = ['getLocation'];
         <dt><?=$current_service_type?$current_service_type->name:'分类 '?><span class="caret"></span> </dt>
         <dd> 
           <ul>
-    <?php 
-        $url = '/' . $seo_params['city_pinyin'] . '/'
-            . ($seo_params['block_pinyin']?($seo_params['block_pinyin'].'/'):'');
-    ?>
-    <li><a href="<?=$url?>">全部</a></li>
+    <li><a href="<?=Url::current(['type_pinyin'=>''])?>">全部</a></li>
 <?php foreach($service_types as $st) { ?>
-    <?php 
-        $url = '/' . $seo_params['city_pinyin'] . '/'
-            . ($seo_params['block_pinyin']?($seo_params['block_pinyin'].'/'):'')
-            . $st['pinyin'] . '/';
-    ?>
-    <li><a href="<?=$url?>"><?=$st->name?></a></li>
+    <li><a href="<?=Url::current(['type_pinyin'=>$st['pinyin']])?>"><?=$st->name?></a></li>
 <?php } ?>
           </ul>
         </dd>
@@ -110,7 +92,6 @@ $this->wechat_apis = ['getLocation'];
             
             <li><a href="?sort=default">综合排序</a></li>
             <li><a href="?sort=fromdate">按开工时间由近到远</a></li>
-            
           </ul>
         </dd>
      </dl>

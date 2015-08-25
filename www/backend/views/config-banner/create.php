@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\ConfigRecommend */
+/* @var $model common\models\ConfigBanner */
 
-$this->title = '创建推荐兼职';
-$this->params['breadcrumbs'][] = ['label' => 'Config Recommends', 'url' => ['index']];
+$this->title = Yii::t('app', '创建广告位');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Config Banners'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="config-recommend-create">
+<div class="config-banner-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

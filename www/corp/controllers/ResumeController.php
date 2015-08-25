@@ -77,7 +77,12 @@ class ResumeController extends CBaseController
         $resume = TaskApplicant::findOne(['id' => $aid]);
         $resume->status = 10;
         if ($resume->save()) {
-            $this->pushResultMsg($resume->task_id,Yii::$app->user->id,TaskApplicant::STATUS_APPLY_SUCCEED);
+            $task_applicant = TaskApplicant::findOne(['id'=>$aid]);
+            $this->pushResultMsg(
+                $resume->task_id,
+                $task_applicant->user_id,
+                TaskApplicant::STATUS_APPLY_SUCCEED
+            );
             return $this->renderJson(['result' => true]);
         }
         return $this->renderJson(['result' => false, 'error' => $resume->errors]);
@@ -108,7 +113,8 @@ class ResumeController extends CBaseController
             $resume = TaskApplicant::findOne(['id' => $aid]);
             $resume->status = 10;
             if ($resume->save()) {
-                $this->pushPassNoticeMsg($task->id,$user_id);
+                $task_applicant = TaskApplicant::findOne(['id'=>$aid]);
+                $this->pushPassNoticeMsg($task->id,$task_applicant->user_id);
                 return $this->redirect('/resume');
             }
         }
@@ -141,7 +147,12 @@ class ResumeController extends CBaseController
         $resume = TaskApplicant::findOne(['id' => $aid]);
         $resume->status = 20;
         if ($resume->save()) {
-            $this->pushResultMsg($resume->task_id,Yii::$app->user->id,TaskApplicant::STATUS_APPLY_FAILED);
+            $task_applicant = TaskApplicant::findOne(['id'=>$aid]);
+            $this->pushResultMsg(
+                $resume->task_id,
+                $task_applicant->user_id,
+                TaskApplicant::STATUS_APPLY_FAILED
+            );
             return $this->renderJson(['result' => true]);
         }
         return $this->renderJson(['result' => false, 'error' => $resume->errors]);
