@@ -98,6 +98,11 @@ class TaskApplicant extends \common\BaseActiveRecord
         return $this->hasOne(Resume::className(), ['user_id' => 'user_id']);
     }
 
+    public function getContact_phonenum()
+    {
+        return $this->task->contact_phonenum;
+    }
+
     /**
      * @inheritdoc
      * @return TaskApplicantQuery the active query used by this AR class.
@@ -127,7 +132,7 @@ class TaskApplicant extends \common\BaseActiveRecord
 
     public function fields()
     {
-        return array_merge(parent::fields(), ['status_label', 'status_options']);
+        return array_merge(parent::fields(), ['status_label', 'status_options', 'contact_phonenum']);
     }
 
     public function extraFields()
