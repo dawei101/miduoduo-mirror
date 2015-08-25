@@ -18,15 +18,8 @@ use Yii;
  *
  * @property Record[] $records
  */
-class Schedule extends \common\BaseActiveRecord
+class Schedule extends \common\models\extensions\time_book\Schedule
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'ext_time_book_schedule';
-    }
 
     /**
      * @inheritdoc
@@ -37,32 +30,7 @@ class Schedule extends \common\BaseActiveRecord
             [['from_datetime', 'to_datetime'], 'safe'],
             [['allowable_distance_offset'], 'integer'],
             [['lat', 'lng'], 'number'],
-            [['user_id', 'task_id'], 'string', 'max' => 200]
+            [['user_id', 'task_id', 'owner_id'], 'string', 'max' => 200]
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'task_id' => 'Task ID',
-            'from_datetime' => 'From Datetime',
-            'to_datetime' => 'To Datetime',
-            'allowable_distance_offset' => 'Allowable Distance Offset',
-            'lat' => 'Lat',
-            'lng' => 'Lng',
-        ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRecords()
-    {
-        return $this->hasMany(Record::className(), ['schedule_id' => 'id']);
     }
 }

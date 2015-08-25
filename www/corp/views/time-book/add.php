@@ -37,7 +37,7 @@
                   <div class="pull-left title-left text-center">工作日期</div>
                   <div class="pull-left right-box div">
                     <div class="riqi jz_in">
-                      <input type="text" style="width: 330px" name="dates" id="dates" placeholder="选择工作日期">
+                      <input type="text" readonly="" style="width: 330px" class="reservation" name="dates" id="dates" placeholder="选择工作日期">
                   </div>
                   <p class="cuowu">内容不能为空!</p>
                 </div></li>
@@ -137,6 +137,7 @@
   </div>
 </div>
 <?php $this->beginBlock('css') ?>
+<link rel="stylesheet" type="text/css" media="all" href="<?=Yii::$app->params['baseurl.static.corp']?>/static/js/data/daterangepicker-bs3.css">
 <style>
     #map {
         width: 100%;
@@ -145,6 +146,7 @@
 </style>
 <?php $this->endBlock('css') ?>
 <?php $this->beginBlock('js') ?>
+<script type="text/javascript" src="<?=Yii::$app->params['baseurl.static.corp']?>/static/js/data/daterangepicker.js"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=<?=Yii::$app->params['baidu.map.web_key']?>"></script>
 <script type="text/javascript">
 $("form").submit(function(e){

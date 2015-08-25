@@ -50,8 +50,10 @@ class BaseActiveController extends ActiveController
     {
         foreach ($this->getQueryShortcuts() as $name=> $map){
             foreach ($map as $value=>$function){
-                if (isset($_REQUEST[$name]) && $_REQUEST[$name]==$value) {
-                    $function($query, $name, $value);
+                if (isset($_REQUEST[$name]) ) {
+                    if ($value=='*' || $_REQUEST[$name]==$value) {
+                        $function($query, $name, $_REQUEST[$name]);
+                    }
                 }
             }
         }

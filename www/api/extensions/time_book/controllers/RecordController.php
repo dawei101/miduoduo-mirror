@@ -11,7 +11,7 @@ use api\common\BaseActiveController;
  */
 class RecordController extends BaseActiveController
 {
-    public $modelClass = 'common\models\extensions\time_book\Record';
+    public $modelClass = 'api\extensions\time_book\models\Record';
 
     public $id_column = 'id';
     public $auto_filter_user = true;
@@ -20,6 +20,13 @@ class RecordController extends BaseActiveController
     public function actions()
     {
         $actions = parent::actions();
-        return ['index'=> $actions['index'], 'view'=> $actions['view'], 'create'=> $actions['create']];
+        $as = ['index'=> $actions['index'], 'view'=> $actions['view']];
+        $as['create'] = [
+            'class' => 'api\extensions\time_book\models\RecordAction',
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
+            'scenario' => $this->createScenario,
+        ];
+        return $as;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use yii\widgets\LinkPager;
+use yii\helpers\Url;
 
 ?>
 <div class="gl_title_top">
@@ -62,7 +63,7 @@ use yii\widgets\LinkPager;
       </div>
       <div class="jz_tab_5">
         <div class="box_t">
-            <span><a target="_blank" href="/time-book/settings?user_id=<?=$resume->user_id?>&task_id=<?=$task->id?>">工作内容设置</a></span>
+            <span style="display: none;"><a target="_blank" href="/time-book/settings?user_id=<?=$resume->user_id?>&task_id=<?=$task->id?>">工作内容设置</a></span>
             <span><a target="_blank" href="/time-book/detail?user_id=<?=$resume->user_id?>&task_id=<?=$task->id?>">工作明细</a></span>
         </div>
       </div>
@@ -76,7 +77,7 @@ use yii\widgets\LinkPager;
     'prevPageLabel'=>'<<', 'firstPageLabel'=>'首页'])?>
 
     <div class="daka_r">
-      <a href="#" class="xiazai">下载考勤表</a>
+      <a target="_blank" href="<?=Url::current(['excel'=>1])?>" class="xiazai">下载考勤表</a>
       <a href="/time-book/add?gid=<?=$task->gid?>">添加考勤日程</a>
     </div>
 </div>

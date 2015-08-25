@@ -11,7 +11,7 @@ use api\common\BaseActiveController;
  */
 class ScheduleController extends BaseActiveController
 {
-    public $modelClass = 'common\models\extensions\time_book\Schedule';
+    public $modelClass = 'api\extensions\time_book\models\Schedule';
 
     public $id_column = 'id';
     public $auto_filter_user = true;
@@ -22,4 +22,17 @@ class ScheduleController extends BaseActiveController
         $actions = parent::actions();
         return ['index'=> $actions['index'], 'view'=> $actions['view']];
     }
+
+    public function getQueryShortcuts()
+    {
+        return [
+             'date' => [
+                 '*' => function($query, $name, $value){
+                     $query->andWhere(['date'=>$value]);
+                 },
+            ],
+        ];
+    }
+
+
 }

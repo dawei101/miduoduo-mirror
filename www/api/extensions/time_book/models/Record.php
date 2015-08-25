@@ -17,16 +17,8 @@ use Yii;
  *
  * @property Schedule $schedule
  */
-class Record extends \common\BaseActiveRecord
+class Record extends \common\models\extensions\time_book\Record
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'ext_time_book_record';
-    }
-
     /**
      * @inheritdoc
      */
@@ -37,32 +29,7 @@ class Record extends \common\BaseActiveRecord
             [['id', 'event_type', 'schedule_id'], 'integer'],
             [['lng', 'lat'], 'number'],
             [['created_time'], 'safe'],
-            [['user_id'], 'string', 'max' => 200]
+            [['user_id', 'owner_id'], 'string', 'max' => 200]
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'lng' => 'Lng',
-            'lat' => 'Lat',
-            'event_type' => 'Event Type',
-            'created_time' => 'Created Time',
-            'user_id' => 'User ID',
-            'schedule_id' => 'Schedule ID',
-        ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSchedule()
-    {
-        return $this->hasOne(Schedule::className(), ['id' => 'schedule_id']);
-    }
-
 }

@@ -1,4 +1,4 @@
-
+<!--
 <div class="container" style="clear: both;">
     <ul class="nav nav-tabs">
         <li class="<?=$subject=='worker'?'active':''?>" role="presentation">
@@ -9,4 +9,4 @@
             <a href="/time-book/date-summary?gid=<?=$task->gid?>"> 按日期 </a> </li>
     </ul>
 </div>
-
+-->

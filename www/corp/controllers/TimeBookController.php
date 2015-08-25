@@ -2,6 +2,7 @@
 namespace corp\controllers;
 
 use Yii;
+use Exception;
 use yii\web\HttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -55,7 +56,7 @@ class TimeBookController extends CBaseController
         }
     }
 
-    public function actionWorkerSummary($gid, $resume_name=null, $address=null)
+    public function actionWorkerSummary($gid, $resume_name=null, $address=null, $excel=false)
     {
         $task = Task::find()
             ->where(['gid'=> $gid, 'user_id'=>Yii::$app->user->id])->one();
@@ -71,7 +72,9 @@ class TimeBookController extends CBaseController
 
         $countQuery = clone $query;
         $worker_count = $countQuery->count();
-        $pages =  new Pagination(['pageSize'=>Yii::$app->params['pageSize'],
+        $page_size = $excel?99999999:Yii::$app->params['pageSize'];
+        $pages =  new Pagination([
+            'pageSize'=>$page_size,
             'totalCount' => $worker_count]);
 
         $applicants = $query->offset($pages->offset)
@@ -114,8 +117,7 @@ class TimeBookController extends CBaseController
         foreach ($ss as $add){
             $addresses[] = $add->address;
         }
-
-        return $this->render('summary', [
+        $params = [
             'task' => $task,
             'subject' => 'worker',
             'addresses' => $addresses,
@@ -124,7 +126,14 @@ class TimeBookController extends CBaseController
             'pages' => $pages,
             'worker_count' => $worker_count,
             'today_worker_count' => $today_worker_count,
-        ]);
+        ];
+        if (!$excel){
+            return $this->render('summary', $params);
+        } else {
+            header('Content-Disposition: attachment;filename="'.$task->gid.'.xls"');
+            header("Cache-Control: max-age=0");
+            return $this->renderPartial('worker_summary_excel', $params);
+        }
     }
 
     public function actionAddressSummary($gid)
@@ -176,16 +185,29 @@ class TimeBookController extends CBaseController
                     unset($user_ids[$k]);
                 }
             }
-            $dates = explode(',', $req->post('dates'));
-            foreach($dates as $k=>$date){
-                if (empty($date)){
-                    unset($dates[$k]);
+            $date_r = explode(' - ', $req->post('dates'));
+            $dates = [];
+            try {
+                $from_date = strtotime($date_r[0]);
+                $to_date = strtotime($date_r[1]);
+                while ($from_date<=$to_date){
+                    $dates[]  = date('Y-m-d', $from_date);
+                    $from_date = strtotime('+1 day', $from_date);
                 }
-                if ($date<$today){
-                    unset($dates[$k]);
+
+                foreach($dates as $k=>$date){
+                    if (empty($date)){
+                        unset($dates[$k]);
+                    }
+                    if ($date<$today){
+                        unset($dates[$k]);
+                    }
                 }
+            } catch (Exception $e){
+                $errors['dates'] = '请选择日期';
             }
-            if (empty($dates)){
+
+            if (count($dates)==0){
                 $errors['dates'] = '请选择日期';
             }
             if (empty($user_ids)){
