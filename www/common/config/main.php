@@ -56,7 +56,7 @@ return [
             'class' => 'yii\caching\DbCache',
             'db' => 'db',
             'cacheTable' => 'jz_cache',
-            'keyPrefix' => 'corp@',
+            'keyPrefix' => 'miduoduo@',
         ],
         'wechat_pusher' => [
             'class' => 'common\pusher\WechatPusher',
