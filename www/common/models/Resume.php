@@ -70,7 +70,7 @@ class Resume extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['name', 'phonenum'], 'required'],
+            [['name'], 'required'],
             [['gender', 'height', 'is_student', 'grade', 'degree',
                 'has_emdical_cert', 'status',
                 'user_id', 'home', 'workplace'], 'integer'],
