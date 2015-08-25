@@ -14,7 +14,7 @@ class Resume extends \common\models\Resume
             [['name'], 'required'],
             [['gender', 'height', 'is_student', 'grade', 'degree',
                 'status', 'user_id', 'home', 'workplace', 'weight'], 'integer'],
-            [['birthdate', 'created_time', 'updated_time'], 'safe'],
+            [['birthdate', 'created_time', 'updated_time', 'gov_id_pic_front','gov_id_pic_back','gov_id_pic_take','exam_status'], 'safe'],
             [['birthdate'], 'date', 'format' => 'yyyy-M-d'],
             [['name', 'college'], 'string', 'max' => 500],
             [['nation'], 'string', 'max' => 255],
