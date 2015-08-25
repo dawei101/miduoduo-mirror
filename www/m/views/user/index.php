@@ -1,9 +1,12 @@
 <?php
+
+use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 $this->title = '个人资料';
 
 $this->nav_left_link = 'javascript:window.history.back()';
-$this->nav_right_link = '/';
+$this->nav_right_link = Url::to(['site/index']);
 $this->nav_right_title = '首页';
 ?>
    <div class="tops">

@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
 
@@ -7,7 +8,7 @@ $this->title = '编辑简历';
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->nav_left_link = 'javascript:window.history.back()';
-$this->nav_right_link = '/';
+$this->nav_right_link = Url::to(['site/index']);
 $this->nav_right_title = '首页';
 
 

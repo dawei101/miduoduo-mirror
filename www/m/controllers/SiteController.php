@@ -60,6 +60,10 @@ class SiteController extends MBaseController
 
     public function actionIndex($city_pinyin='beijing')
     {
+        $cpinyin = Yii::$app->session->get('city_pinyin');
+        if ($cpinyin!=$city_pinyin){
+             Yii::$app->session->set('city_pinyin', $city_pinyin);
+        }
         $city = District::findOne(
             ['seo_pinyin'=> $city_pinyin, 'level'=>'city', 'is_alive'=> 1]);
         $city_id = $city ? $city->id : '';
@@ -123,7 +127,7 @@ class SiteController extends MBaseController
         }
     }
 
-    public function actionCitys(){
+    public function actionChangeCity(){
         // 城市
         $citys  = District::find()
             ->where(['is_alive'=>1,'level'=>'city'])

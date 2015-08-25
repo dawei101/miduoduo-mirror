@@ -4,7 +4,7 @@ use common\Utils;
 
 /* @var $this yii\web\View */
 $this->title = '首页';
-$this->nav_left_link = '/site/citys';
+$this->nav_left_link = '/change-city';
 $this->nav_right_link = '/user';
 $this->nav_right_title = '个人中心';
 $this->nav_left_title = isset($city->name)?$city->name.' &#9660;':'';
@@ -87,7 +87,7 @@ $this->page_description = $seo_code['description'];
   </div>
 </a>
 <?php } ?>
-<a href="/<?=$city_pinyin?>/task/" style="color:#ffa005; display:block; padding:10px 0 15px; text-align:center; margin:0 auto;font-size:1.3em;">更多职位&nbsp;>></a>
+<a href="/<?=$city_pinyin?>/p1/" style="color:#ffa005; display:block; padding:10px 0 15px; text-align:center; margin:0 auto;font-size:1.3em;">更多职位&nbsp;>></a>
 
   </div>
 </div>
