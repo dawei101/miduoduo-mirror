@@ -100,7 +100,9 @@ class TaskApplicant extends \common\BaseActiveRecord
 
     public function getContact_phonenum()
     {
-        return $this->task->contact_phonenum;
+        if ($this->task){
+            return $this->task->contact_phonenum;
+        }
     }
 
     /**

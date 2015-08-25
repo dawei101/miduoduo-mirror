@@ -74,7 +74,8 @@ class WechatController extends \common\BaseController
             $userinfo = AUtils::formatProfile($user);
             $to .= '&user=' . urlencode(json_encode($userinfo));
         }
-        $to .= '&wechat=' . urlencode(json_encode($record->toArray()));
+        $wechat = ['openid'=>$record->openid];
+        $to .= '&wechat=' . urlencode(json_encode($wechat));
         return $this->redirect($to);
     }
 
