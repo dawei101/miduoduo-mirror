@@ -50,7 +50,7 @@ $this->title = '米多多兼职平台';
                     <div class="pull-left tab2">应聘岗位</div>
                     <div class="pull-left tab3">联系方式</div>
                     <div class="pull-left tab4">投递时间</div>
-                    <div class="pull-left tab5">操作</div>
+                    <div class="pull-left tab5">操作<span>（2天未操作简历将失效）</span></div>
                 </dt>
                 <?php foreach ($task_apps as $task_app) {?>
                 <?php 

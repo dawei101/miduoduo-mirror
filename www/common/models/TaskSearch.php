@@ -18,7 +18,7 @@ class TaskSearch extends Task
     public function rules()
     {
         return [
-            [['id', 'clearance_period','recommend', 'salary_unit', 'need_quantity', 'got_quantity', 'user_id', 'service_type_id', 'gender_requirement', 'degree_requirement', 'age_requirement', 'height_requirement', 'status', 'city_id','gid'], 'integer'],
+            [['id', 'clearance_period','recommend', 'salary_unit', 'need_quantity', 'got_quantity', 'user_id', 'service_type_id', 'gender_requirement', 'degree_requirement', 'age_requirement', 'height_requirement', 'status', 'city_id','gid', 'company_id'], 'integer'],
             [['origin', 'title', 'salary_note', 'from_date', 'to_date', 'from_time', 'to_time', 'created_time', 'updated_time', 'detail', 'requirement'], 'safe'],
             [['salary'], 'number'],
         ];
@@ -80,6 +80,7 @@ class TaskSearch extends Task
             'status' => $this->status,
             'city_id' => $this->city_id,
             'origin' => $this->origin,
+            'company_id' => $this->company_id,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

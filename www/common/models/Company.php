@@ -149,7 +149,7 @@ class Company extends \common\BaseActiveRecord
             'person_idcard_pic' => '身份证照片',
             'use_task_date' => '最近一次操作职位日期（增、改、刷新）',
             'use_task_num'  => '最近一次操作职位当天，操作次数',
-
+            'created_time' => '创建时间',
         ];
     }
 

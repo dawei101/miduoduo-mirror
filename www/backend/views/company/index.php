@@ -25,9 +25,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'id',
-            'name',
-            'contact_phone',
+            [
+                'label' => '是否抓取',
+                'filter' => [1 => '否', 2 => '是'],
+                'attribute' => 'user_id_exisit',
+                'value' => function($model){
+                    return $model->user_id > 0 ? '否' : '是';
+                }
+            ],
+            'user_id',
+            [
+                'label' => '企业名称',
+                'attribute' => 'name',
+                'format' => 'raw',
+                'value' => function($model){
+                    return '<a href="/task?TaskSearch[company_id]='.$model->id.'" target="_blank">'.$model->name.'</a>';
+                }
+            ],
+            'created_time',
             'contact_name',
+            'contact_phone',
             'contact_email',
             [
                 'attribute' => 'status',
