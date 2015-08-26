@@ -18,7 +18,7 @@ class ResumeSearch extends Resume
     public function rules()
     {
         return [
-            [['id', 'gender', 'height', 'is_student', 'grade', 'status', 'user_id', 'home', 'workplace'], 'integer'],
+            [['id', 'gender', 'height', 'is_student', 'grade', 'status', 'user_id', 'home', 'workplace','exam_status'], 'integer'],
             [['name', 'phonenum', 'birthdate', 'degree', 'nation', 'college', 'avatar', 'gov_id', 'created_time', 'updated_time'], 'safe'],
         ];
     }
@@ -69,6 +69,7 @@ class ResumeSearch extends Resume
             'user_id' => $this->user_id,
             'home' => $this->home,
             'workplace' => $this->workplace,
+            'exam_status' => $this->exam_status,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

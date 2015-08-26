@@ -95,11 +95,6 @@ class TaskApplicant extends \common\BaseActiveRecord
         return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 
-    public function getContact_phonenum()
-    {
-        return $this->task->contact_phonenum;
-    }
-
     public function getResume()
     {
         return $this->hasOne(Resume::className(), ['user_id' => 'user_id']);

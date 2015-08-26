@@ -21,7 +21,7 @@ class JobUtils
         ];
         $job = new JobQueue;
         $job->task_name = 'job/sync-file-to-cloud-storage';
-        $job->setParams($parmas);
+        $job->setParams($params);
         $job->save();
     }
 

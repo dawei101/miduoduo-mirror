@@ -99,6 +99,16 @@ class Utils
         return false;
     }
 
+    public static function checkUploadFileIsImage($ext){
+        $exts = ['png', 'jpg', 'tif', 'gif'];
+        $ext  = strtolower(trim($ext));
+        if( in_array($ext,$exts) ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public static function urlOfFile($filename)
     {
         return (substr($filename, 0, 4 ) === "http")?$filename:(
