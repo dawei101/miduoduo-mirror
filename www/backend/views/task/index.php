@@ -38,6 +38,7 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
         'filterModel' => $searchModel,
         'columns' => [
             'gid',
+            'contact_phonenum',
             [
                 'label' => '标题',
                 'format' => 'raw',
