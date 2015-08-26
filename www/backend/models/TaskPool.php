@@ -165,8 +165,11 @@ class TaskPool extends \common\BaseActiveRecord
         if (!isset($ds['from_date']) || empty($ds['from_date'])){
             $task->is_longterm = true;
         }
-        $task->from_date = isset($ds['to_date'])?$ds['from_date']:'1999-09-09';
-        $task->to_date = isset($ds['to_date'])?$ds['to_date']:'1999-09-09';
+        $task->from_date = isset($ds['to_date'])?$ds['from_date']:date('Y-m-d');
+        $task->to_date = isset($ds['to_date'])?$ds['to_date']:'2115-01-01';
+        if (isset($ds['to_date'])){
+            $task->is_longterm = 1;
+        }
         $task->need_quantity = intval($ds['need_quantity']);
         $task->detail = $ds['content'];
         $task->address = isset($ds['address'])?$ds['address']:'--';
