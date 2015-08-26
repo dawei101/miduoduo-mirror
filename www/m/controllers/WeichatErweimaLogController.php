@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\WeichatErweima;
 use yii\web\HttpException;
+use common\models\WeichatUserInfo;
 
 /**
  * WeichatErweimaLogController implements the CRUD actions for WeichatErweimaLog model.
@@ -47,10 +48,58 @@ class WeichatErweimaLogController extends Controller
         $searchModel = new WeichatErweimaLogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$erweima_id);
 
+        $date   = isset(Yii::$app->request->get()['WeichatErweimaLogSearch']['create_time']) ? Yii::$app->request->get()['WeichatErweimaLogSearch']['create_time'] : 0;
+        $where_date = $date ? " AND l.`create_time` LIKE '$date%' " : '';
+        
+        $scan_count = WeichatErweimaLog::find()->where(['erweima_id'=>$erweima_id])
+            ->andWhere(['like', 'create_time', $date])->count();
+        WeichatErweima::updateAll(['scan_num'=>$scan_count],['id'=>$erweima_id]);
+
+        $scanuser_count = WeichatErweimaLog::findBySql("
+            SELECT COUNT(DISTINCT(openid)) scanuser_count
+            FROM jz_weichat_erweima_log l 
+            WHERE l.erweima_id=".$erweima_id."
+            ".$where_date."
+        ")->asArray()->all();
+        $scanuser_count = $scanuser_count[0]['scanuser_count'] ? $scanuser_count[0]['scanuser_count'] : 0;
+        
+	    $user_count = WeichatUserInfo::findBySql("
+            SELECT COUNT(distinct(l.openid)) user_count
+            FROM jz_weichat_user_info w
+            LEFT JOIN jz_weichat_erweima_log l ON w.openid=l.openid
+            WHERE l.follow_by_scan=1
+            AND l.erweima_id=".$erweima_id." 
+            ".$where_date."
+        ")->asArray()->all();
+        $user_count = count($user_count) ? $user_count[0]['user_count'] : 0;
+
+        $resume_count = WeichatUserInfo::findBySql("
+            SELECT COUNT(distinct(l.openid)) user_count
+            FROM jz_resume r
+            LEFT JOIN jz_weichat_user_info w ON r.user_id=w.userid
+            LEFT JOIN jz_weichat_erweima_log l ON w.openid=l.openid
+            WHERE l.follow_by_scan=1
+            AND l.erweima_id=".$erweima_id." 
+            ".$where_date."
+        ")->asArray()->all();
+        $resume_count = count($resume_count) ? $resume_count[0]['user_count'] : 0;
+
+        $date_start = strtotime(substr($erweima_m->create_time, 0, 10));
+        $date_end   = strtotime(date("Y-m-d"));
+        $date_options = [];
+	    for($i=$date_start;$i<=$date_end;$i+=(24*3600)){
+	        $date_options[date("Y-m-d",$i)]=date("Y-m-d",$i);
+	    }
+        
         $this->layout = 'bootstrap';
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'user_count'    => $user_count,
+            'resume_count'    => $resume_count,
+            'scan_count'    => $scan_count,
+	        'scanuser_count' => $scanuser_count,
+            'date_options' => $date_options,
         ]);
     }
 
