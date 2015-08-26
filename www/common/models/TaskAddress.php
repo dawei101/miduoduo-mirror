@@ -126,7 +126,7 @@ class TaskAddress extends \common\BaseActiveRecord
 
     public function distance($lat, $lng)
     {
-       $rlat1 = $this->rad($this->lat);
+        $rlat1 = $this->rad($this->lat);
         $rlat2 = $this->rad($lat);
         $rt = $rlat1 - $rlat2;
         $rg = $this->rad($this->lng) - $this->rad($lng);

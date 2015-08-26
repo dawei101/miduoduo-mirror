@@ -136,4 +136,25 @@ class Utils
         $sql = $query->prepare(Yii::$app->db->queryBuilder)->createCommand()->rawSql;
         return $sql;
     }
+
+    /**
+     * 坐标距离
+     * return 米;
+     */
+    public static function distance($poi, $poi2)
+    {
+        $lat = $poi['lat'];
+        $lng = $poi['lng'];
+        $lat2 = $poi2['lat'];
+        $lng2 = $poi2['lng'];
+
+        $rlat1 = $this->rad($lat2);
+        $rlat2 = $this->rad($lat);
+        $rt = $rlat1 - $rlat2;
+        $rad = pi()/180.0 ;
+        $rg = ($rad * $lng2) - ($rad * $lng);
+        $s = (2 * asin(sqrt(pow(sin($rt/2), 2))) +
+            cos($rlat1)*cos($rlat2) * pow(sin($rg/2),2)) * 6372.797 * 1000;
+        return $s;
+    }
 }

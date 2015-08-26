@@ -371,14 +371,14 @@ $this->title = '米多多兼职平台';
     </div>
 <div id="map" style="display:none"></div>
 <?php $this->beginBlock('css')?>
-	<link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/font/iconfont.css" type="text/css" rel="stylesheet">
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/miduoduo-qy.css" type="text/css" rel="stylesheet" />
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/daterangepicker-bs3.css" type="text/css" rel="stylesheet" />
+	<link href="<?=Yii::$app->params["baseurl.static.dashboard"]?>/static/font/iconfont.css" type="text/css" rel="stylesheet">
+    <link href="<?=Yii::$app->params["baseurl.static.dashboard"]?>/static/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="<?=Yii::$app->params["baseurl.static.dashboard"]?>/static/css/miduoduo-qy.css" type="text/css" rel="stylesheet" />
+    <link href="<?=Yii::$app->params["baseurl.static.dashboard"]?>/static/js/data/daterangepicker-bs3.css" type="text/css" rel="stylesheet" />
 <?php $this->endBlock('css')?>
 
 <?php $this->beginBlock('js')?>
-	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/miduoduo.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.dashboard"]?>/static/js/miduoduo.js"></script>
 	<script>
 
 $(function() {
@@ -800,12 +800,12 @@ $(function(){
 
 
 	</script>
-	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/moment.js"></script>
-	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/daterangepicker.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.dashboard"]?>/static/js/data/moment.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.dashboard"]?>/static/js/data/daterangepicker.js"></script>
 
-	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/fuwenben/bootstrap-wysiwyg.js"></script>
-	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/fuwenben/external/jquery.hotkeys.js"></script>
-	<script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/jquery.tagbox.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.dashboard"]?>/static/js/fuwenben/bootstrap-wysiwyg.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.dashboard"]?>/static/js/fuwenben/external/jquery.hotkeys.js"></script>
+	<script src="<?=Yii::$app->params["baseurl.static.dashboard"]?>/static/js/jquery.tagbox.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=GB9AZpYwfhnkMysnlzwSdRqq"> </script>
 <?php $this->endBlock('js')?>
 

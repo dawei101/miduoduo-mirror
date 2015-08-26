@@ -5,6 +5,8 @@ namespace common\models;
 use Yii;
 use ReflectionClass;
 use common\models\TaskAddress;
+use common\models\TaskApplicant;
+use common\models\Resume;
 use common\models\Company;
 use common\models\District;
 use common\models\ServiceType;
@@ -213,6 +215,7 @@ class Task extends \common\BaseActiveRecord
                 'face_requirement', 'talk_requirement', 'health_certificated',
                 'weight_requirement', 'height_requirement',
                 ], 'integer'],
+            ['time_book_opened', 'boolean'],
         ];
     }
 
@@ -448,14 +451,28 @@ class Task extends \common\BaseActiveRecord
         }
     }
 
+    public function getApplicants()
+    {
+        return $this->hasMany(TaskApplicant::className(), ['task_id'=>'id']);
+    }
+
+    public function getResumes()
+    {
+        return $this->hasMany(Resume::className(), ['user_id'=>'user_id'])
+            ->via('applicants');
+    }
+
     public function fields()
     {
-        return array_merge(parent::fields(), [
+        $fs = parent::fields();
+        return array_merge($fs, [
             'clearance_period_label', 'salary_unit_label',
             'labels', 'label_options', 'status_label',
             'requirements',
             'is_overflow',
         ]);
+        unset($fields['contact_phonenum']);
+        return $fields;
     }
 
     public function getNotice()

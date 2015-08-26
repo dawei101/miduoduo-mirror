@@ -20,9 +20,18 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'v1' => [
-            'basePath' => '@app/modules/v1',
-            'class' => 'api\modules\v1\Module'
+            'basePath' => '@app/miduoduo/v1',
+            'class' => 'api\miduoduo\v1\Module'
+        ],
+        'time-book' => [
+            'basePath' => '@app/extensions/time_book',
+            'class' => 'api\extensions\time_book\Module'
+        ],
+        'time-book-management' => [
+            'basePath' => '@app/extensions/time_book',
+            'class' => 'api\extensions\time_book\ManagementModule'
         ]
+ 
     ],
     'components' => [
         'user' => [
@@ -143,6 +152,22 @@ return [
                     'extraPatterns' => [
                         'POST upload'=>'upload',
                     ],
+                ],
+		[
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'time-book/schedule',
+                        'time-book/record',
+                    ],
+                    'pluralize' => '',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'time-book-management/schedule',
+                        'time-book-management/record',
+                    ],
+                    'pluralize' => '',
                 ],
             ],
         ],
