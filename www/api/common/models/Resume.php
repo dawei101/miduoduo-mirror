@@ -12,9 +12,10 @@ class Resume extends \common\models\Resume
     {
         return [
             [['name'], 'required'],
-            [['gender', 'height', 'is_student', 'grade', 'degree',
-                'status', 'user_id', 'home', 'workplace', 'weight'], 'integer'],
+            [['gender', 'is_student', 'grade', 'degree',
+                'status', 'user_id', 'home', 'workplace', ], 'integer'],
             [['birthdate', 'created_time', 'updated_time'], 'safe'],
+            [['weight', 'height'], 'safe'],
             [['birthdate'], 'date', 'format' => 'yyyy-M-d'],
             [['name', 'college'], 'string', 'max' => 500],
             [['nation'], 'string', 'max' => 255],
