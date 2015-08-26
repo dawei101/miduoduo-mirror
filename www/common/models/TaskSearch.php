@@ -21,6 +21,7 @@ class TaskSearch extends Task
             [['id', 'clearance_period','recommend', 'salary_unit', 'need_quantity', 'got_quantity', 'user_id', 'service_type_id', 'gender_requirement', 'degree_requirement', 'age_requirement', 'height_requirement', 'status', 'city_id','gid'], 'integer'],
             [['origin', 'title', 'salary_note', 'from_date', 'to_date', 'from_time', 'to_time', 'created_time', 'updated_time', 'detail', 'requirement'], 'safe'],
             [['salary'], 'number'],
+            ['contact_phonenum', 'safe'],
         ];
     }
 
@@ -84,6 +85,7 @@ class TaskSearch extends Task
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'salary_note', $this->salary_note])
+            ->andFilterWhere(['like', 'contact_phonenum', $this->contact_phonenum])
             ->andFilterWhere(['like', 'detail', $this->detail])
             ->andFilterWhere(['like', 'requirement', $this->requirement]);
 

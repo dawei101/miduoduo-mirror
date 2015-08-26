@@ -45,6 +45,25 @@ class Resume extends \common\BaseActiveRecord
     const STATUS_OK = 0;
     const STATUS_DELETED = 10;
 
+    static $EXAM_STATUSES = [
+        0 => '未验证',
+        1 => '等待审核',
+        2 => '审核通过',
+        10 => '审核未通过',
+    ];
+
+    static $EXAM_STATUSES_MSG = [
+        0 => '您还未提交个人身份证认证信息！',
+        1 => '您的身份证信息认证审核中....',
+        2 => '恭喜您的身份证信审核通过！',
+        10 => '您的身份证信息没有通过审核！',
+    ];
+
+    const EXAM_TODO = 0;
+    const EXAM_PROCESSING  = 1;
+    const EXAM_DONE = 2;
+    const EXAM_NOT_PASSED = 10;
+
     public static function tableName()
     {
         return '{{%resume}}';
@@ -71,10 +90,11 @@ class Resume extends \common\BaseActiveRecord
     {
         return [
             [['name'], 'required'],
+            ['user_id', 'unique', 'on'=>'insert', 'message'=> '简历已经存在，请勿重新创建!'],
             [['gender', 'height', 'is_student', 'grade', 'degree',
                 'has_emdical_cert', 'status',
                 'user_id', 'home', 'workplace'], 'integer'],
-            [['birthdate', 'created_time', 'updated_time'], 'safe'],
+            [['birthdate', 'created_time', 'updated_time','gov_id_pic_front','gov_id_pic_back','gov_id_pic_take','exam_status'], 'safe'],
             [['birthdate'], 'date', 'format' => 'yyyy-M-d'],
             [['name', 'college'], 'string', 'max' => 500],
             [['nation'], 'string', 'max' => 255],
@@ -133,6 +153,10 @@ class Resume extends \common\BaseActiveRecord
             'workplace' => '工作地址',
             'job_wishes' => '工作意愿',
             'intro' => '自我介绍',
+            'gov_id_pic_front' => '身份证正面',
+            'gov_id_pic_back' => '身份证反面',
+            'gov_id_pic_take' => '身份证手持',
+            'exam_status' => '认证状态',
         ];
     }
 
@@ -214,6 +238,10 @@ class Resume extends \common\BaseActiveRecord
         return static::$DEGREES;
     }
 
+    public function getExam_message(){
+        return static::$EXAM_STATUSES_MSG[$this->exam_status];
+    }
+
     public function getStatus_label()
     {
         return static::$STATUSES[$this->status];
@@ -234,7 +262,7 @@ class Resume extends \common\BaseActiveRecord
 
     public function fields()
     {
-        return array_merge(parent::fields(), ['gender_label', 'age', 'degree_label', 'degree_options']);
+        return array_merge(parent::fields(), ['gender_label', 'age', 'degree_label', 'degree_options','exam_message']);
     }
 
     public function extraFields()

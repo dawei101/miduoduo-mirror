@@ -23,7 +23,7 @@ return [
     'baseurl.static.m' => 'http://static.miduoduo.cn/m',
     'baseurl.static.www' => 'http://static.miduoduo.cn/www',
     'baseurl.static.corp' => 'http://static.miduoduo.cn/corp',
-    'baseurl.static.dashboard' => 'http://static.miduoduo.cn/dashboard',
+    'baseurl.static.dashboard' => '',
 
     'nearby_search.max_distance' => 10000, // 单位米
     'host_ip' => '',

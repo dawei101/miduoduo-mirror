@@ -18,12 +18,12 @@ use common\models\Company;
 use common\models\ServiceType;
 
 use corp\CBaseController;
-use corp\models\PasswordResetRequestForm;
-use corp\models\ResetPasswordForm;
-use corp\models\SignupForm;
-use corp\models\LoginForm;
-use corp\models\ContactForm;
-use corp\models\PersonalCertForm;
+use corp\forms\PasswordResetRequestForm;
+use corp\forms\ResetPasswordForm;
+use corp\forms\SignupForm;
+use corp\forms\LoginForm;
+use corp\forms\ContactForm;
+use corp\forms\PersonalCertForm;
 
 /**
  * Site controller
