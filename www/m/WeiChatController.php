@@ -145,7 +145,7 @@ class WeiChatController extends BaseController{
             // 用户“自杀”，删除绑定关系
             $user_result    = User::find()->where(['id'=>$weichat_result->userid])->one();
             if( !$user_result ){
-                $weichat_result->delete();
+                // $weichat_result->delete(); 自杀不在这里处理，应该在自杀的地方
             }else{
                 Yii::$app->session->set('__id',$weichat_result->userid);
                 // 更新登录时间
@@ -159,19 +159,25 @@ class WeiChatController extends BaseController{
     }
     
     // 获取过微信账号、登录后--绑定微信账号
-  private function bindWeichatID($openid,$userid){
-    // 判断是否已经绑定
+    private function bindWeichatID($openid,$userid){
+        // 判断是否已经绑定
         $weichat_result = WeichatUserInfo::find()->where(['userid'=>$userid])->one();
         if( !$weichat_result ){
-            $datetime       = date("Y-m-d H:i:s",time());
-            // 插入数据，完成绑定
-            $weichat    = new WeichatUserInfo();
-            $weichat->openid    = $openid;
-            $weichat->userid    = $userid;
-            $weichat->created_time    = $datetime;
-            $weichat->updated_time    = $datetime;
-            $weichat->is_receive_nearby_msg = 1;    // 新绑定的用户，默认接受微信推送消息
-            $weichat->save();
+            // 判断是否存在绑定关系记录
+            $weichat_user = WeichatUserInfo::findOne(['openid'=>$openid]);
+            if( $weichat_user->openid ){
+                WeichatUserInfo::updateAll(['userid'=> $userid],['openid'=>$openid]);
+            }else{
+                $datetime       = date("Y-m-d H:i:s",time());
+                // 插入数据，完成绑定
+                $weichat    = new WeichatUserInfo();
+                $weichat->openid    = $openid;
+                $weichat->userid    = $userid;
+                $weichat->created_time    = $datetime;
+                $weichat->updated_time    = $datetime;
+                $weichat->is_receive_nearby_msg = 1;    // 新绑定的用户，默认接受微信推送消息
+                $weichat->save();
+            }
         }
         return true;
   }

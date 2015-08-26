@@ -52,6 +52,9 @@ return [
             'accountin' => 'Bo7ZbPipKywJ2kBdwCcJnF75fbhpRW4cvGoYHdLW8CY',     // 收入提醒
         ],
         'preview_user'  => '13699273824,18611299991,18210135925,13240055520',// 定时推送预览人员
+        'url'   => [
+            'erweima_show' => 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=', // 二维码显示
+        ],
     ],
 
     'seo'   => [

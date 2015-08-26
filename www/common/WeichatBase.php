@@ -292,4 +292,41 @@ class WeichatBase
         $msg_body .= '</Articles>';
         return $msg_body;
     }
+
+    public static function checkErweimaValid($create_date){
+        $today_time  = time();
+        $create_time = strtotime($create_date);
+        $diff_time   = $today_time - $create_time;
+        $valid_time  = 60 * 60 * 24 * 6;
+        if( $diff_time >= $valid_time ){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public function createErweimaByUserid($user_id){
+        $scene_id       = $user_id; // 扫描后返回值
+        $access_token   = $this->getWeichatAccessToken();
+
+        $targetUrl      = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token="
+            .$access_token;
+        $postData       = "";
+
+        // 7天的二维码
+        $postData       = '{"expire_seconds": 604800, "action_name": "QR_SCENE", "action_info": {"scene": {"scene_id": '.$scene_id.'}}}';
+
+        $ticketJson = $this->postWeichatAPIdata($targetUrl,$postData);
+        $ticketArr  = json_decode($ticketJson);
+
+        WeichatUserInfo::updateAll(
+            [
+                'erweima_date' => date("Y-m-d"),
+                'erweima_ticket' => $ticketArr->ticket,
+            ],
+            ['userid' => $user_id]
+        );
+
+        return $ticketArr->ticket;
+    }
 }

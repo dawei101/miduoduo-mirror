@@ -39,6 +39,14 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
     const IS_RECEIVE_NEARBY_MSG_YES = 1;
     const IS_RECEIVE_NEARBY_MSG_NO  = 0;
 
+    public static $ORIGIN_TYPES = [
+        0  => '未知', 
+        10 => '用户红包',  
+    ];
+
+    const ORIGIN_TYPES_UNKNOW = 0;
+    const ORIGIN_TYPES_REDPACKET = 10;
+
     public static function tableName()
     {
         return '{{%weichat_user_info}}';
