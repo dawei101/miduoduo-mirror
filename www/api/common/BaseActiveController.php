@@ -74,7 +74,7 @@ class BaseActiveController extends ActiveController
         if ($action->id == 'create'){
             if ($this->auto_filter_user && $this->user_identifier_column){
                 $params = Yii::$app->getRequest()->getBodyParams();
-                $params[$this->user_identifier_column] = Yii::$app->user->id;
+                $params[$this->user_identifier_column] = strval(Yii::$app->user->id);
                 Yii::$app->getRequest()->setBodyParams($params);
             }
         }

@@ -20,18 +20,24 @@ class RecordAction extends \yii\rest\CreateAction
         $params = $req->getBodyParams();
         $params['event_type'] = $req->post('action')=='off'?
             $model::EVENT_OFF:$model::EVENT_ON;
+        $schedule = null;
+        if ($req->post('schedule_id')){
+            $schedule = Schedule::findOne($params['schedule_id']);
+        }
+        if (!$schedule){
+            unset($params['schedule_id']);
+        } else {
+            $params['owner_id'] = $schedule->owner_id;
+        }
         $model->load($params, '');
         if ($model->save()) {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
-            $model->owner_id = $schedule->owner_id;
-
             $model->save();
-
+            $model->checkout();
         } elseif (!$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
-
         return $model;
     }
 

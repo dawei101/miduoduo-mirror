@@ -35,7 +35,7 @@ class Record extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['id', 'lng', 'lat', 'schedule_id'], 'required'],
+            [['lng', 'lat', 'schedule_id'], 'required'],
             [['id', 'event_type', 'schedule_id'], 'integer'],
             [['lng', 'lat'], 'number'],
             [['created_time'], 'safe'],
@@ -78,6 +78,17 @@ class Record extends \common\BaseActiveRecord
             );
         }
         return $this->_distance;
+    }
+
+    public function checkout()
+    {
+        if ($this->event_type==$this::EVENT_ON){
+            $this->schedule->on_late = $this->schedule->from_datetime < $this->created_time;
+        }
+        if ($this->event_type==$this::EVENT_OFF){
+            $this->schedule->off_early = $this->schedule->to_datetime > $this->created_time;
+        }
+        $this->schedule->save();
     }
 
     public function getTime()

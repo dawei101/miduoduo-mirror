@@ -25,7 +25,7 @@ class Record extends \common\models\extensions\time_book\Record
     public function rules()
     {
         return [
-            [['id', 'lng', 'lat', 'schedule_id'], 'required'],
+            [['lng', 'lat', 'schedule_id'], 'required'],
             [['id', 'event_type', 'schedule_id'], 'integer'],
             [['lng', 'lat'], 'number'],
             [['created_time'], 'safe'],
