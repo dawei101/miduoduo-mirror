@@ -11,7 +11,7 @@ class Resume extends \common\models\Resume
     public function rules()
     {
         return [
-            [['name', 'birthdate', 'gender', 'height', 'weight', 'degree'], 'required'],
+            [['name'], 'required'],
             [['gender', 'height', 'is_student', 'grade', 'degree',
                 'status', 'user_id', 'home', 'workplace', 'weight'], 'integer'],
             [['birthdate', 'created_time', 'updated_time'], 'safe'],
@@ -29,7 +29,7 @@ class Resume extends \common\models\Resume
             ['job_wishes', 'string', 'max'=>500],
             ['major', 'string', 'max'=>200],
             ['gender', 'default', 'value'=>0],
-            ['intro', 'string'],
+            [['intro'], 'string', 'max'=>5000],
         ];
     }
 }

@@ -110,6 +110,13 @@ class TaskApplicant extends \common\BaseActiveRecord
         return $this->hasOne(TaskAddress::className(), ['id' => 'address_id']);
     }
 
+    public function getContact_phonenum()
+    {
+        if ($this->task){
+            return $this->task->contact_phonenum;
+        }
+    }
+
     /**
      * @inheritdoc
      * @return TaskApplicantQuery the active query used by this AR class.

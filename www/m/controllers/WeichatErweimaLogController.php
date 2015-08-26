@@ -1,43 +1,31 @@
 <?php
 
-namespace backend\controllers;
+namespace m\controllers;
 
 use Yii;
 use common\models\WeichatErweimaLog;
-use yii\data\ActiveDataProvider;
+use common\models\WeichatErweimaLogSearch;
 use yii\web\Controller;
-use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use backend\BBaseController;
-use common\models\WeichatUserInfo;
 use common\models\WeichatErweima;
-use yii\helpers\ArrayHelper;
+use yii\web\HttpException;
 
 /**
  * WeichatErweimaLogController implements the CRUD actions for WeichatErweimaLog model.
  */
-class WeichatErweimaLogController extends BBaseController
+class WeichatErweimaLogController extends Controller
 {
-
     public function behaviors()
     {
-        return ArrayHelper::merge(parent::behaviors(), [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['operation_manager'],
-                    ],
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
                 ],
             ],
-        ]);
-    }
-
-    public function getViewPath()
-    {
-        return Yii::getAlias('@backend/views/wechat/weichat-erweima-log');
+        ];
     }
 
     /**
@@ -46,46 +34,23 @@ class WeichatErweimaLogController extends BBaseController
      */
     public function actionIndex()
     {
-        $erweimaid  = Yii::$app->request->get('id');
-        $dataProvider = new ActiveDataProvider([
-            'query' => WeichatErweimaLog::find()->where(['erweima_id'=>$erweimaid]),
-        ]);
+        // 验证传入参数
+        $erweima_id = Yii::$app->request->get('id') ? Yii::$app->request->get('id') : 0;
+        $erweima_scene_id = Yii::$app->request->get('sc') ? Yii::$app->request->get('sc') : 0;
+        $erweima_m  = WeichatErweima::find()
+            ->where(['id'=>$erweima_id,'scene_id'=>$erweima_scene_id])
+            ->one();
+        if( !$erweima_m ){
+            throw new HttpException(404, '没有找到对应的二维码');
+        }
 
-        $scan_count = WeichatErweimaLog::find()->where(['erweima_id'=>$erweimaid])->count();
-        WeichatErweima::updateAll(['scan_num'=>$scan_count],['id'=>$erweimaid]);
+        $searchModel = new WeichatErweimaLogSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$erweima_id);
 
-	$scanuser_count = WeichatErweimaLog::findBySql("
-		SELECT COUNT(DISTINCT(openid)) scanuser_count
-		FROM jz_weichat_erweima_log 
-		WHERE erweima_id=".$erweimaid."
-	")->asArray()->all();
-	$scanuser_count = $scanuser_count[0]['scanuser_count'] ? $scanuser_count[0]['scanuser_count'] : 0;
-        
-	$user_count = WeichatUserInfo::findBySql("
-            SELECT COUNT(distinct(l.openid)) user_count
-            FROM jz_weichat_user_info w
-            LEFT JOIN jz_weichat_erweima_log l ON w.openid=l.openid
-            WHERE l.follow_by_scan=1
-            AND l.erweima_id=".$erweimaid." 
-        ")->asArray()->all();
-        $user_count = count($user_count) ? $user_count[0]['user_count'] : 0;
-
-        $resume_count = WeichatUserInfo::findBySql("
-            SELECT COUNT(distinct(l.openid)) user_count
-            FROM jz_resume r
-            LEFT JOIN jz_weichat_user_info w ON r.user_id=w.userid
-            LEFT JOIN jz_weichat_erweima_log l ON w.openid=l.openid
-            WHERE l.follow_by_scan=1
-            AND l.erweima_id=".$erweimaid." 
-        ")->asArray()->all();
-        $resume_count = count($resume_count) ? $resume_count[0]['user_count'] : 0;
-
+        $this->layout = 'bootstrap';
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'user_count'    => $user_count,
-            'resume_count'    => $resume_count,
-            'scan_count'    => $scan_count,
-	    'scanuser_count' => $scanuser_count,
         ]);
     }
 

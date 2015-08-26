@@ -45,7 +45,9 @@ if (Utils::isInWechat()){
         <div class="nav-head text-center">
          <?php if ($this->nav_left_link){ ?>
              <a style="height: 50px; line-height: 50px; min-width:60px;" class="text-left pull-left" href="<?=$this->nav_left_link?>">
-                <span class="glyphicon glyphicon-chevron-left"> </span>
+                <?php if(!$this->nav_left_title){ ?>
+                    <span class="glyphicon glyphicon-chevron-left"> </span>
+                <?php } ?>
                 <?=$this->nav_left_title?>
             </a>
          <?php } else {?>

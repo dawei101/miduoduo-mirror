@@ -56,7 +56,7 @@ return [
             'class' => 'yii\caching\DbCache',
             'db' => 'db',
             'cacheTable' => 'jz_cache',
-            'keyPrefix' => 'corp@',
+            'keyPrefix' => 'miduoduo@',
         ],
         'wechat_pusher' => [
             'class' => 'common\pusher\WechatPusher',
@@ -93,7 +93,7 @@ return [
                 [
 
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['info'],
+                    'levels' => ['info', 'warning', 'error'],
                     'categories' => ['user_location'],
                     'logFile' => '/service/data/logs/user-location/location.log',
                     'logVars'   => [],
@@ -104,9 +104,9 @@ return [
                ],
                [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['info'],
+                    'levels' => ['info', 'warning', 'error'],
                     'categories' => ['payment'],
-                    'logFile' => '/service/data/logs/payment.log',
+                    'logFile' => '/service/data/logs/payment/payment.log',
                     'logVars'   => [],
                     'exportInterval'  => 0,
                     'maxFileSize' => 1024 * 10,
@@ -130,6 +130,7 @@ return [
         'html5_dest' => $root_path . '/html5_dest',
     ],
     'language'=>'zh-CN',
+    'sourceLanguage'=>'zh-CN',
     'timeZone' => 'Asia/Shanghai',
     'params' => $params,
 ];

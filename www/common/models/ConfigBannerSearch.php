@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\ConfigRecommend;
+use common\models\ConfigBanner;
 
 /**
- * ConfigRecommendSearch represents the model behind the search form about `common\models\ConfigRecommend`.
+ * ConfigBannerSearch represents the model behind the search form about `common\models\ConfigBanner`.
  */
-class ConfigRecommendSearch extends ConfigRecommend
+class ConfigBannerSearch extends ConfigBanner
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class ConfigRecommendSearch extends ConfigRecommend
     public function rules()
     {
         return [
-            [['id', 'type', 'display_order','city_id'], 'integer'],
-            [['task_id'], 'safe'],
+            [['id', 'status', 'city_id', 'type', 'display_order'], 'integer'],
+            [['title', 'pic', 'url', 'offline_date', 'created_time'], 'safe'],
         ];
     }
 
@@ -41,11 +41,10 @@ class ConfigRecommendSearch extends ConfigRecommend
      */
     public function search($params)
     {
-        $query = ConfigRecommend::find();
+        $query = ConfigBanner::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder'=>['id'=>SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -58,12 +57,17 @@ class ConfigRecommendSearch extends ConfigRecommend
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'status' => $this->status,
+            'city_id' => $this->city_id,
             'type' => $this->type,
             'display_order' => $this->display_order,
-            'city_id' => $this->city_id,
+            'offline_date' => $this->offline_date,
+            'created_time' => $this->created_time,
         ]);
 
-        $query->andFilterWhere(['like', 'task_id', $this->task_id]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'pic', $this->pic])
+            ->andFilterWhere(['like', 'url', $this->url]);
 
         return $dataProvider;
     }

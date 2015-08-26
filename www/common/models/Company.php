@@ -212,9 +212,9 @@ class Company extends \common\BaseActiveRecord
 
     public function fields()
     {
-        $fields = array_merge(parent::fields(), ['status_label', 'exam_status_label', 'exam_result_label']);
-        unset($fields['contact_phone']);
-        return $fields;
+        $fs = parent::fields();
+        unset($fs['contact_phone']);
+        return array_merge($fs, ['status_label', 'exam_status_label', 'exam_result_label']);
     }
 
     public function asArray()

@@ -78,7 +78,7 @@ class Pay extends Component
         }
         $count_ids      = trim($count_ids,',');
         $date_time      = date("Y-m-d H:i:s");
-        $payout_return  = $this->payOutByWechat($user_id,$count_value,$date_time);
+        $payout_return  = $this->payOutByWechat($user_id,$count_value,$date_time,$count_ids);
 
         $withdraw   = new WithdrawCash();
         $withdraw->user_id          = $user_id;
@@ -103,10 +103,10 @@ class Pay extends Component
     }
 
     // 微信支付
-    public function payOutByWechat($user_id,$count_value,$date_time){
+    public function payOutByWechat($user_id,$count_value,$date_time,$count_ids){
         $weichatbase= new WeichatBase();
         $wechat_id  = $weichatbase->getLoggedUserWeichatID($user_id);
-        $gid        = $wechat_id . time();
+        $gid        = $wechat_id . str_ireplace(',','-',$count_ids);
 
         $payment    = new WechatPayment;
         $pay_result = $payment->payout($wechat_id, $count_value, $gid, '米多多提现');

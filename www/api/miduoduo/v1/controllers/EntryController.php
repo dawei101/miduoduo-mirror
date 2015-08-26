@@ -151,7 +151,9 @@ class EntryController extends BaseActiveController
             ])->one();
             if($user){
                 if($user->validatePassword($password)){
-                    $user->generateAccessToken();
+                    if (!Utils::isInWechat() || empty($user->access_token)){
+                        $user->generateAccessToken();
+                    }
                     $user->save();
                     $this->activeDevice($user);
                     return $this->loginSucceed($user, $password);
@@ -211,7 +213,9 @@ class EntryController extends BaseActiveController
             if (!$user){
                 $user = User::createUserWithPhonenum($phonenum);
             }
-            $user->generateAccessToken();
+            if (!Utils::isInWechat() || empty($user->access_token)){
+                $user->generateAccessToken();
+            }
             $this->activeDevice($user);
             if ($password){
                 $user->setPassword($password);

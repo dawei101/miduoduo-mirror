@@ -283,13 +283,14 @@ class Task extends \common\BaseActiveRecord
             $user_id = Yii::$app->user->id;
             $this->user_id = $user_id;
             $this->gid = time() . mt_rand(100, 999) . $user_id;
-        }
-        if ($this->origin==$this::ORIGIN_INTERNAL){
-            $this->order_time = date('Y-m-d H:i:s', strtotime('+1 day'));
-        } elseif ($this->origin==$this::ORIGIN_CORP){
-            $this->order_time = date('Y-m-d H:i:s', strtotime('+12 hour'));
-        } else {
-            $this->order_time = date('Y-m-d H:i:s', time());
+
+            if ($this->origin==$this::ORIGIN_INTERNAL){
+                $this->order_time = date('Y-m-d H:i:s', strtotime('+1 day'));
+            } elseif ($this->origin==$this::ORIGIN_CORP){
+                $this->order_time = date('Y-m-d H:i:s', strtotime('+12 hour'));
+            } else {
+                $this->order_time = date('Y-m-d H:i:s', time());
+            }
         }
         return parent::beforeSave($insert);
     }
@@ -463,7 +464,8 @@ class Task extends \common\BaseActiveRecord
 
     public function fields()
     {
-        $fileds = array_merge(parent::fields(), [
+        $fs = parent::fields();
+        return array_merge($fs, [
             'clearance_period_label', 'salary_unit_label',
             'labels', 'label_options', 'status_label',
             'requirements',

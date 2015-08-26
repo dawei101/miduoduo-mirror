@@ -70,7 +70,7 @@ class Resume extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['name', 'phonenum'], 'required'],
+            [['name'], 'required'],
             [['gender', 'height', 'is_student', 'grade', 'degree',
                 'has_emdical_cert', 'status',
                 'user_id', 'home', 'workplace'], 'integer'],
@@ -93,7 +93,7 @@ class Resume extends \common\BaseActiveRecord
             ['major', 'string', 'max'=>200],
             ['gender', 'default', 'value'=>0],
             ['grade', 'default', 'value'=>0],
-            ['intro', 'string'],
+            [['intro'], 'string', 'max'=>5000],
         ];
     }
 
@@ -118,6 +118,7 @@ class Resume extends \common\BaseActiveRecord
             'degree' => '学历',
             'nation' => '民族',
             'height' => '身高(cm)',
+            'weight' => '体重',
             'is_student' => '是学生',
             'college' => '学校',
             'major' => '专业',
@@ -131,6 +132,7 @@ class Resume extends \common\BaseActiveRecord
             'home' => '住址',
             'workplace' => '工作地址',
             'job_wishes' => '工作意愿',
+            'intro' => '自我介绍',
         ];
     }
 

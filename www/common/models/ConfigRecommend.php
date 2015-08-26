@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\District;
 
 /**
  * This is the model class for table "{{%config_recommend}}".
@@ -51,5 +52,17 @@ class ConfigRecommend extends \yii\db\ActiveRecord
     public function getTask()
     {
         return $this->hasOne(Task::className(), ['gid' => 'task_id']);
+    }
+
+    public static function getCityList(){
+        $citys_obj = District::find()
+            ->where(['level'=>'city','is_alive'=>1])
+            ->addOrderBy(['id'=>SORT_ASC])
+            ->all();
+        $citys = [];
+        foreach( $citys_obj as $city ){
+            $citys[$city->id] = $city->name;
+        }
+        return $citys; 
     }
 }
