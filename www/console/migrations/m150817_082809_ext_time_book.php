@@ -43,6 +43,7 @@ alter table ext_time_book_schedule add out_work smallint not null default 0;
 alter table ext_time_book_schedule add note varchar(2000) default null;
 alter table ext_time_book_schedule add address varchar(500);
 alter table ext_time_book_schedule add task_title varchar(500);
+alter table ext_time_book_schedule add date date ;
             ";
         $this->execSqls($sqls);
     }
