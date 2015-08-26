@@ -437,17 +437,12 @@ class Task extends \common\BaseActiveRecord
     /*
      *  TODO 临时方法，为了迁移company数据到独立表
      */
-    public function getCompany_name()
+    public function getXcompany_name()
     {
         if ($this->company_id){
             return $this->company->name;
-        }
-    }
-
-    public function getCompany_introduction()
-    {
-        if ($this->company_id){
-            return $this->company->introduction;
+        } else {
+            return $this->company_name;
         }
     }
 
@@ -470,6 +465,7 @@ class Task extends \common\BaseActiveRecord
             'labels', 'label_options', 'status_label',
             'requirements',
             'is_overflow',
+            'xcompany_name',
         ]);
         unset($fields['contact_phonenum']);
         return $fields;
