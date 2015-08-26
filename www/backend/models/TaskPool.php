@@ -175,7 +175,7 @@ class TaskPool extends \common\BaseActiveRecord
         $task->address = isset($ds['address'])?$ds['address']:'--';
         $task->user_id = 0;
 
-        $task->status = $task::STATUS_UNCONFIRMED_FROM_SPIDER;
+        $task->status = $task::STATUS_OK;
         $task->origin = $ds['origin'];
         $task->company_id = 0;
 
