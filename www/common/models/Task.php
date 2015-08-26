@@ -439,7 +439,7 @@ class Task extends \common\BaseActiveRecord
      */
     public function getXcompany_name()
     {
-        if ($this->company_id){
+        if ($this->company_id && $this->company){
             return $this->company->name;
         } else {
             return $this->company_name;
