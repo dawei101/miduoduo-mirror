@@ -71,6 +71,7 @@ class Resume extends \common\BaseActiveRecord
     {
         return [
             [['name'], 'required'],
+            ['user_id', 'unique', 'on'=>'insert', 'message'=> '简历已经存在，请勿重新创建!'],
             [['gender', 'height', 'is_student', 'grade', 'degree',
                 'has_emdical_cert', 'status',
                 'user_id', 'home', 'workplace'], 'integer'],
