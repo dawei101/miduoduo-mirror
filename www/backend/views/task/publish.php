@@ -5,9 +5,21 @@ use yii\bootstrap\ActiveForm;
 use common\models\Task;
 use common\models\District;
 
-$sheng  = District::find()->where(['level'=>'province','is_alive'=>1])->addOrderBy(['id'=>SORT_ASC])->all();
-$shi    = District::find()->where(['parent_id'=>2])->addOrderBy(['id'=>SORT_ASC])->all();
-$qu     = District::find()->where(['parent_id'=>3])->addOrderBy(['id'=>SORT_ASC])->all();
+$city_id = isset($task->city_id) ? $task->city_id : 3;
+if( $city_id ){
+    $city = District::findOne(['id'=>$city_id]);
+    $province_id = $city['parent_id'];
+}else{
+    $province_id = 2;
+}
+
+$sheng  = District::find()
+    ->where(['level'=>'province','is_alive'=>1])->addOrderBy(['id'=>SORT_ASC])->all();
+$shi    = District::find()
+    ->where(['parent_id'=>$province_id])->addOrderBy(['id'=>SORT_ASC])->all();
+$qu     = District::find()
+    ->where(['parent_id'=>$city_id])->addOrderBy(['id'=>SORT_ASC])->all();
+
 $api_url= Yii::$app->params['baseurl.api'];
 
 /* @var $this yii\web\View */
@@ -47,7 +59,7 @@ $this->title = '米多多兼职平台';
                               <div class="pull-left title-left text-center"><em>*</em>工作时间</div>
                               <div class="pull-left right-box div">
                                 <div class="riqi">
-                                  <input type="text" readonly style="width: 330px" class="reservation" value="<?=$task->from_date&&$task->to_date?$task->from_date.' - '.$task->to_date:date('Y-m-d').' - '.date('Y-m-d')?>" placeholder="选择您的工作起始日期"/>
+                                  <input type="text" style="width: 330px" class="reservation" value="<?=$task->from_date&&$task->to_date?$task->from_date.' - '.$task->to_date:date('Y-m-d').' - '.date('Y-m-d')?>" placeholder="选择您的工作起始日期"/>
                                   <label><input name="is_longterm" type="checkbox" class="changqi" <?=$task&&$task->is_longterm?'checked':''?>>长期招聘</label>
                                   <input name="from_date" type="hidden" value="<?=$task->from_date?$task->from_date:date('Y-m-d')?>"/>
                                   <input name="to_date" type="hidden" value="<?=$task->to_date?$task->to_date:date('Y-m-d')?>"/>
@@ -138,7 +150,7 @@ $this->title = '米多多兼职平台';
                                             </option>
                                             <?php foreach($sheng as $k=>$v){ ?>
                                                 <option value="<?=$v->id;?>"
-                                                <?=($v->id==2)?'selected=selected':''?>
+                                                <?=($v->id==$province_id)?'selected=selected':''?>
                                                 >
                                                     <?=$v->short_name;?>
                                                 </option>
@@ -147,7 +159,7 @@ $this->title = '米多多兼职平台';
                                         <select id="address_shi" name="city_id">
                                             <?php foreach($shi as $k=>$v){ ?>
                                                 <option value="<?=$v->id;?>"
-                                                <?=($v->id==3)?'selected=selected':''?>
+                                                <?=($v->id==$city_id)?'selected=selected':''?>
                                                 >
                                                     <?=$v->short_name;?>
                                                 </option>
@@ -440,7 +452,7 @@ function getNowFormatDate() {
 }
 
     var today = getNowFormatDate();
-    if( form.to_date.value < today ){
+    if( form.to_date.value < today && !form.is_longterm.checked ){
         $('.to_time-error').html('您的工作日期需要修改，截止日期应在今天之后');
         $('.to_time-error').show();
         valid = false;

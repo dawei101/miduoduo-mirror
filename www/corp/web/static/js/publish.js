@@ -57,7 +57,7 @@ function getNowFormatDate() {
 }
 
     var today = getNowFormatDate();
-    if( form.to_date.value < today ){
+    if( form.to_date.value < today && !form.is_longterm.checked){
         $('.to_time-error').html('您的工作日期需要修改，截止日期应在今天之后');
         $('.to_time-error').show();
         valid = false;
