@@ -10,7 +10,6 @@ use common\Utils;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -23,12 +22,8 @@ AppAsset::register($this);
     <meta http-equiv="pragma" content="no-cache">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/font/iconfont.css" type="text/css" rel="stylesheet">
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/css/miduoduo-qy.css" type="text/css" rel="stylesheet" />
-    <link href="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/data/daterangepicker-bs3.css" type="text/css" rel="stylesheet" />
-    <script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/jquery.min.js"></script>
-    <script src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/js/bootstrap.min.js"></script>
+    <?php $this->head() ?>
+    <?=isset($this->blocks['css'])?$this->blocks['css']:''?>
 </head>
 <body>
     <?php $this->beginBody() ?>
@@ -64,11 +59,9 @@ AppAsset::register($this);
                 </div>
             </div>
         </div>
-
         <!--main content start-->
         <?= $content ?>
         <!--main content end-->
-
         <div class="foots">
             <div class="container foot">
                 <div class="row">
@@ -91,6 +84,7 @@ AppAsset::register($this);
             </div>
         </div>
         <?php $this->endBody() ?>
+<?=isset($this->blocks['js'])?$this->blocks['js']:''?>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
