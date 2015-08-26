@@ -181,4 +181,21 @@ function CallBack(str) {
     html: 收到返回事件，可以自行处理，如果需要返回，调用 window.MDDNative.pop()
 ```
 
+* 分享
+```
+    window.MDDNative.share(message)
+    
+    message: 字符串
+    {
+        "base":{ "title": "", // 标题
+                  "desc": "", // 描述
+                   "img": "", // 图片 url
+                   "url": ""  // 分享链接
+                }，
+        "ext":{ "money": "",// 红包金额 
+                "title": "", // 标题 
+               "detail": "", // 说明 
+              }
+    }
+```
 
