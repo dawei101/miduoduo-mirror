@@ -269,5 +269,10 @@ class User extends BaseActiveRecord implements IdentityInterface
         return $this->hasOne(WeichatUserInfo::className(),['userid' => 'id']);
     }
 
-
+    public function getLast_location()
+    {
+        return $this->hasOne(
+            UserHistoricalLocation::className(), ['user_id' => 'id'])
+            ->orderBy(['id'=>SORT_DESC]);
+    }
 }

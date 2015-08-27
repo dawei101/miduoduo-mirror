@@ -7,7 +7,7 @@ class Utils
 {
 
     public static function formatProfile($user, $password=''){
-        return [
+        $profile = [
             'id'=> $user->id,
             'username'=> $user->username,
             'password'=> $password,
@@ -18,7 +18,13 @@ class Utils
             'has_resume' => !empty($user->resume),
             'wechat' => !empty($user->weichat),
             'has_wechat' => !empty($user->resume),
+            'last_city' => [],
         ];
+        if ($user->last_location){
+            $city = $user->last_location->city;
+            $profile['last_city'] = ['id'=>$city->id, 'short_name'=>$city->short_name];
+        }
+        return $profile;
     }
 
 }

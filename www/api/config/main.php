@@ -77,7 +77,8 @@ return [
                         'v1/pay-account-event',
                         'v1/pay-withdraw',
                         'v1/recommend-task-group',
-                        'v1/city-banner'
+                        'v1/city-banner',
+                        'v1/user-historical-location',
                     ],
                     'pluralize' => '',
                 ],
