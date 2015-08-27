@@ -126,6 +126,7 @@ return [
                     'pluralize' => '',
                     'patterns' => [
                         'POST set-password' => 'set-password',
+                        'GET profile' => 'profile',
                         'POST bind-third-party-account' => 'bind-third-party-account',
                     ],
                 ],
