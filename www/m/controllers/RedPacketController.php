@@ -11,9 +11,10 @@ use common\models\User;
 
 class RedPacketController extends MBaseController
 {
-    public function actionIndex($user_id='2006'){
+    public function actionIndex($id='2006'){
+        $user_id = $id;
         $weichat_user = WeichatUserInfo::find()
-            ->where(['userid'=>$user_id])
+            ->where(['userid'=>$id])
             ->with('resume')
             ->one();
         $weichat_base = new WeichatBase();
@@ -37,10 +38,23 @@ class RedPacketController extends MBaseController
     public function actionMy(){
         $user_id = Yii::$app->user->id;
         if( $user_id ){
-            $invited = User::find()
+            $inviteds = User::find()
                 ->where(['invited_by'=>Yii::$app->user->id])
-                ->with('resume')
+                ->limit(5)
                 ->all();
+            $invited_all = User::find()
+                ->where(['invited_by'=>Yii::$app->user->id])
+                ->count();
+            
+            $this->layout = false;
+            return $this->render(
+                'my',
+                [
+                    'inviteds' => $inviteds,
+                    'user_id' => $user_id,
+                    'invited_all' => $invited_all,
+                ]
+            );
             var_dump($invited);exit;
             echo $user_id.'<hr />'.$invited_count;
             exit;
@@ -60,6 +74,29 @@ class RedPacketController extends MBaseController
             );
         }
         exit;
+    }
+
+    public function actionMyRecords(){
+        $user_id = Yii::$app->user->id;
+        if( $user_id ){
+            $inviteds = User::find()
+                ->where(['invited_by'=>Yii::$app->user->id])
+                ->limit(100)
+                ->all();
+            $invited_all = User::find()
+                ->where(['invited_by'=>Yii::$app->user->id])
+                ->count();
+            
+            $this->layout = false;
+            return $this->render(
+                'my-records',
+                [
+                    'inviteds' => $inviteds,
+                    'user_id' => $user_id,
+                    'invited_all' => $invited_all,
+                ]
+            );
+        }
     }
 }
 
