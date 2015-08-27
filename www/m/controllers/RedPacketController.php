@@ -66,6 +66,7 @@ class RedPacketController extends MBaseController
                     $this->redirect("my");
                 }
             }
+            //$this->layout = false;
             return $this->render(
                 'vlogin',   
                 [
