@@ -32,6 +32,7 @@ class Resume extends \common\models\Resume
             ['major', 'string', 'max'=>200],
             ['gender', 'default', 'value'=>0],
             [['intro'], 'string', 'max'=>5000],
+            ['exam_status', 'default', 'value'=>0],
         ];
     }
 }
