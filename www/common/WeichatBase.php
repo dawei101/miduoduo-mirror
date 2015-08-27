@@ -9,6 +9,8 @@ use common\models\WeichatUserLog;
 use common\models\WeichatUserInfo;
 use common\models\WeichatAutoresponse;
 use common\models\Task;
+use common\models\AccountEvent;
+use common\models\UserAccount;
 
 class WeichatBase
 {
@@ -328,5 +330,38 @@ class WeichatBase
         );
 
         return $ticketArr->ticket;
+    }
+
+    public function putMoneyToAccount($data){
+        $model          = new AccountEvent();
+        $model->date     = $data['date'];
+        $model->user_id  = $data['user_id'];
+        $model->value    = $data['value'];
+        $model->note     = $data['note'];
+        $model->operator_id  = $data['operator_id'];
+        $model->created_time = $data['created_time'];
+        $model->task_gid     = $data['task_gid'] ? $data['task_gid'] : 0;
+        $model->red_packet_accept_by = $data['red_packet_accept_by'] ? $data['red_packet_accept_by'] : 0;
+        $model->related_id   = '';
+        $model->balance  = 0;
+        $model->type     = $data['type'] ? $data['type'] : 0;
+        $model->save();
+
+        // update user_account
+        $user_account_obj = new UserAccount();
+        $user_account_obj->updateUserAccount($model->user_id);
+
+        // send weichat notice
+        $weichat_base   = new WeichatBase();
+        $pusher_weichat_id       = $weichat_base::getLoggedUserWeichatID($data['user_id']);
+        $pusher_date['first']    = '您好，您有一笔兼职收入到账';
+        $pusher_date['keyword1'] = $data['note'];
+        $pusher_date['keyword2'] = $model->value.'元';
+        $pusher_date['keyword3'] = $model->created_time;
+        $pusher_date['remark']   = '您可以点击通知查看收入详情。';
+        $pusher_task_gid         = $model->task_gid;
+        Yii::$app->wechat_pusher->accountEventIn($pusher_date,$pusher_task_gid,$pusher_weichat_id);
+        
+        return true;
     }
 }

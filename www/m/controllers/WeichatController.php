@@ -144,7 +144,7 @@ class WeichatController extends MBaseController{
         
             // 通过ticket查找返回信息
             $erweima    = WeichatErweima::find()->where(['ticket'=>$ticket])->one();
-            $reMsg      = $erweima->after_msg ? $erweima->after_msg : '直接查看北京最新兼职，点击http://m.miduoduo.cn/task \n其他问题在输入框直接填写，米小多会即时回复您。找不到想找的兼职，也回复给我们吧';
+            $reMsg      = isset($erweima->after_msg) ? $erweima->after_msg : "点击底部菜单进入相关专题。 \n其他问题在输入框直接填写，米小多会即时回复您。找不到想找的兼职，也回复给我们吧";
             $erweima_id = $erweima['id'];
 
             // 保存用户扫描记录

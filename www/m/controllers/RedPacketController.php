@@ -7,6 +7,7 @@ use m\MBaseController;
 use common\models\WeichatUserInfo;
 use common\WeichatBase;
 use common\models\LoginWithDynamicCodeForm;
+use common\models\User;
 
 class RedPacketController extends MBaseController
 {
@@ -36,12 +37,18 @@ class RedPacketController extends MBaseController
     public function actionMy(){
         $user_id = Yii::$app->user->id;
         if( $user_id ){
-            echo $user_id;
+            $invited = User::find()
+                ->where(['invited_by'=>Yii::$app->user->id])
+                ->with('resume')
+                ->all();
+            var_dump($invited);exit;
+            echo $user_id.'<hr />'.$invited_count;
             exit;
         }else{
             $model = new LoginWithDynamicCodeForm();
             if( Yii::$app->request->ispost ){
-                if( $model->load(Yii::$app->request->post()) && $model->login() ){
+                $data = Yii::$app->request->post();
+                if( $model->load($data) && $model->login() ){
                     $this->redirect("my");
                 }
             }

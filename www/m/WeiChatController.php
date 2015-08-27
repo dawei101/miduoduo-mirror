@@ -7,6 +7,8 @@ use yii\helpers\Url;
 use common\BaseController;
 use common\models\WeichatUserInfo;
 use common\models\User;
+use common\WeichatBase;
+use common\models\AccountEvent;
 
 // 如果已经尝试获取过用户微信信息，则不执行任何操作，否则尝试获取用户微信信息
 class WeiChatController extends BaseController{
@@ -167,6 +169,25 @@ class WeiChatController extends BaseController{
             $weichat_user = WeichatUserInfo::findOne(['openid'=>$openid]);
             if( $weichat_user->openid ){
                 WeichatUserInfo::updateAll(['userid'=> $userid],['openid'=>$openid]);
+                if( $weichat_user->origin_type == WeichatUserInfo::ORIGIN_TYPES_REDPACKET ){
+                    User::updateAll(
+                        ['invited_by'=> $weichat_user->origin_detail],
+                        ['id'=>$userid]
+                    );
+                    // 给邀请人发放红包
+                    $data = [
+                        'date' => date("Y-m-d"),
+                        'user_id' => $weichat_user->origin_detail,
+                        'value' => 2,
+                        'note' => '邀请得红包，入账2元',
+                        'operator_id' => 0,
+                        'created_time' => date("Y-m-d H:i:s"),
+                        'red_packet_accept_by' => $userid,
+                        'type' => AccountEvent::TYPES_WEICHAT_RECOMMEND,
+                    ];
+                    $weichat_base = new WeichatBase();
+                    $weichat_base->putMoneyToAccount($data);
+                }
             }else{
                 $datetime       = date("Y-m-d H:i:s",time());
                 // 插入数据，完成绑定
