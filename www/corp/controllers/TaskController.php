@@ -79,7 +79,7 @@ class TaskController extends CBaseController
             if( $data['is_longterm'] ){
                 $data['to_date']    = '2115-01-01';
             }
-            if( $data['is_longterm'] ){
+            if( $data['is_allday'] ){
                 $data['from_time']  = '00:00:01';
                 $data['to_time']    = '23:59:59';
             }
@@ -177,7 +177,7 @@ class TaskController extends CBaseController
             if( $data['is_longterm'] ){
                 $data['to_date']    = '2115-01-01';
             }
-            if( $data['is_longterm'] ){
+            if( $data['is_allday'] ){
                 $data['from_time']  = '00:00:01';
                 $data['to_time']    = '23:59:59';
             }
