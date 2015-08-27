@@ -1,9 +1,9 @@
 <?php
  
-namespace api\modules\v1\controllers;
+namespace api\miduoduo\v1\controllers;
  
 use yii;
-use api\modules\BaseActiveController;
+use api\common\BaseActiveController;
 use common\Utils;
 use common\models\Resume;
 use common\JobUtils;
