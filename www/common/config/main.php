@@ -7,6 +7,9 @@ $params = [];
 
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'bootstrap' => [
+        'log',
+    ],
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
@@ -27,13 +30,14 @@ return [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
+            'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.exmail.qq.com',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
-                'username' => 'support@chongdd.com',
-                'password' => 'chongdd123',
-                'port' => '465', // Port 25 is a very common port too
-                'encryption' => 'ssl', // It is often used, check your provider or mail server specs
+                'host' => 'smtp.exmail.qq.com', 
+                'username' => 'webmaster@miduoduo.cn',
+                'password' => '1q2w3e4r5t67y',
+                'port' => '465', 
+                'encryption' => 'ssl', 
             ],
         ],
         'sms_sender' => [
@@ -84,11 +88,24 @@ return [
             'class' => 'common\message\Message',
        ],
        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'traceLevel' =>0,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning'],
+                    'logFile' => '@data/logs/miduoduo/app.log',
+                    'maxLogFiles' => 30,
+                ],
+                [
+                    'class' => 'yii\log\EmailTarget',
                     'levels' => ['error'],
+                    'mailer' => 'mailer',
+                    'enabled' => 1,
+                    'message' => [
+                        'from' => ['webmaster@miduoduo.cn'],
+                        'to' => ['dev@miduoduo.cn'],
+                        'subject' => '【米多多error】',
+                    ],
                 ],
                 [
 
