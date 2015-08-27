@@ -5,6 +5,7 @@ use Yii;
 use yii\web\HttpException;
 use yii\helpers\Url;
 use common\BaseController;
+use common\Utils;
 use common\models\WeichatUserInfo;
 use common\models\User;
 
@@ -23,7 +24,7 @@ class WeiChatController extends BaseController{
         $this->scope   = Yii::$app->params['weichat']['scope1'];
         $this->hasFetchWeichatID    = Yii::$app->session->get('weichat')['hasFetchWeichatID'] ? Yii::$app->session->get('weichat')['hasFetchWeichatID'] : 0;
         $this->weichatState         = Yii::$app->request->get('state') ? Yii::$app->request->get('state') : $this->weichatState;
-        $this->isWeichatWeb         = $this->isWeichatWeb();
+        $this->isWeichatWeb         = Utils::isInWechat();
 
         Yii::trace("wechat appid is " . $this->appid);
 
@@ -128,6 +129,7 @@ class WeiChatController extends BaseController{
         curl_setopt($curlobj, CURLOPT_HEADER, 0);
         curl_setopt($curlobj, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curlobj, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($curlobj, CURLOPT_TIMEOUT, 1000);
         $returnstr  = curl_exec($curlobj);
         if( curl_error($curlobj) ){
             $returnstr  = 'haserror';

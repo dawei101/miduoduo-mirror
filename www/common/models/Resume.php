@@ -108,6 +108,7 @@ class Resume extends \common\BaseActiveRecord
             [['home', 'workplace'], 'default', 'value'=>0],
             ['phonenum', 'checkPhonenum'],
             ['status', 'default', 'value'=>0],
+            ['exam_status', 'default', 'value'=>0],
             ['origin', 'default', 'value'=>'self'],
             ['job_wishes', 'string', 'max'=>500],
             ['major', 'string', 'max'=>200],
