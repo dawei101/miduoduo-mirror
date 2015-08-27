@@ -176,9 +176,17 @@ BASE_URL = 'http://api.miduoduo.cn'
                 "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288",
                 "resume": {},
                 "invited_count": 9,
+                "has_resume": boolean,
+                "has_wechat": boolean,
+                "last_city": {   //最后设置的城市 与 user-historical-location 对应数据
+                    "id": city_id,
+                    "short_name": city_short_name,
+                    }
+
                 }
         }
 ```
+
 
 ##request请求 标识认证信息
 
@@ -361,20 +369,10 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
 * 删除可做服务
     * DELETE /version/user-service-type/service_type_id
 
-
-###Address 地址
-* 获取自己的地址列表
-    * GET /version/address
-* 查看某地址
-    * GET /version/address/id
-* 添加新地址
-    * POST /version/address
-    * params: province,city,district,address,lat,lng
-* 修改已有地址
-    * PUT /version/address/id
-    * params: province,city,district,address,lat,lng
-* 删除已有地址
-    * DELETE /version/address/id
+### 历史城市记录
+* 切换城市上传记录
+    * POST /version/user-historical-location
+    * params: city_id=,lat=选填,lng=选填
 
 ###收藏
 
