@@ -37,7 +37,7 @@ $this->title = '米多多兼职平台';
 
                 <div class="col-sm-10 padding-0 ">
                     <div class="right-center">
-<?php if($company->status!=$company::STATUS_OK){
+<?php if($company->status==$company::STATUS_FREEZED || $company->status==$company::STATUS_DELETED || $company->status==$company::STATUS_BLACKLISTED){
 ?>
                 <div class="conter-title">发布兼职职位<span style="font-size:12px;padding-left:20px;"><?= $user_task_promission['msg'] ?></span></div>
 <?php

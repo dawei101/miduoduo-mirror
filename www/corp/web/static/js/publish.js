@@ -412,4 +412,11 @@ $(function(){
             $('#jquery-tagbox-text1').removeAttr('readonly');
         }
     });
+
+    $('.reservation').daterangepicker(null, function(start, end, label) {
+        var form = document.forms[0];
+        form.from_date.value = start.format('YYYY-MM-DD');
+        form.to_date.value = end.format('YYYY-MM-DD');
+        //console.log(start.format('YYYY-MM-DD'));
+    });
 });
