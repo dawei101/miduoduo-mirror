@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use Yii;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\User;
@@ -15,6 +17,21 @@ use backend\BBaseController;
  */
 class UserController extends BBaseController
 {
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['delete-myself'],
+                        'allow' => true,
+                        'roles' => ['developer'],
+                    ],
+                ],
+            ],
+        ]);
+    }
 
     /**
      * Lists all User models.

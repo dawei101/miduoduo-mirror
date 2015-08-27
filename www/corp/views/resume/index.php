@@ -32,7 +32,9 @@ $this->title = '米多多兼职平台';
                 <?php 
                     // 超过2天未处理，报名失效
                     if( (time()-strtotime($task_app->created_time)) > 60*60*24*TaskApplicant::STATUS_APPLY_OVERDAYS ){
-                        $task_app->status = 30;
+                        if( $task_app->status == TaskApplicant::STATUS_WAIT_EXAMINE ){
+                            $task_app->status = 30;
+                        }
                     }
                 ?>
                 <dd>

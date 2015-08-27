@@ -9,6 +9,19 @@ from spider import utils
 from scrapy.http.cookies import CookieJar
 
 
+category_img_map = {
+    '820107777f84bb0f4dd202e917b3fa14': '促销',
+    '22c7d4cd63e7f13a097990da955030cc': '展会',
+    '56545be65a163d1a77d0efeff5bb5722': '家教',
+    '73a40933d8c7eb552720308c93d699a2': '客服',
+    '610e7389d522685ad7db1491b642efb9': '小时工',
+    'a423df01deeab461a1776d2c5678bb24': '礼仪',
+    '6202cbf3c296ac4dc7dce933aca5c093': '才艺',
+    '6202cbf3c296ac4dc7dce933aca5c093': '发单',
+    '3c06cda4b42481ada4881d88b5075148': '志愿者',
+    'fb4bb5e50a6aa637e54794cf3087b8b9': '义工',
+    }
+
 class XlbSpider(scrapy.Spider):
 
     name = "xiaolianbang"
@@ -44,11 +57,9 @@ class XlbSpider(scrapy.Spider):
 
 
     def parse_cities(self, response):
-
-        content = response.body
-        res = re.findall('data-city="([^"]+)"', content)
-        for city in res:
-            yield self.build_list_request(city.decode('utf-8'), 1)
+        cities = response.selector.xpath('//*[@id="city_list"]/li/text()').extract()
+        for city in cities:
+            yield self.build_list_request(city, 1)
 
     def build_list_request(self, city, page=1):
         cookies = {}
@@ -69,32 +80,29 @@ class XlbSpider(scrapy.Spider):
         self.logger.debug("request cookie is %s",
                 response.request.cookies)
         _ids = list(response.selector.xpath(
-                '//*[@id="content"]/li/@data-id').extract())
+                '//*[@id="main-con"]//article/@data-id').extract())
+
+        meta = response.meta
+
+        for _id in _ids:
+            if _id not in self.exists_ids:
+                yield self.build_detail_request(_id, meta['city'])
+            else:
+                self.logger.debug('%s is exists.', _id)
+
 
         lis = response.selector.xpath(
-                '//*[@id="content"]/li')
+                '//*[@id="main-con"]//article')
         if len(lis)>0:
             meta = response.meta
             yield self.build_list_request(meta['city'], meta['page']+1)
-        for li in lis:
-            _id = li.xpath('@data-id').extract_first();
-            release_date = li.xpath(
-                    '//div[contains(@class, "time")]/text()').extract_first()
-            if _id and re.match(r'\d{2}-\d{2}', release_date):
-                release_date = self.this_year + '-' + str(release_date)
 
-                if _id not in self.exists_ids:
-                    yield self.build_detail_request(_id, meta['city'], release_date)
-
-    def build_detail_request(self, _id, city, release_date=None):
-        if not release_date:
-            release_date = str(datetime.date.today())
+    def build_detail_request(self, _id, city):
         return scrapy.http.Request(
                     "http://m.xiaolianbang.com/pt/%s/detail" % _id,
                     meta = {
                         'city': city,
                         'id': _id,
-                        'release_date': release_date,
                         },
                     callback=self.parse_detail)
 
@@ -111,9 +119,8 @@ class XlbSpider(scrapy.Spider):
             task['contact'] = None
             task['need_quantity'] = 0
             task['from_date'] = '1999-09-09'
-            task['to_date'] = '1999-09-09'
-            
-            task['release_date'] = response.meta['release_date']
+            task['to_date'] = '2115-01-01'
+            task['release_date'] = datetime.date.today()
 
             self.logger.debug(
                     "The release date is : %s", task['release_date'])
@@ -121,22 +128,22 @@ class XlbSpider(scrapy.Spider):
             task['city'] = response.meta['city']
             task['origin'] = self.origin
             task['title'] = response.xpath(
-                    '//*[@id="info"]/div[contains(@class, "title_box")]/p/text()')\
-                            .extract_first()
+                    '//*[@id="headerD"]/article/p/text()').extract_first()
 
-            task['category_name'] = response.xpath(
-                    '//*[@id="info"]/div[contains(@class, "title_box")]/div/text()')\
-                            .extract_first()
+            cat_img = response.xpath('//*[@id="headerD"]/article/figure/img/@src').extract_first();
+            task['category_name'] = '其他'
+            for k, v in category_img_map.items():
+                if k in cat_img:
+                    task['category_name'] = v
 
-            trs = response.xpath(
-                    '//*[@id="info"]//div[contains(@class, "info_list")]//tr')
+            trs = response.xpath('//*[@id="jz-baseInfo"]//tr')
 
             for tr in trs:
                 label = tr.xpath(
-                        'td[contains(@class,"list_item")]/text()')\
+                        'th/text()')\
                                 .extract_first()
                 info = tr.xpath(
-                        'td[contains(@class,"list_con")]/text()')\
+                        'td/text()')\
                                 .extract_first()
                 if label and info:
                     label = label.encode('utf-8')
@@ -172,8 +179,10 @@ class XlbSpider(scrapy.Spider):
                         task['is_long_term'] = False;
                         task['from_date'] = self.this_year + '-' + '-'.join(r.group(1).split('.'))
                         task['to_date'] = self.this_year + '-' + '-'.join(r.group(2).split('.'))
+                elif '发布时间' in label:
+                    task['release_date'] = info
             cnodes = response.xpath(
-                    '//*[@id="info"]/ul[contains(@class,"job_info")]/li[contains(@class,"info_con")]/node()').extract()
+                    '//*[@id="jz-detail"]//div[contains(@class, "detail")]/node()').extract()
             task['content'] = "\n".join(cnodes)
             yield self.build_contact_request(task)
 
@@ -182,6 +191,7 @@ class XlbSpider(scrapy.Spider):
 
 
     def build_contact_request(self, task):
+
         self.logger.debug("Build apply request for task: %s, %s", task['id'], task['title'])
         return scrapy.http.Request(
                 'http://m.xiaolianbang.com/pt/%s/apply' % task['id'],
@@ -192,24 +202,13 @@ class XlbSpider(scrapy.Spider):
 
     def parse_contact(self, response):
         task = response.meta['task']
-        tits = response.xpath(
-                '//*[@id="con_box"]/li[contains(@class, "sub_tit")]/text()').extract()
-        cons = response.xpath(
-                '//*[@id="con_box"]/li[contains(@class, "sub_con")]').extract()
+        r = re.search(r'"tel:(\d+)"', response.body)
+        if r:
+            task['phonenum'] = r.group(1)
 
-        for i, tit in enumerate(tits):
-            if tits[i] in u'电话报名':
-                cr = re.search(ur'>联系人：(.*?)<', cons[i])
-                if cr:
-                    task['contact'] = cr.group(1)
-                pr = re.search(ur'>电话号码：(\d+)<', cons[i])
-                if pr:
-                    task['phonenum'] = pr.group(1)
-            elif tits[i] in u'其他方式':
-                r = re.search(ur'[\d\w\_\-\.]+\@([\w\_\-\_]+\.)+([\w]+)', cons[i])
-                if r:
-                    task['email'] = r.group(0)
-        yield task
+        r = re.search(ur'[\d\w\_\-\.]+\@([\w\_\-\_]+\.)+([\w]+)', response.body)
+        if r:
+            task['email'] = r.group(0)
 
         if task['address']:
             self.logger.debug("start scrape location for address: %s", task['address'])
@@ -219,7 +218,6 @@ class XlbSpider(scrapy.Spider):
                          'task': task,
                          },
                     callback=self.parse_poi)
-
 
 
     def parse_poi(self, response):

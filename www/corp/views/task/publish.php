@@ -5,9 +5,21 @@ use yii\bootstrap\ActiveForm;
 use common\models\Task;
 use common\models\District;
 
-$sheng  = District::find()->where(['level'=>'province','is_alive'=>1])->addOrderBy(['id'=>SORT_ASC])->all();
-$shi    = District::find()->where(['parent_id'=>2])->addOrderBy(['id'=>SORT_ASC])->all();
-$qu     = District::find()->where(['parent_id'=>3])->addOrderBy(['id'=>SORT_ASC])->all();
+$city_id = isset($task->city_id) ? $task->city_id : 3;
+if( $city_id ){
+    $city = District::findOne(['id'=>$city_id]);
+    $province_id = $city['parent_id'];
+}else{
+    $province_id = 2;
+}
+
+$sheng  = District::find()
+    ->where(['level'=>'province','is_alive'=>1])->addOrderBy(['id'=>SORT_ASC])->all();
+$shi    = District::find()
+    ->where(['parent_id'=>$province_id])->addOrderBy(['id'=>SORT_ASC])->all();
+$qu     = District::find()
+    ->where(['parent_id'=>$city_id])->addOrderBy(['id'=>SORT_ASC])->all();
+
 $api_url= Yii::$app->params['baseurl.api'];
 
 /* @var $this yii\web\View */
@@ -160,7 +172,7 @@ $this->title = '米多多兼职平台';
                                             </option>
                                             <?php foreach($sheng as $k=>$v){ ?>
                                                 <option value="<?=$v->id;?>"
-                                                <?=($v->id==2)?'selected=selected':''?>
+                                                <?=($v->id==$province_id)?'selected=selected':''?>
                                                 >
                                                     <?=$v->short_name;?>
                                                 </option>
@@ -169,7 +181,7 @@ $this->title = '米多多兼职平台';
                                         <select id="address_shi" name="city_id">
                                             <?php foreach($shi as $k=>$v){ ?>
                                                 <option value="<?=$v->id;?>"
-                                                <?=($v->id==3)?'selected=selected':''?>
+                                                <?=($v->id==$city_id)?'selected=selected':''?>
                                                 >
                                                     <?=$v->short_name;?>
                                                 </option>

@@ -16,6 +16,9 @@ class SeoUrlRule extends UrlRule
     public function createUrl($manager, $route, $params)
     {
         if ($route=='task/index') {
+            if (!isset($parmas['city_pinyin'])){
+                return '/';
+            }
             $url = $params['city_pinyin'] . "/";
             if (!empty($params['district_pinyin'])){
                 $url .= $params['district_pinyin'] . "/";

@@ -90,6 +90,7 @@ class Resume extends \common\BaseActiveRecord
     {
         return [
             [['name'], 'required'],
+            ['user_id', 'unique', 'on'=>'insert', 'message'=> '简历已经存在，请勿重新创建!'],
             [['gender', 'height', 'is_student', 'grade', 'degree',
                 'has_emdical_cert', 'status',
                 'user_id', 'home', 'workplace'], 'integer'],
@@ -107,6 +108,7 @@ class Resume extends \common\BaseActiveRecord
             [['home', 'workplace'], 'default', 'value'=>0],
             ['phonenum', 'checkPhonenum'],
             ['status', 'default', 'value'=>0],
+            ['exam_status', 'default', 'value'=>0],
             ['origin', 'default', 'value'=>'self'],
             ['job_wishes', 'string', 'max'=>500],
             ['major', 'string', 'max'=>200],
