@@ -177,18 +177,24 @@ class WeiChatController extends BaseController{
                         ['id'=>$userid]
                     );
                     // 给邀请人发放红包
-                    $data = [
-                        'date' => date("Y-m-d"),
-                        'user_id' => $weichat_user->origin_detail,
-                        'value' => 2,
-                        'note' => '邀请得红包，入账2元',
-                        'operator_id' => 0,
-                        'created_time' => date("Y-m-d H:i:s"),
-                        'red_packet_accept_by' => $userid,
-                        'type' => AccountEvent::TYPES_WEICHAT_RECOMMEND,
-                    ];
-                    $weichat_base = new WeichatBase();
-                    $weichat_base->putMoneyToAccount($data);
+                    $user = User::findOne(['id'=>$userid]);
+                    if( isset($user->username) ){
+                        $note = Yii::$app->params['weichat']['red_packet']['note'];
+                        $username = substr($user->username, 0, 3).'****'.substr($user->username, -4);
+                        $note = str_ireplace( '{username}', $username, $note );
+                        $data = [
+                            'date' => date("Y-m-d"),
+                            'user_id' => $weichat_user->origin_detail,
+                            'value' => Yii::$app->params['weichat']['red_packet']['value'],
+                            'note' => $note,
+                            'operator_id' => 0,
+                            'created_time' => date("Y-m-d H:i:s"),
+                            'red_packet_accept_by' => $userid,
+                            'type' => AccountEvent::TYPES_WEICHAT_RECOMMEND,
+                        ];
+                        $weichat_base = new WeichatBase();
+                        $weichat_base->putMoneyToAccount($data);
+                    }
                 }
             }else{
                 $datetime       = date("Y-m-d H:i:s",time());

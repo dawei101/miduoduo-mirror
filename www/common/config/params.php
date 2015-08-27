@@ -55,6 +55,10 @@ return [
         'url'   => [
             'erweima_show' => 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=', // 二维码显示
         ],
+        'red_packet' => [
+            'value' => 2, // 被邀请人注册，邀请人获得金额
+            'note' => '成功邀请好友{username}注册', // 微信提示消息
+        ],
     ],
 
     'seo'   => [
