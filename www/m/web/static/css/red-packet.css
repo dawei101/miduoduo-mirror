@@ -54,7 +54,10 @@ width: 28%; cursor:pointer; font-size:14px;}
 .pic_f{display:block; color:#fff; font-size:20px;}
 .pic_f img{width:70%; display:block; margin:30px auto;}
 .pic_f p{width:90%; line-height:30px; margin:50px auto; font-weight:700}
-
+.top-nav{display:none;}
+.form-group{margin-bottom:20px;}
+.help-block{font-size: 14px;color: #fff;padding-right: 0px;}
+.bott{background-color: #DDD;  margin-top: 2px;}
 
 
 

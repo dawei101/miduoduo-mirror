@@ -16,49 +16,10 @@ if (Utils::isInWechat()){
     WechatAsset::register($this);
 }
 
-?>
-<!--
-<div class="site-login">
-    <div style='padding: 40px 0 10px 10px;color: #999;' > <?=$this->title?> </div>
-        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-        <div class="form-list">
-            <?= $form->field($model, 'phonenum')->label('手机号')
-              ->input('tel', $options = ['data-id'=>'phonenum'] ) ?>
-            <div class="form-group">
-                <label>验证码</label>
-                <div class="yzm">
-                    <button id="svcode" type="button" class="btn btn-default form-yzm">获取验证码</button>
-                    <input type="text" id="<?= Html::getInputId($model, 'code') ?>"
-                      class="form-control" name="<?= Html::getInputName($model, 'code')?>">
-                </div>
-                <p class="help-block help-block-error"><?=$model->getFirstError('code')?></p>
-            </div>
-        </div>
-    </div>
-    <p class="block-btn">
-        <?= Html::submitButton('下一步', ['class' => 'btn btn-primary btn-lg btn-block', 'name' => 'login-button']) ?>
-    </p>
-    <?php ActiveForm::end(); ?>
-    <p class="text-right" style="padding-right: 15px; ">
-        <a href="/user/vlogin">找回密码</a>
-        &nbsp; &nbsp; &nbsp; &nbsp;
-        <a href="/user/vlogin">手机验证码登录</a>
-    </p>
-</div>
--->
+$this->title = '米多多送现金红包';
 
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
-<meta http-equiv="pragma" content="no-cache">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta http-equiv="pragma" content="no-cache">
-<meta content="black" name="apple-mobile-web-app-status-bar-style">
-<title>米多多送现金红包</title>
+?>
 <link href="<?=Yii::$app->params['baseurl.static.m']?>/static/css/red-packet.css" type="text/css" rel="stylesheet">
-</head>
 
 <body>
 <div class="midd_top"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/midd_top.jpg"></div>
@@ -68,7 +29,7 @@ if (Utils::isInWechat()){
   <div class="input_k">
   <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
      <?= $form->field($model, 'phonenum')->label(false)
-              ->input('tel', $options = ['data-id'=>'phonenum' ,'class'=>"input_z", 'placeholder'=>"请输入您的电话号码"] ) ?>
+              ->input('tel', $options = ['data-id'=>'phonenum' ,'class'=>"input_z", 'placeholder'=>"请输入您的手机号领红包"] ) ?>
      <div class="yz">
         <input type="text" id="<?= Html::getInputId($model, 'code') ?>"
             class="input_z" name="<?= Html::getInputName($model, 'code')?>">
