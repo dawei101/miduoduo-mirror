@@ -10,7 +10,7 @@ img{border:none;}
 .midd_main img{width:90%; display:block; margin:0 auto;}
 .title_hb{width:30%; position:absolute; left:35%; top:5%;z-index:9}
 .title_hb img{width:100%; }
-.jin_e{width:100%; text-align:center;  color:#b72022; position:absolute; left:0; top:24%;z-index:9; font-size:30px; font-weight:bold}
+.jin_e{width:100%; text-align:center;  color:#b72022; position:absolute; left:0; top:22.5%;z-index:9; font-size:30px; font-weight:bold}
 .text_b{width:80%; position:absolute; left:11%; top:43%;z-index:9; }
 .text_b img{width:100%;}
 .text_b a{display:block; width:80%; display:block; margin:3% auto; text-align:center; padding:3% 0; border-radius:4px; font-size:18px; color:#333;}
@@ -53,22 +53,19 @@ width: 28%; cursor:pointer; font-size:14px;}
 .cd-popup img{width:80%; display:block; margin:5% auto;}
 .pic_f{display:block; color:#fff; font-size:20px;}
 .pic_f img{width:70%; display:block; margin:30px auto;}
-.pic_f p{width:90%; line-height:30px; margin:50px auto; font-weight:700}
+.pic_f p{width:90%; line-height:30px; margin:30px auto; font-weight:700}
 .top-nav{display:none;}
-.form-group{margin-bottom:20px;}
-.help-block{font-size: 14px;color: #fff;padding-right: 0px;}
+.form-group{margin-bottom:17px;}
+.help-block{font-size: 12px;color: #fff;padding-right: 0px;}
 .bott{background-color: #DDD;  margin-top: 2px;}
-
-
-
-
-
-
-
-
-
-
-
+.fenxiang-btn{background: #fba61e;  width: 80%;
+  display: block;
+  margin: 3% auto;
+  text-align: center;
+  padding: 3% 0;
+  border-radius: 4px;
+  font-size: 18px;
+  color: #fff;}
 
 
 

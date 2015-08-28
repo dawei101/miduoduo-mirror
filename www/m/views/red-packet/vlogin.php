@@ -37,7 +37,7 @@ $this->title = '米多多送现金红包';
      </div>
      <?= Html::submitButton('立即领取', ['class' => 'botton_l', 'name' => 'login-button']) ?>
    <?php ActiveForm::end(); ?>
-     <div class="ts">分享好友，每注册成功一个，则返现<b>2</b>元，多返多送！</div>
+     <div class="ts">分享好友，每注册成功一个，则返现<b><?=$inviter_value?></b>元，多返多送！</div>
   </div>
 </div>
 <div class="bot_box"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/bot_img.jpg"></div>
@@ -48,10 +48,10 @@ $this->title = '米多多送现金红包';
   </ul>
   <div class="tab_box">
     <div>
-      <p>1、活动时间：20150830-20151230</p>
-      <p>2、满10元以上可提现</p>
-      <p>3、活动时间：20150830-20151230</p>
-      <p>4、活动时间：20150830-20151230</p>
+      <p>1、活动时间：即日起至2015年12月30日</p>
+      <p>2、注册用户可得1元</p>
+      <p>3、邀请好友注册可得2元</p>
+      <p>4、满10元以即可微信提现！</p>
     </div>
    </div>
 </div>
@@ -64,33 +64,28 @@ $this->title = '米多多送现金红包';
     <div>
       <dl>
         <dd>第一名</dd>
-        <dd>王小明</dd>
-        <dd>2000元</dd>
+        <dd>**明</dd>
+        <dd>156元</dd>
       </dl>
       <dl>
-        <dd>第一名</dd>
-        <dd>王小明</dd>
-        <dd>2000元</dd>
+        <dd>第二名</dd>
+        <dd>**诺</dd>
+        <dd>127元</dd>
       </dl>
       <dl>
-        <dd>第一名</dd>
-        <dd>王小明</dd>
-        <dd>2000元</dd>
+        <dd>第三名</dd>
+        <dd>**舵</dd>
+        <dd>79元</dd>
       </dl>
       <dl>
-        <dd>第一名</dd>
-        <dd>王小明</dd>
-        <dd>2000元</dd>
+        <dd>第四名</dd>
+        <dd>**川</dd>
+        <dd>55元</dd>
       </dl>
       <dl>
-        <dd>第一名</dd>
-        <dd>王小明</dd>
-        <dd>2000元</dd>
-      </dl>
-      <dl>
-        <dd>第一名</dd>
-        <dd>王小明</dd>
-        <dd>2000元</dd>
+        <dd>第五名</dd>
+        <dd>**亮</dd>
+        <dd>43元</dd>
       </dl>
     </div>
    </div>
@@ -105,6 +100,9 @@ $this->title = '米多多送现金红包';
         var fp = pipt.closest('.form-group');
         var help=fp.find('.help-block');
         var wait=60;
+        $(vbtn).on('click',function(){
+            return false;
+        });
         function time(o) {
             help.html('请您留意短信或来电');
             if (wait == 0) { 

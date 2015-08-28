@@ -7,20 +7,28 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta http-equiv="pragma" content="no-cache">
 <meta content="black" name="apple-mobile-web-app-status-bar-style">
-<title>米多多送现金红包</title>
+<title>
+    <?php if(isset($weichat_user->resume->name)){ ?>
+        <?=$weichat_user->resume->name?>分享的米多多送现金红包!
+    <?php }else{ ?>
+        我分享的米多多送现金红包!
+    <?php } ?>
+</title>
 <link href="<?=Yii::$app->params['baseurl.static.m']?>/static/css/red-packet.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
-<a href="#" class="pic_f cd-popup-trigger">
+<!-- 添加隐藏的logo图片300*300用于微信分享图标 - start -->
+<div style="display:none;">
+    <img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/weichat_icon.jpg" /> 
+</div>
+<!-- 添加隐藏的logo图片300*300用于微信分享图标 - end -->
+<div class="pic_f cd-popup-trigger">
     <p>
-        <?php if(isset($weichat_user->resume->name)){ ?>
-            <?=$weichat_user->resume->name?>分享的红包。
-        <?php } ?>
     长按二维码微信关注可领取现金红包，亲试有效，赶紧去领吧！</p>
     <img src="<?=Yii::$app->params['weichat']['url']['erweima_show'].$erweima_ticket?>">
-    <p class="fenxiang-btn">立即分享</p>
-</a>
+    <p class="fenxiang-btn">分享给好友</p>
+</div>
 <!--=======以藏的弹出层======-->
 <div class="cd-popup" role="alert">
 <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/fex.png" </div>

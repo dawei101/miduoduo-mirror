@@ -176,25 +176,6 @@ class WeiChatController extends BaseController{
                         ['invited_by'=> $weichat_user->origin_detail],
                         ['id'=>$userid]
                     );
-                    // 给邀请人发放红包
-                    $user = User::findOne(['id'=>$userid]);
-                    if( isset($user->username) ){
-                        $note = Yii::$app->params['weichat']['red_packet']['note'];
-                        $username = substr($user->username, 0, 3).'****'.substr($user->username, -4);
-                        $note = str_ireplace( '{username}', $username, $note );
-                        $data = [
-                            'date' => date("Y-m-d"),
-                            'user_id' => $weichat_user->origin_detail,
-                            'value' => Yii::$app->params['weichat']['red_packet']['value'],
-                            'note' => $note,
-                            'operator_id' => 0,
-                            'created_time' => date("Y-m-d H:i:s"),
-                            'red_packet_accept_by' => $userid,
-                            'type' => AccountEvent::TYPES_WEICHAT_RECOMMEND,
-                        ];
-                        $weichat_base = new WeichatBase();
-                        $weichat_base->putMoneyToAccount($data);
-                    }
                 }
             }else{
                 $datetime       = date("Y-m-d H:i:s",time());
@@ -207,9 +188,13 @@ class WeiChatController extends BaseController{
                 $weichat->is_receive_nearby_msg = 1;    // 新绑定的用户，默认接受微信推送消息
                 $weichat->save();
             }
+
+            // 被邀请人注册，给邀请人发红包
+            $invitee_userid = $userid;
+            WeichatBase::sendRedPacketToInviter($invitee_userid);
         }
         return true;
-  }
+    }
 
     // 判断是否是微信浏览器
     // 这个方法在IOS正常使用

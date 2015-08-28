@@ -15,7 +15,7 @@
 <div class="midd_top"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/midd_top.jpg"></div>
 <div class="midd_main"> <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/hongbao.png" >
   <div class="title_hb"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/my_hb.png"></div>
-  <div class="jin_e"><?=$invited_all*2?>元</div>
+  <div class="jin_e"><?=$invited_all_value?>元</div>
   <div class="text_b"> <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/hb_sm.png"> <a href="<?=Yii::$app->params['baseurl.m']?>/red-packet?id=<?=$user_id?>" class="fenx cd-popup-trigger">分享给好友去赚红包</a> <a href="<?=Yii::$app->params['baseurl.wechat']?>/view/pay/cash-account.html" class="tix">去提现</a> </div>
 </div>
 <div class="bot_box"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/bot_img.jpg"></div>
@@ -27,7 +27,7 @@
   </ul>
   <div class="tab_box">
     <div>
-      <h2>共计<?=$invited_all?>人，可提现<?=$invited_all*2?>元</h2>
+      <h2>共计<?=$invited_all_people?>人，已获得<?=$invited_all_value?>元</h2>
       <?php if( $inviteds ){ ?>
         <ul>
             <?php foreach($inviteds as $invited){ ?>
@@ -35,7 +35,7 @@
                     <span>
                         <?=isset($invited->created_time)?str_ireplace(' ','日 ',str_ireplace('-','月',substr($invited->created_time,5,11))):'未注册'?></li>
                     </span>
-                    <?=isset($invited->username)?(substr($invited->username,0,3).'****'.substr($invited->username,-4)):'未注册'?></li>
+                    <?=isset($invited->invitee->username)?(substr($invited->invitee->username,0,3).'****'.substr($invited->invitee->username,-4)):'未注册'?></li>
             <?php } ?>
         </ul>
         <a href="/red-packet/my-records">查看更多<br />
@@ -44,10 +44,10 @@
         <a href="<?=Yii::$app->params['baseurl.m']?>/red-packet?id=<?=$user_id?>" style="border:0px;">您还木有收入哦，快快行动吧！</a>
       <?php } ?>
     <div class="hide">
-      <p>1、活动时间：2015-08-30 至 2015-12-30</p>
-      <p>2、满10元以上可提现</p>
-      <p>3、活动时间：20150830-20151230</p>
-      <p>4、活动时间：20150830-20151230</p>
+      <p>1、活动时间：即日起至2015年12月30日</p>
+      <p>2、注册用户可得1元</p>
+      <p>3、邀请好友注册可得2元</p>
+      <p>4、满10元以即可微信提现！</p>
     </div>
   </div>
 </div>

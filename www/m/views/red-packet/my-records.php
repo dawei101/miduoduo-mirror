@@ -16,16 +16,16 @@
 <div id="tab">
   <div class="tab_box">
     <div>
-      <h2>共计<?=$invited_all?>人，可提现<?=$invited_all*2?>元</h2>
+      <h2>共计<?=$invited_all_people?>人，可提现<?=$invited_all_value?>元</h2>
       <ul>
-        <?php foreach($inviteds as $invited){ ?>
-            <li>
-                <span>
-                    <?=isset($invited->created_time)?str_ireplace(' ','日 ',str_ireplace('-','月',substr($invited->created_time,5,11))):'未注册'?></li>
-                </span>
-                <?=isset($invited->username)?(substr($invited->username,0,3).'****'.substr($invited->username,-4)):'未注册'?></li>
-        <?php } ?>
-      </ul>
+            <?php foreach($inviteds as $invited){ ?>
+                <li>
+                    <span>
+                        <?=isset($invited->created_time)?str_ireplace(' ','日 ',str_ireplace('-','月',substr($invited->created_time,5,11))):'未注册'?></li>
+                    </span>
+                    <?=isset($invited->invitee->username)?(substr($invited->invitee->username,0,3).'****'.substr($invited->invitee->username,-4)):'未注册'?></li>
+            <?php } ?>
+        </ul>
     </div>
   </div>
 </div>

@@ -11,6 +11,7 @@ use common\models\WeichatAutoresponse;
 use common\models\Task;
 use common\models\AccountEvent;
 use common\models\UserAccount;
+use common\models\User;
 
 class WeichatBase
 {
@@ -363,5 +364,62 @@ class WeichatBase
         Yii::$app->wechat_pusher->accountEventIn($pusher_date,$pusher_task_gid,$pusher_weichat_id);
         
         return true;
+    }
+
+    public static function sendRedPacketToInviter($invitee_userid){
+        $invitee = User::findOne(['id'=>$invitee_userid]);
+        $inviter_id = isset($invitee->invited_by) ? $invitee->invited_by : 0;
+        
+        $has_send = AccountEvent::findOne([
+            'user_id' => $inviter_id,
+            'red_packet_accept_by' => $invitee_userid,
+        ]);
+
+        if( $inviter_id && !isset($has_send->id) ){
+            $note = Yii::$app->params['weichat']['red_packet']['note'];
+            $username = substr($invitee->username, 0, 3).'****'.substr($invitee->username, -4);
+            $note = str_ireplace( '{username}', $username, $note );
+
+            // 给 $inviter_id 发红包
+            $data = [
+                'date'      => date("Y-m-d"),
+                'user_id'   => $inviter_id,
+                'value'     => Yii::$app->params['weichat']['red_packet']['value'],
+                'note'      => $note,
+                'operator_id'  => 0,
+                'created_time' => date("Y-m-d H:i:s"),
+                'red_packet_accept_by' => $invitee_userid,
+                'type'      => AccountEvent::TYPES_WEICHAT_RECOMMEND,
+            ];
+            $weichat_base = new WeichatBase();
+            $weichat_base->putMoneyToAccount($data);
+        }
+    }
+
+    public static function sendRedPacketToUserFirstTime($userid){
+        $user = User::findOne(['id'=>$userid]);
+
+        $has_send = AccountEvent::findOne([
+            'user_id' => $userid,
+            'red_packet_accept_by' => $userid,
+        ]);
+
+        if( isset($user->id) && !isset($has_send->id) ){
+            $note = Yii::$app->params['weichat']['red_packet']['note_me'];
+
+            // 给 $inviter_id 发红包
+            $data = [
+                'date'      => date("Y-m-d"),
+                'user_id'   => $user->id,
+                'value'     => Yii::$app->params['weichat']['red_packet']['value_me'],
+                'note'      => $note,
+                'operator_id'  => 0,
+                'created_time' => date("Y-m-d H:i:s"),
+                'red_packet_accept_by' => $user->id,
+                'type'      => AccountEvent::TYPES_WEICHAT_RECOMMEND,
+            ];
+            $weichat_base = new WeichatBase();
+            $weichat_base->putMoneyToAccount($data);
+        }
     }
 }

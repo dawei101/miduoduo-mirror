@@ -8,6 +8,7 @@ use common\models\WeichatUserInfo;
 use common\WeichatBase;
 use common\models\LoginWithDynamicCodeForm;
 use common\models\User;
+use common\models\AccountEvent;
 
 class RedPacketController extends MBaseController
 {
@@ -37,27 +38,38 @@ class RedPacketController extends MBaseController
 
     public function actionMy(){
         $user_id = Yii::$app->user->id;
+        $inviter_value = Yii::$app->params['weichat']['red_packet']['value'];
         if( $user_id ){
-            $inviteds = User::find()
-                ->where(['invited_by'=>Yii::$app->user->id])
-                ->limit(5)
-                ->all();
-            $invited_all = User::find()
-                ->where(['invited_by'=>Yii::$app->user->id])
-                ->count();
+            WeichatBase::sendRedPacketToUserFirstTime($user_id);
             
+            $inviteds = AccountEvent::find()
+                ->where([
+                    'user_id'=>Yii::$app->user->id,
+                    'type'=>AccountEvent::TYPES_WEICHAT_RECOMMEND,
+                ])
+                ->with('invitee')
+                ->limit(10)
+                ->all();
+            $invited_all = AccountEvent::find()
+                ->where([
+                    'user_id'=>Yii::$app->user->id,
+                    'type'=>AccountEvent::TYPES_WEICHAT_RECOMMEND,
+                ]);
+            $invited_all_people = $invited_all->count();
+            $invited_all_value = $invited_all->sum('value');
+                
+
             $this->layout = false;
             return $this->render(
                 'my',
                 [
                     'inviteds' => $inviteds,
                     'user_id' => $user_id,
-                    'invited_all' => $invited_all,
+                    'invited_all_people' => $invited_all_people,
+                    'invited_all_value' => $invited_all_value,
+                    'inviter_value' => $inviter_value,
                 ]
             );
-            var_dump($invited);exit;
-            echo $user_id.'<hr />'.$invited_count;
-            exit;
         }else{
             $model = new LoginWithDynamicCodeForm();
             if( Yii::$app->request->ispost ){
@@ -66,11 +78,11 @@ class RedPacketController extends MBaseController
                     $this->redirect("my");
                 }
             }
-            //$this->layout = false;
             return $this->render(
                 'vlogin',   
                 [
                     'model' => $model,
+                    'inviter_value' => $inviter_value,
                 ]
             );
         }
@@ -80,13 +92,21 @@ class RedPacketController extends MBaseController
     public function actionMyRecords(){
         $user_id = Yii::$app->user->id;
         if( $user_id ){
-            $inviteds = User::find()
-                ->where(['invited_by'=>Yii::$app->user->id])
+            $inviteds = AccountEvent::find()
+                ->where([
+                    'user_id'=>Yii::$app->user->id,
+                    'type'=>AccountEvent::TYPES_WEICHAT_RECOMMEND,
+                ])
+                ->with('invitee')
                 ->limit(100)
                 ->all();
-            $invited_all = User::find()
-                ->where(['invited_by'=>Yii::$app->user->id])
-                ->count();
+            $invited_all = AccountEvent::find()
+                ->where([
+                    'user_id'=>Yii::$app->user->id,
+                    'type'=>AccountEvent::TYPES_WEICHAT_RECOMMEND,
+                ]);
+            $invited_all_people = $invited_all->count();
+            $invited_all_value = $invited_all->sum('value');
             
             $this->layout = false;
             return $this->render(
@@ -94,7 +114,8 @@ class RedPacketController extends MBaseController
                 [
                     'inviteds' => $inviteds,
                     'user_id' => $user_id,
-                    'invited_all' => $invited_all,
+                    'invited_all_people' => $invited_all_people,
+                    'invited_all_value' => $invited_all_value,
                 ]
             );
         }
