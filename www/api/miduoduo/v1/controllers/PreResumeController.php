@@ -11,7 +11,7 @@ use api\common\BaseActiveController;
  */
 class ResumeController extends BaseActiveController
 {
-    public $modelClass = 'api\common\models\Resume';
+    public $modelClass = 'api\miduoduo\v1\models\Resume';
 
     public function actions()
     {

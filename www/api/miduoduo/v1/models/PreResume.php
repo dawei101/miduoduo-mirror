@@ -1,16 +1,16 @@
 <?php
 
-namespace api\common\models;
-
+namespace api\miduoduo\v1\models;
 use Yii;
 use common\Utils;
 
-class Resume extends \common\models\Resume
+
+class PreResume extends \common\models\Resume
 {
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'gender', 'degree'], 'required'],
             ['user_id', 'unique', 'targetAttribute' => 'user_id',
                 'message'=> '简历已经存在，请勿重新创建!'],
             [['gender', 'is_student', 'grade', 'degree',
