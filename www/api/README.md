@@ -281,8 +281,12 @@ BASE_URL = 'http://api.miduoduo.cn'
       "postcode": "110101",
       "center": "116.418757,39.917544",
       "full_name": "北京市-北京市市辖区-东城区",
-      "disabled": 0
+      "is_alive": 0
     },
+```
+* 搜索城市
+```
+GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_name]]
 ```
 
 ### 任务类型

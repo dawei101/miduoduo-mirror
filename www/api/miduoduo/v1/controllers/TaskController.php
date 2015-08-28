@@ -43,7 +43,12 @@ class TaskController extends BaseActiveController
                         " . $this->getColumn('id') . " DESC ");
                     }
             ],
-             'date_range' => [
+            'city_id' => [
+                '*' => function($query, $name, $value){
+                    $query->andWhere([$this->getColumn('city_id')=>$value]);
+                }
+            ],
+            'date_range' => [
                  'weekend_only' => function($query, $name, $value){
                     static::filterWeekendOnly($query);
                  },

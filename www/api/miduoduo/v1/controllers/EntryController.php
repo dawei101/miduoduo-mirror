@@ -211,12 +211,28 @@ class EntryController extends BaseActiveController
         if(Utils::validateVerifyCode($phonenum, $code)){
             $user = User::findByUsername($phonenum);
             if (!$user){
-                $user = User::createUserWithPhonenum($phonenum);
+                $user = new User();
+                $user->username = $phonenum;
+                if ($invited_by){
+                    $user->invited_by = $invited_by;
+                }
+                $user->setPassword(rand(1000000, 9999999));
+                if (!$user->save()){
+                    $message = '';
+                    foreach ($user->getErrors() as $key=>$errors){
+                        $message .= join('\n', $errors) . "\n";
+                    }
+                    return $this->renderJson([
+                        'success'=> false,
+                        'message'=> $message,
+                    ]);
+                }
             }
             if (!Utils::isInWechat() || empty($user->access_token)){
                 $user->generateAccessToken();
             }
             $this->activeDevice($user);
+
             if ($password){
                 $user->setPassword($password);
             }
