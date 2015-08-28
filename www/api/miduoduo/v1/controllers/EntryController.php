@@ -295,10 +295,13 @@ class EntryController extends BaseActiveController
 
     public function loginSucceed($user, $raw_password='')
     {
+        $profile = AUtils::formatProfile($user, $raw_password);
+        $user->is_virgin = 0;
+        $user->save();
         return $this->renderJson([
             'success'=> true,
             'message'=> '登录成功',
-            'result'=> AUtils::formatProfile($user, $raw_password),
+            'result'=> $profile,
         ]);
     }
 }

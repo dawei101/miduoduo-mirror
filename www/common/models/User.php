@@ -23,6 +23,7 @@ use common\models\WeichatUserInfo;
  * @property string $updated_time
  * @property string $name
  * @property string $is_staff
+ * @property boolean $is_virgin
  */
 class User extends BaseActiveRecord implements IdentityInterface
 {
@@ -33,7 +34,7 @@ class User extends BaseActiveRecord implements IdentityInterface
     ];
 
     const STATUS_OK = 0;
-    const STATUS_DELETE = 0;
+    const STATUS_DELETE = 10;
 
 
     /**
@@ -51,7 +52,7 @@ class User extends BaseActiveRecord implements IdentityInterface
     {
         return [
             [['username'], 'required'],
-            [['status', 'invited_by'], 'integer'],
+            [['status', 'invited_by', 'is_virgin'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
             [['username', 'name'], 'string', 'max' => 200],
             [['password_hash', 'password_reset_token', 'email', 'access_token'], 'string', 'max' => 500],
@@ -62,6 +63,7 @@ class User extends BaseActiveRecord implements IdentityInterface
                 'message'=>'手机号不正确，目前仅支持中国大陆手机号.'],
             ['is_staff', 'default', 'value'=>false],
             ['invited_by', 'default', 'value'=>0],
+            ['is_virgin', 'default', 'value'=>1],
         ];
     }
 
@@ -275,4 +277,5 @@ class User extends BaseActiveRecord implements IdentityInterface
             UserHistoricalLocation::className(), ['user_id' => 'id'])
             ->orderBy(['id'=>SORT_DESC]);
     }
+
 }
