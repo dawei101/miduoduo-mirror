@@ -6,6 +6,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
+use common\Utils;
 use common\BaseActiveRecord;
 use common\models\WeichatUserInfo;
 
@@ -23,6 +24,9 @@ use common\models\WeichatUserInfo;
  * @property string $updated_time
  * @property string $name
  * @property string $is_staff
+ * @property boolean $is_virgin
+ * @property string $app_access_token
+ * @property string $wechat_access_token
  */
 class User extends BaseActiveRecord implements IdentityInterface
 {
@@ -33,7 +37,7 @@ class User extends BaseActiveRecord implements IdentityInterface
     ];
 
     const STATUS_OK = 0;
-    const STATUS_DELETE = 0;
+    const STATUS_DELETE = 10;
 
 
     /**
@@ -51,10 +55,11 @@ class User extends BaseActiveRecord implements IdentityInterface
     {
         return [
             [['username'], 'required'],
-            [['status', 'invited_by'], 'integer'],
+            [['status', 'invited_by', 'is_virgin'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
             [['username', 'name'], 'string', 'max' => 200],
-            [['password_hash', 'password_reset_token', 'email', 'access_token'], 'string', 'max' => 500],
+            [['password_hash', 'password_reset_token', 'email',
+                'wechat_access_token', 'app_access_token'], 'string', 'max' => 500],
             [['auth_key'], 'string', 'max' => 1000],
             [['username'], 'unique'],
             ['status', 'default', 'value' => static::STATUS_OK],
@@ -62,6 +67,7 @@ class User extends BaseActiveRecord implements IdentityInterface
                 'message'=>'手机号不正确，目前仅支持中国大陆手机号.'],
             ['is_staff', 'default', 'value'=>false],
             ['invited_by', 'default', 'value'=>0],
+            ['is_virgin', 'default', 'value'=>1],
         ];
     }
 
@@ -92,6 +98,8 @@ class User extends BaseActiveRecord implements IdentityInterface
             'password_reset_token' => 'Password Reset Token',
             'email' => '邮箱',
             'auth_key' => 'Auth Key',
+            'app_access_token' => 'Access Token',
+            'wechat_access_token' => 'Access Token',
             'access_token' => 'Access Token',
             'status' => '状态',
             'created_time' => '创建时间',
@@ -118,20 +126,35 @@ class User extends BaseActiveRecord implements IdentityInterface
         return static::findOne(['id' => $id, 'status' => static::STATUS_OK]);
     }
 
+    public function getAccess_token()
+    {
+        return $this->{static::getAccessTokenColumn()};
+    }
+
+
+    public static function getAccessTokenColumn()
+    {
+        if (Utils::isInWechat()){
+            return 'wechat_access_token';
+        } else {
+            return 'app_access_token';
+        }
+    }
+
     /**
      * @inheritdoc
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
         if ($token && strlen($token)>0){
-            return static::findOne(['access_token' => $token]);
+            return static::findOne([static::getAccessTokenColumn() => $token]);
         }
         return null;
     }
 
     public function generateAccessToken()
     {
-        $this->access_token= Yii::$app->security->generateRandomString() . '_' . time();
+        $this->{static::getAccessTokenColumn()} = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
     /**
@@ -269,5 +292,11 @@ class User extends BaseActiveRecord implements IdentityInterface
         return $this->hasOne(WeichatUserInfo::className(),['userid' => 'id']);
     }
 
+    public function getLast_location()
+    {
+        return $this->hasOne(
+            UserHistoricalLocation::className(), ['user_id' => 'id'])
+            ->orderBy(['id'=>SORT_DESC]);
+    }
 
 }

@@ -96,4 +96,9 @@ class ConfigBanner extends \yii\db\ActiveRecord
         }
         return $citys; 
     }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['pic_url']);
+    }
 }
