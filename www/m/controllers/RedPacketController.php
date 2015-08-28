@@ -84,11 +84,10 @@ class RedPacketController extends MBaseController
             if( Yii::$app->request->ispost ){
                 $data = Yii::$app->request->post();
                 if( $model->load($data) && $model->login() ){
-                    echo $data['red_packet_city'];exit;
                     $red_packet_city = $data['red_packet_city'] ? $data['red_packet_city'] : 0;
                     User::updateAll(
                         ['red_packet_city'=>$red_packet_city],
-                        ['id'=>$model->id]
+                        ['username'=>$model->phonenum]
                     );
                     $this->redirect("my");
                 }
