@@ -200,5 +200,5 @@ function CallBack(str) {
 ```
 * 个人身份认证
 ```
-    window.MDDNative.idAuth()
+    window.MDDNative.idAuth(callback)
 ```
