@@ -66,6 +66,7 @@ return [
                         'v1/address',
                         'v1/offline-order',
                         'v1/resume',
+                        'v1/pre-resume',
                         'v1/freetime',
                         'v1/task',
                         'v1/task-applicant',
@@ -76,7 +77,9 @@ return [
                         'v1/contact-us',
                         'v1/pay-account-event',
                         'v1/pay-withdraw',
-                        'v1/recommend-task-group'
+                        'v1/recommend-task-group',
+                        'v1/city-banner',
+                        'v1/user-historical-location',
                     ],
                     'pluralize' => '',
                 ],

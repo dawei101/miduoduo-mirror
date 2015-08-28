@@ -9,7 +9,7 @@ use api\common\BaseActiveController;
  *
  * @author dawei
  */
-class ResumeController extends BaseActiveController
+class PreResumeController extends BaseActiveController
 {
     public $modelClass = 'api\miduoduo\v1\models\Resume';
 

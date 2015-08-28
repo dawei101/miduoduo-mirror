@@ -24,7 +24,8 @@ class Module extends \yii\base\Module
         'district' => ['*'],
         'service-type' => ['*'],
         'task-address' => ['nearby'],
-        'recommend-task-group' => ['*']
+        'recommend-task-group' => ['*'],
+        'city-banner' => ['*']
     ];
 
     public function behaviors()

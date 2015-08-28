@@ -378,7 +378,7 @@ class TaskController extends CBaseController
             'use_task_num'=>$use_task_num,
             'use_task_limie'=>$use_task_limie,
             'exam_result'=>$company->exam_result,
-            'msg'=>'今日可操作'.$use_task_limie.'条，已操作'.$use_task_num.'条（操作是指：发布、编辑、刷新职位。申请个人/企业认证后，最多可操作'.$company->getUseTaskLimit(32).'条）',
+            'msg'=>'今日可操作<span class="span_red_s">'.$use_task_limie.'</span>条，已操作<span class="span_red_s">'.$use_task_num.'</span>条（操作是指：发布、编辑、刷新职位。申请个人/企业认证后，最多可操作'.$company->getUseTaskLimit(32).'条）',
         ];
     }
 

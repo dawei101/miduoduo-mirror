@@ -198,4 +198,7 @@ function CallBack(str) {
               }
     }
 ```
-
+* 个人身份认证
+```
+    window.MDDNative.idAuth(callback)
+```

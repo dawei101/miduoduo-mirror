@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Task;
 
 /**
  * This is the model class for table "{{%weichat_push_quality_task}}".
@@ -64,5 +65,9 @@ class WeichatPushQualityTask extends \yii\db\ActiveRecord
             'pushed_time' => '推送时间',
             'push_group' => '推送分组，用于查看日志中本次推送的相关数据',
         ];
+    }
+
+    public function getTask(){
+        return $this::hasOne(Task::className(), ['gid'=>'gid']);
     }
 }

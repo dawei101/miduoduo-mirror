@@ -120,19 +120,22 @@ class WeichatPushQualityTaskController extends BBaseController
     // 发送优单推送
     public function actionPushit($id){
         // 查询优单的数据
-        $data   = WeichatPushQualityTask::find()->where(['id'=>$id])->asArray()->one();
+        $data   = WeichatPushQualityTask::find()
+            ->where(['id'=>$id])
+            ->with('task')
+            ->one();
 
         // 构造优单
         $params = array(
                 //array('name'=>'first','value'=>$data['title'],'color'=>'#222'), 
-                array('name'=>'keyword1','value'=>$data['company_name'],'color'=>'#222'),
-                array('name'=>'keyword2','value'=>$data['task_name'],'color'=>'#222'),
-                array('name'=>'keyword3','value'=>$data['task_type'],'color'=>'#222'),
-                array('name'=>'keyword4','value'=>$data['location'],'color'=>'#222'),
-                array('name'=>'keyword5','value'=>$data['price'],'color'=>'#0000FE'),
+                array('name'=>'keyword1','value'=>$data->company_name,'color'=>'#222'),
+                array('name'=>'keyword2','value'=>$data->task_name,'color'=>'#222'),
+                array('name'=>'keyword3','value'=>$data->task_type,'color'=>'#222'),
+                array('name'=>'keyword4','value'=>$data->location,'color'=>'#222'),
+                array('name'=>'keyword5','value'=>$data->price,'color'=>'#0000FE'),
         );
 
-        $gotoUrl        = Yii::$app->params['baseurl.m'].'/task/view?gid='.$data['gid'];
+        $gotoUrl        = Yii::$app->params['baseurl.wechat'].'/view/job/job-detail.html?task='.$data->task->id;
 
         // 得到待推送的用户列表
         // 这里只给 is_receive_nearby_msg=1 的用户发送推送

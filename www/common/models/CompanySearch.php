@@ -12,13 +12,14 @@ use common\models\Company;
  */
 class CompanySearch extends Company
 {
+    public $user_id_exisit;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'status', 'examined_by', 'user_id'], 'integer'],
+            [['id', 'status', 'examined_by', 'user_id' ,'user_id_exisit'], 'integer'],
             [['contact_name', 'contact_phone', 
             'contact_email', 'name', 'examined_time'], 'safe'],
             [['exam_status', 'exam_result'], 'integer'],
@@ -69,6 +70,12 @@ class CompanySearch extends Company
             'exam_status' => $this->exam_status,
             'user_id' => $this->user_id,
         ]);
+
+        if( $this->user_id_exisit == 1 ){
+            $query->andFilterWhere(['>', 'user_id', 0]);
+        }elseif( $this->user_id_exisit == 2 ){
+            $query->andFilterWhere(['=', 'user_id', 0]);
+        }
 
         // 'exam_result & ' . $this->exam_result => true, // 未测试 
 
