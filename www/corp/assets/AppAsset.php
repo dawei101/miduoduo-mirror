@@ -14,6 +14,7 @@ class AppAsset extends BaseAsset
         'static/font/iconfont.css',
         'static/css/bootstrap.min.css',
         'static/css/miduoduo-qy.css',
+        'static/js/data/daterangepicker-bs3.css',
     ];
 
     public $js = [
