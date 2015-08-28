@@ -21,6 +21,12 @@ class ResumeController extends BBaseController
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'examine' => ['post'],
+                ],
+            ],
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
@@ -184,4 +190,21 @@ class ResumeController extends BBaseController
         return false;
     }
 
+    public function actionExamine($id, $passed)
+    {
+        $resume = $this->findModel($id);
+        $note = Yii::$app->request->post('note');
+        if ($note){
+            $resume->exam_note = $note;
+        }else{
+            $resume->exam_note = NULL;
+        }
+        if ($passed){
+            $resume->exam_status = Resume::EXAM_DONE;
+        } else {
+            $resume->exam_status = Resume::EXAM_NOT_PASSED;
+        }
+        $resume->save();
+        return $this->redirect('view?id=' . $id);
+    }
 }

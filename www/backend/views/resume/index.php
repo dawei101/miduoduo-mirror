@@ -40,7 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'filter'=>[true=> '是', false=>'否']
             ],
             'college',
-            'gov_id',
             [
                 'attribute' => 'status', 'value'=>
                 function ($model){
@@ -48,7 +47,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             'filter'=>Resume::$STATUSES
             ],
-
+            'gov_id',
+            [
+                'attribute' => 'exam_status',
+                'value' => function($model){
+                    return $model::$EXAM_STATUSES[$model->exam_status];
+                },
+                'filter' => Resume::$EXAM_STATUSES,
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

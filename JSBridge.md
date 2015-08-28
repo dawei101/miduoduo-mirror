@@ -33,7 +33,7 @@ function CallBack(str) {
     window.MDDNative.auth(json)
     json: 字符串
     {
-        register：1- 注册，0 － 登录
+        register：2- 微信登录，1- 注册，0 － 登录
         url:// 登录成功后，跳转页面
     }
     
@@ -133,11 +133,26 @@ function CallBack(str) {
 
     callback：回调函数名
 ```
+
+* 打卡时间段
+```
+    window.MDDWeb.clock(start,stop)
+    
+    注：参数为字符类型
+    start: 2015-08-05 09:00
+    stop: 2015-08-05 10:00
+```
+
 * 打卡
 ```
     window.MDDNative.clock(callback)
 
     callback：回调函数名
+    参数     
+    {
+        success: bool   成功失败
+        message: text   提示文案
+    }
 ```
 
 * 获取 baseUrl
@@ -166,4 +181,21 @@ function CallBack(str) {
     html: 收到返回事件，可以自行处理，如果需要返回，调用 window.MDDNative.pop()
 ```
 
+* 分享
+```
+    window.MDDNative.share(message)
+    
+    message: 字符串
+    {
+        "base":{ "title": "", // 标题
+                  "desc": "", // 描述
+                   "img": "", // 图片 url
+                   "url": ""  // 分享链接
+                }，
+        "ext":{ "money": "",// 红包金额 
+                "title": "", // 标题 
+               "detail": "", // 说明 
+              }
+    }
+```
 

@@ -61,10 +61,11 @@ class WeichatErweimaLogSearch extends WeichatErweimaLog
         $query->andFilterWhere([
             'id' => $this->id,
             'erweima_id' => $this->erweima_id,
-            'create_time' => $this->create_time,
             'has_bind' => $this->has_bind,
             'follow_by_scan' => $this->follow_by_scan,
         ]);
+
+        $query->andFilterWhere(['like', 'create_time', $this->create_time]);
 
         if( $erweima_id ){
             $query->andFilterWhere(['erweima_id'=> $erweima_id]);

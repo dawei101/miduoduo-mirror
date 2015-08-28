@@ -176,9 +176,17 @@ BASE_URL = 'http://api.miduoduo.cn'
                 "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288",
                 "resume": {},
                 "invited_count": 9,
+                "has_resume": boolean,
+                "has_wechat": boolean,
+                "last_city": {   //最后设置的城市 与 user-historical-location 对应数据
+                    "id": city_id,
+                    "short_name": city_short_name,
+                    }
+
                 }
         }
 ```
+
 
 ##request请求 标识认证信息
 
@@ -281,9 +289,18 @@ BASE_URL = 'http://api.miduoduo.cn'
       "postcode": "110101",
       "center": "116.418757,39.917544",
       "full_name": "北京市-北京市市辖区-东城区",
-      "disabled": 0
+      "is_alive": 0
     },
 ```
+* 搜索城市
+```
+GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_name]]
+```
+
+### 城市首页BANNER
+
+* 获取城市首页BANNER
+    * GET /version/city-banner?filters=[["=", "city_id", "3"]]
 
 ### 任务类型
 * 任务类型列表
@@ -330,6 +347,11 @@ BASE_URL = 'http://api.miduoduo.cn'
 * 创建自己简历
     * POST /vesion/resume
 
+###图片上传 UploadImage
+
+* 上传一张图片，返回图像地址
+    * POST /version/upload-image/upload?access-token params={is_resume:true|false,图片name和数据库字段对应（如：gov_id_pic_front）}
+
 ###时间表 Freetime(获取简历时可直接获取)
 
 * 获取自己一周的时间表
@@ -352,7 +374,6 @@ BASE_URL = 'http://api.miduoduo.cn'
 * 删除可做服务
     * DELETE /version/user-service-type/service_type_id
 
-
 ###Address 地址
 * 获取自己的地址列表
     * GET /version/address
@@ -366,6 +387,11 @@ BASE_URL = 'http://api.miduoduo.cn'
     * params: province,city,district,address,lat,lng
 * 删除已有地址
     * DELETE /version/address/id
+
+### 历史城市记录
+* 切换城市上传记录
+    * POST /version/user-historical-location
+    * params: city_id=,lat=选填,lng=选填
 
 ###收藏
 

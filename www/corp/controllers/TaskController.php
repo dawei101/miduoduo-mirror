@@ -79,7 +79,7 @@ class TaskController extends CBaseController
             if( $data['is_longterm'] ){
                 $data['to_date']    = '2115-01-01';
             }
-            if( $data['is_longterm'] ){
+            if( $data['is_allday'] ){
                 $data['from_time']  = '00:00:01';
                 $data['to_time']    = '23:59:59';
             }
@@ -177,7 +177,7 @@ class TaskController extends CBaseController
             if( $data['is_longterm'] ){
                 $data['to_date']    = '2115-01-01';
             }
-            if( $data['is_longterm'] ){
+            if( $data['is_allday'] ){
                 $data['from_time']  = '00:00:01';
                 $data['to_time']    = '23:59:59';
             }
@@ -391,6 +391,9 @@ class TaskController extends CBaseController
         }
         return [
             'result'=>$result,
+            'use_task_num'=>0,
+            'use_task_limie'=>0,
+            'exam_result'=>false,
             'msg'=>'您的账户'.$company->getConpanyStatusLabel($status).'，请联系客服：010-84991662',
         ];
     }

@@ -57,7 +57,7 @@ function getNowFormatDate() {
 }
 
     var today = getNowFormatDate();
-    if( form.to_date.value < today ){
+    if( form.to_date.value < today && !form.is_longterm.checked){
         $('.to_time-error').html('您的工作日期需要修改，截止日期应在今天之后');
         $('.to_time-error').show();
         valid = false;
@@ -411,5 +411,12 @@ $(function(){
         }else{
             $('#jquery-tagbox-text1').removeAttr('readonly');
         }
+    });
+
+    $('.reservation').daterangepicker(null, function(start, end, label) {
+        var form = document.forms[0];
+        form.from_date.value = start.format('YYYY-MM-DD');
+        form.to_date.value = end.format('YYYY-MM-DD');
+        //console.log(start.format('YYYY-MM-DD'));
     });
 });

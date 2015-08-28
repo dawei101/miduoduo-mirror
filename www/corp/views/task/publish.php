@@ -5,9 +5,21 @@ use yii\bootstrap\ActiveForm;
 use common\models\Task;
 use common\models\District;
 
-$sheng  = District::find()->where(['level'=>'province','is_alive'=>1])->addOrderBy(['id'=>SORT_ASC])->all();
-$shi    = District::find()->where(['parent_id'=>2])->addOrderBy(['id'=>SORT_ASC])->all();
-$qu     = District::find()->where(['parent_id'=>3])->addOrderBy(['id'=>SORT_ASC])->all();
+$city_id = isset($task->city_id) ? $task->city_id : 3;
+if( $city_id ){
+    $city = District::findOne(['id'=>$city_id]);
+    $province_id = $city['parent_id'];
+}else{
+    $province_id = 2;
+}
+
+$sheng  = District::find()
+    ->where(['level'=>'province','is_alive'=>1])->addOrderBy(['id'=>SORT_ASC])->all();
+$shi    = District::find()
+    ->where(['parent_id'=>$province_id])->addOrderBy(['id'=>SORT_ASC])->all();
+$qu     = District::find()
+    ->where(['parent_id'=>$city_id])->addOrderBy(['id'=>SORT_ASC])->all();
+
 $api_url= Yii::$app->params['baseurl.api'];
 
 /* @var $this yii\web\View */
@@ -20,35 +32,17 @@ $this->title = '米多多兼职平台';
         <div class="row">
             <div class="fabu-box padding-0">
                 <div class="col-sm-2 padding-0">
-                    <div class="qiye-left">
-                        <dl>
-                            <dt class="pitch-on"><i class="iconfont">&#xe609;</i>我要发布</dt>
-                        </dl>
-                        <dl>
-                            <dt class="default-title" class=""><i class="iconfont">&#xe612;</i>职位管理</dt>
-                            <dd class="default-lis"><a href="/task">全部</a></dd>
-                            <dd class="default-lis"><a href="/task?status=0">显示中</a></dd>
-                            <dd class="default-lis"><a href="/task?status=30">审核中</a></dd>
-                            <dd class="default-lis"><a href="/task?status=40">审核未通过</a></dd>
-                        </dl>
-                        <dl  class="default-title">
-                            <dt class="default-title"><i class="iconfont">&#xe60c;</i>简历管理</dt>
-                            <dd class="default-lis"><a href="/resume">全部</a></dd>
-                            <dd class="default-lis"><a href="/resume?read=0">未查看</a></dd>
-                            <dd class="default-lis"><a href="/resume?read=1">已查看</a></dd>
-                        </dl>
-                        <dl>
-                            <dt class="default-title"><i class="iconfont">&#xe60b;</i>用户中心</dt>
-                            <dd class="default-lis"><a href="/user/info">我的资料</a></dd>
-                            <dd class="default-lis"><a href="/user/account">我的账号</a></dd>
-                            <dd class="default-lis"><a href="/user/personal-cert">个人认证</a></dd>
-                            <dd class="default-lis"><a href="/user/corp-cert">企业认证</a></dd>
-                        </dl>
-                    </div>
+                     <?= $this->render('../layouts/sidebar', ['active_menu'=>'publish']) ?>
                 </div>
 
                 <div class="col-sm-10 padding-0 ">
                     <div class="right-center">
+<?php if($company->status==$company::STATUS_FREEZED || $company->status==$company::STATUS_DELETED || $company->status==$company::STATUS_BLACKLISTED){
+?>
+                <div class="conter-title">发布兼职职位<span style="font-size:12px;padding-left:20px;"><?= $user_task_promission['msg'] ?></span></div>
+<?php
+} else {
+?>
                         <div class="conter-title">发布兼职职位<span style="font-size:12px;padding-left:20px;"><?= $user_task_promission['msg'] ?></span></div>
                         <?php if($user_task_promission['result']==false){ ?>
                             <div class="tishi-cs">
@@ -178,7 +172,7 @@ $this->title = '米多多兼职平台';
                                             </option>
                                             <?php foreach($sheng as $k=>$v){ ?>
                                                 <option value="<?=$v->id;?>"
-                                                <?=($v->id==2)?'selected=selected':''?>
+                                                <?=($v->id==$province_id)?'selected=selected':''?>
                                                 >
                                                     <?=$v->short_name;?>
                                                 </option>
@@ -187,7 +181,7 @@ $this->title = '米多多兼职平台';
                                         <select id="address_shi" name="city_id">
                                             <?php foreach($shi as $k=>$v){ ?>
                                                 <option value="<?=$v->id;?>"
-                                                <?=($v->id==3)?'selected=selected':''?>
+                                                <?=($v->id==$city_id)?'selected=selected':''?>
                                                 >
                                                     <?=$v->short_name;?>
                                                 </option>
@@ -367,6 +361,7 @@ $this->title = '米多多兼职平台';
                             <?php ActiveForm::end(); ?>
                         </div>
                     </div>
+<?php } ?>
                 </div>
             </div>
         </div>

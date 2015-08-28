@@ -15,7 +15,7 @@
     <div class="qiuzhi-logo"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/qiuzhi-logo.png" width="244" height="80"></div>
     <ul>
        <li><a href="/">首页</a></li>
-       <li><a href="<?=Yii::$app->params['baseurl.m'] . '/task'?>">最新兼职</a></li>
+       <li><a href="<?=Yii::$app->params['baseurl.m'] . '/'?>">最新兼职</a></li>
        <li><a href="<?=Yii::$app->params['baseurl.corp']?>">企业版</a></li>       
     </ul>
   </div>
@@ -23,12 +23,15 @@
 <div class="qiuzhi-banner">
   <div class="cent">
       <div class="pic-top"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/jianzhi-pic.png" width="805" height="170"></div>
-    <div class="erwei-box">
-        <div class="erweibox"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei.jpg" width="140" height="140">
-        <P>扫码关注微信号</P>
+    <div class="erwei-box" style="width:1020px;">
+      <div class="erweibox" style="width:340px;"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei.jpg" width="140" height="140">
+        <P>关注微信号</P>
       </div>
-      <div class="erweibox"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei-download-app.png" width="140" height="140">
-        <P>扫码下载APP</P>
+      <div class="erweibox" style="width:340px;"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ios-app.jpg" width="140" height="140">
+        <P>下载苹果App</P>
+      </div>
+      <div class="erweibox" style="width:340px;"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/android-app.jpg" width="140" height="140">
+        <P>下载安卓App</P>
       </div>
     </div>
   </div>

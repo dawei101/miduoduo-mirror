@@ -20,9 +20,18 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'v1' => [
-            'basePath' => '@app/modules/v1',
-            'class' => 'api\modules\v1\Module'
+            'basePath' => '@app/miduoduo/v1',
+            'class' => 'api\miduoduo\v1\Module'
+        ],
+        'time-book' => [
+            'basePath' => '@app/extensions/time_book',
+            'class' => 'api\extensions\time_book\Module'
+        ],
+        'time-book-management' => [
+            'basePath' => '@app/extensions/time_book',
+            'class' => 'api\extensions\time_book\ManagementModule'
         ]
+ 
     ],
     'components' => [
         'user' => [
@@ -67,7 +76,9 @@ return [
                         'v1/contact-us',
                         'v1/pay-account-event',
                         'v1/pay-withdraw',
-                        'v1/recommend-task-group'
+                        'v1/recommend-task-group',
+                        'v1/city-banner',
+                        'v1/user-historical-location',
                     ],
                     'pluralize' => '',
                 ],
@@ -117,6 +128,7 @@ return [
                     'pluralize' => '',
                     'patterns' => [
                         'POST set-password' => 'set-password',
+                        'GET profile' => 'profile',
                         'POST bind-third-party-account' => 'bind-third-party-account',
                     ],
                 ],
@@ -134,6 +146,30 @@ return [
                         'POST report-push-id' => 'report-push-id',
                         'GET,POST check-update' => 'check-update',
                         'POST t-login'=>'t-login',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'time-book/schedule',
+                        'time-book/record',
+                    ],
+                    'pluralize' => '',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'time-book-management/schedule',
+                        'time-book-management/record',
+                    ],
+                    'pluralize' => '',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/upload-image'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'POST upload'=>'upload',
                     ],
                 ],
             ],
