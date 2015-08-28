@@ -289,6 +289,11 @@ BASE_URL = 'http://api.miduoduo.cn'
 GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_name]]
 ```
 
+### 城市首页BANNER
+
+* 获取城市首页BANNER
+    * GET /version/city-banner?filters=[["=", "city_id", "3"]]
+
 ### 任务类型
 * 任务类型列表
     * GET /version/service-type
