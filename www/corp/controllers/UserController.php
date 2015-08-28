@@ -281,8 +281,7 @@ class UserController extends CBaseController
             if(!$filename) {
                 return $this->render('personal-cert',[
                     'company' => $company,
-                    'error'=>[
-                        'person_idcard_pic'=>'上传文件错误']]);
+                    'error'=> '上传文件错误']);
             }
             $company->person_idcard_pic = $filename;
             $company->exam_status = Company::EXAM_PROCESSING;
