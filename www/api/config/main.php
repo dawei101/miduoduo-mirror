@@ -66,6 +66,7 @@ return [
                         'v1/address',
                         'v1/offline-order',
                         'v1/resume',
+                        'v1/pre-resume',
                         'v1/freetime',
                         'v1/task',
                         'v1/task-applicant',
