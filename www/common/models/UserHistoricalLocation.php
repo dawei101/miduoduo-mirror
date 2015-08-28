@@ -62,6 +62,11 @@ class UserHistoricalLocation extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
+    public function getCity()
+    {
+        return $this->hasOne(District::className(), ['id' => 'city_id']);
+    }
+
     /**
      * @inheritdoc
      * @return UserHistoricalLocationQuery the active query used by this AR class.

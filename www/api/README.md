@@ -374,6 +374,20 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
 * 删除可做服务
     * DELETE /version/user-service-type/service_type_id
 
+###Address 地址
+* 获取自己的地址列表
+    * GET /version/address
+* 查看某地址
+    * GET /version/address/id
+* 添加新地址
+    * POST /version/address
+    * params: province,city,district,address,lat,lng
+* 修改已有地址
+    * PUT /version/address/id
+    * params: province,city,district,address,lat,lng
+* 删除已有地址
+    * DELETE /version/address/id
+
 ### 历史城市记录
 * 切换城市上传记录
     * POST /version/user-historical-location
