@@ -18,7 +18,7 @@ class Utils
             'resume' => $user->resume?['1'=>1]:null,
             'has_resume' => !empty($user->resume),
             'has_wechat' => !empty($user->weichat),
-            'id_examed' => $user->resume?($this->resume->exam_status==Resume::EXAM_DONE):false,
+            'id_extam_status' => $user->resume?$user->resume->exam_status:false,
             'is_virgin' => $user->is_virgin,
             'last_city' => [],
         ];
