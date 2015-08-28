@@ -179,6 +179,7 @@ BASE_URL = 'http://api.miduoduo.cn'
                 "has_resume": boolean,
                 "has_wechat": boolean,
                 "id_examed": boolean, //认证过
+                "is_virgin": boolean,
                 "last_city": {   //最后设置的城市 与 user-historical-location 对应数据
                     "id": city_id,
                     "short_name": city_short_name,
