@@ -9,9 +9,9 @@
 <meta content="black" name="apple-mobile-web-app-status-bar-style">
 <title>
     <?php if(isset($weichat_user->resume->name)){ ?>
-        <?=$weichat_user->resume->name?>分享的米多多送现金红包!
+        <?=$weichat_user->resume->name?>分享的米多多现金红包，百万现金红包大派送！
     <?php }else{ ?>
-        我分享的米多多送现金红包!
+        我分享的米多多现金红包，百万现金红包大派送！
     <?php } ?>
 </title>
 <link href="<?=Yii::$app->params['baseurl.static.m']?>/static/css/red-packet.css" type="text/css" rel="stylesheet">

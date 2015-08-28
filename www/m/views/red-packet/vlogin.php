@@ -16,7 +16,7 @@ if (Utils::isInWechat()){
     WechatAsset::register($this);
 }
 
-$this->title = '米多多送现金红包';
+$this->title = '米多多百万现金红包大派送！';
 
 ?>
 <link href="<?=Yii::$app->params['baseurl.static.m']?>/static/css/red-packet.css" type="text/css" rel="stylesheet">
@@ -34,6 +34,8 @@ $this->title = '米多多送现金红包';
         <input type="text" id="<?= Html::getInputId($model, 'code') ?>"
             class="input_z" name="<?= Html::getInputName($model, 'code')?>">
         <button class="bott" id="svcode">获取验证码</button>
+        <input type="hidden" id="red_packet_city"
+            class="input_z" name="red_packet_city">
      </div>
      <?= Html::submitButton('立即领取', ['class' => 'botton_l', 'name' => 'login-button']) ?>
    <?php ActiveForm::end(); ?>
@@ -141,6 +143,103 @@ $this->title = '米多多送现金红包';
         });
     });
 </script>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=<?=Yii::$app->params['baidu.map.web_key']?>"></script>
+<script type="text/javascript">
+
+function setCookie(cname, cvalue, seconds) {
+    var d = new Date();
+    d.setTime(d.getTime() + (seconds*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(c_name){
+    if (document.cookie.length>0)
+      {
+      c_start=document.cookie.indexOf(c_name + "=")
+      if (c_start!=-1)
+        { 
+        c_start=c_start + c_name.length+1 
+        c_end=document.cookie.indexOf(";",c_start)
+        if (c_end==-1) c_end=document.cookie.length
+        return unescape(document.cookie.substring(c_start,c_end))
+        } 
+      }
+    return ""
+}
+
+function getLocation(callback) {
+    var current_city_pinyin = getCookie('current_city_pinyin');
+    var current_city_name = getCookie('current_city_name');
+    if( current_city_pinyin ){
+        document.getElementById('current_city').innerHTML = "<a href='/"+current_city_pinyin+"/'>"+unescape(current_city_name)+"</a>";
+    }else{
+        getH5Location(callback);
+    }
+}
+
+function getH5Location(callback) {
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position){
+        var c= position.coords;
+        tranLocation({lat: c.latitude, lng: c.longitude}, function(loc){
+            callback(loc);
+        });
+      });
+  } else {
+      callback();
+  }
+}
+
+function tranLocation(poi, callback) {
+  var url = 'http://api.map.baidu.com/geoconv/v1/?coords='
+      + poi.lng + ',' + poi.lat + '&from=1&to=5&ak='
+      + "<?=Yii::$app->params['baidu.map.web_key']?>";
+  $.ajax({
+    'dataType': 'jsonp',
+    'url': url,
+    success: function(json){
+        console.log(json);
+        if(json['status']==0){
+            callback({lng: json.result[0].x, lat: json.result[0].y})
+        }
+    },
+    error: function(e){
+        console.log(e);
+    }
+  });
+}
+
+function pointToStreet(lng,lat,type){
+    // 百度地图API功能
+	var map = new BMap.Map("allmap");
+    
+	var point = new BMap.Point(lng,lat);
+       
+	var geoc = new BMap.Geocoder();   
+    geoc.getLocation(point, function(rs){
+        var addComp = rs.addressComponents;
+
+        var citys_json = <?=$citys_json?>;
+        var keyword = addComp.city;
+        if(keyword.length > 0){
+            $.each(citys_json, function(i, v) {
+                if (v.name.search(keyword) > -1) {
+                    var city_id = v.id;
+                    $('#red_packet_city').val(city_id);
+                    return false;
+                }
+            });
+        }
+    });  
+}
+
+getLocation(function(loc){
+    pointToStreet(loc.lng,loc.lat,1);
+});
+</script>
+
 <?php $this->endBlock('js') ?>
 
 </body>

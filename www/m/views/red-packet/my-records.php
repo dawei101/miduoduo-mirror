@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta http-equiv="pragma" content="no-cache">
 <meta content="black" name="apple-mobile-web-app-status-bar-style">
-<title>米多多送现金红包</title>
+<title>米多多百万现金红包大派送！</title>
 <link href="<?=Yii::$app->params['baseurl.static.m']?>/static/css/red-packet.css" type="text/css" rel="stylesheet">
 </head>
 

@@ -9,6 +9,8 @@ use common\WeichatBase;
 use common\models\LoginWithDynamicCodeForm;
 use common\models\User;
 use common\models\AccountEvent;
+use yii\helpers\Json;
+use common\models\District;
 
 class RedPacketController extends MBaseController
 {
@@ -71,10 +73,23 @@ class RedPacketController extends MBaseController
                 ]
             );
         }else{
+            // 城市
+            $citys  = District::find()
+                ->where(['is_alive'=>1,'level'=>'city'])
+                ->orderBy(['seo_pinyin'=>SORT_ASC])
+                ->all();
+            $citys_json = Json::encode($citys);
+
             $model = new LoginWithDynamicCodeForm();
             if( Yii::$app->request->ispost ){
                 $data = Yii::$app->request->post();
                 if( $model->load($data) && $model->login() ){
+                    echo $data['red_packet_city'];exit;
+                    $red_packet_city = $data['red_packet_city'] ? $data['red_packet_city'] : 0;
+                    User::updateAll(
+                        ['red_packet_city'=>$red_packet_city],
+                        ['id'=>$model->id]
+                    );
                     $this->redirect("my");
                 }
             }
@@ -83,6 +98,7 @@ class RedPacketController extends MBaseController
                 [
                     'model' => $model,
                     'inviter_value' => $inviter_value,
+                    'citys_json' => $citys_json,
                 ]
             );
         }
