@@ -48,7 +48,7 @@ class WechatUtils
         return static::$_access_token;
     }
 
-    public static function getUrlJson($targetUrl,$getData=''){
+    public static function getUrlJson($targetUrl, $getData=''){
         // 请求的数据
         $error = false;
         $data = [];
@@ -85,6 +85,9 @@ class WechatUtils
             curl_close($curlobj);
             $retry -= 1;
         }
+        if (!$data){
+            throw new Exception("微信系统异常，请稍后再试");
+        }
         return $data;
     }
 
@@ -98,6 +101,5 @@ class WechatUtils
             . '&code=' . $code . '&grant_type=authorization_code';
         return static::getUrlJson($url);
     }
-
 
 }
