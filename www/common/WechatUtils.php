@@ -64,7 +64,15 @@ class WechatUtils
             curl_setopt($curlobj, CURLOPT_TIMEOUT, 1000);
             $returnstr  = curl_exec($curlobj);
             if(!curl_error($curlobj) ){
-                $data = json_decode($returnstr, true);
+                $d = json_decode($returnstr, true);
+                if (isset($d['errcode']) && intval($d['errcode'])!=0){
+                    $data = $d;
+                }
+                if (isset($d['errcode']) && intval($d['errcode'])==-1){
+                    Yii::warning("wechat:打开微信出错, url is:" . $targetUrl);
+                    echo "微信系统繁忙，请稍后再试";
+                    die();
+                }
             }
             curl_close($curlobj);
             $retry -= 1;
