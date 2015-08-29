@@ -2,6 +2,7 @@
 namespace common;
 
 use Yii;
+use yii\base\Exception;
 
 
 class WechatUtils
@@ -64,14 +65,21 @@ class WechatUtils
             curl_setopt($curlobj, CURLOPT_TIMEOUT, 1000);
             $returnstr  = curl_exec($curlobj);
             if(!curl_error($curlobj) ){
-                $d = json_decode($returnstr, true);
-                if (isset($d['errcode']) && intval($d['errcode'])!=0){
-                    $data = $d;
+                $err = 0;
+                $data = json_decode($returnstr, true);
+                if (isset($data['errcode'])){
+                    if (intval($data['errcode'])>0){
+                        Yii::error("wechat:打开微信出错, error code:" . $data['errcode'] . "url is:" . $targetUrl);
+                        $err = 1;
+                        throw new Exception("系统正在调整，请稍后再试");
+                    }
+                    if (intval($data['errcode'])<0){
+                        Yii::warning("wechat:打开微信出错, url is:" . $targetUrl);
+                        $err = 1;
+                    }
                 }
-                if (isset($d['errcode']) && intval($d['errcode'])==-1){
-                    Yii::warning("wechat:打开微信出错, url is:" . $targetUrl);
-                    echo "微信系统繁忙，请稍后再试";
-                    die();
+                if ($err){
+                    $data = [];
                 }
             }
             curl_close($curlobj);
