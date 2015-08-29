@@ -224,7 +224,7 @@ class TaskController extends CBaseController
             if( $company->status == $company::STATUS_WHITEISTED ){
                 
             }else{
-                $model->status = 30;
+                $task->status = Task::STATUS_IS_CHECK;
             }
 
             $task->service_type_id = ServiceType::findOne(['name' => Yii::$app->request->post('service_type_id')])->id;

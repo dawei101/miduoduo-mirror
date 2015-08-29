@@ -281,8 +281,7 @@ class UserController extends CBaseController
             if(!$filename) {
                 return $this->render('personal-cert',[
                     'company' => $company,
-                    'error'=>[
-                        'person_idcard_pic'=>'上传文件错误']]);
+                    'error'=> '上传文件错误']);
             }
             $company->person_idcard_pic = $filename;
             $company->exam_status = Company::EXAM_PROCESSING;
@@ -294,7 +293,13 @@ class UserController extends CBaseController
             $company->exam_note   = '';
             $company->setAttributes(Yii::$app->request->post(), false);
             if (!$company->validate() || !$company->save()) {
-                return $this->render('personal-cert',['company' => $company, 'error'=>$company->errors]);
+                $error = '';
+                foreach ($company->errors as $key=>$errors){
+                    $error .= implode("\n", $errors) . "\n";
+                }
+                return $this->render(
+                    'personal-cert',
+                    ['company' => $company, 'error'=>$error]);
             }
             JobUtils::addSyncFileJob($company, 'person_idcard_pic');
             return $this->render('personal-cert',['company' => $company, 'error'=>false]);
@@ -334,7 +339,12 @@ class UserController extends CBaseController
             $company->exam_note   = '';
             $company->setAttributes(Yii::$app->request->post(), false);
             if (!$company->validate() || !$company->save()) {
-                return $this->render('corp-cert',['company' => $company, 'error'=>$company->errors]);
+
+                $error = '';
+                foreach ($company->errors as $key=>$errors){
+                    $error .= implode("\n", $errors) . "\n";
+                }
+                return $this->render('corp-cert',['company' => $company, 'error'=>$error]);
             }
             JobUtils::addSyncFileJob($company, 'person_idcard_pic');
             JobUtils::addSyncFileJob($company, 'corp_idcard_pic');

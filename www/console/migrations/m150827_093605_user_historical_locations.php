@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `jz_user_historical_location` (
   `city_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_jz_user_historical_location_jz_user1_idx` (`user_id` ASC)
-ENGINE = InnoDB 
+  ) ENGINE = InnoDB 
             ";
         return $this->execSqls($sqls);
 

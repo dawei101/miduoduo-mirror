@@ -68,6 +68,7 @@ class TaskController extends BaseActiveController
     public function buildBaseQuery()
     {
         $query = parent::buildBaseQuery();
+        $query->andWhere(['city_id'=>3]);
         return $query;
     }
 

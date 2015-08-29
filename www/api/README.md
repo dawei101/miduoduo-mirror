@@ -29,11 +29,7 @@ BASE_URL = 'http://api.miduoduo.cn'
         { "success": true,
             "message": "登陆成功",
             "result": {
-                "username": "18661775819",
-                "password": 密码(验证码登陆会返回空),
-                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288",
-                "resume": {},
-                "invited_count": 9,
+                profile 返回值
                 }
         }
 ```
@@ -51,12 +47,8 @@ BASE_URL = 'http://api.miduoduo.cn'
         { "success": true,
             "message": "登陆成功",
             "result": {
-                "username": "18661775819",
-                "password": 密码(直接返回登陆的密码),
-                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288",
-                "resume": {},
-                "invited_count": 9,
-                }
+                profile 返回值
+            }
         }
 ```
 ###注册
@@ -153,11 +145,7 @@ BASE_URL = 'http://api.miduoduo.cn'
         { "success": true,
             "message": 修改成功,
             "result": {
-                "username": "18661775819",
-                "password": 密码(直接返回登陆的密码),
-                "access_token": "S1AVJulRj22ZwzDAcLB4-zL2Y1kYMZt1_1434246288",
-                "resume": {},
-                "invited_count": 9,
+                profile 的返回值
                 }
         }
     备注：* 重新设置密码后，之前的access_token将失效
@@ -348,6 +336,9 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
     * PUT /version/resume/user_id
 * 创建自己简历
     * POST /vesion/resume
+
+### 简版简历 PreResume
+* url :  /version/pre-resume  其他使用同Resume
 
 ###图片上传 UploadImage
 

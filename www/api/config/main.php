@@ -17,7 +17,6 @@ foreach ($param_files as $f){
 return [
     'id' => 'app-api',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
     'modules' => [
         'v1' => [
             'basePath' => '@app/miduoduo/v1',
@@ -38,15 +37,6 @@ return [
             'identityClass' => 'common\models\User',
             'enableSession' => false,
             'enableAutoLogin' => false,
-        ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
         ],
         'cache' => [
             'class' => 'yii\caching\DbCache',

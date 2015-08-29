@@ -5,6 +5,7 @@ namespace api\miduoduo\v1\models;
 use Yii;
 use common\Utils;
 
+
 class Resume extends \common\models\Resume
 {
     public function rules()
@@ -13,7 +14,7 @@ class Resume extends \common\models\Resume
             [['name'], 'required'],
             ['user_id', 'unique', 'targetAttribute' => 'user_id',
                 'message'=> '简历已经存在，请勿重新创建!'],
-            [['gender', 'is_student', 'grade', 'degree',
+            [['gender', 'is_student', 'grade', 'degree', 'city_id',
                 'status', 'user_id', 'home', 'workplace', ], 'integer'],
             [['weight', 'height'], 'safe'],
             [['birthdate', 'created_time', 'updated_time', 'gov_id_pic_front','gov_id_pic_back','gov_id_pic_take','exam_status'], 'safe'],
