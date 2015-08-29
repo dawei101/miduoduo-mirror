@@ -65,6 +65,9 @@ class ResumeController extends CBaseController
     public function actionRead($aid)
     {
         $resume = TaskApplicant::findOne(['id' => $aid]);
+        if (!$resume){
+            throw new BadRequestHttpException;
+        }
         $resume->have_read = 1;
         if ($resume->save()) {
             return $this->renderJson(['result' => true]);
