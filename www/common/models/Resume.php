@@ -6,6 +6,7 @@ use Yii;
 use common\models\User;
 use common\models\Address;
 use common\models\TaskApplicant;
+use common\models\AccountEvent;
 
 /**
  * This is the model class for table "{{%resume}}".
@@ -259,6 +260,29 @@ class Resume extends \common\BaseActiveRecord
     public function getCommon_url()
     {
         return Yii::$app->params['baseurl.frontend'] . '/resume-' . $this->user_id . '-' . $this->name;
+    }
+
+    public function getInvite()
+    {
+        return $this->hasMany(User::className(), ['invited_by' => 'user_id']);
+    }
+
+    public function getInvite_account()
+    {
+        return $this->hasMany(AccountEvent::className(), ['user_id' => 'user_id'])
+            ->andWhere(['type' => AccountEvent::TYPES_WEICHAT_RECOMMEND]);
+    }
+
+    public static function getCityList(){
+        $citys_obj = District::find()
+            ->where(['level'=>'city','is_alive'=>1])
+            ->addOrderBy(['id'=>SORT_ASC])
+            ->all();
+        $citys = [0=>'未知'];
+        foreach( $citys_obj as $city ){
+            $citys[$city->id] = $city->name;
+        }
+        return $citys; 
     }
 
     public function fields()
