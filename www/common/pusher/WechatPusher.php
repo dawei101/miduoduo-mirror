@@ -76,7 +76,7 @@ class WechatPusher extends WeichatBase
     private function savePushLog($returnMsg,$openid,$pushGroup=''){
         // 解析
         $returnArr  = json_decode($returnMsg);
-        $result     = $returnArr->errmsg;
+        $result     = isset($returnArr->errmsg) ? $returnArr->errmsg : 'null';
         $pushGroup  = $pushGroup ? $pushGroup : uniqid();
 
         // 保存日志
