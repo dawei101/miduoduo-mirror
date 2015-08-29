@@ -9,9 +9,12 @@ class m150828_093618_add_wechat_access_token_field extends BaseMigration
     {
         $sqls = "
             alter table jz_user add wechat_access_token varchar(500);
-            alter table jz_user CHANGE access_token app_access_token varchar(500);
-            create index idx_user_wechat_access_token on jz_user (wechat_access_token) using hash;
-            create index idx_user_app_access_token on jz_user (app_access_token) using hash;
+            alter table jz_user add app_access_token varchar(500);
+            update jz_user set wechat_access_token=access_token ;
+            update jz_user set app_access_token=access_token;
+            create index idx_user_wechat_access_token on jz_user (wechat_access_token);
+            create index idx_user_app_access_token on jz_user (app_access_token);
+            alter table jz_user drop access_token;
             ";
         return $this->execSqls($sqls);
     }
