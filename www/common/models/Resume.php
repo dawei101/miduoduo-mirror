@@ -27,6 +27,7 @@ use common\models\TaskApplicant;
  * @property string $updated_time
  * @property integer $status
  * @property integer $user_id
+ * @property integer $city_id
  * @property integer $home
  * @property integer $workplace
  * @property varchar(200) $origin
@@ -92,7 +93,7 @@ class Resume extends \common\BaseActiveRecord
             [['name'], 'required'],
             ['user_id', 'unique', 'on'=>'insert', 'message'=> '简历已经存在，请勿重新创建!'],
             [['gender', 'height', 'is_student', 'grade', 'degree',
-                'has_emdical_cert', 'status',
+                'has_emdical_cert', 'status', 'city_id',
                 'user_id', 'home', 'workplace'], 'integer'],
             [['birthdate', 'created_time', 'updated_time','gov_id_pic_front','gov_id_pic_back','gov_id_pic_take','exam_status'], 'safe'],
             [['birthdate'], 'date', 'format' => 'yyyy-M-d'],
