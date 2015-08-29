@@ -139,6 +139,11 @@ class TaskApplicant extends \common\BaseActiveRecord
         return $this::$STATUSES;
     }
 
+    public function getDate()
+    {
+        return substr($this->created_time, 0, 10);
+    }
+
     public function fields()
     {
         return array_merge(

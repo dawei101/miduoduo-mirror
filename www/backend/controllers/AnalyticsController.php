@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 
+use yii\db\Query;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -110,6 +111,94 @@ class AnalyticsController extends BDataBaseController
     public function actionClearup(){
         DataDaily::deleteAll();
         $this->redirect('/');
+    }
+
+    public function actionApplicant($city_id=0, $date=null)
+    {
+        $today = date('Y-m-d');
+        if (!$city_id && !$date){
+            $date = $today;
+        }
+        if ($city_id){
+            $data = $this->getApplicantData($today, $city_id=$city_id);
+            $this->render('city-applicant', [
+                'data' => $data,
+                'city_id' => $city_id,
+            ]);
+        }
+        if ($date){
+            $prev_date = date('Y-m-d', time('-1 days', strtotime($date)));
+            $c = $this->getApplicantData($today, $date=$date);
+            $prev = $this->getApplicantData($today, $date=$prev_date);
+            ksort($c);
+            $data = [];
+            foreach ($c as $city_id=>$count){
+                $prev_count = isset($prev[$city_id])?$prev[$city_id]:0;
+                $data[$city_id] = ['count'=>$count, 'increase'=>$prev_count];
+            }
+
+            $this->render('date-applicant', [
+                'data' => $data,
+                'date' => $date,
+            ]);
+        }
+    }
+
+    public function getApplicantData($today, $city_id=null, $date=null)
+    {
+        $cache = Yii::$app->cache;
+        if ($city_id){
+            $key = 'analytics.applicant.' . $city_id;
+            $data = $cache->get($key);
+            if ($data){
+                $last_record = array_pop($data);
+                $date = $last_record['date'];
+            } else {
+                $data = [];
+                $date = '1900-01-01';
+            }
+
+            $query = new Query;
+            $applicants = TaskApplicant::find()
+                ->joinWith('task')
+                ->andWhere([Task::tableName().'.city_id', $city_id])
+                ->where(['>', 'created_time', $date])->all();
+            $anas = [];
+            foreach($applicants as $a){
+                if (!isset($anas[$a->date])){
+                    $anas[$a->date] = 0;
+                }
+                $anas[$a->date] += 1;
+            }
+            ksort($anas);
+            $data = $data + $anas;
+            $cache->set($key, $data, 0);
+        } else if ($date){
+            $key = 'analytics.applicant.' . $date;
+            if ($date == $today){
+                $data = [];
+            } else {
+                $data = $cache->get($key);
+            }
+            $next_day = date('Y-m-d', time('+1 days', strtotime($date)));
+            if (!$data){
+                $applicants = TaskApplicant::find()
+                    ->joinWith('task')
+                    ->andWhere(['>', 'created_time', $date])
+                    ->andWhere(['<=', 'created_time', $next_day])
+                    ->all();
+                foreach($applicants as $a){
+                    if (!isset($data[$a->city_id])){
+                        $data[$a->city_id] = 0;
+                    }
+                    $data[$a->city_id] += 1;
+                }
+                if ($date != $today){
+                    $cache->set($key, $data, 0);
+                }
+            }
+        }
+        return $data;
     }
 
     protected function findModel($id)

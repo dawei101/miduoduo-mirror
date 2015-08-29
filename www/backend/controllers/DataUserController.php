@@ -50,8 +50,6 @@ class DataUserController extends BDataBaseController
         $data_type  = Yii::$app->request->get('type_id') ? Yii::$app->request->get('type_id') : 1;
         // 城市
         $city_id    = Yii::$app->request->get('city_id') ? Yii::$app->request->get('city_id') : 0;
-        // 只有北京
-        $city_id    = 0;
 
         // 统计数据的列项 注册总量、简历总量
         $dataRows   = '';

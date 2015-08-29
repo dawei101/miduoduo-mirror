@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ]); 
                 // 城市选项
                 $model  = new District();
-                $city   = $model->find()->where(['level'=>'province'])->asArray()->all();
-                $cityarr= array(0=>'全部--暂时无效');
+                $city   = $model->find()->where(['level'=>'city'])->asArray()->all();
+                $cityarr= array(0=>'全部城市');
                 foreach( $city as $k => $v ){
                     $cityarr[$v['id']]    = $v['name'];
                 }
