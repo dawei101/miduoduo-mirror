@@ -106,6 +106,10 @@ return [
                         'to' => ['dev@miduoduo.cn'],
                         'subject' => '【米多多error】',
                     ],
+                    'except' => [
+                        'yii\web\HttpException:404',
+                        'yii\web\HttpException:400',
+                    ],
                 ],
                 [
 
