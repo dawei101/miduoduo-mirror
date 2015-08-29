@@ -32,7 +32,7 @@ $this->page_description = $seo_code['description'];
 <style>
 .city .sech{width:100%; padding:10px 0; background:#fff;position:relative;}
 .city dd{clear:both;}
-.city .sech input{width:90%; padding:3% 0; margin:0 auto; display:block; border:1px #eee solid; border-radius:40px; text-indent:3em; color:#999; font-size:1em; background:url(img/sech.png) 3% no-repeat #fff; }
+.city .sech input{width:90%; padding:3% 0; margin:0 auto; display:block; border:1px #eee solid; border-radius:40px; text-indent:3em; color:#999; font-size:1em; background:url(/static/img/sech.png) 3% no-repeat #fff; }
 .search_city{position:absolute; left:0; top:65px; width:100%; }
 .current_city{width:100%; padding:3% 0; background:#fff; text-align:left; line-height:30px; margin:2% 0; font-size:1em; color:#666;}
 .current_city div{width:90%; margin:0 auto;}

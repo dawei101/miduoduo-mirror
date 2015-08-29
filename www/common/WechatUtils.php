@@ -2,14 +2,14 @@
 namespace common;
 
 use Yii;
+use yii\base\Exception;
 
 
 class WechatUtils
 {
 
-    private static $_access_token;
-
     private static $_access_token_key = 'wechat_access_token';
+    private static $_access_token_lock_key = 'wechat_access_token_lock';
 
     public static function makeAuthUrl($callback, $state='')
     {
@@ -27,27 +27,43 @@ class WechatUtils
     {
         $appid = Yii::$app->params['weichat']['appid'];
         $secret = Yii::$app->params['weichat']['secret'];
-        if (!static::$_access_token){
-            static::$_access_token = 
-                Yii::$app->global_cache->get(static::$_access_token_key);
-            if(!static::$_access_token){
-                $getTokenUrl = 
-                    'https://api.weixin.qq.com/cgi-bin/token'
-                    . '?grant_type=client_credential'
-                    . '&appid='.$appid.'&secret='.$secret;
+        $cache = Yii::$app->global_cache;
+        $access_token = null;
+        if (!$access_token){
+            $access_token =
+                $cache->get(static::$_access_token_key);
+            if(!$access_token){
+                $ac_lock = $cache->get(static::$_access_token_lock_key);
+                if (!$ac_lock){
+                    $ac_lock = ['locked'=>0, 'tmp_access_token'=> ''];
+                    $cache->set(static::$_access_token_lock_key, $ac_lock, 0);
+                }
+                if ($ac_lock['locked']){
+                    $access_token = $ac_lock['tmp_access_token'];
+                } else {
+                    $ac_lock['locked'] = 1;
+                    $cache->set(static::$_access_token_lock_key, $ac_lock, 0);
 
-                $arr = static::getUrlJson($getTokenUrl);
-                static::$_access_token = $arr['access_token'];
-                Yii::$app->global_cache->set(
-                    static::$_access_token_key,
-                    static::$_access_token,
-                    1.8 * 60 * 60);
+                    $getTokenUrl =
+                        'https://api.weixin.qq.com/cgi-bin/token'
+                        . '?grant_type=client_credential'
+                        . '&appid='.$appid.'&secret='.$secret;
+
+                    $arr = static::getUrlJson($getTokenUrl);
+                    $access_token = $arr['access_token'];
+                    $cache->set(static::$_access_token_key,
+                        $access_token, 1.8 * 60 * 60);
+
+                    $ac_lock['locked'] = 0;
+                    $ac_lock['tmp_access_token'] = $access_token;
+                    $cache->set(static::$_access_token_lock_key, $ac_lock, 0);
+                }
             }
         }
-        return static::$_access_token;
+        return $access_token;
     }
 
-    public static function getUrlJson($targetUrl,$getData=''){
+    public static function getUrlJson($targetUrl, $getData=''){
         // 请求的数据
         $error = false;
         $data = [];
@@ -64,10 +80,28 @@ class WechatUtils
             curl_setopt($curlobj, CURLOPT_TIMEOUT, 1000);
             $returnstr  = curl_exec($curlobj);
             if(!curl_error($curlobj) ){
+                $err = 0;
                 $data = json_decode($returnstr, true);
+                if (isset($data['errcode'])){
+                    if (intval($data['errcode'])>0){
+                        Yii::error("wechat:打开微信出错, error code:" . $data['errcode'] . "url is:" . $targetUrl);
+                        $err = 1;
+                        throw new Exception("系统正在调整，请稍后再试");
+                    }
+                    if (intval($data['errcode'])<0){
+                        Yii::warning("wechat:打开微信出错, url is:" . $targetUrl);
+                        $err = 1;
+                    }
+                }
+                if ($err){
+                    $data = [];
+                }
             }
             curl_close($curlobj);
             $retry -= 1;
+        }
+        if (!$data){
+            throw new Exception("微信系统异常，请稍后再试");
         }
         return $data;
     }
@@ -82,6 +116,5 @@ class WechatUtils
             . '&code=' . $code . '&grant_type=authorization_code';
         return static::getUrlJson($url);
     }
-
 
 }

@@ -46,7 +46,7 @@ return [
             'tmp_weichat'   => [1=>'兼职',2=>'通知'],           // 微信模板
         ],
         'tmp_weichat'  => [
-            'quality'   => 'NoEWsq5BpBRdEymm3-W6YrYoBBkyWCFNUkfJhpCbYcc',     // 优单模板
+            'quality'   => '-gglDuUE4SjcfP69Vj2Y_7yho-9Ox1vrW_2GAdcd9aA',     // 优单模板
             'nearby'    => 'qwENcjpEuIBn53LHyFh4-PmmpVaSmL04WpylDX1JkaE',     // 附近模板
             'applicant' => 'srIf6HPINf-I-BmlPJSqxfJ_E-ZUFlrp_D4MUUvQFOc',     // 报名成功
             'accountin' => 'Bo7ZbPipKywJ2kBdwCcJnF75fbhpRW4cvGoYHdLW8CY',     // 收入提醒
