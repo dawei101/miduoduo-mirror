@@ -42,22 +42,7 @@ class WeichatBase
 
 
     public function getWeichatAccessToken(){
-
-        if (!$this->_access_token){
-            $this->_access_token = Yii::$app->global_cache->get($this->_access_token_key);
-            if(!$this->_access_token){
-                $appid = Yii::$app->params['weichat']['appid'];
-                $secret = Yii::$app->params['weichat']['secret'];
-                $getTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$secret;
-                $json = $this->getWeichatAPIdata($getTokenUrl);
-                $arr = json_decode($json); 
-                $this->_access_token = $arr->access_token;
-                Yii::$app->global_cache->set(
-                    $this->_access_token_key,
-                    $this->_access_token, 1.8 * 60 * 60);
-            }
-        }
-        return $this->_access_token;
+        return WechatUtils::getAccessToken();
     }
 
     /**

@@ -8,9 +8,8 @@ use yii\base\Exception;
 class WechatUtils
 {
 
-    private static $_access_token;
-
     private static $_access_token_key = 'wechat_access_token';
+    private static $_access_token_lock_key = 'wechat_access_token_lock';
 
     public static function makeAuthUrl($callback, $state='')
     {
@@ -28,24 +27,40 @@ class WechatUtils
     {
         $appid = Yii::$app->params['weichat']['appid'];
         $secret = Yii::$app->params['weichat']['secret'];
-        if (!static::$_access_token){
-            static::$_access_token = 
-                Yii::$app->global_cache->get(static::$_access_token_key);
-            if(!static::$_access_token){
-                $getTokenUrl = 
-                    'https://api.weixin.qq.com/cgi-bin/token'
-                    . '?grant_type=client_credential'
-                    . '&appid='.$appid.'&secret='.$secret;
+        $cache = Yii::$app->global_cache;
+        $access_token = null;
+        if (!$access_token){
+            $access_token =
+                $cache->get(static::$_access_token_key);
+            if(!$access_token){
+                $ac_lock = $cache->get(static::$_access_token_lock_key);
+                if (!$ac_lock){
+                    $ac_lock = ['locked'=>0, 'tmp_access_token'=> ''];
+                    $cache->set(static::$_access_token_lock_key, $ac_lock, 0);
+                }
+                if ($ac_lock['locked']){
+                    $access_token = $ac_lock['tmp_access_token'];
+                } else {
+                    $ac_lock['locked'] = 1;
+                    $cache->set(static::$_access_token_lock_key, $ac_lock, 0);
 
-                $arr = static::getUrlJson($getTokenUrl);
-                static::$_access_token = $arr['access_token'];
-                Yii::$app->global_cache->set(
-                    static::$_access_token_key,
-                    static::$_access_token,
-                    1.8 * 60 * 60);
+                    $getTokenUrl =
+                        'https://api.weixin.qq.com/cgi-bin/token'
+                        . '?grant_type=client_credential'
+                        . '&appid='.$appid.'&secret='.$secret;
+
+                    $arr = static::getUrlJson($getTokenUrl);
+                    $access_token = $arr['access_token'];
+                    $cache->set(static::$_access_token_key,
+                        $access_token, 1.8 * 60 * 60);
+
+                    $ac_lock['locked'] = 0;
+                    $ac_lock['tmp_access_token'] = $access_token;
+                    $cache->set(static::$_access_token_lock_key, $ac_lock, 0);
+                }
             }
         }
-        return static::$_access_token;
+        return $access_token;
     }
 
     public static function getUrlJson($targetUrl, $getData=''){
