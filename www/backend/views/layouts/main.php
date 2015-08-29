@@ -81,6 +81,11 @@ $user = Yii::$app->user;
                 <li class="operation_managermmenu" data-group="analytics"><a href="/data-user">数据统计</a></li>
 <?php } ?>
 
+<?php if ($user->can('operation_manager')) { ?>
+    <li class="mtitle" data-group="yunying"><a>运营</a></li>
+    <li class="mmenu" data-group="yunying"><a href="/red-packet/index?sort=-red_packet_num">微信红包</a></li>
+<?php } ?>
+
 <?php if ($user->can('developer')) { ?>
                 <li class="mtitle" data-group="dev"><a>产品研发</a></li>
                 <li class="mmenu" data-group="dev"><a href="/app-release-version">应用发布管理</a></li>

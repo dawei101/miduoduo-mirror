@@ -109,6 +109,7 @@ class User extends BaseActiveRecord implements IdentityInterface
             'name' => '姓名',
             'invited_by' => '邀请码',
             'red_packet_city' => '城市',
+            'red_packet_num' => '红包邀请数量',
         ];
     }
 

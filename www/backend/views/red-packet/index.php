@@ -25,12 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             //'name',
             'username',
-            [
-                'label' => '邀请数量',
-                'value' => function($model){
-                    return count($model->invite);
-                }
-            ],
+            'red_packet_num',
             [
                 'label' => '已提现/总红包金额',
                 'value' => function($model){

@@ -369,6 +369,7 @@ class WeichatBase
     public static function sendRedPacketToInviter($invitee_userid){
         $invitee = User::findOne(['id'=>$invitee_userid]);
         $inviter_id = isset($invitee->invited_by) ? $invitee->invited_by : 0;
+        $inviter = User::findOne(['id'=>$inviter_id]);
         
         $has_send = AccountEvent::findOne([
             'user_id' => $inviter_id,
@@ -393,6 +394,10 @@ class WeichatBase
             ];
             $weichat_base = new WeichatBase();
             $weichat_base->putMoneyToAccount($data);
+            User::updateAll(
+                ['red_packet_num'=>$inviter->red_packet_num + 1],    
+                ['id'=>$inviter->id]
+            );
         }
     }
 
