@@ -26,7 +26,7 @@ if (Utils::isInWechat()){
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta http-equiv="pragma" content="no-cache">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <link  rel="shortcut icon"  href="img/miduoduo.ico" />
+    <link  rel="shortcut icon"  href="/static/img/miduoduo.ico" />
     <meta name="format-detection" content="telephone=no">
     <title><?=$this->page_title?><?=$this->title?> - 米多多兼职</title>
     <meta name="keywords"  content="<?=isset($this->page_keywords)?$this->page_keywords:''?>"/>
