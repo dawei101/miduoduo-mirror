@@ -84,7 +84,7 @@ class WechatUtils
                 $data = json_decode($returnstr, true);
                 if (isset($data['errcode'])){
                     if (intval($data['errcode'])>0){
-                        Yii::error("wechat:打开微信出错, error code:" . $data['errcode'] . "url is:" . $targetUrl);
+                        Yii::error("wechat:打开微信出错, error code:" . $data['errcode'] . " url is:" . $targetUrl);
                         $err = 1;
                         throw new Exception("系统正在调整，请稍后再试");
                     }
