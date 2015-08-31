@@ -18,8 +18,6 @@ class RecordAction extends \yii\rest\CreateAction
         ]);
         $req = Yii::$app->getRequest();
         $params = $req->getBodyParams();
-        $params['event_type'] = $req->post('action')=='off'?
-            $model::EVENT_OFF:$model::EVENT_ON;
         $schedule = null;
         if ($req->post('schedule_id')){
             $schedule = Schedule::findOne($params['schedule_id']);
@@ -29,12 +27,31 @@ class RecordAction extends \yii\rest\CreateAction
         } else {
             $params['owner_id'] = $schedule->owner_id;
         }
+        $mtime = (strtotime($schedule->from_datetime) + strtotime($schedule->to_datetime))/2;
+
+        if (time()>$mtime){
+            $params['event_type'] = $model::EVENT_OFF;
+        } else {
+            $params['event_type'] = $model::EVENT_ON;
+            $on_model = $this->modelClass::findOne(
+                ['schedule_id'=>$schedule->id, 'event_type'=>$model::EVENT_ON]);
+            if ($on_model){
+                $params['event_type'] = $model::EVENT_WORKING;
+            }
+        }
+
         $model->load($params, '');
         if ($model->save()) {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
             $model->save();
             $model->checkout();
+            if ($model->event_type==$model::EVENT_OFF){
+                $this->modelClass::updateAll(
+                    ['event_type'=>$model::EVENT_WORKING],
+                    ['schedule_id'=>$schedule->id, 'event_type'=>$model::EVENT_OFF]
+                );
+            }
         } elseif (!$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }

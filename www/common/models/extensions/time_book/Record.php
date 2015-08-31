@@ -23,6 +23,7 @@ class Record extends \common\BaseActiveRecord
 
     const EVENT_ON = 1;
     const EVENT_OFF = 2;
+    const EVENT_WORKING = 10;
 
     public static function tableName()
     {
