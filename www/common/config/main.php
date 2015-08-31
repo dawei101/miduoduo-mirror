@@ -103,12 +103,13 @@ return [
                     'enabled' => 1,
                     'message' => [
                         'from' => ['webmaster@miduoduo.cn'],
-                        'to' => ['dev@miduoduo.cn'],
+                        'to' => ['suixb@miduoduo.cn', 'liyw@miduoduo.cn'],
                         'subject' => '【米多多error】',
                     ],
                     'except' => [
                         'yii\web\HttpException:404',
                         'yii\web\HttpException:400',
+                        'yii\web\HttpException:401',
                     ],
                 ],
                 [
