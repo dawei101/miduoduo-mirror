@@ -49,10 +49,20 @@ class WechatController extends \common\BaseController
     {
         $code = Yii::$app->request->get('code');
         $params = Yii::$app->session['wechat_state'];
+        if (!$code){
+            throw new \yii\web\NotFoundHttpException();
+        }
 
-        $winfo = WechatUtils::getUserTokenByCode($code);
+        $key = "wechat.authcode." . $code;
+        $winfo = Yii::$app->cache->get($key);
+
+        if (!$winfo){
+            // 这里加cache 是因为用户网络环境不好，有可能重复发送请求，但code只能用一次
+            $winfo = WechatUtils::getUserTokenByCode($code);
+            //$token  = $winfo['access_token'];
+            Yii::$app->cache->set($key, $winfo, 5 * 60);
+        }
         $openid = $winfo['openid'];
-        //$token  = $winfo['access_token'];
 
         $record = WeichatUserInfo::find()->where(['openid'=>$openid])->one();
         if (!$record){

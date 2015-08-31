@@ -80,9 +80,9 @@ class SiteController extends FBaseController
         // $this->layout= false;
         $mobileAgent = array("iphone", "ipod", "ipad", "android", "mobile", "blackberry", "webos", "incognito", "webmate", "bada", "nokia", "lg", "ucweb", "skyfire");
         
-        $browser = $_SERVER['HTTP_USER_AGENT'];
+        $browser = Yii::$app->request->userAgent;
         $isMobile = false;
-          
+
         foreach($mobileAgent as $search){
             if(stristr($browser,$search)!=false){
                 $isMobile = true;
