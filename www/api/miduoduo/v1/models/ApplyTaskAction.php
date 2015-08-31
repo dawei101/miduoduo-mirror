@@ -38,8 +38,11 @@ class ApplyTaskAction extends \yii\rest\CreateAction
             if (empty($resume->phonenum)) {
                 $resume->phonenum = Yii::$app->user->identity->username;
             }
-
-            if (Utils::isPhonenum($task->contact_phonenum)){
+            $wechat_profile = Yii::$app->user->identity->weichat;
+            if ($wechat_profile) {
+                Yii::$app->wechat_pusher
+                    ->toApplicantTaskAppliedDone($task, $wechat_profile->openid);
+            } else if (Utils::isPhonenum($task->contact_phonenum)){
                 Yii::$app->sms_pusher->push(
                     $resume->phonenum,
                     ['task'=>$task, 'resume'=>$resume],
