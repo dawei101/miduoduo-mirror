@@ -56,6 +56,19 @@ class RedPacketController extends BBaseController
         ]);
     }
 
+    public function actionDetail($invited_by=2006)
+    {
+        $searchModel = new RedPacketSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $dataProvider->query->andWhere(['invited_by'=>$invited_by]);
+
+        return $this->render('detail', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single Resume model.
      * @param integer $id
