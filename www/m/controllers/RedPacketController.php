@@ -43,6 +43,8 @@ class RedPacketController extends MBaseController
         $inviter_value = Yii::$app->params['weichat']['red_packet']['value'];
         if( $user_id ){
             WeichatBase::sendRedPacketToUserFirstTime($user_id);
+
+            $userinfo = User::find()->where(['id'=>$user_id])->with('resume')->one();
             
             $inviteds = AccountEvent::find()
                 ->where([
@@ -59,8 +61,7 @@ class RedPacketController extends MBaseController
                 ]);
             $invited_all_people = $invited_all->count();
             $invited_all_value = $invited_all->sum('value');
-                
-
+               
             $this->layout = false;
             return $this->render(
                 'my',
@@ -70,6 +71,7 @@ class RedPacketController extends MBaseController
                     'invited_all_people' => $invited_all_people,
                     'invited_all_value' => $invited_all_value,
                     'inviter_value' => $inviter_value,
+                    'userinfo' => $userinfo,
                 ]
             );
         }else{

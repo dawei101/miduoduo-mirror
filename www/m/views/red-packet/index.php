@@ -27,7 +27,7 @@
     <p>
     长按二维码微信关注可领取现金红包，亲试有效，赶紧去领吧！</p>
     <img src="<?=Yii::$app->params['weichat']['url']['erweima_show'].$erweima_ticket?>">
-    <p class="fenxiang-btn">分享给好友</p>
+    <!--p class="fenxiang-btn">分享给好友</p-->
 </div>
 <!--=======以藏的弹出层======-->
 <div class="cd-popup" role="alert">

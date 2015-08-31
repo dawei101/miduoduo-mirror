@@ -16,7 +16,8 @@
 <div class="midd_main"> <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/hongbao.png" >
   <div class="title_hb"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/my_hb.png"></div>
   <div class="jin_e"><?=$invited_all_value?>元</div>
-  <div class="text_b"> <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/hb_sm.png"> <a href="<?=Yii::$app->params['baseurl.m']?>/red-packet?id=<?=$user_id?>" class="fenx cd-popup-trigger">分享给好友去赚红包</a> <a href="<?=Yii::$app->params['baseurl.wechat']?>/view/pay/cash-account.html" class="tix">去提现</a> </div>
+  <div class="text_b"> <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/hb_sm.png"> 
+  <a href="javascript:;" class="fenx cd-popup-trigger fenxiang-btn">分享给好友去赚红包</a> <a href="<?=Yii::$app->params['baseurl.wechat']?>/view/pay/cash-account.html" class="tix">去提现</a> </div>
 </div>
 <div class="bot_box"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/bot_img.jpg"></div>
 <div id="tab">
@@ -51,10 +52,63 @@
     </div>
   </div>
 </div>
-<!--=======以藏的弹出层======-->
+<!--=======隐藏的弹出层======-->
 <div class="cd-popup" role="alert">
-<img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/fex.png" </div>
+    <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/fex.png" />
+</div>
+
 <script type="text/javascript" src="<?=Yii::$app->params['baseurl.static.m']?>/static/js/jquery.min.js"></script> 
+
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+  $.get("<?=Yii::$app->params['baseurl.m']?>/wechat/env", function(data) {
+        wx.config({
+            debug:false
+            , appId: data.wx_config.appId
+            , timestamp: data.wx_config.timestamp
+            , nonceStr: data.wx_config.nonceStr
+            , signature: data.wx_config.signature
+            , jsApiList: [
+                'checkJsApi',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'getLocation',
+                'openLocation'
+            ]
+        });
+    }, "json");
+    wx.ready(function(){
+        wx.onMenuShareTimeline({
+            title: '<?=isset($userinfo->resume->name)?$userinfo->resume->name:"我"?>分享的米多多现金红包，百万现金红包大派送！', // 分享标题
+            link: "<?=Yii::$app->params['baseurl.m']?>/red-packet?id=2006", // 分享链接
+            imgUrl: "<?=Yii::$app->params['baseurl.static.m']?>/static/img/hongbao.jpg", // 分享图标
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+            title: '<?=isset($userinfo->resume->name)?$userinfo->resume->name:"我"?>分享的米多多现金红包，百万现金红包大派送！', // 分享标题
+            desc: '来领取现金红包，还可帮【<?=isset($userinfo->resume->name)?$userinfo->resume->name:"TA"?>】获得奖励哦！', // 分享描述
+            link: "<?=Yii::$app->params['baseurl.m']?>/red-packet?id=2006", // 分享链接
+            imgUrl: "<?=Yii::$app->params['baseurl.static.m']?>/static/img/hongbao.jpg", // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () { 
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () { 
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+</script>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	var $tab_li = $('#tab ul li');
@@ -65,5 +119,6 @@ $(document).ready(function(){
 	});	
 });
 </script>
+<script src="<?=Yii::$app->params['baseurl.static.m']?>/static/js/red-packet.js"></script>
 </body>
 </html>
