@@ -39,15 +39,17 @@ class ApplyTaskAction extends \yii\rest\CreateAction
                 $resume->phonenum = Yii::$app->user->identity->username;
             }
             $wechat_profile = Yii::$app->user->identity->weichat;
-            if ($wechat_profile) {
-                Yii::$app->wechat_pusher
-                    ->toApplicantTaskAppliedDone($task, $wechat_profile->openid);
-            } else if (Utils::isPhonenum($task->contact_phonenum)){
-                Yii::$app->sms_pusher->push(
-                    $resume->phonenum,
-                    ['task'=>$task, 'resume'=>$resume],
-                    'to-applicant-task-applied-done'
-                );
+            if (Utils::isPhonenum($task->contact_phonenum)){
+                if ($wechat_profile) {
+                    Yii::$app->wechat_pusher
+                        ->toApplicantTaskAppliedDone($task, $wechat_profile->openid);
+                } else {
+                    Yii::$app->sms_pusher->push(
+                        $resume->phonenum,
+                        ['task'=>$task, 'resume'=>$resume],
+                        'to-applicant-task-applied-done'
+                    );
+                }
                 Yii::$app->sms_pusher->push(
                     $task->contact_phonenum,
                     ['task'=>$task, 'resume'=>$resume],
@@ -56,11 +58,16 @@ class ApplyTaskAction extends \yii\rest\CreateAction
                 $model->applicant_alerted = true;
                 $model->company_alerted = true;
             } else {
-               Yii::$app->sms_pusher->push(
-                    $resume->phonenum,
-                    ['task'=>$task, 'resume'=>$resume],
-                    'to-applicant-task-need-touch-actively'
-                );
+                if ($wechat_profile) {
+                    Yii::$app->wechat_pusher
+                        ->toApplicantTaskAppliedDone($task, $wechat_profile->openid);
+                } else {
+                    Yii::$app->sms_pusher->push(
+                        $resume->phonenum,
+                        ['task'=>$task, 'resume'=>$resume],
+                        'to-applicant-task-need-touch-actively'
+                    );
+                }
                 $model->company_alerted = false;
                 $model->applicant_alerted = true;
             }
