@@ -146,6 +146,7 @@ class Task extends \common\BaseActiveRecord
     const STATUS_OK = 0;
     const STATUS_IS_CHECK = 30;
     const STATUS_UN_PASSED = 40;
+    const STATUS_OVERDUE = 50;
     const STATUS_OFFLINE = 10;
     const STATUS_DELETED = 20;
     const STATUS_UNCONFIRMED_FROM_SPIDER = 100;
@@ -159,7 +160,6 @@ class Task extends \common\BaseActiveRecord
     {
         return static::$ORIGIN[$this->origin];
     }
-
 
     public function getClearance_period_label()
     {

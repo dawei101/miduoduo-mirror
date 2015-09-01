@@ -95,7 +95,7 @@
                 </div>
                 <div>
                     <span>下班情况：</span>
-                        <?=$schedule->on_late?'早退':'正常'?>
+                        <?=$schedule->off_early?'早退':'正常'?>
                      <?php if ($schedule->off_record) { 
                         $record=$schedule->off_record;
                      ?>
