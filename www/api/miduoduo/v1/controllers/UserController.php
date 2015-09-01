@@ -36,6 +36,20 @@ class UserController extends BaseActiveController
         ]);
     }
 
+    public function actionTear()
+    {
+        $user = Yii::$app->user->identity;
+        $r = 1;
+        if ($user->is_virgin){
+            $user->is_virgin = 0;
+            $r = $user->save();
+        }
+        return $this->renderJson([
+            'success'=> $r,
+            'message'=> $r?"设置成功":"设置失败",
+        ]);
+    }
+
     public function actionBindThirdPartyAccount()
     {
         $params = Yii::$app->request->post('params');
