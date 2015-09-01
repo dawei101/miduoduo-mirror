@@ -289,7 +289,9 @@ class TimeBookController extends CBaseController
         }
         $resume = Resume::findOne(['user_id'=> $user_id]);
         $query = Schedule::find()
-            ->where(['owner_id'=>Yii::$app->user->id, 'task_id'=>$task_id])
+            ->where(['owner_id'=>Yii::$app->user->id,
+                'user_id' => $user_id,
+                'task_id'=>$task_id])
             ->with('on_record')->with('off_record')
             ->orderBy(['date'=> SORT_DESC]);
         if ($on_late!=''){
