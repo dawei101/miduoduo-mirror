@@ -12,6 +12,7 @@ use common\models\Task;
 use common\models\AccountEvent;
 use common\models\UserAccount;
 use common\models\User;
+use common\models\District;
 
 class WeichatBase
 {
@@ -202,6 +203,16 @@ class WeichatBase
         }
     }
 
+    public function getUserinfoByOpenid($openid=''){
+        $userinfo = WeichatUserInfo::find()
+            ->where(['openid'=>$openid])
+            ->with('user')
+            ->with('resume')
+            ->with('user_historical_location')
+            ->one();
+        return $userinfo;
+    }
+
     public function hasFollowed($openid){
         $openid_obj   = WeichatUserInfo::find()
             ->where(['openid'=>$openid,'status'=>WeichatUserInfo::STATUS_OK])
@@ -246,20 +257,38 @@ class WeichatBase
             return $model->response_msg;
         }else{
             // 未命中关键字，改为搜索任务名称
+            // 用户默认城市
+            $userinfo = $this->getUserinfoByOpenid($openid);
+            $city_id = isset($userinfo->user_historical_location->city_id) ? $userinfo->user_historical_location->city_id : 3 ;
+
             $task_model = Task::find()
-                ->where(['status'=>0])
+                ->where(['status'=>0, 'city_id' => $city_id])
+                ->andWhere(['>', 'to_date', date("Y-m-d")])
                 ->andWhere(['like','title',"%".$keyword."%",false])
-                ->limit(10)->All();
+                ->limit(9)->All();
             if( count($task_model)>0 ){
-                return $this->renderTaskLink($task_model);
+                return $this->renderTaskLink($task_model, $city_id, $keyword);
             }else{
                 return false;
             }
         }
     }
 
-    public function renderTaskLink($task_model){
+    public function renderTaskLink($task_model, $city_id=3, $keyword=''){
+        $city = District::findOne(['id'=>$city_id]);
+        $city_name = isset($city->name) ? $city->name : '当前城市';
+
         $msg_body   = '<ArticleCount>'.count($task_model).'</ArticleCount><Articles>';
+        $img         = Yii::$app->params['baseurl.static.m'].'/static/img/wx_list1.jpg';
+        $url         = Yii::$app->params['baseurl.wechat']."/view/index.html?from=singlemessageisappinstalled=0";
+        $msg_body   .= '
+                <item>
+                <Title><![CDATA[在'.$city_name.'搜索“'.$keyword.'”结果]]></Title> 
+                <Description><![CDATA[在'.$city_name.'搜索“'.$keyword.'”结果]]></Description>
+                <PicUrl><![CDATA['.$img.']]></PicUrl>
+                <Url><![CDATA['.$url.']]></Url>
+                </item>
+            ';
         foreach( $task_model as $k => $v ){
             if( $k == 0 ){
                 $img         = Yii::$app->params['baseurl.static.m'].'/static/img/wx_list1.jpg';

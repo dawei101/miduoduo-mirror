@@ -207,14 +207,14 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .zhiwei-lis-title h2 { color: #3388ff;font-size: 16px; line-height: 40px;padding-left: 20px; width: 73%;}
 .bt-span {height: 30px; overflow: hidden;padding-top: 7px;}
 .zhiwei-lis-title span{border:1px #00b966 solid; border-radius:4px; padding:2px 4px; margin-top:10px; margin-right:20px; cursor:pointer;width:73%;}
-.zhiwei-lis-left { color: #606c77;font-size: 12px;height: 58px; line-height: 18px;padding-left: 20px;width: 70%;}
+.zhiwei-lis-left { color: #606c77;font-size: 12px;height: 70px; line-height: 22px;padding-left: 20px;width: 70%;}
 .zhiwei-lis-left span{margin-right:20px;}
 .zhiwei-lis-right {color: #606c77;font-size: 12px; height: 58px;  line-height: 20px;width: 230px;}
 .fb-sj{color:#a5abb2;}
 .zhiwei-zt{width:230px;}
 .bg-left,.bg-right{width:50px; height:19px; background:url(../img/z-xian.png) repeat-x; margin-top:20px;}
 .bg-text{width:110px; line-height:60px;font-size:16px;}
-.shenqing-zt{width:230px; height:40px; border-radius:4px; background:#00b966; color:#fff; line-height:40px; margin-top:5px;font-size:16px; }
+.shenqing-zt{width:156px; border-radius:4px; background:#00b966; color:#fff; line-height:30px; margin-top:5px;font-size:16px; }
 .news{width:48px; height:20px; line-height:18px; color:#fff; font-size:16px; background:#ef1d1d; margin-top:20px; border-radius:10px; margin-left:20px;}
 
 .jianli-lis{width:100%; padding:30px; overflow:hidden; color:#606c77;}
