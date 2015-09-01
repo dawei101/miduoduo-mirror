@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use common\models\User;
 use common\models\Resume;
+use common\models\UserHistoricalLocation;
 
 /**
  * This is the model class for table "{{%weichat_user_info}}".
@@ -88,6 +89,11 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'userid']);
+    }
+
+    public function getUser_historical_location(){
+        return $this->hasOne(UserHistoricalLocation::className(),['user_id'=>'userid'])
+            ->addOrderBy(['id'=> SORT_DESC]);
     }
 
     public function getResume(){

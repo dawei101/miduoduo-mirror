@@ -75,14 +75,30 @@
                 'onMenuShareQQ',
                 'onMenuShareWeibo',
                 'getLocation',
-                'openLocation'
+                'openLocation',
+                'hideMenuItems',
             ]
         });
     }, "json");
     wx.ready(function(){
+        wx.hideMenuItems({
+            menuList: [
+                'menuItem:share:timeline',  
+                "menuItem:share:qq",
+                "menuItem:share:weiboApp",
+                "menuItem:favorite",
+                "menuItem:share:facebook",
+                "menuItem:openWithSafari",
+                "menuItem:openWithQQBrowser",
+            ],
+            fail: function (res) {
+                //alert(JSON.stringify(res));
+            }
+        });
+
         wx.onMenuShareTimeline({
             title: '<?=isset($userinfo->resume->name)?$userinfo->resume->name:"我"?>分享的米多多现金红包，百万现金红包大派送！', // 分享标题
-            link: "<?=Yii::$app->params['baseurl.m']?>/red-packet?id=2006", // 分享链接
+            link: "<?=Yii::$app->params['baseurl.m']?>/red-packet?id=<?=isset($userinfo->id)?$userinfo->id:2006?>", // 分享链接
             imgUrl: "<?=Yii::$app->params['baseurl.static.m']?>/static/img/hongbao.jpg", // 分享图标
             success: function () { 
                 // 用户确认分享后执行的回调函数
@@ -95,7 +111,7 @@
         wx.onMenuShareAppMessage({
             title: '<?=isset($userinfo->resume->name)?$userinfo->resume->name:"我"?>分享的米多多现金红包，百万现金红包大派送！', // 分享标题
             desc: '来领取现金红包，还可帮【<?=isset($userinfo->resume->name)?$userinfo->resume->name:"TA"?>】获得奖励哦！', // 分享描述
-            link: "<?=Yii::$app->params['baseurl.m']?>/red-packet?id=2006", // 分享链接
+            link: "<?=Yii::$app->params['baseurl.m']?>/red-packet?id=<?=isset($userinfo->id)?$userinfo->id:2006?>", // 分享链接
             imgUrl: "<?=Yii::$app->params['baseurl.static.m']?>/static/img/hongbao.jpg", // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
