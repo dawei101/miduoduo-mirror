@@ -30,7 +30,7 @@ function CallBack(str) {
 
 * 请求认证
 ```
-    window.MDDNative.auth(json)
+    window.MDDNative.auth(json，callback)
     json: 字符串
     {
         register：2- 微信登录，1- 注册，0 － 登录
