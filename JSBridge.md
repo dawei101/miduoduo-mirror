@@ -136,11 +136,11 @@ function CallBack(str) {
 
 * 打卡时间段
 ```
-    window.MDDWeb.clock(start,stop)
+    window.MDDWeb.clock(boolean show)
     
-    注：参数为字符类型
-    start: 2015-08-05 09:00
-    stop: 2015-08-05 10:00
+    show: 
+    true : 显示打开
+    false：不显示打开按钮
 ```
 
 * 打卡
@@ -202,3 +202,11 @@ function CallBack(str) {
 ```
     window.MDDNative.idAuth(callback)
 ```
+* 简历修改
+```
+    window.MDDNative.resume(has_resume)
+    has_resume:
+        true: 已填写简历
+        false：未填写简历
+```
+
