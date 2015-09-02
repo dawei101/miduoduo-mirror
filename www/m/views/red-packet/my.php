@@ -109,7 +109,7 @@
         });
 
         wx.onMenuShareAppMessage({
-            title: '<?=isset($userinfo->resume->name)?$userinfo->resume->name:"我"?>分享的米多多现金红包，百万现金红包大派送！', // 分享标题
+            title: '<?=isset($userinfo->resume->name)?$userinfo->resume->name:"我"?>分享的米多多百万现金红包大派送，立即领取！', // 分享标题
             desc: '来领取现金红包，还可帮【<?=isset($userinfo->resume->name)?$userinfo->resume->name:"TA"?>】获得奖励哦！', // 分享描述
             link: "<?=Yii::$app->params['baseurl.m']?>/red-packet?id=<?=isset($userinfo->id)?$userinfo->id:2006?>", // 分享链接
             imgUrl: "<?=Yii::$app->params['baseurl.static.m']?>/static/img/hongbao.jpg", // 分享图标
