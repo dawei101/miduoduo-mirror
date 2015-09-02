@@ -20,6 +20,10 @@ img{border:none;}
 
 .pic{width:80%; margin:2% auto 4%; padding-bottom:5%;}
 
+.fx_box img,.top_banner img{width:100%;}
+.fx_box{margin-top:-5px; display:block; overflow:hidden; position:relative}
+.erweima{left:18%;position: absolute;top: 20%;width: 60%;z-index: 20;}
+
 
 #tab{width:100%; position:relative;}
 .hide{display:none;}

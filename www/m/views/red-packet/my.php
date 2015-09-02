@@ -39,7 +39,7 @@
                     <?=isset($invited->invitee->username)?(substr($invited->invitee->username,0,3).'****'.substr($invited->invitee->username,-4)):'未注册'?></li>
             <?php } ?>
         </ul>
-        <a href="/red-packet/my-records">查看更多<br />
+        <a href="<?=Yii::$app->params['baseurl.m']?>/red-packet/my-records">查看更多<br />
         <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/more.png" width="29" height="21"></a> </div>
       <?php }else{ ?>
         <a href="<?=Yii::$app->params['baseurl.m']?>/red-packet?id=<?=$user_id?>" style="border:0px;">您还木有收入哦，快快行动吧！</a>

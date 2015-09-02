@@ -20,20 +20,16 @@
 <body>
 <!-- 添加隐藏的logo图片300*300用于微信分享图标 - start -->
 <div style="display:none;">
-    <img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/weichat_icon.jpg" /> 
+    <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/hongbao.jpg" /> 
 </div>
 <!-- 添加隐藏的logo图片300*300用于微信分享图标 - end -->
-<div class="pic_f cd-popup-trigger">
-    <p>
-    长按二维码微信关注可领取现金红包，亲试有效，赶紧去领吧！</p>
-    <img src="<?=Yii::$app->params['weichat']['url']['erweima_show'].$erweima_ticket?>">
-    <!--p class="fenxiang-btn">分享给好友</p-->
-</div>
-<!--=======以藏的弹出层======-->
-<div class="cd-popup" role="alert">
-<img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/fex.png" </div>
-<script type="text/javascript" src="<?=Yii::$app->params['baseurl.static.m']?>/static/js/jquery.min.js"></script> 
-<script src="<?=Yii::$app->params['baseurl.static.m']?>/static/js/red-packet.js"></script>
+<div class="top_banner"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/fx_top.jpg"></div>
+<a href="#" class="fx_box">
+    <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/fx_erwei.jpg" >
+    <div class="erweima"><img src="<?=Yii::$app->params['weichat']['url']['erweima_show'].$erweima_ticket?>" ></div>
+</a>
+
 
 </body>
 </html>
+
