@@ -126,13 +126,17 @@ class WeichatPushQualityTaskController extends BBaseController
             ->one();
 
         // 构造优单
+        $task_time = (isset($data->work_time) && $data->work_time) ? '工作内容：'.$data->work_time.'\r\n' : '';
+        $task_detail = (isset($data->work_detail) && $data->work_detail) ? '工作内容：'.$data->work_detail : '';
+        //echo $task_detail;exit;
         $params = array(
                 //array('name'=>'first','value'=>$data['title'],'color'=>'#222'), 
-                array('name'=>'keyword1','value'=>$data->company_name,'color'=>'#222'),
-                array('name'=>'keyword2','value'=>$data->task_name,'color'=>'#222'),
-                array('name'=>'keyword3','value'=>$data->task_type,'color'=>'#222'),
-                array('name'=>'keyword4','value'=>$data->location,'color'=>'#222'),
-                array('name'=>'keyword5','value'=>$data->price,'color'=>'#0000FE'),
+                array('name'=>'keyword1','value'=>$data->company_name,'color'=>'#000080'),
+                array('name'=>'keyword2','value'=>$data->task_name,'color'=>'#000080'),
+                array('name'=>'keyword3','value'=>$data->task_type,'color'=>'#000080'),
+                array('name'=>'keyword4','value'=>$data->location,'color'=>'#000080'),
+                array('name'=>'keyword5','value'=>$data->price,'color'=>'#000080'),
+                array('name'=>'remark','value'=>$task_time.$task_detail,'color'=>'#000080'),
         );
 
         $gotoUrl        = Yii::$app->params['baseurl.wechat'].'/view/job/job-detail.html?task='.$data->task->id;
