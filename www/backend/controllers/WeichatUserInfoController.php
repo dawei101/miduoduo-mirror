@@ -4,31 +4,26 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\WeichatUserInfo;
-use yii\data\ActiveDataProvider;
-use yii\helpers\ArrayHelper;
-use yii\filters\AccessControl;
-use backend\BBaseController;
+use common\models\WeichatUserInfoSearch;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * WeichatUserInfoController implements the CRUD actions for WeichatUserInfo model.
  */
-class WeichatUserInfoController extends BBaseController
+class WeichatUserInfoController extends Controller
 {
     public function behaviors()
     {
-        return ArrayHelper::merge(parent::behaviors(), [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['operation_manager'],
-                    ],
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
                 ],
             ],
-        ]);
+        ];
     }
 
     public function getViewPath()
@@ -42,11 +37,11 @@ class WeichatUserInfoController extends BBaseController
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => WeichatUserInfo::find(),
-        ]);
+        $searchModel = new WeichatUserInfoSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

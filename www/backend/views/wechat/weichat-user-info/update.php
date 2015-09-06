@@ -5,10 +5,12 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\WeichatUserInfo */
 
-$this->title = '更新用户微信信息: ' . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Weichat User Infos', 'url' => ['index']];
+$this->title = Yii::t('app', 'Update {modelClass}: ', [
+    'modelClass' => 'Weichat User Info',
+]) . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Weichat User Infos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="weichat-user-info-update">
 
