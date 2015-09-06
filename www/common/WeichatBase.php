@@ -9,6 +9,10 @@ use common\models\WeichatUserLog;
 use common\models\WeichatUserInfo;
 use common\models\WeichatAutoresponse;
 use common\models\Task;
+use common\models\AccountEvent;
+use common\models\UserAccount;
+use common\models\User;
+use common\models\District;
 
 class WeichatBase
 {
@@ -199,6 +203,16 @@ class WeichatBase
         }
     }
 
+    public function getUserinfoByOpenid($openid=''){
+        $userinfo = WeichatUserInfo::find()
+            ->where(['openid'=>$openid])
+            ->with('user')
+            ->with('resume')
+            ->with('user_historical_location')
+            ->one();
+        return $userinfo;
+    }
+
     public function hasFollowed($openid){
         $openid_obj   = WeichatUserInfo::find()
             ->where(['openid'=>$openid,'status'=>WeichatUserInfo::STATUS_OK])
@@ -243,20 +257,38 @@ class WeichatBase
             return $model->response_msg;
         }else{
             // 未命中关键字，改为搜索任务名称
+            // 用户默认城市
+            $userinfo = $this->getUserinfoByOpenid($openid);
+            $city_id = isset($userinfo->user_historical_location->city_id) ? $userinfo->user_historical_location->city_id : 3 ;
+
             $task_model = Task::find()
-                ->where(['status'=>0])
+                ->where(['status'=>0, 'city_id' => $city_id])
+                ->andWhere(['>', 'to_date', date("Y-m-d")])
                 ->andWhere(['like','title',"%".$keyword."%",false])
-                ->limit(10)->All();
+                ->limit(9)->All();
             if( count($task_model)>0 ){
-                return $this->renderTaskLink($task_model);
+                return $this->renderTaskLink($task_model, $city_id, $keyword);
             }else{
                 return false;
             }
         }
     }
 
-    public function renderTaskLink($task_model){
+    public function renderTaskLink($task_model, $city_id=3, $keyword=''){
+        $city = District::findOne(['id'=>$city_id]);
+        $city_name = isset($city->name) ? $city->name : '当前城市';
+
         $msg_body   = '<ArticleCount>'.count($task_model).'</ArticleCount><Articles>';
+        $img         = Yii::$app->params['baseurl.static.m'].'/static/img/wx_list1.jpg';
+        $url         = Yii::$app->params['baseurl.wechat']."/view/index.html?from=singlemessageisappinstalled=0";
+        $msg_body   .= '
+                <item>
+                <Title><![CDATA[在'.$city_name.'搜索“'.$keyword.'”结果]]></Title> 
+                <Description><![CDATA[在'.$city_name.'搜索“'.$keyword.'”结果]]></Description>
+                <PicUrl><![CDATA['.$img.']]></PicUrl>
+                <Url><![CDATA['.$url.']]></Url>
+                </item>
+            ';
         foreach( $task_model as $k => $v ){
             if( $k == 0 ){
                 $img         = Yii::$app->params['baseurl.static.m'].'/static/img/wx_list1.jpg';
@@ -276,5 +308,137 @@ class WeichatBase
         }
         $msg_body .= '</Articles>';
         return $msg_body;
+    }
+
+    public static function checkErweimaValid($create_date){
+        $today_time  = time();
+        $create_time = strtotime($create_date);
+        $diff_time   = $today_time - $create_time;
+        $valid_time  = 60 * 60 * 24 * 6;
+        if( $diff_time >= $valid_time ){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public function createErweimaByUserid($user_id){
+        $scene_id       = $user_id; // 扫描后返回值
+        $access_token   = $this->getWeichatAccessToken();
+
+        $targetUrl      = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token="
+            .$access_token;
+        $postData       = "";
+
+        // 7天的二维码
+        $postData       = '{"expire_seconds": 604800, "action_name": "QR_SCENE", "action_info": {"scene": {"scene_id": '.$scene_id.'}}}';
+
+        $ticketJson = $this->postWeichatAPIdata($targetUrl,$postData);
+        $ticketArr  = json_decode($ticketJson);
+
+        WeichatUserInfo::updateAll(
+            [
+                'erweima_date' => date("Y-m-d"),
+                'erweima_ticket' => $ticketArr->ticket,
+            ],
+            ['userid' => $user_id]
+        );
+
+        return $ticketArr->ticket;
+    }
+
+    public function putMoneyToAccount($data){
+        $model          = new AccountEvent();
+        $model->date     = $data['date'];
+        $model->user_id  = $data['user_id'];
+        $model->value    = $data['value'];
+        $model->note     = $data['note'];
+        $model->operator_id  = $data['operator_id'];
+        $model->created_time = $data['created_time'];
+        $model->task_gid     = isset($data['task_gid']) ? $data['task_gid'] : '0';
+        $model->red_packet_accept_by = isset($data['red_packet_accept_by']) ? $data['red_packet_accept_by'] : 0;
+        $model->related_id   = '';
+        $model->balance  = 0;
+        $model->type     = isset($data['type']) ? $data['type'] : 0;
+        $model->save();
+
+        // update user_account
+        $user_account_obj = new UserAccount();
+        $user_account_obj->updateUserAccount($model->user_id);
+
+        // send weichat notice
+        $weichat_base   = new WeichatBase();
+        $pusher_weichat_id       = $weichat_base::getLoggedUserWeichatID($data['user_id']);
+        $pusher_date['first']    = '您好，您有一笔收入到账';
+        $pusher_date['keyword1'] = $data['note'];
+        $pusher_date['keyword2'] = $model->value.'元';
+        $pusher_date['keyword3'] = $model->created_time;
+        $pusher_date['remark']   = '您可以点击通知查看收入详情。';
+        $pusher_task_gid         = $model->task_gid;
+        Yii::$app->wechat_pusher->accountEventIn($pusher_date,$pusher_task_gid,$pusher_weichat_id);
+        
+        return true;
+    }
+
+    public static function sendRedPacketToInviter($invitee_userid){
+        $invitee = User::findOne(['id'=>$invitee_userid]);
+        $inviter_id = isset($invitee->invited_by) ? $invitee->invited_by : 0;
+        $inviter = User::findOne(['id'=>$inviter_id]);
+        
+        $has_send = AccountEvent::findOne([
+            'user_id' => $inviter_id,
+            'red_packet_accept_by' => $invitee_userid,
+        ]);
+
+        if( $inviter_id && !isset($has_send->id) ){
+            $note = Yii::$app->params['weichat']['red_packet']['note'];
+            $username = substr($invitee->username, 0, 3).'****'.substr($invitee->username, -4);
+            $note = str_ireplace( '{username}', $username, $note );
+
+            // 给 $inviter_id 发红包
+            $data = [
+                'date'      => date("Y-m-d"),
+                'user_id'   => $inviter_id,
+                'value'     => Yii::$app->params['weichat']['red_packet']['value'],
+                'note'      => $note,
+                'operator_id'  => 0,
+                'created_time' => date("Y-m-d H:i:s"),
+                'red_packet_accept_by' => $invitee_userid,
+                'type'      => AccountEvent::TYPES_WEICHAT_RECOMMEND,
+            ];
+            $weichat_base = new WeichatBase();
+            $weichat_base->putMoneyToAccount($data);
+            User::updateAll(
+                ['red_packet_num'=>$inviter->red_packet_num + 1],    
+                ['id'=>$inviter->id]
+            );
+        }
+    }
+
+    public static function sendRedPacketToUserFirstTime($userid){
+        $user = User::findOne(['id'=>$userid]);
+
+        $has_send = AccountEvent::findOne([
+            'user_id' => $userid,
+            'red_packet_accept_by' => $userid,
+        ]);
+
+        if( isset($user->id) && !isset($has_send->id) ){
+            $note = Yii::$app->params['weichat']['red_packet']['note_me'];
+
+            // 给 $inviter_id 发红包
+            $data = [
+                'date'      => date("Y-m-d"),
+                'user_id'   => $user->id,
+                'value'     => Yii::$app->params['weichat']['red_packet']['value_me'],
+                'note'      => $note,
+                'operator_id'  => 0,
+                'created_time' => date("Y-m-d H:i:s"),
+                'red_packet_accept_by' => $user->id,
+                'type'      => AccountEvent::TYPES_WEICHAT_RECOMMEND,
+            ];
+            $weichat_base = new WeichatBase();
+            $weichat_base->putMoneyToAccount($data);
+        }
     }
 }

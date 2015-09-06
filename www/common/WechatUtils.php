@@ -63,7 +63,7 @@ class WechatUtils
         return $access_token;
     }
 
-    public static function getUrlJson($targetUrl, $getData=''){
+    public static function getUrlJson($targetUrl, $postData=''){
         // 请求的数据
         $error = false;
         $data = [];
@@ -74,7 +74,7 @@ class WechatUtils
             curl_setopt($curlobj, CURLOPT_URL, $targetUrl);
             curl_setopt($curlobj, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curlobj, CURLOPT_HEADER, 0);
-            curl_setopt($curlobj, CURLOPT_POSTFIELDS, $getData);
+            curl_setopt($curlobj, CURLOPT_POSTFIELDS, $postData);
             curl_setopt($curlobj, CURLOPT_SSL_VERIFYPEER, FALSE);
             curl_setopt($curlobj, CURLOPT_SSL_VERIFYHOST, FALSE);
             curl_setopt($curlobj, CURLOPT_TIMEOUT, 1000);
@@ -84,7 +84,7 @@ class WechatUtils
                 $data = json_decode($returnstr, true);
                 if (isset($data['errcode'])){
                     if (intval($data['errcode'])>0){
-                        Yii::error("wechat:打开微信出错, error code:" . $data['errcode'] . "url is:" . $targetUrl);
+                        Yii::error("wechat:打开微信出错, error code:" . $data['errcode'] . " url is:" . $targetUrl);
                         $err = 1;
                         throw new Exception("系统正在调整，请稍后再试");
                     }

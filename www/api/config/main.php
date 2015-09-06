@@ -120,6 +120,8 @@ return [
                     'patterns' => [
                         'POST set-password' => 'set-password',
                         'GET profile' => 'profile',
+                        'GET tear' => 'tear',
+                        'POST tear' => 'tear',
                         'POST bind-third-party-account' => 'bind-third-party-account',
                     ],
                 ],

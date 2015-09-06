@@ -9,6 +9,8 @@ use yii\web\IdentityInterface;
 use common\Utils;
 use common\BaseActiveRecord;
 use common\models\WeichatUserInfo;
+use common\models\AccountEvent;
+use common\models\District;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -55,7 +57,7 @@ class User extends BaseActiveRecord implements IdentityInterface
     {
         return [
             [['username'], 'required'],
-            [['status', 'invited_by', 'is_virgin'], 'integer'],
+            [['status', 'invited_by', 'is_virgin', 'red_packet_city'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
             [['username', 'name'], 'string', 'max' => 200],
             [['password_hash', 'password_reset_token', 'email',
@@ -106,6 +108,8 @@ class User extends BaseActiveRecord implements IdentityInterface
             'updated_time' => '更新时间',
             'name' => '姓名',
             'invited_by' => '邀请码',
+            'red_packet_city' => '城市',
+            'red_packet_num' => '红包邀请数量',
         ];
     }
 
@@ -289,7 +293,8 @@ class User extends BaseActiveRecord implements IdentityInterface
     }
 
     public function getWeichat(){
-        return $this->hasOne(WeichatUserInfo::className(),['userid' => 'id']);
+        return $this->hasOne(WeichatUserInfo::className(),['userid' => 'id'])
+            ->andWhere(['status'=>WeichatUserInfo::STATUS_OK]);
     }
 
     public function getLast_location()
@@ -297,6 +302,29 @@ class User extends BaseActiveRecord implements IdentityInterface
         return $this->hasOne(
             UserHistoricalLocation::className(), ['user_id' => 'id'])
             ->orderBy(['id'=>SORT_DESC]);
+    }
+
+    public function getInvite()
+    {
+        return $this->hasMany(User::className(), ['invited_by' => 'id']);
+    }
+
+    public function getInvite_account()
+    {
+        return $this->hasMany(AccountEvent::className(), ['user_id' => 'id'])
+            ->andWhere(['type' => AccountEvent::TYPES_WEICHAT_RECOMMEND]);
+    }
+
+    public static function getCityList(){
+        $citys_obj = District::find()
+            ->where(['level'=>'city','is_alive'=>1])
+            ->addOrderBy(['id'=>SORT_ASC])
+            ->all();
+        $citys = [0=>'未知'];
+        foreach( $citys_obj as $city ){
+            $citys[$city->id] = $city->name;
+        }
+        return $citys; 
     }
 
 }

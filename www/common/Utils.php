@@ -148,13 +148,18 @@ class Utils
         $lat2 = $poi2['lat'];
         $lng2 = $poi2['lng'];
 
-        $rlat1 = $this->rad($lat2);
-        $rlat2 = $this->rad($lat);
+        $rlat1 = $lat * pi()/180.0;
+        $rlat2 = $lat2 * pi()/180.0;
         $rt = $rlat1 - $rlat2;
         $rad = pi()/180.0 ;
         $rg = ($rad * $lng2) - ($rad * $lng);
         $s = (2 * asin(sqrt(pow(sin($rt/2), 2))) +
             cos($rlat1)*cos($rlat2) * pow(sin($rg/2),2)) * 6372.797 * 1000;
         return $s;
+    }
+
+    public static function distanceStr($poi, $poi2)
+    {
+        return Yii::$app->formatter->asDistance(static::distance($poi, $poi2));
     }
 }

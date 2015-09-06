@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use common\models\User;
 use common\models\Resume;
+use common\models\UserHistoricalLocation;
 
 /**
  * This is the model class for table "{{%weichat_user_info}}".
@@ -38,6 +39,14 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
 
     const IS_RECEIVE_NEARBY_MSG_YES = 1;
     const IS_RECEIVE_NEARBY_MSG_NO  = 0;
+
+    public static $ORIGIN_TYPES = [
+        0  => '未知', 
+        10 => '用户红包',  
+    ];
+
+    const ORIGIN_TYPES_UNKNOW = 0;
+    const ORIGIN_TYPES_REDPACKET = 10;
 
     public static function tableName()
     {
@@ -80,6 +89,11 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'userid']);
+    }
+
+    public function getUser_historical_location(){
+        return $this->hasOne(UserHistoricalLocation::className(),['user_id'=>'userid'])
+            ->addOrderBy(['id'=> SORT_DESC]);
     }
 
     public function getResume(){

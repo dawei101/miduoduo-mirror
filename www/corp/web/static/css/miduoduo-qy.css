@@ -201,20 +201,20 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .pitch-current .iconfont{margin:0 10px 0 10px; font-size:20px;color:#00b966;}
 .current a{ }
 .current a{color:#00b966; display:block; width:100%;background:#fff;width:100%;}
-.zhiwei-lis{width:790px; padding:30px; overflow:hidden;width:900px;}
+.zhiwei-lis {overflow: hidden; padding: 20px 30px 30px; width: 900px;}
 .zhiwei-lis li{width:750px; border:1px #d2d5d8 solid; overflow:hidden; margin-bottom:20px;width:100%}
 .zhiwei-lis-title{width:100%; border-bottom:1px #eee dashed; overflow:hidden; height:40px; border-bottom:1px #ccc dashed; margin-bottom:5px;}
-.zhiwei-lis-title h2{width:70%; line-height:40px; color:#3388ff; font-size:16px;padding-left:20px;}
-.bt-span{height:30px; padding-top:10px;}
+.zhiwei-lis-title h2 { color: #3388ff;font-size: 16px; line-height: 40px;padding-left: 20px; width: 73%;}
+.bt-span {height: 30px; overflow: hidden;padding-top: 7px;}
 .zhiwei-lis-title span{border:1px #00b966 solid; border-radius:4px; padding:2px 4px; margin-top:10px; margin-right:20px; cursor:pointer;width:73%;}
-.zhiwei-lis-left{width:70%; height:90px; line-height:30px; padding-left:20px; color:#606c77}
+.zhiwei-lis-left { color: #606c77;font-size: 12px;height: 70px; line-height: 22px;padding-left: 20px;width: 70%;}
 .zhiwei-lis-left span{margin-right:20px;}
-.zhiwei-lis-right{width:230px; height:90px; line-height:30px;color:#606c77}
+.zhiwei-lis-right {color: #606c77;font-size: 12px; height: 58px;  line-height: 20px;width: 230px;}
 .fb-sj{color:#a5abb2;}
 .zhiwei-zt{width:230px;}
 .bg-left,.bg-right{width:50px; height:19px; background:url(../img/z-xian.png) repeat-x; margin-top:20px;}
 .bg-text{width:110px; line-height:60px;font-size:16px;}
-.shenqing-zt{width:140px; height:40px; border-radius:4px; background:#00b966; color:#fff; line-height:40px; margin-top:5px;font-size:16px; }
+.shenqing-zt{width:156px; border-radius:4px; background:#00b966; color:#fff; line-height:30px; margin-top:5px;font-size:16px; }
 .news{width:48px; height:20px; line-height:18px; color:#fff; font-size:16px; background:#ef1d1d; margin-top:20px; border-radius:10px; margin-left:20px;}
 
 .jianli-lis{width:100%; padding:30px; overflow:hidden; color:#606c77;}
@@ -346,13 +346,13 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 
 /*================================================这里是新样式开始===============================================*/
 .names a{color:#3388ff;}
-.daka_lis{width:950px; overflow:hidden; color:#606c77; border:1px #eee solid; margin:20px 0 20px 10px;}
+.daka_lis {border: 1px solid #eee; color: #606c77;margin: 30px; overflow: hidden;}
 .daka_lis dd{border-bottom:1px #eee solid; overflow:hidden; padding:10px 0 20px 20px;}
 .tab_1{width:85%; float:left;}
 .tab_2{width:15%; float:left; text-align:center;font-size:16px;}
 .tab_tag span{margin-right:30px; font-size:16px; display:block; float:left; width:28%;}
 .tab_tag span em{font-style:normal; margin:0 5px;}
-.tab_1 .names{font-size:20px; margin-bottom:10px;}
+.tab_1 .names {font-size: 16px;margin-bottom: 10px;}
 .tab_text{ line-height:40px; margin-bottom:10px;}
 .tab_2 a{padding:10px 27px; background:#00b966; margin:10px auto; color:#fff;}
 .conter-title1{height:48px; border-bottom:1px #00b966 solid; width:100%; color:#2a3141; font-size:18px; line-height:48px; padding-left:20px; background:#FFF;}

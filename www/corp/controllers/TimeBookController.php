@@ -40,6 +40,10 @@ class TimeBookController extends CBaseController
             'totalCount' => $countQuery->count()]);
 
         $tasks = $query->offset($pages->offset)
+            ->andWhere(['status'=>[
+                Task::STATUS_OK, Task::STATUS_DELETED, 
+                Task::STATUS_OFFLINE, Task::STATUS_OVERDUE
+            ]])
             ->limit($pages->limit)->all();
 
         return $this->render('index', [
@@ -67,7 +71,9 @@ class TimeBookController extends CBaseController
 
         $today = date('Y-m-d');
 
-        $query = $task->getApplicants()->joinWith('resume', 'address');
+        $query = $task->getApplicants()
+            ->andWhere([TaskApplicant::tableName() . '.status'=>TaskApplicant::STATUS_APPLY_SUCCEED])
+            ->joinWith('resume', 'address');
         $query->filterWhere([Resume::tableName() . '.name'=> $resume_name]);
 
         $countQuery = clone $query;
@@ -283,7 +289,9 @@ class TimeBookController extends CBaseController
         }
         $resume = Resume::findOne(['user_id'=> $user_id]);
         $query = Schedule::find()
-            ->where(['owner_id'=>$user_id, 'task_id'=>$task_id])
+            ->where(['owner_id'=>Yii::$app->user->id,
+                'user_id' => $user_id,
+                'task_id'=>$task_id])
             ->with('on_record')->with('off_record')
             ->orderBy(['date'=> SORT_DESC]);
         if ($on_late!=''){
@@ -319,7 +327,7 @@ class TimeBookController extends CBaseController
         } else {
             if ($action=='record_note') {
                 $schedule->note = $note;
-            } else if ($action=='delete'){
+            } else {
                 $schedule->{$action} = 1;
             }
             $r = $schedule->save();
