@@ -285,9 +285,9 @@ class Task extends \common\BaseActiveRecord
             $this->gid = time() . mt_rand(100, 999) . $user_id;
 
             if ($this->origin==$this::ORIGIN_INTERNAL){
-                $this->order_time = date('Y-m-d H:i:s', strtotime('+1 day'));
+                $this->order_time = date('Y-m-d H:i:s', strtotime('+7 day'));
             } elseif ($this->origin==$this::ORIGIN_CORP){
-                $this->order_time = date('Y-m-d H:i:s', strtotime('+12 hour'));
+                $this->order_time = date('Y-m-d H:i:s', strtotime('+5 day'));
             } else {
                 $this->order_time = date('Y-m-d H:i:s', time());
             }
