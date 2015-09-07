@@ -13,6 +13,15 @@ use common\models\JobQueue;
 class JobWorkerController extends Controller
 {
 
+
+    public function actionSchedule()
+    {
+        // 添加每日任务
+        // Yii::$app->job_queue_manager->add(); ...
+
+    }
+
+
     public function actionTest($job_id)
     {
         $job = JobQueue::findOne($job_id);
