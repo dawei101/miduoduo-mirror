@@ -4,7 +4,7 @@ namespace console\jobs;
 
 use console\BaseJob;
 
-class CouldStorageJob extends BaseJob
+class CloudStorageJob extends BaseJob
 {
 
     public function actionSyncFile($model, $column, $pk)
