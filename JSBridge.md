@@ -33,10 +33,10 @@ function CallBack(str) {
     window.MDDNative.auth(json，callback)
     json: 字符串
     {
-        register：2- 微信登录，1- 注册，0 － 登录
-        isInit:
-            true: 填写资料
-            false：不填写个人资料
+        type：2- 微信登录，1- 注册，0 － 登录
+        notInit:
+            true: 不填写个人资料
+            false：填写资料
     }
     
     注：json ＝ null
