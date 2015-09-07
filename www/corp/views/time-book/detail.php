@@ -87,21 +87,21 @@
                      ?>
                         |
                         <?=$record->time?>
-                        |  [<?=$record->distance?>m]
-                            <a target="_blank" href="http://api.map.baidu.com/marker?location=<?=$record->lat?>,<?=$record->lng?>&title=<?=$schedule->date.'-'.$resume->name.'-'.'上班打卡地点'?>&output=html">查看地图</a>
+                        |  [<?=$record->distance?>]
+                            <a target="_blank" href="http://api.map.baidu.com/marker?location=<?=$record->lat?>,<?=$record->lng?>&output=html">查看地图</a>
                      <?php } else {?>
                         |  无记录
                      <?php }?>
                 </div>
                 <div>
                     <span>下班情况：</span>
-                        <?=$schedule->on_late?'早退':'正常'?>
+                        <?=$schedule->off_early?'早退':'正常'?>
                      <?php if ($schedule->off_record) { 
                         $record=$schedule->off_record;
                      ?>
                         |
                         <?=$record->time?>
-                        |  [<?=$record->distance?>m]
+                        |  [<?=$record->distance?>]
                             <a target="_blank" href="http://api.map.baidu.com/marker?location=<?=$record->lat?>,<?=$record->lng?>&title=<?=$schedule->date.'-'.$resume->name.'-'.'上班打卡地点'?>&output=html">查看地图</a>
                      <?php } else {?>
                         |  无记录

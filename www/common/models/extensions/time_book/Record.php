@@ -73,7 +73,7 @@ class Record extends \common\BaseActiveRecord
     public function getDistance()
     {
         if (!$this->_distance){
-            $this->_distance = Utils::distance(
+            $this->_distance = Utils::distanceStr(
                 ['lat'=>$this->lat, 'lng'=> $this->lng],
                 ['lat'=> $this->schedule->lat, 'lng'=> $this->schedule->lng]
             );
@@ -84,10 +84,10 @@ class Record extends \common\BaseActiveRecord
     public function checkout()
     {
         if ($this->event_type==$this::EVENT_ON){
-            $this->schedule->on_late = $this->schedule->from_datetime < $this->created_time;
+            $this->schedule->on_late = strtotime($this->schedule->from_datetime) < time();
         }
         if ($this->event_type==$this::EVENT_OFF){
-            $this->schedule->off_early = $this->schedule->to_datetime > $this->created_time;
+            $this->schedule->off_early = strtotime($this->schedule->to_datetime) > time();
         }
         $this->schedule->save();
     }

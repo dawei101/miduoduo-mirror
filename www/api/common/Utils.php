@@ -19,7 +19,7 @@ class Utils
             'has_resume' => !empty($user->resume),
             'has_wechat' => !empty($user->weichat),
             'id_extam_status' => $user->resume?$user->resume->exam_status:false,
-            'is_virgin' => $user->is_virgin,
+            'is_virgin' => $user->is_virgin && empty($user->resume),
             'last_city' => [],
         ];
         if ($user->last_location){

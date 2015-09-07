@@ -148,7 +148,7 @@ return [
         'jobs' => $root_path . '/console/jobs',
         'data' => '/service/data',
         'media' => '/service/data/media',
-        'html5_src' => $project_root . '/frontend/dist/webapp',
+        'html5_src' => $project_root . '/frontend/dist/customer/webapp',
         'html5_dest' => $root_path . '/html5_dest',
     ],
     'language'=>'zh-CN',
