@@ -96,6 +96,10 @@ class AccountEvent extends BaseActiveRecord
         return $this->hasOne(Resume::className(),['user_id' => 'operator_id']);
     }
 
+    public function getInvitee(){
+        return $this->hasOne(User::className(),['id' => 'red_packet_accept_by']);
+    }
+
     public function extraFields(){
         return ['accounts'];
     }

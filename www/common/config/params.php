@@ -53,6 +53,13 @@ return [
             'appmsg'    => '-gglDuUE4SjcfP69Vj2Y_7yho-9Ox1vrW_2GAdcd9aA',  // 职位消息通知
         ],
         'preview_user'  => '13699273824,18611299991,18210135925,13240055520',// 定时推送预览人员
+        'url'   => [
+            'erweima_show' => 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=', // 二维码显示
+        ],
+        'red_packet' => [
+            'value' => 2, // 被邀请人注册，邀请人获得金额
+            'note' => '成功邀请好友{username}注册', // 微信提示消息
+        ],
     ],
 
     'seo'   => [

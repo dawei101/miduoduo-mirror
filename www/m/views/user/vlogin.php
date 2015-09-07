@@ -30,7 +30,9 @@ $this->nav_right_title = '登录';
             </div>
             <p class="help-block help-block-error"><?=$model->getFirstError('code')?></p>
           </div>
+          <!--
           <?= $signuping?$form->field($model, 'invited_code')->label('邀请码'):'' ?>
+          -->
 
                 </div>
         </div>

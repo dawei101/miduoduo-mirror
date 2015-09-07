@@ -100,7 +100,7 @@ class WechatPusher extends WeichatBase
             array('name'=>'keyword3','value'=>$task->from_date.'至'.$task->to_date,'color'=>'#444'),
             array('name'=>'keyword4','value'=>$task->address,'color'=>'#444'),
             array('name'=>'keyword5','value'=>$task->contact.' '.$task->contact_phonenum,'color'=>'#444'),
-            array('name'=>'remark','value'=>"联系时，请告知是从米多多投递的。如遇任何招聘问题，请致电米多多。01084991662。也可点此内容进入职位详情投诉。",'color'=>'#999')
+            array('name'=>'remark','value'=>"联系时，请告知是从米多多投递的。如遇任何招聘问题，请致电米多多：".Yii::$app->params['supportTel']."。也可点此内容进入职位详情投诉。",'color'=>'#999')
         );
         $gotoUrl        = Yii::$app->params['baseurl.wechat'].'/view/job/job-detail.html?task='.$task->id;
         $this->pushWeichatMsg($touser,$weichatTempID,$params,$gotoUrl);
@@ -115,8 +115,8 @@ class WechatPusher extends WeichatBase
             array('name'=>'keyword2','value'=>$task->title,'color'=>'#000080'),
             array('name'=>'keyword3','value'=>$task->service_type->name,'color'=>'#000080'),
             array('name'=>'keyword4','value'=>$task->address,'color'=>'#000080'),
-            array('name'=>'keyword5','value'=>$task->salary.' /'.$task::$SALARY_UNITS[$task->salary_unit],'color'=>'#000080'),
-            array('name'=>'remark','value'=>"如遇任何问题，请致电米多多，010-84991662。也可以点此内容进职位详情投诉。",'color'=>'#999')
+            array('name'=>'keyword5','value'=>$task->contact.' '.$task->contact_phonenum,'color'=>'#000080'),
+            array('name'=>'remark','value'=>"联系时，请告知是从米多多投递的。如遇任何招聘问题，请致电米多多：".Yii::$app->params['supportTel']."。也可点此内容进入职位详情投诉。",'color'=>'#999')
         );
         $gotoUrl        = Yii::$app->params['baseurl.wechat'].'/view/job/job-detail.html?task='.$task->id;
         $this->pushWeichatMsg($touser,$weichatTempID,$params,$gotoUrl);
@@ -132,8 +132,8 @@ class WechatPusher extends WeichatBase
             array('name'=>'keyword2','value'=>$task->title,'color'=>'#000080'),
             array('name'=>'keyword3','value'=>$task->service_type->name,'color'=>'#000080'),
             array('name'=>'keyword4','value'=>$task->address,'color'=>'#000080'),
-            array('name'=>'keyword5','value'=>$task->salary.' /'.$task::$SALARY_UNITS[$task->salary_unit],'color'=>'#000080'),
-            array('name'=>'remark','value'=>"别灰心，您可以点击查看更多兼职去投递。如遇任何问题，请致电米多多，010-84991662。",'color'=>'#999')
+            array('name'=>'keyword5','value'=>$task->contact.' '.$task->contact_phonenum,'color'=>'#000080'),
+            array('name'=>'remark','value'=>"别灰心，你可以查看更多优质的职位去投递。如遇任何招聘问题，请致电米多多：".Yii::$app->params['supportTel']."。也可点此内容进入职位详情投诉。",'color'=>'#999')
         );
         $gotoUrl        = Yii::$app->params['baseurl.wechat'].'/view/index.html';
         $this->pushWeichatMsg($touser,$weichatTempID,$params,$gotoUrl);
@@ -150,7 +150,7 @@ class WechatPusher extends WeichatBase
             array('name'=>'keyword3','value'=>$task->notice->meet_time,'color'=>'#444'),
             array('name'=>'keyword4','value'=>$task->notice->place,'color'=>'#444'),
             array('name'=>'keyword5','value'=>$task->notice->linkman.','.$task->notice->phone,'color'=>'#444'),
-            array('name'=>'remark','value'=>"请您准时参加。如遇问题，请联系米多多：0108765342",'color'=>'#999')
+            array('name'=>'remark','value'=>"请您准时参加。如遇问题，请联系米多多：".Yii::$app->params['supportTel']." ",'color'=>'#999')
         );
         $gotoUrl        = Yii::$app->params['baseurl.wechat'].'/view/job/job-detail.html?task='.$task->id;
         $this->pushWeichatMsg($touser,$weichatTempID,$params,$gotoUrl);

@@ -146,6 +146,7 @@ class Task extends \common\BaseActiveRecord
     const STATUS_OK = 0;
     const STATUS_IS_CHECK = 30;
     const STATUS_UN_PASSED = 40;
+    const STATUS_OVERDUE = 50;
     const STATUS_OFFLINE = 10;
     const STATUS_DELETED = 20;
     const STATUS_UNCONFIRMED_FROM_SPIDER = 100;
@@ -153,13 +154,15 @@ class Task extends \common\BaseActiveRecord
 
     public function getStatus_label()
     {
+        if ($this->is_overflow){
+            return $this->is_overflow_label;
+        }
         return static::$STATUSES[$this->status];
     }
     public function getOrigin_label()
     {
         return static::$ORIGIN[$this->origin];
     }
-
 
     public function getClearance_period_label()
     {
@@ -285,9 +288,9 @@ class Task extends \common\BaseActiveRecord
             $this->gid = time() . mt_rand(100, 999) . $user_id;
 
             if ($this->origin==$this::ORIGIN_INTERNAL){
-                $this->order_time = date('Y-m-d H:i:s', strtotime('+1 day'));
+                $this->order_time = date('Y-m-d H:i:s', strtotime('+7 day'));
             } elseif ($this->origin==$this::ORIGIN_CORP){
-                $this->order_time = date('Y-m-d H:i:s', strtotime('+12 hour'));
+                $this->order_time = date('Y-m-d H:i:s', strtotime('+5 day'));
             } else {
                 $this->order_time = date('Y-m-d H:i:s', time());
             }

@@ -21,6 +21,7 @@ use common\models\Resume;
 use common\models\District;
 use common\models\ConfigRecommend;
 use yii\helpers\Json;
+use common\models\UserHistoricalLocation;
 
 /**
  * Site controller
@@ -60,13 +61,42 @@ class SiteController extends MBaseController
 
     public function actionIndex($city_pinyin='beijing')
     {
-        $cpinyin = Yii::$app->session->get('city_pinyin');
-        if ($cpinyin!=$city_pinyin){
-             Yii::$app->session->set('city_pinyin', $city_pinyin);
-        }
         $city = District::findOne(
             ['seo_pinyin'=> $city_pinyin, 'level'=>'city', 'is_alive'=> 1]);
         $city_id = $city ? $city->id : '';
+        
+        // 登录用户的上次城市
+        $user_id = Yii::$app->user->id ? Yii::$app->user->id : 0;
+        if( $user_id ){
+            $db_city = UserHistoricalLocation::find()
+                ->where(['user_id'=>$user_id])
+                ->orderBy(['id'=>SORT_DESC])
+                ->with('city')
+                ->one();
+            $db_city_pinyin = isset($db_city->city->seo_pinyin) ? $db_city->city->seo_pinyin : '';
+        }else{
+            $db_city_pinyin = '';
+        }
+
+        // 切换城市，更新session
+        $session_city_pinyin = Yii::$app->session->get('city_pinyin');
+        if( !$session_city_pinyin ){
+            Yii::$app->session->set('city_pinyin', $db_city_pinyin);
+            $session_city_pinyin = $db_city_pinyin;
+            if( !$city_pinyin ){
+                $city_pinyin = $db_city_pinyin;
+            }
+        }
+        if ($session_city_pinyin!=$city_pinyin){
+             Yii::$app->session->set('city_pinyin', $city_pinyin);
+        }
+        // 切换城市，更新db
+        if( $user_id && $db_city_pinyin != $city_pinyin ){
+            $user_historical_location = new UserHistoricalLocation();
+            $user_historical_location->city_id = $city_id;
+            $user_historical_location->user_id = $user_id;
+            $user_historical_location->save();
+         }
 
         // 查询出需要展示的 gids
         // type=1 标示查询的是M端的推荐信息
@@ -99,8 +129,6 @@ class SiteController extends MBaseController
             ->addOrderBy(['display_order'=>SORT_DESC])
             ->joinWith('recommend')->all();
 
-            $city = District::findOne($city_id);
-            //print_r( $query->all() );exit;
             return $this->render('index', 
                 ['tasks'=>$tasks,
                  'city'=>$city,
@@ -117,7 +145,6 @@ class SiteController extends MBaseController
                 ->addOrderBy(['id'=>SORT_DESC])
                 ->limit(5);
                 ;
-            $city = District::findOne($city_id);
             return $this->render('index', 
                 ['tasks'=>$query->all(),
                  'city'=>$city,
@@ -128,6 +155,24 @@ class SiteController extends MBaseController
     }
 
     public function actionChangeCity(){
+        // 数据库中记录的城市
+        $user_id = Yii::$app->user->id ? Yii::$app->user->id : 0;
+        if( $user_id ){
+            $db_city = UserHistoricalLocation::find()
+                ->where(['user_id'=>$user_id])
+                ->orderBy(['id'=>SORT_DESC])
+                ->with('city')
+                ->one();
+            $db_city_pinyin = isset($db_city->city->seo_pinyin) ? $db_city->city->seo_pinyin : '';
+        }else{
+            $db_city_pinyin = '';
+        }
+        $session_city_pinyin = Yii::$app->session->get('city_pinyin');
+        if( $db_city_pinyin && !$session_city_pinyin ){
+            Yii::$app->session->set('city_pinyin', $db_city_pinyin);
+            return $this->redirect('/'.$db_city_pinyin.'/');
+        }
+
         // 城市
         $citys  = District::find()
             ->where(['is_alive'=>1,'level'=>'city'])

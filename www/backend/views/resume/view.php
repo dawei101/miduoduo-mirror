@@ -74,17 +74,17 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'gov_id_pic_front',
                 'format' => 'raw',
-                'value' => ($model->gov_id_pic_front?Html::img(Utils::urlOfFile($model->gov_id_pic_front)):'无') ,
+                'value' => ($model->gov_id_pic_front?Html::img(Utils::urlOfFile($model->gov_id_pic_front), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->gov_id_pic_front)."')"]):'无') ,
             ],
             [
                 'attribute' => 'gov_id_pic_back',
                 'format' => 'raw',
-                'value' => ($model->gov_id_pic_back?Html::img(Utils::urlOfFile($model->gov_id_pic_back)):'无') ,
+                'value' => ($model->gov_id_pic_back?Html::img(Utils::urlOfFile($model->gov_id_pic_back), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->gov_id_pic_back)."')"]):'无') ,
             ],
             [
                 'attribute' => 'gov_id_pic_take',
                 'format' => 'raw',
-                'value' => ($model->gov_id_pic_take?Html::img(Utils::urlOfFile($model->gov_id_pic_take)):'无') ,
+                'value' => ($model->gov_id_pic_take?Html::img(Utils::urlOfFile($model->gov_id_pic_take), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->gov_id_pic_take)."')"]):'无') ,
             ],
             [
                 'attribute' => 'exam_status',
@@ -99,11 +99,11 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="panel-heading">认证审核 </div>
       <div class="panel-body">
         <p >身份证正面：</p>
-        <?= Html::img(Utils::urlOfFile($model->gov_id_pic_front)) ?>
+        <?= Html::img(Utils::urlOfFile($model->gov_id_pic_front), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->gov_id_pic_front)."')"]) ?>
         <p >身份证反面：</p>
-        <?= Html::img(Utils::urlOfFile($model->gov_id_pic_back)) ?>
+        <?= Html::img(Utils::urlOfFile($model->gov_id_pic_back), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->gov_id_pic_back)."')"]) ?>
         <p >身份证手持：</p>
-        <?= Html::img(Utils::urlOfFile($model->gov_id_pic_take)) ?>
+        <?= Html::img(Utils::urlOfFile($model->gov_id_pic_take), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->gov_id_pic_take)."')"]) ?>
       </div>
         <div class="panel-footer">
           <div class="row">
