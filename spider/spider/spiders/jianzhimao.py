@@ -149,8 +149,6 @@ class XlbSpider(scrapy.Spider):
             self.logger.debug("Trace end: location....")
             yield task
         except Exception, e:
-            import pdb
-            pdb.set_trace()
             self.logger.error("parse detail failed with error: %s" % e)
 
 

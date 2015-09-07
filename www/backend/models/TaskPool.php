@@ -223,6 +223,7 @@ class TaskPool extends \common\BaseActiveRecord
             $this->task_id = $task->id;
             $this->status = static::STATUS_EXPORTED;
             $this->save();
+
         }
         return $task;
     }
