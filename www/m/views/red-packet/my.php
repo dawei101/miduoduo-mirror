@@ -15,8 +15,8 @@
 <div class="midd_top"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/midd_top.jpg"></div>
 <div class="midd_main"> <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/hongbao.png" >
   <div class="title_hb"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/my_hb.png"></div>
-  <div class="jin_e"><?=$invited_all_value?>元</div>
-  <div class="text_b"> <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/hb_sm.png"> 
+  <div class="jin_e"><?=str_ireplace('.00','',$invited_all_value)?><span style="font-size:14px; margin-top:-10px;">元</span></div>
+  <div class="text_b"> <div class="pic"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/hb_sm.png"></div>
   <a href="javascript:;" class="fenx cd-popup-trigger fenxiang-btn">分享给好友去赚红包</a> <a href="<?=Yii::$app->params['baseurl.wechat']?>/view/pay/cash-account.html" class="tix">去提现</a> </div>
 </div>
 <div class="bot_box"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/bot_img.jpg"></div>
@@ -39,7 +39,7 @@
                     <?=isset($invited->invitee->username)?(substr($invited->invitee->username,0,3).'****'.substr($invited->invitee->username,-4)):'未注册'?></li>
             <?php } ?>
         </ul>
-        <a href="/red-packet/my-records">查看更多<br />
+        <a href="<?=Yii::$app->params['baseurl.m']?>/red-packet/my-records">查看更多<br />
         <img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/more.png" width="29" height="21"></a> </div>
       <?php }else{ ?>
         <a href="<?=Yii::$app->params['baseurl.m']?>/red-packet?id=<?=$user_id?>" style="border:0px;">您还木有收入哦，快快行动吧！</a>
@@ -109,7 +109,7 @@
         });
 
         wx.onMenuShareAppMessage({
-            title: '<?=isset($userinfo->resume->name)?$userinfo->resume->name:"我"?>分享的米多多现金红包，百万现金红包大派送！', // 分享标题
+            title: '<?=isset($userinfo->resume->name)?$userinfo->resume->name:"我"?>分享的米多多百万现金红包大派送，立即领取！', // 分享标题
             desc: '来领取现金红包，还可帮【<?=isset($userinfo->resume->name)?$userinfo->resume->name:"TA"?>】获得奖励哦！', // 分享描述
             link: "<?=Yii::$app->params['baseurl.m']?>/red-packet?id=<?=isset($userinfo->id)?$userinfo->id:2006?>", // 分享链接
             imgUrl: "<?=Yii::$app->params['baseurl.static.m']?>/static/img/hongbao.jpg", // 分享图标
