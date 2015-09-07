@@ -1,3 +1,9 @@
+//点击显示以藏
+$(function(){
+   $(".add-xs").click(function(){ $(".add-ons").toggle(); 
+   });
+});
+
 $(function() {
       $(".tagBox-add-tag").hide();
 });

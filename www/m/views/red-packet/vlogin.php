@@ -39,7 +39,7 @@ $this->title = '米多多百万现金红包大派送！';
      </div>
      <?= Html::submitButton('立即领取', ['class' => 'botton_l', 'name' => 'login-button']) ?>
    <?php ActiveForm::end(); ?>
-     <div class="ts">分享好友，每注册成功一个，则返现<b><?=$inviter_value?></b>元，多返多送！</div>
+     <div class="ts">分享好友，每注册成功一个，则返现<b><?=$inviter_value?></b>元，多邀多送！</div>
   </div>
 </div>
 <div class="bot_box"><img src="<?=Yii::$app->params['baseurl.static.m']?>/static/img/red-packet/bot_img.jpg"></div>
@@ -52,8 +52,8 @@ $this->title = '米多多百万现金红包大派送！';
     <div>
       <p>1、活动时间：即日起至2015年12月30日</p>
       <p>2、注册用户可得1元</p>
-      <p>3、邀请好友注册可得2元</p>
-      <p>4、满10元以即可微信提现！</p>
+      <p>3、邀请好友注册，邀请人可得2元</p>
+      <p>4、满10元以上即可微信提现！</p>
     </div>
    </div>
 </div>

@@ -59,13 +59,13 @@ if ($model->status!=Company::STATUS_DELETED) {
             [
                 'attribute' => 'person_idcard_pic',
                 'format' => 'raw',
-                'value' => ($model->person_idcard_pic?Html::img(Utils::urlOfFile($model->person_idcard_pic)):'无') ,
+                'value' => ($model->person_idcard_pic?Html::img(Utils::urlOfFile($model->person_idcard_pic), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->person_idcard_pic)."')"]):'无') ,
             ],
             'corp_idcard',
             [
                 'attribute' => 'corp_idcard_pic',
                 'format' => 'raw',
-                'value' => $model->corp_idcard_pic?Html::img(Utils::urlOfFile($model->corp_idcard_pic)):'无',
+                'value' => $model->corp_idcard_pic?Html::img(Utils::urlOfFile($model->corp_idcard_pic), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->corp_idcard_pic)."')"]):'无',
             ],
             'exam_result_label',
             'exam_status_label',
@@ -77,10 +77,10 @@ if ($model->status!=Company::STATUS_DELETED) {
       <div class="panel-heading">认证审核 </div>
       <div class="panel-body">
         <p >身份证:</p>
-        <?= Html::img(Utils::urlOfFile($model->person_idcard_pic)) ?>
+        <?= Html::img(Utils::urlOfFile($model->person_idcard_pic), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->person_idcard_pic)."')"]) ?>
         <?php if ($model->corp_idcard_pic) { ?>
         <p >营业执照:</p>
-        <?= Html::img(Utils::urlOfFile($model->corp_idcard_pic)) ?>
+        <?= Html::img(Utils::urlOfFile($model->corp_idcard_pic), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->corp_idcard_pic)."')"]) ?>
         <?php } ?>
       </div>
         <div class="panel-footer">

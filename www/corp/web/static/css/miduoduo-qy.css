@@ -180,6 +180,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .ma-right input{color:#999;}
 .add-xs{width:100px; line-height:40px; font-size:16px; border:none; background:#fff; margin-left:10px; cursor:pointer}
 .add-ons{clear:both; padding: 0 0 0 118px; height:40px; display:none}
+.qy-add-ons{padding-left:139px;}
 .add-ons-input{margin-right:5px; margin-top:10px; width:120px;}
 .add-ons-input input{width:120px; height:40px; text-indent:0.3em; color:#999;border: 1px solid #999;}
 .add-ons-input ul{width:100px;}
@@ -202,10 +203,11 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .current a{ }
 .current a{color:#00b966; display:block; width:100%;background:#fff;width:100%;}
 .zhiwei-lis {overflow: hidden; padding: 20px 30px 30px; width: 900px;}
+.qy-zhiwei-lis{width:980px;}
 .zhiwei-lis li{width:750px; border:1px #d2d5d8 solid; overflow:hidden; margin-bottom:20px;width:100%}
 .zhiwei-lis-title{width:100%; border-bottom:1px #eee dashed; overflow:hidden; height:40px; border-bottom:1px #ccc dashed; margin-bottom:5px;}
-.zhiwei-lis-title h2 { color: #3388ff;font-size: 16px; line-height: 40px;padding-left: 20px; width: 73%;}
-.bt-span {height: 30px; overflow: hidden;padding-top: 7px;}
+.zhiwei-lis-title h2 { color: #3388ff;font-size: 16px; line-height: 40px;padding-left: 20px;}
+.bt-span {height: 30px; overflow: hidden;padding-top: 7px;float:right !important}
 .zhiwei-lis-title span{border:1px #00b966 solid; border-radius:4px; padding:2px 4px; margin-top:10px; margin-right:20px; cursor:pointer;width:73%;}
 .zhiwei-lis-left { color: #606c77;font-size: 12px;height: 70px; line-height: 22px;padding-left: 20px;width: 70%;}
 .zhiwei-lis-left span{margin-right:20px;}

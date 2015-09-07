@@ -38,7 +38,7 @@ class WeichatPushQualityTask extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_time', 'updated_time', 'pushed_time'], 'safe'],
+            [['created_time', 'updated_time', 'pushed_time', 'work_time', 'work_detail'], 'safe'],
             [['has_pushed'], 'integer'],
             [['gid', 'task_type', 'location', 'price', 'push_group'], 'string', 'max' => 100],
             [['title', 'company_name', 'task_name'], 'string', 'max' => 200]
@@ -64,6 +64,8 @@ class WeichatPushQualityTask extends \yii\db\ActiveRecord
             'has_pushed' => '是否推送过',
             'pushed_time' => '推送时间',
             'push_group' => '推送分组，用于查看日志中本次推送的相关数据',
+            'work_time' => '工作时间',
+            'work_detail' => '工作内容',
         ];
     }
 

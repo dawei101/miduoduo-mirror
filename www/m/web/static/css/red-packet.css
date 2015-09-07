@@ -6,27 +6,33 @@ img{border:none;}
 
 .midd_top{width:100%; }
 .midd_top img{width:100%;}
-.midd_main{width:100%; margin:-5px auto 0; position:relative; background:url(../img/red-packet/body_bg.jpg) bottom repeat-y; padding-bottom:30px }
+.midd_main{width:100%; margin:-5px auto 0; position:relative; background:url(../img/red-packet/body_bg.jpg) bottom repeat-y; padding-bottom:10px }
 .midd_main img{width:90%; display:block; margin:0 auto;}
 .title_hb{width:30%; position:absolute; left:35%; top:5%;z-index:9}
 .title_hb img{width:100%; }
-.jin_e{width:100%; text-align:center;  color:#b72022; position:absolute; left:0; top:22.5%;z-index:9; font-size:30px; font-weight:bold}
+.jin_e{width:100%; text-align:center;  color:#b72022; position:absolute; left:0;  top: 23.7%;z-index:9; font-size:40px; font-weight:bold}
 .text_b{width:80%; position:absolute; left:11%; top:43%;z-index:9; }
 .text_b img{width:100%;}
-.text_b a{display:block; width:80%; display:block; margin:3% auto; text-align:center; padding:3% 0; border-radius:4px; font-size:18px; color:#333;}
-.text_b .fenx{background:#fba61e;}
-.text_b .tix{background:#dedede;}
+.text_b a{display:block; width:80%; display:block; margin:3% auto; text-align:center; padding:3% 0; border-radius:4px; font-size:18px; color:#fff;}
+.text_b .fenx{background:#ff9c00;}
+.text_b .tix{background:#dedede;color:#333;}
 .bot_box,.bot_box img{width:100%;}
+
+.pic{width:80%; margin:2% auto 4%; padding-bottom:5%;}
+
+.fx_box img,.top_banner img{width:100%;}
+.fx_box{margin-top:-5px; display:block; overflow:hidden; position:relative}
+.erweima{left:18%;position: absolute;top: 7%;width: 60%;z-index: 20;}
 
 
 #tab{width:100%; position:relative;}
 .hide{display:none;}
-#tab .tab_menu{width:50%; border-radius:40px; background:#ba0201; margin:0 auto; color:#fff; height:40px; line-height:40px; text-align:center; font-size:18px;}
+#tab .tab_menu{width:50%; border-radius:40px; background:#ba0201; margin:0 auto; color:#fff; height:40px; line-height:40px; text-align:center; font-size:16px;}
 #tab .tab_menu li{width:50%; float:left;cursor:pointer;}
 #tab .tab_menu .selected{background-color:#f7c677; border-radius:40px; color:#ba0201}
-.tab_box div{width:90%; margin:4% auto; border-radius:10px; background:#ba0201; padding:3%; color:#fff; font-size:18px;}
-.tab_box div h2{font-style:normal; font-size:18px; width:90%; margin:0 auto 3%; border-bottom:1px #fff solid; padding:3%;}
-.tab_box div ul{width:90%; margin:0 auto 2%; font-size:18px;}
+.tab_box div{width:90%; margin:4% auto; border-radius:10px; background:#ba0201; padding:3%; color:#fff; font-size:16px;}
+.tab_box div h2{font-style:normal; font-size:16px; width:90%; margin:0 auto 3%; border-bottom:1px #fff solid; padding:3%;}
+.tab_box div ul{width:90%; margin:0 auto 2%; font-size:16px;}
 .tab_box div ul li{padding:0.5% 0; min-width:30%}
 .tab_box div ul span{float:right; }
 .tab_box div a{font-style:normal; font-size:18px; width:90%; margin:0 auto; border-top:1px #fff solid; padding:3%; display:block; color:#fff; text-align:center; }
@@ -36,19 +42,19 @@ img{border:none;}
 .ta_l span{ display:block; width:15px; height:15px;  border-radius:15px; background:#ba0201; position:absolute; right:-3px; top:12px;}
 .ta_r span{ display:block; width:15px; height:15px;  border-radius:15px; background:#ba0201; position:absolute; left:-3px; top:12px;}
 
-.tab_box div dl{width:100%; margin:0 auto 2%; font-size:18px; overflow:hidden;}
+.tab_box div dl{width:100%; margin:0 auto 2%; font-size:16px; overflow:hidden;}
 .tab_box div dl dd{width:33%; display:block; float:left; padding:0.5% 0; text-align:center}
 
-.title_qb{ left: 41%;position: absolute;top:20%;width: 18%;z-index: 9;}
+.title_qb{ left: 41%;position: absolute;top:22%;width: 18%;z-index: 9;}
 
 .input_k{ left: 20%;position: absolute; top: 41%; width: 60%; z-index: 9;}
-.bott{border: medium none; border-radius: 4px;color: #666;font-size: 18px;padding: 4.3% 0;position: absolute;right:-11px;  top: 15.5%;
-width: 28%; cursor:pointer; font-size:14px;}
-.input_k .input_z{width:100%; padding:4% 0; border-radius:4px; font-size:18px; color:#666; border:none; text-indent:1em; margin:3%;}
+.bott{border: medium none; border-radius: 4px;color: #666;font-size: 18px;padding: 4.7% 0;position: absolute;right:0;  top: 12.3%;
+width: 35%; cursor:pointer; font-size:14px;}
+.input_k .input_z{width:100%; padding:4% 0; border-radius:4px; font-size:18px; color:#666; border:none; text-indent:0.5em; margin:3% 0;}
 .yz{position:relative;width:100%;}
-.botton_l{width:100%; padding:4% 0; border-radius:4px; font-size:18px; color:#666; border:none; text-indent:1em; margin:3%; background:#fba61e; color:#333}
-.ts{font-size:18px; color:#fff; width:100%;  margin:0 auto;}
-.ts b{font-size:25px; margin:0 10px;}
+.botton_l{width:100%; padding:4% 0; border-radius:4px; font-size:18px; color:#666; border:none; text-indent:1em; margin:3% 0; background:#ff9c00; color:#fff}
+.ts{font-size:14px !important; color:#fff; width:100%;  margin:5% auto 0; line-height:20px;}
+.ts b{font-size:18px; margin:0 10px;}
 
 .cd-popup img{width:80%; display:block; margin:5% auto;}
 .pic_f{display:block; color:#fff; font-size:20px;}
@@ -56,7 +62,7 @@ width: 28%; cursor:pointer; font-size:14px;}
 .pic_f p{width:90%; line-height:30px; margin:30px auto; font-weight:700}
 .top-nav{display:none;}
 .form-group{margin-bottom:17px;}
-.help-block{font-size: 12px;color: #fff;padding-right: 0px;}
+.help-block{font-size: 12px ;color: #fff;padding-right: 0px;}
 .bott{background-color: #DDD;  margin-top: 2px;}
 .fenxiang-btn{background: #fba61e;  width: 80%;
   display: block;
@@ -73,13 +79,14 @@ width: 28%; cursor:pointer; font-size:14px;}
 
 @media screen and (max-width:379px){
 	body{font-size:12px;-webkit-text-size-adjust: none;}
-	.jin_e,.input_k .input_z,.ts,.botton_l{font-size:14px;}
+	.jin_e{font-size:20px;}
+	.input_k .input_z,.ts,.botton_l{font-size:14px;}
 	#tab .tab_menu,.bott{font-size:12px;}
 	.tab_box div h2{font-size:14px;}
 	.tab_box div p,.tab_box div a,.tab_box div ul,.tab_box div dl{font-size:14px;}
 	.ta_l span{ display:block; width:10px; height:10px;  border-radius:10px; background:#ba0201; position:absolute; right:-3px; top:14px;}
 .ta_r span{ display:block; width:10px; height:10px;  border-radius:10px; background:#ba0201; position:absolute; left:-3px; top:14px;}
-.bott{border: medium none; border-radius: 4px;color: #666;font-size: 14px;padding: 4.1% 0;position: absolute;right:-5px;  top:12%;
+.bott{border: medium none; border-radius: 4px;color: #666;font-size: 14px;padding: 4.1% 0;position: absolute;right:0px;  top:12%;
 width:40%; cursor:pointer; font-size:12px;}
 	
 }
