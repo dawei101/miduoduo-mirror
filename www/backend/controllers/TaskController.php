@@ -166,7 +166,9 @@ class TaskController extends BBaseController
 
         $company = Company::findByCurrentUser();
 
-        $task = Task::findOne(['id' => $id]);
+        $task = Task::find()->where(['id' => $id])->with('company')->one();
+        $company_name = (isset($task->company_name) && $task->company_name) ? $task->company_name : (isset($task->company->name) ? $task->company->name : '');
+        $task->company_name = $company_name;
         if (!$task) {
             return $this->goHome();
         }

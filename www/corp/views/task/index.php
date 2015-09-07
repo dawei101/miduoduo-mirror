@@ -19,7 +19,7 @@ $this->title = '米多多兼职平台';
       <div class="col-sm-10 padding-0 ">
         <div class="right-center">
           <div class="conter-title">职位管理<span style="font-size:12px;padding-left:20px;"><?= $user_task_promission['msg'] ?></span></div>
-            <ul class="zhiwei-lis">
+            <ul class="zhiwei-lis qy-zhiwei-lis">
             <?php foreach ($tasks as $task) {?>
                 <li>
                    <div class="zhiwei-lis-title">

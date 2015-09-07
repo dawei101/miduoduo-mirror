@@ -252,7 +252,7 @@ $this->title = '米多多兼职平台';
                                         </div>
                                         <span class="add-xs">+其他要求</span>
                                     </div>
-                                    <div class="add-ons">
+                                    <div class="add-ons qy-add-ons">
                                         <div class="nice-select pull-left add-ons-input" name="nice-select">
                                             <input name="face_requirement" type="text" readonly placeholder="形象" value="<?=$task->face_requirement!=false?TASK::$FACE_REQUIREMENT[$task->face_requirement]:'形象无要求'?>">
                                             
