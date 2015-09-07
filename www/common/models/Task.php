@@ -154,6 +154,9 @@ class Task extends \common\BaseActiveRecord
 
     public function getStatus_label()
     {
+        if ($this->is_overflow){
+            return $this->is_overflow_label;
+        }
         return static::$STATUSES[$this->status];
     }
     public function getOrigin_label()
