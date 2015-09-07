@@ -223,6 +223,7 @@ class TaskPool extends \common\BaseActiveRecord
             $this->task_id = $task->id;
             $this->status = static::STATUS_EXPORTED;
             $this->save();
+
         }
         return $task;
     }
@@ -281,7 +282,6 @@ class TaskPool extends \common\BaseActiveRecord
                 "礼仪" => "礼仪模特",
                 "模特" => "礼仪模特",
                 "派单" => "传单",
-                "翻译" => "翻译",
                 "服务员" => "服务员",
                 "临时工" => "临时工",
                 "设计" => "美工平面",
