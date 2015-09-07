@@ -59,7 +59,7 @@ return [
         'cloud_storage' => [
             'class' => 'common\cloud_storage\AliyunOss',
             'access_id' => 'eLpJwnKe6N5SbdpE',
-            'access_key' => 'eLpJwnKe6N5SbdpE',
+            'access_key' => 'sJRSuhbrOULev4kv9Pq91EiNzlHssb',
             'hostname' => 'oss-cn-beijing-internal.aliyuncs.com', // 北京内网
             //'hostname' => 'oss-cn-beijing.aliyuncs.com', // 北京外网
         ],
@@ -97,26 +97,27 @@ return [
        'log' => [
             'traceLevel' =>0,
             'targets' => [
-                [
+                'main' => [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                     'logFile' => '@data/logs/miduoduo/app.log',
                     'maxLogFiles' => 30,
                 ],
-                [
+                'mail_log' => [
                     'class' => 'yii\log\EmailTarget',
                     'levels' => ['error'],
                     'mailer' => 'mailer',
-                    'enabled' => 1,
+                    'enabled' => 0,
                     'message' => [
                         'from' => ['webmaster@miduoduo.cn'],
                         'to' => ['suixb@miduoduo.cn', 'liyw@miduoduo.cn'],
                         'subject' => '【米多多error】',
                     ],
                     'except' => [
-                        'yii\web\HttpException:404',
                         'yii\web\HttpException:400',
                         'yii\web\HttpException:401',
+                        'yii\web\HttpException:404',
+                        'yii\web\HttpException:403',
                     ],
                 ],
                 [

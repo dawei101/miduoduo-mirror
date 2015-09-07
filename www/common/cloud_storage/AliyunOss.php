@@ -1,9 +1,10 @@
 <?php
 namespace common\cloud_storage;
 
-use yii\base\Component;
-
 require_once(dirname(__FILE__) . '/aliyun_oss/sdk.class.php');
+
+use yii\base\Component;
+use ALIOSS;
 
 class AliyunOss extends Component
 {
@@ -27,7 +28,8 @@ class AliyunOss extends Component
     public function uploadFile($file, $to_file, $bucket='miduoduo')
     {
         $oss = $this->getOSS();
-        return $oss->upload_file_by_file($bucket, $to_file, $file);
+        $r = $oss->upload_file_by_file($bucket, $to_file, $file);
+        return 'http://miduoduo.oss-cn-beijing.aliyuncs.com/' . $to_file;
     }
 
 }

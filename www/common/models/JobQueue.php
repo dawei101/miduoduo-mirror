@@ -124,7 +124,7 @@ class JobQueue extends \common\BaseActiveRecord
     {
         if ($this->retry_times>0){
             $this->retry_times -= 1;
-            $this->status = $this::STATUS_IN_QUEUE;
+            $this->status = static::STATUS_IN_QUEUE;
             return true;
         }
         return false;

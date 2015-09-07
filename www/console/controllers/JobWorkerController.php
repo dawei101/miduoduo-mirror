@@ -8,9 +8,16 @@ use Yii;
 use yii\console\Controller;
 use yii\console\Application;
 use yii\helpers\ArrayHelper;
+use common\models\JobQueue;
 
 class JobWorkerController extends Controller
 {
+
+    public function actionTest($job_id)
+    {
+        $job = JobQueue::findOne($job_id);
+        $this->runJob($job);
+    }
 
     public $defaultAction = 'run';
 
@@ -70,9 +77,9 @@ class JobWorkerController extends Controller
             $job->message = "找不到对应的job";
         }
         if ($r){
-            $job->status = $job::STATUS_DONE;
+            $job->status = JobQueue::STATUS_DONE;
         } else {
-            $job->status = $job::STATUS_FAILED;
+            $job->status = JobQueue::STATUS_FAILED;
             $job->retryIfCan();
         }
         $job->save();
