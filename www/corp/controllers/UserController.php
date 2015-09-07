@@ -205,6 +205,7 @@ class UserController extends CBaseController
         if(Yii::$app->request->isPost){
             $model->setAttributes(Yii::$app->request->post(), false);
             $model->user_id = Yii::$app->user->id;
+            $model->origin  = Company::ORIGINS_SELF;
             if ($model->validate() && $model->save()) {
                 if (!Yii::$app->user->can('corp')){
                     $auth = Yii::$app->authManager;
