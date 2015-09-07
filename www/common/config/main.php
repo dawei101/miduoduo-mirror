@@ -56,6 +56,13 @@ return [
             'app_key' => 'fcdc25a74fa9d95484276160',
             'master_secret' => 'f9c837cfb26bd97dc8ed2201',
         ],
+        'cloud_storage' => [
+            'class' => 'common\cloud_storage\AliyunOss',
+            'access_id' => 'eLpJwnKe6N5SbdpE',
+            'access_key' => 'eLpJwnKe6N5SbdpE',
+            'hostname' => 'oss-cn-beijing-internal.aliyuncs.com', // 北京内网
+            //'hostname' => 'oss-cn-beijing.aliyuncs.com', // 北京外网
+        ],
         'global_cache' => [
             'class' => 'yii\caching\DbCache',
             'db' => 'db',
