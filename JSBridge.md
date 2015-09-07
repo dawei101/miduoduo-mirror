@@ -34,7 +34,9 @@ function CallBack(str) {
     json: 字符串
     {
         register：2- 微信登录，1- 注册，0 － 登录
-        url:// 登录成功后，跳转页面
+        isInit:
+            true: 填写资料
+            false：不填写个人资料
     }
     
     注：json ＝ null
