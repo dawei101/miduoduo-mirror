@@ -211,7 +211,7 @@ class BaseActiveController extends ActiveController
                 } else {
                     $filter[1] = $this->getColumn($filter[1]);
                 }
-                if (!empty($filter[2])){
+                if (isset($filter[2])){
                     $query->andWhere($filter);
                 }
             }
