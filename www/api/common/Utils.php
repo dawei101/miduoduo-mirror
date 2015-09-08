@@ -8,6 +8,17 @@ class Utils
 {
 
     public static function formatProfile($user, $password=''){
+        if( !empty($user->resume) 
+                && strlen($user->resume->name)  
+                && ($user->resume->birthdate > '0000-00-00') 
+                && strlen($user->resume->gender) 
+                && strlen($user->resume->height) 
+                && strlen($user->resume->weight) 
+                && strlen($user->resume->degree)){
+            $has_basicinfo = true;
+        }else{
+            $has_basicinfo = false;
+        }
         $profile = [
             'id'=> $user->id,
             'username'=> $user->username,
@@ -18,6 +29,7 @@ class Utils
             'resume' => $user->resume?['1'=>1]:null,
             'has_resume' => !empty($user->resume),
             'has_wechat' => !empty($user->weichat),
+            'has_basicinfo' => $has_basicinfo,
             'id_extam_status' => $user->resume?$user->resume->exam_status:false,
             'is_virgin' => $user->is_virgin && empty($user->resume),
             'last_city' => [],
