@@ -19,22 +19,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $cities = [];
 foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $city){
-    $cities[$city_id] = $city->short_name;
+    $cities[$city->id] = $city->short_name;
 }
 ?>
 <div class="data-daily-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <table>
+    <table class="table table-striped">
         <th>
-            <td>城市名</td> <td> 今日报名</td> <td> 报名变化</td>
+            <td>城市名</td> <td> 报名状况</td>
         </th>
-    <?php foreach ($data as $row) { ?>
+    <?php foreach ($data as $city_id=>$row) { 
+?>
         <tr>
-        <td><?=$cities[$row['city_id']]?></td>
-        <td><?=$row['count']?></td>
-        <td><?=$row['increase']?></td>
+        <td><?=$cities[$city_id]?></td>
+        <td><?=$row['count']?> <?=$row['increase']?></td>
         </tr>
     <?php } ?>
 

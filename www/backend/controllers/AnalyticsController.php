@@ -10,6 +10,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\BDataBaseController;
+use common\models\TaskApplicant;
+use common\models\Task;
 use common\models\DataDaily;
 
 
@@ -120,16 +122,16 @@ class AnalyticsController extends BDataBaseController
             $date = $today;
         }
         if ($city_id){
-            $data = $this->getApplicantData($today, $city_id=$city_id);
-            $this->render('city-applicant', [
+            $data = $this->getApplicantData($today, $city_id);
+            return $this->render('city-applicant', [
                 'data' => $data,
                 'city_id' => $city_id,
             ]);
         }
         if ($date){
             $prev_date = date('Y-m-d', time('-1 days', strtotime($date)));
-            $c = $this->getApplicantData($today, $date=$date);
-            $prev = $this->getApplicantData($today, $date=$prev_date);
+            $c = $this->getApplicantData($today, null, $date);
+            $prev = $this->getApplicantData($today, null, $prev_date);
             ksort($c);
             $data = [];
             foreach ($c as $city_id=>$count){
@@ -137,7 +139,7 @@ class AnalyticsController extends BDataBaseController
                 $data[$city_id] = ['count'=>$count, 'increase'=>$prev_count];
             }
 
-            $this->render('date-applicant', [
+            return $this->render('date-applicant', [
                 'data' => $data,
                 'date' => $date,
             ]);
@@ -162,7 +164,7 @@ class AnalyticsController extends BDataBaseController
             $applicants = TaskApplicant::find()
                 ->joinWith('task')
                 ->andWhere([Task::tableName().'.city_id', $city_id])
-                ->where(['>', 'created_time', $date])->all();
+                ->where(['>', Task::tableName().'.created_time', $date])->all();
             $anas = [];
             foreach($applicants as $a){
                 if (!isset($anas[$a->date])){
@@ -184,8 +186,8 @@ class AnalyticsController extends BDataBaseController
             if (!$data){
                 $applicants = TaskApplicant::find()
                     ->joinWith('task')
-                    ->andWhere(['>', 'created_time', $date])
-                    ->andWhere(['<=', 'created_time', $next_day])
+                    ->andWhere(['>', TaskApplicant::tableName().'.created_time', $date])
+                    ->andWhere(['<=', TaskApplicant::tableName().'.created_time', $next_day])
                     ->all();
                 foreach($applicants as $a){
                     if (!isset($data[$a->city_id])){
