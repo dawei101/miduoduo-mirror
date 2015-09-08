@@ -180,7 +180,11 @@ class ResumeController extends CBaseController
     public function pushResultMsg($task_id,$user_id,$status){
         $weichat_base   = new WeichatBase();
         $weichat_id     = $weichat_base::getLoggedUserWeichatID($user_id);
-        $task   = Task::find()->where(['id'=>$task_id])->one();
+        $task   = Task::find()
+            ->where(['id'=>$task_id])
+            ->with('company')
+            ->with('service_type')
+            ->one();
         if( $status == TaskApplicant::STATUS_APPLY_SUCCEED ){
             if( $weichat_id ){
                 Yii::$app->wechat_pusher->toApplicantTaskAppliedDonePassYes($task,$weichat_id);
