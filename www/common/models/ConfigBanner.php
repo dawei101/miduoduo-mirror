@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use common\models\District;
 use common\Utils;
+use common\models\Task;
 
 /**
  * This is the model class for table "{{%config_banner}}".
@@ -59,7 +60,7 @@ class ConfigBanner extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'city_id', 'type', 'display_order'], 'integer'],
+            [['status', 'city_id', 'type', 'display_order', 'task_id'], 'integer'],
             [['offline_date', 'created_time'], 'safe'],
             [['title'], 'string', 'max' => 256],
             [['pic', 'url'], 'string', 'max' => 512]
@@ -82,6 +83,7 @@ class ConfigBanner extends \yii\db\ActiveRecord
             'url' => '链接',
             'offline_date' => '下线日期',
             'created_time' => '创建时间',
+            'task_id' => '任务id(设置了任务id，就不用再设置链接了)',
         ];
     }
 
@@ -100,5 +102,9 @@ class ConfigBanner extends \yii\db\ActiveRecord
     public function fields()
     {
         return array_merge(parent::fields(), ['pic_url']);
+    }
+
+    public function getTask(){
+        return $this->hasOne(Task::className(),['id' => 'task_id']);
     }
 }

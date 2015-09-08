@@ -118,9 +118,9 @@ class SiteController extends MBaseController
             ])
             ->andWhere("`offline_date` >= '".date("Y-m-d")."'")
             ->addOrderBy(['display_order'=>SORT_ASC])
+            ->with('task')
             ->limit(5)
             ->all();
-
         if($gids){
             // 查询数据显示
             $tasks      = Task::find()->where(['status'=>Task::STATUS_OK])

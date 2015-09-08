@@ -67,6 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model::$DISPLAY_ORDER[$model->display_order];
                 }
             ],
+            [
+                'attribute' => 'task_id',
+                'label'=> '任务id',
+                'value' => function($model){
+                    return $model->task_id;
+                }
+            ],
             //'display_order',
             // 'title',
             // 'pic',
