@@ -18,6 +18,15 @@ use common\models\Task;
 class Company extends \common\BaseActiveRecord
 {
 
+    static $ORIGINS = [
+        0 => '其他',
+        1 => '自主注册',
+        2 => '抓取',
+    ];
+    const ORIGINS_OTHER = 0;
+    const ORIGINS_SELF  = 1;
+    const ORIGINS_SPIDER= 2;
+    
     static $STATUSES = [
         0 => '正常',
         5 => '已冻结',
@@ -150,6 +159,7 @@ class Company extends \common\BaseActiveRecord
             'use_task_date' => '最近一次操作职位日期（增、改、刷新）',
             'use_task_num'  => '最近一次操作职位当天，操作次数',
             'created_time' => '创建时间',
+            'origin' => '渠道来源',
         ];
     }
 

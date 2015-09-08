@@ -26,11 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'id',
             [
-                'label' => '是否抓取',
-                'filter' => [1 => '否', 2 => '是'],
-                'attribute' => 'user_id_exisit',
+                'label' => '渠道来源',
+                'filter' => Company::$ORIGINS,
+                'attribute' => 'origin',
                 'value' => function($model){
-                    return $model->user_id > 0 ? '否' : '是';
+                    return Company::$ORIGINS[$model->origin];
                 }
             ],
             'user_id',

@@ -28,6 +28,8 @@ use common\models\Company;
     <?= $form->field($model, 'exam_status')->dropdownList(Company::$EXAM_STATUSES) ?>
     <?= $form->field($model, 'exam_result')->dropdownList(Company::$EXAM_RESULTS) ?>
 
+    <?= $form->field($model, 'origin')->dropdownList(Company::$ORGINS) ?>
+
     <?= $form->field($model, 'intro')->textArea() ?>
 
     <div class="form-group">

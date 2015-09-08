@@ -22,7 +22,7 @@ class CompanySearch extends Company
             [['id', 'status', 'examined_by', 'user_id' ,'user_id_exisit'], 'integer'],
             [['contact_name', 'contact_phone', 
             'contact_email', 'name', 'examined_time'], 'safe'],
-            [['exam_status', 'exam_result'], 'integer'],
+            [['exam_status', 'exam_result', 'origin'], 'integer'],
         ];
     }
 
@@ -69,13 +69,8 @@ class CompanySearch extends Company
             'contact_email' => $this->contact_email,
             'exam_status' => $this->exam_status,
             'user_id' => $this->user_id,
+            'origin' => $this->origin,
         ]);
-
-        if( $this->user_id_exisit == 1 ){
-            $query->andFilterWhere(['>', 'user_id', 0]);
-        }elseif( $this->user_id_exisit == 2 ){
-            $query->andFilterWhere(['=', 'user_id', 0]);
-        }
 
         // 'exam_result & ' . $this->exam_result => true, // 未测试 
 
