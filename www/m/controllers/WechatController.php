@@ -53,15 +53,27 @@ class WechatController extends \common\BaseController
             throw new \yii\web\NotFoundHttpException();
         }
 
-        $key = "wechat.authcode." . $code;
+        $key      = "wechat.authcode." . $code;
+        $lock_key = "wechat.authcode.lock." . $code;
+
+        // 等待前一个请求写入缓存
+        usleep(20000); // 0.2 second
+        $locked = Yii::$app->cache->get($lock_key);
+        $times  = 0;
+        while ( $locked && ($times<10) ){
+            $times++;
+            usleep(100000); // 0.1 second
+            $locked = Yii::$app->cache->get($lock_key);
+        }
         $winfo = Yii::$app->cache->get($key);
 
         if (!$winfo){
-            // 这里加cache 是因为用户网络环境不好，有可能重复发送请求，但code只能用一次
+            Yii::$app->cache->set($lock_key, 1, 5 * 60);
             $winfo = WechatUtils::getUserTokenByCode($code);
-            //$token  = $winfo['access_token'];
+            Yii::$app->cache->delete($lock_key);
             Yii::$app->cache->set($key, $winfo, 5 * 60);
         }
+
         $openid = $winfo['openid'];
 
         $record = WeichatUserInfo::find()->where(['openid'=>$openid])->one();
