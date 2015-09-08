@@ -126,7 +126,7 @@ class WeichatPushQualityTaskController extends BBaseController
             ->one();
 
         // 构造优单
-        $task_time = (isset($data->work_time) && $data->work_time) ? '工作内容：'.$data->work_time.'\r\n' : '';
+        $task_time = (isset($data->work_time) && $data->work_time) ? '工作时间：'.$data->work_time.'\r\n' : '';
         $task_detail = (isset($data->work_detail) && $data->work_detail) ? '工作内容：'.$data->work_detail : '';
         //echo $task_detail;exit;
         $params = array(
