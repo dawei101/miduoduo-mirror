@@ -135,7 +135,7 @@ function getNowFormatDate() {
             valid = false;
         }else{
             var value = form.sms_phonenum.value;
-            if(!value.match(/^1[3|4|5|8][0-9]\d{4,8}$/)){
+            if(!value.match(/^1[0-9][0-9]\d{4,8}$/)){
                 $('.enroll-error').html("请输入正确的手机号");
                 $('.enroll-error').show();
                 valid = false;
