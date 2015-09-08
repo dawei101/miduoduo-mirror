@@ -60,7 +60,7 @@ class WechatController extends \common\BaseController
         usleep(20000); // 0.2 second
         $locked = Yii::$app->cache->get($lock_key);
         $times  = 0;
-        while ( $locked && ($times<100) ){
+        while ( $locked && ($times<10) ){
             $times++;
             usleep(100000); // 0.1 second
             $locked = Yii::$app->cache->get($lock_key);
