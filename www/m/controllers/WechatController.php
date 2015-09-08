@@ -54,7 +54,7 @@ class WechatController extends \common\BaseController
         }
 
         $key      = "wechat.authcode." . $code;
-        $lock_key = "wechat.authcode." . $code;
+        $lock_key = "wechat.authcode.lock." . $code;
 
         // 等待前一个请求写入缓存
         usleep(20000); // 0.2 second
@@ -68,10 +68,10 @@ class WechatController extends \common\BaseController
         $winfo = Yii::$app->cache->get($key);
 
         if (!$winfo){
-            Yii::$app->cache->set($lock_key, 1, 5);
+            Yii::$app->cache->set($lock_key, 1, 5 * 60);
             $winfo = WechatUtils::getUserTokenByCode($code);
             Yii::$app->cache->delete($lock_key);
-            Yii::$app->cache->set($key, $winfo, 5);
+            Yii::$app->cache->set($key, $winfo, 5 * 60);
         }
 
         $openid = $winfo['openid'];
