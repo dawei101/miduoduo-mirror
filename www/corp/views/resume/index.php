@@ -38,7 +38,7 @@ $this->title = '米多多兼职平台';
                     }
                 ?>
                 <dd>
-                    <div class="pull-left tab1 borser-tab-right">
+                    <div class="pull-left tab1">
                         <div class="names" aid="<?=$task_app->resume->id?>"><span style="float: left; display: block; line-height: 20px; padding: 0 10px 0 0;color: #666;">
                             <?php if($task_app->status == $task_app::STATUS_WAIT_EXAMINE || $task_app->status == $task_app::STATUS_APPLY_SUCCEED) {?>
                                 <a href="<?=$task_app->resume->common_url?>" target="blank"><?=$task_app->resume->name?></a>
@@ -48,7 +48,7 @@ $this->title = '米多多兼职平台';
                         </span></div>
                         <div class="jiben"><span><?=$task_app->resume->age?>岁</span><span><?=$task_app->resume->gender_label?></span><span><?=$task_app->resume->college?></span></div>
                     </div>
-                    <div class="pull-left tab2 text-center borser-tab-right"><a href="<?=Yii::$app->params['baseurl.m']?>/task/view?gid=<?=$task_app->task->gid?>" target="blank"><?=$task_app->task->title?></a></div>
+                    <div class="pull-left tab2 text-center borser-tab-right borser-tab-leftt"><a href="<?=Yii::$app->params['baseurl.m']?>/task/view?gid=<?=$task_app->task->gid?>" target="blank"><?=$task_app->task->title?></a></div>
                     <div class="pull-left tab3 text-center borser-tab-right">
                         <?php if($task_app->status == $task_app::STATUS_WAIT_EXAMINE || $task_app->status == $task_app::STATUS_APPLY_SUCCEED) {?>
                             <?=$task_app->resume->phonenum?>
@@ -123,7 +123,7 @@ $this->registerJsFile(Yii::$app->params["baseurl.static.corp"] . '/static/js/res
 		</ul-->
 		<a href="#" class="cd-popup-close img-replace">关闭</a>
         <div class="notice_error_msg"></div>
-        <button class="fabu-bt" style="margin: 10px 0 30px;">发送通知</button>
+        <button class="fabu-bt" >发送通知</button>
         <?php ActiveForm::end(); ?>
 	</div>
 </div>
