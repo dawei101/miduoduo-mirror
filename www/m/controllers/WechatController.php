@@ -53,27 +53,27 @@ class WechatController extends \common\BaseController
             throw new \yii\web\NotFoundHttpException();
         }
 
-        $key = "wechat.authcode." . $code;
+        $key      = "wechat.authcode." . $code;
         $lock_key = "wechat.authcode." . $code;
 
+        // 等待前一个请求写入缓存
+        usleep(20000); // 0.2 second
         $locked = Yii::$app->cache->get($lock_key);
-        $timeout = time() + 1000;
-
-        while ($locked && $timeout<time()){
-            sleep(100);
+        $times  = 0;
+        while ( $locked && ($times<100) ){
+            $times++;
+            usleep(100000); // 0.1 second
             $locked = Yii::$app->cache->get($lock_key);
         }
-        if ($locked){
-            $winfo = Yii::$app->cache->get($key);
-        } else {
-            Yii::$app->cache->set($lock_key, 1, 5 * 60);
+        $winfo = Yii::$app->cache->get($key);
 
-            if (!$winfo){
-                $winfo = WechatUtils::getUserTokenByCode($code);
-                Yii::$app->cache->delete($lock_key);
-                Yii::$app->cache->set($key, $winfo, 5*60);
-            }
+        if (!$winfo){
+            Yii::$app->cache->set($lock_key, 1, 5);
+            $winfo = WechatUtils::getUserTokenByCode($code);
+            Yii::$app->cache->delete($lock_key);
+            Yii::$app->cache->set($key, $winfo, 5);
         }
+
         $openid = $winfo['openid'];
 
         $record = WeichatUserInfo::find()->where(['openid'=>$openid])->one();

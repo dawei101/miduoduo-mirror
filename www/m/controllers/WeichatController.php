@@ -7,6 +7,7 @@ use common\models\WeichatErweima;
 use common\models\WeichatErweimaLog;
 use common\WeichatBase;
 use common\models\WeichatUserInfo;
+use yii\web\BadRequestHttpException;
 
 class WeichatController extends MBaseController{
 
@@ -22,7 +23,11 @@ class WeichatController extends MBaseController{
 
     private function responseMsg(){
         // get post data, May be due to the different environments
-        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $postStr = isset($GLOBALS["HTTP_RAW_POST_DATA"]) ? $GLOBALS["HTTP_RAW_POST_DATA"] : '';
+        if( !$postStr ){
+            throw new BadRequestHttpException('无权限访问该页面！');
+            exit;
+        }
 
           // extract post data
         if (!empty($postStr)){
