@@ -51,6 +51,10 @@ $user = Yii::$app->user;
                 <li class="mmenu" data-group="operation"><a href="/config-recommend/index?sort=-id">配置-推荐兼职</a></li>
                 <li class="mmenu" data-group="operation"><a href="/config-banner/index?sort=-id">配置-首页广告</a></li>
 <?php } ?>
+<?php if ($user->can('operation_manager')) { ?>
+    <li class="mtitle" data-group="yunying"><a>运营</a></li>
+    <li class="mmenu" data-group="yunying"><a href="/red-packet/index?sort=-red_packet_num">微信红包</a></li>
+<?php } ?>
 
 <?php if ($user->can('operation_manager')) { ?>
                 <li class="mtitle" data-group="wechat"><a>微信</a></li>
@@ -79,11 +83,7 @@ $user = Yii::$app->user;
 <?php if ($user->can('admin')) { ?>
                 <li class="mtitle" data-group="analytics"><a>统计</a></li>
                 <li class="operation_managermmenu" data-group="analytics"><a href="/data-user">数据统计</a></li>
-<?php } ?>
-
-<?php if ($user->can('operation_manager')) { ?>
-    <li class="mtitle" data-group="yunying"><a>运营</a></li>
-    <li class="mmenu" data-group="yunying"><a href="/red-packet/index?sort=-red_packet_num">微信红包</a></li>
+                <li class="operation_managermmenu" data-group="analytics"><a href="/analytics/applicant">多城市报名统计</a></li>
 <?php } ?>
 
 <?php if ($user->can('developer')) { ?>

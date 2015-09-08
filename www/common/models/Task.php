@@ -287,13 +287,13 @@ class Task extends \common\BaseActiveRecord
             $this->user_id = $user_id;
             $this->gid = time() . mt_rand(100, 999) . $user_id;
 
-            if ($this->origin==$this::ORIGIN_INTERNAL){
-                $this->order_time = date('Y-m-d H:i:s', strtotime('+7 day'));
-            } elseif ($this->origin==$this::ORIGIN_CORP){
-                $this->order_time = date('Y-m-d H:i:s', strtotime('+5 day'));
-            } else {
-                $this->order_time = date('Y-m-d H:i:s', time());
-            }
+        }
+        if ($this->origin==$this::ORIGIN_INTERNAL){
+            $this->order_time = date('Y-m-d H:i:s', strtotime('+7 day'));
+        } elseif ($this->origin==$this::ORIGIN_CORP){
+            $this->order_time = date('Y-m-d H:i:s', strtotime('+5 day'));
+        } else {
+            $this->order_time = date('Y-m-d H:i:s', time());
         }
         return parent::beforeSave($insert);
     }

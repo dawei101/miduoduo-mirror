@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use backend\BDataBaseController;
 use common\models\TaskApplicant;
 use common\models\Task;
+use common\models\District;
 use common\models\DataDaily;
 
 
@@ -115,35 +116,60 @@ class AnalyticsController extends BDataBaseController
         $this->redirect('/');
     }
 
-    public function actionApplicant($city_id=0, $date=null)
+    public function actionApplicant($city_id=null, $date=null)
     {
         $today = date('Y-m-d');
+        if ($date){
+            $date = date('Y-m-d', strtotime($date));
+        }
         if (!$city_id && !$date){
             $date = $today;
         }
         if ($city_id){
             $data = $this->getApplicantData($today, $city_id);
+            $city = District::findOne($city_id);
             return $this->render('city-applicant', [
                 'data' => $data,
-                'city_id' => $city_id,
+                'city' => $city,
             ]);
         }
         if ($date){
-            $prev_date = date('Y-m-d', time('-1 days', strtotime($date)));
+            $prev_date = date('Y-m-d', strtotime('-1 day', strtotime($date)));
             $c = $this->getApplicantData($today, null, $date);
             $prev = $this->getApplicantData($today, null, $prev_date);
-            ksort($c);
+
             $data = [];
-            foreach ($c as $city_id=>$count){
+            $cities = District::findAll(['level'=>'city', 'is_alive'=>1]);
+            foreach($cities as $city){
+                $city_id = $city->id;
+                $count = !isset($c[$city_id])?0:$c[$city_id];
                 $prev_count = isset($prev[$city_id])?$prev[$city_id]:0;
-                $data[$city_id] = ['count'=>$count, 'increase'=>$prev_count];
+                $data[$city_id] = ['count'=>$count, 'increase'=>$count-$prev_count];
             }
 
+            ksort($data);
             return $this->render('date-applicant', [
                 'data' => $data,
                 'date' => $date,
             ]);
         }
+    }
+    public function actionClearCache()
+    {
+        $cache = Yii::$app->cache;
+        $date = strtotime('+1 month');
+        $fdate = strtotime('2015-06-06');
+        while($date>$fdate){
+            $key = 'analytics.applicant.' . date('Y-m-d', $date);
+            $cache->delete($key);
+            $date = strtotime('-1 day', $date);
+        }
+        foreach (District::findAll(['level'=>'city']) as $city)
+        {
+            $key = 'analytics.applicant.' . $city->id;
+            $cache->delete($key);
+        }
+        return $this->redirect('./applicant');
     }
 
     public function getApplicantData($today, $city_id=null, $date=null)
@@ -177,12 +203,12 @@ class AnalyticsController extends BDataBaseController
             $cache->set($key, $data, 0);
         } else if ($date){
             $key = 'analytics.applicant.' . $date;
-            if ($date == $today){
+            if ($date >= $today){
                 $data = [];
             } else {
                 $data = $cache->get($key);
             }
-            $next_day = date('Y-m-d', time('+1 days', strtotime($date)));
+            $next_day = date('Y-m-d', strtotime('+1 days', strtotime($date)));
             if (!$data){
                 $applicants = TaskApplicant::find()
                     ->joinWith('task')
@@ -190,12 +216,16 @@ class AnalyticsController extends BDataBaseController
                     ->andWhere(['<=', TaskApplicant::tableName().'.created_time', $next_day])
                     ->all();
                 foreach($applicants as $a){
-                    if (!isset($data[$a->city_id])){
-                        $data[$a->city_id] = 0;
+                    if (!$a->task || empty($a->task->city_id)){
+                        continue;
                     }
-                    $data[$a->city_id] += 1;
+                    $city_id = $a->task->city_id;
+                    if (!isset($data[$city_id])){
+                        $data[$city_id] = 0;
+                    }
+                    $data[$city_id] += 1;
                 }
-                if ($date != $today){
+                if ($date < $today){
                     $cache->set($key, $data, 0);
                 }
             }
