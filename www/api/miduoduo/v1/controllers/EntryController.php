@@ -283,7 +283,7 @@ class EntryController extends BaseActiveController
     public function loginWithWechat($params)
     {
         $info = WeichatUserInfo::find()->with('user')
-            ->where(['openid'=>$params['openid']])
+            ->where(['unionid'=>$params['unionid']])
             ->andWhere(['>', 'userid', 0])
             ->one();
         if ($info){

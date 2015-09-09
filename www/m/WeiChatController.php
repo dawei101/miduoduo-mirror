@@ -50,6 +50,7 @@ class WeiChatController extends BaseController{
                 $weichat= Yii::$app->session->get('weichat');
                 $openid = isset($weichat['openid']) ? $weichat['openid'] : 0;
                 $userid = Yii::$app->session->get('__id');
+                $unionid= isset($weichat['unionid']) ? $weichat['unionid'] : 0;
                 $hasBindWeichatID = isset($weichat['hasBindWeichatID']) ? $weichat['hasBindWeichatID'] : 0;
 
                 // 标记渠道信息
@@ -59,7 +60,7 @@ class WeiChatController extends BaseController{
 
                 if( $openid && $userid && !$hasBindWeichatID ){
                     // 绑定，保存数据库
-                    if( $this->bindWeichatID($openid,$userid) ){
+                    if( $this->bindWeichatID($openid,$userid,$unionid) ){
                         // 标记已经尝试过绑定
                         $weichatInfo  = Yii::$app->session->get('weichat');
                         $weichatInfo['hasBindWeichatID']  = 1;
@@ -113,6 +114,7 @@ class WeiChatController extends BaseController{
             if( $openid ){
                 $this->loginByWeichatID($openid);
                 $weichatInfo['openid']  = $openid;
+                $weichatInfo['unionid']  = $getTokenArr->unionid;
             }
         }
 
@@ -163,14 +165,14 @@ class WeiChatController extends BaseController{
     }
     
     // 获取过微信账号、登录后--绑定微信账号
-    private function bindWeichatID($openid,$userid){
+    private function bindWeichatID($openid,$userid,$unionid){
         // 判断是否已经绑定
         $weichat_result = WeichatUserInfo::find()->where(['userid'=>$userid])->one();
         if( !$weichat_result ){
             // 判断是否存在绑定关系记录
             $weichat_user = WeichatUserInfo::findOne(['openid'=>$openid]);
-            if( $weichat_user->openid ){
-                WeichatUserInfo::updateAll(['userid'=> $userid],['openid'=>$openid]);
+            if( isset($weichat_user->openid) ){
+                WeichatUserInfo::updateAll(['userid'=> $userid,'unionid'=>$unionid],['openid'=>$openid]);
                 if( $weichat_user->origin_type == WeichatUserInfo::ORIGIN_TYPES_REDPACKET ){
                     User::updateAll(
                         ['invited_by'=> $weichat_user->origin_detail],
@@ -182,6 +184,7 @@ class WeiChatController extends BaseController{
                 // 插入数据，完成绑定
                 $weichat    = new WeichatUserInfo();
                 $weichat->openid    = $openid;
+                $weichat->unionid   = $unionid;
                 $weichat->userid    = $userid;
                 $weichat->created_time    = $datetime;
                 $weichat->updated_time    = $datetime;
