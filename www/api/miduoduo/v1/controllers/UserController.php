@@ -69,13 +69,21 @@ class UserController extends BaseActiveController
     {
         $user_id = Yii::$app->user->id;
         WeichatUserInfo::updateAll(['userid'=>0], ['userid'=>$user_id]);
-        $winfo = WeichatUserInfo::find()
-            ->where(['unionid'=>$params['unionid']])->one();
+        $unionid = isset($params['unionid']) ? $params['unionid'] : '';
+        if( $unionid ){
+            $winfo = WeichatUserInfo::find()
+                ->where(['unionid'=>$params['unionid']])->one();
+        }else{
+            $winfo = WeichatUserInfo::find()
+                ->where(['openid'=>$params['openid']])->one();
+            
+        }
         if (!$winfo){
             $winfo = new WeichatUserInfo;
         }
-        $winfo->unionid = $params['unionid'];
-        $winfo->app_openid = $params['app_openid'];
+        isset($params['openid']) ? ($winfo->openid = $params['openid']) : '';
+        isset($params['unionid']) ? ($winfo->unionid = $params['unionid']) : '';
+        isset($params['app_openid']) ? ($winfo->app_openid = $params['app_openid']) : '';
         $winfo->userid = $user_id;
         if (isset($params['nickname'])){
             $winfo->weichat_name = $params['nickname'];

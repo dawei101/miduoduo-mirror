@@ -31,11 +31,11 @@ class TempController extends BBaseController
     }
 
     public function actionIndex(){
-        $user   = WeichatUserInfo::find()->orderby(['id'=>SORT_ASC])->all();
+        $user   = WeichatUserInfo::find()->where(['unionid'=>null])->orderby(['id'=>SORT_ASC])->all();
         $wb = new WeichatBase();
-        $at = $wb->getWeichatAccessToken();
 
         foreach( $user as $k => $v ){
+            $at = $wb->getWeichatAccessToken();
             $api = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$at."&openid=".$v->openid;
             $data = $wb->getWeichatAPIdata($api);
             $data = json_decode($data);

@@ -78,6 +78,9 @@ class WechatController extends \common\BaseController
         $unionid= $winfo['unionid'];
 
         $record = WeichatUserInfo::find()->where(['openid'=>$openid])->one();
+        if(!$record){
+            $record = WeichatUserInfo::find()->where(['unionid'=>$unionid])->one();
+        }
         if (!$record){
             $record = new WeichatUserInfo;
 
@@ -88,6 +91,9 @@ class WechatController extends \common\BaseController
             $record->save();
         }elseif( !isset($record->unionid) || !($record->unionid) ){
             WeichatUserInfo::updateAll(['unionid'=>$unionid],['openid'=>$openid]);
+        }elseif( !isset($record->openid) || !($record->openid) ){
+            WeichatUserInfo::updateAll(['openid'=>$openid],['unionid'=>$unionid]);
+            
         }
         $to = $params['callback_url'];
         $to .= '?origin_url=' . urlencode($params['origin_url']);
