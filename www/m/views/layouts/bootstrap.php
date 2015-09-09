@@ -64,6 +64,17 @@ if (Utils::isInWechat()){
     <nav class="top-nav"></nav>
     <?= $content ?>
 </div>
+<div class="bz_pic"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/bz_pic.jpg"></div>
+<div class="m_midd_foot">
+   <ul>
+      <li><a href="#">触屏版</a></li>
+      <li class="bor_left"><a href="<?=Yii::$app->params["baseurl.frontend"]?>">电脑版</a></li>
+      <li  class="bor_left bor_right"><a href="<?=Yii::$app->params["downloadApp.android"]?>">客户端</a></li>
+      <li><a href="<?=Yii::$app->params["baseurl.m"]?>/index.php/site/wechat">微信版</a></li>
+   </ul>
+   <div class="foot_div"><a href="<?=Yii::$app->params["baseurl.frontend"]?>">求职版</a><a href="<?=Yii::$app->params["baseurl.corp"]?>">企业版</a></div>
+   <div class="foot_div1">北京米多多兼职   京ICP备15019760号-3</div>
+</div>
 <?php $this->endBody() ?>
 <?php
 if (Utils::isInWechat()){ ?>

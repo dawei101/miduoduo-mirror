@@ -185,8 +185,11 @@ class TaskController extends \m\MBaseController
         $pathInfo = explode('/',Yii::$app->request->pathInfo);
         if( count($pathInfo) == 3 ){
             $seo_pinyin = $pathInfo[0];
+            $service_type = $pathInfo[1];
+            $service_type = ServiceType::findOne(['pinyin' => $service_type]);
         }else{
             $seo_pinyin = '';
+            $service_type = '';
         }
 
         $this->layout = 'main';
@@ -218,6 +221,7 @@ class TaskController extends \m\MBaseController
                     'app'=> $app,
                     'resume'=> $resume,
                     'seo_pinyin' => $seo_pinyin,
+                    'service_type' => $service_type,
                 ]
             );
         } else {
