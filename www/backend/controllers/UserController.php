@@ -118,6 +118,10 @@ class UserController extends BBaseController
                 Yii::info("delete Data in $model where user_id= $user_id\n");
                 $model::deleteAll(['user_id'=>$user_id]);
             }
+           if (isset($model::getTableSchema()->columns['userid'])){
+                Yii::info("delete Data in $model where userid= $user_id\n");
+                $model::deleteAll(['userid'=>$user_id]);
+            }
         }
         User::deleteAll(['id'=>$user_id]);
         return $this->redirect('/');
