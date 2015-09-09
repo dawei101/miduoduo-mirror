@@ -23,7 +23,7 @@ class ServiceType extends \common\BaseActiveRecord
     ];
 
     const STATUS_OK = 0;
-    const STATUS_DELETED = 0;
+    const STATUS_DELETED = 10;
 
     public static function tableName()
     {
