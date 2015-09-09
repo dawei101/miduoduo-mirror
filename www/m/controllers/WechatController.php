@@ -75,15 +75,19 @@ class WechatController extends \common\BaseController
         }
 
         $openid = $winfo['openid'];
+        $unionid= $winfo['unionid'];
 
         $record = WeichatUserInfo::find()->where(['openid'=>$openid])->one();
         if (!$record){
             $record = new WeichatUserInfo;
 
             $record->openid = $openid;
+            $record->unionid   = $unionid;
             $record->userid = 0;
             $record->is_receive_nearby_msg = 1; //接受微信推送消息
             $record->save();
+        }elseif( !isset($record->unionid) || !($record->unionid) ){
+            WeichatUserInfo::updateAll(['unionid'=>$unionid],['openid'=>$openid]);
         }
         $to = $params['callback_url'];
         $to .= '?origin_url=' . urlencode($params['origin_url']);
