@@ -54,7 +54,7 @@ $this->page_description = $seo_code['description'];
 
 <ul class="bxslider">
     <?php foreach($banners_city as $banner){ ?>
-      <li><a href="<?=$banner->url?>"><img src="<?=$banner->pic_url?>" ></a></li>
+      <li><a href="<?=isset($banner->task->gid)?Yii::$app->params['baseurl.m'].'/task/view?gid='.$banner->task->gid:$banner->url?>"><img src="<?=$banner->pic_url?>" ></a></li>
     <?php } ?>
 </ul>
 

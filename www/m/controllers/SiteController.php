@@ -128,6 +128,7 @@ class SiteController extends MBaseController
             ])
             ->andWhere("`offline_date` >= '".date("Y-m-d")."'")
             ->addOrderBy(['display_order'=>SORT_ASC])
+            ->with('task')
             ->limit(5)
             ->all();
 
