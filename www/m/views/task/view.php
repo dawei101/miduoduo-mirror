@@ -42,12 +42,16 @@ $this->nav_right_title = '首页';
     }
 </style>
 <?php $this->endBlock('css')?>
+<div class="midd_xz">
+    <span class="gble">×</span>
+    <a href="<?=Yii::$app->params["downloadApp.android"]?>"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/midd_xz.jpg"></a>
+</div>
 <!--======详情======-->
 <div class="midd-xiangqing">
   <div class="list-title">
     <h2><?= $task->title ?></h2>
   </div>
-  <div class="list-tag">
+  <!--div class="list-tag">
     <span class="tag-im">￥<?= floor($task->salary); ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span>
     <?php if ($task->labels_str){
      foreach($task->labels as $label) {?>
@@ -57,7 +61,8 @@ $this->nav_right_title = '首页';
     |&nbsp;&nbsp;<?=$task->clearance_period_label?>
     &nbsp;&nbsp;|&nbsp;&nbsp;已报名：<?=$task->got_quantity?>/<?=$task->need_quantity?>人
     </span>
-  </div>
+  </div-->
+  <div class="panel-body list-bt"><p class="p-text"><span class="jiage"><?= floor($task->salary); ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span> | <a href="<?=Yii::$app->params["baseurl.m"]?>/<?=$seo_pinyin?>/">北京-朝阳</a> | <?php if(isset($service_type->id)){ ?><a href="<?=Yii::$app->params["baseurl.m"]?>/<?=$seo_pinyin?>/<?=$service_type->pinyin?>/"><?=$service_type->name?></a><?php } ?></p></div>
 </div>
 <div class="list-subsection">
     <dl>
@@ -102,7 +107,6 @@ $this->nav_right_title = '首页';
        <dd>
             <div>
                 <p>联系人：<?=$task->contact?></p>
-                <p>联系电话:<?=$task->contact_phonenum?></p>
            </div>
       </dd>
     </dl>
@@ -168,8 +172,19 @@ $this->nav_right_title = '首页';
     <a href="#" class="cd-popup-close img-replace">关闭</a>
   </div> 
 </div>
-<div style="height:90px"></div>
 
+<div class="bz_pic"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/bz_pic.jpg"></div>
+<div class="m_midd_foot">
+   <ul>
+      <li><a href="#">触屏版</a></li>
+      <li class="bor_left"><a href="<?=Yii::$app->params["baseurl.frontend"]?>">电脑版</a></li>
+      <li  class="bor_left bor_right"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=cn.miduoduo.android">客户端</a></li>
+      <li><a href="<?=Yii::$app->params["baseurl.m"]?>/index.php/site/wechat">微信版</a></li>
+   </ul>
+   <div class="foot_div"><a href="<?=Yii::$app->params["baseurl.frontend"]?>">求职版</a><a href="<?=Yii::$app->params["baseurl.corp"]?>">企业版</a></div>
+   <div class="foot_div1">北京米多多兼职   京ICP备15019760号-3</div>
+</div>
+<div style="height:90px"></div>
 <?php $this->beginBlock('js') ?>
 <script>
 $(function(){
@@ -212,6 +227,9 @@ $(function(){
                 GB.login(location.href);
             }
         });;
+    });
+    $('.gble').on('click', function(){
+        $('.midd_xz').slideUp('400');
     });
 });
 </script>

@@ -22,6 +22,8 @@ use common\models\District;
 use common\models\ConfigRecommend;
 use yii\helpers\Json;
 use common\models\UserHistoricalLocation;
+use common\models\ServiceType;
+use yii\helpers\Url;
 
 /**
  * Site controller
@@ -59,11 +61,19 @@ class SiteController extends MBaseController
         ];
     }
 
-    public function actionIndex($city_pinyin='beijing')
+    public function actionIndex($city_pinyin='beijing', $type_pinyin='', $district_pinyin='')
     {
         $city = District::findOne(
             ['seo_pinyin'=> $city_pinyin, 'level'=>'city', 'is_alive'=> 1]);
+
         $city_id = $city ? $city->id : '';
+
+        $district = null;
+        $stype = ServiceType::findOne(['pinyin'=> $type_pinyin]);
+        if ($city && $district_pinyin){
+            $district = District::findOne(
+                ['seo_pinyin'=>$district_pinyin, 'parent_id'=> $city->id]);
+        }
         
         // 登录用户的上次城市
         $user_id = Yii::$app->user->id ? Yii::$app->user->id : 0;
@@ -121,6 +131,7 @@ class SiteController extends MBaseController
             ->limit(5)
             ->all();
 
+        $location   = Yii::$app->session->get('location');
         if($gids){
             // 查询数据显示
             $tasks      = Task::find()->where(['status'=>Task::STATUS_OK])
@@ -134,6 +145,10 @@ class SiteController extends MBaseController
                  'city'=>$city,
                  'banners_city' => $banners_city,
                  'city_pinyin'=>$city_pinyin,
+                 'current_district' => 
+                    empty($district)?$city:District::findOne($district),
+                 'location' => $location,
+                 'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
                 ]);
 
             return $this->render('index');
@@ -150,6 +165,10 @@ class SiteController extends MBaseController
                  'city'=>$city,
                  'banners_city' => $banners_city,
                  'city_pinyin'=>$city_pinyin,
+                 'current_district' => 
+                    empty($district)?$city:District::findOne($district),
+                 'location' => $location,
+                 'current_service_type' => empty($service_type)?null:ServiceType::findOne($service_type),
                 ]);
         }
     }
@@ -217,5 +236,17 @@ class SiteController extends MBaseController
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionWechat()
+    {
+        $this->layout = false;
+        return $this->render('wechat');
+    }
+
+    public function actionDownload()
+    {
+        $this->layout = false;
+        return $this->render('download');
     }
 }

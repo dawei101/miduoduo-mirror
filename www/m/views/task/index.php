@@ -44,14 +44,19 @@ $this->nav_right_title = '首页';
 $this->wechat_apis = ['getLocation'];
 
 ?>
-
-  <nav class="navbar-fixed-top top-nav" style="top: 50px;" role="navigation">
+<div class="midd_xz">
+    <span class="gble">×</span>
+    <a href="<?=Yii::$app->params["downloadApp.android"]?>"><img src="<?=Yii::$app->params["baseurl.static.m"]?>/static/img/midd_xz.jpg"></a>
+</div>
+  <nav class="navbar-fixed-top top-nav" style="float: left; position: relative;width:100%;" role="navigation">
     <dl class="select">
-        <dt style=" white-space: nowrap;"><?=$current_district->name?> <span class="caret"></span>
-</dt><span class="inverted-triangle"></span>
+        <dt style=" white-space: nowrap;">
+            <?=$current_district->name?> <span class="caret"></span>
+        </dt>
+        <span class="inverted-triangle"></span>
         <dd> 
           <ul>
-        <li><a href="<?=Url::current(['district_pinyin'=>''])?>">全城</a></li>
+            <li><a href="<?=Url::current(['district_pinyin'=>''])?>">全城</a></li>
             <li style="display: none;">
                 <?php if($location['id']){ ?>
                     <a href="/task/nearest?lat=<?= $location['latitude'] ?>&lng=<?= $location['longitude'] ?>&service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a>
@@ -59,20 +64,22 @@ $this->wechat_apis = ['getLocation'];
                     <a href="/task/nearest?service_type=<?= Yii::$app->request->get('service_type') ?>">附近</a>
                 <?php } ?>
             </li>
-<?php foreach($districts as $district) { ?>
-    <li><a href="<?=Url::current(['district_pinyin'=>$district->seo_pinyin])?>"><?=$district->name?></a></li>
-<?php } ?>
+            <?php foreach($districts as $district) { ?>
+                <li><a href="<?=Url::current(['district_pinyin'=>$district->seo_pinyin])?>"><?=$district->name?></a></li>
+            <?php } ?>
           </ul>
         </dd>
      </dl>
     <dl class="select">
-        <dt><?=$current_service_type?$current_service_type->name:'分类 '?><span class="caret"></span> </dt>
+        <dt>
+            <?=$current_service_type?$current_service_type->name:'分类 '?><span class="caret"></span>
+        </dt>
         <dd> 
           <ul>
-    <li><a href="<?=Url::current(['type_pinyin'=>''])?>">全部</a></li>
-<?php foreach($service_types as $st) { ?>
-    <li><a href="<?=Url::current(['type_pinyin'=>$st['pinyin']])?>"><?=$st->name?></a></li>
-<?php } ?>
+            <li><a href="<?=Url::current(['type_pinyin'=>''])?>">全部</a></li>
+            <?php foreach($service_types as $st) { ?>
+                <li><a href="<?=Url::current(['type_pinyin'=>$st['pinyin']])?>"><?=$st->name?></a></li>
+            <?php } ?>
           </ul>
         </dd>
      </dl>
@@ -118,6 +125,9 @@ $(function(){
       dt.on(GB.click_event, function(){dd.is(":hidden")?_show():_hide();});
       dd.find("a").click(function(){dt.html($(this).html());_hide();});     //选择效果（如需要传值，可自定义参数，在此处返回对应的“value”值 ）
       $("body").click(function(i){ !$(i.target).parents(".select").first().is(s) ? _hide():"";});
+    });
+    $('.gble').on('click', function(){
+        $('.midd_xz').slideUp('400');
     });
 });
 </script>
