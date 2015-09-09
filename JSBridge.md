@@ -204,11 +204,26 @@ function CallBack(str) {
 ```
     window.MDDNative.idAuth(callback)
 ```
+
 * 简历修改
 ```
     window.MDDNative.resume(has_resume)
     has_resume:
         true: 已填写简历
         false：未填写简历
+```
+
+* 简历完整度
+```
+    window.MDDNative.hasBasicInfo(has)
+    has_resume:
+        true: 已填写简历
+        false：未填写简历
+```
+
+* 获取版本
+```
+    var version = window.MDDNative.version()
+    
 ```
 

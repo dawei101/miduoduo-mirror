@@ -86,7 +86,7 @@ class WechatController extends \common\BaseController
             $record->save();
         }
         $to = $params['callback_url'];
-        $to .= '?origin_url=' . $params['origin_url'];
+        $to .= '?origin_url=' . urlencode($params['origin_url']);
         if ($record->user){
             $user = $record->user;
             if (empty($user->access_token)) {
