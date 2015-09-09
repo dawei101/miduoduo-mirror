@@ -73,7 +73,9 @@ class TaskController extends BaseActiveController
         if( count($action_params) == 1 && $action_params['id'] ){
             
         }else{
-            $query->andWhere(['city_id'=>3]);
+            if( !stripos(Yii::$app->request->get('filters'), 'city_id') ){
+                $query->andWhere(['city_id'=>3]);
+            }
         }
 
         return $query;

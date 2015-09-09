@@ -236,3 +236,18 @@ a.list-group-item:focus, a.list-group-item:hover {
 	.top-nav,.nav-head,.navbar{ width:540px; margin:0 auto;}
 }
 
+.midd_xz{width:100%; position:relative; }
+.midd_xz img{width:100%;}
+.gble{width:20px; height:20px; position:absolute; left:0; top:0; font-size:20px; line-height:20px; text-align:center; color:#fff;background:#5f636c; border-radius:30px;}
+.m_midd_foot{width:100%; background:#2a3140; padding:5%; font-size:100% }
+.m_midd_foot ul{margin:0 auto; background:#343c4b; overflow:hidden; border:1px #4e5963 solid;}
+.m_midd_foot li{float:left; list-style:none; width:25%; text-align:center;padding:3% 0 3%;}
+.m_midd_foot li a{ color:#828b93}
+.bor_left{border-left:1px #4e5963 solid;}
+.bor_right{border-right:1px #4e5963 solid;}
+.foot_div{width:100%; padding:3% 0 1%; text-align:center;color:#4e5963;}
+.foot_div a{color:#4e5963; margin:0 5% 0 0;}
+.foot_div1{width:100%; padding:2% 0 1%; text-align:center;color:#4e5963;}
+.jiage{color:#fa4535;}
+.bz_pic img{width:100%;}
+
