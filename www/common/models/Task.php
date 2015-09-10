@@ -395,7 +395,7 @@ class Task extends \common\BaseActiveRecord
 
     public function getIs_overflow()
     {
-        return $this->need_quantity <= $this->got_quantity;
+        return $this->need_quantity < $this->got_quantity;
     }
 
     public function getIs_overflow_label()
