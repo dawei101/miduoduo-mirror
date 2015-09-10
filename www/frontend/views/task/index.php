@@ -68,7 +68,7 @@ $this->title = ($current_service_type?$current_service_type->name:'') . '兼职�
     </ul>
   </div>
 </div>
-<div class="nav_title">米多多&gt;<a href="#">北京兼职</a></div>
+<div class="nav_title"><a href="<?=Yii::$app->params['baseurl.frontend']?>">米多多</a> &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/p1/">北京兼职</a></div>
 <ul class="nav_sx">
    <li>
    		<div class="nav_sx_left">区域：</div>
@@ -98,7 +98,7 @@ $this->title = ($current_service_type?$current_service_type->name:'') . '兼职�
     <ul class="lis">
         <?php foreach ($tasks as $task){ if(isset($task->id)){ ?>
             <li>
-            <a href="#">
+            <a href="/<?=$seo_params['city_pinyin']?>/<?=$task->service_type->pinyin?>/<?=$task->gid?>">
                <div class="lis_left_1">
                   <h2><?=$task->title ?></h2>
                   <span><?=$task->service_type->name?></span>
@@ -119,14 +119,13 @@ $this->title = ($current_service_type?$current_service_type->name:'') . '兼职�
             </li>
         <?php }} ?>
         <div class="page">
-        
-            <a href="#">上一页</a><a href="#" class="page_on">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">下一页</a>
+            <?=LinkPager::widget([
+                'pagination' => $pages,
+                'maxButtonCount'=>4,
+                'lastPageLabel'=>'末页', 'nextPageLabel'=>'下一页',
+                'prevPageLabel'=>'上一页', 'firstPageLabel'=>'首页'])
+                ?>
         </div>
-        <?=LinkPager::widget([
-            'pagination' => $pages,
-            'maxButtonCount'=>4,
-            'lastPageLabel'=>'末页', 'nextPageLabel'=>'下一页',
-            'prevPageLabel'=>'上一页', 'firstPageLabel'=>'首页'])?>
     </ul>
 </div>
 <div class="cnter_right">

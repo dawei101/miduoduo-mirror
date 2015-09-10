@@ -106,5 +106,55 @@ class TaskController extends \frontend\FBaseController
             'seo_params'=> $seo_params,
         ]);
     }
+
+    public function actionView()
+    {
+        $pathInfo = explode('/',Yii::$app->request->pathInfo);
+        if( count($pathInfo) == 3 ){
+            $seo_pinyin = $pathInfo[0];
+            $service_type = $pathInfo[1];
+            $service_type = ServiceType::findOne(['pinyin' => $service_type]);
+        }else{
+            $seo_pinyin = '';
+            $service_type = '';
+        }
+
+        $this->layout = 'main';
+        $user_id = Yii::$app->user->id;
+        $resume =(bool) Resume::find()->where(['user_id'=>$user_id])->one();
+        $gid = Yii::$app->request->get('gid');
+        $task = null;
+        if ($gid){
+            $task = Task::find()->where(['gid'=>$gid])
+                ->with('city')->with('district')->with('addresses')->one();
+        }
+        if ($task){
+            $collected = false;
+            $complainted = false;
+            $app = null;
+            if (!Yii::$app->user->isGuest){
+                $collected = TaskCollection::find()->where(
+                    ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->exists();
+                $complainted = Complaint::find()->where(
+                    ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->exists();
+                $app = TaskApplicant::find()->where(
+                    ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->one();
+            }
+            $this->layout = false;
+            return $this->render('view', 
+                [
+                    'task'=>$task,
+                    'collected'=>$collected,
+                    'complainted'=>$complainted,
+                    'app'=> $app,
+                    'resume'=> $resume,
+                    'seo_pinyin' => $seo_pinyin,
+                    'service_type' => $service_type,
+                ]
+            );
+        } else {
+            $this->render404("未知的信息");
+        }
+    }
 } 
 ?>
