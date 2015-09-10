@@ -20,7 +20,7 @@ class JobUtils
             'pk' => $model->getPrimaryKey(),
         ];
         $job = new JobQueue;
-        $job->task_name = 'cloud-sotrage/sync-file';
+        $job->task_name = 'cloud-storage/sync-file';
         $job->setParams($params);
         $job->save();
     }
