@@ -156,8 +156,8 @@ class WeichatController extends MBaseController{
                     $model = new WeichatUserInfo();
                     $model->openid = (string)$openid;
                     $model->is_receive_nearby_msg = WeichatUserInfo::IS_RECEIVE_NEARBY_MSG_NO;
-                    $model->origin_type = WeichatUserInfo::ORIGIN_TYPES_REDPACKET;
-                    $model->origin_detail = (string)$weichat_user->userid;
+                    $model->origin_type = WeichatUserInfo::ORIGIN_TYPES_PC_TASK;
+                    $model->origin_detail = (string)$task_info->id;
                     $model->save();
                 }
             }else{

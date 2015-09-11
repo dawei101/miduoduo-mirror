@@ -42,11 +42,13 @@ class WeichatUserInfo extends \yii\db\ActiveRecord
 
     public static $ORIGIN_TYPES = [
         0  => '未知', 
-        10 => '用户红包',  
+        10 => '用户红包', 
+        20 => 'PC任务',
     ];
 
     const ORIGIN_TYPES_UNKNOW = 0;
     const ORIGIN_TYPES_REDPACKET = 10;
+    const ORIGIN_TYPES_PC_TASK = 20;
 
     public static function tableName()
     {
