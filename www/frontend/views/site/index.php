@@ -1,25 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-<link rel="shortcut icon"  href="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/miduoduo.ico" />
-<title>【米多多兼职】最靠谱有保障的兼职平台</title>
-<meta name="description" content="米多多兼职网，是中国最大的正规网上兼职平台。所有兼职招聘信息全部经过人工审核，不收任何押金和费用，安全有保障。免费找兼职，就上米多多兼职网。 miduoduo.cn" />
-<meta name="keywords" content="兼职网,大学生兼职网,正规网上兼职平台" />
-<link href="<?=Yii::$app->params["baseurl.static.www"]?>/static/css/miduoduo.css" type="text/css" rel="stylesheet" >
-</head>
-<body>
-<div class="nav-top">
-  <div class="nav">
-    <div class="qiuzhi-logo"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/qiuzhi-logo.png" width="244" height="80"></div>
-    <ul>
-       <li><a href="/">首页</a></li>
-       <li><a href="<?=Yii::$app->params['baseurl.m'] . '/'?>">最新兼职</a></li>
-       <li><a href="<?=Yii::$app->params['baseurl.corp']?>">企业版</a></li>       
-    </ul>
-  </div>
-</div>
+<?php
+use common\Seo;
+use common\Utils;
+
+/********* seo start ***********/
+$seocity    = isset($city->name)?$city->name:'';
+$block      = '';
+$type       = '';
+$clearance_type = '';
+$conpany    = '';
+$task_title = '';
+$page_type  = 'index';
+
+$seo_code   = Seo::makeSeoCode($seocity,$block,$type,$clearance_type,$conpany,$task_title,$page_type);
+
+$this->page_title = $seo_code['title'];
+$this->page_keywords = $seo_code['keywords'];
+$this->page_description = $seo_code['description'];
+/********* seo end ***********/
+?>
 <div class="qiuzhi-banner">
   <div class="cent">
       <div class="pic-top"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/jianzhi-pic.png" width="805" height="170"></div>
@@ -144,59 +142,35 @@
 <div class="bottom-bsnner">
   <div class="toumin-box"></div>
   <div class="text-mi">米多多，不仅仅是兼职！</div>
-</div>
-<footer>
-  <ul>
-    <li class="contact-us1">
-      <h2>联系我们</h2>
-      <p>邮箱：coutact@miduoduo.cn</p>
-      <p>电话：010-84991662</p>
-    </li>
-    <li class="about-us">
-      <h2>关于我们</h2>
-      <p><a href="#">公司介绍</a></p>
-      <p><a href="#">团队介绍</a></p>
-    </li>
-    <li class="xian"></li>
-    <li class="attention-us">
-      <h2>关注我们</h2>
-      <div class="erwei"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/fooerwei.jpg" width="70" height="70">
-        <div class="er-text">扫码进入m站</div>
-      </div>
-      <!-- <div class="erwei"><img src="img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>--> 
-    </li>
-  </ul>
-</footer>
-<script src="<?=Yii::$app->params["baseurl.static.www"]?>/static/js/jquery.min.js"></script> 
-<script>
-    $(function(){
-      $(function(){
-      $('#suc1 li').hover(function(){
-        $('.text',this).stop().animate({
-          height:'0'
+</div> 
+<?php $this->beginBlock('js') ?>
+    <script>
+        $(function(){
+          $(function(){
+          $('#suc1 li').hover(function(){
+            $('.text',this).stop().animate({
+              height:'0'
+            });
+          },function(){
+            $('.text',this).stop().animate({
+              height:'330px'
+            });
+          });
         });
-      },function(){
-        $('.text',this).stop().animate({
-          height:'330px'
+        })
+
+        $(function(){
+          $(function(){
+          $('#zan-mi .zan-box').hover(function(){
+            $('.zan',this).stop().animate({
+              height:'258px'
+            });
+          },function(){
+            $('.zan',this).stop().animate({
+              height:'0'
+            });
+          });
         });
-      });
-    });
-    })
-</script> 
-<script>
-    $(function(){
-      $(function(){
-      $('#zan-mi .zan-box').hover(function(){
-        $('.zan',this).stop().animate({
-          height:'258px'
-        });
-      },function(){
-        $('.zan',this).stop().animate({
-          height:'0'
-        });
-      });
-    });
-    })
+        })
     </script>
-</body>
-</html>
+<?php $this->endBlock('js') ?>

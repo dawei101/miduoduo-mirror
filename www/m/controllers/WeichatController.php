@@ -7,6 +7,7 @@ use common\models\WeichatErweima;
 use common\models\WeichatErweimaLog;
 use common\WeichatBase;
 use common\models\WeichatUserInfo;
+use common\models\Task;
 use yii\web\BadRequestHttpException;
 
 class WeichatController extends MBaseController{
@@ -146,24 +147,39 @@ class WeichatController extends MBaseController{
                 $model->save();
             }
         }else{
+            // 任务地址
+            $task_info = Task::findOne(['erweima_ticket'=>$ticket]);
+            if( isset($task_info->id) ){
+                $reMsg  = "您好，欢迎关注米多多优职！报名“".$task_info->title."”点这里 \n<a href='".Yii::$app->params['baseurl.wechat']."/view/job/job-detail.html?task=".$task_info->id."'>兼职链接</a>";
+                $current_user = WeichatUserInfo::findOne(['openid'=>$openid]);
+                if( !isset($current_user->openid) ){
+                    $model = new WeichatUserInfo();
+                    $model->openid = (string)$openid;
+                    $model->is_receive_nearby_msg = WeichatUserInfo::IS_RECEIVE_NEARBY_MSG_NO;
+                    $model->origin_type = WeichatUserInfo::ORIGIN_TYPES_REDPACKET;
+                    $model->origin_detail = (string)$weichat_user->userid;
+                    $model->save();
+                }
+            }else{
         
-            // 通过ticket查找返回信息
-            $erweima    = WeichatErweima::find()->where(['ticket'=>$ticket])->one();
-            $reMsg      = isset($erweima->after_msg) ? $erweima->after_msg : "点击底部菜单进入相关专题。 \n其他问题在输入框直接填写，米小多会即时回复您。找不到想找的兼职，也回复给我们吧";
-            $erweima_id = $erweima['id'];
+                // 通过ticket查找返回信息
+                $erweima    = WeichatErweima::find()->where(['ticket'=>$ticket])->one();
+                $reMsg      = isset($erweima->after_msg) ? $erweima->after_msg : "点击底部菜单进入相关专题。 \n其他问题在输入框直接填写，米小多会即时回复您。找不到想找的兼职，也回复给我们吧";
+                $erweima_id = $erweima['id'];
 
-            // 保存用户扫描记录
-            if( isset($erweima['id']) ){
-                $erweilog   = new WeichatErweimaLog();
-                $erweilog->erweima_id       = $erweima_id;
-                $erweilog->openid           = (string)$openid;
-                $erweilog->create_time      = date("Y-m-d H:i:s",time());
-                $erweilog->has_bind         = 0;
-                $erweilog->follow_by_scan   = $isNew;
-                $erweilogsave               = $erweilog->save();
-                // 更新总扫描数量
-                $erweima->scan_num  = $erweima->scan_num+1;
-                $erweima->update();
+                // 保存用户扫描记录
+                if( isset($erweima['id']) ){
+                    $erweilog   = new WeichatErweimaLog();
+                    $erweilog->erweima_id       = $erweima_id;
+                    $erweilog->openid           = (string)$openid;
+                    $erweilog->create_time      = date("Y-m-d H:i:s",time());
+                    $erweilog->has_bind         = 0;
+                    $erweilog->follow_by_scan   = $isNew;
+                    $erweilogsave               = $erweilog->save();
+                    // 更新总扫描数量
+                    $erweima->scan_num  = $erweima->scan_num+1;
+                    $erweima->update();
+                }
             }
         }
 

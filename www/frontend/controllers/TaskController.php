@@ -21,9 +21,27 @@ use common\models\WeichatPushSetTemplatePushItem;
 use common\models\ConfigRecommend;
 use common\models\UserLocation;
 use common\Seo;
+use common\TaskUtils;
+use common\WeichatBase;
 
 class TaskController extends \frontend\FBaseController
 {
+    /**
+     * @inheritdoc
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+        ];
+    }
+    
     public function actionIndex($city_pinyin='beijing', $type_pinyin='', $district_pinyin='')
     {
         $city = District::findOne(
@@ -91,11 +109,14 @@ class TaskController extends \frontend\FBaseController
         $user_id    = Yii::$app->user->id;
         $location   = Yii::$app->session->get('location');
 
-        // var_dump($tasks);exit;
-        $this->layout = false;
+        $task_utils = new TaskUtils();
+        $recommend_task_list = $task_utils->getRecommendTaskList( $city_id );
+
+        // var_dump($city);exit;
         return $this->render('index', 
         [
             'tasks' => $tasks,
+            'recommend_task_list' => $recommend_task_list,
             'city'  => $city,
             'pages' => $pages,
             'current_district'      => 
@@ -140,10 +161,24 @@ class TaskController extends \frontend\FBaseController
                 $app = TaskApplicant::find()->where(
                     ['task_id'=>$task->id, 'user_id'=>Yii::$app->user->id])->one();
             }
-            $this->layout = false;
+
+            $task_utils = new TaskUtils();
+            $recommend_task_list = $task_utils->getRecommendTaskList( $task->city_id );
+            
+            $weichat_base = new WeichatBase();
+            if( !$weichat_base->checkErweimaValid($task->erweima_date) ){
+                $task_erweima = $weichat_base->createErweimaByTaskid( $task->id );
+            }else{
+                $task_erweima = $task->erweima_ticket;
+            }
+            $task_erweima = Yii::$app->params['weichat']['url']['erweima_show']
+                .$task_erweima;
+            
             return $this->render('view', 
                 [
-                    'task'=>$task,
+                    'task' => $task,
+                    'recommend_task_list' => $recommend_task_list,
+                    'task_erweima' => $task_erweima,
                     'collected'=>$collected,
                     'complainted'=>$complainted,
                     'app'=> $app,

@@ -50,6 +50,9 @@ return [
                 ]
             ],
         ],
+        'view' => [
+            'class' => 'frontend\FView',
+        ],
     ],
     'params' => $params,
 ];

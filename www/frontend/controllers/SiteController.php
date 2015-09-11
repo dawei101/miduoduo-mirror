@@ -17,6 +17,8 @@ use frontend\models\ContactForm;
 
 use common\Utils;
 use common\Constants;
+use common\models\District;
+use yii\helpers\Json;
 
 /**
  * Site controller
@@ -90,8 +92,7 @@ class SiteController extends FBaseController
                 exit;
             }
         }
-        return $this -> renderPartial('index');
-        //return $this->render('index');
+        return $this->render('index');
     }
 
     public function actionContact()
@@ -115,5 +116,47 @@ class SiteController extends FBaseController
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionChangeCity(){
+        // 数据库中记录的城市
+        $user_id = Yii::$app->user->id ? Yii::$app->user->id : 0;
+        if( $user_id ){
+            $db_city = UserHistoricalLocation::find()
+                ->where(['user_id'=>$user_id])
+                ->orderBy(['id'=>SORT_DESC])
+                ->with('city')
+                ->one();
+            $db_city_pinyin = isset($db_city->city->seo_pinyin) ? $db_city->city->seo_pinyin : '';
+        }else{
+            $db_city_pinyin = '';
+        }
+        $session_city_pinyin = Yii::$app->session->get('city_pinyin');
+        if( $db_city_pinyin && !$session_city_pinyin ){
+            Yii::$app->session->set('city_pinyin', $db_city_pinyin);
+            return $this->redirect('/'.$db_city_pinyin.'/');
+        }
+
+        // 城市
+        $citys  = District::find()
+            ->where(['is_alive'=>1,'level'=>'city'])
+            ->orderBy(['seo_pinyin'=>SORT_ASC])
+            ->all();
+        $citys_json = Json::encode($citys);
+        
+        // 拼音
+        $pinyins = [];
+        foreach( $citys as $city ){
+            $city_first_word = strtoupper(substr($city->seo_pinyin,0,1));
+            if( !in_array($city_first_word,$pinyins) ){
+                $pinyins[] = $city_first_word;
+            }
+        }
+
+        return $this->render('citys', [
+            'citys' => $citys,
+            'pinyins' => $pinyins,
+            'citys_json' => $citys_json,
+        ]);
     }
 }

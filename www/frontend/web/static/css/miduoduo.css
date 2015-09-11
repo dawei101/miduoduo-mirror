@@ -87,5 +87,49 @@ footer ul li p a{color:#999;}
 .xian{width:1px; height:135px; background:#5a4a33; margin:20px 10px;}
 .erwei{float:left; margin-right:10px;}
 .erwei img{float:left;}
-.er-text{width:90px; height:50px; font-size:16px; color:#fff; float:right; border-top:5px #fff solid;border-right:5px #fff solid;border-bottom:6px #fff solid;  line-height:25px; padding-top:10px; padding-left:5px}
+.er-text{width:90px; height:49px; font-size:16px; color:#fff; float:right; border-top:5px #fff solid;border-right:5px #fff solid;border-bottom:6px #fff solid;  line-height:20px; padding-top:10px; padding-left:5px}
 
+.qiuzhi-logo{position:relative;}
+.qiuzhi-logo img{margin-top:10px;}
+.qiuzhi-logo span {
+    color: #f5d031;
+    display: block;
+    font-size: 18px;
+    left: 70px;
+    min-width: 300px;
+    position: absolute;
+    top: 40px;
+    z-index: 900;
+}
+.qiuzhi-logo a{ font-size:20px; color:#999;  width:100px; font-size:12px; margin-left:10px}
+
+.qiuzhi-logo img{margin-top:10px;}
+
+.remen,.city_on,.more_city,.city_tabb{width:1080px; min-height:60px; background:#fff; margin:0 auto 15px; overflow:hidden}
+/*.city_on{background:#fafafa;}*/
+.dq_city{float:left;line-height:60px; font-size:16px; padding-left:1%;color:#00b966; margin-right:20px;}
+.dq_city strong{color: #666;}
+.sousuo{width:80%; margin:0 auto;}
+.sousuo .text_in{width:82%; border:1px #ccc solid; border-radius:5px; line-height:40px; font-size:16px; margin-top:10px; padding-left:2%;color: #293142;}
+.sousuo .bnt_in{width:15%; margin-top:10px; margin-left:-5px;border:1px #ccc solid; border-radius:0px 5px 5px 0px; line-height:40px;font-size:16px; background:#00b966; color:#fff; cursor:pointer; }
+.remen h2{font-size:16px; color:#666; line-height:30px; border-bottom:1px #ccc solid; margin-bottom:10px; background:#fafafa; padding:1% 1%;}
+.rm_box{padding:1% 1%;}
+.remen a,.city_tabb .tag_list a{display:block; float:left; padding:5px 10px; font-size:14px; color:#666; margin:0 10px 10px 0;}
+.remen a:hover,.city_tabb .tag_list a:hover,.qiuzhi-logo a:hover{color:#00b966;}
+.more_city  h2{font-size:16px; color:#666; line-height:30px; border-bottom:1px #ccc solid; margin-bottom:10px; background:#fafafa; padding:1% 1%;}
+.more_city .sou_tab a{display:block; padding:10px 31px; text-align:center; color:#2a3141; float:left; margin-left:1%; background:#fafafa; border-radius:4px; margin-bottom:1%; font-size:14px;}
+.more_city .sou_tab a:hover{background:#00b966; color:#fff;}
+.city_tabb dl{clear:both;}
+.city_title1{font-size:16px; color:#666; line-height:30px; border-bottom:1px #ccc solid; margin-bottom:10px;  padding:1% 1%; font-weight:bold;}
+.search_city{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: absolute;
+    width: 723px;
+}
+.search_city a{
+    display: block;
+    font-size: 16px;
+    padding: 5px 16px;
+}

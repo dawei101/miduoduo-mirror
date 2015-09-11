@@ -7,30 +7,39 @@ use common\models\ServiceType;
 use common\Seo;
 use yii\widgets\LinkPager;
 use common\BaseController;
+
+/********* seo start ***********/
+$city       = isset($task->city->name)?$task->city->name:'';
+$block      = '';
+$type       = '';
+$clearance_type = '';
+$conpany    = $task->company_name;
+$task_title = $task->title;
+$page_type  = 'detail';
+
+$need_quantity  = $task->need_quantity;
+$address        = '';
+if(isset($task->addresses)){
+    foreach($task->addresses as $k => $v){ 
+        $address    .= $v->title.','.$v->address.';';
+    }
+}
+$salary         = floor($task->salary);
+$detail         = $task->detail;
+
+$seo_code   = Seo::makeSeoCode($city,$block,$type,$clearance_type,$conpany,$task_title,$page_type,$need_quantity,$address,$salary,$detail);
+
+$this->title = '兼职详情';
+$this->page_title = $seo_code['title'];
+$this->page_keywords = $seo_code['keywords'];
+$this->page_description = strip_tags($seo_code['description']);
+/********* seo end ***********/
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-<link rel="shortcut icon"  href="img/miduoduo.ico" />
-<title>米多多/兼职平台</title>
-<link href="/static/css/miduoduo.css" type="text/css" rel="stylesheet" >
-<link href="/static/css/task.css" type="text/css" rel="stylesheet" >
-</head>
-<body>
-<div class="nav-top">
-  <div class="nav">
-    <div class="qiuzhi-logo"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/qiuzhi-logo.png" width="244" height="80"></div>
-    <ul>
-      <li><a href="#">首页</a></li>
-      <li><a href="#">最新兼职</a></li>
-      <li><a href="#">直聘职位</a></li>
-      <li><a href="#">企业版</a></li>
-    </ul>
-  </div>
+<div class="nav_title">
+    <a href="<?=Yii::$app->params['baseurl.frontend']?>">米多多</a> &gt; 
+    <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_pinyin?>/p1/"><?=$city?>兼职</a> &gt; 
+    <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_pinyin?>/<?=$task->service_type->pinyin?>/"><?=$city?><?=$task->service_type->name?></a>
 </div>
-<div class="nav_title"><a href="<?=Yii::$app->params['baseurl.frontend']?>">米多多</a> &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_pinyin?>/p1/">北京兼职</a> &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_pinyin?>/<?=$task->service_type->pinyin?>/">北京<?=$task->service_type->name?></a></div>
 <div class="center_c">
   <div class="cnter_left">
     <div class="midd_title">
@@ -98,46 +107,26 @@ use common\BaseController;
     <div class="midd_xq_title">报名方式</div>
     <div class="midd_xq_text">
       <div class="tex">微信扫码，立即报名该职位</div>
-      <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/erwei.jpg" width="287" height="287"> </div>
+      <img src="<?=$task_erweima?>" width="287" height="287"> </div>
   </div>
   <div class="cnter_right">
-    <div class="right_title">急聘岗位</div>
-    <ul class="jipin_list">
-      <li><a href="#"><span>200/天</span>去哪网客服</a></li>
-      <li><a href="#"><span>200/天</span>去哪网客服</a></li>
-      <li><a href="#"><span>200/天</span>去哪网客服</a></li>
-      <li><a href="#"><span>200/天</span>去哪网客服</a></li>
-      <li><a href="#"><span>200/天</span>去哪网客服</a></li>
-    </ul>
+    <?php if($recommend_task_list){ ?>
+        <div class="right_title">推荐岗位</div>
+        <ul class="jipin_list">
+            <?php foreach($recommend_task_list as $task){ ?>
+                <li><a href="/<?=$seo_pinyin?>/<?=$task->service_type->pinyin?>/<?=$task->gid?>" target="_blank"><span><?=str_ireplace('.00','',$task->salary)?>元/<?=$task::$SALARY_UNITS[$task->salary_unit]?></span><?=$task->title?></a></li>
+            <?php } ?>
+        </ul>
+    <?php } ?>
     <div class="right_title">扫码快速找兼职</div>
     <div class="erwei_img"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/erwei.jpg" width="287" height="287"></div>
-    <div class="right_title">热门兼职</div>
-    <div class="remen_jz"> <a href="#">长期客服</a> <a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a> </div>
+    <!--div class="right_title">热门兼职</div>
+    <div class="remen_jz">
+        <a href="#">长期客服</a>
+    </div-->
   </div>
 </div>
-<div class="zhiwei_tj"> <a href="#">长期客服</a> <a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客长期客服服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客长期服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服长期客服</a><a href="#">长期客服</a> <a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客长期客服服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客长期服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服</a><a href="#">长期客服长期客服</a></div>
+<!--div class="zhiwei_tj">
+    <a href="#">长期客服</a>
+</div-->
 
-<footer>
-  <ul>
-    <li class="contact-us1">
-      <h2>联系我们</h2>
-      <p>邮箱：coutact@miduoduo.cn</p>
-      <p>电话：010-84991662</p>
-    </li>
-    <li class="about-us">
-      <h2>关于我们</h2>
-      <p><a href="#">公司介绍</a></p>
-      <p><a href="#">团队介绍</a></p>
-    </li>
-    <li class="xian"></li>
-    <li class="attention-us">
-      <h2>关注我们</h2>
-      <div class="erwei"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/fooerwei.jpg" width="70" height="70">
-        <div class="er-text">扫码进入m站</div>
-      </div>
-      <!-- <div class="erwei"><img src="img/fooerwei1.jpg" width="70" height="70"><div class="er-text">关注微信公众号</div></div>--> 
-    </li>
-  </ul>
-</footer>
-</body>
-</html>
