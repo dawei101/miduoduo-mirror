@@ -179,6 +179,8 @@ class TaskPool extends \common\BaseActiveRecord
         $task->origin = $ds['origin'];
         $task->company_id = 0;
 
+        $this->company_name = isset($this->company_name) ? 
+            str_ireplace('校联邦','米多多',$this->company_name) : '米多多运营中心';
         if ($this->company_name){
             $task->company_name = $this->company_name;
             $com = Company::find()->where([
