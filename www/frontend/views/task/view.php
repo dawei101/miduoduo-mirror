@@ -112,12 +112,12 @@ $this->page_description = strip_tags($seo_code['description']);
     </div>
     <div class="midd_xq_title">求职说明</div>
     <div class="midd_xq_text">
-      <P>如果您在求职中，遇到企业无理要求支付押金，或者工作内容与实际发布内容不符，请与我们及时联系，米多多会及时处理。</P>
+      <P>如果您在求职中，遇到企业无理要求支付押金，或者工作内容与实际发布内容不符，请与我们及时联系。扫描下方二维码，关注米多多后，点击信息，举报该职位即可。米多多会及时处理。</P>
       <p>如果您遇到欺诈，米多多提供兼职呢欺诈赔付，<a href="<?=Yii::$app->params['baseurl.frontend']?>/site/assurance">赔付方案</a></p>
     </div>
     <div class="midd_xq_title">报名方式</div>
     <div class="midd_xq_text">
-      <div class="tex">微信扫码关注，报名该职位！</div>
+      <div class="tex">微信扫码关注米多多，点击链接即可报名！</div>
       <img src="<?=$task_erweima?>" width="287" height="287"> </div>
   </div>
   <div class="cnter_right">

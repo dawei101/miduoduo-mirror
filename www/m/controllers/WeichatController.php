@@ -150,7 +150,7 @@ class WeichatController extends MBaseController{
             // 任务地址
             $task_info = Task::findOne(['erweima_ticket'=>$ticket]);
             if( isset($task_info->id) ){
-                $reMsg  = "您好，欢迎关注米多多优职！报名“".$task_info->title."”点这里 \n<a href='".Yii::$app->params['baseurl.wechat']."/view/job/job-detail.html?task=".$task_info->id."'>兼职链接</a>";
+                $reMsg  = "您好，欢迎关注米多多优职！报名“".$task_info->title."”点这里>><a href='".Yii::$app->params['baseurl.wechat']."/view/job/job-detail.html?task=".$task_info->id."'>立即报名</a>";
                 $current_user = WeichatUserInfo::findOne(['openid'=>$openid]);
                 if( !isset($current_user->openid) ){
                     $model = new WeichatUserInfo();

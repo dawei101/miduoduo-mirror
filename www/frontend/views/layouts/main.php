@@ -51,7 +51,9 @@ if( $lastest_seo_pinyin ){
     <div class="nav-top">
         <div class="nav">
             <div class="qiuzhi-logo">
-                <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/qiuzhi-logo.png" width="60" height="60">
+                <a href="<?=Yii::$app->params["baseurl.frontend"]?>" style="margin-left:0px;">
+                    <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/qiuzhi-logo.png" width="60" height="60" alt="米多多兼职">
+                </a>
                 <?php //echo $city->short_name;exit; ?>
                 <?php if(isset($city->short_name)){ ?>
                     <span><?=$city->short_name?><a href="<?=Yii::$app->params["baseurl.frontend"]?>/change-city">[切换城市]</a></span>
@@ -59,7 +61,7 @@ if( $lastest_seo_pinyin ){
             </div>
             <ul>
                 <li><a href="<?=Yii::$app->params["baseurl.frontend"]?>">首页</a></li>
-                <li><a href="<?=$jz_url?>">最新兼职</a></li>
+                <li><a href="<?=$jz_url?>">米多多网页版</a></li>
                 <li><a href="<?=Yii::$app->params["baseurl.m"]?>">手机版</a></li>
                 <li><a href="<?=Yii::$app->params["baseurl.corp"]?>">企业版</a></li>
             </ul>
