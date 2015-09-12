@@ -9,7 +9,7 @@ ul li{list-style:none;}
 .nav_title a:hover{color:#f5d031;}
 
 .nav_sx_left{float:left; height:35px; line-height:35px; text-indent:1em; color:#212225; font-size:12px; /*font-weight:bold;*/}
-.nav_sx{width:1080px; background:#fafafa; min-height:70px; margin:0px auto 15px;} 
+.nav_sx{width:1080px; background:#fafafa; min-height:70px; margin:0px auto 15px;overflow: hidden;} 
 .nav_sx_right{float:left; width:1010px; min-height:30px;}
 .nav_sx_right a{padding:5px 8px; margin:5px 5px 0 0; display:block; min-width:20px; float:left;color:#1e38fb;}
 .nav_sx_right a:hover, .nav_sx_right .current{background:#f5d031; color:#fff;}
@@ -48,7 +48,7 @@ ul li{list-style:none;}
 
 .cnter_right{width:300px; min-height:300px; float:right; border:1px #ccc solid; overflow:hidden;padding-bottom: 10px;} 
 .right_title{width:100%; background:#fafafb; border-bottom:2px #00b966 solid; line-height:45px; font-size:16px; color:#00b966; text-indent:1em}
-.jipin_list li{border-bottom:1px #ccc solid; line-height:50px; font-size:14px; color:#333; text-indent:0.5em;} 
+.jipin_list li{border-bottom:1px #ccc solid; line-height:50px;height:50px;overflow: hidden; font-size:14px; color:#333; text-indent:0.5em;} 
 .jipin_list li a{color:#1e38fb;}
 .jipin_list li a:hover{color:#00b966;}
 .jipin_list li span{float:right; margin-right:10px;} 
@@ -83,3 +83,4 @@ ul li{list-style:none;}
 .pf{width:1080px; margin:0 auto;}
 .pf img{width:640px; margin:0 auto; display:block}
 
+.img_pc{width:1080px; height:100px; margin:20px auto; border:1px #ccc solid;}

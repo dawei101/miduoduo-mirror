@@ -147,3 +147,6 @@ $this->page_description = $seo_code['description'];
 <!--div class="zhiwei_tj">
     <a href="#">长期客服长期客服</a>
 </div-->
+<div class="img_pc">
+    <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/xinyu.jpg">
+</div>
