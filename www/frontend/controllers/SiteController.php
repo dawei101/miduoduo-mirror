@@ -42,7 +42,7 @@ class SiteController extends FBaseController
                 'only' => ['index'],
                 'lastModified' => function ($action, $params) {
                     $file = Yii::getAlias("@frontend/views/site/index.php");
-                    return filemtime($file);
+                    //return filemtime($file);
                 },
             ]
         ];

@@ -20,6 +20,7 @@ if( $current_district->id != $city->id ){
     $block      = '';
     $page_type  = 'city';
 }
+
 $type       = $current_service_type?$current_service_type->name:'';
 if( $type ){
     $seocity    = $current_district->name;
@@ -37,14 +38,33 @@ $this->page_keywords = $seo_code['keywords'];
 $this->page_description = $seo_code['description'];
 /********* seo end ***********/
 ?>
-<div class="nav_title"><a href="<?=Yii::$app->params['baseurl.frontend']?>">米多多</a> &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/p1/"><?=$city->short_name?>兼职</a></div>
+<div class="nav_title">
+    <a href="<?=Yii::$app->params['baseurl.frontend']?>">米多多</a> &gt; 
+    <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/p1/"><?=$city->short_name?>兼职</a>
+    <?php if( isset($current_district->seo_pinyin) && ($current_district->id != $city->id ) ){ ?>
+         &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/<?=$current_district->seo_pinyin?>/p1/"><?=$current_district->short_name?>兼职</a>
+    <?php } ?>
+    <?php if(isset($current_service_type->pinyin)){ ?>
+        &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/<?=$current_service_type->pinyin?>/p1/"><?=$current_service_type->name?></a>
+    <?php } ?>
+</div>
 <ul class="nav_sx">
    <li>
    		<div class="nav_sx_left">区域：</div>
         <div class="nav_sx_right">
-            <a href="<?=Url::current(['district_pinyin'=>''])?>" class="">全城</a>
+            <a href="<?=Url::current(['district_pinyin'=>''])?>" 
+                <?php if($current_district->id == $city->id){ ?>
+                    class="current"
+                <?php } ?>
+            >
+                全城
+            </a>
             <?php foreach($districts as $district) { ?>
-                <a href="<?=Url::current(['district_pinyin'=>$district->seo_pinyin])?>">
+                <a href="<?=Url::current(['district_pinyin'=>$district->seo_pinyin])?>"
+                    <?php if($district->seo_pinyin == $current_district->seo_pinyin){ ?>
+                        class="current"
+                    <?php } ?>
+                >
                     <?=$district->name?>
                 </a>
             <?php } ?>
@@ -53,9 +73,19 @@ $this->page_description = $seo_code['description'];
    <li>
    		<div class="nav_sx_left">分类：</div>
         <div class="nav_sx_right">
-            <a href="<?=Url::current(['type_pinyin'=>''])?>">全部</a>
+            <a href="<?=Url::current(['type_pinyin'=>''])?>" 
+                <?php if(!isset($current_service_type->pinyin)){ ?>
+                    class="current"
+                <?php } ?>
+            >
+                全部
+            </a>
             <?php foreach($service_types as $st) { ?>
-                <a href="<?=Url::current(['type_pinyin'=>$st['pinyin']])?>">
+                <a href="<?=Url::current(['type_pinyin'=>$st['pinyin']])?>"
+                    <?php if(isset($current_service_type->pinyin) && $st->pinyin == $current_service_type->pinyin){ ?>
+                        class="current"
+                    <?php } ?>
+                >
                     <?=$st->name?>
                 </a>
             <?php } ?>
