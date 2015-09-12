@@ -62,7 +62,24 @@ $this->nav_right_title = '首页';
     &nbsp;&nbsp;|&nbsp;&nbsp;已报名：<?=$task->got_quantity?>/<?=$task->need_quantity?>人
     </span>
   </div-->
-  <div class="panel-body list-bt"><p class="p-text"><span class="jiage"><?= floor($task->salary); ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span> | <a href="<?=Yii::$app->params["baseurl.m"]?>/<?=$seo_pinyin?>/">北京-朝阳</a> | <?php if(isset($service_type->id)){ ?><a href="<?=Yii::$app->params["baseurl.m"]?>/<?=$seo_pinyin?>/<?=$service_type->pinyin?>/"><?=$service_type->name?></a><?php } ?></p></div>
+  <div class="panel-body list-bt"><p class="p-text"><span class="jiage"><?= floor($task->salary); ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span> | 
+  <a href="<?=Yii::$app->params['baseurl.m']?>/<?=$seo_pinyin ? $seo_pinyin : 'beijing'?>/<?php
+                if( $task->district ){
+                    echo $task->district->seo_pinyin;
+                }else{
+                    echo 'p1';
+                }
+            ?>/">
+            <?php
+            if ($task->city) {
+                echo $task->city->name;
+            }
+            if ($task->district) {
+                echo ' - '.$task->district->name;
+            } ?>
+            <?=$task->address?>
+  </a>
+  | <?php if(isset($service_type->id)){ ?><a href="<?=Yii::$app->params["baseurl.m"]?>/<?=$seo_pinyin?>/<?=$service_type->pinyin?>/"><?=$service_type->name?></a><?php } ?></p></div>
 </div>
 <div class="list-subsection">
     <dl>

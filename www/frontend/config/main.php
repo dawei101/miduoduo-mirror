@@ -39,7 +39,19 @@ return [
             'rules' => [
                 'download-app' => 'site/download-app',
                 'resume-<user_id:\d+>-<name:.*?>'=>'resume/detail',
+
+                // 详情 =城市/服务类别/gid
+                'change-city' => 'site/change-city',
+                '<param_one:[a-z]+>/<param_two:[a-z]+>/<gid:\d{10,40}?>'=>'task/view',
+                [
+                    'class' => 'frontend\SeoUrlRule',
+                    'pattern'=> '',
+                    'route'=>'',
+                ]
             ],
+        ],
+        'view' => [
+            'class' => 'frontend\FView',
         ],
     ],
     'params' => $params,

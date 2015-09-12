@@ -12,9 +12,10 @@ class AppAsset extends BaseAsset
     public $basePath = '@webroot';
 
     public $css = [
-        'css/site.css',
-        // 'frontend/web/css/site.css',
+        'static/css/miduoduo.css',
+        'static/css/task.css',
     ];
+
     public $js = [
     ];
     public $depends = [

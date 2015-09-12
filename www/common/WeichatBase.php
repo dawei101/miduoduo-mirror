@@ -347,6 +347,31 @@ class WeichatBase
         return $ticketArr->ticket;
     }
 
+    public function createErweimaByTaskid($task_id){
+        $scene_id       = $task_id; // 扫描后返回值
+        $access_token   = $this->getWeichatAccessToken();
+
+        $targetUrl      = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token="
+            .$access_token;
+        $postData       = "";
+
+        // 7天的二维码
+        $postData       = '{"expire_seconds": 604800, "action_name": "QR_SCENE", "action_info": {"scene": {"scene_id": '.$scene_id.'}}}';
+
+        $ticketJson = $this->postWeichatAPIdata($targetUrl,$postData);
+        $ticketArr  = json_decode($ticketJson);
+
+        Task::updateAll(
+            [
+                'erweima_date' => date("Y-m-d"),
+                'erweima_ticket' => $ticketArr->ticket,
+            ],
+            ['id' => $task_id]
+        );
+
+        return $ticketArr->ticket;
+    }
+
     public function putMoneyToAccount($data){
         $model          = new AccountEvent();
         $model->date     = $data['date'];

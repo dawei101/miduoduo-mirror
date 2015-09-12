@@ -3,9 +3,24 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 $this->title = '关于我们';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <p>我们可以用最好的方式为企业解决兼职问题。我们可以保证兼职的质量，并获得相应的反馈。 </p>
+
+<div class="nav_title">
+    <a href="<?=Yii::$app->params["baseurl.frontend"]?>">米多多</a> &gt; 
+    <?=$this->title?>
+</div>
+<div class="pf">
+    <p>
+        北京宠爱有家信息技术技术有限公司，2015年成立。
+    </p>
+    <p>
+        公司以提供自由职业者便捷办公为使命，让更多人可以轻松soho。
+    </p>
+    <p>
+        公司核心团队来国内各大科技公司。
+    </p>
+    <p>
+        公司地址：北京市朝阳区亚运村（北四环边上）。
+         
+     </p>
 </div>

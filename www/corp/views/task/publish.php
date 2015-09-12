@@ -187,9 +187,9 @@ $this->title = '米多多兼职平台';
                                                 </option>
                                             <?php } ?>
                                         </select>
-                                        <select id="address_qu">
+                                        <select id="address_qu" name="district_id">
                                             <option value="0">区/县</option>
-                                            <option value="-1">不限工作地点</option>
+                                            <option value="0">不限工作地点</option>
                                             <?php foreach($qu as $k=>$v){ ?>
                                                 <option value="<?=$v->id;?>">
                                                     <?=$v->short_name;?>
