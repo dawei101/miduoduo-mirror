@@ -66,26 +66,30 @@ if( $lastest_seo_pinyin ){
         </div>
     </div>
     <?= $content ?>
+
     <footer>
-        <ul>
-            <li class="contact-us1">
-                <h2>联系我们</h2>
-                <p>邮箱：<?=Yii::$app->params['supportEmail']?></p>
-                <p>电话：<?=Yii::$app->params['supportTel']?></p>
-            </li>
-            <li class="about-us">
-                <h2>关于我们</h2>
-                <p><a href="<?=Yii::$app->params['baseurl.frontend']?>/site/about">公司介绍</a></p>
-                <p><a href="<?=Yii::$app->params['baseurl.frontend']?>/site/team">团队介绍</a></p>
-            </li>
-                <li class="xian"></li>
-                <li class="attention-us">
-                <h2>关注我们</h2>
-                <div class="erwei"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/erwei.jpg" width="70" height="70">
-                <div class="er-text">微信关注<br />米多多</div>
-                </div>
-            </li>
-        </ul>
+      <ul>
+        <li class="contact-us1">
+          <div class="foot_nav">
+            <a href="<?=Yii::$app->params["baseurl.frontend"]?>">米多多求职版</a>
+            <a href="<?=Yii::$app->params["baseurl.corp"]?>">米多多企业版</a>
+            <a href="#">地推达人</a>
+            <a href="<?=Yii::$app->params['downloadApp.android']?>">客户端下载</a>
+            <a href="<?=Yii::$app->params["baseurl.wechat"]?>/view/index.html">微信版</a>
+          </div>
+          <div class="lianxi">
+            联系我们：&nbsp;&nbsp;邮箱：<?=Yii::$app->params['supportEmail']?>&nbsp;&nbsp;&nbsp;&nbsp;电话：<?=Yii::$app->params['supportTel']?>
+          </div>
+          <div  class="lianxi">京ICP 备15019760号-3</div>
+          <h2>米多多，最快兼职招聘平台！</h2>
+        </li>
+        <li class="xian"></li>
+        <li class="attention-us">
+          <div class="erwei_l">
+            <div class="er_t">微信二维码</div><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei.jpg" width="140" height="140"> </div>
+          <div class="erwei_r"><div class="er_t">APP下载二维码</div><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/app.jpg" width="140" height="140"> </div>
+        </li>
+      </ul>
     </footer>
 </body>
 </html>

@@ -120,6 +120,14 @@ class SiteController extends FBaseController
         return $this->render('about');
     }
 
+    public function actionAssurance(){
+        return $this->render('assurance');
+    }
+
+    public function actionTeam(){
+        return $this->render('team');
+    }
+
     public function actionChangeCity(){
         // 数据库中记录的城市
         $user_id = Yii::$app->user->id ? Yii::$app->user->id : 0;

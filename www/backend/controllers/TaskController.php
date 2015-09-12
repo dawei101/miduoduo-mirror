@@ -85,6 +85,10 @@ class TaskController extends BBaseController
             if ($city_id) {
                 $model->city_id = $city_id;
             }
+            $district_id = Yii::$app->request->post('district_id');
+            if ($district_id) {
+                $model->district_id = $district_id;
+            }
             $clearance_period = Yii::$app->request->post('clearance_period');
             if ($clearance_period) {
                 $model->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);
@@ -185,8 +189,24 @@ class TaskController extends BBaseController
                 $data['to_time']    = '23:59:59';
             }
           
+            $current_city_id     = $task->city_id;
+            $current_district_id = $task->district_id;
+            
             $task->setAttributes($data, false);
 
+            $city_id = Yii::$app->request->post('city_id');
+            if ($city_id) {
+                $task->city_id = $city_id;
+            }else{
+                $task->city_id = $current_city_id;
+            }
+            $district_id = Yii::$app->request->post('district_id');
+            if ($district_id>0) {
+                $task->district_id = $district_id;
+            }else{
+                $task->district_id = $current_district_id;
+            }
+            
             $clearance_period = $data['clearance_period'];
             if ($clearance_period) {
                 $task->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);

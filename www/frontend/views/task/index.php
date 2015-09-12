@@ -42,10 +42,10 @@ $this->page_description = $seo_code['description'];
     <a href="<?=Yii::$app->params['baseurl.frontend']?>">米多多</a> &gt; 
     <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/p1/"><?=$city->short_name?>兼职</a>
     <?php if( isset($current_district->seo_pinyin) && ($current_district->id != $city->id ) ){ ?>
-         &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/<?=$current_district->seo_pinyin?>/p1/"><?=$current_district->short_name?>兼职</a>
+         &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/<?=$current_district->seo_pinyin?>/"><?=$current_district->short_name?>兼职</a>
     <?php } ?>
     <?php if(isset($current_service_type->pinyin)){ ?>
-        &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/<?=$current_service_type->pinyin?>/p1/"><?=$current_service_type->name?></a>
+        &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/<?=$current_service_type->pinyin?>/"><?=$current_service_type->name?></a>
     <?php } ?>
 </div>
 <ul class="nav_sx">
@@ -60,7 +60,7 @@ $this->page_description = $seo_code['description'];
                 全城
             </a>
             <?php foreach($districts as $district) { ?>
-                <a href="<?=Url::current(['district_pinyin'=>$district->seo_pinyin])?>"
+                <a href="<?=str_ireplace('p1/','',Url::current(['district_pinyin'=>$district->seo_pinyin]))?>"
                     <?php if($district->seo_pinyin == $current_district->seo_pinyin){ ?>
                         class="current"
                     <?php } ?>
@@ -81,7 +81,7 @@ $this->page_description = $seo_code['description'];
                 全部
             </a>
             <?php foreach($service_types as $st) { ?>
-                <a href="<?=Url::current(['type_pinyin'=>$st['pinyin']])?>"
+                <a href="<?=str_ireplace('p1/','',Url::current(['type_pinyin'=>$st['pinyin']]))?>"
                     <?php if(isset($current_service_type->pinyin) && $st->pinyin == $current_service_type->pinyin){ ?>
                         class="current"
                     <?php } ?>

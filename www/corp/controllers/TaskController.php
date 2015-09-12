@@ -86,11 +86,17 @@ class TaskController extends CBaseController
 
             $data['company_id'] = $company_id;
             $data['user_id'] = Yii::$app->user->id;
+            $data['updated_time'] = date("Y-m-d H:i:s");
+
             $model->setAttributes($data, false);
 
             $city_id = Yii::$app->request->post('city_id');
             if ($city_id) {
                 $model->city_id = $city_id;
+            }
+            $district_id = Yii::$app->request->post('district_id');
+            if ($district_id) {
+                $model->district_id = $district_id;
             }
             $clearance_period = Yii::$app->request->post('clearance_period');
             if ($clearance_period) {
@@ -182,7 +188,25 @@ class TaskController extends CBaseController
                 $data['to_time']    = '23:59:59';
             }
 
+            $data['updated_time'] = date("Y-m-d H:i:s");
+
+            $current_city_id     = $task->city_id;
+            $current_district_id = $task->district_id;
+            
             $task->setAttributes($data, false);
+
+            $city_id = Yii::$app->request->post('city_id');
+            if ($city_id) {
+                $task->city_id = $city_id;
+            }else{
+                $task->city_id = $current_city_id;
+            }
+            $district_id = Yii::$app->request->post('district_id');
+            if ($district_id>0) {
+                $task->district_id = $district_id;
+            }else{
+                $task->district_id = $current_district_id;
+            }
 
             $clearance_period = Yii::$app->request->post('clearance_period');
             if ($clearance_period) {
