@@ -13,6 +13,8 @@ use common\models\ServiceType;
 use common\models\ConfigRecommend;
 use common\models\WeichatPushSetTemplatePushItem;
 use common\models\TaskNotice;
+use common\models\TaskOnlinejobNeedinfo;
+use common\models\TaskOnlinejob;
 
 /**
  * This is the model class for table "{{%task}}".
@@ -460,6 +462,15 @@ class Task extends \common\BaseActiveRecord
             ->via('applicants');
     }
 
+    public function getOnlinejob(){
+        return $this->hasOne(TaskOnlinejob::className(),['task_id'=>'id']);
+    }
+
+    public function getOnlinejob_needinfo(){
+        return $this->hasMany(TaskOnlinejobNeedinfo::className(),['task_id'=>'id'])
+            ->addOrderBy(['display_order' => SORT_DESC]);
+    }
+
     public function fields()
     {
         $fs = parent::fields();
@@ -469,6 +480,8 @@ class Task extends \common\BaseActiveRecord
             'requirements',
             'is_overflow',
             'xcompany_name',
+            'onlinejob',
+            'onlinejob_needinfo',
         ]);
         unset($fields['contact_phonenum']);
         return $fields;
