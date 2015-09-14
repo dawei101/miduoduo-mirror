@@ -36,7 +36,6 @@ $user = Yii::$app->user;
                 <li class="mtitle" data-group="admin"><a>账号，简历，任务分类</a></li>
                 <li class="mmenu" data-group="admin"><a href="/user">账号管理</a></li>
                 <li class="mmenu" data-group="admin"><a href="/user/set-role">角色管理</a></li>
-                <li class="mmenu" data-group="admin"><a href="/resume">人才库</a></li>
                 <li class="mmenu" data-group="admin"><a href="/district">城市</a></li>
                 <li class="mmenu" data-group="admin"><a href="/service-type">任务类型</a></li>
 <?php } ?>
@@ -48,6 +47,7 @@ $user = Yii::$app->user;
                 <li class="mmenu" data-group="operation"><a href="/task-pool">爬虫-任务列表</a></li>
                 <li class="mmenu" data-group="operation"><a href="/task-pool-white-list">爬虫-白名单(黑名单)</a></li>
                 <li class="mmenu" data-group="operation"><a href="/company">企业库</a></li>
+                <li class="mmenu" data-group="operation"><a href="/resume">人才库</a></li>
                 <li class="mmenu" data-group="operation"><a href="/config-recommend/index?sort=-id">配置-推荐兼职</a></li>
                 <li class="mmenu" data-group="operation"><a href="/config-banner/index?sort=-id">配置-首页广告</a></li>
 <?php } ?>
