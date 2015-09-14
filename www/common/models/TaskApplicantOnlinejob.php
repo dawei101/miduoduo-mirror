@@ -17,6 +17,17 @@ use Yii;
  */
 class TaskApplicantOnlinejob extends \yii\db\ActiveRecord
 {
+    public static $HAS_SYNC_WECHAT_PIC = [
+        0 => '否',
+        1 => '是',
+    ];
+
+    public static $STATUS = [
+        0  => '等待审核',
+        10 => '审核通过',
+        20 => '审核不通过',
+    ];
+
     /**
      * @inheritdoc
      */

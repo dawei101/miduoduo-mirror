@@ -36,6 +36,7 @@ CREATE TABLE `jz_task_onlinejob_needinfo`(
 CREATE TABLE `jz_task_applicant_onlinejob`(
  `id` INT(11) NOT NULL auto_increment COMMENT '在线任务提交id',
  `status` TINYINT(4) DEFAULT 0 COMMENT '状态',
+ `reason` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '审核未通过原因',
  `app_id` INT(11) DEFAULT 0 COMMENT '任务报名id',
  `user_id` INT(11) DEFAULT 0 COMMENT '用户id',
  `task_id` INT(11) DEFAULT 0 COMMENT '任务id',

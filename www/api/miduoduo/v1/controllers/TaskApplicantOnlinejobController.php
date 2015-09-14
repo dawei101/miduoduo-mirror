@@ -10,11 +10,11 @@ use api\common\BaseActiveController;
  *
  * @author suibber
  */
-class TaskApplicantController extends BaseActiveController
+class TaskApplicantOnlinejobController extends BaseActiveController
 {
     public $modelClass = 'common\models\TaskApplicantOnlinejob';
 
-    public $id_column = 'task_id';
+    public $id_column = 'id';
     public $auto_filter_user = true;
     public $user_identifier_column = 'user_id';
 
@@ -22,18 +22,23 @@ class TaskApplicantController extends BaseActiveController
     {
         $as = parent::actions();
         $as['create'] = [
-            'class' => 'api\miduoduo\v1\models\ApplyTaskAction',
+            'class' => 'api\miduoduo\v1\models\TaskApplicantOnlinejobAction',
             'modelClass' => $this->modelClass,
             'checkAccess' => [$this, 'checkAccess'],
             'scenario' => $this->createScenario,
         ];
-        $actions['create']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+        $as['update'] = [
+            'class' => 'api\miduoduo\v1\models\TaskApplicantOnlinejobUpdateAction',
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
+            'scenario' => $this->createScenario,
+        ];
+        $as['view'] = [
+            'class' => 'api\miduoduo\v1\models\TaskApplicantOnlinejobViewAction',
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
+        ];
         return $as;
-    }
-
-    public function prepareDataProvider(){
-        $user_id    = \Yii::$app->user->id;
-        echo $user_id;exit;
     }
 
 }
