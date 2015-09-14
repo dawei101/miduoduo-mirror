@@ -75,6 +75,7 @@ ul li{list-style:none;}
 .pagination .page_on{background:#00b966; color:#fff;}
 .pagination li a{height:auto;padding: 7px 15px;color: #00b966; width: auto;}
 .pagination li span{display: block;height:auto;padding: 7px 15px;color: #00b966; width: auto;}
+.pagination li span:hover{color:#fff;}
 
 .peifu{width:1080px; margin:0 auto;}
 .pf_title{ font-size:50px; color:#d3433b; text-align:center; font-style:normal; border-bottom:5px #d3433b solid; line-height:80px}
