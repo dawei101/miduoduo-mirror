@@ -117,9 +117,13 @@ $this->title = '米多多兼职平台';
     </li>
     <li>
         <div class="pull-left title-left text-center"><em></em>需提交证据</div>
-        <?php foreach($evidences as $k => $evidence){ ?>
-            <input class="changqi" type="checkbox" name="needinfo_<?=$k?>" value="<?=$evidence?>"><?=$evidence?>
-        <?php } ?>
+        <div class="pull-left right-box input-z">
+            <?php foreach($evidences as $k => $evidence){ ?>
+                <span class="needinfo-item2">
+                    <input class="changqi" type="checkbox" name="needinfo_<?=$k?>" value="<?=$evidence?>"><?=$evidence?>
+                </span>
+            <?php } ?>
+        </div>
     </li>
 </ul>
     
