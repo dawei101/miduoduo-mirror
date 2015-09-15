@@ -2,7 +2,7 @@
 namespace api\extensions\time_book\models;
 
 use Yii;
-
+use common\Utils;
 
 class RecordAction extends \yii\rest\CreateAction
 {
@@ -40,6 +40,18 @@ class RecordAction extends \yii\rest\CreateAction
                     $params['event_type'] = $model::EVENT_WORKING;
                 }
             }
+        }
+
+        $distance = Utils::distanceStr(
+                        ['lat'=>$params['lat'], 'lng'=> $params['lng']],
+                        ['lat'=> $schedule->lat, 'lng'=> $schedule->lng]
+                    );
+        $distance_m = str_ireplace('m','',$distance);
+        if( !is_numeric($distance_m) || $distance_m >= Yii::$app->params['time_book.valid_distance'] ){
+            return [
+                'success' => false,
+                'message' => '您不在打卡范围内！',
+            ];
         }
 
         $model->load($params, '');

@@ -60,6 +60,17 @@ Baseurl = //api.miduoduo.cn/time-book/
         action=on/off
     return 
     {
-        
+        "lat": "39.9829512",
+        "lng": "116.452629",
+        "schedule_id": "508",
+        "user_id": "2006",
+        "owner_id": "6951",
+        "event_type": 1,
+        "id": 147
+    }
+    OR
+    {
+        "success": false,
+        "message": "您不在打卡范围内！"
     }
 ```
