@@ -446,3 +446,37 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
     border-color: #00b966 !important;
     color: #fff !important;
 }
+
+/* 在线任务 */
+.needinfo-item{
+    float: right;
+    line-height: 36px;
+    margin: 5px 0;
+    padding: 10px 0;
+    width: 84%;
+}
+.needinfo-item .needinfo-item-text{
+    border: 1px solid #999;
+    color: #999;
+    height: 40px;
+    padding: 0 5px;
+    width: 328px;
+	margin-right: 10px;
+}
+.needinfo-add{
+    float: right;
+    line-height: 36px;
+    margin: 5px 0;
+    padding: 10px 0;
+    width: 84%;
+}
+.needinfo-add span{
+    background: #00b966 none repeat scroll 0 0;
+    border: medium none;
+    color: #fff;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    margin: 20px 0 30px 60px;
+    width: 200px;
+}

@@ -60,6 +60,7 @@ class Task extends \common\BaseActiveRecord
         1=>'周结',
         2=>'日结',
         3=>'完工结',
+        4=>'实时结算',
     ];
 
     public static $SALARY_UNITS = [
@@ -69,6 +70,7 @@ class Task extends \common\BaseActiveRecord
         3=>'月',
         4=>'次',
         5=>'单',
+        6=>'个',
     ];
 
     public static $GENDER_REQUIREMENT = [

@@ -31,6 +31,7 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
 
     <p>
         <?= Html::a('创建任务订单', ['publish'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('创建在线任务', ['publish-onlinejob'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

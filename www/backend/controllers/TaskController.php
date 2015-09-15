@@ -361,5 +361,80 @@ class TaskController extends BBaseController
         return $this->render('public');
     }
 
+    public function actionPublishOnlinejob()
+    {
+        $model = new Task();
+
+        if (Yii::$app->request->isPost) {
+            
+            $data = Yii::$app->request->post();
+
+            var_dump($data);exit;
+            
+            $data['from_time']  = '00:00:01';
+            $data['to_time']    = '23:59:59';
+
+            $model->setAttributes($data, false);
+
+            $city_id = Yii::$app->request->post('city_id');
+            if ($city_id) {
+                $model->city_id = $city_id;
+            }
+            $district_id = Yii::$app->request->post('district_id');
+            if ($district_id) {
+                $model->district_id = $district_id;
+            }
+            $clearance_period = Yii::$app->request->post('clearance_period');
+            if ($clearance_period) {
+                $model->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);
+            } 
+            $salary_unit = 6;
+            if ($salary_unit) {
+                $model->salary_unit = $salary_unit;
+            }
+
+            $service_type_id = 17;
+            if($service_type_id){
+                $model->service_type_id = $service_type_id;
+            }
+
+            $recommend = Yii::$app->request->post('recommend');
+            if($recommend){
+                $model->recommend = array_search($recommend, Task::$RECOMMEND);
+            } 
+
+            $status = Yii::$app->request->post('status');
+            if($status){
+                $model->status = array_search($status, Task::$STATUSES);
+            }
+            $model->need_quantity = 1;
+            $model->recommend = 0;
+            $model->salary = intval($model->salary);
+            $model->contact = Yii::$app->params['supportName'];
+            $model->contact_phonenum = Yii::$app->params['supportTel'];
+            $model->clearance_period = 4; // 实时结算
+            if ($model->validate() && $model->save()) {              
+                $task_id = $model->id;
+                $addressList = explode(' ', Yii::$app->request->post('address_list'));
+                if(!in_array("", $addressList)){
+                    foreach($addressList as $item){
+                        $address = TaskAddress::findOne(['id' => $item]);
+                        $address->task_id = $task_id;
+                        $address->save();
+                    }
+                }
+                return $this->redirect('/task/');
+            }
+        }
+
+        $services = ServiceType::find()->all();
+        return $this -> render('publish-onlinejob',
+        [
+            'services'=>$services, 
+            'task'=>$model,  
+            'address'=>[],
+            'evidences' => Yii::$app->params['onlinejob.evidence'],
+        ]);
+    }
 
 }
