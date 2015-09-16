@@ -382,6 +382,113 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
     onlinejob：在线任务特殊字段描述（app名称、app介绍、下载链接、审核周期、是否需要填写账号手机号等）
     onlinejob_needinfo：操作步骤（type 1为图片2为文本、intro为该字段介绍、intro_pic_url为图片介绍、is_required 0表示无需用户填写 1表示需要用户上传或填写）
     ```
+* 提交任务
+    * POST http://api.suixb.chongdd.cn/v1/task-applicant-onlinejob?access_token=null
+    * 参数
+    ```
+    task_id：任务id
+    need_phonenum：app注册手机号
+    need_username：app注册账号
+    need_person_idcard：app注册身份证号
+    onlinejob_needinfo = jietu.jpg  (onlinejob_needinfo为onlinejob_needinfo的id，有多个，如注册截图对应的id为5，那么格式为 5 = 注册截图.jpg)
+    ```
+    * 返回信息
+    ```
+    {
+      "task_id": "492",
+      "app_id": "123",
+      "user_id": "2006",
+      "needinfo": "a:5:{i:2;s:5:\"2.pic\";i:3;s:5:\"3.pic\";i:6;s:5:\"6.pic\";i:4;s:7:\"suibber\";i:5;s:11:\"13699273824\";}",
+      "id": 6
+    }
+    失败不回返回id
+    ```
+* 我提交的任务列表
+    * GET http://api.suixb.chongdd.cn/v1/task-applicant-onlinejob? filters=[["=","task_id","492"]]&access_token=null
+    * 返回信息
+    ```
+    {
+      "items": [
+        {
+          "id": 2,
+          "status": 20,
+          "reason": "图片不符",
+          "app_id": 0,
+          "user_id": 2006,
+          "task_id": 492,
+          "needinfo": null,
+          "has_sync_wechat_pic": 0,
+          "need_phonenum": null,
+          "need_username": null,
+          "need_person_idcard": null,
+          "created_time": "2015-09-16 15:19:55",
+          "updated_time": null,
+          "status_msg": "审核不通过"
+        },
+        {
+          "id": 1,
+          "status": 0,
+          "reason": null,
+          "app_id": 1234,
+          "user_id": 2006,
+          "task_id": 492,
+          "needinfo": "a:5:{i:2;s:5:\"2.pic\";i:3;s:5:\"3.pic\";i:6;s:5:\"6.pic\";i:4;s:7:\"suibber\";i:5;s:11:\"13699273824\";}",
+          "has_sync_wechat_pic": 0,
+          "need_phonenum": null,
+          "need_username": null,
+          "need_person_idcard": null,
+          "created_time": "2015-09-16 15:19:55",
+          "updated_time": null,
+          "status_msg": "等待审核"
+        }
+      ],
+      "_links": {
+        "self": {
+          "href": "/version/task-applicant-onlinejob?filters=[["=","task_id","492"]]&access_token=null"
+        }
+      },
+      "_meta": {
+        "totalCount": 2,
+        "pageCount": 1,
+        "currentPage": 1,
+        "perPage": 20
+      }
+    }
+    ```
+    * 参数说明
+    ```
+    status：0等待审核，10审核通过，20审核不通过
+    reason：审核未通过原因
+    ```
+* 我提交的任务详情
+    * GET /version/task-applicant-onlinejob/1?access_token=null
+    * 返回信息
+    ```
+    {
+      "id": 1,
+      "status": 0,
+      "reason": null,
+      "app_id": 1234,
+      "user_id": 2006,
+      "task_id": 492,
+      "needinfo": {
+        "2": "2.pic",
+        "3": "3.pic",
+        "4": "suibber",
+        "5": "13699273824",
+        "6": "6.pic"
+      },
+      "has_sync_wechat_pic": 0,
+      "need_phonenum": null,
+      "need_username": null,
+      "need_person_idcard": null,
+      "created_time": "2015-09-16 15:19:55",
+      "updated_time": null,
+      "status_msg": "等待审核"
+    }
+    ```
+* 修改我提交的任务
+    * PUT /version/task-applicant-onlinejob/1?access_token=null
 
 ###简历 Resume
 
