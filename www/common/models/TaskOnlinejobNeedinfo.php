@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\Utils;
 
 /**
  * This is the model class for table "{{%task_onlinejob_needinfo}}".
@@ -66,5 +67,15 @@ class TaskOnlinejobNeedinfo extends \yii\db\ActiveRecord
             'is_required' => '是否需要填写',
             'is_must' => '是否必填',
         ];
+    }
+
+    public function getIntro_pic_url()
+    {
+        return Utils::urlOfFile($this->intro_pic);
+    }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['intro_pic_url']);
     }
 }

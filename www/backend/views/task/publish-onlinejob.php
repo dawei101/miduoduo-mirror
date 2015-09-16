@@ -120,7 +120,7 @@ $this->title = '米多多兼职平台';
         <div class="pull-left right-box input-z">
             <?php foreach($evidences as $k => $evidence){ ?>
                 <span class="needinfo-item2">
-                    <input class="changqi" type="checkbox" name="needinfo_<?=$k?>" value="<?=$evidence?>"><?=$evidence?>
+                    <input class="changqi" type="checkbox" name="<?=$k?>" value="1"><?=$evidence?>
                 </span>
             <?php } ?>
         </div>

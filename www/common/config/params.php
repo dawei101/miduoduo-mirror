@@ -103,10 +103,11 @@ return [
         'log_base_url'  => '/var/miduoduo/miduoduo/www/user_logs/',
     ],
 
-    'onlinejob' => [
-        '注册手机号',
-        '注册用户名',
-        '身份证号',
+    // 需要在`jz_task_onlinejob`和`jz_task_applicant_onlinejob`增加字段,model也要改
+    'onlinejob.evidence' => [
+        'need_phonenum' => '注册手机号',
+        'need_username' => '注册用户名',
+        'need_person_idcard' => '身份证号',
     ],
 
     /*

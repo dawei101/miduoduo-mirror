@@ -17,6 +17,8 @@ use common\models\TaskAddress;
 use backend\BBaseController;
 use common\models\TaskSearch;
 use common\models\TaskOnlinejob;
+use common\JobUtils;
+use common\Utils;
 
 /**
  * Site controller
@@ -371,7 +373,7 @@ class TaskController extends BBaseController
             
             $data = Yii::$app->request->post();
 
-            $this->saveOnlinejob($data, $model->id, $_FILES);
+            $this->saveOnlinejob($data, 22, $_FILES);
             var_dump($_FILES);exit;
             
             $data['from_time']  = '00:00:01';
@@ -449,7 +451,20 @@ class TaskController extends BBaseController
         $online_job->download_android = $data['app_download_android'];
         $online_job->download_ios = $data['app_download_ios'];
         $online_job->audit_cycle = $data['app_audit_cycle'];
-        $online_job->save;
+        $online_job->need_phonenum = isset($data['need_phonenum']) ? $data['need_phonenum'] : 0;
+        $online_job->need_username = isset($data['need_username']) ? $data['need_username'] : 0;
+        $online_job->need_person_idcard = isset($data['need_person_idcard']) ? $data['need_person_idcard'] : 0;
+        if($online_job->save()){
+            $this->saveOnlinejobNeedinfo($data ,$task_id, $files);
+        }
     }
 
+    private function saveOnlinejobNeedinfo($data, $task_id, $files){
+        foreach( $files as $file_k => $file_v ){
+            $group_name = str_ireplace('_file','',$file_k);
+            $intro_pic  = Utils::saveUploadFile($file_v);
+            var_dump($intro_pic);exit;
+        }
+        var_dump($data);exit;
+    }
 }

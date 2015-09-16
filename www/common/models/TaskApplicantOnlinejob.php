@@ -43,7 +43,7 @@ class TaskApplicantOnlinejob extends \yii\db\ActiveRecord
     {
         return [
             [['status', 'app_id', 'user_id', 'task_id', 'has_sync_wechat_pic'], 'integer'],
-            [['needinfo'], 'string']
+            [['needinfo', 'need_phonenum', 'need_username', 'need_person_idcard'], 'string']
         ];
     }
 
@@ -60,6 +60,9 @@ class TaskApplicantOnlinejob extends \yii\db\ActiveRecord
             'task_id' => '任务id',
             'needinfo' => '序列化的任务提交信息',
             'has_sync_wechat_pic' => '是否已经同步微信上传图片',
+            'need_phonenum' => '手机号',
+            'need_username' => '用户名',
+            'need_person_idcard' => '身份证',
         ];
     }
 }
