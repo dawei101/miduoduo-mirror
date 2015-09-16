@@ -227,3 +227,31 @@ function CallBack(str) {
     
 ```
 
+* 上传图片
+```
+    window.MDDNative.fetchImage(type,callback)
+    type: 字符串
+        'camera': 从摄像头获取照片
+        'album': 从相册获取照片
+        '': 空字符表示摄像头和相册的选择
+    
+    callback: 
+        result: 服务端返回信息，字符串 json
+        image：img 表示的路径
+        
+例子：
+function fetchNativeImage() {
+	// camera
+	// album
+	window.MDDNative.fetchImage("","nativeImageCB");
+}
+
+function nativeImageCB(data) {
+	image.src = data.image;
+
+	alert("nativeImageCallBack: " + data.result)
+
+}
+        
+```
+
