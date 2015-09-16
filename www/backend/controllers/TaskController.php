@@ -373,9 +373,6 @@ class TaskController extends BBaseController
         if (Yii::$app->request->isPost) {
             
             $data = Yii::$app->request->post();
-
-            $this->saveOnlinejob($data, 22, $_FILES);
-            var_dump($_FILES);exit;
             
             $data['from_time']  = '00:00:01';
             $data['to_time']    = '23:59:59';
@@ -420,16 +417,9 @@ class TaskController extends BBaseController
             $model->contact_phonenum = Yii::$app->params['supportTel'];
             $model->clearance_period = 4; // 实时结算
             if ($model->validate() && $model->save()) {              
-                $this->saveOnlinejob($data, $model->id, $_FILES);
                 $task_id = $model->id;
-                $addressList = explode(' ', Yii::$app->request->post('address_list'));
-                if(!in_array("", $addressList)){
-                    foreach($addressList as $item){
-                        $address = TaskAddress::findOne(['id' => $item]);
-                        $address->task_id = $task_id;
-                        $address->save();
-                    }
-                }
+                $this->saveOnlinejob($data, $task_id, $_FILES);
+                
                 return $this->redirect('/task/');
             }
         }
@@ -461,20 +451,21 @@ class TaskController extends BBaseController
     }
 
     private function saveOnlinejobNeedinfo($data, $task_id, $files){
-        $needinfo_model = new TaskOnlinejobNeedinfo();
         foreach( $files as $file_k => $file_v ){
+            $needinfo_model = new TaskOnlinejobNeedinfo();
             $group = [];
             $group_name = str_ireplace('_intro_pic','',$file_k);
-            $group['intro_pic']  = Utils::saveUploadFile($file_v);
+            $needinfo_model->task_id = $task_id;
+            $needinfo_model->type    = TaskOnlinejobNeedinfo::TYPES_PIC;
+            $needinfo_model->intro_pic  = Utils::saveUploadFile($file_v);
             foreach( $data as $data_k => $data_v ){
                 if( stripos($data_k, $group_name) !== false ){
                     $data_k = preg_replace('/needinfo\_\d*?\_/is','',$data_k);
-                    $group[$data_k] = $data_v;
+                    $needinfo_model->$data_k = $data_v;
                 }
             }
-            $needinfo_model->load($group);
-            var_dump($needinfo_model);exit;
+            $needinfo_model->save();
+            JobUtils::addSyncFileJob($needinfo_model, 'intro_pic');
         }
-        exit;
     }
 }

@@ -30,6 +30,9 @@ class TaskOnlinejobNeedinfo extends \yii\db\ActiveRecord
         2 => '文本',
     ];
 
+    const TYPES_PIC = 1;
+    const TYPES_TEXT = 2;
+
     /**
      * @inheritdoc
      */

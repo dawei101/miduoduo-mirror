@@ -326,6 +326,63 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
     * GET /version/task-applicant/task_id
     *  如果未报名 return 404
 
+### 在线任务
+* 任务详情
+    * GET /version/task/id
+    * 返回格式
+    ```
+    {
+      "id": 502,
+      "service_type_id": 17,
+      "onlinejob": {
+        "id": 40,
+        "task_id": 502,
+        "name": "米多多app",
+        "intro": "米多多找兼职",
+        "download_android": "http://download.miduoduo.cn/android",
+        "download_ios": "http://download.miduoduo.cn/ios",
+        "audit_cycle": 1,
+        "need_phonenum": 1,
+        "need_username": 1,
+        "need_person_idcard": 0
+      },
+      "onlinejob_needinfo": [
+        {
+          "id": 16,
+          "status": 0,
+          "task_id": 502,
+          "group_id": 0,
+          "type": 1,
+          "display_order": 0,
+          "intro": "首先打开，下载",
+          "intro_pic": "nSBlEnyqj7Kk3ijy_5J235vuPfWgus7J-14423894256193.jpg",
+          "is_required": 0,
+          "is_must": 0,
+          "intro_pic_url": "http://media.test.chongdd.cn/nSBlEnyqj7Kk3ijy_5J235vuPfWgus7J-14423894256193.jpg"
+        },
+        {
+          "id": 17,
+          "status": 0,
+          "task_id": 502,
+          "group_id": 0,
+          "type": 1,
+          "display_order": 0,
+          "intro": "然后填写个人信息注册，要上传",
+          "intro_pic": "CIzbd5D9ToUiQYMub1W1k8EwYhYWyD5f-14423894256712.jpg",
+          "is_required": 1,
+          "is_must": 0,
+          "intro_pic_url": "http://media.test.chongdd.cn/CIzbd5D9ToUiQYMub1W1k8EwYhYWyD5f-14423894256712.jpg"
+        }
+      ]
+    }
+    ```
+    * 参数说明
+    ```
+    service_type_id = 17：表示任务类型为线上任务
+    onlinejob：在线任务特殊字段描述（app名称、app介绍、下载链接、审核周期、是否需要填写账号手机号等）
+    onlinejob_needinfo：操作步骤（type 1为图片2为文本、intro为该字段介绍、intro_pic_url为图片介绍、is_required 0表示无需用户填写 1表示需要用户上传或填写）
+    ```
+
 ###简历 Resume
 
 * 获取自己简历(使用须取列表中第一个)
