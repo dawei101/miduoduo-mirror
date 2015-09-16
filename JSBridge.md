@@ -240,6 +240,9 @@ function CallBack(str) {
         image：img 表示的路径
         
 例子：
+
+<img id="image" src="" alt="上海鲜花港 - 郁金香" >
+
 function fetchNativeImage() {
 	// camera
 	// album
