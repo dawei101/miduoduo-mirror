@@ -77,7 +77,6 @@ if( $lastest_seo_pinyin ){
             <a href="<?=Yii::$app->params["baseurl.corp"]?>">米多多企业版</a>
             <a href="#">地推达人</a>
             <a href="<?=Yii::$app->params['downloadApp.android']?>">客户端下载</a>
-            <a href="<?=Yii::$app->params["baseurl.wechat"]?>/view/index.html">微信版</a>
           </div>
           <div class="lianxi">
             联系我们：&nbsp;&nbsp;邮箱：<?=Yii::$app->params['supportEmail']?>&nbsp;&nbsp;&nbsp;&nbsp;电话：<?=Yii::$app->params['supportTel']?>
