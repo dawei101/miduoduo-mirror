@@ -65,4 +65,13 @@ class TaskApplicantOnlinejob extends \yii\db\ActiveRecord
             'need_person_idcard' => '身份证',
         ];
     }
+
+    public function getStatus_msg(){
+        return $this::$STATUS[$this->status];
+    }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['status_msg']);
+    }
 }

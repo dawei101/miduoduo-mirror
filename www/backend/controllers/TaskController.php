@@ -17,6 +17,7 @@ use common\models\TaskAddress;
 use backend\BBaseController;
 use common\models\TaskSearch;
 use common\models\TaskOnlinejob;
+use common\models\TaskOnlinejobNeedinfo;
 use common\JobUtils;
 use common\Utils;
 
@@ -460,11 +461,20 @@ class TaskController extends BBaseController
     }
 
     private function saveOnlinejobNeedinfo($data, $task_id, $files){
+        $needinfo_model = new TaskOnlinejobNeedinfo();
         foreach( $files as $file_k => $file_v ){
-            $group_name = str_ireplace('_file','',$file_k);
-            $intro_pic  = Utils::saveUploadFile($file_v);
-            var_dump($intro_pic);exit;
+            $group = [];
+            $group_name = str_ireplace('_intro_pic','',$file_k);
+            $group['intro_pic']  = Utils::saveUploadFile($file_v);
+            foreach( $data as $data_k => $data_v ){
+                if( stripos($data_k, $group_name) !== false ){
+                    $data_k = preg_replace('/needinfo\_\d*?\_/is','',$data_k);
+                    $group[$data_k] = $data_v;
+                }
+            }
+            $needinfo_model->load($group);
+            var_dump($needinfo_model);exit;
         }
-        var_dump($data);exit;
+        exit;
     }
 }
