@@ -18,7 +18,7 @@ $this->title = '米多多兼职平台';
 <div class="right-center">
 <div class="conter-title">发布在线任务</div>
 
-<?php $form = ActiveForm::begin();?>
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);?>
 <ul class="tianxie-box">
     <li>
         <div class="pull-left title-left text-center"><em>*</em>兼职标题</div>
