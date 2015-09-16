@@ -28,6 +28,10 @@ class TaskApplicantOnlinejob extends \yii\db\ActiveRecord
         20 => '审核不通过',
     ];
 
+    const STATUS_UNKNOWN = 0;
+    const STATUS_PASSED = 10;
+    const STATUS_NOT_PASSED = 20;
+
     /**
      * @inheritdoc
      */
@@ -55,7 +59,7 @@ class TaskApplicantOnlinejob extends \yii\db\ActiveRecord
         return [
             'id' => '在线任务提交id',
             'status' => '状态',
-            'app_id' => '任务报名id',
+            'app_id' => '报名id',
             'user_id' => '用户id',
             'task_id' => '任务id',
             'needinfo' => '序列化的任务提交信息',
@@ -63,10 +67,14 @@ class TaskApplicantOnlinejob extends \yii\db\ActiveRecord
             'need_phonenum' => '手机号',
             'need_username' => '用户名',
             'need_person_idcard' => '身份证',
+            'reason' => '未通过原因',
         ];
     }
 
     public function getStatus_msg(){
+        if(!$this->status){
+            $this->status = 0;
+        }
         return $this::$STATUS[$this->status];
     }
 

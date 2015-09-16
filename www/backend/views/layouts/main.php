@@ -43,6 +43,7 @@ $user = Yii::$app->user;
 <?php if ($user->can('operation_manager')) { ?>
                 <li class="mtitle" data-group="operation"><a>信息运营</a></li>
                 <li class="mmenu" data-group="operation"><a href="/task">任务</a></li>
+                <li class="mmenu" data-group="operation"><a href="/task?TaskSearch[service_type_id]=17">在线任务</a></li>
                 <li class="mmenu" data-group="operation"><a href="/task-applicant">任务报名单</a></li>
                 <li class="mmenu" data-group="operation"><a href="/task-pool">爬虫-任务列表</a></li>
                 <li class="mmenu" data-group="operation"><a href="/task-pool-white-list">爬虫-白名单(黑名单)</a></li>

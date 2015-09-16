@@ -65,8 +65,13 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
             ],
             [
                 'attribute' => 'service_type_id',
+                'format' => 'raw',
                 'value' => function ($model){
-                    return $model->service_type->name;
+                    if( $model->service_type->id != 17 ){
+                        return $model->service_type->name;
+                    }else{
+                        return "<a href='/task-applicant-onlinejob?TaskApplicantOnlinejobSearch[task_id]=".$model->id."' target='_blank'>".$model->service_type->name."</a>";
+                    }
                 },
                 'filter' => $service_type_maps,
             ],
