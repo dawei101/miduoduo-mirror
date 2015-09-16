@@ -16,6 +16,8 @@ use common\models\TaskAddress;
 
 use backend\BBaseController;
 use common\models\TaskSearch;
+use common\models\TaskOnlinejob;
+
 /**
  * Site controller
  */
@@ -369,7 +371,8 @@ class TaskController extends BBaseController
             
             $data = Yii::$app->request->post();
 
-            var_dump($data);exit;
+            $this->saveOnlinejob($data, $model->id, $_FILES);
+            var_dump($_FILES);exit;
             
             $data['from_time']  = '00:00:01';
             $data['to_time']    = '23:59:59';
@@ -414,6 +417,7 @@ class TaskController extends BBaseController
             $model->contact_phonenum = Yii::$app->params['supportTel'];
             $model->clearance_period = 4; // 实时结算
             if ($model->validate() && $model->save()) {              
+                $this->saveOnlinejob($data, $model->id, $_FILES);
                 $task_id = $model->id;
                 $addressList = explode(' ', Yii::$app->request->post('address_list'));
                 if(!in_array("", $addressList)){
@@ -435,6 +439,17 @@ class TaskController extends BBaseController
             'address'=>[],
             'evidences' => Yii::$app->params['onlinejob.evidence'],
         ]);
+    }
+
+    private function saveOnlinejob($data, $task_id = 2002, $files){
+        $online_job = new TaskOnlinejob();
+        $online_job->task_id = $task_id;
+        $online_job->name = $data['app_name'];
+        $online_job->intro = $data['app_intro'];
+        $online_job->download_android = $data['app_download_android'];
+        $online_job->download_ios = $data['app_download_ios'];
+        $online_job->audit_cycle = $data['app_audit_cycle'];
+        $online_job->save;
     }
 
 }

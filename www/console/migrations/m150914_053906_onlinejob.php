@@ -16,6 +16,9 @@ CREATE TABLE `jz_task_onlinejob`(
  `download_android` VARCHAR(200) COLLATE utf8_unicode_ci  DEFAULT NULL comment '安卓下载链接',
  `download_ios` VARCHAR(200) COLLATE utf8_unicode_ci DEFAULT NULL comment 'IOS下载链接',
  `audit_cycle` TINYINT DEFAULT 0 COMMENT '审核周期',
+ `need_phonenum` TINYINT(4)  DEFAULT 0 comment '需要手机号',
+ `need_username` TINYINT(4)  DEFAULT 0 comment '需要用户名',
+ `need_person_idcard` TINYINT(4)  DEFAULT 0 comment '需要身份证',
  primary key (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci comment '在线任务表';
 
@@ -42,6 +45,9 @@ CREATE TABLE `jz_task_applicant_onlinejob`(
  `task_id` INT(11) DEFAULT 0 COMMENT '任务id',
  `needinfo` text COLLATE utf8_unicode_ci DEFAULT NULL comment '序列化的任务提交信息',
  `has_sync_wechat_pic` tinyint(4) default 0 comment '是否已经同步微信上传图片',
+ `need_phonenum` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL comment '手机号',
+ `need_username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL comment '用户名',
+ `need_person_idcard` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL comment '身份证',
  primary key (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci comment '在线任务提交信息';
             ";
