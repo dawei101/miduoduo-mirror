@@ -12,6 +12,7 @@ use common\models\User;
 use common\models\AppReleaseVersion;
 use common\models\Device;
 use common\models\WeichatUserInfo;
+use common\Constants;
 use api\common\Utils as AUtils;
 
 /**
@@ -116,6 +117,11 @@ class EntryController extends BaseActiveController
 
         $appv = AppReleaseVersion::find()->where(['device_type'=>$device_type])
             ->orderBy(['id'=>SORT_DESC])->one();
+        if ($appv && ($app_version=='1.0' || $app_version=='1.1')){
+            if ($device_type==Constants::DEVICE_ANDROID) {
+                $appv->html_version = "23";
+            }
+        }
 
         return $this->renderJson([
             'success'=> true,
