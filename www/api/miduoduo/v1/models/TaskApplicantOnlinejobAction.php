@@ -33,7 +33,11 @@ class TaskApplicantOnlinejobAction extends \yii\rest\CreateAction
         $model->load($data, '');
         
         if ($model->save()) {
-            
+            if( !isset($data['has_sync_wechat_pic']) || $data['has_sync_wechat_pic'] != 1 ){
+                Yii::$app->job_queue_manager->add('wechat-download-img/down',
+                    ['id'=>$model->id]
+                );
+            }
         } elseif (!$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }

@@ -99,6 +99,17 @@ class Utils
         return false;
     }
 
+    public static function savaDownloadFile($download_url, $ext = 'jpg'){
+        $hash = Yii::$app->getSecurity()->generateRandomString() . '-' . intval(microtime(true)*10000);
+        $filename = $hash . '.' . $ext;
+        $uploadfile = Yii::getAlias('@media/' . $filename);
+        if( file_put_contents($uploadfile, file_get_contents($download_url)) ){
+            return $filename;
+        }else{
+            return false;
+        }
+    }
+
     public static function checkUploadFileIsImage($ext){
         $exts = ['png', 'jpg', 'tif', 'gif'];
         $ext  = strtolower(trim($ext));

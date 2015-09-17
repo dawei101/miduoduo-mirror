@@ -117,4 +117,12 @@ class WechatUtils
         return static::getUrlJson($url);
     }
 
+    public static function downloadMediaFile($media_id){
+        $fileurl   = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token="
+            .WechatUtils::getAccessToken()
+            ."&media_id=".$media_id;
+        $localfile = Utils::savaDownloadFile($fileurl, 'jpg');
+        return $localfile;
+    }
+
 }

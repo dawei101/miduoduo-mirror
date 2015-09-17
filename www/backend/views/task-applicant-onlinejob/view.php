@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\Utils;
+use common\WechatUtils;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\TaskApplicantOnlinejob */
@@ -54,7 +55,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <b><?=$needinfo->is_required?'<span style="color:red">(*)</span>':''?><?=$needinfo->intro?>：</b><br />
         <?php foreach(unserialize($model->needinfo) as $k => $info){ ?>
             <?php if($needinfo->id == $k){ ?>
-                <img src='<?= Utils::urlOfFile($info) ?>' width="400" />
+                <?php if($model->has_sync_wechat_pic){ ?>
+                    <img src='<?= Utils::urlOfFile($info) ?>' width="400" />
+                <?php }else{ ?>
+                    <img src='<?= "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".WechatUtils::getAccessToken()."&media_id=".$info ?>' width="400" />
+                <?php } ?>
             <?php } ?>
         <?php } ?>
         <hr />
