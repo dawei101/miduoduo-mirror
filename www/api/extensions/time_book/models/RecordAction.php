@@ -3,6 +3,7 @@ namespace api\extensions\time_book\models;
 
 use Yii;
 use common\Utils;
+use yii\web\BadRequestHttpException;
 
 class RecordAction extends \yii\rest\CreateAction
 {
@@ -48,10 +49,13 @@ class RecordAction extends \yii\rest\CreateAction
                     );
         $distance_m = str_ireplace('m','',$distance);
         if( !is_numeric($distance_m) || $distance_m >= Yii::$app->params['time_book.valid_distance'] ){
+            throw new BadRequestHttpException('您不在打卡范围内！', 404);
+            /*
             return [
                 'success' => false,
                 'message' => '您不在打卡范围内！',
             ];
+            */
         }
 
         $model->load($params, '');
