@@ -28,6 +28,8 @@ return [
     'nearby_search.max_distance' => 10000, // 单位米
     'host_ip' => '',
 
+    'time_book.valid_distance' => 500, // 单位米
+
     'downloadApp.android' => 'http://a.app.qq.com/o/simple.jsp?pkgname=cn.miduoduo.android',
     'downloadApp.ios' => 'https://itunes.apple.com/zh/app/mi-duo-duo-jian-zhi/id1016364056',
 
