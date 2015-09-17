@@ -136,7 +136,7 @@ class WeichatPushQualityTaskController extends BBaseController
                 array('name'=>'keyword3','value'=>$data->task_type,'color'=>'#000080'),
                 array('name'=>'keyword4','value'=>$data->location,'color'=>'#000080'),
                 array('name'=>'keyword5','value'=>$data->price,'color'=>'#000080'),
-                array('name'=>'remark','value'=>$task_time.$task_detail,'color'=>'#000080'),
+                array('name'=>'remark','value'=>$task_time.$task_detail.'\r\n\r\n如需退订，回复tdd退订每日热门兼职推送','color'=>'#000080'),
         );
 
         $gotoUrl        = Yii::$app->params['baseurl.wechat'].'/view/job/job-detail.html?task='.$data->task->id;
