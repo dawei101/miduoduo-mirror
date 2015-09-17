@@ -117,9 +117,9 @@ class EntryController extends BaseActiveController
 
         $appv = AppReleaseVersion::find()->where(['device_type'=>$device_type])
             ->orderBy(['id'=>SORT_DESC])->one();
-        if ($appv && $appv->app_version=='1.0' && $appv->app_version=='1.1'){
-            if ($app_version==Constants::DEVICE_ANDROID) {
-                $appv->html_version = 23;
+        if ($appv && ($app_version=='1.0' || $app_version=='1.1')){
+            if ($device_type==Constants::DEVICE_ANDROID) {
+                $appv->html_version = "23";
             }
         }
 
