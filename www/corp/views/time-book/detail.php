@@ -81,7 +81,7 @@
                 <?php } else { ?>
                 <div>
                     <span>上班情况：</span>
-                        <?=$schedule->on_late?'迟到':$schedule->out_work_on?'未打卡':'正常'?>
+                        <?=$schedule->on_late?'迟到':($schedule->out_work_on?'未打卡':'正常')?>
                      <?php if ($schedule->on_record) { 
                         $record=$schedule->on_record;
                      ?>
@@ -95,7 +95,7 @@
                 </div>
                 <div>
                     <span>下班情况：</span>
-                        <?=$schedule->off_early?'早退':$schedule->out_work_off?'未打卡':'正常'?>
+                        <?=$schedule->off_early?'早退':($schedule->out_work_off?'未打卡':'正常')?>
                      <?php if ($schedule->off_record) { 
                         $record=$schedule->off_record;
                      ?>
