@@ -294,7 +294,7 @@ class User extends BaseActiveRecord implements IdentityInterface
 
     public function getWeichat(){
         return $this->hasOne(WeichatUserInfo::className(),['userid' => 'id'])
-            ->andWhere(['status'=>WeichatUserInfo::STATUS_OK]);
+            ->andWhere(['`jz_weichat_user_info`.`status`'=>WeichatUserInfo::STATUS_OK]);
     }
 
     public function getLast_location()

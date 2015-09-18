@@ -84,9 +84,17 @@ class WechatUtils
                 $data = json_decode($returnstr, true);
                 if (isset($data['errcode'])){
                     if (intval($data['errcode'])>0){
-                        Yii::error("wechat:打开微信出错, error code:" . $data['errcode'] . " url is:" . $targetUrl);
-                        $err = 1;
-                        throw new Exception("系统正在调整，请稍后再试");
+                        $has_wechat_errcode = Yii::$app->session->get('has_wechat_errcode');
+                        if( $has_wechat_errcode ){
+                            $callback_url = Yii::$app->session['wechat_state']['callback_url'];
+                            Yii::error("wechat:打开微信出错, error code:" . $data['errcode'] . " url is:" . $targetUrl . "callback_url is:".$callback_url);
+                            $err = 1;
+                            throw new Exception("系统正在调整，请稍后再试");
+                        }else{
+                            Yii::$app->session->set('has_wechat_errcode', true);
+                            header("Location:".Yii::$app->params['baseurl.wechat']."/view/index.html");
+                            exit;
+                        }
                     }
                     if (intval($data['errcode'])<0){
                         Yii::warning("wechat:打开微信出错, url is:" . $targetUrl);
