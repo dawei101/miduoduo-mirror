@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Task;
 
 /**
  * This is the model class for table "{{%task_applicant_onlinejob}}".
@@ -69,6 +70,10 @@ class TaskApplicantOnlinejob extends \yii\db\ActiveRecord
             'need_person_idcard' => '身份证',
             'reason' => '未通过原因',
         ];
+    }
+
+    public function getTask(){
+        return $this->hasOne(Task::className(),['id' => 'task_id']);
     }
 
     public function getStatus_msg(){

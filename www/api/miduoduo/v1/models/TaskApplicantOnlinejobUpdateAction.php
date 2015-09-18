@@ -29,6 +29,8 @@ class TaskApplicantOnlinejobUpdateAction extends \yii\rest\UpdateAction
         $data['needinfo'] = serialize($needinfo_arr);
 
         $model->load($data, '');
+        $model->status = $model::STATUS_UNKNOWN;
+        $model->reason = '';
         if ($model->save()) {
             
         } elseif (!$model->hasErrors()) {

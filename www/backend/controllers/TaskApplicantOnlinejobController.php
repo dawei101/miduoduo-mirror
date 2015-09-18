@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\TaskOnlinejobNeedinfo;
+use common\WeichatBase;
+use common\models\AccountEvent;
 
 /**
  * TaskApplicantOnlinejobController implements the CRUD actions for TaskApplicantOnlinejob model.
@@ -125,19 +127,37 @@ class TaskApplicantOnlinejobController extends Controller
 
     public function actionExamine($id, $passed)
     {
-        $resume = $this->findModel($id);
+        $app_onlinejob_obj = TaskApplicantOnlinejob::find()->where(['id' => $id])
+            ->with('task')
+            ->one();
         $note = Yii::$app->request->post('note');
         if ($note){
-            $resume->reason = $note;
+            $app_onlinejob_obj->reason = $note;
         }else{
-            $resume->reason = NULL;
+            $app_onlinejob_obj->reason = NULL;
         }
         if ($passed){
-            $resume->status = TaskApplicantOnlinejob::STATUS_PASSED;
+            $app_onlinejob_obj->status = TaskApplicantOnlinejob::STATUS_PASSED;
+            $this->payoffMoney($app_onlinejob_obj);
         } else {
-            $resume->status = TaskApplicantOnlinejob::STATUS_NOT_PASSED;
+            $app_onlinejob_obj->status = TaskApplicantOnlinejob::STATUS_NOT_PASSED;
         }
-        $resume->save();
+        $app_onlinejob_obj->save();
         return $this->redirect('view?id=' . $id);
+    }
+
+    private function payoffMoney($app_onlinejob_obj){
+        $data = [
+            'date'      => date("Y-m-d"),
+            'user_id'   => $app_onlinejob_obj->user_id,
+            'value'     => $app_onlinejob_obj->task->salary,
+            'note'      => "任务‘".$app_onlinejob_obj->task->title."’通过审核！",
+            'operator_id'  => Yii::$app->user->id,
+            'created_time' => date("Y-m-d H:i:s"),
+            'red_packet_accept_by' => '',
+            'type'      => AccountEvent::TYPES_ONLINEJOB,
+        ];
+        $weichat_base = new WeichatBase();
+        $weichat_base->putMoneyToAccount($data);    
     }
 }

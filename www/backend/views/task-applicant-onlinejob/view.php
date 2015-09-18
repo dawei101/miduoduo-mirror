@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_time',
         ],
     ]) ?>
-
+<?php if($model->status == $model::STATUS_UNKNOWN){ ?>
     <div class="panel panel-default">
       <div class="panel-heading">认证审核 </div>
       <div class="panel-body">
@@ -82,11 +82,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <input type="hidden" name="passed" value="0">
                 <button class="btn btn-danger" type="submit">审核不通过</button>
                 <br />
-                <textarea name="note" placeholder="不通过备注，用于提示用户" class="form-control custom-control" rows="3" style="resize:none">原因为：</textarea>
+                <textarea name="note" placeholder="不通过备注，用于提示用户" class="form-control custom-control" rows="3" style="resize:none"></textarea>
               </form>
             </div>
           </div>
         </div>
     </div>
-
+<?php } ?>
 </div>
