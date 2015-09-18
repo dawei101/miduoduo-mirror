@@ -32,10 +32,10 @@ class TaskApplicantOnlinejobUpdateAction extends \yii\rest\UpdateAction
         if ($model->save()) {
             
         } elseif (!$model->hasErrors()) {
-            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            return ['success'=>false,"message"=> "修改失败"];
         }
 
-        return $model;
+        return ['success'=>true,"message"=> "修改成功",'result'=>$model];
     }
 
 }

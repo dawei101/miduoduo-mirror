@@ -39,10 +39,10 @@ class TaskApplicantOnlinejobAction extends \yii\rest\CreateAction
                 );
             }
         } elseif (!$model->hasErrors()) {
-            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            return ['success'=>false,"message"=> "添加失败"];
         }
 
-        return $model;
+        return ['success'=>true,"message"=> "添加成功",'result'=>$model];
     }
 
 }
