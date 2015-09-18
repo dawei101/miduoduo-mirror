@@ -31,6 +31,7 @@ CREATE TABLE `jz_task_onlinejob_needinfo`(
  `display_order` TINYINT(4) DEFAULT 0 COMMENT '排序',
  `intro` VARCHAR(200) COLLATE utf8_unicode_ci DEFAULT NULL comment '名称',
  `intro_pic` VARCHAR(500) COLLATE utf8_unicode_ci DEFAULT NULL comment '图片',
+ `url` varchar(400) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'URL',
  `is_required` TINYINT DEFAULT 0 COMMENT '是否需要填写',
  `is_must` TINYINT DEFAULT 0 COMMENT '是否必填',
  primary key (`id`)

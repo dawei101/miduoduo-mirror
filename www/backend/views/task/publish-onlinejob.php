@@ -108,6 +108,7 @@ $this->title = '米多多兼职平台';
         <input type="hidden" class="needinfo-num" value="10">
         <div class="needinfo-item">
             <input type="text" class="needinfo-item-text" name="needinfo_10_intro" placeholder="操作说明">
+            <input type="text" class="needinfo-item-text" name="needinfo_10_url" placeholder="打开链接"><br />
             <input type="checkbox" name="needinfo_10_is_required" value="1"> 需要上传截图
             <input type="file" name="needinfo_10_intro_pic">
         </div>
@@ -572,7 +573,7 @@ $(function(){
         var needinfo_num = $('.needinfo-num').val();
         needinfo_num    = Number(needinfo_num) + 1;
         $('.needinfo-num').val(needinfo_num);
-        var str = '<div class="needinfo-item"><input class="needinfo-item-text" type="text" name="needinfo_'+needinfo_num+'_intro" placeholder="操作说明"> <input type="checkbox" name="needinfo_'+needinfo_num+'_is_required" value="1"> 需要上传截图<input type="file" name="needinfo_'+needinfo_num+'_intro_pic"></div>';
+        var str = '<div class="needinfo-item"><input class="needinfo-item-text" type="text" name="needinfo_'+needinfo_num+'_intro" placeholder="操作说明"> <input type="text" class="needinfo-item-text" name="needinfo_'+needinfo_num+'_url" placeholder="打开链接"><br /><input type="checkbox" name="needinfo_'+needinfo_num+'_is_required" value="1"> 需要上传截图<input type="file" name="needinfo_'+needinfo_num+'_intro_pic"></div>';
         $('.needinfo-add').before(str);
     });
 });

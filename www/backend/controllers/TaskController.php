@@ -451,10 +451,15 @@ class TaskController extends BBaseController
     }
 
     private function saveOnlinejobNeedinfo($data, $task_id, $files){
+        $group = [];
+        $group2 = [];
         foreach( $files as $file_k => $file_v ){
             $needinfo_model = new TaskOnlinejobNeedinfo();
-            $group = [];
             $group_name = str_ireplace('_intro_pic','',$file_k);
+            $group[] = $group_name;
+            if( !$file_v['name'] ){
+                $group2[] = $group_name;
+            }
             $needinfo_model->task_id = $task_id;
             $needinfo_model->type    = TaskOnlinejobNeedinfo::TYPES_PIC;
             $needinfo_model->intro_pic  = Utils::saveUploadFile($file_v);
@@ -464,8 +469,23 @@ class TaskController extends BBaseController
                     $needinfo_model->$data_k = $data_v;
                 }
             }
+            $needinfo_model->display_order  = str_ireplace('needinfo_','',str_ireplace('_intro_pic','',$file_k));
             $needinfo_model->save();
             JobUtils::addSyncFileJob($needinfo_model, 'intro_pic');
+        }
+
+        foreach( $group2 as $k2 => $v2 ){
+            $needinfo_model = new TaskOnlinejobNeedinfo();
+            foreach( $data as $data_k => $data_v ){
+                if( stripos($data_k, $v2) !== false ){
+                    $data_k = preg_replace('/needinfo\_\d*?\_/is','',$data_k);
+                    $needinfo_model->$data_k = $data_v;
+                }
+            }
+            $needinfo_model->task_id = $task_id;
+            $needinfo_model->type    = TaskOnlinejobNeedinfo::TYPES_TEXT;
+            $needinfo_model->display_order  = str_ireplace('needinfo_','',str_ireplace('_intro_pic','',$v2));
+            $needinfo_model->save();
         }
     }
 }

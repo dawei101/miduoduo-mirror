@@ -470,7 +470,7 @@ class Task extends \common\BaseActiveRecord
 
     public function getOnlinejob_needinfo(){
         return $this->hasMany(TaskOnlinejobNeedinfo::className(),['task_id'=>'id'])
-            ->addOrderBy(['display_order' => SORT_DESC]);
+            ->addOrderBy(['display_order' => SORT_ASC]);
     }
 
     public function fields()
