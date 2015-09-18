@@ -109,9 +109,10 @@ class WechatPusher extends WeichatBase
     public function toApplicantTaskAppliedDonePassYes($task,$touser){
         // 微信推送
         $weichatTempID  = Yii::$app->params['weichat']['tmp_weichat']['appmsg'];
+        $company_name   = isset($task->company->name)?$task->company->name:$task->company_name;
         $params         = array(
             array('name'=>'first','value'=>'您好！很高兴，招聘单位已经接受您的报名！','color'=>'#000080'), 
-            array('name'=>'keyword1','value'=>$task->company->name,'color'=>'#000080'),
+            array('name'=>'keyword1','value'=>$company_name,'color'=>'#000080'),
             array('name'=>'keyword2','value'=>$task->title,'color'=>'#000080'),
             array('name'=>'keyword3','value'=>$task->service_type->name,'color'=>'#000080'),
             array('name'=>'keyword4','value'=>$task->address,'color'=>'#000080'),
@@ -125,10 +126,11 @@ class WechatPusher extends WeichatBase
     public function toApplicantTaskAppliedDonePassNo($task,$touser){
         // 微信推送
         $weichatTempID  = Yii::$app->params['weichat']['tmp_weichat']['appmsg'];
+        $company_name   = isset($task->company->name)?$task->company->name:$task->company_name;
         $params         = array(
             array('name'=>'first',
                 'value'=>'您好！很遗憾，您的报名失败了！','color'=>'#000080'), 
-            array('name'=>'keyword1','value'=>$task->company->name,'color'=>'#000080'),
+            array('name'=>'keyword1','value'=>$company_name,'color'=>'#000080'),
             array('name'=>'keyword2','value'=>$task->title,'color'=>'#000080'),
             array('name'=>'keyword3','value'=>$task->service_type->name,'color'=>'#000080'),
             array('name'=>'keyword4','value'=>$task->address,'color'=>'#000080'),
