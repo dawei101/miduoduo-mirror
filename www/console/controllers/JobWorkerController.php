@@ -14,11 +14,12 @@ class JobWorkerController extends Controller
 {
 
 
-    public function actionSchedule()
+    public function actionSchedule($date='')
     {
         // 添加每日任务
-        // Yii::$app->job_queue_manager->add(); ...
-
+        $date = $date ? $date : date("Y-m-d");
+        Yii::$app->job_queue_manager->add('time-book/update',['date'=>$date]);
+        echo "任务已填加！\r\n";
     }
 
 
