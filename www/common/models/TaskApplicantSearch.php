@@ -66,7 +66,7 @@ class TaskApplicantSearch extends TaskApplicant
         if ($this->created_time){
             list($from_date, $to_date) = explode(' - ', $this->created_time);
             $query->andWhere(['>=', 'created_time', $from_date]);
-            $query->andWhere(['<', 'created_time', $to_date]);
+            $query->andWhere(['<=', 'created_time', $to_date]);
 
             Yii::$app->session->set('taskapp_created_from_date', $from_date);
             Yii::$app->session->set('taskapp_created_to_date', $to_date);
