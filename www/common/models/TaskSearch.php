@@ -88,7 +88,7 @@ class TaskSearch extends Task
             Yii::$app->session->set('task_created_from_date', $created_from_date);
             Yii::$app->session->set('task_created_to_date', $created_to_date);
             $query->andWhere(['>=', 'created_time', $created_from_date]);
-            $query->andWhere(['<', 'created_time', $created_to_date]);
+            $query->andWhere(['<=', 'created_time', $created_to_date]);
         }
 
         $query->andFilterWhere(['like', 'title', $this->title])
