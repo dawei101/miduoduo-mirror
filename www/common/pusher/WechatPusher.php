@@ -80,13 +80,15 @@ class WechatPusher extends WeichatBase
         $pushGroup  = $pushGroup ? $pushGroup : uniqid();
 
         // 保存日志
-        $log        = new WeichatPushLog();
-        $log->push_group    = $pushGroup;
-        $log->openid        = $openid;
-        $log->create_time   = date("Y-m-d H:i:s",time());
-        $log->result        = $result;
-        $log->return_msg    = $returnMsg;
-        $log->save();
+        if( $result != 'ok' ){
+            $log        = new WeichatPushLog();
+            $log->push_group    = $pushGroup;
+            $log->openid        = $openid;
+            $log->create_time   = date("Y-m-d H:i:s",time());
+            $log->result        = $result;
+            $log->return_msg    = $returnMsg;
+            $log->save();
+        }
     }
 
     // 报名微信推送消息
