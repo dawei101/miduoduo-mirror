@@ -43,7 +43,8 @@ class ResumeController extends CBaseController
             $task_ids[] = $task->id;
         }
         $query = TaskApplicant::find()
-            ->where(['in', 'task_id', $task_ids]);
+            ->where(['in', 'task_id', $task_ids])
+            ->orderBy(['id' => SORT_DESC]);
         if ($status!==false){
             $query->andWhere(['status'=>$status]);
         }
