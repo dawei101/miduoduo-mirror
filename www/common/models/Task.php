@@ -484,6 +484,7 @@ class Task extends \common\BaseActiveRecord
             'xcompany_name',
             'onlinejob',
             'onlinejob_needinfo',
+            'service_type',
         ]);
         unset($fields['contact_phonenum']);
         return $fields;
