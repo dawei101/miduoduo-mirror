@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\jui\DatePicker;
+use kartik\daterange\DateRangePicker;
 use common\models\TaskApplicant;
 
 /* @var $this yii\web\View */
@@ -23,6 +24,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [      
             ['attribute'=> 'id',
                  'label'=>'投递流水ID'
+            ],
+            [
+                'label' => '申请时间',
+                'attribute' => 'created_time',
+                'value' => function($model){
+                    return $model->created_time;
+                },
+                'filter' => DateRangePicker::widget([
+                    'name' => 'TaskApplicantSearch[created_time]',
+                    'convertFormat'=>true,
+                    'value'=>Yii::$app->session->get('taskapp_created_from_date').' - '.Yii::$app->session->get('taskapp_created_to_date'),
+                    'language'=>'cn',
+                    'pluginOptions'=>[
+                        'format'=>'Y-m-d'
+                    ]            
+                ]),
             ],
             [
                  'attribute'=> 'resume_name',
@@ -53,17 +70,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return '<span class="pull-right">已删除</span>';
                 },
                 'label'=>'应聘岗位'
-            ],
-            [
-                'label' => '申请日期',
-                'attribute' => 'created_time',
-                'value' => function($model){
-                    return Yii::$app->formatter->asDate($model->created_time);
-                },
-                'filter' => DatePicker::widget([
-                    'name' => 'TaskApplicantSearch[created_time]',
-                    'dateFormat' => 'yyyy-MM-dd',
-                ]),
             ],
             [
                 'attribute' => 'company_alerted',

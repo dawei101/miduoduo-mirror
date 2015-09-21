@@ -19,9 +19,9 @@ class TaskSearch extends Task
     {
         return [
             [['id', 'clearance_period','recommend', 'salary_unit', 'need_quantity', 'got_quantity', 'user_id', 'service_type_id', 'gender_requirement', 'degree_requirement', 'age_requirement', 'height_requirement', 'status', 'city_id','gid', 'company_id'], 'integer'],
-            [['origin', 'title', 'salary_note', 'from_date', 'to_date', 'from_time', 'to_time', 'created_time', 'updated_time', 'detail', 'requirement'], 'safe'],
+            [['origin', 'title', 'salary_note', 'from_date', 'to_date', 'from_time', 'to_time', 'updated_time', 'detail', 'requirement'], 'safe'],
             [['salary'], 'number'],
-            ['contact_phonenum', 'safe'],
+            [['contact_phonenum', 'created_time'], 'safe'],
         ];
     }
 
@@ -69,7 +69,6 @@ class TaskSearch extends Task
             'to_time' => $this->to_time,
             'need_quantity' => $this->need_quantity,
             'got_quantity' => $this->got_quantity,
-            'created_time' => $this->created_time,
             'updated_time' => $this->updated_time,
             'address' => $this->address,
             'user_id' => $this->user_id,
@@ -83,6 +82,14 @@ class TaskSearch extends Task
             'origin' => $this->origin,
             'company_id' => $this->company_id,
         ]);
+
+        if ($this->created_time){
+            list($created_from_date, $created_to_date) = explode(' - ', $this->created_time);
+            Yii::$app->session->set('task_created_from_date', $created_from_date);
+            Yii::$app->session->set('task_created_to_date', $created_to_date);
+            $query->andWhere(['>=', 'created_time', $created_from_date]);
+            $query->andWhere(['<', 'created_time', $created_to_date]);
+        }
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'salary_note', $this->salary_note])
