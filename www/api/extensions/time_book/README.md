@@ -69,8 +69,35 @@ Baseurl = //api.miduoduo.cn/time-book/
         "id": 147
     }
     OR
+    http 400 错误
+```
+
+### 考勤打卡 新接口
+    POST /time-book/record-new
+    params: 
+        lat=
+        lng=
+        schedule_id=
+        device_id=
+    return 
     {
-        "success": false,
-        "message": "您不在打卡范围内！"
+      "success": true,
+      "message": "打卡成功！",
+      "result": {
+        "lat": "39.934603",
+        "lng": "116.214768",
+        "schedule_id": "526",
+        "device_id": "223344xpxp0",
+        "user_id": "2006",
+        "owner_id": "6951",
+        "event_type": 10,
+        "device_date": "2015-09-22",
+        "id": 171
+      }
+    }
+    OR
+    {
+      "success": false,
+      "message": ""
     }
 ```
