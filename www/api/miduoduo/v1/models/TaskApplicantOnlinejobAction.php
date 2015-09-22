@@ -62,7 +62,7 @@ class TaskApplicantOnlinejobAction extends \yii\rest\CreateAction
             return ['success'=>false,"message"=> "手机号不能为空"];
         }
         if( $task->onlinejob->need_username && !$model->need_username ){
-            return ['success'=>false,"message"=> "注册账号不能为空"];
+            return ['success'=>false,"message"=> "用户名不能为空"];
         }
         if( $task->onlinejob->need_person_idcard && !$model->need_person_idcard ){
             return ['success'=>false,"message"=> "身份证号不能为空"];
@@ -83,7 +83,7 @@ class TaskApplicantOnlinejobAction extends \yii\rest\CreateAction
                 'need_username' => $model->need_username,
             ]);
             if($used){
-                return ['success'=>false,"message"=> "账号已被使用"];
+                return ['success'=>false,"message"=> "用户名已被使用"];
             }
         }
         if( $task->onlinejob->need_person_idcard ){

@@ -198,6 +198,21 @@ $this->title = '米多多兼职平台';
             <?php } ?>
         </div>
     </li>
+    <li>
+        <div class="pull-left title-left text-center"><em>*</em>状态</div>
+        <div class="pull-left right-box zhiweileibie">
+            <div class="nice-select tl" name="nice-select">
+                <input type="text" readonly placeholder=" ===状态===" value="<?= ($task->status) !==null ? Task::$STATUSES[$task->status] : ''?>">
+                 <ul>
+                    <?php foreach(Task::$STATUSES as $st) {?>
+                    <li><?=$st?></li>
+                    <?php }?>
+                </ul>
+                <input type="hidden" name="status" value="<?= ($task->status) !==null ? Task::$STATUSES[$task->status] : ''?>"/>
+                <p class="cuowu status-error">内容不能为空!</p>
+            </div>
+        </div>
+    </li>
 </ul>
     
   
