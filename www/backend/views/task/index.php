@@ -73,13 +73,15 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
                 },
                 'filter' => Task::$RECOMMEND,
             ],
+            /*
             [
-		'attribute' => 'clearance_period',
+		        'attribute' => 'clearance_period',
                 'value' => function ($model){
                     return $model->clearance_period_label;
                 },
                 'filter' => Task::$CLEARANCE_PERIODS,
             ],
+            */
             [
                 'attribute' => 'service_type_id',
                 'format' => 'raw',
@@ -92,6 +94,7 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
                 },
                 'filter' => $service_type_maps,
             ],
+            /*
             [
                 'attribute' => 'salary_unit',
                 'label' => '薪资与单位',
@@ -100,6 +103,7 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
                 },
                 'filter' => Task::$SALARY_UNITS,
             ],
+            */
             [
                 'attribute' => 'city_id',
                 'value' => function ($model){
