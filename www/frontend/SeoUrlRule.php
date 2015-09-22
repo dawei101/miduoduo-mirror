@@ -26,6 +26,7 @@ class SeoUrlRule extends UrlRule
             if (!empty($params['type_pinyin'])){
                 $url .= $params['type_pinyin'] . "/";
             }
+            $params['page'] = isset($params['page'])?$params['page']:1;
             return $url . 'p' . $params['page'] . '/';
         }
         if ($route=='site/index') {
