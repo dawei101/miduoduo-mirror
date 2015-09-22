@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use common\models\Task;
 use common\models\District;
 use common\models\ServiceType;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\TaskSearch */
@@ -40,6 +41,22 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
         'columns' => [
             'id',
             'gid',
+            [
+                'label' => '发布时间',
+                'attribute' => 'created_time',
+                'value' => function($model){
+                    return $model->created_time;
+                },
+                'filter' => DateRangePicker::widget([
+                    'name' => 'TaskSearch[created_time]',
+                    'convertFormat'=>true,
+                    'value'=>Yii::$app->session->get('task_created_from_date').' - '.Yii::$app->session->get('task_created_to_date'),
+                    'language'=>'cn',
+                    'pluginOptions'=>[
+                        'format'=>'Y-m-d'
+                    ]            
+                ]),
+            ],
             'contact_phonenum',
             [
                 'label' => '标题',

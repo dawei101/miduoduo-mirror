@@ -24,7 +24,6 @@ class TaskApplicantSearch extends TaskApplicant
     {
         return [
             [['id', 'user_id', 'task_id', 'status'], 'integer'],
-            [['created_time'], 'date'],
             [['created_time', 'task_title'], 'safe'],
             [['company_alerted', 'applicant_alerted'], 'boolean'],
             [['resume_phonenum', 'resume_name'], 'safe'],
@@ -65,11 +64,14 @@ class TaskApplicantSearch extends TaskApplicant
         }
 
         if ($this->created_time){
-            $from_date = $this->created_time;
-            $date = DateTime::createFromFormat('Y-m-d', $this->created_time);
-            $to_date = $date->modify('+1 day')->format('Y-m-d');
-            $query->andWhere(['>=', 'created_time', $from_date]);
-            $query->andWhere(['<', 'created_time', $to_date]);
+            list($from_date, $to_date) = explode(' - ', $this->created_time);
+            if($from_date){
+                $query->andWhere(['>=', 'created_time', $from_date]);
+                $query->andWhere(['<=', 'created_time', $to_date]);
+            }
+
+            Yii::$app->session->set('taskapp_created_from_date', $from_date);
+            Yii::$app->session->set('taskapp_created_to_date', $to_date);
         }
 
         // 根据标题搜索

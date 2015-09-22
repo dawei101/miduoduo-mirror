@@ -613,6 +613,14 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
 ### 提现接口
     *GET /version/pay-withdraw?type=10
 
+### 上报信息接口
+* 上报push_id和user_id
+    * POST /version/report/push-id?access_token=null
+    * 提交参数
+    ```
+    push_id = 极光推送id
+    ```
+
 ## 关于性能上的优化
     * TODO
 

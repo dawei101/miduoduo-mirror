@@ -199,10 +199,14 @@ class ResumeController extends BBaseController
         }else{
             $resume->exam_note = NULL;
         }
+        $app_pusher = Yii::$app->app_pusher;
+        $app_pusher_options = ['url' => 'native://identity/auth'];
         if ($passed){
             $resume->exam_status = Resume::EXAM_DONE;
+            $app_pusher->notification($resume->user_id, "恭喜，您的个人认证已通过！\r\n请到\"个人认证\"页面查看详情。", $app_pusher_options);
         } else {
             $resume->exam_status = Resume::EXAM_NOT_PASSED;
+            $app_pusher->notification($resume->user_id, "抱歉，您的个人认证未通过！\r\n请到\"个人认证\"页面查看详情。", $app_pusher_options);
         }
         $resume->save();
         return $this->redirect('view?id=' . $id);

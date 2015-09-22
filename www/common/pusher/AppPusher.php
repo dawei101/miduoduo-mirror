@@ -25,6 +25,11 @@ class AppPusher extends Component implements ViewContextInterface
     public $app_key;
     public $master_secret;
 
+    public function getViewPath()
+    {
+        return Yii::getAlias("");
+    }
+
 
     public function getClient()
     {
@@ -37,7 +42,7 @@ class AppPusher extends Component implements ViewContextInterface
         return $this->_client;
     }
 
-    public function notification($user_id, $message)
+    public function notification($user_id, $message, $options=[])
     {
         $devices = Device::find()->where(['user_id'=>$user_id, 'is_active'=>true])->all();
         $reg_ids = [];
@@ -55,7 +60,7 @@ class AppPusher extends Component implements ViewContextInterface
                 ->push()
                 ->setPlatform(JModel\all)
                 ->setAudience($audiences)
-                ->setNotification(JModel\notification($message,  JModel\ios($message, $badge="+1")))
+                ->setNotification(JModel\notification($message, JModel\ios($message, $badge="+1",1,true,$options)))
                 ->send();
             Yii::trace('Push message succeed with sendno:'. $result->sendno
                 . ', message id:' . $result->msg_id
