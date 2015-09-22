@@ -129,11 +129,9 @@ function CallBack(str) {
 
     callback：回调函数名
 ```
-* 获取照片
+* 获取设备 ID
 ```
-    window.MDDNative.photo(callback)
-
-    callback：回调函数名
+    var id = window.MDDNative.deviceId()
 ```
 
 * 打卡时间段
