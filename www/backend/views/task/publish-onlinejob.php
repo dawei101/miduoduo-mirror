@@ -6,6 +6,19 @@ use common\models\Task;
 use common\models\District;
 
 $city_id = isset($task->city_id) ? $task->city_id : 3;
+if( $city_id ){
+    $city = District::findOne(['id'=>$city_id]);
+    $province_id = $city['parent_id'];
+}else{
+    $province_id = 2;
+}
+
+$sheng  = District::find()
+    ->where(['level'=>'province','is_alive'=>1])->addOrderBy(['id'=>SORT_ASC])->all();
+$shi    = District::find()
+    ->where(['parent_id'=>$province_id])->addOrderBy(['id'=>SORT_ASC])->all();
+$qu     = District::find()
+    ->where(['parent_id'=>$city_id])->addOrderBy(['id'=>SORT_ASC])->all();
 
 $api_url= Yii::$app->params['baseurl.api'];
 
@@ -55,6 +68,65 @@ $this->title = '米多多兼职平台';
             <p class="cuowu title-error">内容不能为空!</p>
         </div>
     </li>
+<li>
+                                    <div class="pull-left title-left text-center"><em>*</em>工作地址</div>
+                                    <div class="pull-left right-box address">
+<!--
+                                    <div class="nice-select quyu" name="nice-select">
+                                        <input id="address_count" type="text" placeholder="地址" value="一个">
+                                        
+                                        <ul>
+                                            <li>不限</li>
+                                            <li>一个</li>
+                                            <li>多个</li>
+                                        </ul>
+                                    </div> 
+                                        <div class="nice-select quyu" name="nice-select">
+                                            <input type="text" readonly value="北京" >
+                                        </div> -->
+                                        <span id="api_url" style="display:none;"><?=$api_url?></span>
+                                        <select id="address_sheng">
+                                            <option value="0">
+                                                省份/直辖市
+                                            </option>
+                                            <?php foreach($sheng as $k=>$v){ ?>
+                                                <option value="<?=$v->id;?>"
+                                                <?=($v->id==$province_id)?'selected=selected':''?>
+                                                >
+                                                    <?=$v->short_name;?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                        <select id="address_shi" name="city_id">
+                                            <?php foreach($shi as $k=>$v){ ?>
+                                                <option value="<?=$v->id;?>"
+                                                <?=($v->id==$city_id)?'selected=selected':''?>
+                                                >
+                                                    <?=$v->short_name;?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                        <select id="address_qu" name="district_id">
+                                            <option value="0">区/县</option>
+                                            <option value="-1">不限工作地点</option>
+                                            <?php foreach($qu as $k=>$v){ ?>
+                                                <option value="<?=$v->id;?>">
+                                                    <?=$v->short_name;?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                        <input type="text" autocomplete="off" placeholder="详细位置" name="address" id="jquery-tagbox-text1" class="add-v"/>
+                                        <span class="tianj">+添加</span>
+                                        <input type="hidden" name="address_list"/>
+                                        <ul class="dizhi" id="search-result" style="display:none"></ul>
+                                        <p class="cuowu address_error">内容不能为空!</p>
+                                    </div>
+                                    <div class="zhi" id="selected-address">
+                                    <?php foreach($address as $item){?>
+                                        <div class="p-box" id="<?=$item->id?>"><span>&times;</span><div class="dz-v"><?=$item->title?></div></div>
+                                    <?php }?>
+                                    </div>
+                                </li>
     <li>
       <div class="pull-left title-left text-center"><em>*</em>任务时间</div>
       <div class="pull-left right-box div">
@@ -69,7 +141,7 @@ $this->title = '米多多兼职平台';
     <li>
         <div class="pull-left title-left text-center"><em></em>申请条件</div>
         <div class="pull-left right-box">
-            <input name="recommend" type="text" placeholder="" value="<?=$task->title?>">
+            <input name="requirement" type="text" placeholder="" value="">
             <p class="cuowu title-error">内容不能为空!</p>
         </div>
     </li>
@@ -121,7 +193,7 @@ $this->title = '米多多兼职平台';
         <div class="pull-left right-box input-z">
             <?php foreach($evidences as $k => $evidence){ ?>
                 <span class="needinfo-item2">
-                    <input class="changqi" type="checkbox" name="<?=$k?>" value="1"><?=$evidence?>
+                    <input style="height:15px;" type="checkbox" name="<?=$k?>" value="1"><?=$evidence?>
                 </span>
             <?php } ?>
         </div>

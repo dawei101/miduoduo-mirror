@@ -401,21 +401,18 @@ class TaskController extends BBaseController
                 $model->service_type_id = $service_type_id;
             }
 
-            $recommend = Yii::$app->request->post('recommend');
-            if($recommend){
-                $model->recommend = array_search($recommend, Task::$RECOMMEND);
-            } 
+            $model->requirement = Yii::$app->request->post('requirement');
+            $model->need_quantity = 9999;
 
             $status = Yii::$app->request->post('status');
             if($status){
                 $model->status = array_search($status, Task::$STATUSES);
             }
-            $model->need_quantity = 1;
             $model->recommend = 0;
             $model->salary = intval($model->salary);
             $model->contact = Yii::$app->params['supportName'];
             $model->contact_phonenum = Yii::$app->params['supportTel'];
-            $model->clearance_period = 4; // 实时结算
+            $model->clearance_period = 4; // 按键结算
             if ($model->validate() && $model->save()) {              
                 $task_id = $model->id;
                 $this->saveOnlinejob($data, $task_id, $_FILES);

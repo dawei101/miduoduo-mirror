@@ -60,7 +60,7 @@ class Task extends \common\BaseActiveRecord
         1=>'周结',
         2=>'日结',
         3=>'完工结',
-        4=>'实时结算',
+        4=>'按单结算',
     ];
 
     public static $SALARY_UNITS = [
