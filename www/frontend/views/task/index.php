@@ -12,7 +12,7 @@ $districts = District::find()->where(['parent_id'=>$city->id])->all();
 $service_types = ServiceType::find()->where(['status'=>0])->all();
 
 /********* seo start ***********/
-$seocity    = isset($city->name)?$city->name:'';
+$seocity    = isset($city->short_name)?$city->short_name:'';
 if( $current_district->id != $city->id ){
     $block      = $current_district->name;
     $page_type  = 'block';
@@ -65,7 +65,7 @@ $this->page_description = $seo_code['description'];
                         class="current"
                     <?php } ?>
                 >
-                    <?=$district->name?>
+                    <?=$district->short_name?>
                 </a>
             <?php } ?>
         </div>
