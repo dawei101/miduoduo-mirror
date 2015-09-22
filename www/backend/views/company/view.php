@@ -75,14 +75,14 @@ if ($model->status!=Company::STATUS_DELETED) {
 <?php if ($model->exam_status==Company::EXAM_PROCESSING) { ?>
     <div class="panel panel-default">
       <div class="panel-heading">认证审核 </div>
-      <div class="panel-body">
+      <!--div class="panel-body">
         <p >身份证:</p>
         <?= Html::img(Utils::urlOfFile($model->person_idcard_pic), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->person_idcard_pic)."')"]) ?>
         <?php if ($model->corp_idcard_pic) { ?>
         <p >营业执照:</p>
         <?= Html::img(Utils::urlOfFile($model->corp_idcard_pic), ['width'=>700, 'onclick'=>"window.open('".Utils::urlOfFile($model->corp_idcard_pic)."')"]) ?>
         <?php } ?>
-      </div>
+      </div-->
         <div class="panel-footer">
           <div class="row">
             <div class="col-xs-3">

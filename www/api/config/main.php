@@ -143,6 +143,14 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => ['v1/report'],
+                    'pluralize' => '',
+                    'extraPatterns' => [
+                        'POST push-id'=>'push-id',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/upload-image'],
                     'pluralize' => '',
                     'extraPatterns' => [
