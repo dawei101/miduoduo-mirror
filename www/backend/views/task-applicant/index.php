@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  'format'=>'raw',
                  'value'=>function($model){
                      if ($model->resume){
-                         return "<a target='_blank' class='pull-right' href='/resume/view?user_id=". $model->user_id ."'>". ($model->resume?($model->resume->name):'') ."</a>";
+                         return "<a target='_blank' href='/resume/view?user_id=". $model->user_id ."'>". ($model->resume?($model->resume->name):'') ."</a>";
                      }
                  },
                  'label'=>'简历',
@@ -65,9 +65,9 @@ $this->params['breadcrumbs'][] = $this->title;
                  'format'=>'raw',
                  'value'=>function($model){
                     if ($model->task){
-                        return "<a target='_blank' class='pull-right' href='".Yii::$app->params['baseurl.m']."/task/view?gid=". $model->task->gid ."'>".$model->task->title ."</a>";
+                        return "<a target='_blank' href='".Yii::$app->params['baseurl.m']."/task/view?gid=". $model->task->gid ."'>".$model->task->title ."<br />电话：".$model->task->contact_phonenum."</a>";
                     }
-                    return '<span class="pull-right">已删除</span>';
+                    return '<span>已删除</span>';
                 },
                 'label'=>'应聘岗位'
             ],

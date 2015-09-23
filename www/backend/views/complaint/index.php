@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ] ,
             'resume.name',
-            // 'created_time',
+            'created_time',
             // 'status',
             ['class' => 'yii\grid\ActionColumn'],
         ],
