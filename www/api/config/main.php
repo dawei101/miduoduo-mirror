@@ -162,6 +162,7 @@ return [
                     'controller' => [
                         'time-book/schedule',
                         'time-book/record',
+                        'time-book/record-new',
                     ],
                     'pluralize' => '',
                 ],
