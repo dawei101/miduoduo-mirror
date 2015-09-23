@@ -10,7 +10,7 @@ $this->nav_right_title = '个人中心';
 $this->nav_left_title = '';
 
 /********* seo start ***********/
-$seocity    = isset($city->name)?$city->name:'';
+$seocity    = isset($city->short_name)?$city->short_name:'';
 $block      = '';
 $type       = '';
 $clearance_type = '';
@@ -41,7 +41,7 @@ $this->page_description = $seo_code['description'];
      <div class="rm_box">
         <?php foreach($citys as $city){ ?>
            <?php if($city->is_hot==1){ ?>
-               <a href="/<?=$city->seo_pinyin?>/p1/"><?=$city->name?></a>
+               <a href="/<?=$city->seo_pinyin?>/p1/"><?=$city->short_name?></a>
            <?php } ?>
        <?php } ?>
      </div>
@@ -61,7 +61,7 @@ $this->page_description = $seo_code['description'];
             <dd class="tag_list">
                 <?php foreach($citys as $city){ ?>
                     <?php if( substr($city->seo_pinyin,0,1)==strtolower($pinyin) ){ ?>
-                        <a href="/<?=$city->seo_pinyin?>/p1/"><?=$city->name?></a>
+                        <a href="/<?=$city->seo_pinyin?>/p1/"><?=$city->short_name?></a>
                     <?php } ?>
                 <?php } ?>
             </dd>
