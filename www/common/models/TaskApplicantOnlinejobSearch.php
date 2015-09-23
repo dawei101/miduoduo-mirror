@@ -6,12 +6,15 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\TaskApplicantOnlinejob;
+use common\models\Task;
 
 /**
  * TaskApplicantOnlinejobSearch represents the model behind the search form about `common\models\TaskApplicantOnlinejob`.
  */
 class TaskApplicantOnlinejobSearch extends TaskApplicantOnlinejob
 {
+    public $task_title;
+
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class TaskApplicantOnlinejobSearch extends TaskApplicantOnlinejob
     {
         return [
             [['id', 'status', 'app_id', 'user_id', 'task_id', 'has_sync_wechat_pic'], 'integer'],
-            [['reason', 'needinfo', 'need_phonenum', 'need_username', 'need_person_idcard', 'created_time', 'updated_time'], 'safe'],
+            [['reason', 'needinfo', 'need_phonenum', 'need_username', 'need_person_idcard', 'created_time', 'updated_time', 'task_title'], 'safe'],
         ];
     }
 
@@ -72,6 +75,20 @@ class TaskApplicantOnlinejobSearch extends TaskApplicantOnlinejob
             ->andFilterWhere(['like', 'need_username', $this->need_username])
             ->andFilterWhere(['like', 'need_person_idcard', $this->need_person_idcard]);
 
+        // 根据标题搜索
+        if( isset($this->task_title) && $this->task_title ){
+            $task_m = Task::find()->where("`title` LIKE '%".$this->task_title."%'")->asArray()->all();
+            $_ids   = array();
+            foreach( $task_m as $k => $v ){
+                $_ids[]   = $v['id'];
+            }
+            if (count($_ids)>0){
+                $query->andFilterWhere(['in', 'task_id', $_ids]);
+            } else {
+                $query->andWhere('1=2');
+            }
+        }
+        
         return $dataProvider;
     }
 }
