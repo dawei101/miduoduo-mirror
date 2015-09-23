@@ -37,8 +37,8 @@ $this->page_description = strip_tags($seo_code['description']);
 ?>
 <div class="nav_title">
     <a href="<?=Yii::$app->params['baseurl.frontend']?>">米多多</a> &gt; 
-    <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_pinyin?>/p1/"><?=$city?>兼职</a> &gt; 
-    <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_pinyin?>/<?=$task->service_type->pinyin?>/"><?=$city?><?=$task->service_type->name?></a>
+    <a href="http://<?=$_SERVER['HTTP_HOST']?>"><?=$city?>兼职</a> &gt; 
+    <a href="http://<?=$_SERVER['HTTP_HOST']?>/<?=$task->service_type->pinyin?>/"><?=$city?><?=$task->service_type->name?></a>
 </div>
 <div class="center_c">
   <div class="cnter_left">
@@ -47,16 +47,16 @@ $this->page_description = strip_tags($seo_code['description']);
         <h2><?= $task->title ?></h2>
         <span class="red_r"><?= floor($task->salary); ?>/<?= $task::$SALARY_UNITS[$task->salary_unit] ?></span><span>|</span><span><?=$task::$CLEARANCE_PERIODS[$task->clearance_period]?></span><span>|</span>
         <span>
-            <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_pinyin?>/<?=$task->service_type->pinyin?>/"><?=$task->service_type->name?></a>    
+            <a href="http://<?=$_SERVER['HTTP_HOST']?>/<?=$task->service_type->pinyin?>/"><?=$task->service_type->name?></a>    
         </span>
         <span>
-            <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_pinyin?>/<?php
+            <a href="http://<?=$_SERVER['HTTP_HOST']?>/<?php
                 if( $task->district ){
                     echo $task->district->seo_pinyin;
                 }else{
-                    echo 'p1';
+                    echo '';
                 }
-            ?>/">
+            ?>">
             <?php
             if ($task->city) {
                 echo $task->city->name;
@@ -113,7 +113,7 @@ $this->page_description = strip_tags($seo_code['description']);
     <div class="midd_xq_title">求职说明</div>
     <div class="midd_xq_text">
       <P>如果您在求职中，遇到企业无理要求支付押金，或者工作内容与实际发布内容不符，请与我们及时联系。扫描下方二维码，关注米多多后，点击信息，举报该职位即可。米多多会及时处理。</P>
-      <p>如果您遇到欺诈，米多多提供兼职呢欺诈赔付，<a href="<?=Yii::$app->params['baseurl.frontend']?>/site/assurance">赔付方案</a></p>
+      <p>如果您遇到欺诈，米多多提供兼职呢欺诈赔付，<a href="<?=Yii::$app->params['baseurl.frontend']?>/site/assurance" target="_blank">赔付方案</a></p>
     </div>
     <div class="midd_xq_title">报名方式</div>
     <div class="midd_xq_text">
@@ -125,7 +125,7 @@ $this->page_description = strip_tags($seo_code['description']);
         <div class="right_title">推荐岗位</div>
         <ul class="jipin_list">
             <?php foreach($recommend_task_list as $task){ ?>
-                <li><a href="/<?=$seo_pinyin?>/<?=$task->service_type->pinyin?>/<?=$task->gid?>" target="_blank"><span><?=str_ireplace('.00','',$task->salary)?>元/<?=$task::$SALARY_UNITS[$task->salary_unit]?></span><?=$task->title?></a></li>
+                <li><a href="/<?=$task->service_type->pinyin?>/<?=$task->gid?>" target="_blank"><span><?=str_ireplace('.00','',$task->salary)?>元/<?=$task::$SALARY_UNITS[$task->salary_unit]?></span><?=$task->title?></a></li>
             <?php } ?>
         </ul>
     <?php } ?>

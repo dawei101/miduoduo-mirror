@@ -61,7 +61,7 @@ if( $lastest_seo_pinyin ){
             </div>
             <ul>
                 <li><a href="<?=Yii::$app->params["baseurl.frontend"]?>">首页</a></li>
-                <li><a href="<?=$jz_url?>">米多多网页版</a></li>
+                <li><a href="<?=Yii::$app->params["baseurl.frontend"]?>/change-city">米多多网页版</a></li>
                 <li><a href="<?=Yii::$app->params["baseurl.m"]?>">手机版</a></li>
                 <li><a href="<?=Yii::$app->params["baseurl.corp"]?>">企业版</a></li>
             </ul>
