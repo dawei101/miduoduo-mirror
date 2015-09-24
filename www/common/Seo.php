@@ -66,4 +66,9 @@ class Seo
         //print_r($seo_params);exit;
         return $seo_params;
     }
+
+    public static function formatFrontendUrl($url){
+        $url = preg_replace('/^\/\w+?\//is','/',$url);
+        return $url;
+    }
 }
