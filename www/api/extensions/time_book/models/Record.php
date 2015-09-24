@@ -28,7 +28,7 @@ class Record extends \common\models\extensions\time_book\Record
             [['lng', 'lat', 'schedule_id'], 'required'],
             [['id', 'event_type', 'schedule_id'], 'integer'],
             [['lng', 'lat'], 'number'],
-            [['created_time'], 'safe'],
+            [['created_time', 'device_id', 'device_date'], 'safe'],
             [['user_id', 'owner_id'], 'string', 'max' => 200]
         ];
     }
