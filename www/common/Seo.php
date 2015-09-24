@@ -67,8 +67,13 @@ class Seo
         return $seo_params;
     }
 
-    public static function formatFrontendUrl($url){
-        $url = preg_replace('/^\/\w+?\//is','/',$url);
+    public static function formatFrontendUrl($url, $type = ''){
+        if( $type == '' ){
+            $url = preg_replace('/^\/\w+?\//is','/',$url);
+            $url = str_ireplace('p1/', '', $url);
+        }elseif( $type == 'pager' ){
+            $url = preg_replace('/href\=\"\/\w+?\//is','href="/',$url);
+        }
         return $url;
     }
 }

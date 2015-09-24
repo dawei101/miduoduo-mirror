@@ -52,7 +52,7 @@ $this->page_description = $seo_code['description'];
    <li>
    		<div class="nav_sx_left">区域：</div>
         <div class="nav_sx_right">
-            <a href="<?=preg_replace('/^\/\w+?\//is','/',Url::current(['district_pinyin'=>'']))?>" 
+            <a href="<?=Seo::formatFrontendUrl(Url::current(['district_pinyin'=>'']))?>" 
                 <?php if($current_district->id == $city->id){ ?>
                     class="current"
                 <?php } ?>
@@ -60,7 +60,7 @@ $this->page_description = $seo_code['description'];
                 全城
             </a>
             <?php foreach($districts as $district) { ?>
-                <a href="<?=str_ireplace('p1/','',preg_replace('/^\/\w+?\//is','/',Url::current(['district_pinyin'=>$district->seo_pinyin])))?>"
+                <a href="<?=Seo::formatFrontendUrl(Url::current(['district_pinyin'=>$district->seo_pinyin]))?>"
                     <?php if($district->seo_pinyin == $current_district->seo_pinyin){ ?>
                         class="current"
                     <?php } ?>
@@ -73,7 +73,7 @@ $this->page_description = $seo_code['description'];
    <li>
    		<div class="nav_sx_left">分类：</div>
         <div class="nav_sx_right">
-            <a href="<?=preg_replace('/^\/\w+?\//is','/',Url::current(['type_pinyin'=>'']))?>" 
+            <a href="<?=Seo::formatFrontendUrl(Url::current(['type_pinyin'=>'']))?>" 
                 <?php if(!isset($current_service_type->pinyin)){ ?>
                     class="current"
                 <?php } ?>
@@ -81,7 +81,7 @@ $this->page_description = $seo_code['description'];
                 全部
             </a>
             <?php foreach($service_types as $st) { ?>
-                <a href="<?=str_ireplace('p1/','',preg_replace('/^\/\w+?\//is','/',Url::current(['type_pinyin'=>$st['pinyin']])))?>"
+                <a href="<?=Seo::formatFrontendUrl(Url::current(['type_pinyin'=>$st['pinyin']]))?>"
                     <?php if(isset($current_service_type->pinyin) && $st->pinyin == $current_service_type->pinyin){ ?>
                         class="current"
                     <?php } ?>
@@ -121,12 +121,12 @@ $this->page_description = $seo_code['description'];
         <?php
             //var_dump($pages);exit;
         ?>
-            <?=preg_replace('/href\=\"\/\w+?\//is','href="/',LinkPager::widget([
+            <?=Seo::formatFrontendUrl(LinkPager::widget([
                 'pagination' => $pages,
                 'maxButtonCount'=>8,
                 'lastPageLabel'=>'末页', 'nextPageLabel'=>'下一页',
                 'prevPageLabel'=>'上一页', 'firstPageLabel'=>'首页'
-            ]))?>
+            ]), 'pager')?>
         </div>
     </ul>
 </div>
