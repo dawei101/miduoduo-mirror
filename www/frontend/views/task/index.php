@@ -45,7 +45,7 @@ $this->page_description = $seo_code['description'];
          &gt; <a href="http://<?=$_SERVER['HTTP_HOST']?>/<?=$current_district->seo_pinyin?>/"><?=$current_district->short_name?>兼职</a>
     <?php } ?>
     <?php if(isset($current_service_type->pinyin)){ ?>
-        &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/<?=$current_service_type->pinyin?>/"><?=$current_service_type->name?></a>
+        &gt; <a href="http://<?=$_SERVER['HTTP_HOST']?>/<?=$current_service_type->pinyin?>/"><?=$current_service_type->name?></a>
     <?php } ?>
 </div>
 <ul class="nav_sx">
