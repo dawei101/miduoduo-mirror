@@ -131,7 +131,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .default-title a{color:#a5abb2;}
 .default-lis a{ color:#606c77;}
 .right-center{background:#fff; overflow:hidden; height:100% !important; min-height:940px;}
-.conter-title{height:48px; border-bottom:1px #00b966 solid; width:100%; color:#2a3141; font-size:18px; line-height:48px; padding-left:40px; background:#FFF;}
+.conter-title{height:48px; border-bottom:1px #00b966 solid; width:100%; color:#2a3141; font-size:14px; line-height:48px; padding-left:40px; background:#FFF;}
 .tianxie-box{height:100%;position:relative; background:#fff; border-bottom:1px #eee dashed; padding:0px 30px 30px; overflow:hidden;color:#999;}
 .tishi-cs{color:#999; text-align:center; border:#f00 solid 1px; width:90%;  margin:30px auto 20px; padding:10px 0; font-size:18px;}
 .tishi-cs a{text-decoration:underline; font-weight:bold;width:810px;}
@@ -144,7 +144,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .riqi label,.time-xz label{line-height:30px;margin-left:10px; margin-top:5px}
 .riqi input.changqi,.time-xz input.changqi{width:30px; height:auto !important;}
 .time-xz{margin-top:15px;}
-.time-xz .times{margin-left:0;width:148px; margin-bottom: 15px;}
+.time-xz .times{margin-left:0;width:148px; margin-bottom: 20px;}
 .time-xz .times input{width:147px;}
 .time-xz .times ul{width:150px;}
 .time-xz span{margin-left:10px; margin-top:10px; color:#a5abb2; margin-right:10px;}
@@ -171,7 +171,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .dl-left{width:200px;}
 .dl-left li{width:200px; margin:5px 0; line-height:30px; font-size:16px; color:#2a3141; border-bottom:1px #ccc solid;}
 .dl-pic{width:400px;}
-.edit{width:99%; height:200px; overflow-y:auto;  border:#d2d5d8 solid 1px; padding:10px; margin-bottom:10px;}
+.edit{width:99%; height:200px; overflow-y:auto;  border:#d2d5d8 solid 1px; padding:10px; margin-bottom:20px;}
 .edit p{line-height:30px; font-size:14px;}
 .input-z input{width:98px;}
 .input-z  .iconfont {margin-left:-35px;}
@@ -204,10 +204,10 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .current a{color:#00b966; display:block; width:100%;background:#fff;width:100%;}
 .zhiwei-lis {overflow: hidden; padding: 20px 30px 30px; width: 900px;}
 .qy-zhiwei-lis{width:980px;}
-.zhiwei-lis li{width:750px; border:1px #d2d5d8 solid; overflow:hidden; margin-bottom:20px;width:100%}
+.zhiwei-lis li {width: 750px;border: 1px #d2d5d8 solid;overflow: hidden;margin-bottom: 10px;width: 100%;}
 .zhiwei-lis-title{width:100%; border-bottom:1px #eee dashed; overflow:hidden; height:40px; border-bottom:1px #ccc dashed; margin-bottom:5px;}
 .zhiwei-lis-title h2 { color: #3388ff;font-size: 16px; line-height: 40px;padding-left: 20px;width: 70%;}
-.bt-span {height: 30px; overflow: hidden;padding-top: 7px;}
+.bt-span {height: 30px;overflow: hidden;padding-top: 7px;margin-top: 3px;}
 .zhiwei-lis-title span{border:1px #00b966 solid; border-radius:4px; padding:2px 4px; margin-top:10px; margin-right:20px; cursor:pointer;width:73%;}
 .zhiwei-lis-left { color: #606c77;font-size: 12px;height: 70px; line-height: 22px;padding-left: 20px;width: 70%;}
 .zhiwei-lis-left span{margin-right:20px;}
@@ -220,22 +220,22 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .news{width:48px; height:20px; line-height:18px; color:#fff; font-size:16px; background:#ef1d1d; margin-top:20px; border-radius:10px; margin-left:20px;}
 
 .jianli-lis{width:100%; padding:30px; overflow:hidden; color:#606c77;}
-.jianli-lis .tab-title{width:100%; height:40px; background:#eee; text-align:center; line-height:40px; font-size:16px;}
+.jianli-lis .tab-title{width:100%; height:30px; background:#eee; text-align:center; line-height:30px; font-size:14px;}
 .tab1{width:20%; padding-left:10px;}
 .tab2{width:24%;}
 .tab3{width:15%;}
 .tab4{width:20%;}
 .tab5{width:20%;}
 .tab5 span{font-size:12px;font-weight: 100;}
-.jianli-lis dd{min-height:80px; border:1px #eee solid; border-bottom:1px #eee dashed; border-top:none;width:100%; padding:20px 0; overflow:hidden;}
-.names{color:#3388ff; font-size:14px; margin:5px 0; line-height:30px;}
+.jianli-lis dd {border: 1px #eee solid;border-bottom: 1px #eee dashed;border-top: none; width: 100%;padding: 5px 0;overflow: hidden;height: 50px;}
+/*.names{color:#3388ff; font-size:14px; margin:5px 0; line-height:30px;}*/
 .jiben{color:#606c77; line-height:20px;ffont-size:14px;}
 .jiben span{margin-right:5px;}
-.jianli-lis dd .tab2,.jianli-lis dd .tab3,.jianli-lis dd .tab4{line-height:60px;}
+.jianli-lis dd .tab2,.jianli-lis dd .tab3,.jianli-lis dd .tab4{line-height:27px;}
 .borser-tab-right{border-right:1px #eee solid;}
 .borser-tab-leftt{border-left:1px #eee solid;}
 .jishou{background:#00b966; padding:5px 10px; border:none; color:#fff; margin:15px 10px 0;}
-.yijishou{background:none; padding:5px 10px; border:none; color:#ccc; margin:15px 10px 0;text-align: center;}
+.yijishou {background: none;padding: 5px 10px; border: none; color: #ccc; text-align: center;}
 .jujue{background:#606c77; padding:5px 5px; border:none; color:#fff; margin-top:15px; }
 .pagers a{color:#00b966; padding:10px 15px; border:1px #eee solid; font-size:16px;}
 .pagers a:hover{background:#eee;}
@@ -289,7 +289,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .zhi span {background: #ccc;border-radius:100px;color: #666;margin-top: 6px;cursor:pointer; width:20px; height:20px; float:right; line-height:20px; line-height:20px; margin-right:10px; font-size:18px;text-align: center;}
 .dz-v {float: left;color: #666;}
 .add-v {width: 297px !important;}
-.address select{height:40px; border:#999 solid 1px;border-right:0;color:#999;width: 108px; padding:0 5px;}
+.address select{height:40px; border:#999 solid 1px;color:#999;width: 108px; padding:0 5px;}
 
 .tianj { border: 2px solid #00b966  !important;float: right;margin-right: 9px;padding: 8px 15px; border-radius:4px; border:2px #ccc solid; color:#00b966; cursor:pointer;}
 
@@ -351,15 +351,15 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 /*================================================这里是新样式开始===============================================*/
 .names a{color:#3388ff;}
 .daka_lis {border: 1px solid #eee; color: #606c77;margin: 30px; overflow: hidden;}
-.daka_lis dd{border-bottom:1px #eee solid; overflow:hidden; padding:10px 0 20px 20px;}
+.daka_lis dd{border-bottom:1px #eee solid; overflow:hidden;  padding: 10px 0 0px 20px; height:60px;}
 .tab_1{width:85%; float:left;}
-.tab_2{width:15%; float:left; text-align:center;font-size:16px;}
-.tab_tag span{margin-right:30px; font-size:16px; display:block; float:left; width:28%;}
+.tab_2{width:15%; float:left; text-align:center;}
+.tab_tag span{margin-right:30px; display:block; float:left; width:28%;}
 .tab_tag span em{font-style:normal; margin:0 5px;}
-.tab_1 .names {font-size: 16px;margin-bottom: 10px;}
-.tab_text{ line-height:40px; margin-bottom:10px;}
-.tab_2 a{padding:10px 27px; background:#00b966; margin:10px auto; color:#fff;}
-.conter-title1{height:48px; border-bottom:1px #00b966 solid; width:100%; color:#2a3141; font-size:18px; line-height:48px; padding-left:20px; background:#FFF;}
+.tab_1 .names {font-size: 14px;}
+.tab_text {margin-bottom: 2px;}
+.tab_2 a {background: #00b966; margin: -7px auto 5px;color: #fff;display: block;width: 60%;line-height: 25px;margin-top: -3px;}
+.conter-title1{height:48px; border-bottom:1px #00b966 solid; width:100%; color:#2a3141; font-size:16px; line-height:48px; padding-left:20px; background:#FFF;}
 .time-xz{margin-top:15px;}
 .time-xz .times{margin-left:0;width:150px;}
 .time-xz .times input{width:147px; border:1px #999 solid; height:40px; padding:0 5px;}
