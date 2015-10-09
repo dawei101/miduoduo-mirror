@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]); 
                 // 城市选项
                 $model  = new District();
-                $city   = $model->find()->where(['level'=>'city'])->asArray()->all();
+                $city   = $model->find()->where(['level'=>'city','is_alive'=>1])->addOrderBy(['id'=> SORT_ASC])->asArray()->all();
                 $cityarr= array(0=>'全部城市');
                 foreach( $city as $k => $v ){
                     $cityarr[$v['id']]    = $v['name'];
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="form-group field-district-level required">
                     <select id="district-level" class="form-control" name="city_id">
                         <?php foreach($cityarr as $k => $v){ ?>
-                            <option value="<?= $k ?>"><?= $v ?></option>
+                            <option value="<?= $k ?>" <?php if( Yii::$app->request->get('city_id') == $k ){echo 'selected';} ?>><?= $v ?></option>
                         <?php } ?>
                     </select>
                     <div class="help-block"></div>
