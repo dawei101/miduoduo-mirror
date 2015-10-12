@@ -50,6 +50,113 @@ Baseurl = //api.miduoduo.cn/time-book/
     }
 ```
 
+### 获得用户日程-新接口
+```
+    GET /time-book/schedule-new?[date=2015-08-09]&access-token=null
+    RETURN :
+    {
+      "success": true,
+      "message": "获取成功！",
+      "result": {
+        "11": {
+          "id": 535,
+          "user_id": "2006",
+          "task_id": "553",
+          "from_datetime": "2015-10-12 06:00:00",
+          "to_datetime": "2015-10-12 10:00:00",
+          "allowable_distance_offset": 500,
+          "date": "2015-10-12",
+          "owner_id": "2006",
+          "on_late": 0,
+          "off_early": 0,
+          "out_work": 0,
+          "note": null,
+          "lng": 116.639083,
+          "lat": 40.321198,
+          "address": "北京 怀柔 京北大世界 ",
+          "task_title": "测试多打卡任务-001",
+          "out_work_on": 0,
+          "out_work_off": 0,
+          "event_type": 1,
+          "time": "2015-10-12 06:00:00",
+          "has_done": 0,
+          "msg": "待打卡"
+        },
+        "12": {
+          "id": 535,
+          "user_id": "2006",
+          "task_id": "553",
+          "from_datetime": "2015-10-12 06:00:00",
+          "to_datetime": "2015-10-12 10:00:00",
+          "allowable_distance_offset": 500,
+          "date": "2015-10-12",
+          "owner_id": "2006",
+          "on_late": 0,
+          "off_early": 0,
+          "out_work": 0,
+          "note": null,
+          "lng": 116.639083,
+          "lat": 40.321198,
+          "address": "北京 怀柔 京北大世界 ",
+          "task_title": "测试多打卡任务-001",
+          "out_work_on": 0,
+          "out_work_off": 0,
+          "event_type": 2,
+          "time": "2015-10-12 10:00:00",
+          "has_done": 0,
+          "msg": "待打卡"
+        },
+        "21": {
+          "id": 595,
+          "user_id": "2006",
+          "task_id": "554",
+          "from_datetime": "2015-10-12 06:00:00",
+          "to_datetime": "2015-10-12 09:00:00",
+          "allowable_distance_offset": 500,
+          "date": "2015-10-12",
+          "owner_id": "2006",
+          "on_late": 0,
+          "off_early": 0,
+          "out_work": 0,
+          "note": null,
+          "lng": 117.117662,
+          "lat": 40.14678,
+          "address": "北京 平谷 国泰百货(平谷店) ",
+          "task_title": "测试多打卡任务-002",
+          "out_work_on": 0,
+          "out_work_off": 0,
+          "event_type": 1,
+          "time": "2015-10-12 06:00:00",
+          "has_done": 0,
+          "msg": "待打卡"
+        },
+        "22": {
+          "id": 595,
+          "user_id": "2006",
+          "task_id": "554",
+          "from_datetime": "2015-10-12 06:00:00",
+          "to_datetime": "2015-10-12 09:00:00",
+          "allowable_distance_offset": 500,
+          "date": "2015-10-12",
+          "owner_id": "2006",
+          "on_late": 0,
+          "off_early": 0,
+          "out_work": 0,
+          "note": null,
+          "lng": 117.117662,
+          "lat": 40.14678,
+          "address": "北京 平谷 国泰百货(平谷店) ",
+          "task_title": "测试多打卡任务-002",
+          "out_work_on": 0,
+          "out_work_off": 0,
+          "event_type": 2,
+          "time": "2015-10-12 09:00:00",
+          "has_done": 1,
+          "msg": "已打卡"
+        }
+      }
+    }
+```
 
 ### 考勤打卡
     POST /time-book/record
