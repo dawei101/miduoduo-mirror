@@ -24,6 +24,16 @@ use common\models\extensions\time_book;
 class Schedule extends \common\BaseActiveRecord
 {
 
+    public $count;
+    public $past_count;
+
+    public $on_late_count;
+    public $off_early_count;
+    public $out_work_count;
+    public $noted_count;
+
+    public $is_today_on;
+
     /**
      * @inheritdoc
      */
@@ -62,6 +72,9 @@ class Schedule extends \common\BaseActiveRecord
             'allowable_distance_offset' => 'Allowable Distance Offset',
             'lat' => 'Lat',
             'lng' => 'Lng',
+            'out_work_on' => '是否打卡',
+            'on_late' => '是否迟到',
+            'off_early' => '是否早退',
         ];
     }
 
