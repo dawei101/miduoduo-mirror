@@ -176,6 +176,55 @@ Baseurl = //api.miduoduo.cn/time-book/
     }
 ```
 
+### 任务打卡明细
+    GET /time-book/schedule?filters=[["=","task_id", "477"]]&access_token=NULL
+    return
+    ```
+    {
+      "items": [
+        {
+          "id": 474,
+          "user_id": "2006",
+          "task_id": "477",
+          "from_datetime": "2015-09-17 17:03:44",
+          "to_datetime": "2015-09-30 17:00:00",
+          "allowable_distance_offset": 500,
+          "date": "2015-09-17",
+          "owner_id": "2006",
+          "on_late": 0,
+          "off_early": 0,
+          "out_work": 0,
+          "note": null,
+          "lng": 116.421508,
+          "lat": 39.997099,
+          "address": "北京 加利大厦 ",
+          "task_title": "2015-08-27-003",
+          "out_work_on": 0,
+          "out_work_off": 0
+        },
+        {
+          "id": 471,
+          "user_id": "2006",
+          "task_id": "477",
+          "from_datetime": "2015-09-17 17:03:43",
+          "to_datetime": "2015-09-29 17:00:00",
+          "allowable_distance_offset": 500,
+          "date": "2015-09-17",
+          "owner_id": "2006",
+          "on_late": 0,
+          "off_early": 0,
+          "out_work": 0,
+          "note": null,
+          "lng": 116.421508,
+          "lat": 39.997099,
+          "address": "北京 加利大厦 ",
+          "task_title": "2015-08-27-003",
+          "out_work_on": 0,
+          "out_work_off": 0
+        },
+    }
+    ```
+
 ### 考勤打卡
     POST /time-book/record
     params: 
