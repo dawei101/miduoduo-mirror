@@ -32,6 +32,7 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
 
     <p>
         <?= Html::a('创建任务订单', ['publish'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('创建在线任务', ['publish-onlinejob'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -72,20 +73,28 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
                 },
                 'filter' => Task::$RECOMMEND,
             ],
+            /*
             [
-		'attribute' => 'clearance_period',
+		        'attribute' => 'clearance_period',
                 'value' => function ($model){
                     return $model->clearance_period_label;
                 },
                 'filter' => Task::$CLEARANCE_PERIODS,
             ],
+            */
             [
                 'attribute' => 'service_type_id',
+                'format' => 'raw',
                 'value' => function ($model){
-                    return $model->service_type->name;
+                    if( $model->service_type->id != 17 ){
+                        return $model->service_type->name;
+                    }else{
+                        return "<a href='/task-applicant-onlinejob?TaskApplicantOnlinejobSearch[task_id]=".$model->id."' target='_blank'>".$model->service_type->name."</a>";
+                    }
                 },
                 'filter' => $service_type_maps,
             ],
+            /*
             [
                 'attribute' => 'salary_unit',
                 'label' => '薪资与单位',
@@ -94,6 +103,7 @@ foreach (District::findAll(['level'=>'city', 'is_alive'=>1]) as $c)
                 },
                 'filter' => Task::$SALARY_UNITS,
             ],
+            */
             [
                 'attribute' => 'city_id',
                 'value' => function ($model){

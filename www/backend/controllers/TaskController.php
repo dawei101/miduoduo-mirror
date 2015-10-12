@@ -16,6 +16,11 @@ use common\models\TaskAddress;
 
 use backend\BBaseController;
 use common\models\TaskSearch;
+use common\models\TaskOnlinejob;
+use common\models\TaskOnlinejobNeedinfo;
+use common\JobUtils;
+use common\Utils;
+
 /**
  * Site controller
  */
@@ -361,5 +366,123 @@ class TaskController extends BBaseController
         return $this->render('public');
     }
 
+    public function actionPublishOnlinejob()
+    {
+        $model = new Task();
 
+        if (Yii::$app->request->isPost) {
+            
+            $data = Yii::$app->request->post();
+            
+            $data['from_time']  = '00:00:01';
+            $data['to_time']    = '23:59:59';
+
+            $model->setAttributes($data, false);
+
+            $city_id = Yii::$app->request->post('city_id');
+            if ($city_id) {
+                $model->city_id = $city_id;
+            }
+            $district_id = Yii::$app->request->post('district_id');
+            if ($district_id) {
+                $model->district_id = $district_id;
+            }
+            $clearance_period = Yii::$app->request->post('clearance_period');
+            if ($clearance_period) {
+                $model->clearance_period = array_search($clearance_period, Task::$CLEARANCE_PERIODS);
+            } 
+            $salary_unit = 6;
+            if ($salary_unit) {
+                $model->salary_unit = $salary_unit;
+            }
+
+            $service_type_id = 17;
+            if($service_type_id){
+                $model->service_type_id = $service_type_id;
+            }
+
+            $model->requirement = Yii::$app->request->post('requirement');
+            $model->need_quantity = 9999;
+
+            $status = Yii::$app->request->post('status');
+            if($status){
+                $model->status = array_search($status, Task::$STATUSES);
+            }
+            $model->recommend = 0;
+            $model->salary = intval($model->salary);
+            $model->contact = Yii::$app->params['supportName'];
+            $model->contact_phonenum = Yii::$app->params['supportTel'];
+            $model->clearance_period = 4; // 按键结算
+            if ($model->validate() && $model->save()) {              
+                $task_id = $model->id;
+                $this->saveOnlinejob($data, $task_id, $_FILES);
+                
+                return $this->redirect('/task/');
+            }
+        }
+
+        $services = ServiceType::find()->all();
+        return $this -> render('publish-onlinejob',
+        [
+            'services'=>$services, 
+            'task'=>$model,  
+            'address'=>[],
+            'evidences' => Yii::$app->params['onlinejob.evidence'],
+        ]);
+    }
+
+    private function saveOnlinejob($data, $task_id = 2002, $files){
+        $online_job = new TaskOnlinejob();
+        $online_job->task_id = $task_id;
+        $online_job->name = $data['app_name'];
+        $online_job->intro = $data['app_intro'];
+        $online_job->download_android = $data['app_download_android'];
+        $online_job->download_ios = $data['app_download_ios'];
+        $online_job->audit_cycle = $data['app_audit_cycle'];
+        $online_job->need_phonenum = isset($data['need_phonenum']) ? $data['need_phonenum'] : 0;
+        $online_job->need_username = isset($data['need_username']) ? $data['need_username'] : 0;
+        $online_job->need_person_idcard = isset($data['need_person_idcard']) ? $data['need_person_idcard'] : 0;
+        if($online_job->save()){
+            $this->saveOnlinejobNeedinfo($data ,$task_id, $files);
+        }
+    }
+
+    private function saveOnlinejobNeedinfo($data, $task_id, $files){
+        $group = [];
+        $group2 = [];
+        foreach( $files as $file_k => $file_v ){
+            $needinfo_model = new TaskOnlinejobNeedinfo();
+            $group_name = str_ireplace('_intro_pic','',$file_k);
+            $group[] = $group_name;
+            if( !$file_v['name'] ){
+                $group2[] = $group_name;
+            }
+            $needinfo_model->task_id = $task_id;
+            $needinfo_model->type    = TaskOnlinejobNeedinfo::TYPES_PIC;
+            $needinfo_model->intro_pic  = Utils::saveUploadFile($file_v);
+            foreach( $data as $data_k => $data_v ){
+                if( stripos($data_k, $group_name) !== false ){
+                    $data_k = preg_replace('/needinfo\_\d*?\_/is','',$data_k);
+                    $needinfo_model->$data_k = $data_v;
+                }
+            }
+            $needinfo_model->display_order  = str_ireplace('needinfo_','',str_ireplace('_intro_pic','',$file_k));
+            $needinfo_model->save();
+            JobUtils::addSyncFileJob($needinfo_model, 'intro_pic');
+        }
+
+        foreach( $group2 as $k2 => $v2 ){
+            $needinfo_model = new TaskOnlinejobNeedinfo();
+            foreach( $data as $data_k => $data_v ){
+                if( stripos($data_k, $v2) !== false ){
+                    $data_k = preg_replace('/needinfo\_\d*?\_/is','',$data_k);
+                    $needinfo_model->$data_k = $data_v;
+                }
+            }
+            $needinfo_model->task_id = $task_id;
+            $needinfo_model->type    = TaskOnlinejobNeedinfo::TYPES_TEXT;
+            $needinfo_model->display_order  = str_ireplace('needinfo_','',str_ireplace('_intro_pic','',$v2));
+            $needinfo_model->save();
+        }
+    }
 }
