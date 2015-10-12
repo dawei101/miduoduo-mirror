@@ -40,19 +40,19 @@ $this->page_description = $seo_code['description'];
 ?>
 <div class="nav_title">
     <a href="<?=Yii::$app->params['baseurl.frontend']?>">米多多</a> &gt; 
-    <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/p1/"><?=$city->short_name?>兼职</a>
+    <a href="http://<?=$_SERVER['HTTP_HOST']?>"><?=$city->short_name?>兼职</a>
     <?php if( isset($current_district->seo_pinyin) && ($current_district->id != $city->id ) ){ ?>
-         &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/<?=$current_district->seo_pinyin?>/"><?=$current_district->short_name?>兼职</a>
+         &gt; <a href="http://<?=$_SERVER['HTTP_HOST']?>/<?=$current_district->seo_pinyin?>/"><?=$current_district->short_name?>兼职</a>
     <?php } ?>
     <?php if(isset($current_service_type->pinyin)){ ?>
-        &gt; <a href="<?=Yii::$app->params['baseurl.frontend']?>/<?=$seo_params['city_pinyin']?>/<?=$current_service_type->pinyin?>/"><?=$current_service_type->name?></a>
+        &gt; <a href="http://<?=$_SERVER['HTTP_HOST']?>/<?=$current_service_type->pinyin?>/"><?=$current_service_type->name?></a>
     <?php } ?>
 </div>
 <ul class="nav_sx">
    <li>
    		<div class="nav_sx_left">区域：</div>
         <div class="nav_sx_right">
-            <a href="<?=Url::current(['district_pinyin'=>''])?>" 
+            <a href="<?=Seo::formatFrontendUrl(Url::current(['district_pinyin'=>'']))?>" 
                 <?php if($current_district->id == $city->id){ ?>
                     class="current"
                 <?php } ?>
@@ -60,7 +60,7 @@ $this->page_description = $seo_code['description'];
                 全城
             </a>
             <?php foreach($districts as $district) { ?>
-                <a href="<?=str_ireplace('p1/','',Url::current(['district_pinyin'=>$district->seo_pinyin]))?>"
+                <a href="<?=Seo::formatFrontendUrl(Url::current(['district_pinyin'=>$district->seo_pinyin]))?>"
                     <?php if($district->seo_pinyin == $current_district->seo_pinyin){ ?>
                         class="current"
                     <?php } ?>
@@ -73,7 +73,7 @@ $this->page_description = $seo_code['description'];
    <li>
    		<div class="nav_sx_left">分类：</div>
         <div class="nav_sx_right">
-            <a href="<?=Url::current(['type_pinyin'=>''])?>" 
+            <a href="<?=Seo::formatFrontendUrl(Url::current(['type_pinyin'=>'']))?>" 
                 <?php if(!isset($current_service_type->pinyin)){ ?>
                     class="current"
                 <?php } ?>
@@ -81,7 +81,7 @@ $this->page_description = $seo_code['description'];
                 全部
             </a>
             <?php foreach($service_types as $st) { ?>
-                <a href="<?=str_ireplace('p1/','',Url::current(['type_pinyin'=>$st['pinyin']]))?>"
+                <a href="<?=Seo::formatFrontendUrl(Url::current(['type_pinyin'=>$st['pinyin']]))?>"
                     <?php if(isset($current_service_type->pinyin) && $st->pinyin == $current_service_type->pinyin){ ?>
                         class="current"
                     <?php } ?>
@@ -97,7 +97,7 @@ $this->page_description = $seo_code['description'];
     <ul class="lis">
         <?php foreach ($tasks as $task){ if(isset($task->id)){ ?>
             <li>
-            <a href="/<?=$seo_params['city_pinyin']?>/<?=$task->service_type->pinyin?>/<?=$task->gid?>" target="_blank">
+            <a href="/<?=$task->service_type->pinyin?>/<?=$task->gid?>" target="_blank">
                <div class="lis_left_1">
                   <h2><?=$task->title ?></h2>
                   <span><?=$task->service_type->name?></span>
@@ -118,12 +118,15 @@ $this->page_description = $seo_code['description'];
             </li>
         <?php }} ?>
         <div class="page">
-            <?=LinkPager::widget([
+        <?php
+            //var_dump($pages);exit;
+        ?>
+            <?=Seo::formatFrontendUrl(LinkPager::widget([
                 'pagination' => $pages,
-                'maxButtonCount'=>4,
+                'maxButtonCount'=>8,
                 'lastPageLabel'=>'末页', 'nextPageLabel'=>'下一页',
-                'prevPageLabel'=>'上一页', 'firstPageLabel'=>'首页'])
-                ?>
+                'prevPageLabel'=>'上一页', 'firstPageLabel'=>'首页'
+            ]), 'pager')?>
         </div>
     </ul>
 </div>
@@ -132,7 +135,7 @@ $this->page_description = $seo_code['description'];
         <div class="right_title">推荐岗位</div>
         <ul class="jipin_list">
             <?php foreach($recommend_task_list as $task){ ?>
-                <li><a href="/<?=$seo_params['city_pinyin']?>/<?=$task->service_type->pinyin?>/<?=$task->gid?>" target="_blank"><span><?=str_ireplace('.00','',$task->salary)?>元/<?=$task::$SALARY_UNITS[$task->salary_unit]?></span><?=$task->title?></a></li>
+                <li><a href="/<?=$task->service_type->pinyin?>/<?=$task->gid?>" target="_blank"><span><?=str_ireplace('.00','',$task->salary)?>元/<?=$task::$SALARY_UNITS[$task->salary_unit]?></span><?=$task->title?></a></li>
             <?php } ?>
         </ul>
     <?php } ?>

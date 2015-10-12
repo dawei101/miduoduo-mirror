@@ -61,9 +61,7 @@ class BDataBaseController extends BBaseController
         
         // 城市筛选
         $city_id   = is_numeric($city_id) ? $city_id : 0;
-        if( $city_id ){
-            $where  .= " AND `city_id`=".$city_id." ";
-        }
+        $where  .= " AND `city_id`=".$city_id." ";
 
         // 起止时间不能大于今天
         $currentTime    = time();
@@ -127,7 +125,7 @@ class BDataBaseController extends BBaseController
 
     /**
      *
-     * checkDataNew 检查日期范围内，数据统计是存在，如果不是则查询保存
+     * checkDataNew 检查日期范围内，数据统计是否存在，如果不是则查询保存
      *
      * @author suixb
      * @param array $dataArr 时间范围数组
@@ -176,7 +174,6 @@ class BDataBaseController extends BBaseController
 
         // 开始处理没有记录的
         // 1 用户端 数据
-        // 城市的问题暂时不考虑
         if( $type == 1 ){
             foreach( $notExistArr as $k3 => $v3 ){
                 $model  = new DataDaily();
@@ -184,71 +181,129 @@ class BDataBaseController extends BBaseController
                 $model->type    = $type;
 
                 // 注册总量
-                $zczl   = User::findBySql("SELECT count(2) 'zczl' FROM ".$tablePrefix."user WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                if( $city_id ){
+                    $where = " AND `red_packet_city`={$city_id} ";
+                }else{
+                    $where = '';
+                }
+                $zczl   = User::findBySql("SELECT count(2) 'zczl' FROM ".$tablePrefix."user WHERE LEFT(`created_time`,10)<='".$v3."'  $where")->asArray()->one(); 
                 $zczl   = $zczl['zczl'];
                 $model_zczl  = clone $model;
                 $model_zczl->key    = 'zczl';
                 $model_zczl->value  = $zczl;
+                $model_zczl->city_id = $city_id;
                 $model_zczl->save();
 
                 // 今日注册总量
-                $jrzczl   = User::findBySql("SELECT count(2) 'jrzczl' FROM ".$tablePrefix."user WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                if( $city_id ){
+                    $where = " AND `red_packet_city`={$city_id} ";
+                }else{
+                    $where = '';
+                }
+                $jrzczl   = User::findBySql("SELECT count(2) 'jrzczl' FROM ".$tablePrefix."user WHERE LEFT(`created_time`,10)='".$v3."' $where")->asArray()->one(); 
                 $jrzczl   = $jrzczl['jrzczl'];
                 $model_jrzczl  = clone $model;
                 $model_jrzczl->key    = 'jrzczl';
                 $model_jrzczl->value  = $jrzczl;
+                $model_jrzczl->city_id = $city_id;
                 $model_jrzczl->save();
 
                 // 简历总量
-                $jlzl   = Resume::findBySql("SELECT count(2) 'jlzl' FROM ".$tablePrefix."resume WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                if( $city_id ){
+                    $where = " AND u.red_packet_city={$city_id} ";
+                }else{
+                    $where = '';
+                }
+                $jlzl   = Resume::findBySql("SELECT count(r.id) 'jlzl' FROM ".$tablePrefix."resume r LEFT JOIN jz_user u ON r.user_id=u.id WHERE LEFT(u.`created_time`,10)<='".$v3."' $where")->asArray()->one(); 
                 $jlzl   = $jlzl['jlzl'];
                 $model_jlzl  = clone $model;
                 $model_jlzl->key    = 'jlzl';
                 $model_jlzl->value  = $jlzl;
+                $model_jlzl->city_id = $city_id;
                 $model_jlzl->save();
 
                 // 今日简历总量
-                $jrjlzl   = User::findBySql("SELECT count(2) 'jrjlzl' FROM ".$tablePrefix."resume WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                if( $city_id ){
+                    $where = " AND u.red_packet_city={$city_id} ";
+                }else{
+                    $where = '';
+                }
+                $jrjlzl   = User::findBySql("SELECT count(r.id) 'jrjlzl' FROM ".$tablePrefix."resume r LEFT JOIN jz_user u ON r.user_id=u.id WHERE LEFT(r.`created_time`,10)='".$v3."' $where")->asArray()->one(); 
                 $jrjlzl   = $jrjlzl['jrjlzl'];
                 $model_jrjlzl  = clone $model;
                 $model_jrjlzl->key    = 'jrjlzl';
                 $model_jrjlzl->value  = $jrjlzl;
+                $model_jrjlzl->city_id = $city_id;
                 $model_jrjlzl->save();
 
                 // 投递总量
-                $tdzl   = User::findBySql("SELECT count(2) 'tdzl' FROM ".$tablePrefix."task_applicant WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                if( $city_id ){
+                    $where = " AND u.red_packet_city={$city_id} ";
+                }else{
+                    $where = '';
+                }
+                $tdzl   = User::findBySql("SELECT count(2) 'tdzl' FROM ".$tablePrefix."task_applicant a LEFT JOIN jz_user u ON a.user_id=u.id WHERE LEFT(a.`created_time`,10)<='".$v3."' $where")->asArray()->one(); 
                 $tdzl   = $tdzl['tdzl'];
                 $model_tdzl  = clone $model;
                 $model_tdzl->key    = 'tdzl';
                 $model_tdzl->value  = $tdzl;
+                $model_tdzl->city_id = $city_id;
                 $model_tdzl->save();
 
                 // 今日投递总量
-                $jrtdzl   = User::findBySql("SELECT count(2) 'jrtdzl' FROM ".$tablePrefix."task_applicant WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                if( $city_id ){
+                    $where = " AND u.red_packet_city={$city_id} ";
+                }else{
+                    $where = '';
+                }
+                $jrtdzl   = User::findBySql("SELECT count(2) 'jrtdzl' FROM ".$tablePrefix."task_applicant a LEFT JOIN jz_user u ON a.user_id=u.id WHERE LEFT(a.`created_time`,10)='".$v3."' $where")->asArray()->one(); 
                 $jrtdzl   = $jrtdzl['jrtdzl'];
                 $model_jrtdzl  = clone $model;
                 $model_jrtdzl->key    = 'jrtdzl';
                 $model_jrtdzl->value  = $jrtdzl;
+                $model_jrtdzl->city_id = $city_id;
                 $model_jrtdzl->save();
 
                 // 投递人数
-                $tdrs   = User::findBySql("SELECT count(DISTINCT(user_id)) 'tdrs' FROM ".$tablePrefix."task_applicant WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                if( $city_id ){
+                    $where = " AND u.red_packet_city={$city_id} ";
+                }else{
+                    $where = '';
+                }
+                $tdrs   = User::findBySql("SELECT count(DISTINCT(a.user_id)) 'tdrs' FROM ".$tablePrefix."task_applicant a LEFT JOIN jz_user u ON a.user_id=u.id WHERE LEFT(a.`created_time`,10)<='".$v3."' $where")->asArray()->one(); 
                 $tdrs   = $tdrs['tdrs'];
                 $model_tdrs  = clone $model;
                 $model_tdrs->key    = 'tdrs';
                 $model_tdrs->value  = $tdrs;
+                $model_tdrs->city_id = $city_id;
                 $model_tdrs->save();
 
                 // 今日投递人数
-                $jrtdrs   = User::findBySql("SELECT count(DISTINCT(user_id)) 'jrtdrs' FROM ".$tablePrefix."task_applicant WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                if( $city_id ){
+                    $where = " AND u.red_packet_city={$city_id} ";
+                }else{
+                    $where = '';
+                }
+                $jrtdrs   = User::findBySql("SELECT count(DISTINCT(a.user_id)) 'jrtdrs' FROM ".$tablePrefix."task_applicant a LEFT JOIN jz_user u ON a.user_id=u.id WHERE LEFT(a.`created_time`,10)='".$v3."' $where")->asArray()->one(); 
                 $jrtdrs   = $jrtdrs['jrtdrs'];
                 $model_jrtdrs  = clone $model;
                 $model_jrtdrs->key    = 'jrtdrs';
                 $model_jrtdrs->value  = $jrtdrs;
+                $model_jrtdrs->city_id = $city_id;
                 $model_jrtdrs->save();
 
                 // 今日新投递人数（第一次投递的人数）
-                $jrxyhtd   = User::findBySql("SELECT count(DISTINCT(user_id)) 'jrxyhtd' FROM jz_task_applicant WHERE LEFT(`created_time`,10)='".$v3."'
+                if( $city_id ){
+                    $where = " AND u.red_packet_city={$city_id} ";
+                }else{
+                    $where = '';
+                }
+                $jrxyhtd   = User::findBySql("SELECT count(DISTINCT(user_id)) 'jrxyhtd' FROM ".$tablePrefix."task_applicant a 
+                LEFT JOIN 
+                ".$tablePrefix."user u 
+                ON a.user_id=u.id
+                WHERE LEFT(a.`created_time`,10)='".$v3."'
+                $where 
                 AND user_id NOT IN(
                     SELECT ao.user_id from jz_task_applicant ao WHERE LEFT(ao.`created_time`,10)<'".$v3."'
                 )")->asArray()->one(); 
@@ -256,41 +311,50 @@ class BDataBaseController extends BBaseController
                 $model_jrxyhtd  = clone $model;
                 $model_jrxyhtd->key    = 'jrxyhtd';
                 $model_jrxyhtd->value  = $jrxyhtd;
+                $model_jrxyhtd->city_id = $city_id;
                 $model_jrxyhtd->save();
             }
         }
 
         // 2 职位 数据
-        // 城市的问题暂时不考虑
         if( $type == 2 ){
             foreach( $notExistArr as $k3 => $v3 ){
                 $model  = new DataDaily();
                 $model->date    = $v3;
                 $model->type    = $type;
 
+                if( $city_id ){
+                    $where = " AND `city_id`={$city_id} ";
+                }else{
+                    $where = '';
+                }
+
                 // 总贴量
-                $ztl    = User::findBySql("SELECT count(2) 'ztl' FROM ".$tablePrefix."task WHERE LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $ztl    = User::findBySql("SELECT count(2) 'ztl' FROM ".$tablePrefix."task WHERE LEFT(`created_time`,10)<='".$v3."' $where")->asArray()->one(); 
                 $ztl    = $ztl['ztl'];
                 $model_ztl  = clone $model;
                 $model_ztl->key    = 'ztl';
                 $model_ztl->value  = $ztl;
+                $model_ztl->city_id = $city_id;
                 $model_ztl->save();
 
                 // 总在线贴量
-                $zzxtl   = User::findBySql("SELECT count(2) 'zzxtl' FROM ".$tablePrefix."task WHERE status=0 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $zzxtl   = User::findBySql("SELECT count(2) 'zzxtl' FROM ".$tablePrefix."task WHERE status=0 AND LEFT(`created_time`,10)<='".$v3."' $where")->asArray()->one(); 
                 $zzxtl   = $zzxtl['zzxtl'];
                 $model_zzxtl  = clone $model;
                 $model_zzxtl->key    = 'zzxtl';
                 $model_zzxtl->value  = $zzxtl;
+                $model_zzxtl->city_id = $city_id;
                 $model_zzxtl->save();
                 
 
                 // 后台新增
-                $htxz   = Resume::findBySql("SELECT count(2) 'htxz' FROM ".$tablePrefix."task WHERE LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $htxz   = Resume::findBySql("SELECT count(2) 'htxz' FROM ".$tablePrefix."task WHERE LEFT(`created_time`,10)='".$v3."' $where")->asArray()->one(); 
                 $htxz   = $htxz['htxz'];
                 $model_htxz  = clone $model;
                 $model_htxz->key    = 'htxz';
                 $model_htxz->value  = $htxz;
+                $model_htxz->city_id = $city_id;
                 $model_htxz->save();
                 
 
@@ -300,6 +364,7 @@ class BDataBaseController extends BBaseController
                 $model_zqxz  = clone $model;
                 $model_zqxz->key    = 'zqxz';
                 $model_zqxz->value  = $zqxz;
+                $model_zqxz->city_id = $city_id;
                 $model_zqxz->save();
                 
 
@@ -309,6 +374,7 @@ class BDataBaseController extends BBaseController
                 $model_yhxz  = clone $model;
                 $model_yhxz->key    = 'yhxz';
                 $model_yhxz->value  = $yhxz;
+                $model_yhxz->city_id = $city_id;
                 $model_yhxz->save();
                 
 
@@ -318,112 +384,130 @@ class BDataBaseController extends BBaseController
                 $model_zdsh  = clone $model;
                 $model_zdsh->key    = 'zdsh';
                 $model_zdsh->value  = $zdsh;
+                $model_zdsh->city_id = $city_id;
                 $model_zdsh->save();
                 
 
                 // 总过期
-                $zgq   = Resume::findBySql("SELECT count(2) 'zgq' FROM ".$tablePrefix."task WHERE `to_date`<'".$v3."'")->asArray()->one(); 
+                $zgq   = Resume::findBySql("SELECT count(2) 'zgq' FROM ".$tablePrefix."task WHERE `to_date`<'".$v3."' $where")->asArray()->one(); 
                 $zgq   = $zgq['zgq'];
                 $model_zgq  = clone $model;
                 $model_zgq->key    = 'zgq';
                 $model_zgq->value  = $zgq;
+                $model_zgq->city_id = $city_id;
                 $model_zgq->save();
                 
 
                 // 今日过期
-                $jrgq   = Resume::findBySql("SELECT count(2) 'jrgq' FROM ".$tablePrefix."task WHERE `to_date`='".$v3."'")->asArray()->one(); 
+                $jrgq   = Resume::findBySql("SELECT count(2) 'jrgq' FROM ".$tablePrefix."task WHERE `to_date`='".$v3."' $where")->asArray()->one(); 
                 $jrgq   = $jrgq['jrgq'];
                 $model_jrgq  = clone $model;
                 $model_jrgq->key    = 'jrgq';
                 $model_jrgq->value  = $jrgq;
+                $model_jrgq->city_id = $city_id;
                 $model_jrgq->save();
             }
         }
 
         // 3 微信 数据
-        // 城市的问题暂时不考虑
         if( $type == 3 ){
             foreach( $notExistArr as $k3 => $v3 ){
                 $model  = new DataDaily();
                 $model->date    = $v3;
                 $model->type    = $type;
 
+                if( $city_id ){
+                    $where = " AND u.red_packet_city={$city_id} ";
+                    $where2 = " AND red_packet_city={$city_id} ";
+                }else{
+                    $where = '';
+                    $where2 = '';
+                }
+
                 // 总关注
-                $zgz    = User::findBySql("SELECT count(2) 'zgz' FROM ".$tablePrefix."weichat_user_log WHERE event_type=1 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
-                $zqx    = User::findBySql("SELECT count(2) 'zqx' FROM ".$tablePrefix."weichat_user_log WHERE event_type=2 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
-                $zgz    = $zgz['zgz'] - $zqx['zqx'] + 846;    // 846 为之前的关注数据
+                $zgz    = User::findBySql("SELECT count(2) 'zgz' from ".$tablePrefix."weichat_user_info w LEFT JOIN ".$tablePrefix."user u ON w.userid=u.id WHERE LEFT(w.`created_time`,10)<='".$v3."' and w.status=0 $where")->asArray()->one(); 
+                $zgz    = $zgz['zgz'];
                 $model_zgz  = clone $model;
                 $model_zgz->key    = 'zgz';
                 $model_zgz->value  = $zgz;
+                $model_zgz->city_id = $city_id;
                 $model_zgz->save();
                 
 
                 // 今日关注
-                $jrgz   = User::findBySql("SELECT count(2) 'jrgz' FROM ".$tablePrefix."weichat_user_log WHERE event_type=1 AND LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrgz   = User::findBySql("SELECT count(2) 'jrgz' from ".$tablePrefix."weichat_user_info w LEFT JOIN ".$tablePrefix."user u ON w.userid=u.id WHERE LEFT(w.`created_time`,10)='".$v3."' and w.status=0 $where")->asArray()->one(); 
                 $jrgz   = $jrgz['jrgz'];
                 $model_jrgz  = clone $model;
                 $model_jrgz->key    = 'jrgz';
                 $model_jrgz->value  = $jrgz;
+                $model_jrgz->city_id = $city_id;
                 $model_jrgz->save();
 
                 // 总退订
-                $ztd    = User::findBySql("SELECT count(2) 'ztd' FROM ".$tablePrefix."weichat_user_log WHERE event_type=2 AND LEFT(`created_time`,10)<='".$v3."'")->asArray()->one(); 
+                $ztd    = User::findBySql("SELECT count(2) 'ztd' from ".$tablePrefix."weichat_user_info w LEFT JOIN ".$tablePrefix."user u ON w.userid=u.id WHERE LEFT(w.`created_time`,10)<='".$v3."' and w.status!=0 $where")->asArray()->one(); 
                 $ztd    = $ztd['ztd'];
                 $model_ztd  = clone $model;
                 $model_ztd->key    = 'ztd';
                 $model_ztd->value  = $ztd;
+                $model_ztd->city_id = $city_id;
                 $model_ztd->save();
                 
 
                 // 今日退订
-                $jrtd   = User::findBySql("SELECT count(2) 'jrtd' FROM ".$tablePrefix."weichat_user_log WHERE event_type=2 AND LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrtd   = User::findBySql("SELECT count(2) 'jrtd' from ".$tablePrefix."weichat_user_info w LEFT JOIN ".$tablePrefix."user u ON w.userid=u.id WHERE LEFT(w.`created_time`,10)='".$v3."' and w.status!=0 $where")->asArray()->one(); 
                 $jrtd   = $jrtd['jrtd'];
                 $model_jrtd  = clone $model;
                 $model_jrtd->key    = 'jrtd';
                 $model_jrtd->value  = $jrtd;
+                $model_jrtd->city_id = $city_id;
                 $model_jrtd->save();
                 
 
                 // 今日推送人数
                 $jrtsrs   = Resume::findBySql("SELECT count(DISTINCT(openid)) 'jrtsrs' FROM ".$tablePrefix."weichat_push_log WHERE LEFT(`create_time`,10)='".$v3."'")->asArray()->one(); 
-                $jrtsrs   = $jrtsrs['jrtsrs'];
+                $jrtsrs   = 0;
                 $model_jrtsrs  = clone $model;
                 $model_jrtsrs->key    = 'jrtsrs';
                 $model_jrtsrs->value  = $jrtsrs;
+                $model_jrtsrs->city_id = $city_id;
                 $model_jrtsrs->save();
 
                 // 今日推送总量
                 $jrtszl   = Resume::findBySql("SELECT count(2) 'jrtszl' FROM ".$tablePrefix."weichat_push_log WHERE LEFT(`create_time`,10)='".$v3."'")->asArray()->one(); 
-                $jrtszl   = $jrtszl['jrtszl'];
+                $jrtszl   = 0;
                 $model_jrtszl  = clone $model;
                 $model_jrtszl->key    = 'jrtszl';
                 $model_jrtszl->value  = $jrtszl;
+                $model_jrtszl->city_id = $city_id;
                 $model_jrtszl->save();
 
                 // 今日微信注册
-                $jrwxzc   = User::findBySql("SELECT count(2) 'jrwxzc' FROM ".$tablePrefix."user WHERE `origin`='weichat' AND LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrwxzc   = User::findBySql("SELECT count(2) 'jrwxzc' FROM ".$tablePrefix."user WHERE `origin`='weichat' AND LEFT(`created_time`,10)='".$v3."' $where2")->asArray()->one(); 
                 $jrwxzc   = $jrwxzc['jrwxzc'];
                 $model_jrwxzc  = clone $model;
                 $model_jrwxzc->key    = 'jrwxzc';
                 $model_jrwxzc->value  = $jrwxzc;
+                $model_jrwxzc->city_id = $city_id;
                 $model_jrwxzc->save();
 
 
                 // 今日微信投递人数
-                $jrwxtdrs   = User::findBySql("SELECT count(distinct(`user_id`)) 'jrwxtdrs' FROM ".$tablePrefix."task_applicant WHERE `origin`='weichat' AND LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrwxtdrs   = User::findBySql("SELECT count(distinct(`user_id`)) 'jrwxtdrs' FROM ".$tablePrefix."task_applicant a left join ".$tablePrefix."user u on u.id=a.user_id WHERE a.`origin`='weichat' AND LEFT(a.`created_time`,10)='".$v3."' $where")->asArray()->one(); 
                 $jrwxtdrs   = $jrwxtdrs['jrwxtdrs'];
                 $model_jrwxtdrs  = clone $model;
                 $model_jrwxtdrs->key    = 'jrwxtdrs';
                 $model_jrwxtdrs->value  = $jrwxtdrs;
+                $model_jrwxtdrs->city_id = $city_id;
                 $model_jrwxtdrs->save();
                 
 
                 // 今日微信投递总量
-                $jrwxtdzl   = User::findBySql("SELECT count(2) 'jrwxtdzl' FROM ".$tablePrefix."task_applicant WHERE `origin`='weichat' AND LEFT(`created_time`,10)='".$v3."'")->asArray()->one(); 
+                $jrwxtdzl   = User::findBySql("SELECT count(`user_id`) 'jrwxtdzl' FROM ".$tablePrefix."task_applicant a left join ".$tablePrefix."user u on u.id=a.user_id WHERE a.`origin`='weichat' AND LEFT(a.`created_time`,10)='".$v3."' $where")->asArray()->one(); 
                 $jrwxtdzl   = $jrwxtdzl['jrwxtdzl'];
                 $model_jrwxtdzl  = clone $model;
                 $model_jrwxtdzl->key    = 'jrwxtdzl';
                 $model_jrwxtdzl->value  = $jrwxtdzl;
+                $model_jrwxtdzl->city_id = $city_id;
                 $model_jrwxtdzl->save();
                 
             }

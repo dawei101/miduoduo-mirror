@@ -11,6 +11,7 @@ return [
 
     'user.passwordResetTokenExpire' => 3600,
 
+    'baseurl' => 'miduoduo.cn',
     'baseurl.api' => 'http://api.miduoduo.cn',
     'baseurl.m' => 'http://m.miduoduo.cn',
     'baseurl.backend' => 'http://dashboard.miduoduo.cn',

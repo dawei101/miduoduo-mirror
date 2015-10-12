@@ -41,7 +41,7 @@ $this->page_description = $seo_code['description'];
      <div class="rm_box">
         <?php foreach($citys as $city){ ?>
            <?php if($city->is_hot==1){ ?>
-               <a href="/<?=$city->seo_pinyin?>/p1/"><?=$city->short_name?></a>
+               <a href="http://<?=$city->seo_pinyin?>.<?=Yii::$app->params['baseurl']?>"><?=$city->short_name?></a>
            <?php } ?>
        <?php } ?>
      </div>
@@ -61,7 +61,7 @@ $this->page_description = $seo_code['description'];
             <dd class="tag_list">
                 <?php foreach($citys as $city){ ?>
                     <?php if( substr($city->seo_pinyin,0,1)==strtolower($pinyin) ){ ?>
-                        <a href="/<?=$city->seo_pinyin?>/p1/"><?=$city->short_name?></a>
+                        <a href="http://<?=$city->seo_pinyin?>.<?=Yii::$app->params['baseurl']?>"><?=$city->short_name?></a>
                     <?php } ?>
                 <?php } ?>
             </dd>
@@ -80,7 +80,7 @@ $this->page_description = $seo_code['description'];
                 var p_num   = 0;
                 $.each(citys_json, function(i, v) {
                     if (v.name.search(keyword) > -1) {
-                        search_city += '<a href="/'+v.seo_pinyin+'/p1/">'+v.name+'</a>';
+                        search_city += '<a href="http://'+v.seo_pinyin+'.<?=Yii::$app->params['baseurl']?>">'+v.name+'</a>';
                         p_num ++;
                     }
                     if(p_num > p_limit){
