@@ -3,6 +3,7 @@
 namespace common\models\extensions\time_book;
 
 use Yii;
+use common\models\extensions\time_book\Record;
 
 /**
  * This is the model class for table "ext_time_book_schedule".
@@ -22,6 +23,8 @@ use Yii;
  */
 class Schedule extends \common\BaseActiveRecord
 {
+
+    public $event_type;
 
     /**
      * @inheritdoc

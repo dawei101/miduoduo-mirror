@@ -162,6 +162,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => [
                         'time-book/schedule',
+                        'time-book/schedule-new',
                         'time-book/record',
                         'time-book/record-new',
                     ],
