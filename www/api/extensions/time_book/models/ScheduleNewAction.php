@@ -5,6 +5,7 @@ use Yii;
 use common\Utils;
 use yii\web\BadRequestHttpException;
 use common\models\extensions\time_book\Schedule;
+use common\models\extensions\time_book\Record;
 
 class ScheduleNewAction extends \yii\rest\IndexAction
 {
@@ -27,13 +28,13 @@ class ScheduleNewAction extends \yii\rest\IndexAction
         foreach( $schedules as $key => $schedule ){
             $key1 = ($key+1)*10+1;
             $return_schedules[$key1] = $schedule->toArray();
-            $return_schedules[$key1]['event_type'] = 1;
+            $return_schedules[$key1]['event_type'] = Record::EVENT_ON;
             $return_schedules[$key1]['time'] = $return_schedules[$key1]['from_datetime'];
             $return_schedules[$key1]['has_done'] = 0;
             $return_schedules[$key1]['msg'] = '待打卡';
             $key2 = ($key+1)*10+2;
             $return_schedules[$key2] = $schedule->toArray();
-            $return_schedules[$key2]['event_type'] = 2;
+            $return_schedules[$key2]['event_type'] = Record::EVENT_OFF;
             $return_schedules[$key2]['time'] = $return_schedules[$key2]['to_datetime'];
             $return_schedules[$key2]['has_done'] = 0;
             $return_schedules[$key2]['msg'] = '待打卡';
