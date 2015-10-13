@@ -100,4 +100,31 @@ class Schedule extends \common\BaseActiveRecord
     {
         return $this->date <= date('Y-m-d');
     }
+
+    public function getOn_daka(){
+        $time = Record::findOne(['schedule_id' => $this->id, 'event_type' => Record::EVENT_ON]);
+        if($time){
+            return $time->created_time;
+        }else{
+            return NULL;
+        }
+    }
+
+    public function getOff_daka(){
+        $time = Record::findOne(['schedule_id' => $this->id, 'event_type' => Record::EVENT_OFF]);
+        if($time){
+            return $time->created_time;
+        }else{
+            return NULL;
+        }
+    }
+
+    public function fields()
+    {
+        $fs = parent::fields();
+        return array_merge($fs, [
+            'on_daka',
+            'off_daka',
+        ]);
+    }
 }
