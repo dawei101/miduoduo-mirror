@@ -30,11 +30,13 @@ class AccountEvent extends BaseActiveRecord
         0 => '导入',
         10 => '微信推广红包',
         20 => '提现',
+        30 => '在线任务',
     ];
 
     const TYPES_UPLOAD      = 0;
     const TYPES_WEICHAT_RECOMMEND  = 10;
     const TYPES_WITHDRAW    = 20;
+    const TYPES_ONLINEJOB   = 30;
 
     public static $LOCKEDS = [
         0 => '否',

@@ -13,6 +13,8 @@ use common\models\ServiceType;
 use common\models\ConfigRecommend;
 use common\models\WeichatPushSetTemplatePushItem;
 use common\models\TaskNotice;
+use common\models\TaskOnlinejobNeedinfo;
+use common\models\TaskOnlinejob;
 
 /**
  * This is the model class for table "{{%task}}".
@@ -58,7 +60,7 @@ class Task extends \common\BaseActiveRecord
         1=>'周结',
         2=>'日结',
         3=>'完工结',
-        4=>'完工结',
+        4=>'按单结算',
     ];
 
     public static $SALARY_UNITS = [
@@ -68,7 +70,7 @@ class Task extends \common\BaseActiveRecord
         3=>'月',
         4=>'次',
         5=>'单',
-        6=>'完工结',
+        6=>'个',
     ];
 
     public static $GENDER_REQUIREMENT = [
@@ -462,6 +464,15 @@ class Task extends \common\BaseActiveRecord
             ->via('applicants');
     }
 
+    public function getOnlinejob(){
+        return $this->hasOne(TaskOnlinejob::className(),['task_id'=>'id']);
+    }
+
+    public function getOnlinejob_needinfo(){
+        return $this->hasMany(TaskOnlinejobNeedinfo::className(),['task_id'=>'id'])
+            ->addOrderBy(['display_order' => SORT_ASC]);
+    }
+
     public function fields()
     {
         $fs = parent::fields();
@@ -471,6 +482,9 @@ class Task extends \common\BaseActiveRecord
             'requirements',
             'is_overflow',
             'xcompany_name',
+            'onlinejob',
+            'onlinejob_needinfo',
+            'service_type',
         ]);
         unset($fields['contact_phonenum']);
         return $fields;

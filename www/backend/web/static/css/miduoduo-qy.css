@@ -131,7 +131,7 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .default-lis a{ color:#606c77;}
 .right-center{background:#fff; overflow:hidden; height:100% !important; min-height:940px;font-weight:bold;}
 .conter-title{height:48px; border-bottom:1px #00b966 solid; width:100%; color:#2a3141; font-size:18px; line-height:48px; padding-left:40px; background:#FFF;}
-.tianxie-box{height:100%;position:relative; background:#fff; border-bottom:1px #eee dashed; padding:0px 30px 30px; overflow:hidden;color:#999;   border:1px solid #fed732;}
+.tianxie-box{height:100%;position:relative; background:#fff; padding:0px 30px 30px; overflow:hidden;color:#999;   border:1px #eee dashed;}
 .tishi-cs{color:#999; text-align:center; border:#f00 solid 1px; width:90%;  margin:30px auto 20px; padding:10px 0; font-size:18px;}
 .tishi-cs a{text-decoration:underline; font-weight:bold;width:810px;}
 .tianxie-box li{width:916px; margin:20px 0; clear:both; min-height: 40px;}
@@ -445,4 +445,40 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
     background-color: #00b966 !important;
     border-color: #00b966 !important;
     color: #fff !important;
+}
+
+/* 在线任务 */
+.needinfo-item, .needinfo-add{
+    float: right;
+    line-height: 36px;
+    margin: 5px 0;
+    padding: 10px 0;
+    width: 776px;
+}
+.needinfo-item .needinfo-item-text{
+    border: 1px solid #999;
+    color: #999;
+    height: 40px;
+    padding: 0 5px;
+    width: 328px;
+	margin-right: 10px;
+}
+.needinfo-add span{
+    background: #00b966 none repeat scroll 0 0;
+    border: medium none;
+    color: #fff;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    padding: 7px 20px;
+    width: 200px;
+}
+.needinfo-item2 input{
+	width: 30px;
+	height: 0;
+}
+.needinfo-item2{
+    float: left;
+    padding-right: 40px;
+    padding-top: 10px;
 }

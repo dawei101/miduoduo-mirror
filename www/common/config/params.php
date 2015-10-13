@@ -1,6 +1,7 @@
 <?php
 return [
     'adminEmail' => 'webmaster@miduoduo.cn',
+    'supportName' => '米多多运营中心',
     'supportEmail' => 'contact@miduoduo.cn',
     'supportTel' => '010-84991662',
     'bugEmail' => '1bbd853df30a46a695cd7d350bee6caa+lukps3jjzxxxx3gr1rzd@boards.trello.com',
@@ -103,6 +104,13 @@ return [
     'file_log' =>[
         'max_size'      => 20000,
         'log_base_url'  => '/var/miduoduo/miduoduo/www/user_logs/',
+    ],
+
+    // 需要在`jz_task_onlinejob`和`jz_task_applicant_onlinejob`增加字段,model也要改
+    'onlinejob.evidence' => [
+        'need_phonenum' => '注册手机号',
+        'need_username' => '注册用户名',
+        'need_person_idcard' => '身份证号',
     ],
 
     /*
