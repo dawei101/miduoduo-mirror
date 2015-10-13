@@ -222,7 +222,11 @@ function CallBack(str) {
 * 获取版本
 ```
     var version = window.MDDNative.version()
-    
+```
+
+* 获取设备 ID
+```
+    var deviceId = window.MDDNative.deviceId()
 ```
 
 * 上传图片
