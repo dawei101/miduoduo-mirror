@@ -79,7 +79,7 @@ $this->title = '米多多兼职平台';
                             <li>
                                 <div class="pull-left title-left text-center">兼职时间</div>
                                 <div class="pull-left right-box zhiweileibie">
-                                    <div class="nice-select tl" name="nice-select">
+                                    <div class="tasktime-select">
                                         <table>
                                             <tr>
                                                 <td></td>
@@ -91,35 +91,34 @@ $this->title = '米多多兼职平台';
                                                 <td>星期六</td>
                                                 <td>星期日</td>
                                             </tr>
+                                            <?php 
+                                                $time_maps = ['morning'=>'上午',
+                                                    'afternoon'=>'下午',
+                                                    'evening'=>'晚上'
+                                                ];
+                                                foreach ($time_maps as $when=>$title){
+                                            ?>
+                                                <tr>
+                                                    <td><em><?=$title?></em></td>
+                                                  <?php for($i=0;$i<=6;$i++) {
+                                                    $checked = '';
+                                                    if (isset($tasktimes[$i])){
+                                                        $ft = $tasktimes[$i];
+                                                        $checked = $ft->$when?'checked=checked':'';
+                                                    }
+                                                    ?>
+                                                    <td>
+                                                        <input class='tasktime' type='checkbox' name='tasktime[]' value="<?=$i?>_<?=$when?>" <?=$checked?>>
+                                                    </td>
+                                                  <?php }?>
+                                                </tr>
+                                            <?php } ?>
                                             <tr>
-                                                <td>上午</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>下午</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>晚上</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td colspan=8>
+                                                    <a href="javascript:;" onclick="checkedAllTasktime();">全选</a>
+                                                    &nbsp; | &nbsp;
+                                                    <a href="javascript:;" onclick="uncheckedAllTasktime();">清空</a>
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>

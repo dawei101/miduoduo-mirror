@@ -13,6 +13,7 @@ use common\models\Company;
 use common\models\Task;
 use common\models\ServiceType;
 use common\models\TaskAddress;
+use common\models\Tasktime;
 
 use corp\models\TaskPublishModel;
 
@@ -152,6 +153,7 @@ class TaskController extends CBaseController
                     $address->save();
                 }
                 $this->updateUseTaskNum();
+                $this->updateTasktime($task_id, $data['tasktime']);
                 return $this->redirect('/task/');
             }
         }
@@ -263,6 +265,7 @@ class TaskController extends CBaseController
                     $address->save();
                 }
                 $this->updateUseTaskNum();
+                $this->updateTasktime($task_id, $data['tasktime']);
                 return $this->redirect('/task/');
             }
         }
@@ -271,8 +274,13 @@ class TaskController extends CBaseController
         $task->from_time = substr($task->from_time, 0, -3);
         $task->to_time = substr($task->to_time, 0, -3);
         Yii::$app->session->set('current_task_id', $task->id);
+        $tasktimes = $this->getTasktimes($task->id);
         return $this->render('publish',
-        ['task' => $task, 'services'=>$services, 'company'=>$company, 'address'=>$addresses,'user_task_promission'=>$user_task_promission]);
+        [
+            'task' => $task, 'services'=>$services, 'company'=>$company, 
+            'address'=>$addresses,'user_task_promission'=>$user_task_promission,
+            'tasktimes'=>$tasktimes,
+        ]);
     }
 
     public function actionRefresh($gid)
@@ -432,6 +440,27 @@ class TaskController extends CBaseController
             $return       = $this->checkUseTaskNum($company);
         }
         return $return;
+    }
+
+    protected function updateTasktime($task_id, $tasktimes){
+        Tasktime::deleteAll(['task_id' => $task_id]);
+        for($i=0; $i<=6; $i++){
+            $tasktime_m = new Tasktime();
+            $tasktime_m->dayofweek = $i;
+            $tasktime_m->task_id = $task_id;
+            foreach( $tasktimes as $tasktime ){
+                list($dayofweek, $timemoment) = explode('_', $tasktime);
+                if($dayofweek == $i){
+                    $tasktime_m->$timemoment = 1;
+                }
+            }
+            $tasktime_m->save();
+        }
+    }
+
+    protected function getTasktimes($task_id){
+        $tasktimes = Tasktime::findAll(['task_id' => $task_id]);
+        return $tasktimes;
     }
 
 }

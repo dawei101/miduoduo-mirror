@@ -1,3 +1,14 @@
+function checkedAllTasktime(){
+    var coll = document.getElementsByClassName('tasktime');
+    for(var i = 0; i < coll.length; i++)
+        coll[i].checked = true;
+}
+function uncheckedAllTasktime(){
+    var coll = document.getElementsByClassName('tasktime');
+    for(var i = 0; i < coll.length; i++)
+        coll[i].checked = false;
+}
+
 //点击显示以藏
 $(function(){
    $(".add-xs").click(function(){ $(".add-ons").toggle(); 
