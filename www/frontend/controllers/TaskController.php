@@ -72,7 +72,7 @@ class TaskController extends \frontend\FBaseController
         $query = Task::find()
             ->with('service_type')
             ->where(['status'=>Task::STATUS_OK])
-            ->andWhere(['>', 'to_date', date("Y-m-d")])
+            ->andWhere(['or', ['>', 'to_date', date("Y-m-d")], ['is_longterm' => 1]])
             ->andWhere(['city_id'=>$city_id]);
 
         if ( !empty($district) ){
@@ -91,7 +91,7 @@ class TaskController extends \frontend\FBaseController
                     WHEN `from_date`<='".date("Y-m-d")."' THEN `order_time`
                     ELSE 0
                 END) DESC,`from_date` ASC,`order_time` DESC,`id` DESC
-            ");
+                ");
         }else{
             // 默认按照`order_time`排序
             $query->addOrderBy(['order_time'=>SORT_DESC,'id'=>SORT_DESC]);

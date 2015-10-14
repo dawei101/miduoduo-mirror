@@ -131,8 +131,7 @@ class TaskController extends \m\MBaseController
 
         $query = Task::find()->with('service_type');
         $query->where(['status'=>Task::STATUS_OK]);
-        $query->andWhere(['>', 'to_date', date("Y-m-d")]);
-
+        $query->andWhere(['or', ['>', 'to_date', date("Y-m-d")], ['is_longterm' => 1]]);
         $query = $query->andWhere(['city_id'=>$city_id]);
         if (!empty($district)){
             $query->andWhere(['district_id'=>$district]);
