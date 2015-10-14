@@ -237,3 +237,11 @@ ul li{list-style:none;}
 .p-text{padding:10px 0;font-size:1em;}
 .bz_pic img{width:100%;}
 .bz_pic{margin-bottom:-5px;}
+
+.tasktime{
+	border:1px solid #ccc;
+}
+.tasktime td{
+	border:1px solid #ccc;
+	text-align:center;
+}
