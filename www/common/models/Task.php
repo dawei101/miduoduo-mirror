@@ -15,6 +15,7 @@ use common\models\WeichatPushSetTemplatePushItem;
 use common\models\TaskNotice;
 use common\models\TaskOnlinejobNeedinfo;
 use common\models\TaskOnlinejob;
+use common\models\Tasktime;
 
 /**
  * This is the model class for table "{{%task}}".
@@ -473,6 +474,10 @@ class Task extends \common\BaseActiveRecord
             ->addOrderBy(['display_order' => SORT_ASC]);
     }
 
+    public function getTasktime(){
+        return $this->hasMany(Tasktime::className(), ['task_id' => 'id']);
+    }
+
     public function fields()
     {
         $fs = parent::fields();
@@ -485,6 +490,7 @@ class Task extends \common\BaseActiveRecord
             'onlinejob',
             'onlinejob_needinfo',
             'service_type',
+            'tasktime',
         ]);
         unset($fields['contact_phonenum']);
         return $fields;
