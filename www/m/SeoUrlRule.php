@@ -145,8 +145,8 @@ class SeoUrlRule extends UrlRule
 
     public function redirectIfCitySet($path)
     {
-        if( $path == '' || $path == '/' ){
-            $city_pinyin = Yii::$app->session->get('city_pinyin');
+        $city_pinyin = Yii::$app->session->get('city_pinyin');
+        if( $path == '' || $path == '/' || $path == $city_pinyin ){
             if( $city_pinyin ){
                 header("Location:/$city_pinyin/");
                 exit;
