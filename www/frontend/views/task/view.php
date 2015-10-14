@@ -100,6 +100,7 @@ $this->page_description = strip_tags($seo_code['description']);
              <?=substr($task->to_time, 0,5)?>
             <?php } ?>
       </div>
+      <?php if($task->tasktime){ ?>
       <div><span>兼职时间：</span>
             <table class="tasktime" cellSpacing=0 cellPadding=0>
                 <tr>
@@ -136,6 +137,7 @@ $this->page_description = strip_tags($seo_code['description']);
                 <?php } ?>
             </table>
       </div>
+      <?php } ?>
       <div><span>地址：</span><?php if(isset($task->addresses)){foreach($task->addresses as $k => $v){ ?><?=$v->title?><?=$v->address?'，':''?><?=$v->address?>；<?php }} ?></div>
     </div>
     <div class="midd_xq_title">职位描述</div>
