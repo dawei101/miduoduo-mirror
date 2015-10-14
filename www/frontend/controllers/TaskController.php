@@ -147,7 +147,7 @@ class TaskController extends \frontend\FBaseController
         $task = null;
         if ($gid){
             $task = Task::find()->where(['gid'=>$gid])
-                ->with('city')->with('district')->with('addresses')->one();
+                ->with('city')->with('district')->with('addresses')->with('tasktime')->one();
         }
         if ($task){
             $collected = false;

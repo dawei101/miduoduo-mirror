@@ -106,6 +106,47 @@ $this->nav_right_title = '首页';
            <?php } ?>
        </dd>
     </dl>
+    <?php if($task->tasktime){ ?>
+        <dl>
+           <dt>兼职时间</dt>
+           <dd>
+            <table class="tasktime" cellSpacing=0 cellPadding=0>
+                <tr>
+                    <td></td>
+                    <td>星期一</td>
+                    <td>星期二</td>
+                    <td>星期三</td>
+                    <td>星期四</td>
+                    <td>星期五</td>
+                    <td>星期六</td>
+                    <td>星期日</td>
+                </tr>
+                <?php 
+                    $time_maps = ['morning'=>'上午',
+                        'afternoon'=>'下午',
+                        'evening'=>'晚上'
+                    ];
+                    foreach ($time_maps as $when=>$title){
+                ?>
+                    <tr>
+                        <td><em><?=$title?></em></td>
+                      <?php for($i=0;$i<=6;$i++) {
+                        $checked = '';
+                        if (isset($task->tasktime[$i])){
+                            $ft = $task->tasktime[$i];
+                            $checked = $ft->$when?'checked=checked':'';
+                        }
+                        ?>
+                        <td>
+                            <input class='tasktime' type='checkbox' disabled="disabled" name='tasktime[]' value="<?=$i?>_<?=$when?>" <?=$checked?>>
+                        </td>
+                      <?php }?>
+                    </tr>
+                <?php } ?>
+            </table>
+           </dd>
+        </dl>
+    <?php } ?>
     <dl>
       <dt>工作地点</dt>
       <dd><?php if(isset($task->addresses)){foreach($task->addresses as $k => $v){ ?><?=$v->title?><?=$v->address?'，':''?><?=$v->address?>；<?php }} ?></dd>

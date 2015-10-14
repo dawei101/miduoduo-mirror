@@ -85,3 +85,11 @@ ul li{list-style:none;}
 .pf img{width:640px; margin:0 auto; display:block}
 
 .img_pc{width:1080px; height:100px; margin:20px auto; border:1px #ccc solid;}
+
+.tasktime{
+	border:1px solid #ccc;
+}
+.tasktime td{
+	border:1px solid #ccc;
+	text-align:center;
+}
