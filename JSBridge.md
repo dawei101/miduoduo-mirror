@@ -129,6 +129,19 @@ function CallBack(str) {
 
     callback：回调函数名
 ```
+
+* 开始持续定位
+```
+    window.MDDNative.startLocation(callback)
+
+    callback：回调函数名
+```
+
+* 停止持续定位
+```
+    window.MDDNative.stopLocation()
+```
+
 * 获取设备 ID
 ```
     var id = window.MDDNative.deviceId()
