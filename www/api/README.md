@@ -621,7 +621,9 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
     push_id = 极光推送id
     ```
 
-### 企业相关接口
+# 企业相关接口
+
+## 企业信息相关
 * 获取当前的企业信息
 ```
     GET /version/company?access_token=null
