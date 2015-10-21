@@ -218,7 +218,7 @@ BASE_URL = 'http://api.miduoduo.cn'
                     id:         按id升序排列
                     -task.id:   按task的id 降序排序
                 ```
-            * http://api.test.chongdd.cn/v1/task?expand=service_type&filters=[['service_type_id', '=', '10']]
+            * http://api.test.chongdd.cn/v1/task?expand=service_type&filters=[["=", "service_type_id", "10"]]
         * 返回格式:
         ```
     {
@@ -284,7 +284,7 @@ BASE_URL = 'http://api.miduoduo.cn'
 ```
 * 搜索城市
 ```
-GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_name]]
+GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_name]]
 ```
 
 ### 城市首页BANNER
@@ -621,9 +621,9 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
     push_id = 极光推送id
     ```
 
-# 企业相关接口
+## 企业相关接口
 
-## 企业信息相关
+### 企业信息相关
 * 获取当前的企业信息
 ```
     GET /version/company?access_token=null
@@ -736,6 +736,102 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
         }
         失败：
         false
+```
+
+### 企业任务相关
+* 我的任务列表
+```
+    GET /version/company-task?access_token=null
+    参数：
+        filters=[["=","status","0"]] 显示中
+        filters=[["!=","status","0"]] 未显示
+    RETURN：
+        {
+            "items": [{
+                .....
+                "undo_applicant_num": "1" # 未处理简历数量
+            },{},{}]
+            "_links": {
+                "self": {
+                  "href": "http://api.suixb.chongdd.cn/v1/company-task?access_token=NhvBihyN9R-Rovux-eA1klpmX-v1TRgu_1445403967&page=1"
+                },
+                "next": {
+                  "href": "http://api.suixb.chongdd.cn/v1/company-task?access_token=NhvBihyN9R-Rovux-eA1klpmX-v1TRgu_1445403967&page=2"
+                },
+                "last": {
+                  "href": "http://api.suixb.chongdd.cn/v1/company-task?access_token=NhvBihyN9R-Rovux-eA1klpmX-v1TRgu_1445403967&page=5"
+                }
+              },
+              "_meta": {
+                "totalCount": 97,
+                "pageCount": 5,
+                "currentPage": 1,
+                "perPage": 20
+              }
+        }
+```
+
+* 查看任务详情
+```
+    GET /version/company-task/{任务ID}?access_token=null
+    参数：
+        无
+    RETURN：
+        任务详情信息
+```
+
+* 刷新任务
+```
+    PUT /version/company-task/{任务ID}?access_token=null
+    参数：
+        updated_time = 2015-10-27 15:02:27 # 最新时间
+    RETURN：
+        任务修改后的详情信息
+```
+
+* 下架任务
+```
+    PUT /version/company-task/{任务ID}?access_token=null
+    参数：
+        status = 10
+    RETURN：
+        任务修改后的详情信息
+```
+
+* 编辑任务
+```
+    PUT /version/company-task/{任务ID}?access_token=null
+    参数：
+        
+    RETURN：
+        任务修改后的详情信息
+```
+
+* 发布任务
+```
+    POST /version/company-task?access_token=null
+    参数：
+        salary = 工资
+        salary_unit = 工资单位
+            0=>'小时',
+            1=>'天',
+            2=>'周',
+            3=>'月',
+            4=>'次',
+            5=>'单',
+            6=>'个',
+        from_date = 任务开始日期
+        to_date = 任务结束日期
+        need_quantity = 需要数量
+        title = 标题
+        detail = 详情
+        service_type_id = 服务类别 # 通过接口获取：/version/service-type
+        contact = 联系人姓名
+        contact_phonenum = 联系人手机
+        city_id = 城市id
+        origin = app # 发布信息来源
+    RETURN：
+        任务发布后的详情信息
 ```
 
 ## 关于性能上的优化

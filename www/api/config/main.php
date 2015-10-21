@@ -72,6 +72,7 @@ return [
                         'v1/user-historical-location',
                         'v1/task-applicant-onlinejob',
                         'v1/company',
+                        'v1/company-task',
                     ],
                     'pluralize' => '',
                 ],

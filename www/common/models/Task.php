@@ -478,6 +478,15 @@ class Task extends \common\BaseActiveRecord
         return $this->hasMany(Tasktime::className(), ['task_id' => 'id']);
     }
 
+    public function getUndo_applicant_num(){
+        $overtime   = date("Y-m-d H:i:s",time()-60*60*24*TaskApplicant::STATUS_APPLY_OVERDAYS);
+        $undo = $this->hasMany(TaskApplicant::className(), ['task_id' => 'id'])
+            ->andWhere(['status' => 0])
+            ->andWhere(['>', 'created_time', $overtime])
+            ->count();
+        return $undo;
+    }
+
     public function fields()
     {
         $fs = parent::fields();
@@ -491,6 +500,7 @@ class Task extends \common\BaseActiveRecord
             'onlinejob_needinfo',
             'service_type',
             'tasktime',
+            'undo_applicant_num',
         ]);
         unset($fields['contact_phonenum']);
         return $fields;
