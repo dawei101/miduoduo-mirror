@@ -679,6 +679,13 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
         contact_phone = 联系人电话
     RETURN
         成功：
+        {
+          "name": "name",
+          "contact_name": "联系人不能为空",
+          "contact_phone": "13901234567",
+          "user_id": "2006",
+          "id": 2045
+        }
         失败：
         [
           {
