@@ -70,7 +70,8 @@ return [
                         'v1/recommend-task-group',
                         'v1/city-banner',
                         'v1/user-historical-location',
-                        'v1/task-applicant-onlinejob'
+                        'v1/task-applicant-onlinejob',
+                        'v1/company',
                     ],
                     'pluralize' => '',
                 ],

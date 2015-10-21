@@ -621,6 +621,113 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
     push_id = 极光推送id
     ```
 
+### 企业相关接口
+* 获取当前的企业信息
+    ```
+    GET /version/company?access_token=null
+        参数：null
+    RETURN
+        成功：
+        {
+          "success": true,
+          "message": "已经开通企业账号",
+          "result": {
+            "id": 432,
+            "name": "测试自主注册",
+            "avatar": null,
+            "examined_time": null,
+            "status": 0,
+            "examined_by": 0,
+            "user_id": 2006,
+            "contact_email": "suixb@miduoduo.cn",
+            "intro": "",
+            "contact_name": "隋小波",
+            "service": null,
+            "corp_type": null,
+            "corp_size": null,
+            "person_name": null,
+            "person_idcard": null,
+            "person_idcard_pic": null,
+            "corp_name": null,
+            "corp_idcard": null,
+            "corp_idcard_pic": null,
+            "exam_result": 48,
+            "exam_status": 2,
+            "exam_note": null,
+            "use_task_date": "2015-10-21",
+            "use_task_num": 0, # 今天已操作任务数量
+            "allow_task_num": 5, # 今日可操作任务数量
+            "created_time": "2015-09-07 17:37:09",
+            "origin": 1,
+            "status_label": "正常",
+            "exam_status_label": "审核完成",
+            "exam_result_label": " 身份证验证通过 营业执照验证通过"
+          }
+        }
+        失败：
+        {
+          "success": false,
+          "message": "未开通企业账号"
+        }
+    ```
+* 创建企业信息
+    ```
+    POST /version/company?access_token=null
+    参数：
+        name = 企业名称
+        contact_name = 联系人名称
+        contact_phone = 联系人电话
+    RETURN
+        成功：
+        失败：
+        [
+          {
+            "field": "user_id",
+            "message": "企业经存在，请勿重新创建!"
+          }
+        ]
+    ```
+* 修改企业信息
+    ```
+    PUT /version/company/{企业ID}?access_token=null
+    参数：如下
+    RETURN 修改后的信息
+        成功：
+        {
+          "id": 432,
+          "name": "隋小波的测试企业",
+          "avatar": null,
+          "examined_time": null,
+          "status": 0,
+          "examined_by": 0,
+          "user_id": 2006,
+          "contact_email": "suixb@miduoduo.cn",
+          "intro": "",
+          "contact_name": "隋小波",
+          "service": null,
+          "corp_type": null,
+          "corp_size": null,
+          "person_name": null,
+          "person_idcard": null,
+          "person_idcard_pic": null,
+          "corp_name": null,
+          "corp_idcard": null,
+          "corp_idcard_pic": null,
+          "exam_result": 48,
+          "exam_status": 2,
+          "exam_note": null,
+          "use_task_date": "2015-10-21",
+          "use_task_num": 0,
+          "created_time": "2015-09-07 17:37:09",
+          "origin": 1,
+          "status_label": "正常",
+          "exam_status_label": "审核完成",
+          "exam_result_label": " 身份证验证通过 营业执照验证通过"
+        }
+        失败：
+        false
+    ```
+
 ## 关于性能上的优化
     * TODO
 
