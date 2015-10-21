@@ -834,6 +834,50 @@ GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_nam
         任务发布后的详情信息
 ```
 
+### 企业受到的简历相关操作
+
+* 全部简历
+```
+    GET version/company-applicant?access_token=null
+    参数：
+        filters=[["=","task_id","572"]] # 查看某个任务的报名情况
+        page=1
+    RETURN：
+        {
+            "items": [
+            {
+              "id": 11467,
+              "created_time": "2015-10-21 16:03:10",
+              "user_id": 2006,
+              "task_id": 572,
+              "company_alerted": 1,
+              "applicant_alerted": 1,
+              "status": 0,
+              "origin": "App:2-",
+              "have_read": 0,
+              "supposed_salary": null,
+              "got_salary": null,
+              "account_event_id": null,
+              "address_id": null,
+              "status_label": "已报名",
+              "status_options": {
+                "0": "已报名",
+                "10": "报名成功",
+                "20": "报名失败",
+                "30": "已结算"
+              },
+              "contact_phonenum": "13901234567"
+            },
+          ],
+          "_meta": {
+            "totalCount": "36",
+            "pageCount": 2,
+            "currentPage": "1",
+            "perPage": 20
+          }
+        }
+```
+
 ## 关于性能上的优化
     * TODO
 
