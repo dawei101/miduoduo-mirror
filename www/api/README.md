@@ -677,6 +677,7 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
         name = 企业名称
         contact_name = 联系人名称
         contact_phone = 联系人电话
+        origin = 3（固定，表示注册渠道是移动端）
     RETURN
         成功：
         {

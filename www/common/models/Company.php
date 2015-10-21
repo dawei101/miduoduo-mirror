@@ -22,10 +22,12 @@ class Company extends \common\BaseActiveRecord
         0 => '其他',
         1 => '自主注册',
         2 => '抓取',
+        3 => 'app注册',
     ];
     const ORIGINS_OTHER = 0;
     const ORIGINS_SELF  = 1;
-    const ORIGINS_SPIDER= 2;
+    const ORIGINS_SPIDER = 2;
+    const ORIGINS_APP = 3;
     
     static $STATUSES = [
         0 => '正常',

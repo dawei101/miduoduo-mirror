@@ -3,6 +3,7 @@
 namespace api\miduoduo\v1\models;
 
 use Yii;
+use common\models\Company as CommonCompany;
 
 /**
  * This is the model class for table "{{%company}}".
@@ -37,12 +38,6 @@ use Yii;
  */
 class Company extends \yii\db\ActiveRecord
 {
-    static $USE_TASK_LIMIT = [
-        16 => 3,
-        32 => 5,
-        48 => 5,
-    ];
-
     /**
      * @inheritdoc
      */
@@ -107,15 +102,40 @@ class Company extends \yii\db\ActiveRecord
     }
 
     public function getAllow_task_num(){
-        if( isset(static::$USE_TASK_LIMIT[$this->exam_result]) ){
-            return static::$USE_TASK_LIMIT[$this->exam_result];
+        if( isset(CommonCompany::$USE_TASK_LIMIT[$this->exam_result]) ){
+            return CommonCompany::$USE_TASK_LIMIT[$this->exam_result];
         }else{
             return 1;
         }
     }
 
+    public function getStatus_label()
+    {
+        return CommonCompany::$STATUSES[$this->status];
+    }
+
+    public function getExam_status_label()
+    {
+        return CommonCompany::$EXAM_STATUSES[$this->exam_status];
+    }
+
+    public function getExam_result_label()
+    {
+        $s = '';
+        if (CommonCompany::EXAM_GOVID_PASSED & $this->exam_result){
+            $s .= ' ' . CommonCompany::$EXAM_RESULTS[CommonCompany::EXAM_GOVID_PASSED];
+        }
+        if ($this->exam_result & CommonCompany::EXAM_LICENSE_PASSED){
+            $s .= ' ' . CommonCompany::$EXAM_RESULTS[CommonCompany::EXAM_LICENSE_PASSED];
+        }
+        if( !$this->exam_result ){
+            $s .= ' ' . CommonCompany::$EXAM_RESULTS[CommonCompany::EXAM_GOVID_UNCHECK];
+        }
+        return $s;
+    }
+
     public function fields()
     {
-        return array_merge(parent::fields(), ['allow_task_num']);
+        return array_merge(parent::fields(), ['allow_task_num', 'status_label', 'exam_status_label', 'exam_result_label']);
     }
 }
