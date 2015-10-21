@@ -623,7 +623,7 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
 
 ### 企业相关接口
 * 获取当前的企业信息
-    ```
+```
     GET /version/company?access_token=null
         参数：null
     RETURN
@@ -669,9 +669,9 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
           "success": false,
           "message": "未开通企业账号"
         }
-    ```
+```
 * 创建企业信息
-    ```
+```
     POST /version/company?access_token=null
     参数：
         name = 企业名称
@@ -686,9 +686,9 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
             "message": "企业经存在，请勿重新创建!"
           }
         ]
-    ```
+```
 * 修改企业信息
-    ```
+```
     PUT /version/company/{企业ID}?access_token=null
     参数：如下
     RETURN 修改后的信息
@@ -726,7 +726,7 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
         }
         失败：
         false
-    ```
+```
 
 ## 关于性能上的优化
     * TODO
