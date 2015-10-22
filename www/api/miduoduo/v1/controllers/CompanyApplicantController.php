@@ -24,6 +24,12 @@ class CompanyApplicantController extends BaseActiveController
     {
         $as = parent::actions();
         unset($as['delete']);
+        $as['update'] = [
+            'class' => 'api\miduoduo\v1\models\CompanyEditApplicantAction',
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
+            'scenario' => $this->createScenario,
+        ];
         return $as;
     }
 

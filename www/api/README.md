@@ -878,6 +878,18 @@ GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_nam
         }
 ```
 
+* 接受、拒绝简历
+```
+    PUT /version/company-applicant/11467?access_token=null
+    参数：
+        status={10录用、20不合适}
+    RETURN：
+        成功：
+        报名详情信息
+        失败：
+        false
+```
+
 ## 关于性能上的优化
     * TODO
 
