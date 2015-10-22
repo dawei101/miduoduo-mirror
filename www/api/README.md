@@ -880,14 +880,26 @@ GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_nam
 
 * 接受、拒绝简历
 ```
-    PUT /version/company-applicant/11467?access_token=null
+    PUT /version/company-applicant/{简历投递的ID号}?task_id={任务ID}&access_token=null
     参数：
         status={10录用、20不合适}
     RETURN：
         成功：
-        报名详情信息
+            报名详情信息
         失败：
-        false
+            false
+```
+
+* 查看用户简历详情
+```
+    GET /version/company-resume/{user_id}?task_id={task_id}access_token=null
+    参数：
+        无
+    RETURN：
+        成功：
+            用户简历信息
+        失败：
+            false
 ```
 
 ## 关于性能上的优化

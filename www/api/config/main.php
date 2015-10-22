@@ -74,6 +74,7 @@ return [
                         'v1/company',
                         'v1/company-task',
                         'v1/company-applicant',
+                        'v1/company-resume',
                     ],
                     'pluralize' => '',
                 ],

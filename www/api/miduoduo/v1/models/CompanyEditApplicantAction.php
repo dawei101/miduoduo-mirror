@@ -23,28 +23,32 @@ class CompanyEditApplicantAction extends \yii\rest\UpdateAction
         }
         $model->scenario = $this->scenario;
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-        if ($model->save() === false && !$model->hasErrors()) {
-            throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
-        }else{
-            $params = Yii::$app->getRequest()->getBodyParams();
-            $status = isset($params['status']) ? $params['status'] : '';
-            if( $status == TaskApplicant::STATUS_APPLY_SUCCEED ){
-                // send success msg to user
-                $this->pushResultMsg(
-                    $model->task_id,
-                    $model->user_id,
-                    TaskApplicant::STATUS_APPLY_SUCCEED
-                );
-            }elseif( $status == TaskApplicant::STATUS_APPLY_FAILED ){
-                // send failed msg to user
-                $this->pushResultMsg(
-                    $model->task_id,
-                    $model->user_id,
-                    TaskApplicant::STATUS_APPLY_FAILED
-                );
+        if( $this->checkAppTask($model->user_id, $model->task_id) ){
+            if ($model->save() === false && !$model->hasErrors()) {
+                throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
+            }else{
+                $params = Yii::$app->getRequest()->getBodyParams();
+                $status = isset($params['status']) ? $params['status'] : '';
+                if( $status == TaskApplicant::STATUS_APPLY_SUCCEED ){
+                    // send success msg to user
+                    $this->pushResultMsg(
+                        $model->task_id,
+                        $model->user_id,
+                        TaskApplicant::STATUS_APPLY_SUCCEED
+                    );
+                }elseif( $status == TaskApplicant::STATUS_APPLY_FAILED ){
+                    // send failed msg to user
+                    $this->pushResultMsg(
+                        $model->task_id,
+                        $model->user_id,
+                        TaskApplicant::STATUS_APPLY_FAILED
+                    );
+                }
             }
+            return $model;
+        }else{
+            return false;
         }
-        return $model;
     }
 
     public function pushResultMsg($task_id,$user_id,$status){
@@ -77,6 +81,20 @@ class CompanyEditApplicantAction extends \yii\rest\UpdateAction
                     'to-applicant-task-applied-pass-no'
                 );
             }
+        }
+    }
+
+    public function checkAppTask($user_id, $task_id){
+        $applicant = TaskApplicant::findOne(['user_id' => $user_id, 'task_id' => $task_id]);
+        if( $applicant ){
+            $task = Task::findOne(['id'=>$task_id, 'user_id'=>YII::$app->user->id]);
+            if($task){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
         }
     }
 
