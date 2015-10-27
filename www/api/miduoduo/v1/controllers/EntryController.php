@@ -152,7 +152,7 @@ class EntryController extends BaseActiveController
         $username = Yii::$app->request->post('phonenum');
         $password = Yii::$app->request->post('password');
         if(!(empty($username) || empty($password))){
-            $user = User::find()->with('resume')->where([
+            $user = User::find()->with('resume')->with('company')->where([
                 'username' => $username,
             ])->one();
             if($user){
