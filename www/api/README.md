@@ -732,7 +732,13 @@ GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_nam
           "origin": 1,
           "status_label": "正常",
           "exam_status_label": "审核完成",
-          "exam_result_label": " 身份证验证通过 营业执照验证通过"
+          "exam_result_label": " 身份证验证通过 营业执照验证通过",
+          "task_infos": {
+              "all": "25",   
+              "online": "14",  # 在线任务
+              "overtime": "1", # 过期任务
+              "offline": "0" # 下线任务
+          }
         }
         失败：
         false

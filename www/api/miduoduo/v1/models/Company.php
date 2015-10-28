@@ -4,6 +4,7 @@ namespace api\miduoduo\v1\models;
 
 use Yii;
 use common\models\Company as CommonCompany;
+use common\models\Task;
 
 /**
  * This is the model class for table "{{%company}}".
@@ -134,8 +135,22 @@ class Company extends \yii\db\ActiveRecord
         return $s;
     }
 
+    public function getTask_infos(){
+        $user_id = YII::$app->user->id;
+        $all = Task::find()->where(['user_id' => $user_id])->count();
+        $online = Task::find()->where(['user_id' => $user_id, 'status' => 0])->count();
+        $overtime = Task::find()->where(['user_id' => $user_id, 'status' => 10])->count();
+        $offline = Task::find()->where(['user_id' => $user_id, 'status' => 50])->count();
+        return [
+            'all' => $all,
+            'online' => $online,
+            'overtime' => $overtime,
+            'offline' => $offline,
+        ];
+    }
+
     public function fields()
     {
-        return array_merge(parent::fields(), ['allow_task_num', 'status_label', 'exam_status_label', 'exam_result_label']);
+        return array_merge(parent::fields(), ['allow_task_num', 'status_label', 'exam_status_label', 'exam_result_label', 'task_infos']);
     }
 }
