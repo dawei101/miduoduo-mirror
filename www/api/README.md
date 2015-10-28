@@ -819,7 +819,8 @@ GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_nam
         is_allday = 工作时间是否为全天  0,1
         from_time = 工作开始时间
         to_time = 工作结束时间
-        address = 工作地点列表ID，如 234,235,236,237 # 地理位置接口：/version/company-task-address?access_token=null
+        city_id = 第一个工作地点的城市ID
+        address_ids = 工作地点列表ID，如 234,235,236,237 # 地理位置接口：/version/company-task-address?access_token=null
         detail = 详情描述
         need_quantity = 人员要求-人数
         gender_requirement = 人员要求-性别 0 不限，1 男，2 女

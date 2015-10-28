@@ -501,6 +501,7 @@ class Task extends \common\BaseActiveRecord
             'service_type',
             'tasktime',
             'undo_applicant_num',
+            'addresses',
         ]);
         unset($fields['contact_phonenum']);
         return $fields;

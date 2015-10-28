@@ -23,6 +23,18 @@ class CompanyTaskController extends BaseActiveController
     public function actions()
     {
         $actions = parent::actions();
+        $actions['create'] = [
+            'class' => 'api\miduoduo\v1\models\CompanyTaskCreateAction',
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
+            'scenario' => $this->createScenario,
+        ];
+        $actions['update'] = [
+            'class' => 'api\miduoduo\v1\models\CompanyTaskUpdateAction',
+            'modelClass' => $this->modelClass,
+            'checkAccess' => [$this, 'checkAccess'],
+            'scenario' => $this->createScenario,
+        ];
         return $actions;
     }
 }
