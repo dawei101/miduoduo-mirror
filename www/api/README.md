@@ -811,27 +811,55 @@ GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_nam
 ```
     POST /version/company-task?access_token=null
     参数：
-        salary = 工资
-        salary_unit = 工资单位
-            0=>'小时',
-            1=>'天',
-            2=>'周',
-            3=>'月',
-            4=>'次',
-            5=>'单',
-            6=>'个',
+        title = 职位名称
+        service_type_id = 服务类别 # 通过接口获取：/version/service-type
+        is_longterm = 长期招聘 0,1
         from_date = 任务开始日期
         to_date = 任务结束日期
-        need_quantity = 需要数量
-        title = 标题
-        detail = 详情
-        service_type_id = 服务类别 # 通过接口获取：/version/service-type
+        is_allday = 工作时间是否为全天  0,1
+        from_time = 工作开始时间
+        to_time = 工作结束时间
+        address = 工作地点列表ID，如 234,235,236,237 # 地理位置接口：/version/company-task-address?access_token=null
+        detail = 详情描述
+        need_quantity = 人员要求-人数
+        gender_requirement = 人员要求-性别 0 不限，1 男，2 女
+        height_requirement = 人员要求-身高 0=>'身高无要求',1=>'155cm以上',2=>'165cm以上',3=>'170cm以上',3=>'175cm以上'
+        salary = 薪酬
+        salary_unit = 薪酬单位 0=>'小时',1=>'天',2=>'周',3=>'月',4=>'次',5=>'单',6=>'个'
+        clearance_period = 结算方式 0=>'月结',1=>'周结',2=>'日结',3=>'完工结',4=>'按单结算',
         contact = 联系人姓名
         contact_phonenum = 联系人手机
-        city_id = 城市id
         origin = app # 发布信息来源
     RETURN：
         任务发布后的详情信息
+```
+
+* 添加地理位置接口
+```
+    POST /version/company-task-address?access_token=null
+    参数：
+        province = 省直辖市名
+        city = 城市名
+        district = 区域名
+        lat = 坐标
+        lng = 坐标
+        task_id = 0
+        user_id = 用户ID
+        title = 用户搜索的区域名称（北京 融科资讯中心C座 北楼12层）
+        address = 百度返回的地理位置名称（北京市海淀区科学院南路2号）
+    RETURN：
+        成功：
+        {
+          "lat": "11",
+          "lng": "22",
+          "task_id": "0",
+          "user_id": "2006",
+          "id": 400,
+          "distance": 0,
+          "distance_label": "0m"
+        }
+        失败：
+        false
 ```
 
 ### 企业受到的简历相关操作
