@@ -677,8 +677,14 @@ GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_nam
     POST /version/company?access_token=null
     参数：
         name = 企业名称
+        corp_type = 招聘性质（1 = '企业直聘',2 = '人力资源',3 = '领队'）
+        corp_size = 企业规模（0-20人，20-100人，100人以上）
+        intro = 公司介绍
+        corp_name = 招聘方名称
+        city_id = 城市ID，所在地区
         contact_name = 联系人名称
         contact_phone = 联系人电话
+        contact_email = 招聘邮箱
         origin = 3（固定，表示注册渠道是移动端）
     RETURN
         成功：
@@ -754,9 +760,83 @@ GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_nam
     RETURN：
         {
             "items": [{
-                .....
-                "undo_applicant_num": "1" # 未处理简历数量
-            },{},{}]
+              {
+              "id": 572,
+              "title": "职位名称",
+              "clearance_period": 0,
+              "salary": "10.00",
+              "salary_unit": 2,
+              "salary_note": null,
+              "from_date": "2015-10-21", # 工作开始日期
+              "to_date": "2015-12-21",  # 工作结束日期
+              "from_time": null, # 工作开始时间
+              "to_time": null,  # 工作结束时间
+              "need_quantity": 20, # 需要人数
+              "got_quantity": 4,  # 已获得人数
+              "created_time": "2015-10-21 15:36:44",
+              "updated_time": "0000-00-00 00:00:00",
+              "detail": "详细介绍",
+              "requirement": null,
+              "user_id": 2006,
+              "service_type_id": 12,
+              "gender_requirement": null,
+              "degree_requirement": null,
+              "age_requirement": null,
+              "height_requirement": null,
+              "status": 0,
+              "city_id": 3,
+              "gid": "14454130049102006",
+              "district_id": null,
+              "company_id": null,
+              "address": "",
+              "company_name": "",
+              "company_introduction": null,
+              "contact": "张三那",
+              "contact_phonenum": "13901234567",
+              "labels_str": null,
+              "origin": "internal",
+              "face_requirement": 0,
+              "talk_requirement": 0,
+              "health_certificated": 0,
+              "weight_requirement": 0,
+              "sms_phonenum": null,
+              "is_longterm": 0, # 是否为长期招聘
+              "order_time": "2015-11-05 08:55:12",
+              "recommend": 0,
+              "is_allday": 0, # 工作时间是否全天
+              "time_book_opened": 0,
+              "erweima_ticket": "gQHm8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xLzNVT084TkhtYUxNUjM4dU12VzNUAAIEbM0nVgMEgDoJAA==",
+              "erweima_date": "2015-10-22",
+              "clearance_period_label": "月结",
+              "salary_unit_label": "周",
+              "labels": [
+                "月结",
+                "10-21至12-21"
+              ],
+              "label_options": [],
+              "status_label": "正常",
+              "requirements": "",
+              "is_overflow": false,
+              "xcompany_name": "",
+              "onlinejob": null,
+              "onlinejob_needinfo": [],
+              "service_type": {  # 职位类别
+                "id": 12,
+                "name": "促销",
+                "created_time": null,
+                "updated_time": null,
+                "modified_by": null,
+                "status": 0,
+                "pinyin": "cuxiao",
+                "status_label": "正常"
+              },
+              "tasktime": [],
+              "undo_applicant_num": "0", # 未处理简历数量
+              "addresses": []
+            },
+            {},
+            {}
+            ]
             "_links": {
                 "self": {
                   "href": "http://api.suixb.chongdd.cn/v1/company-task?access_token=NhvBihyN9R-Rovux-eA1klpmX-v1TRgu_1445403967&page=1"

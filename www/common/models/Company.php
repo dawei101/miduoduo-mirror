@@ -80,6 +80,12 @@ class Company extends \common\BaseActiveRecord
         48 => 5,
     ];
 
+    static $CORP_TYPES = [
+        1 => '企业直聘',
+        2 => '人力资源',
+        3 => '领队',
+    ];
+
     public function getExam_status_label()
     {
         return static::$EXAM_STATUSES[$this->exam_status];
@@ -115,7 +121,7 @@ class Company extends \common\BaseActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['id', 'status', 'examined_by', 'user_id', 'exam_result'], 'integer'],
+            [['id', 'status', 'examined_by', 'user_id', 'exam_result', 'city_id'], 'integer'],
             [['examined_time','use_task_date','use_task_num','person_name','corp_idcard'], 'safe'],
             [['name', ], 'string', 'max' => 500],
             [['name', 'contact_phone', 'contact_email', 'contact_name'], 'string', 'max' => 500],
@@ -139,6 +145,7 @@ class Company extends \common\BaseActiveRecord
     {
         return [
             'id' => 'ID',
+            'city_id' => '城市ID',
             'name' => '企业名',
             'intro'=>'公司介绍',
             'examined_time' => '审核日期',
