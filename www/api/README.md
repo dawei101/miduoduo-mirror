@@ -832,7 +832,36 @@ GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_nam
               },
               "tasktime": [],
               "undo_applicant_num": "0", # 未处理简历数量
-              "addresses": []
+              "addresses": [
+                {
+                  "id": 267,
+                  "province": "河北 ",
+                  "city": "秦皇岛 ",
+                  "district": null,
+                  "lat": 39.824923,
+                  "lng": 119.497805,
+                  "task_id": 572,
+                  "user_id": 2006,
+                  "title": "河北 秦皇岛 吉程宾馆 ",
+                  "address": "秦皇岛北戴河区北戴河区安一路8号(老虎石海上公园)",
+                  "distance": 0,
+                  "distance_label": "0m"
+                },
+                {
+                  "id": 268,
+                  "province": "河北 ",
+                  "city": "秦皇岛 ",
+                  "district": null,
+                  "lat": 39.941259,
+                  "lng": 119.606184,
+                  "task_id": 572,
+                  "user_id": 2006,
+                  "title": "河北 秦皇岛 ",
+                  "address": "秦皇岛市",
+                  "distance": 0,
+                  "distance_label": "0m"
+                }
+              ]
             },
             {},
             {}
