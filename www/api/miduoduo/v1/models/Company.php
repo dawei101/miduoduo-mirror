@@ -112,17 +112,20 @@ class Company extends \yii\db\ActiveRecord
 
     public function getStatus_label()
     {
+        $this->status = $this->status ? $this->status : 0;
         return CommonCompany::$STATUSES[$this->status];
     }
 
     public function getExam_status_label()
     {
+        $this->exam_status = $this->exam_status ? $this->exam_status : 0;
         return CommonCompany::$EXAM_STATUSES[$this->exam_status];
     }
 
     public function getExam_result_label()
     {
         $s = '';
+        $this->exam_result = $this->exam_result ? $this->exam_result : 0;
         if (CommonCompany::EXAM_GOVID_PASSED & $this->exam_result){
             $s .= ' ' . CommonCompany::$EXAM_RESULTS[CommonCompany::EXAM_GOVID_PASSED];
         }
