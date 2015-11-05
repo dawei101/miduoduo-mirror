@@ -21,14 +21,16 @@ class CompanyTaskUpdateAction extends \yii\rest\UpdateAction
             throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
         }
 
-        $address_ids = $data['address_ids'];
-        $task_id = $model->id;
-        $addressList = explode(',', $address_ids);
-        foreach($addressList as $item){
-            $address = TaskAddress::findOne(['id' => $item]);
-            if( isset($address->task_id) ){
-                $address->task_id = $task_id;
-                $address->save();
+        $address_ids = isset($data['address_ids']) ? $data['address_ids'] : '';
+        if($address_ids){
+            $task_id = $model->id;
+            $addressList = explode(',', $address_ids);
+            foreach($addressList as $item){
+                $address = TaskAddress::findOne(['id' => $item]);
+                if( isset($address->task_id) ){
+                    $address->task_id = $task_id;
+                    $address->save();
+                }
             }
         }
 

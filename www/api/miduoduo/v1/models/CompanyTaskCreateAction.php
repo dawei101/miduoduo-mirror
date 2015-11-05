@@ -23,14 +23,16 @@ class CompanyTaskCreateAction extends \yii\rest\CreateAction
         $data = Yii::$app->getRequest()->getBodyParams();
         $model->load($data, '');
         if ($model->save()) {
-            $address_ids = $data['address_ids'];
-            $task_id = $model->id;
-            $addressList = explode(',', $address_ids);
-            foreach($addressList as $item){
-                $address = TaskAddress::findOne(['id' => $item]);
-                if( isset($address->task_id) ){
-                    $address->task_id = $task_id;
-                    $address->save();
+            $address_ids = isset($data['address_ids']) ? $data['address_ids'] : '';
+            if($address_ids){
+                $task_id = $model->id;
+                $addressList = explode(',', $address_ids);
+                foreach($addressList as $item){
+                    $address = TaskAddress::findOne(['id' => $item]);
+                    if( isset($address->task_id) ){
+                        $address->task_id = $task_id;
+                        $address->save();
+                    }
                 }
             }
 
