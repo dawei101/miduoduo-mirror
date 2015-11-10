@@ -327,10 +327,10 @@ class Task extends \common\BaseActiveRecord
             $this->to_time = '23:59';
         }
         if( $this->to_date < date("Y-m-d") ){
-            $this->addError('您的工作日期需要修改，截止日期应在今天之后');
+            $this->addError('您的工作日期需要修改，截止日期应在今天之后', '您的工作日期需要修改，截止日期应在今天之后');
         }
         if( $this->from_time > $this->to_time ){
-            $this->addError('您的工作时间需要修改，起始时间应小于结束时间');
+            $this->addError('您的工作时间需要修改，起始时间应小于结束时间', '您的工作时间需要修改，起始时间应小于结束时间');
         }
         
     }
