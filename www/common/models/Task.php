@@ -197,7 +197,7 @@ class Task extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['salary', 'salary_unit', 'from_date', 'to_date',
+            [['salary', 'salary_unit',
                 'need_quantity', 'detail',
                 'title', 'service_type_id'], 'required'],
             // ['company_id', 'required', 'message'=>'请选择一个已存在的公司'],
@@ -224,7 +224,7 @@ class Task extends \common\BaseActiveRecord
                 'weight_requirement', 'height_requirement',
                 ], 'integer'],
             ['time_book_opened', 'boolean'],
-            [['from_date', 'is_longterm', 'to_date', 'is_allday'], 'checkInputData'],
+            [['from_date', 'to_date', 'is_longterm', 'is_allday' ,'title'], 'checkInputData'],
         ];
     }
 
@@ -326,13 +326,19 @@ class Task extends \common\BaseActiveRecord
             $this->from_time = '00:00';
             $this->to_time = '23:59';
         }
+
+        if( $this->to_date == '' ){
+            $this->addError('to_date', '请填写工作结束日期');
+        }
+        if( $this->from_date == '' ){
+            $this->addError('from_date', '请填写工作开始日期');
+        }
         if( $this->to_date < date("Y-m-d") ){
             $this->addError('您的工作日期需要修改，截止日期应在今天之后', '您的工作日期需要修改，截止日期应在今天之后');
         }
         if( $this->from_time > $this->to_time ){
             $this->addError('您的工作时间需要修改，起始时间应小于结束时间', '您的工作时间需要修改，起始时间应小于结束时间');
         }
-        
     }
 
     public function tidyTitle()
