@@ -2,6 +2,7 @@
 
 namespace api\miduoduo\v1\models;
 use common\models\TaskAddress;
+use common\models\Company;
 
 use Yii;
 
@@ -20,6 +21,8 @@ class CompanyTaskUpdateAction extends \yii\rest\UpdateAction
         if ($model->save() === false && !$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
         }
+
+        Company::updateUseTaskNum();
 
         $address_ids = isset($data['address_ids']) ? $data['address_ids'] : '';
         if($address_ids){

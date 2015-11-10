@@ -261,6 +261,13 @@ class Company extends \common\BaseActiveRecord
         }
     }
 
+    public static function updateUseTaskNum(){
+        $user_id = Yii::$app->user->id;
+        $company = Company::findOne(['user_id' => $user_id]);
+        $use_task_num = $company->use_task_num + 1;
+        Company::updateAll(['use_task_num' => $use_task_num], ['user_id' => $user_id]);
+    }
+
     public function updateNeedcheckToPass($company_id){
         Task::updateAll(['status' => Task::STATUS_OK],"status='".Task::STATUS_IS_CHECK."' AND company_id='".$company_id."'");
     }

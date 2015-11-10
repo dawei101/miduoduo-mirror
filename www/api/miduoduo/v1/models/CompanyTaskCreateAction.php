@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\helpers\Url;
 use yii\web\ServerErrorHttpException;
 use common\models\TaskAddress;
+use common\models\Company;
 
 class CompanyTaskCreateAction extends \yii\rest\CreateAction
 {
@@ -24,6 +25,8 @@ class CompanyTaskCreateAction extends \yii\rest\CreateAction
 
         $model->load($data, '');
         if ($model->save()) {
+            Company::updateUseTaskNum();
+
             $address_ids = isset($data['address_ids']) ? $data['address_ids'] : '';
             if($address_ids){
                 $task_id = $model->id;
