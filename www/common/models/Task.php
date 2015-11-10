@@ -224,6 +224,7 @@ class Task extends \common\BaseActiveRecord
                 'weight_requirement', 'height_requirement',
                 ], 'integer'],
             ['time_book_opened', 'boolean'],
+            [['from_date', 'is_longterm', 'to_date', 'is_allday'], 'checkInputData'],
         ];
     }
 
@@ -303,35 +304,35 @@ class Task extends \common\BaseActiveRecord
         return parent::beforeSave($insert);
     }
 
-    public static function checkInputData($data){
-        if( !isset($data['from_date']) ){
-            $data['from_date'] = '';
+    public function checkInputData($data){
+        if( !isset($this->from_date) ){
+            $this->from_date = '';
         }
-        if( !isset($data['to_date']) ){
-            $data['to_date'] = '';
+        if( !isset($this->to_date) ){
+            $this->to_date = '';
         }
-        if( !isset($data['from_time']) ){
-            $data['from_time'] = '';
+        if( !isset($this->from_time) ){
+            $this->from_time = '';
         }
-        if( !isset($data['to_time']) ){
-            $data['to_time'] = '';
+        if( !isset($this->to_time) ){
+            $this->to_time = '';
         }
 
-        if( isset($data['is_longterm']) && $data['is_longterm'] == 1 ){
-            $data['from_date'] = '2015-01-01';
-            $data['to_date'] = '2115-01-01';
+        if( isset($this->is_longterm) && $this->is_longterm == 1 ){
+            $this->from_date = '2015-01-01';
+            $this->to_date = '2115-01-01';
         }
-        if( isset($data['is_allday']) && $data['is_allday'] == 1 ){
-            $data['from_time'] = '00:00';
-            $data['to_time'] = '23:59';
+        if( isset($this->is_allday) && $this->is_allday == 1 ){
+            $this->from_time = '00:00';
+            $this->to_time = '23:59';
         }
-        if( $data['to_date'] < date("Y-m-d") ){
-            return '您的工作日期需要修改，截止日期应在今天之后';
+        if( $this->to_date < date("Y-m-d") ){
+            $this->addError('您的工作日期需要修改，截止日期应在今天之后');
         }
-        if( $data['from_time'] > $data['to_time'] ){
-            return '您的工作时间需要修改，起始时间应小于结束时间';
+        if( $this->from_time > $this->to_time ){
+            $this->addError('您的工作时间需要修改，起始时间应小于结束时间');
         }
-        return '';
+        
     }
 
     public function tidyTitle()

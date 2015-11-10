@@ -7,7 +7,6 @@ use yii\base\Model;
 use yii\helpers\Url;
 use yii\web\ServerErrorHttpException;
 use common\models\TaskAddress;
-use common\models\Task;
 
 class CompanyTaskCreateAction extends \yii\rest\CreateAction
 {
@@ -22,22 +21,6 @@ class CompanyTaskCreateAction extends \yii\rest\CreateAction
             'scenario' => $this->scenario,
         ]);
         $data = Yii::$app->getRequest()->getBodyParams();
-
-        if( isset($data['is_longterm']) && $data['is_longterm'] == 1 ){
-            $data['from_date'] = '2015-01-01';
-            $data['to_date'] = '2115-01-01';
-        }
-        if( isset($data['is_allday']) && $data['is_allday'] == 1 ){
-            $data['from_time'] = '00:00';
-            $data['to_time'] = '23:59';
-        }
-        $check_input_data_msg = Task::checkInputData($data);
-        if( $check_input_data_msg ){
-            return [
-                'success' => false,
-                'message' => $check_input_data_msg,
-            ];
-        }
 
         $model->load($data, '');
         if ($model->save()) {
