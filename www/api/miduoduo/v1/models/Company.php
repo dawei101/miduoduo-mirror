@@ -142,8 +142,9 @@ class Company extends \yii\db\ActiveRecord
         $user_id = YII::$app->user->id;
         $all = Task::find()->where(['user_id' => $user_id])->count();
         $online = Task::find()->where(['user_id' => $user_id, 'status' => 0])->count();
-        $overtime = Task::find()->where(['user_id' => $user_id, 'status' => 10])->count();
-        $offline = Task::find()->where(['user_id' => $user_id, 'status' => 50])->count();
+        $over_date = date("Y-m-d");
+        $overtime = Task::find()->where(['user_id' => $user_id])->andWhere(['<','to_date',$over_date])->count();
+        $offline = Task::find()->where(['user_id' => $user_id, 'status' => 10])->count();
         return [
             'all' => $all,
             'online' => $online,

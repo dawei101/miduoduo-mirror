@@ -303,6 +303,37 @@ class Task extends \common\BaseActiveRecord
         return parent::beforeSave($insert);
     }
 
+    public static function checkInputData($data){
+        if( !isset($data['from_date']) ){
+            $data['from_date'] = '';
+        }
+        if( !isset($data['to_date']) ){
+            $data['to_date'] = '';
+        }
+        if( !isset($data['from_time']) ){
+            $data['from_time'] = '';
+        }
+        if( !isset($data['to_time']) ){
+            $data['to_time'] = '';
+        }
+
+        if( isset($data['is_longterm']) && $data['is_longterm'] == 1 ){
+            $data['from_date'] = '2015-01-01';
+            $data['to_date'] = '2115-01-01';
+        }
+        if( isset($data['is_allday']) && $data['is_allday'] == 1 ){
+            $data['from_time'] = '00:00';
+            $data['to_time'] = '23:59';
+        }
+        if( $data['to_date'] < date("Y-m-d") ){
+            return '您的工作日期需要修改，截止日期应在今天之后';
+        }
+        if( $data['from_time'] > $data['to_time'] ){
+            return '您的工作时间需要修改，起始时间应小于结束时间';
+        }
+        return '';
+    }
+
     public function tidyTitle()
     {
         return preg_replace('/【.*?】/', '', $this->title);
