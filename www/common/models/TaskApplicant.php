@@ -18,7 +18,8 @@ use Yii;
  */
 class TaskApplicant extends \common\BaseActiveRecord
 {
-
+    const STATUS_APPLY_OVERDAYS = 2;
+    
     public static $STATUSES = [
         0 => '已报名',
         10 => '报名成功',

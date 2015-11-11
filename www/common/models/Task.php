@@ -197,7 +197,7 @@ class Task extends \common\BaseActiveRecord
     public function rules()
     {
         return [
-            [['salary', 'salary_unit', 'from_date', 'to_date',
+            [['salary', 'salary_unit',
                 'need_quantity', 'detail',
                 'title', 'service_type_id'], 'required'],
             // ['company_id', 'required', 'message'=>'请选择一个已存在的公司'],
@@ -224,6 +224,7 @@ class Task extends \common\BaseActiveRecord
                 'weight_requirement', 'height_requirement',
                 ], 'integer'],
             ['time_book_opened', 'boolean'],
+            [['from_date', 'to_date', 'is_longterm', 'is_allday' ,'title'], 'checkInputData'],
         ];
     }
 
@@ -301,6 +302,43 @@ class Task extends \common\BaseActiveRecord
             $this->order_time = date('Y-m-d H:i:s', time());
         }
         return parent::beforeSave($insert);
+    }
+
+    public function checkInputData($data){
+        if( !isset($this->from_date) ){
+            $this->from_date = '';
+        }
+        if( !isset($this->to_date) ){
+            $this->to_date = '';
+        }
+        if( !isset($this->from_time) ){
+            $this->from_time = '';
+        }
+        if( !isset($this->to_time) ){
+            $this->to_time = '';
+        }
+
+        if( isset($this->is_longterm) && $this->is_longterm == 1 ){
+            $this->from_date = '2015-01-01';
+            $this->to_date = '2115-01-01';
+        }
+        if( isset($this->is_allday) && $this->is_allday == 1 ){
+            $this->from_time = '00:00';
+            $this->to_time = '23:59';
+        }
+
+        if( $this->to_date == '' ){
+            $this->addError('to_date', '请填写工作结束日期');
+        }
+        if( $this->from_date == '' ){
+            $this->addError('from_date', '请填写工作开始日期');
+        }
+        if( $this->to_date < date("Y-m-d") ){
+            $this->addError('您的工作日期需要修改，截止日期应在今天之后', '您的工作日期需要修改，截止日期应在今天之后');
+        }
+        if( $this->from_time > $this->to_time ){
+            $this->addError('您的工作时间需要修改，起始时间应小于结束时间', '您的工作时间需要修改，起始时间应小于结束时间');
+        }
     }
 
     public function tidyTitle()
@@ -478,6 +516,15 @@ class Task extends \common\BaseActiveRecord
         return $this->hasMany(Tasktime::className(), ['task_id' => 'id']);
     }
 
+    public function getUndo_applicant_num(){
+        $overtime   = date("Y-m-d H:i:s",time()-60*60*24*TaskApplicant::STATUS_APPLY_OVERDAYS);
+        $undo = $this->hasMany(TaskApplicant::className(), ['task_id' => 'id'])
+            ->andWhere(['status' => 0])
+            ->andWhere(['>', 'created_time', $overtime])
+            ->count();
+        return $undo;
+    }
+
     public function fields()
     {
         $fs = parent::fields();
@@ -491,6 +538,8 @@ class Task extends \common\BaseActiveRecord
             'onlinejob_needinfo',
             'service_type',
             'tasktime',
+            'undo_applicant_num',
+            'addresses',
         ]);
         unset($fields['contact_phonenum']);
         return $fields;
