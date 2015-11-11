@@ -11,6 +11,7 @@ use common\BaseActiveRecord;
 use common\models\WeichatUserInfo;
 use common\models\AccountEvent;
 use common\models\District;
+use common\models\Company;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -290,6 +291,10 @@ class User extends BaseActiveRecord implements IdentityInterface
     public function getResume(){
         
         return $this->hasOne(Resume::className(), ['user_id' => 'id']);
+    }
+
+    public function getCompany(){
+        return $this->hasOne(Company::className(), ['user_id' => 'id']);
     }
 
     public function getWeichat(){

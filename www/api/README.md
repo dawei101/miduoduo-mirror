@@ -218,7 +218,7 @@ BASE_URL = 'http://api.miduoduo.cn'
                     id:         按id升序排列
                     -task.id:   按task的id 降序排序
                 ```
-            * http://api.test.chongdd.cn/v1/task?expand=service_type&filters=[['service_type_id', '=', '10']]
+            * http://api.test.chongdd.cn/v1/task?expand=service_type&filters=[["=", "service_type_id", "10"]]
         * 返回格式:
         ```
     {
@@ -284,7 +284,7 @@ BASE_URL = 'http://api.miduoduo.cn'
 ```
 * 搜索城市
 ```
-GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_name]]
+GET /version/district?filters=[["=", "level", "city"], ["like", "name", city_name]]
 ```
 
 ### 城市首页BANNER
@@ -620,6 +620,431 @@ GET /version/district?filters=[['=', 'level', 'city'], ['like', 'name', city_nam
     ```
     push_id = 极光推送id
     ```
+
+## 企业相关接口
+
+### 企业信息相关
+* 获取当前的企业信息
+```
+    GET /version/company?access_token=null
+        参数：null
+    RETURN
+        成功：
+        {
+          "success": true,
+          "message": "已经开通企业账号",
+          "result": {
+            "id": 432,
+            "name": "测试自主注册",
+            "avatar": null,
+            "examined_time": null,
+            "status": 0,
+            "examined_by": 0,
+            "user_id": 2006,
+            "contact_email": "suixb@miduoduo.cn",
+            "intro": "",
+            "contact_name": "隋小波",
+            "service": null,
+            "corp_type": null,
+            "corp_size": null,
+            "person_name": null,
+            "person_idcard": null,
+            "person_idcard_pic": null,
+            "corp_name": null,
+            "corp_idcard": null,
+            "corp_idcard_pic": null,
+            "exam_result": 48,
+            "exam_status": 2,
+            "exam_note": null,
+            "use_task_date": "2015-10-21",
+            "use_task_num": 0, # 今天已操作任务数量
+            "allow_task_num": 5, # 今日可操作任务数量
+            "created_time": "2015-09-07 17:37:09",
+            "origin": 1,
+            "status_label": "正常",
+            "exam_status_label": "审核完成",
+            "exam_result_label": " 身份证验证通过 营业执照验证通过"
+          }
+        }
+        失败：
+        {
+          "success": false,
+          "message": "未开通企业账号"
+        }
+```
+* 创建企业信息
+```
+    POST /version/company?access_token=null
+    参数：
+        name = 企业名称
+        corp_type = 招聘性质（1 = '企业直聘',2 = '人力资源',3 = '领队'）
+        corp_size = 企业规模（0-20人，20-100人，100人以上）
+        intro = 公司介绍
+        corp_name = 招聘方名称
+        city_id = 城市ID，所在地区
+        contact_name = 联系人名称
+        contact_phone = 联系人电话
+        contact_email = 招聘邮箱
+        origin = 3（固定，表示注册渠道是移动端）
+    RETURN
+        成功：
+        {
+          "name": "name",
+          "contact_name": "联系人不能为空",
+          "contact_phone": "13901234567",
+          "user_id": "2006",
+          "id": 2045
+        }
+        失败：
+        [
+          {
+            "field": "user_id",
+            "message": "企业经存在，请勿重新创建!"
+          }
+        ]
+```
+* 修改企业信息
+```
+    PUT /version/company/{企业ID}?access_token=null
+    参数：如下
+    RETURN 修改后的信息
+        成功：
+        {
+          "id": 432,
+          "name": "隋小波的测试企业",
+          "avatar": null,
+          "examined_time": null,
+          "status": 0,
+          "examined_by": 0,
+          "user_id": 2006,
+          "contact_email": "suixb@miduoduo.cn",
+          "intro": "",
+          "contact_name": "隋小波",
+          "service": null,
+          "corp_type": null,
+          "corp_size": null,
+          "person_name": null,
+          "person_idcard": null,
+          "person_idcard_pic": null,
+          "corp_name": null,
+          "corp_idcard": null,
+          "corp_idcard_pic": null,
+          "exam_result": 48,
+          "exam_status": 2,
+          "exam_note": null,
+          "use_task_date": "2015-10-21",
+          "use_task_num": 0,
+          "created_time": "2015-09-07 17:37:09",
+          "origin": 1,
+          "status_label": "正常",
+          "exam_status_label": "审核完成",
+          "exam_result_label": " 身份证验证通过 营业执照验证通过",
+          "task_infos": {
+              "all": "25",   
+              "online": "14",  # 在线任务
+              "overtime": "1", # 过期任务
+              "offline": "0" # 下线任务
+          }
+        }
+        失败：
+        false
+```
+
+### 企业任务相关
+* 我的任务列表
+```
+    GET /version/company-task?access_token=null
+    参数：
+        filters=[["=","status","0"]] 显示中
+        filters=[["!=","status","0"]] 未显示
+    RETURN：
+        {
+            "items": [{
+              {
+              "id": 572,
+              "title": "职位名称",
+              "clearance_period": 0,
+              "salary": "10.00",
+              "salary_unit": 2,
+              "salary_note": null,
+              "from_date": "2015-10-21", # 工作开始日期
+              "to_date": "2015-12-21",  # 工作结束日期
+              "from_time": null, # 工作开始时间
+              "to_time": null,  # 工作结束时间
+              "need_quantity": 20, # 需要人数
+              "got_quantity": 4,  # 已获得人数
+              "created_time": "2015-10-21 15:36:44",
+              "updated_time": "0000-00-00 00:00:00",
+              "detail": "详细介绍",
+              "requirement": null,
+              "user_id": 2006,
+              "service_type_id": 12,
+              "gender_requirement": null,
+              "degree_requirement": null,
+              "age_requirement": null,
+              "height_requirement": null,
+              "status": 0,
+              "city_id": 3,
+              "gid": "14454130049102006",
+              "district_id": null,
+              "company_id": null,
+              "address": "",
+              "company_name": "",
+              "company_introduction": null,
+              "contact": "张三那",
+              "contact_phonenum": "13901234567",
+              "labels_str": null,
+              "origin": "internal",
+              "face_requirement": 0,
+              "talk_requirement": 0,
+              "health_certificated": 0,
+              "weight_requirement": 0,
+              "sms_phonenum": null,
+              "is_longterm": 0, # 是否为长期招聘
+              "order_time": "2015-11-05 08:55:12",
+              "recommend": 0,
+              "is_allday": 0, # 工作时间是否全天
+              "time_book_opened": 0,
+              "erweima_ticket": "gQHm8DoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xLzNVT084TkhtYUxNUjM4dU12VzNUAAIEbM0nVgMEgDoJAA==",
+              "erweima_date": "2015-10-22",
+              "clearance_period_label": "月结",
+              "salary_unit_label": "周",
+              "labels": [
+                "月结",
+                "10-21至12-21"
+              ],
+              "label_options": [],
+              "status_label": "正常",
+              "requirements": "",
+              "is_overflow": false,
+              "xcompany_name": "",
+              "onlinejob": null,
+              "onlinejob_needinfo": [],
+              "service_type": {  # 职位类别
+                "id": 12,
+                "name": "促销",
+                "created_time": null,
+                "updated_time": null,
+                "modified_by": null,
+                "status": 0,
+                "pinyin": "cuxiao",
+                "status_label": "正常"
+              },
+              "tasktime": [],
+              "undo_applicant_num": "0", # 未处理简历数量
+              "addresses": [
+                {
+                  "id": 267,
+                  "province": "河北 ",
+                  "city": "秦皇岛 ",
+                  "district": null,
+                  "lat": 39.824923,
+                  "lng": 119.497805,
+                  "task_id": 572,
+                  "user_id": 2006,
+                  "title": "河北 秦皇岛 吉程宾馆 ",
+                  "address": "秦皇岛北戴河区北戴河区安一路8号(老虎石海上公园)",
+                  "distance": 0,
+                  "distance_label": "0m"
+                },
+                {
+                  "id": 268,
+                  "province": "河北 ",
+                  "city": "秦皇岛 ",
+                  "district": null,
+                  "lat": 39.941259,
+                  "lng": 119.606184,
+                  "task_id": 572,
+                  "user_id": 2006,
+                  "title": "河北 秦皇岛 ",
+                  "address": "秦皇岛市",
+                  "distance": 0,
+                  "distance_label": "0m"
+                }
+              ]
+            },
+            {},
+            {}
+            ]
+            "_links": {
+                "self": {
+                  "href": "http://api.suixb.chongdd.cn/v1/company-task?access_token=NhvBihyN9R-Rovux-eA1klpmX-v1TRgu_1445403967&page=1"
+                },
+                "next": {
+                  "href": "http://api.suixb.chongdd.cn/v1/company-task?access_token=NhvBihyN9R-Rovux-eA1klpmX-v1TRgu_1445403967&page=2"
+                },
+                "last": {
+                  "href": "http://api.suixb.chongdd.cn/v1/company-task?access_token=NhvBihyN9R-Rovux-eA1klpmX-v1TRgu_1445403967&page=5"
+                }
+              },
+              "_meta": {
+                "totalCount": 97,
+                "pageCount": 5,
+                "currentPage": 1,
+                "perPage": 20
+              }
+        }
+```
+
+* 查看任务详情
+```
+    GET /version/company-task/{任务ID}?access_token=null
+    参数：
+        无
+    RETURN：
+        任务详情信息
+```
+
+* 刷新任务
+```
+    PUT /version/company-task/{任务ID}?access_token=null
+    参数：
+        updated_time = 2015-10-27 15:02:27 # 最新时间
+    RETURN：
+        任务修改后的详情信息
+```
+
+* 下架任务
+```
+    PUT /version/company-task/{任务ID}?access_token=null
+    参数：
+        status = 10
+    RETURN：
+        任务修改后的详情信息
+```
+
+* 编辑任务
+```
+    PUT /version/company-task/{任务ID}?access_token=null
+    参数：
+        
+    RETURN：
+        任务修改后的详情信息
+```
+
+* 发布任务
+```
+    POST /version/company-task?access_token=null
+    参数：
+        title = 职位名称
+        service_type_id = 服务类别 # 通过接口获取：/version/service-type
+        is_longterm = 长期招聘 0,1
+        from_date = 任务开始日期
+        to_date = 任务结束日期
+        is_allday = 工作时间是否为全天  0,1
+        from_time = 工作开始时间
+        to_time = 工作结束时间
+        city_id = 第一个工作地点的城市ID
+        address_ids = 工作地点列表ID，如 234,235,236,237 # 地理位置接口：/version/company-task-address?access_token=null
+        detail = 详情描述
+        need_quantity = 人员要求-人数
+        gender_requirement = 人员要求-性别 0 不限，1 男，2 女
+        height_requirement = 人员要求-身高 0=>'身高无要求',1=>'155cm以上',2=>'165cm以上',3=>'170cm以上',3=>'175cm以上'
+        salary = 薪酬
+        salary_unit = 薪酬单位 0=>'小时',1=>'天',2=>'周',3=>'月',4=>'次',5=>'单',6=>'个'
+        clearance_period = 结算方式 0=>'月结',1=>'周结',2=>'日结',3=>'完工结',4=>'按单结算',
+        contact = 联系人姓名
+        contact_phonenum = 联系人手机
+        origin = app # 发布信息来源
+    RETURN：
+        任务发布后的详情信息
+```
+
+* 添加地理位置接口
+```
+    POST /version/company-task-address?access_token=null
+    参数：
+        province = 省直辖市名
+        city = 城市名
+        district = 区域名
+        lat = 坐标
+        lng = 坐标
+        task_id = 0
+        user_id = 用户ID
+        title = 用户搜索的区域名称（北京 融科资讯中心C座 北楼12层）
+        address = 百度返回的地理位置名称（北京市海淀区科学院南路2号）
+    RETURN：
+        成功：
+        {
+          "lat": "11",
+          "lng": "22",
+          "task_id": "0",
+          "user_id": "2006",
+          "id": 400,
+          "distance": 0,
+          "distance_label": "0m"
+        }
+        失败：
+        false
+```
+
+### 企业受到的简历相关操作
+
+* 全部简历
+```
+    GET version/company-applicant?access_token=null
+    参数：
+        filters=[["=","task_id","572"]] # 查看某个任务的报名情况
+        page=1
+    RETURN：
+        {
+            "items": [
+            {
+              "id": 11467,
+              "created_time": "2015-10-21 16:03:10",
+              "user_id": 2006,
+              "task_id": 572,
+              "company_alerted": 1,
+              "applicant_alerted": 1,
+              "status": 0,
+              "origin": "App:2-",
+              "have_read": 0,
+              "supposed_salary": null,
+              "got_salary": null,
+              "account_event_id": null,
+              "address_id": null,
+              "status_label": "已报名",
+              "status_options": {
+                "0": "已报名",
+                "10": "报名成功",
+                "20": "报名失败",
+                "30": "已结算"
+              },
+              "contact_phonenum": "13901234567"
+            },
+          ],
+          "_meta": {
+            "totalCount": "36",
+            "pageCount": 2,
+            "currentPage": "1",
+            "perPage": 20
+          }
+        }
+```
+
+* 接受、拒绝简历
+```
+    PUT /version/company-applicant/{简历投递的ID号}?task_id={任务ID}&access_token=null
+    参数：
+        status={10录用、20不合适}
+    RETURN：
+        成功：
+            报名详情信息
+        失败：
+            false
+```
+
+* 查看用户简历详情
+```
+    GET /version/company-resume/{user_id}?task_id={task_id}access_token=null
+    参数：
+        无
+    RETURN：
+        成功：
+            用户简历信息
+        失败：
+            false
+```
 
 ## 关于性能上的优化
     * TODO

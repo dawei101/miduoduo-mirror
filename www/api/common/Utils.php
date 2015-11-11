@@ -33,6 +33,7 @@ class Utils
             'id_extam_status' => $user->resume?$user->resume->exam_status:false,
             'is_virgin' => $user->is_virgin && empty($user->resume),
             'last_city' => [],
+            'company' => isset($user->company->id) ? $user->company->toArray() : false,
         ];
         if ($user->last_location){
             $city = $user->last_location->city;
