@@ -28,7 +28,7 @@ $this->title = '米多多兼职平台';
                     <div class="pull-left tab4">投递时间</div>
                     <div class="pull-left tab5">操作<span>（2天未操作简历将失效）</span></div>
                 </dt>
-                <?php foreach ($task_apps as $task_app) {?>
+                <?php foreach ($task_apps as $task_app) { if(isset($task_app->resume->id)){?>
                 <?php 
                     // 超过2天未处理，报名失效
                     if( (time()-strtotime($task_app->created_time)) > 60*60*24*TaskApplicant::STATUS_APPLY_OVERDAYS ){
@@ -63,7 +63,7 @@ $this->title = '米多多兼职平台';
                     <div class="pull-left tab5"><div class="yijishou"><?=$task_app->status_label?></div></div>
                     <?php }?>
                 </dd>
-                <?php }?>
+                <?php }}?>
                 <?=LinkPager::widget(['pagination' => $pagination])?>
 <!--
                 <div class="pagination pagers pull-right pagination-lg">

@@ -3,6 +3,7 @@
 namespace common\models\extensions\time_book;
 
 use Yii;
+use common\models\extensions\time_book;
 
 /**
  * This is the model class for table "ext_time_book_schedule".
@@ -22,6 +23,16 @@ use Yii;
  */
 class Schedule extends \common\BaseActiveRecord
 {
+
+    public $count;
+    public $past_count;
+
+    public $on_late_count;
+    public $off_early_count;
+    public $out_work_count;
+    public $noted_count;
+
+    public $is_today_on;
 
     /**
      * @inheritdoc
@@ -61,6 +72,9 @@ class Schedule extends \common\BaseActiveRecord
             'allowable_distance_offset' => 'Allowable Distance Offset',
             'lat' => 'Lat',
             'lng' => 'Lng',
+            'out_work_on' => '是否打卡',
+            'on_late' => '是否迟到',
+            'off_early' => '是否早退',
         ];
     }
 
@@ -85,5 +99,32 @@ class Schedule extends \common\BaseActiveRecord
     public function getIs_past()
     {
         return $this->date <= date('Y-m-d');
+    }
+
+    public function getOn_daka(){
+        $time = Record::findOne(['schedule_id' => $this->id, 'event_type' => Record::EVENT_ON]);
+        if($time){
+            return $time->created_time;
+        }else{
+            return NULL;
+        }
+    }
+
+    public function getOff_daka(){
+        $time = Record::findOne(['schedule_id' => $this->id, 'event_type' => Record::EVENT_OFF]);
+        if($time){
+            return $time->created_time;
+        }else{
+            return NULL;
+        }
+    }
+
+    public function fields()
+    {
+        $fs = parent::fields();
+        return array_merge($fs, [
+            'on_daka',
+            'off_daka',
+        ]);
     }
 }
