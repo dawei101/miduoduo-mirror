@@ -22,14 +22,17 @@ $this->page_description = $seo_code['description'];
   <div class="cent">
       <div class="pic-top"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/jianzhi-pic.png" width="805" height="170"></div>
     <div class="erwei-box" style="width:1020px;">
-      <div class="erweibox" style="width:340px;"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ban-erwei.jpg" width="140" height="140">
-        <P>关注微信号</P>
+      <div class="erweibox" style="width: 255px;"> <img src="http://static.miduoduo.cn/www/static/img/ban-erwei.jpg" width="140" height="140">
+        <p>关注微信号</p>
       </div>
-      <div class="erweibox" style="width:340px;"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/ios-app.jpg" width="140" height="140">
-        <P>下载苹果App</P>
+      <div class="erweibox" style="width: 255px;"> <img src="http://static.miduoduo.cn/www/static/img/ios-app.jpg" width="140" height="140">
+        <p>下载苹果App</p>
       </div>
-      <div class="erweibox" style="width:340px;"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/android-app.jpg" width="140" height="140">
-        <P>下载安卓App</P>
+      
+    <div class="erweibox" style="width: 255px;"> <img src="http://static.miduoduo.cn/www/static/img/android-app.jpg" width="140" height="140">
+        <p>下载安卓App</p>
+      </div><div class="erweibox" style="width: 255px;"> <img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/qiye.jpg" width="140" height="140">
+        <p>企业微信号</p>
       </div>
     </div>
   </div>

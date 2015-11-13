@@ -35,8 +35,9 @@ AppAsset::register($this);
                 data-target="#example-navbar-collapse"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                 <a class="navbar-brand" href="/"><img src="<?=Yii::$app->params["baseurl.static.corp"]?>/static/img/qiye-logo.png"></a> </div>
                 <div class="collapse navbar-collapse" id="example-navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" style=" position:relative;">
                         <?php if (!Yii::$app->user->isGuest){ ?>
+                            <li><a href="#" id="shoujifabu-a">手机发职位</a></li>
                             <li class="active"><a href="/task/">我的职位</a></li>
                             <li><a href="/task/publish">我要发布</a></li>
                             <li><a href="/resume/">简历管理
@@ -50,11 +51,13 @@ AppAsset::register($this);
                             <li><a href="/user/info">用户中心</a></li>
                             <li><a href="/user/logout">退出</a></li>
                         <?php }else{ ?>
+                            <li><a href="#" id="shoujifabu-a">手机发职位</a></li>
                             <li class="active"><a href="#">我的职位</a></li>
                             <li><a href="#">我要发布</a></li>
                             <li><a href="#">简历管理</a></li>
                             <li><a href="#">用户中心</a></li>
                         <?php }?>
+			<div id="shoujifabu-div" style="display:none; background:#2a3141  none repeat scroll 0 0; padding: 20px;position: absolute;right: 0;top: 65px; width: 100%;"><img width="180" height="180" src="http://static.suixb.chongdd.cn/www/static/img/qiye.jpg" style="display:block; margin:0 auto;"><div style="text-align:center; font-size:18px; color:#fff;line-height:50px">扫一扫去手机发布职位</div></div>
                     </ul>
                 </div>
             </div>
@@ -92,6 +95,11 @@ AppAsset::register($this);
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-64201170-1', 'auto');
   ga('send', 'pageview');
+    $(document).ready(function(){
+        $('#shoujifabu-a').on('click',function(){
+            $('#shoujifabu-div').slideToggle(200);
+        });
+    });
 </script>
 <script>
 var _hmt = _hmt || [];
