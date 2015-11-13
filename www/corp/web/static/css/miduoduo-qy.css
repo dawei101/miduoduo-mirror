@@ -30,14 +30,22 @@ h1,h2,h3,h4,h5,h6,em{font-style:normal; font-weight:normal; margin:0;}
 .midd-nav-text li a em{}
 /*======banner代码======*/
 .midd-kong{height:100px;}
-.banner{width:100%; height:auto; background:#fed732 url(../img/banner-bg.jpg); overflow:hidden; padding:80px 0;}
+.banner{width:100%; height:auto; background:#fed732 url(../img/banner-bg.jpg); overflow:hidden; padding:60px 0;}
 .banner h2{font-size:32px; color:#fff; line-height:90px; border-bottom:1px #2a3141 dashed;}
-.banner h1{font-size:72px; color:#2a3141; margin:40px 0;}
+.banner h1 {
+  font-size: 58px;
+  color: #2a3141;
+  margin: 18px 0;
+}
 .h4 h4{font-size:20px; color:#fff; background:#606c77; text-align:center;float:left; display:inline; padding:5px 0;width:235px;}
 .h4{overflow:hidden }
 .h4-l{width:10px;background:#606c77;height:32px; margin-right:4px;}
 .h4-r{width: 0;   height: 0;border-bottom:16px solid transparent;border-top:16px solid transparent;border-left:20px solid #606c77;font-size: 0;line-height: 0;vertical-align: middle; margin-left:3px;}
-.banner h3{font-size:25px; color:#f55b38; margin:40px 0;}
+.banner h3 {
+  font-size: 25px;
+  color: #f55b38;
+  margin: 20px 0;
+}
 
 /*======首页选项卡======*/
 .menusWrapper{width:100%; height:60px; margin-bottom: 20px; border-bottom: 3px solid #eeeeee; }

@@ -17,8 +17,12 @@ ul li{list-style:none;}
 .erwei-box{width:690px; height:140px;;background:rgba(255, 255, 255, 0.6)!important; filter:Alpha(opacity=60); background:#fff;  padding:20px 30px; margin:0 auto;}
 .erweibox{float:left; width:345px}
 .erwei-box img{float:left; line-height:140px;}
-.erwei-box p{ line-height:140px; float:left; font-size:18px; padding-left:20px}
-
+.erwei-box p {
+  line-height: 140px;
+  float: left;
+  font-size: 15px;
+  padding-left: 10px;
+}
 
 
 
