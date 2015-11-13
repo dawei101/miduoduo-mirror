@@ -18,7 +18,7 @@ $this->title = '米多多兼职平台';
         <div class="h4"> <span class="h4-l pull-left"></span>
           <h4>让兼职招聘管理变的轻松</h4>
           <span class="h4-r pull-left"></span> </div>
-        <h3 class="fixde">超大兼职库，算法匹配，系统推送，人工触达，快速响应</h3>
+          <div style="margin:20px 0"><img src="<?=Yii::$app->params["baseurl.static.www"]?>/static/img/qiye.jpg" width="140" height="140" ><h3 class="fixde"  style="float: right;font-size: 33px;line-height: 50px;margin-top:20px;width: 73%;" >超大兼职库，算法匹配，系统推送，人工触达，快速响应</h3></div>
       </div>
       <div class="col-sm-12 col-md-6 col-lg-5">
         <div class="tab">
