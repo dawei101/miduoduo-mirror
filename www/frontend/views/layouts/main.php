@@ -76,7 +76,7 @@ if( $lastest_seo_pinyin ){
             <a href="<?=Yii::$app->params["baseurl.frontend"]?>">米多多求职版</a>
             <a href="<?=Yii::$app->params["baseurl.corp"]?>">米多多企业版</a>
             <a href="<?=Yii::$app->params['downloadApp.android']?>">客户端下载</a>
-            <a href="http://www.youshigongzuo.com" title="有时工作网">有时工作网</a>
+            <a target="_blank" href="http://www.youshigongzuo.com" title="有时工作网">有时工作网</a>
           </div>
           <div class="lianxi">
             联系我们：&nbsp;&nbsp;邮箱：<?=Yii::$app->params['supportEmail']?>&nbsp;&nbsp;&nbsp;&nbsp;电话：<?=Yii::$app->params['supportTel']?>
